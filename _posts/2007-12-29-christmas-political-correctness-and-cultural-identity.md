@@ -18,8 +18,7 @@ in woolly coats (Santa Claus and variations) are standard Christmas imagery even
 the temperature never drops below 15ºC. People accuse each other of cultural imperialism and then
 just celebrate anyway.
 
-**A Christian festival, versus other religions
-**
+**A Christian festival, versus other religions**
 
 Sometime in the past, it
 was quite simple: Various European peoples had a festival sometime around the winter solstice in

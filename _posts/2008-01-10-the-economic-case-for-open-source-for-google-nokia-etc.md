@@ -39,23 +39,21 @@ of B will go up. So, if you are a company selling B, and you are clever, you wil
 price of A down as far as possible, even commodify it. That way, you can sell B for a higher price
 and you'll be better off.
 
-<p>And now if you look around who is investing in open source software,
+And now if you look around who is investing in open source software,
 you'll notice that often the software released in this free manner is actually a complement of what
-that company is trying to sell. For
-instance:
-<ul>
-<li>Google want to sell advertising on mobile web sites. Mobile web browsers and
+that company is trying to sell. For instance:
+
+* Google want to sell advertising on mobile web sites. Mobile web browsers and
 mobile operating systems are complements of mobile web sites, so Google make
 [Android](/2007/11/20/android-googles-throw-away-mobile-operating-system/) and release it freely in
 order to drive down the price of these
-complements.</li>
-<li>Our friends at
-[Collabora](http://www.collabora.co.uk/) are
+complements.
+* Our friends at [Collabora](http://www.collabora.co.uk/) are
 [paid by Nokia](http://www.collabora.co.uk/16/press-release-2) to work on an open source platform
 for Nokia's internet tablets. Nokia sell phone hardware, and the operating system is a complement of
 the hardware, so it makes sense for Nokia to commoditise it. Moreover, third-party applications are
 a complement of the hardware, so by opening the platform to the wide variety of freely available
-Linux software, Nokia increases the value of its hardware even more.</li>
-</ul>
+Linux software, Nokia increases the value of its hardware even more.
+
 Once you think about
-it this way, it's amazing how the economics begin to make sense!</p>
+it this way, it's amazing how the economics begin to make sense!

@@ -18,21 +18,20 @@ small pictures) will load in 0.5 seconds. Honestly, if you've *ever* tried to ac
 web page from a phone you know that this figure is just laughably wrong. It is *never* that
 fast.
 
-<p>Finally, after lots of searching, I found
+Finally, after lots of searching, I found
 [this paper](http://research.microsoft.com/~pablo/papers/www04.pdf) by
 [Pablo Rodriguez](http://blog.rodriguezrodriguez.com/),
 [Sarit Mukherjee](http://www1.bell-labs.com/user/sarit/) and Sampath Rangarajan. And they give some
 good reasons why this is the
 case:
-<ul>
-<li>The round-trip time for packets is between 400 and 1000 ms in a typical 3G
-cell.</li>
-<li>Packets loss is inevitable in wireless transmissions because of radio interference.
+
+* The round-trip time for packets is between 400 and 1000 ms in a typical 3G cell.
+* Packets loss is inevitable in wireless transmissions because of radio interference.
 There are two approaches to packet loss: either let TCP deal with retransmission (in which case it
 thinks the network is congested, and reduces the transfer rate), or to retransmit lost packets in a
 low-level protocol (in which case the round-trip times observed by TCP can vary wildly, which
-confuses TCP and also reduces the transfer rate).</li>
-</ul>
+confuses TCP and also reduces the transfer rate).
+
 In a nutshell, TCP is really not up to
 the job, but it's so widely used that there is basically no chance that it is going to be replaced
 anytime so on. (WAP included a layer called the
@@ -40,30 +39,28 @@ anytime so on. (WAP included a layer called the
 better replacement for TCP. But we know what happened to WAP -- nobody wants to use it.) In their
 paper, Rodriguez et al. go on to describe a method for partially getting round the problem by
 rewriting DNS and HTTP responses -- it's not ideal, but at least it removes some of the worst
-problems.</p>
+problems.
 
-<p>The real problem here is that round-trip time though. On a normal broadband connection
+The real problem here is that round-trip time though. On a normal broadband connection
 I'd expect a round-trip time between 25 ms (within the UK) and 125 ms (across the Atlantic). On 3G,
 even though the bandwidth is not that much lower than broadband, we've got a round-trip time 8 to 15
 times higher. And this time really becomes noticeable every time you click on a
 link:
-<ol>
-<li>Send a DNS request for the hostname we want to contact, and wait for the response.
+
+* Send a DNS request for the hostname we want to contact, and wait for the response.
 (Unless we've cached the DNS record on the
-handset.)</li>
-<li>Send a TCP SYN packet to the server we want to contact, and wait for the
-response.</li>
-<li>Send the HTTP query over the established TCP connection.</li>
-</ol>
+handset.)
+* Send a TCP SYN packet to the server we want to contact, and wait for the response.
+* Send the HTTP query over the established TCP connection.
+
 This means
 that every time we click a link, we have to wait 2 or 3 round trip times -- i.e. between 0.8 and 3.0
 seconds -- until we get the very first few bytes of the page we requested. That's assuming that none
 of those first few packets got lost (because if one of them was lost, there would be no way of
 telling -- all you can do is wait for a timeout and try again). And then we still have to transfer
-the whole page, and have all the TCP issues to deal with.</p>
+the whole page, and have all the TCP issues to deal with.
 
-I just hope that mobile phones nowadays
-use
+I just hope that mobile phones nowadays use
 [persistent HTTP connections](http://en.wikipedia.org/wiki/HTTP_persistent_connection) or
 [pipelining](http://en.wikipedia.org/wiki/HTTP_pipelining) which would remove some of the overheads.
 Does anybody know if they do? I'd like to hear from you.

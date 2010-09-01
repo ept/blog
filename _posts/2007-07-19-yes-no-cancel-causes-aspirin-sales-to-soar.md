@@ -45,50 +45,44 @@ it's not immediately clear what each of the choices is actually going to do. Whi
 buttons will cause all your work to be lost if you press it? Which one will save it? And what does
 *Cancel* mean anyway? Aaargh, it causes headaches.
 
-<p>Let me explain this with a few examples. A
+Let me explain this with a few examples. A
 situation in which you frequently encounter a Yes/No/Cancel dialog box is when you are trying to
 close a document without having saved it. Like
 this:
+
 <p style="text-align:
 center"><img src="/static/2007/07/yesnocancel1-en.png" alt="Do you want to save the changes?
 Yes/No/Cancel" /></p>
+
 Nice of it to ask, you say -- you had completely forgotten to save. Ok. Now
-compare it to this
-one:
+compare it to this one:
+
 <p style="text-align:
 center"><img src="/static/2007/07/yesnocancel2-en.png" alt="Do you really want to quit without
 saving? Yes/No/Cancel" /></p>
+
 Can you believe it? It's asking the opposite question! Now even if you
 usually know by habit which button to press, suddenly you have to stop and think. And this box is
-even worse, because it's not clear what the difference is between No and Cancel.</p>
+even worse, because it's not clear what the difference is between No and Cancel.
 
-<p>Fundamentally the
-problem here is that we are actually asking two questions at the same
-time:
-<ol>
-<li>Do you want to save the
-document?</li>
-<li>Do you want to quit the application?</li>
-</ol>
-The answer to each question might
-be yes or no, which gives us four different possible
-actions:
-<ol>
-<li>save changes and quit *(the "Yes" button in the first
-example)
-*</li>
-<li>discard changes and quit *(the "No" button in the first
-example)*</li>
-<li>do nothing -- do not save and do not quit *(the "Cancel" button in the first
-example)*</li>
-<li>save changes but do not quit</li>
-</ol>
+Fundamentally the problem here is that we are actually asking two questions at the same time:
+
+1. Do you want to save the document?
+2. Do you want to quit the application?
+
+The answer to each question might be yes or no, which gives us four different possible actions:
+
+1. save changes and quit *(the "Yes" button in the first example)*
+2. discard changes and quit *(the "No" button in the first example)*
+3. do nothing -- do not save and do not quit *(the "Cancel" button in the first example)*
+4. save changes but do not quit
+
 The fourth option is generally perceived
 to be silly, so there is no button for that purpose and we get a choice of three. In the first
 example picture, these three correspond to Yes, No and Cancel respectively. What about the second
 example? Clicking Yes will "discard changes and quit". Maybe clicking No will save changes and quit,
 or maybe it will do nothing. Who knows what cancel will do, let alone the mystery of the red X in
-the corner.</p>
+the corner.
 
 Already with simple examples like this, you can begin to see that it's a bad idea to
 label buttons as Yes, No and Cancel. The meaning of these words depends very much on the question.
@@ -97,18 +91,17 @@ answer. As a user, you just want to know which button is going to cause your wor
 hours to be lost -- and neither of these examples makes it immediately clear which the "dangerous"
 button is.
 
-<p>Apple have tried to avoid this problem by not labelling the buttons Yes/No/Cancel, but
-more
-descriptively:
+Apple have tried to avoid this problem by not labelling the buttons Yes/No/Cancel, but
+more descriptively:
+
 <p
 align="center"><a href="/static/2007/07/yesnocancel3-en.png" title="Do you want to save changes to
 this document before closing? Don’t
 Save/Cancel/Save"><img src="/static/2007/07/yesnocancel3-en.png" alt="Do you want to save changes to
 this document before closing? Don’t Save/Cancel/Save" /></a></p>
-Using a verb (in this case
-"save") is recommended in Apple's
-[Human Interface
-Guidelines](http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/).
+
+Using a verb (in this case "save") is recommended in Apple's
+[Human Interface Guidelines](http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/).
 Also note that the "dangerous" button (which discards changes and quits) is set apart from the two
 "safe" buttons. This is clearly much better already, but the program is still trying to answer two
 questions at the same time, which you may consider to be an unnecessary complication.</p>
@@ -119,51 +112,48 @@ companies, but also to every other organisation or person who writes software. A
 terrible occurrences of Yes/No/Cancel in the world for which neither Microsoft nor Apple carries any
 blame.
 
-<p>One terrible thing which you see sometimes is an implicit relabelling of the buttons. Here
+One terrible thing which you see sometimes is an implicit relabelling of the buttons. Here
 the programmer clearly couldn't be bothered to make his own buttons, and instead placed the burden
-on the
-user:
+on the user:
+
 <p style="text-align:
 center"><img src="/static/2007/07/yesnocancel4-en.png" alt="The connection failed. Click Yes to try
 again, No to ignore the error, or Cancel to quit the application." /></p>
+
 You really need to switch
 on your brain to decide which button to press. And by phrasing the question badly, it can get even
 worse:
+
 <p style="text-align:
 center"><img src="/static/2007/07/yesnocancel5-en.png" alt="It is not recommended that you continue
 without overwriting this file…" /></p>
-At this point, I very much hope that you will have run out
-of the room screaming. And maybe returned to read the rest of this article. (With a headache.)</p>
 
-<p>You
-might think that the last example was very contrived, but the point I wanted to make was about
+At this point, I very much hope that you will have run out
+of the room screaming. And maybe returned to read the rest of this article. (With a headache.)
+
+You might think that the last example was very contrived, but the point I wanted to make was about
 negative questions. Why ask whether not to do something (the negative) if you can simply ask whether
 to do something (the positive)? I find this occurring particularly frequently with respect to
 checkboxes:
+
 <p style="text-align:
 center"><img src="/static/2007/07/yesnocancel6-en.png" alt="Disable nuclear missiles?" /></p>
-It is
-counterintuitive to put a tick in a box for something you don't want. Just don't ask negative
-questions. But that's a story for another day.</p>
 
-A few final
-remarks:
-<ul>
-<li>This website is not related to the
-[web comic OK/Cancel](http://www.ok-cancel.com/) although we're talking similar subject
-matter.</li>
-<li>[Windows Vista allows button
-relabelling](http://blogs.msdn.com/oldnewthing/archive/2006/09/11/749489.aspx) (article and
-discussion by Raymond
-Chen).</li>
-<li>[This article shows that Vista doesn't actually use this
-relabelling](http://www.user-interface.org/2005/12/23/dialog-boxes/), and contrasts different human
-interface
-guidelines.</li>
-<li>You might have noticed that the implicit relabelling example above is actually
-a case of Abort/Retry/Ignore. I first considered making that the name for this site, but fortunately
-Abort/Retry/Ignore is largely extinct by now (lucky you if you don't know what I'm talking about).
-There is
-[an excellent poem about Abort/Retry/Ignore](http://www.annoyances.org/exec/show/article09-122)
-though, inspired by E.A.Poe.</li>
-</ul>
+It is counterintuitive to put a tick in a box for something you don't want. Just don't ask negative
+questions. But that's a story for another day.
+
+A few final remarks:
+
+* This website is not related to the
+  [web comic OK/Cancel](http://www.ok-cancel.com/) although we're talking similar subject
+  matter.
+* [Windows Vista allows button relabelling](http://blogs.msdn.com/oldnewthing/archive/2006/09/11/749489.aspx)
+  (article and discussion by Raymond Chen).
+* [This article shows that Vista doesn't actually use this relabelling](http://www.user-interface.org/2005/12/23/dialog-boxes/),
+  and contrasts different human interface guidelines.
+* You might have noticed that the implicit relabelling example above is actually
+  a case of Abort/Retry/Ignore. I first considered making that the name for this site, but fortunately
+  Abort/Retry/Ignore is largely extinct by now (lucky you if you don't know what I'm talking about).
+  There is
+  [an excellent poem about Abort/Retry/Ignore](http://www.annoyances.org/exec/show/article09-122)
+  though, inspired by E.A.Poe.

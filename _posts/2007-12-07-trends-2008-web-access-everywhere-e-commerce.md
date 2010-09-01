@@ -16,7 +16,7 @@ being a huge success. Well, it never was in most parts of the world. It's quite 
 observers are now rather more cautious when it is announced that the mobile web is finally here, and
 that it is about to engulf the mainstream consumer.
 
-<p>In such an environment it is refreshing to hear
+In such an environment it is refreshing to hear
 the opinion of a neutral organisation who simply observes what is going on in the minds of consumers
 worldwide.
 [Trendwatching.com](http://www.trendwatching.com/) produces well researched monthly briefings on the
@@ -25,6 +25,7 @@ would come that they would announce the mobile web as a major consumer trend. An
 2007, the time has arrived. They announce in their predictions for
 [8 important consumer trends in 2008](http://www.trendwatching.com/briefing/)
 ([PDF](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)):
+
 <blockquote>"Five years
 ago, we introduced ONLINE OXYGEN as the engine behind all this excitement: control-craving consumers
 needing online access as much as they need oxygen. \[...\] If there's one device that's going to
@@ -34,16 +35,16 @@ definitely going to speed things up. \[...\] don't count on consumers' insatiabl
 online 24/7 to remain unmet
 forever."
 <p align="right">-- Trendwatching.com,
-["Online
-Oxygen"](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)</p>
+["Online Oxygen"](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)</p>
 </blockquote>
+
 Although
 still a bit cautious in their wording, and emphasising that it won't happen overnight, the
 trendwatchers have confirmed that the mobile web is not just a bubble. The signs are set for
 internet access anywhere, at any time, on almost any device, and it's looking as though we won't be
-able to imagine a world without it in a reasonably small number of years' time.</p>
+able to imagine a world without it in a reasonably small number of years' time.
 
-<p>But what is all
+But what is all
 that online access to be used for? E-commerce and social networking, say the trendwatchers. Social
 networking is a bit difficult to grasp, I think; it's another one of those areas with a lot of hype
 and not necessarily much substance. E-commerce is a very important reality though, as
@@ -52,7 +53,8 @@ out](http://www.computing.co.uk/computing/news/2205120/online-sales-rise-130bn) 
 have risen by 29% since last year, reaching £130bn). And Trendwatching.com are convinced that this
 trend is going to
 continue:
-<blockquote>"Sometimes, the Next Big Thing can be right under your nose. Consider the
+
+<blockquote><p>"Sometimes, the Next Big Thing can be right under your nose. Consider the
 online riches to be reaped in 2008 from... ecommerce! Sure, it's been around for years and years,
 but prepare for a forceful 'sequel'. After all, never before have so many consumers been willing to
 overcome security threats, still shockingly bad (or boring) design, and delivery screwups. In other
@@ -63,17 +65,17 @@ waiting to be spent by web-savvy consumers around the world.</p>
 <p>So in 2008, spend blood, sweat and
 tears on improving your ecommerce presence; the pay-off will be immediate, and far more substantial
 than investing in Web 2.0
-me-toos!"
+me-toos!"</p>
 <p align="right">-- Trendwatching.com,
 ["Online
 Oxygen"](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)</p>
 </blockquote>
-Consider
-that this market research organisation spends most of their time talking about brand psychology,
+
+Consider that this market research organisation spends most of their time talking about brand psychology,
 status symbols, and the purchasing habits of particular sections of society. They are not
 technology-oriented in the least. And nevertheless they are announcing the coming of the ubiquitous
 internet, and its huge value for commerce. For me, this announcement marks the transition of the
-mobile web from hype to reality.</p>
+mobile web from hype to reality.
 
 Of course, there are still a lot of problems to overcome -- the
 top three are probably user experience, data traffic pricing, and handset market fragmentation. But

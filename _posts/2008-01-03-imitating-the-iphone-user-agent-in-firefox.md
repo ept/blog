@@ -24,19 +24,21 @@ see what you would get if you were using some other software. This is sometimes 
 [it's possible to do the same thing with other browsers
 too](http://www.ericgiguere.com/articles/masquerading-your-browser.html).
 
-<p>Download the
+Download the
 [User Agent Switcher add-on for Firefox](https://addons.mozilla.org/en-US/firefox/addon/59), and
 restart Firefox. In the menu, go to Tools -&gt; User Agent Switcher -&gt; Options -&gt; Options. Add
 a new user agent, with description "iPhone", and the following entry in the user agent
 field:
+
 <blockquote>Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420.1 (KHTML, like
 Gecko) Version/3.0 Mobile/3B48b Safari/419.3</blockquote>
+
 The remaining fields (app version etc.)
 can stay empty. Now you can click Tools -&gt; User Agent Switcher -&gt; iPhone, and your browser
 instantly "becomes" an iPhone. If the site uses features which are not available in Firefox, it will
 not render correctly, but at least the site should serve you the same content as it would do to an
 iPhone. (The user agent above is taken from a real iPhone; there are probably many others which work
-too, but that one has worked for me.)</p>
+too, but that one has worked for me.)
 
 One big caveat: you shouldn't really be doing this! Use it
 only briefly for testing a site, then reset the user agent to the Firefox default. Otherwise you'll

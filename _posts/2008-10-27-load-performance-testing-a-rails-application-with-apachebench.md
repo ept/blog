@@ -60,6 +60,7 @@ The first graph is for a test with four concurrent connections, i.e. the
 server should be pretty relaxed. It shows which proportion of pages were served in less than a
 particular time (i.e. the percentiles). The graph is generated from timings of 10,000 page
 views.
+
 <p style="text-align: center;
 "><a
 href="/static/2008/10/test4.png"><img class="size-full wp-image-169 aligncenter"
@@ -94,8 +95,8 @@ load average reported by the Linux kernel reached a maximum of 1.6 -- not very m
 Now,
 what happens when we hit the site harder? In the next test I increased the concurrency parameter to
 16, more than twice the number of mongrels. Now I would expect all mongrels to be busy all the time
-(saturated with requests), and response times to go up. And this is the graph we
-get:
+(saturated with requests), and response times to go up. And this is the graph we get:
+
 <p style="text-align: center;
 "><a
 href="/static/2008/10/test5.png"><img class="size-full wp-image-170 aligncenter"
@@ -148,11 +149,12 @@ The thing which struck me in this graph is quite how straight that red line is; 
 expected the response times to be less widely spread. This prompted me to have a look at the actual
 distribution/histogram of response times as reported by the client.
 
-<p>Another thing I wanted to check
+Another thing I wanted to check
 was how good ApacheBench's concurrency setting actually was -- how could I trust that it really
 keeps the server as busy as it claims to? And maybe it makes requests in certain regular patterns
 which might skew the results. So I ran the following 3 tests in a side-by-side
 comparison:
+
 <ol>
 <li>One ApacheBench process set to make 64 concurrent requests, running on an EC2
 instance, no keep-alive, making 10,000
@@ -163,15 +165,17 @@ requests.</li>
 <li>Four ApacheBench processes, each set to make 16 concurrent requests, each running
 on its own EC2 instance, no keep-alive, each making 2,500 requests.</li>
 </ol>
+
 The server-side
 statistics for the three tests, including the total throughput, were identical. However,
 interestingly, there was a noticeable difference between the distribution of response times reported
-by ApacheBench in the three cases. I have plotted them below:</p>
+by ApacheBench in the three cases. I have plotted them below:
 
 (This diagram is what you get if you
 flip the one above by a diagonal axis and then differentiate the function by response time. Note
 also that the colours now have a different
 meaning.)
+
 <p style="text-align: center;
 "><a
 href="/static/2008/10/distribution.png"><img class="size-full wp-image-168 aligncenter"
@@ -202,99 +206,93 @@ In order to produce these statistics, I wrote
 a few simple shell scripts to gather and process the data. I'll put them here in case somebody finds
 them useful (and so that I can find them again when I need them next time!).
 
-<p>First I have two
+First I have two
 scripts which run on the servers with the mongrels. In our setup, each virtual machine has its own
 logfile, so the scripts need to be run on each virtual machine. They select the portion of the
 logfile which was written during the duration of the test, and also log load averages from the
 kernel. Set an environment variable like **export LOGFILE=/path/to/my/production.log** before
 running these scripts. The first is called **before-test.sh** and should be run before the test
 starts:
-<pre lang="bash" line="1">#!/bin/sh
-if \[ ! -f "$LOGFILE" \]; then echo "LOGFILE not found";
-exit 1; fi
-echo "time,1min,5min,10min,running,procs,lastproc" > /tmp/loadavg.csv
-( while true; do</p>
 
-<p>ts=`date '+%Y%m%d%H%M%S'`
+{% highlight bash %}
+#!/bin/sh
+if [ ! -f "$LOGFILE" ]; then echo "LOGFILE not found"; exit 1; fi
+echo "time,1min,5min,10min,running,procs,lastproc" > /tmp/loadavg.csv
+( while true; do
+
+ts=`date '+%Y%m%d%H%M%S'`
 load="`cat /proc/loadavg | tr ' /' ','`"
-echo "$ts,$load" >>
-/tmp/loadavg.csv
+echo "$ts,$load" >> /tmp/loadavg.csv
 sleep 1
 done ) &
 echo $! > /tmp/loadavg.pid
-wc -l $LOGFILE | awk '{print $1}' >
-/tmp/skip_log_lines</pre>
-And **after-test.sh** should be run when the test has
-ended:
-<pre lang="bash" line="1">#!/bin/sh
+wc -l $LOGFILE | awk '{print $1}' > /tmp/skip_log_lines
+{% endhighlight %}
+
+And **after-test.sh** should be run when the test has ended:
+
+{% highlight bash %}
+#!/bin/sh
 kill `cat /tmp/loadavg.pid`
-echo "total,render,db,url" >
-/tmp/requests.csv
+echo "total,render,db,url" > /tmp/requests.csv
 skip=`cat /tmp/skip_log_lines`
 tail -n +`expr $skip + 1` $LOGFILE | grep
 '^Completed in' | \\
 awk '{print $3 "," $8 "," $12 "," $17}' >> /tmp/requests.csv
-rm -f
-/tmp/loadavg.pid /tmp/skip_log_lines</pre>
+rm -f /tmp/loadavg.pid /tmp/skip_log_lines
+{% endhighlight %}
+
 As you can see, it filters the processing times reported
 by the server out of the logfile and formats them as CSV for post-processing in your favourite
-spreadsheet application.</p>
+spreadsheet application.
 
 To execute the test (potentially with several processes at the same time),
 I ran something like the following on an EC2
 instance:
-<pre lang="bash" line="1">apt-get update
+
+{% highlight bash %}
+apt-get update
 apt-get -y dist-upgrade
 apt-get -y install
 apache2-utils
 mkdir loadtest
 cd loadtest
 TESTS="list1 list2 list3 list4"
-COOKIE="-C
-_session_id=12345678901234567890"
+COOKIE="-C _session_id=12345678901234567890"
 HOST="http://staging.example.com/"
-AB="ab -n 10000 -c 16" # 10,000
-requests, concurrency 16 per process
+AB="ab -n 10000 -c 16" # 10,000 requests, concurrency 16 per process
 $AB -g list1.log $COOKIE "${HOST}/path/to/test" &
-$AB -g
-list2.log $COOKIE "${HOST}/path/to/test" &
+$AB -g list2.log $COOKIE "${HOST}/path/to/test" &
 $AB -g list3.log $COOKIE "${HOST}/path/to/test" &
-$AB
--g list4.log $COOKIE "${HOST}/path/to/test" &
+$AB -g list4.log $COOKIE "${HOST}/path/to/test" &
 wait
 for test in $TESTS; do
-awk -F '\' "{print
-\\$4 \\",\\" \\$5 \\",\\" \\$6 \\",$test\\"}" < $test.log | tail -n +2 > $test
+awk -F '\' "{print \\$4 \\",\\" \\$5 \\",\\" \\$6 \\",$test\\"}" < $test.log | tail -n +2 > $test
 done
-echo
-"dtime,ttime,wait,test" > bench.csv
-cat $TESTS >>
-bench.csv</pre>
-<span>Then copying and aggregating all the logs onto my machine for making pretty
-graphs:</span>
-<pre lang="bash"
-line="1">TEST=test7
+echo "dtime,ttime,wait,test" > bench.csv
+cat $TESTS >> bench.csv
+{% endhighlight %}
+
+Then copying and aggregating all the logs onto my machine for making pretty graphs:
+
+{% highlight bash %}
+TEST=test7
 CLIENTS="ec2-75-101-204-213"
 KEYFILE="path/to/private/key/file/for/ec2/instance"
-for
-host in prod1 prod2; do
+for host in prod1 prod2; do
 for file in loadavg requests; do
-scp "ey-$host:/tmp/$file.csv"
-"$file-$host.csv"
+scp "ey-$host:/tmp/$file.csv" "$file-$host.csv"
 done
 done
 for client in $CLIENTS; do
-scp -i $KEYFILE
-root@$client.compute-1.amazonaws.com:loadtest/bench.csv client-$client.csv
+scp -i $KEYFILE root@$client.compute-1.amazonaws.com:loadtest/bench.csv client-$client.csv
 done
 mkdir $TEST
-paste -d
-',' loadavg-prod1.csv loadavg-prod2.csv > $TEST/loadavg.csv
-cat requests-prod\[12\].csv >
-$TEST/requests.csv
+paste -d ',' loadavg-prod1.csv loadavg-prod2.csv > $TEST/loadavg.csv
+cat requests-prod\[12\].csv > $TEST/requests.csv
 cat client*.csv > $TEST/clients.csv
-mv loadavg-prod\[12\].csv
-requests-prod\[12\].csv client*.csv
-$TEST</pre>
-<span>Obviously these scripts are still pretty rough around the edges, but they did the
-job of being simple and telling me what I wanted to know.</span>
+mv loadavg-prod\[12\].csv requests-prod\[12\].csv client*.csv $TEST
+{% endhighlight %}
+
+Obviously these scripts are still pretty rough around the edges, but they did the
+job of being simple and telling me what I wanted to know.

@@ -22,11 +22,8 @@ Chonophage is absolutely astonishing. I can only recommend seeing it yourself, b
 doesn't really do it justice, but it's the best I could find so
 far.
 
-<object type="application/x-shockwave-flash" width=350" height="300"
-data="http://downloads.sms.csx.cam.ac.uk/mediaplayer.swf?file=http://downloads.sms.csx.cam.ac.uk/110-1522/110-1522-sms_archive-flv_medium_default_stream.flv">
-<param name="movie"
-value="http://downloads.sms.csx.cam.ac.uk/mediaplayer.swf?file=http://downloads.sms.csx.cam.ac.uk/110-1522/110-1522-sms_archive-flv_medium_default_stream.flv"&allowfullscreen="true"&usefullscreen="true"&allowscriptaccess="sameDomain");"
-/>
+<object type="application/x-shockwave-flash" width="350" height="300" data="http://downloads.sms.csx.cam.ac.uk/mediaplayer.swf?file=http://downloads.sms.csx.cam.ac.uk/110-1522/110-1522-sms_archive-flv_medium_default_stream.flv">
+<param name="movie" value="http://downloads.sms.csx.cam.ac.uk/mediaplayer.swf?file=http://downloads.sms.csx.cam.ac.uk/110-1522/110-1522-sms_archive-flv_medium_default_stream.flv&allowfullscreen=true&usefullscreen=true&allowscriptaccess=sameDomain" />
 </object>
 
 The Chronophage is a beast which eats away time. Dr John Taylor conceived it as a
@@ -62,7 +59,7 @@ many many electric kettles sold, that already paid off well. He continued to mak
 improvements in the field of electric kettles, and apparently the cordless kettle (with the round
 base, onto which you can place the kettle in any angle) is his invention.
 
-<p>You may think electric
+You may think electric
 kettles are a boring subject, but with John Taylor talking about them, you can't help being
 fascinated. After all, they are very much part of our day-to-day lives. He talks about tuning the
 [bi-metallic thermostat](http://en.wikipedia.org/wiki/Bi-metallic_strip) to achieving a perfect
@@ -71,10 +68,10 @@ the thermostat switches off, otherwise the steam causes unwanted condensation in
 Asia, it is tuned differently, because the water should be kept on hard boil for close to a minute
 to ensure germs are killed off. In the UK, electric kettles have been popular for a long time, but
 they didn't really catch on in Germany; this was due to the popular opinion amongst traditional
-<em>[Hausfrauen](http://dict.leo.org/ende?lang=en&amp;search=Hausfrau)</em> who found the heating
+[*Hausfrauen*](http://dict.leo.org/ende?lang=en&amp;search=Hausfrau) who found the heating
 element 'dirty' when calcium deposits accumulated on it. Taylor figured out that the heating element
 could be concealed beneath a flat kettle base, making it much easier to clean and descale, and
-electric kettle sales took off in Germany too.</p>
+electric kettle sales took off in Germany too.
 
 These stories are about engineering and business
 only on the surface. Underneath, they are about people. About simple, everyday lives.
@@ -91,8 +88,7 @@ John is a very humble and
 retiring person -- absolutely not what one would expect of somebody at his level of success. I found
 it positive and encouraging to see that you could be a successful entrepreneur not by being loud and
 self-aggrandising, but by quietly figuring out how to improve people's lives. He is not from a
-particularly affluent background, he was not even particularly good at university (he graduated with
-a
+particularly affluent background, he was not even particularly good at university (he graduated with a
 [2.2](http://en.wikipedia.org/wiki/British_undergraduate_degree_classification#Lower_second-class_honours),
 if I remember correctly) and he didn't expect to change the world. He didn't choose to work on
 particularly sexy things; instead he made little improvements to the lowly electric kettle. He
@@ -147,7 +143,7 @@ cycle of progress and positive change.
 Therefore, if we see Taylor's bust in the Taylor Library, or
 pay our tuition fees from his money, I *don't* believe that he wants us to think "oh, what a
 wonderful and generous man John Taylor is". That would completely miss the point. No, what we should
-be thinking is:* "ah, what a good idea he had: I should be grateful and motivated by his support,
+be thinking is: *"ah, what a good idea he had: I should be grateful and motivated by his support,
 and when I have developed further a few years down the line, I will remember his gift and will give
 something back"*.
 
@@ -196,8 +192,7 @@ that monastic tradition today, reminding us of the importance to treasure that c
 to keep it as something precious, to be grateful, and at the same time to constantly move forward
 and progress, deepening our understanding of the world and ourselves.
 
-**What's this got to do with
-the Corpus Clock?**
+**What's this got to do with the Corpus Clock?**
 
 Which brings us back to the starting point, the Chronophage, now part of the
 same walls which are the home to both all the precious learning and also all the money matters

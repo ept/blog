@@ -36,7 +36,7 @@ the only ones who are grappling with a dysfunctional product, maybe by social ne
 like that. Not that it makes the product any better; it just makes its users feel slightly
 better.
 
-<em>**Edit (29 January 2008): **Meanwhile the issue has been sorted out and we have been
+**Edit (29 January 2008):** Meanwhile the issue has been sorted out and we have been
 placed on the map manually. The address search also seems to be working now, and we've even been
 joined by another UK pin in London. Netlife handled the matter very quickly and nicely --
-thanks!</em>
+thanks!

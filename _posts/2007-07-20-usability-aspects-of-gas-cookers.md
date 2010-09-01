@@ -45,26 +45,30 @@ try one of the two possibilities at random. And I generally get it wrong. And I 
 cooker. Call me lazy, call me a slow learner, the end effect is still that I'm annoyed. (Hey, I cook
 for myself from basic ingredients, I can't be that lazy.)
 
-<p>The solution would be to arrange the
+The solution would be to arrange the
 knobs in such a fashion that it is immediately clear which one controls which of the hobs. The
 easiest way of doing that is to arrange them in a square, rather than in a straight line; however
 that might be impractical as the cooker would have to be wider. So this is my suggestion, an
 arrangement which is unambiguous but requires hardly any additional
 space:
+
 <p style="text-align:
 center"><img src="/static/2007/07/cooker.png" alt="Alternative knob arrangement for the cooker"
 /></p>
-(Comments on whether it is more aesthetically pleasing are
-welcome.)</p>
 
-<p><a href="/static/2007/07/img_5865.jpg" title="Knob to control one of the
+(Comments on whether it is more aesthetically pleasing are welcome.)
+
+<a href="/static/2007/07/img_5865.jpg" title="Knob to control one of the
 hobs"><img src="/static/2007/07/img_5865.thumbnail.jpg" title="Knob to control one of the hobs"
-alt="Knob to control one of the hobs" align="right" hspace="15" vspace="10" /></a>I've not finished
+alt="Knob to control one of the hobs" align="right" hspace="15" vspace="10" /></a>
+
+I've not finished
 yet. The next thing I want to mention is a bizarre feature which seems to be common to gas cookers.
 (I grew up with electric cookers, so this is a bit new to me.) Here is a picture of one of the
 knobs. The arrow points to the right, which is its "off" setting. To turn on the gas, you turn the
 knob anticlockwise. Two things I find
 bizarre:
+
 <ul>
 <li>In all other devices I can think of, turning the knob as far as possible
 anticlockwise turns it off (the "leftmost" position). Here you need to go as far as possible
@@ -73,12 +77,13 @@ clockwise.</li>
 the maximum flow of gas; then as you turn it further, it gradually decreases again. The small flame
 is furthest away from the "off" position, not closest as you may expect.</li>
 </ul>
+
 I'd be grateful
 for any explanation of why gas cookers work this way. My hypothesis had been that it's good to get a
 strong flow of gas first thing after turning on, so that the spark will cause it to ignite quickly.
 Only today when taking the photo did I notice the little spark symbol next to the little flame. This
 suggests that you're actually supposed to turn the knob all the way round to the little flame for
-ignition -- that completely messes up my theory. Any other ideas?</p>
+ignition -- that completely messes up my theory. Any other ideas?
 
 I must say though, the strange
 behaviour of the knob doesn't irritate me, as I've got used to that. The arrangement of the knobs

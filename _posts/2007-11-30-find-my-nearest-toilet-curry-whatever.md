@@ -3,49 +3,46 @@ layout: ync-post
 title: "Find my nearest toilet, curry, whatever"
 ---
 
-<p>Some interesting developments in so-called
+Some interesting developments in so-called
 [location based services](http://en.wikipedia.org/wiki/Location-based_service) have hit the news in
 the last few
 days:
-<ul>
-<li>The city of Westminster, London, is running a trial of a system which recommends your
+
+* The city of Westminster, London, is running a trial of a system which recommends your
 nearest public toilet if you send a text message to a shortcode. The name: "SatLav". ([Telegraph
 article](http://www.telegraph.co.uk/news/main.jhtml?xml=/news/2007/11/29/nsatlav129.xml),
 [Computing
-article](http://www.computing.co.uk/vnunet/news/2204758/satlav-scheme-finds-toilets))</li>
-<li>The
+article](http://www.computing.co.uk/vnunet/news/2204758/satlav-scheme-finds-toilets))
+* The
 [Google Maps application](http://www.google.com/gmm/) on mobile phones can now
 [show your current location](http://www.youtube.com/watch?v=mIG-Dx7kF3Q) on the map at your request.
 ([Analysis by Steve
-Harrop](http://www.vodafonebetavine.net/web/guest/projects/resources/location_enhanced_services))</li>
-</ul>
-Although
-it can undoubtedly be very useful in many circumstances (I can certainly see myself using both the
+Harrop](http://www.vodafonebetavine.net/web/guest/projects/resources/location_enhanced_services))
+
+Although it can undoubtedly be very useful in many circumstances (I can certainly see myself using both the
 toilet service and the map service), these developments do raise questions: How do they know where I
 am? Does Google now know my location as well as my web searches, emails, contacts, diaries, YouTube
 video preferences and everything else? How easy is it for a somebody to track where I am, and can
-they do it without me noticing?</p>
+they do it without me noticing?
 
 In case you were wondering, this is not GPS. There are phones with
 in-build GPS, but they are still pretty rare and expensive. The remarkable thing about these
 location technologies is that they work pretty well with a far broader range of handsets (although
 Google Maps is more accurate if you have GPS).
 
-<p>So how does it work? As far as I know, there are the
-following ways of finding your
-location:
-<ul>
-<li>GPS (only on a few phones such as the Nokia
-N95)</li>
-<li>Operator-based location lookup ([as offered by MX
+So how does it work? As far as I know, there are the
+following ways of finding your location:
+
+* GPS (only on a few phones such as the Nokia N95)
+* Operator-based location lookup ([as offered by MX
 Telecom](http://www.mxtelecom.com/uk/lbs), for example) -- this is what SatLav
-uses.</li>
-<li>Cell ID and cell location -- this is what Google uses.</li>
-</ul>
+uses.
+* Cell ID and cell location -- this is what Google uses.
+
 GPS I won't discuss
 any further: it can be accessed only by applications installed on the phone, which need to be given
 permission to do so -- the phone itself controls the information, so the chances of abuse are pretty
-low. (But see the Google-related caveat below.)</p>
+low. (But see the Google-related caveat below.)
 
 Operator lookup is a bit more concerning. To find
 out somebody's location, you need to know their phone number. You send a location request for that
@@ -57,8 +54,7 @@ the only mobile network in the UK which has not yet implemented location request
 valid for only one look-up, so you don't need to be concerned about the toilet finder service being
 able to track you for the rest of your life just because you needed a loo in Westminster once.
 
-The
-advantage of operator-based lookup is that it works on any phone, provided that phone's network
+The advantage of operator-based lookup is that it works on any phone, provided that phone's network
 supports location lookups. (In the UK, Vodafone, T-Mobile, O2 and Orange all do.) No software needs
 to be installed, and it appears to be reasonably secure too. On the downside, the operators charge
 for the service -- about £0.10 a go, plus a monthly fee. And if you want to use a location-based

@@ -7,12 +7,12 @@ Here it is -- my photo series documenting the menu madness of German ticket mach
 the story for an introduction. This post contains a lot of graphics, so I've split it out into a
 separate page. Please click the title or the following link to read it.
 
-<p><!--more-->These photos
+These photos
 were taken in Stuttgart main station in July 2007. The ticket machine I am examining here is a
 modern touch-screen type -- in some smaller stations there are also
 [old style ticket machines](http://www.sendung.de/fahrkartenautomat/) which work completely
 differently, have far fewer features and are much easier to use. As far as I know, the old ones are
-being phased out.</p>
+being phased out.
 
 A brief note for any Americans reading this -- a *"return ticket"* is British for
 *"round trip"*, and *"single"* equals *"one-way"*.
@@ -121,8 +121,7 @@ the bottom right-hand corner of the dark blue panel, and it's not highlighted in
 it, and this is what you get: timetable information! Note how the price varies depending on the
 route, the time, the type of train, ... man, I just want to get to Munich, no matter how!
 
-You
-actually have to keep your eyes open here -- the ICE train, usually faster than the IC, is more
+You actually have to keep your eyes open here -- the ICE train, usually faster than the IC, is more
 expensive by 6 € but actually takes two minutes longer. Quirky. Anyway, I choose the first
 connection. Would you have noticed that the grey box containing the information about one particular
 connection is simultaneously the button you need to press to select it? (The text *"Bitte hier
@@ -166,24 +165,19 @@ machine...
 <a href="/static/2007/11/img_5944.jpg" title="Ticket machine
 screenshot"><img src="/static/2007/11/img_5944.jpg" alt="Ticket machine screenshot" /></a>
 
-<p>**Screen
-14**: Here are a few more screens illustrating what happens if you choose to buy a return ticket.
+**Screen 14**: Here are a few more screens illustrating what happens if you choose to buy a return ticket.
 You also get similar screens even for a single ticket if you don't choose the fast track. This
 screen gives you the following
 choices:
-<ul>
-<li>no return
-journey</li>
-<li>*departure* date of the return journey on the day of the outward journey, or on
-another
-date</li>
-<li>*arrival* date of the return journey on the day of the outward journey, or on another
-date</li>
-</ul>
+
+* no return journey
+* *departure* date of the return journey on the day of the outward journey, or on another date
+* *arrival* date of the return journey on the day of the outward journey, or on another date
+
 Now what on earth is this about?  Sleeper trains are not very common, so usually the
 departure and arrival dates will be the same. The intellectual effort of figuring out which button
 to press is actually quite significant. And what if you have 3 minutes to go before your train
-departs?</p>
+departs?
 
 <a href="/static/2007/11/img_5945.jpg" title="Ticket machine
 screenshot"><img src="/static/2007/11/img_5945.jpg" alt="Ticket machine screenshot" /></a>
@@ -207,8 +201,7 @@ screenshot"><img src="/static/2007/11/img_5947.jpg" alt="Ticket machine screensh
 
 **Screen
 17**: I selected 10:00 as time of departure. Now we're back on the confirmation screen (similar to
-screen
-8).
+screen 8).
 
 <a href="/static/2007/11/img_5948.jpg" title="Ticket machine
 screenshot"><img src="/static/2007/11/img_5948.jpg" alt="Ticket machine screenshot" /></a>

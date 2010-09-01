@@ -6,8 +6,7 @@ title: "User experience importance is being recognised"
 Marketing professionals are finally beginning to understand the importance of designing a coherent
 and positive user experience is an important part of online marketing.
 [Usability News quotes](http://www.usabilitynews.com/news/article4050.asp) from
-[a recent
-report](http://www.e-consultancy.com/publications/usability-and-user-experience-report-2007/):
+[a recent report](http://www.e-consultancy.com/publications/usability-and-user-experience-report-2007/):
 *"...the biggest benefits of usability investment are improved perceptions of brand, increased
 conversion rates and greater customer loyalty and retention."*
 

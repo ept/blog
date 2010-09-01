@@ -32,16 +32,18 @@ citizens, locals and foreigners,
 [geeks](http://mingle2.com/geek-quiz) and
 [technophobes](http://www.thefreedictionary.com/technophobe). Quite a challenge!
 
-<p>Last weekend I was
+Last weekend I was
 in Germany, which gave me an opportunity to compare the ticket machines there to the British ones. I
 took photographs of the screens, which I will present in detail in two separate articles. Today I
 will compare just summary views of the two contrasting
 system.
+
 <h3>The comparison</h3>
+
 Some of the points to consider: How long does it take an average
 user to buy a ticket? Can the machine quickly serve common requests, as well as cater for occasional
 unusual requests? How usable are the machines for visitors, who are not familiar with the fare
-structure and other national particularities?</p>
+structure and other national particularities?
 
 In terms of speed and ease of use, the German
 machines performed **shockingly badly** compared to the British ones. On a British ticket machine,
@@ -49,8 +51,7 @@ you need to press four buttons (**four clicks**) to buy a return ticket to a com
 a German ticket machine, buying a return ticket requires a minimum of **sixteen clicks** -- four
 times as many -- and that's if you know the machines well and and find the "fast track" screen!
 
-If
-you have a railcard in the UK, you need two additional clicks to tell the machine about it,
+If you have a railcard in the UK, you need two additional clicks to tell the machine about it,
 increasing the process to six clicks. Not so with the German machines. There, an average BahnCard
 owner will make a whopping **twenty-seven clicks** or more to buy a return ticket. 350% more than
 the British equivalent!

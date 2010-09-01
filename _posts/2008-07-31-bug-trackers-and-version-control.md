@@ -28,12 +28,9 @@ Full details of
 [this 'bugtraq' convention are described on the "svn commit ./me"
 blog](http://markphip.blogspot.com/2007/01/integrating-subversion-with-your-issue.html).
 
-Here's
-what it looks like:
+Here's what it looks like:
 
-<p>\[caption id="attachment_95" align="alignnone" width="300" caption="Screenshot
-of bug tracker, subversion and eclipse
-integration"\]<a
+<p><a
 href="/static/2008/07/screenshot.png"><img class="size-medium wp-image-95" title="Screenshot of bug
 tracker, subversion and eclipse integration" src="/static/2008/07/screenshot.png" alt="Screenshot of
-bug tracker, subversion and eclipse integration" width="300" height="272" /></a>\[/caption\]</p>
+bug tracker, subversion and eclipse integration" width="300" height="272" /></a></p>

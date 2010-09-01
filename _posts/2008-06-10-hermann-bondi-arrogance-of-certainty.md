@@ -3,7 +3,7 @@ layout: ync-post
 title: "Hermann Bondi: Arrogance of certainty"
 ---
 
-<p>A few years ago, I was discussing the tensions between
+A few years ago, I was discussing the tensions between
 [relativism](http://en.wikipedia.org/wiki/Relativism) and religion with a friend. In a vastly
 simplified nutshell, relativism is an understanding of the world which is founded on the principle
 that everything we know and perceive is relative to our own person (e.g. we perceive the whole world
@@ -13,26 +13,27 @@ as absolute truth. Think of the artificial reality of
 relativism and religion is a topic I continue to be interested in, but it's so complex that I've
 come to think that understanding it is more or less a lifetime project. I've certainly not even
 scratched the surface, let alone made up my
-mind.)</p>
-<p>In that context I was told that I had to read a certain article by
+mind.)
+
+In that context I was told that I had to read a certain article by
 [Sir Hermann Bondi](http://en.wikipedia.org/wiki/Herman_Bondi) (Physicist, 1919--2005) entitled
 *"Arrogance of certainty"*, because it apparently forms the basis of every discussion of the topic.
 I was given a copy of the article on paper, and I liked it because of its lucid and clear writing
 style. I kept it, even though the paper got quite crumpled in my bag at some
-point. </p>
-<p>Recently I was looking for the article again and searched for it on Google. To my
+point.
+
+Recently I was looking for the article again and searched for it on Google. To my
 great surprise, I couldn't find any trace of it, let alone the whole text. Therefore I want to
 re-publish it here so that others may find it online in future. Unfortunately I have no idea where
 and when it was originally published -- all I have is a crumpled photocopy of a photocopy of a
 newspaper cutting. If you have any further information, please let me
-know.</p>
-<p>I neither fully agree or disagree with this article, but I think it is well worth
-reading. Without any further comment, here it
-is.</p>
-<blockquote><p>Hermann
-Bondi</p>
-<p>**Arrogance of
-certainty**</p>
+know.
+
+I neither fully agree or disagree with this article, but I think it is well worth
+reading. Without any further comment, here it is.
+
+<blockquote><p>Hermann Bondi</p>
+<p>**Arrogance of certainty**</p>
 <p>I am a non-believer in any revealed religion and a scientist. In my acquaintance
 with scientists I find both belief and non-belief. I know sufficient numbers of scientists of each
 persuasion to be willing to classify two statements as both being stupid and palpably untrue

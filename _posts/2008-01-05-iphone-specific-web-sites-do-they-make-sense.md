@@ -8,23 +8,21 @@ influential technology phenomenon of the year. It's been talked about so much th
 starting to get sick of it. But that doesn't change the fact that it has had a significant impact,
 particularly on the way the mobile web works.
 
-<p>One of the most striking developments that ensued are
+One of the most striking developments that ensued are
 the moves by several popular web sites to provide versions of their offering which are specifically
 tailored to people visiting their site from an iPhone. Amongst others, I
 found:
-<ul>
-<li>[Amazon.com](http://www.amazon.com/gp/aw/h.html)</li>
-<li>[Facebook](http://iphone.facebook.com/)</li>
-<li>[Ta-Da
-Lists](http://www.tadalist.com/)</li>
-<li>[Meebo](http://www.meebo.com/)</li>
-<li>[Netvibes](http://iphone.netvibes.com/)</li>
-</ul>
-(Most
-of these sites show their iPhone look only to web browsers which identify themselves as Safari
+
+* [Amazon.com](http://www.amazon.com/gp/aw/h.html)
+* [Facebook](http://iphone.facebook.com/)
+* [Ta-Da Lists](http://www.tadalist.com/)
+* [Meebo](http://www.meebo.com/)
+* [Netvibes](http://iphone.netvibes.com/)
+
+(Most of these sites show their iPhone look only to web browsers which identify themselves as Safari
 Mobile.
 [To test them in a desktop web browser, see this
-article](/2008/01/03/imitating-the-iphone-user-agent-in-firefox/).)</p>
+article](/2008/01/03/imitating-the-iphone-user-agent-in-firefox/).)
 
 iPhone specific development is
 fashionable, it seems. Some of those sites actually borrow and incorporate iPhone design elements
@@ -65,7 +63,7 @@ Mini) are a lot more numerous still. So in terms of the number of devices, writi
 sites (as opposed to Opera-specific sites, for instance) really doesn't make much
 sense.
 
-<p>[Hitslink/Net Applications' operating system
+[Hitslink/Net Applications' operating system
 statistics](http://marketshare.hitslink.com/report.aspx?qprid=10) show that in December 2007, iPhone
 and iPod Touch users accounted for 0.14% of web page views, more than all other mobile platforms put
 together (Windows Mobile: 0.06%, S60: 0.02%).
@@ -73,23 +71,25 @@ together (Windows Mobile: 0.06%, S60: 0.02%).
 However, Ray Anderson, CEO of
 [Bango](http://bango.com/), points out that these figures are
 misleading:
-<blockquote>Hitslink produced this report by using data from their analytics customers.
+
+<blockquote><p>Hitslink produced this report by using data from their analytics customers.
 These people operate HTML/PC websites. They say: "You simply paste a small piece of HTML code on
 each page you wish to track statistics on".</p>
 
-The 300 million or so mobile phone browser users (say
+<p>The 300 million or so mobile phone browser users (say
 50 million S60) can't or don't browse HTML sites. They browse mobile friendly sites (WAP or XHTML or
-iMode) which will not have this HTML code in.
+iMode) which will not have this HTML code in.</p>
 
-Considering that organizations like Bango, Admob,
+<p>Considering that organizations like Bango, Admob,
 Peperonity, Vodafone report mobile browser traffic in the billions of pages per day, most of thse
 being S40 or S60 its clear that by ignoring non-HTML sites these stats are misleading and
-mistaken.
+mistaken.</p>
 <p align="right">-- Ray Anderson, in an email to
 [Mobile Monday London mailing list](http://tech.groups.yahoo.com/group/momolondon/), 5 Dec
 2007</p>
 </blockquote>
-<p align="left">In other words, all that Hitslink's statistics say is that
+
+In other words, all that Hitslink's statistics say is that
 iPhone users are more likely to visit more desktop web sites, but it doesn't say anything at all
 about usage of sites which are specifically designed for mobile use. The conclusion I draw from this
 is that an iPhone user is much more likely to visit desktop sites than Windows Mobile or S60 users,
@@ -98,17 +98,17 @@ much at all. This may have a variety of reasons -- due to its large screen, desk
 more usable on the iPhone than they are on devices with smaller screens; Safari Mobile has pretty
 neat zooming capabilities; and maybe iPhone users simply approach the device with a more
 web-oriented attitude, because after all it is more of an internet tablet than a
-phone.</p>
-<p align="left">If iPhone users actually prefer desktop-style websites, because they work
+phone.
+
+If iPhone users actually prefer desktop-style websites, because they work
 quite nicely on the large screen, it really doesn't make much sense to design a specific iPhone
 version of a site. On the other hand, if it's that increased usability of the iPhone web experience
 which drives web usage per person to be many times higher than on S60 and Windows Mobile devices...
 then there's a very strong case in favour of designing device-specific
-sites.</p>
-<p align="left">Is iPhone-specific design just a case of companies wanting to look cool
+sites.
+
+Is iPhone-specific design just a case of companies wanting to look cool
 by having an iPhone-optimised site and jumping on the bandwagon? Is this just a fashion which will
 go away again as quickly as it came? Or do such companies actually derive significant benefits from
 iPhone users? I'd be interested to hear your
-comments.</p>
-
-<blockquote></blockquote>
+comments.

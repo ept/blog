@@ -3,41 +3,28 @@ layout: ync-post
 title: "Semantic web updates"
 ---
 
-<p>A few weeks ago I
-[noted down some links to current developments of the semantic
-web](/2008/09/07/barcamp-brighton-notes/). After hearing
+A few weeks ago I
+[noted down some links to current developments of the semantic web](/2008/09/07/barcamp-brighton-notes/). After hearing
 [Tom Morris](http://tommorris.org/) speak again on "The State of the Semantic Web" at
 [BarCampLondon5](http://barcamp.org/BarCampLondon5), here are some
 more:
-<ul>
-<li>[Getting started with the Semantic Web - Get Semantic
-Wiki](http://www.getsemantic.com/wiki/Get_Started_with_the_Semantic_Web)</li>
-<li>[Freebase
-Parallax](http://mqlx.com/~david/parallax/), a new user interface for browsing
-[Freebase](http://www.freebase.com/)</li>
-<li>BBC programmes use RDF: e.g.
-[Doctor Who](http://www.bbc.co.uk/programmes/b0074f9p) -
-[in
-RDF](http://www.bbc.co.uk/programmes/b0074f9p.rdf)</li>
-<li>[SIOC (Semantically-Interlinked Online
-Communities)](http://sioc-project.org/) is an ontology/vocabulary for expressing social
-links</li>
-<li>[FOAF
-project](http://www.foaf-project.org/)</li>
-<li>Searching semantic web data sources:
-[Sindice](http://sindice.com/)</li>
-<li>[SPARQL/Update](http://jena.hpl.hp.com/~afs/SPARQL-Update.html)
-or SPARUL - for modifying RDF data
-stores</li>
-<li>[POWDER](http://www.w3.org/2007/powder/) - define sets of
-URLs?</li>
-<li>[Simple Knowledge Organization System](http://www.w3.org/2004/02/skos/) (SKOS) -
-simpler than ontologies, without
-inference?</li>
-<li>[Rule Interchange Format](http://www.w3.org/2005/rules/) (RIF) - define
-inference rules</li>
-</ul>
-(OMG mad W3C acronyms!)</p>
+
+* [Getting started with the Semantic Web - Get Semantic Wiki](http://www.getsemantic.com/wiki/Get_Started_with_the_Semantic_Web)
+* [Freebase Parallax](http://mqlx.com/~david/parallax/), a new user interface for browsing
+  [Freebase](http://www.freebase.com/)
+* BBC programmes use RDF: e.g. [Doctor Who](http://www.bbc.co.uk/programmes/b0074f9p) -
+  [in RDF](http://www.bbc.co.uk/programmes/b0074f9p.rdf)
+* [SIOC (Semantically-Interlinked Online Communities)](http://sioc-project.org/) is an ontology/vocabulary for expressing social links
+* [FOAF project](http://www.foaf-project.org/)
+* Searching semantic web data sources: [Sindice](http://sindice.com/)
+* [SPARQL/Update](http://jena.hpl.hp.com/~afs/SPARQL-Update.html)
+  or SPARUL - for modifying RDF data stores
+* [POWDER](http://www.w3.org/2007/powder/) - define sets of URLs?
+* [Simple Knowledge Organization System](http://www.w3.org/2004/02/skos/) (SKOS) -
+  simpler than ontologies, without inference?
+* [Rule Interchange Format](http://www.w3.org/2005/rules/) (RIF) - define inference rules
+
+(OMG mad W3C acronyms!)
 
 I also heard Sian Clark of Yahoo speak about
 [SearchMonkey](http://developer.yahoo.com/searchmonkey/) at

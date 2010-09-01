@@ -37,26 +37,28 @@ use the system, rather than seeking the blame with the system itself. Hilarious 
 stereotypical, and scary because such a big organisation can get away with it without people putting
 up a fuss and explaining that this is just not acceptable.
 
-<p>Some highlights from the
-article:
-<blockquote>*Moschner \[the course instructor\] says that the new ticket machines have a
+Some highlights from the article:
+
+<blockquote><em>Moschner \[the course instructor\] says that the new ticket machines have a
 more visible display and also accept cash besides credit and debit cards. "Are they just as
 cumbersome as the old ones?" an over-70-year-old lady enquires. The course instructor remains calm:
-"They are not cumbersome."*</blockquote>
-Hmm. Complete denial of the existence of problems. Two more
-quotes indicate that there is a fundamental misunderstanding of user behaviour going
-on:
-<blockquote>*"Read what it says there. It is important."*</p>
+"They are not cumbersome."</em></blockquote>
 
-<p>*"The ticket machine really does tell
-you what it wants, you just have to look."*</blockquote>
+Hmm. Complete denial of the existence of problems. Two more
+quotes indicate that there is a fundamental misunderstanding of user behaviour going on:
+
+<blockquote><p><em>"Read what it says there. It is important."</em></p>
+
+<p><em>"The ticket machine really does tell
+you what it wants, you just have to look."</em></p></blockquote>
+
 Why should I be trying to find out what the
 ticket machine wants? *It* should be trying to find out what *I *want! Also, I shouldn't have to
 read every word on the screen. That's simply not what people do. People don't even read whether
 doors are labelled 'PUSH' or 'PULL' before trying one or the other. People just press random buttons
 in the hope of getting somewhere quickly, and the system should be designed to cope with this sort
 of behaviour. Anything else is just unrealistic and designed for robots rather than
-humans.</p>
+humans.
 
 Fortunately this course is a positive initiative, probably with a thought along the lines
 of "well, if we can't get the design right, at least we can teach people how to use the broken

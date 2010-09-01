@@ -6,8 +6,7 @@ title: "The Tour de France metaphor for entrepreneurship"
 In case you didn't know: In Cambridge, bicycles rule the roads. In the the more studenty parts of
 the city at least. Ok, it's nothing like what you get in many Asian cities, but by European
 standards it's not bad, as demonstrated by this video (embedded below, or
-[follow this link to
-YouTube](http://www.youtube.com/watch?v=XA_Crc67SAM)):
+[follow this link to YouTube](http://www.youtube.com/watch?v=XA_Crc67SAM)):
 
 <object
 classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="425" height="355"
@@ -56,26 +55,25 @@ the same level of satisfaction as cycling. Think of the Tour de France. You can 
 if you're a car driver -- unfortunately you will not be part of the race itself, but your job will
 be simply to carry the TV cameras. A sideshow, not a main actor.
 
-<p>I think this metaphor is working
+I think this metaphor is working
 surprisingly well. Let's see how far we can push the comparison between different career paths and
 different means of
 transport.
-<ul>
-<li>**Academic research** is like **walking**. It's definitely the best way of
+
+* **Academic research** is like **walking**. It's definitely the best way of
 getting around a new and unknown place, or one with difficult terrain. You get to enjoy lots of nice
 flowers and other details along the way, but it's slow -- you can't expect to travel very
-far.</li>
-<li>**Corporate careers** are like **taking the bus** when you start out, and like
+far.
+* **Corporate careers** are like **taking the bus** when you start out, and like
 **driving a car** when you are more senior. For many people that's the best way, it's pretty safe,
 and maybe a bit
-unexciting.</li>
-<li>**Start-up business** is like **cycling**. It's hard work, but you get to
+unexciting.
+* **Start-up business** is like **cycling**. It's hard work, but you get to
 discover new and exciting places, you get there pretty quickly if it's not too far, and you get the
 satisfaction of doing it out of your own strength. Also, when you're cycling and you have a bit of
 spare time, it only takes an instant to become a pedestrian, so you have some of the benefits of
-academic research
-too.</li>
-<li>When a VC (**venture capitalist**) invests in a start-up business, I see it as being a
+academic research too.
+* When a VC (**venture capitalist**) invests in a start-up business, I see it as being a
 bit like attaching a **rocket booster** to your bicycle, putting on a helmet, lighting the fuse and
 holding on tight. The kind of thing you might expect to see on
 [Top Gear](http://www.bbc.co.uk/topgear/show/). With a bit of luck you will leave all the cars
@@ -83,8 +81,8 @@ behind, find yourself at a garage which will transform your bike into a heavy-du
 you can go driving around the nicest places in the world for years to come. With less luck, you will
 fall off and get a few bruises, but probably you will laugh at the kick you got out of it, and
 you'll immediately start searching for another bike and another rocket booster to give it another
-try.</li>
-</ul>
+try.
+
 To conclude, I'd say that these are all good ways of getting from one place to
 another, and clearly some people will prefer one type over another. But you should know what the
-options are, and make a conscious decision. The same thing applies with work.</p>
+options are, and make a conscious decision. The same thing applies with work.

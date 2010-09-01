@@ -20,21 +20,17 @@ average blog about kittens; I mean a site with at least **100 million page views
 And I wanted the framework to be reasonably widely used, so that other people will have found the
 fatal bugs and already fixed them before we come along.
 
-<p>This left me with three options which
-seemed to me to be worth taking
-seriously:
-<ol>
-<li>Java Platform Enterprise Edition
-(JEE)</li>
-<li>Ruby on
-Rails</li>
-<li>Microsoft ASP.NET</li>
-</ol>
+This left me with three options which seemed to me to be worth taking seriously:
+
+* Java Platform Enterprise Edition (JEE)
+* Ruby on Rails
+* Microsoft ASP.NET
+
 Of course there are plenty more (Django came into
 consideration, for example) but judging by the contents of the computer section of my local book
 shop, those others must be pretty niche. Although ASP.NET looks like a reasonably well-designed
 platform I had to unfortunately exclude it straight away, because I don't want the risk of being
-locked into a Microsoft platform (and I'm not yet sure how reliable Mono is).</p>
+locked into a Microsoft platform (and I'm not yet sure how reliable Mono is).
 
 So the showdown is
 between **Java Enterprise** and **Ruby on Rails**, and the contenders could hardly differ more in
@@ -53,11 +49,11 @@ tendency here is obviously to go with the fun, informal start-up types than with
 corporate types. But wait, I was trying to make an objective decision, and the discussions about
 these platforms are already quasi-religious and emotional enough.
 
-<p>I have tried to come up with a
+I have tried to come up with a
 list of criteria by which I want to judge these to frameworks. One by one, in no particular
 order:
-<ul>
-<li>**Developer productivity and learning curve for new developers.** Ruby on Rails
+
+* **Developer productivity and learning curve for new developers.** Ruby on Rails
 will get you started quicker, there's not much doubt about that. In Java, I think the worst problem
 for a newcomer is actually the massive choice of different libraries to use and different ways to do
 the same thing -- there doesn't appear to be any combination of libraries which is particularly
@@ -71,22 +67,22 @@ of different combinations), people would write a lot more good documentation for
 stack, and it would become a lot easier for more developers to start using it effectively. With the
 right tools and good documentation, productivity could potentially be about the same for Rails and
 Java, but at the moment Java is shooting itself in the foot in this
-regard.</li>
-<li>**Ease of recruiting good and motivated developers.** I've not yet worked out how
+regard.
+* **Ease of recruiting good and motivated developers.** I've not yet worked out how
 the two frameworks compare in this point. There are not many people who know Ruby, but those two do
 tend to be pretty passionate about it, so there's an increased chance they will do a good job. Just
 about every computer science student learns Java these days (except at a few misguided institutions
 where they still teach C++), so there are plenty of Java developers around, although it's not clear
 how many of them are actually really
-good.</li>
-<li>**Standardisation of platform.** This point is a combination of the last two points.
+good.
+* **Standardisation of platform.** This point is a combination of the last two points.
 If a lot of people use a platform, it is likely to be more stable, less buggy, better documented,
 better designed, faster, more supported in the long term, more interoperable with other systems, and
 so on. However, you can't just judge by number of users -- so many developers worldwide use plain
 PHP, the poor souls, and probably don't even realise that although their LAMP platform is a
 quasi-standard, it's complete rubbish for developing non-trivial
-applications.</li>
-<li>**Manageability of a complex code base.** This is the point where I
+applications.
+* **Manageability of a complex code base.** This is the point where I
 personally really appreciate statically typed programming languages (call me old-fashioned). With
 Java in Eclipse, you can immediately search for the place where something is defined, you can
 refactor class and method names without too much fear (except when you use Java names in XML files),
@@ -94,27 +90,26 @@ you get decent code completion, you know at compile-time which methods an object
 calling something speculatively which may or may not be there), and so on. Dynamically typed
 scripting languages are great for prototyping and writing things quickly, but I find they start
 getting a bit scary and tricky to handle once you go past a few thousand lines of
-code.</li>
-<li>**Testability and robustness** -- i.e. "if I change something here, how likely is it
+code.
+* **Testability and robustness** -- i.e. "if I change something here, how likely is it
 that I will break something at the other end of the application?". Fortunately, both frameworks
 offer reasonable support for automated regression testing; Ruby on Rails probably a bit more so,
 because it relies primarily on automated tests (rather than a type system) to ensure things don't
 fall apart
-horribly.</li>
-<li>**Scalability, stability and reliability.** This is a pretty important one,
+horribly.
+* **Scalability, stability and reliability.** This is a pretty important one,
 since any outage immediately gives a very bad impression to your users, and can potentially cost a
 lot of money. However, it's hard to get hold of accurate reports on how well the frameworks behave
 in a harsh production environment, with a large number of concurrent users (hundreds of page views
 per second) and a large database. I'm inclined to attribute better stability to Java because it's
 almost certainly used in corporates for more critical applications than Ruby is. Ruby on Rails, on
 the other hand, has
-[had some pretty bad
-press](http://www.techcrunch.com/2008/05/01/twitter-said-to-be-abandoning-ruby-on-rails/) concerning
+[had some pretty bad press](http://www.techcrunch.com/2008/05/01/twitter-said-to-be-abandoning-ruby-on-rails/) concerning
 its scalability. The biggest RoR deployment at the moment is apparently
 [Yellow Pages](http://www.yellowpages.com/); rather embarrassingly for both them and for Rails, this
 site has actually been down for at least the last 12 hours as I write this
-post.</li>
-<li>**Internationalisation and Unicode.** There are translation features in both
+post.
+* **Internationalisation and Unicode.** There are translation features in both
 frameworks, and they are both ok, although none really strikes me as brilliant. The bigger issue is
 with Unicode support. I agree fully with
 [Joel Spolsky's opinions in this matter](http://www.joelonsoftware.com/articles/Unicode.html) --
@@ -128,25 +123,24 @@ to remember to call them explicitly. At least Java encourages you to specify an 
 convert between byte streams and strings (although in my opinion it still isn't radical enough --
 all conversion methods without an explicit charset parameter ought to be marked as deprecated, to
 make it really clear to the developer what they are
-doing).</li>
-<li>**Toolchain support.** Java has been around for a long time, and some pretty
+doing).
+* **Toolchain support.** Java has been around for a long time, and some pretty
 powerful tools to support it have evolved in that time (we are using the commercial
 [MyEclipse](http://www.myeclipseide.com/) and it's doing a good job for us). Ruby on Rails is
 younger, but is actually quite well supported too due to its active developer community --
 [Aptana](http://www.aptana.com/rails/) is pretty neat, for
-example.</li>
-<li>**Libraries for additional functionality.** Since Java is so common, libraries for
+example.
+* **Libraries for additional functionality.** Since Java is so common, libraries for
 it are also very common -- pretty much whatever you want to do, you can download a jar file to do it
 for you. With Ruby we're not that far yet, but more and more libraries are being ported, so this is
 not likely to be a very limiting
-factor.</li>
-<li>**Ease of integration with back end.** We've got some algorithmic, number-crunching
+factor.
+* **Ease of integration with back end.** We've got some algorithmic, number-crunching
 applications running in the background handling all the really clever technology. These are written
 in Java, and the web framework has got to be able to communicate with them. If the web tier is also
 in Java, that is easy; if it's not, we have to write an explicit interface, but it's not the end of
-the world
-either.</li>
-<li>**Integrating with and impression on customers.** Who's your customer? If your
+the world either.
+* **Integrating with and impression on customers.** Who's your customer? If your
 application is targeted at general consumers who will use it over the web, they don't care what
 framework you use as long as it works well. However, if the software is actually going to be
 licensed to an enterprise where the IT department have to integrate it with their own systems, then
@@ -154,9 +148,8 @@ the technology matters. Not so much because of real difficulties (most integrati
 on the database level anyway, so the application server is pretty irrelevant) but because they are
 going to ask you what technology you use; if it's different from what they use themselves, they will
 suspect that it's going to be more effort to integrate, which might become their excuse not to buy
-from
-you.</li>
-<li>**Long-term support.** In 3--5 years' time, what will have happened to the software?
+from you.
+* **Long-term support.** In 3--5 years' time, what will have happened to the software?
 It may be that our application is still running, but will we still get security updates and bugfixes
 for the framework? Will somebody come along and completely re-write the API so that we in turn have
 to invest a lot in porting the application to the new API, or else risk running on an unsupported
@@ -164,13 +157,12 @@ platform? This is crystal ball gazing of course, but to be honest: Java Enterpri
 and if there is one thing which big corporations tend to be good at, it's *keeping things the way
 they are*. With Rails I fear more about the changeability of the framework over time. That said,
 the move from J2EE 1.4 to JEE 5 (two years ago today, incidentally) was pretty major, so maybe they
-are both equally changeable.</li>
-</ul>
+are both equally changeable.
+
 After all those points I'd like to finish off with a few
-things which I would rather **not**
-have:
-<ul>
-<li>**Too much flexibility in combining technologies.** Abstract APIs create an illusion
+things which I would rather **not** have:
+
+* **Too much flexibility in combining technologies.** Abstract APIs create an illusion
 of portability -- ok, so you think you can replace your PostgreSQL with Oracle by changing one line
 in an XML configuration file. Really? Not even subtle differences in query semantics? And how often
 are you going to make such a major change to the system like changing your database server? I don't
@@ -178,14 +170,14 @@ think it's exactly such a common case that it has to be optimised for. It's not 
 APIs, but they don't add as much value as you might think at first. And as I mentioned above, having
 too much choice about the components from which you can assemble your system implies a lack of
 useful documentation and a slower learning curve for new
-developers.</li>
-<li>**Boilerplate and duplicate code.** You can create it with a code generation
+developers.
+* **Boilerplate and duplicate code.** You can create it with a code generation
 tool, with a bit of luck you can even keep it up-to-date with that tool, but it's still extremely
 ugly and makes things harder to maintain. The main advantage of scripting languages in my mind is
 that things like database model objects are defined at runtime rather than compile-time, eliminating
 all that generated code. However, you then lose the static type system, so you can't win on this
-one.</li>
-</ul>
+one.
+
 So where does that leave us? Do you have any further aspects or information which we
 should consider, or any specific experience with these technologies? Let us know by the comments
-below.</p>
+below.

@@ -56,22 +56,22 @@ definition of team is more like "a group of friends who want to accomplish somet
 have fun in the process". And my definition is very much what I'm aiming for in our
 company.
 
-<p>Finally an interesting and inspiring quote on the subject of trust in teams -- an
-extremely important matter, presented here with a philosophical
-slant:
-<blockquote>"Once you've decided to go with a given group, your best tactic is to trust them.
+Finally an interesting and inspiring quote on the subject of trust in teams -- an
+extremely important matter, presented here with a philosophical slant:
+
+<blockquote><p>"Once you've decided to go with a given group, your best tactic is to trust them.
 Any defensive measure taken to guarantee success in spite of them will only make things worse. It
 may give you some relief from worry in the short term, but it won't help in the long run, and it
 will poison any chance for the team to jell. \[...\]</p>
 
-Most managers give themselves excellent grades
+<p>Most managers give themselves excellent grades
 on knowing when to trust their people and when not to. But in our experience, too many managers err
 on the side of mistrust. They follow the basic premise that their people may operate completely
 autonomously, as long as they operate correctly. This amounts to no autonomy at all. The only
 freedom that has any meaning is the freedom to proceed differently from the way your manager would
 have proceeded. This is true in a broader sense, too: The right to be right (in your manager's eyes
 or your government's eyes) is irrelevant; it's only the right to be wrong that makes you
-free."
+free."</p>
 <p align="right">-- Tom DeMarco and Timothy Lister:
 [Peopleware](http://www.dorsethouse.com/books/pw.html), p. 133-134</p>
 </blockquote>
