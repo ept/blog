@@ -3,15 +3,16 @@ layout: ync-post
 title: "How we totally ignored our customers"
 ---
 
-<p><a
-href="http://www.cafepress.com/kandsranch"><img src="/static/2009/12/epiphany.jpg" alt="The Four
-Steps to the Epiphany" title="The Four Steps to the Epiphany" width="240" height="240"
-class="alignleft size-full wp-image-353" /></a> It's the end of the year, a good time to take a step
-back and reflect on the past year and what it means for the future. For me, 2009 has been dominated
-by building
+<a href="http://www.cafepress.com/kandsranch">
+    <img src="/static/2009/12/epiphany.jpg" alt="The Four Steps to the Epiphany"
+        width="240" height="240" class="alignleft size-full wp-image-353" />
+</a>
+
+It's the end of the year, a good time to take a step back and reflect on the past year and what
+it means for the future. For me, 2009 has been dominated by building
 [Go Test It](http://go-test.it/) and then
 [selling it to Red Gate](http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html).
-That's a pretty successful year in my book.</p>
+That's a pretty successful year in my book.
 
 Over Christmas I finally had time to read
 [The Four Steps to the Epiphany](http://www.cafepress.com/kandsranch) by
@@ -37,8 +38,7 @@ to be.
 
 This sounds trivially obvious, but it is not.
 
-Let me digress for a minute. Something else I
-read recently is
+Let me digress for a minute. Something else I read recently is
 [The Fable of the User-Centred Designer](http://www.userfocus.co.uk/fable/) by David Travis (a short
 but beautifully written eBook -- well worth reading but quite different from the Four Steps to the
 Epiphany). It made me realise how badly we had gone wrong with Go Test It. Steve Blank's book
@@ -53,8 +53,7 @@ user interface before it was implemented. But did I actually go out to potential
 my ideas on them? Not a single bit! We thought about the ideas for a few minutes by ourselves,
 nodded our heads, and then just went ahead and hacked it together.
 
-I have no excuse whatsoever for
-ignoring our customers like I did. Hell, we even had a poster from the
+I have no excuse whatsoever for ignoring our customers like I did. Hell, we even had a poster from the
 [Usability Professionals' Association](http://www.upassoc.org/) hanging in our office for a while,
 detailing the steps of a user-centred design process. (Some years ago I thought our company was
 going to be a usability consultancy -- that was before we got into web development and ultimately
@@ -63,8 +62,7 @@ into building Go Test It. Hahaha! By the way, that's
 And nevertheless I totally ignored it. We were not doing anything like user-centred design, let
 alone Customer Development as proposed by Steve Blank, which is a lot further-reaching.
 
-The only
-thing which saved us was that I was basically building a product to solve my own problem. I had
+The only thing which saved us was that I was basically building a product to solve my own problem. I had
 worked on a big, JavaScript-intensive web app project, and had felt the pain of getting it to work
 in different versions of IE. So I had an idea of the kind of tool I had wanted to make that project
 less painful.

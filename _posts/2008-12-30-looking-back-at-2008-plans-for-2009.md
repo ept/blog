@@ -32,19 +32,18 @@ parsing, semantic web, RDF and ontologies, search technology, Facebook applicati
 integration and automated testing, user interface design, REST API design, web application
 scalability, SMS/MMS gateway integration, payment gateway integration, and so on.
 
-Along with all
-this technical excitement, the business has also been profitable, and has enjoyed stable cash-flow.
-I am pleased.
+Along with all this technical excitement, the business has also been profitable, and has enjoyed
+stable cash-flow. I am pleased.
 
 So where do we go from here?
 
-<p>In 2009, I am hoping to focus more on Ept's own
+In 2009, I am hoping to focus more on Ept's own
 projects. We will continue work on projects for clients, but will also invest in developing products
 which a lot of people will find useful, and which will help to give us a stronger position in
 future. Without giving away too much detail ahead of time, these are the two main
 areas:
-<ol>
-<li>I have
+
+1. I have
 [previously mentioned how we use Selenium](/2008/09/27/selenium-automated-testing-web-applications/)
 for automated testing of our web applications, and that I would love to use a hosted service which
 will run the tests for us if I could find a service which met our needs. The problem: such a service
@@ -53,9 +52,8 @@ for web application developers like ourselves, who need to **test their work in 
 but have better things to do than to spend ages setting up their own grid of machines to run those
 tests. Our service will be a **massive time-saver** for web developers who want to deliver quality
 work. So far I've had enthusiastic feedback from fellow web developers, and I am really looking
-forward to giving you all this useful
-tool.</li>
-<li>Dealing with **invoices and payments** is going to be important for you sooner or
+forward to giving you all this useful tool.
+2. Dealing with **invoices and payments** is going to be important for you sooner or
 later if you want your business to be sustainable (a.k.a. 'have food to eat'). That's as true for
 web apps as it is in most of the rest of the world. Unfortunately most developers find it an
 extremely un-sexy topic, and so while you get dozens of web frameworks which compete to deal with
@@ -64,15 +62,14 @@ framework to provide a flexible but powerful basis for an invoicing and payments
 next months I will be developing a **free and open source framework** which anybody can use to
 easily create a powerful and flexible invoicing and payment system. It will be **both
 developer-friendly and accountant-friendly** and based on open standards (such as
-[UBL, which I have explored
-previously](/2008/11/10/the-most-boring-topic-in-the-world-except-for-the-terry-pratchett-references/)).
+[UBL, which I have explored previously](/2008/11/10/the-most-boring-topic-in-the-world-except-for-the-terry-pratchett-references/)).
 Initially it will be designed for Ruby on Rails apps, but hopefully it will get ported to other
-languages and frameworks later on.</li>
-</ol>
+languages and frameworks later on.
+
+
 The common theme: providing tools and building blocks
 for the people who make the applications which shape the web. I believe that web applications are
 already very important, and have an extremely bright future. I want to do my bit to make the web
-even more awesome than it is already: open, interconnected, dependable, secure, useful.</p>
+even more awesome than it is already: open, interconnected, dependable, secure, useful.
 
-Happy new
-year!
+Happy new year!

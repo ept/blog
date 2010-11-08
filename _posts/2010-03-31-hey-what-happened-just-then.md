@@ -37,6 +37,7 @@ get it standing on its own feet. We embarked on a big customer development push 
 our customers really were and what they really wanted, and we learnt a lot. It was
 good.
 
+
 **Rapportive comes into being**
 
 Other things were happening around that time. My friends
@@ -57,6 +58,7 @@ weeks; we showed it to a few people and they seemed to like it. We put up a simp
 with a few pictures and an install button, so that we had something we could show to potential
 investors. It wasn't much. We hadn't even written a privacy policy because we were expecting it to
 only go out to a small number of people.
+
 
 **And then... OMGWTFBBQ**
 
@@ -96,8 +98,8 @@ All of a sudden, our time is incredibly precious. We want to continue to develop
 quickly and continue making something which people really want. We are moving at a very rapid pace,
 because every day, we have the opportunity to make tens of thousands of people happy.
 
-**So... what
-about Go Test It?**
+
+**So... what about Go Test It?**
 
 This success, great as it was, put me in a difficult situation. I was still
 full-time on Go Test It, and we were just ramping up development to build several big, important
@@ -123,6 +125,7 @@ very talented so it's not difficult for them to find work. And most importantly,
 managed to stay friends with everybody involved. So I think we achieved a good outcome
 overall.
 
+
 **Onwards and upwards**
 
 So here we go: I'm now a full-time co-founder at Rapportive, and
@@ -130,9 +133,8 @@ together the three of us are going full steam ahead. We have tens of thousands o
 what we are doing. We have investors knocking on our door. And we have bucketloads of plans and
 bright ideas combined with the energy and passion to make them happen.
 
-Life never moves in straight
-lines; it is full of unexpected surprises. But hey, most surprises turn out to be good ones if you
-make the most of them. And that's what we're doing right now.
+Life never moves in straight lines; it is full of unexpected surprises. But hey, most surprises
+turn out to be good ones if you make the most of them. And that's what we're doing right now.
 
 We're in San Francisco and the Bay
 Area from now until mid-April, so if you'd like to meet us in person, please

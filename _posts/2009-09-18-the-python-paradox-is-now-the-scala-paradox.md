@@ -21,14 +21,13 @@ Of course times have moved on, and
 Python (and Ruby, for that matter) are definitely entering the mainstream. They are still fine
 languages, but they no longer carry as much of an early adopter aura about them. The culture of
 testing and code beauty which is embraced by the Ruby and Python communities is still something
-special, and that is now the primary reason why I would choose Ruby and Python over Java or
-C#.
+special, and that is now the primary reason why I would choose Ruby and Python over Java or C#.
 
 PG's observation still holds true. But what are the new technologies to look out for? What can
 you find in 2009 which has the same role as Python did in 2004?
 
-**Choosing a programming
-language**
+
+**Choosing a programming language**
 
 A few months ago, when I was designing the system architecture for
 [Go Test It, our awesome cross-browser testing product](http://go-test.it), I had a lot of design
@@ -40,33 +39,26 @@ simply a good fit for the job.
 
 But what about the actual test management infrastructure?
 
-I chose
-to write it in
-[Scala](http://www.scala-lang.org/). There were plenty of reasons why this could have seemed a bad
-idea:
-<ul>
-<li>I had hardly any experience in using Scala, so I would have to invest a lot of time
-learning it as I went
-along;</li>
-<li>nobody else I knew had any experience in using Scala *at all*, so anyone I hired
-would probably also have to learn it (at the cost of slower
-progress);</li>
-<li>some of the tools (particularly the Eclipse plugin) were still packed with
-bugs;</li>
-<li>although I had access to Java libraries, I knew that I would have to write library
-wrappers of my own to make use of the Scala language
-features;</li>
-<li>setting up a proper build process was
-[pretty horrible](/2009/05/13/building-go-test-it-fun-with-scala-and-rest-apis/).</li>
-</ul>
+I chose to write it in [Scala](http://www.scala-lang.org/). There were plenty of reasons why this
+could have seemed a bad idea:
 
-Scala
-also had some technical merits; particularly the actor model for multithreaded programming was a
+* I had hardly any experience in using Scala, so I would have to invest a lot of time
+  learning it as I went along;
+* nobody else I knew had any experience in using Scala *at all*, so anyone I hired
+  would probably also have to learn it (at the cost of slower progress);
+* some of the tools (particularly the Eclipse plugin) were still packed with bugs;
+* although I had access to Java libraries, I knew that I would have to write library
+  wrappers of my own to make use of the Scala language features;
+* setting up a proper build process was
+  [pretty horrible](/2009/05/13/building-go-test-it-fun-with-scala-and-rest-apis/).
+
+Scala also had some technical merits; particularly the actor model for multithreaded programming was a
 good fit for our problem. Still, in a purely technical consideration, it probably wouldn't have made
 much sense. But my heart still said yes. The prospect of working with a language which looked
 pretty, had static type inference, nice functional programming features, and runs on the JVM
 (battle-tested and optimised over many years)... my heart just said yes. It wasn't a rational
 choice, but an instinctive, emotional one.
+
 
 **Paul Graham was right**
 
@@ -77,9 +69,8 @@ sheet of paper), I was talking to
 office. Sam is bright, motivated and interested in the things going on in the software world. We
 were talking casually about Go Test It and I showed him my messy diagram.
 
-And when I had talked him
-through the architecture ("I think I'll write these three components in Scala, and they will talk to
-each other via a
+And when I had talked him through the architecture ("I think I'll write these three components in
+Scala, and they will talk to each other via a
 [RabbitMQ message queue](http://www.rabbitmq.com/)"), Sam said, in effect, "Hey, this is cool, I
 want to work on this".
 
@@ -89,9 +80,8 @@ learning Scala and contributing to the
 code he wrote. He did this simply because he found it interesting and wanted to learn something new.
 The code he wrote was good, production-quality stuff. And he didn't want a penny for it.
 
-It's not
-often that you get high-quality contributions to a closed-source project from a developer who is
-busy enough with several other projects already, for free.
+It's not often that you get high-quality contributions to a closed-source project from a developer
+who is busy enough with several other projects already, for free.
 
 Of course Sam cannot live on technical
 stimulation and my gratitude alone, and since then, we have actually contracted him to do paid work
@@ -108,12 +98,11 @@ around for long enough to come out of the purely academic space, are stable enou
 production-worthy, but are also new and exciting enough to attract good
 developers.
 
+
 **Fashion-Driven Development?**
 
-In
-[an article about non-relational
-databases](http://carsonified.com/blog/dev/should-you-go-beyond-relational-databases/) which
-[Ryan Carson](http://twitter.com/ryancarson) asked me to write a few months ago, I suggested that
+In [an article about non-relational databases](http://carsonified.com/blog/dev/should-you-go-beyond-relational-databases/)
+which [Ryan Carson](http://twitter.com/ryancarson) asked me to write a few months ago, I suggested that
 fashion can and should play a role in choosing which technologies to use. I got some criticism for
 this remark, but I still stand by my view. It is effectively a different way of looking at PG's
 statement, provided you look for the fashion in the right circles (i.e. amongst experienced

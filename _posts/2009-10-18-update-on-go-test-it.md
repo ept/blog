@@ -3,12 +3,11 @@ layout: ync-post
 title: "Update on Go Test It"
 ---
 
-[GoTestIt, my company's product for automated functional testing of web apps across different
-browsers](http://go-test.it), has been progressing in leaps and bounds. We
-[launched at Future of Web
-Apps](http://go-test.it/blog/2009/10/05/launch-at-future-of-web-apps.html), only about 7 months
-after the first line of code was written. Since then, lots of people have signed up and given us
-loads of positive feedback on the service.
+[GoTestIt, my company's product for automated functional testing of web apps across different browsers](http://go-test.it),
+has been progressing in leaps and bounds. We
+[launched at Future of Web Apps](http://go-test.it/blog/2009/10/05/launch-at-future-of-web-apps.html),
+only about 7 months after the first line of code was written. Since then, lots of people have signed up
+and given us loads of positive feedback on the service.
 
 Go Test It now has its own
 [Twitter account](http://twitter.com/GoTestIt) and
@@ -17,8 +16,7 @@ Go Test It now has its own
 tips. I will keep this blog as my personal space, for general thoughts on software development, and
 I won't inundate you with marketing messages, honestly! :-)
 
-On a personal level, you might recall
-that
+On a personal level, you might recall that
 [I was going to start a PhD](/2009/03/31/doing-a-phd/) around this time. That was back at the
 beginning of this year, when I didn't know whether Go Test It was really going to go
 anywhere.

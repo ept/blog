@@ -20,8 +20,7 @@ too). I had not seen most of them before, but the message they got across in jus
 so powerful that I'm immediately convinced of their potential, and since the demo night I've even
 been going around telling other people how awesome these startups are. That's powerful stuff.
 
-So
-how do you make a demo which will convince others that you are great and that they should tell all
+So how do you make a demo which will convince others that you are great and that they should tell all
 their friends about you?
 
 Well, first you actually need something substantial to show. A product, a
@@ -35,24 +34,19 @@ I've seen that happen and it feels tragic, so please do yourself and your audien
 it a good demo. It's not that hard, and these are the guidelines I set myself when preparing my
 demo. They may not work for everybody, but they worked well for me.
 
-**1. Know what you're going to
-say**
+**1. Know what you're going to say**
 
 When I was at school, the only role I was allowed to play in the drama club was to be the
 lighting technician at the back of the room -- no chance anyone would let me near acting. That's
 because I can't remember scripts word-by-word for the life of me, and even if I could, I feel really
 silly when reciting learnt lines. Therefore I have no choice but to speak freely.
 
-However, you do
-need to have a pretty clear idea of what you are going to talk about, and how long it is going to
-take, if you want your presentation to be slick. You do need a script in the sense that you need to
-decide
-beforehand:
-<ul>
-<li>exactly which buttons you are going to click,
-and</li>
-<li>which topics you are going to address.</li>
-</ul>
+However, you do need to have a pretty clear idea of what you are going to talk about, and how long
+it is going to take, if you want your presentation to be slick. You do need a script in the sense
+that you need to decide beforehand:
+
+* exactly which buttons you are going to click, and
+* which topics you are going to address.
 
 Then speak the whole thing out loud
 twice. I find twice is a good number because I get a good feeling for how long the demo is going to
@@ -84,40 +78,33 @@ development environment on your laptop on which you can run your app, there are 
 where you're accidentally relying on internet access. Some of my
 favourites:
 
-<ul>
-<li>You've copied and pasted the Google Analytics/UserVoice/whatever JavaScript
-snippet into your page. When you're offline, that script won't load until the network times out, and
-so the browser's page load event doesn't get fired until 30 seconds later. But all your funky
-graphical effects only get initialised when the page is fully loaded, and suddenly you have no
-animations, no Ajax, nothing! It's almost like the
-1990s!</li>
-<li>You want to demonstrate clicking a link from an email, which opens a particular
-feature in your application; however, that email you sent to the test account contains the
-production site's URL, not the address on your local
-machine.</li>
-<li>You are relying on hostnames provided by a DNS server on another
-network.</li>
-<li>Some easily forgotten part of your infrastructure (your mail server, memcached,
-message queue, mashed-up web service, ...) is not on your own
-machine.</li>
-<li>Your Delicious Bookmarks Firefox extension (or other) tries to connect to its home
-server via an SSL connection. Since you're a new guest to the network, the wireless access point
-intercepts the connection and inserts its own login page; of course its SSL certificate is invalid
-though. The result? An annoying SSL certificate warning dialog which pops out of nothing every two
-minutes.</li>
-</ul>
+* You've copied and pasted the Google Analytics/UserVoice/whatever JavaScript
+  snippet into your page. When you're offline, that script won't load until the network times out, and
+  so the browser's page load event doesn't get fired until 30 seconds later. But all your funky
+  graphical effects only get initialised when the page is fully loaded, and suddenly you have no
+  animations, no Ajax, nothing! It's almost like the 1990s!
+* You want to demonstrate clicking a link from an email, which opens a particular
+  feature in your application; however, that email you sent to the test account contains the
+  production site's URL, not the address on your local machine.
+* You are relying on hostnames provided by a DNS server on another network.
+* Some easily forgotten part of your infrastructure (your mail server, memcached,
+  message queue, mashed-up web service, ...) is not on your own machine.
+* Your Delicious Bookmarks Firefox extension (or other) tries to connect to its home
+  server via an SSL connection. Since you're a new guest to the network, the wireless access point
+  intercepts the connection and inserts its own login page; of course its SSL certificate is invalid
+  though. The result? An annoying SSL certificate warning dialog which pops out of nothing every two
+  minutes.
 
-<p>To make sure your application works offline, fully disconnect the network on
+
+To make sure your application works offline, fully disconnect the network on
 your laptop (or even better: go to a café with a dodgy public WiFi that intercepts SSL!), clear
 your browser cache, and make sure every step of your demo still works flawlessly. Make sure you
 leave enough preparation time to fix things that don't work -- it took me the best part of a day to
 make Go Test It work without an internet connection! And I had to use, believe it or not, various
-entries in my
-<code>/etc/hosts</code> file and even an
-<code>ssh</code> tunnel to localhost (for remapping ports). Yes, a bit crazy, but it worked.</p>
+entries in my `/etc/hosts` file and even an `ssh` tunnel to localhost (for remapping ports).
+Yes, a bit crazy, but it worked.
 
-In the
-demo night on Thursday we actually had the projector problem rather than the internet problem. But
+In the demo night on Thursday we actually had the projector problem rather than the internet problem. But
 you're on the web, right? It shouldn't be hard for you to demonstrate your application on someone
 else's computer. Even the hardware guys, mbed and CamVine, pulled off their demos smoothly using a
 computer they had never touched before!
@@ -164,18 +151,12 @@ Some of this might be confidential. None of this should be appearing on the larg
 your screen.
 
 The easiest solution, I find, is to have a separate system user account to which I log
-in only for demos. It is stripped down to the
-minimum:
+in only for demos. It is stripped down to the minimum:
 
-<ul>
-<li>blank
-desktop,</li>
-<li>menus only contain the apps which are absolutely
-required,</li>
-<li>no unnecessary Firefox extensions (see the Delicious problems
-above),</li>
-<li>screensaver disabled.</li>
-</ul>
+* blank desktop,
+* menus only contain the apps which are absolutely required,
+* no unnecessary Firefox extensions (see the Delicious problems above),
+* screensaver disabled.
 
 When using the second user account, you can still
 stay logged in to your primary account at the same time, and have all your terminal windows and
@@ -184,9 +165,8 @@ demo: TweetDeck, for example, is a notorious memory hog, and it would be a shame
 in your demo suddenly takes 10 seconds to load because a shortage of memory caused Firefox, your
 application server or your database to be paged out to disk.
 
-Also keep in mind that projectors
-typically have a resolution of 1024x768 -- make sure you've tested in advance what your website
-looks like at that width.
+Also keep in mind that projectors typically have a resolution of 1024x768 -- make sure you've
+tested in advance what your website looks like at that width.
 
 If you need to press arcane key combinations on your laptop to enable an
 external monitor, make sure you know exactly what those keys are, and that you've tried them

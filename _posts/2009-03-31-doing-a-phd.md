@@ -25,19 +25,16 @@ winds of a start-up into the safe haven of academia. Let me assure you that this
 for two
 reasons.
 
-<ul>
-<li>Firstly, I will keep my company going on the side. Obviously I won't be doing it
-full-time any more, but I am keeping all of my active clients, and I will continue the high level of
-service they know from me. It won't be a return to student lifestyle for me; if anything, my focus
-will get
-sharper.</li>
+* Firstly, I will keep my company going on the side. Obviously I won't be doing it
+  full-time any more, but I am keeping all of my active clients, and I will continue the high level of
+  service they know from me. It won't be a return to student lifestyle for me; if anything, my focus
+  will get sharper.
+* Secondly, the research proposal I have written is not just any proposal. It is
+  aimed squarely at what I (and many others) believe will be the most influential technologies of the
+  next decade or two: technology which deals with the vast amount of data on the web, filtering,
+  processing and mining that information such that it becomes a source of useful insight.
+  **Machine learning** and **computational linguistics**.
 
-<li>Secondly, the research proposal I have written is not just any proposal. It is
-aimed squarely at what I (and many others) believe will be the most influential technologies of the
-next decade or two: technology which deals with the vast amount of data on the web, filtering,
-processing and mining that information such that it becomes a source of useful insight. **Machine
-learning** and **computational linguistics**.</li>
-</ul>
 
 We are rapidly moving towards a world
 where everything which can be digitised and put on the web will be. Blogs, social networking sites,
@@ -91,10 +88,8 @@ getting to know the community. Why can't you just visualise the relationships be
 speakers and topics, so that you can immediately see who the most influential presenters are and
 whose interests are closest to your own? Or even discover which attendees of the event would be most
 worth talking to? At the moment we rely on personal referrals, serendipitous meetings and crude
-markers (like
-[First Tuesday](http://www.firsttuesday.co.uk/)'s
-["green for start-up, red for investor, yellow for service
-provider"](http://www.independent.co.uk/news/business/news/disciples-stay-faithful-to-dot-coms-713036.html));
+markers (like [First Tuesday](http://www.firsttuesday.co.uk/)'s
+["green for start-up, red for investor, yellow for service provider"](http://www.independent.co.uk/news/business/news/disciples-stay-faithful-to-dot-coms-713036.html));
 why can't we have a more direct way of finding the people we should be talking to?
 
 There are two
@@ -103,8 +98,7 @@ the same person (even if they are on different websites, using a variant spellin
 pseudonym-like username, and without confusing two people who happen to share the same name), and
 secondly mapping out the relationships between the people and the topics they talk about.
 
-Google's
-success rests, amongst other things, on the
+Google's success rests, amongst other things, on the
 [PageRank algorithm](http://ilpubs.stanford.edu:8090/422/) which calculates a 'quality' rating for
 each page on the web. Their core innovation was to realise that links between pages, not just the
 pages' content, were the measure which determined how useful a search result would be, and
@@ -136,8 +130,7 @@ relevant. And I hope to collaborate with the lovely people at the Cambridge Engi
 [Zoubin Ghahramani](http://learning.eng.cam.ac.uk/zoubin/) who is recognised as one of the top
 researchers worldwide in the machine learning field. Very good reasons to be in Cambridge.
 
-Please
-note that this is not at all certain yet -- I have applied, but I may not get accepted, I may not
+Please note that this is not at all certain yet -- I have applied, but I may not get accepted, I may not
 get funding, and the Board of Graduate Studies may lose/forget my papers. But all going well, this
 is the general direction in which I'd like to head.
 
@@ -147,9 +140,8 @@ information and automated mining of that information will increase massively in 
 and exploring the ethical and social consequences, as well as protecting the rights of the
 individual, should be a part of the research in this area.
 
-PS. My favourite techy buzzword so far
-is **"maximum entropy supertagger"** ([one of the
-components](http://portal.acm.org/citation.cfm?id=1220396) of the C&C parser). Just say that out
+PS. My favourite techy buzzword so far is **"maximum entropy supertagger"**
+([one of the components](http://portal.acm.org/citation.cfm?id=1220396) of the C&C parser). Just say that out
 loud. Maximum Entropy Supertagger. Doesn't it sound awesome? Before my inner eye, there is a sci-fi
 film of a group of heroes fighting off an alien invasion. The tentacled beasts from outer space are
 everywhere, but the good guys are just managing to keep them at bay. But then... ominous music in

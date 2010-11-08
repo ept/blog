@@ -19,7 +19,7 @@ better for you, i.e. the higher the monetary benefit of the sale to
 you.
 
 <img src="/static/2010/01/graph1.jpg" alt="Graph: Value over price (1)" width="500"
-height="299" class="aligncenter size-full" />
+    height="299" class="aligncenter size-full" />
 
 The first bit of money makes a big difference --
 maybe you really need it so that you can pay the rent, otherwise you'll get kicked out of your
@@ -43,8 +43,7 @@ Therefore, you
 should be taking your relationship with the buyer into account. How indignant they will be about
 your price will depend on a lot of factors (the market value of what you have to offer, how much you
 charged them previously, how much they can afford, etc). But in general there will be some sort of
-function describing how happy they are depending on the price (BogoGraph
-alert!):
+function describing how happy they are depending on the price (BogoGraph alert!):
 
 <img src="/static/2010/01/graph2.jpg" alt="Graph: Value over price (2)" width="500"
 height="368" class="aligncenter size-full" />
@@ -79,26 +78,19 @@ The red line is simply the sum of the blue and the
 black, and represents the total value you're getting out of the sale. Some things to
 observe:
 
-<ol>
-<li>There is a very clear maximum for the total value. This is what you should be
-aiming
-at.</li>
-<li>The price at which the seller's value is maximised is always higher than the ideal
-price for the buyer (i.e. the red line's maximum is further to the right than the blue line's
-maximum). Of course the buyer would prefer to pay less -- if that is not the case, you're definitely
-charging too
-little.</li>
-<li>The blue graph is like quantum mechanics: it changes when you measure it. Keep your
-negotiations short, simple and clear. Don't keep changing your mind, because that just reduces
-goodwill and thus the total value. Keep in mind that the whole point of this exercise is to stay
-friends!</li>
-<li>The optimal price depends on your weighting of blue curve vs. black curve -- the
-less you care about the buyer's goodwill, the higher the optimal
-price.</li>
-<li>Even if you are playing hard-nosed, it's a game of diminishing returns. By pushing
-harder you will get a bit more money, but the buyer will also get *a lot* more indignant. The harder
-you push, the smaller your marginal gains.</li>
-</ol>
+1. There is a very clear maximum for the total value. This is what you should be aiming at.
+2. The price at which the seller's value is maximised is always higher than the ideal
+   price for the buyer (i.e. the red line's maximum is further to the right than the blue line's
+   maximum). Of course the buyer would prefer to pay less -- if that is not the case, you're definitely
+   charging too little.
+3. The blue graph is like quantum mechanics: it changes when you measure it. Keep your
+   negotiations short, simple and clear. Don't keep changing your mind, because that just reduces
+   goodwill and thus the total value. Keep in mind that the whole point of this exercise is to stay friends!
+4. The optimal price depends on your weighting of blue curve vs. black curve -- the
+   less you care about the buyer's goodwill, the higher the optimal price.
+5. Even if you are playing hard-nosed, it's a game of diminishing returns. By pushing
+   harder you will get a bit more money, but the buyer will also get *a lot* more indignant. The harder
+   you push, the smaller your marginal gains.
 
 This brings us to an interesting concept: you
 can trade in buyer's goodwill for more money by adjusting how much you care about how the other
@@ -110,18 +102,14 @@ the particular deal. I generally work with quite a low return on indignation, i.
 quite highly and won't readily trade it for a bit more money. That's
 because:
 
-<ol>
-<li>I don't find it fun to be hard-nosed, so I'll much rather be nice (assuming the
-other party is also nice),
-and</li>
-<li>I think in terms of long-term value, and I believe that goodwill stays around for a
-long time, so I'll much rather invest in building good long-term relationships than try to extract
-the maximum monetary value in the short term.</li>
-</ol>
+1. I don't find it fun to be hard-nosed, so I'll much rather be nice (assuming the
+   other party is also nice), and
+2. I think in terms of long-term value, and I believe that goodwill stays around for a
+   long time, so I'll much rather invest in building good long-term relationships than try to extract
+   the maximum monetary value in the short term.
 
-That's my approach, and I'm sure others
-will think differently. But at least, with a framework like this, you can be conscious about your
-return on indignation.
+That's my approach, and I'm sure others will think differently. But at least, with a framework
+like this, you can be conscious about your return on indignation.
 
 By the way, if you're into pricing products which are not individually
 negotiated -- quite a different topic -- you should definitely read

@@ -3,14 +3,9 @@ layout: ync-post
 title: "Building Go Test It: Fun with Scala and REST APIs"
 ---
 
-<p>\[caption id="attachment_279" align="alignleft" width="285" caption="Go Test It
-logo"\]<a
-href="http://go-test.it/"><img class="size-full wp-image-279" title="Go Test It logo"
-src="/static/2009/05/go-test-it.png" alt="Go Test It" width="285" height="177"
-/></a>\[/caption\]</p>
+<img src="/static/2009/05/go-test-it.png" alt="Go Test It" width="285" height="177" class="size-full wp-image-279" />
 
-[Go Test It](http://go-test.it/), the awesome new web testing product I am
-currently working on, was
+[Go Test It](http://go-test.it/), the awesome new web testing product I am currently working on, was
 [announced](http://twitter.com/martinkl/status/1763467765) on Monday. I had
 [hinted at it](/2008/12/30/looking-back-at-2008-plans-for-2009/) back in December, but now that it
 is taking shape it was time for me to start spreading the word.
@@ -27,15 +22,14 @@ automated functional tests.
 On this blog I would like to share from time to time some of the
 technical challenges we have overcome in the process of building this product.
 
-**Today: Simple REST
-APIs in Scala**
+
+**Today: Simple REST APIs in Scala**
 
 The Go Test It system consists of a number of different components using different
 programming languages, different frameworks, different infrastructures. The main user front-end is a
 [Rails](http://rubyonrails.org/) app, but not all tasks are so well suited to Ruby. In particular,
 the multi-threaded parts of the system which do a lot of the internal coordination are being written
-in
-[Scala](http://www.scala-lang.org/), a very elegant JVM-based language which lends itself well to
+in [Scala](http://www.scala-lang.org/), a very elegant JVM-based language which lends itself well to
 this sort of thing.
 
 The various components of the system need to communicate, and depending on the
@@ -43,37 +37,36 @@ type of interaction needed, we're using a combination of a
 [message queue](http://www.rabbitmq.com/) and
 [REST APIs](http://en.wikipedia.org/wiki/Representational_State_Transfer). There is good Java
 library support for both, and since Scala can seamlessly use Java libraries, it all fits together
-very
-nicely.
+very nicely.
 
-<p>[Jersey](https://jersey.dev.java.net/) is a really neat Java (and, by extension, Scala)
+[Jersey](https://jersey.dev.java.net/) is a really neat Java (and, by extension, Scala)
 library for writing REST APIs. (It falls into a similar category as
 [Sinatra](http://www.sinatrarb.com/) in the Ruby world.) For example, a resource which returns a
-HTML document can be written in just a few lines of Scala
-code:
-<pre lang="scala" line="1">package com.example.restapi
-import
-javax.ws.rs._</p>
+HTML document can be written in just a few lines of Scala code:
 
-<p>@Path("/hello")
+{% highlight scala %}
+package com.example.restapi
+import javax.ws.rs._
+
+@Path("/hello")
 class Hello {
-@GET @Produces(Array("text/html"))
-def doGet =
-"<html><body><h1>hello jersey/scala world!</h1></body></html>"
-}</pre>
+  @GET @Produces(Array("text/html"))
+  def doGet = "<html><body><h1>hello jersey/scala world!</h1></body></html>"
+}
+{%endhighlight %}
+
 A resource is defined by a
 class, annotated with the path(s) under which it can be accessed, and has one or more methods to
 handle different HTTP verbs (GET, POST, PUT, DELETE), and if you want, also different methods for
-different content types.</p>
+different content types.
 
 Coda Hale has written up
-[some really nice examples of using
-Jersey](http://codahale.com/what-makes-jersey-interesting-parameter-classes/) and doing nice clean
+[some really nice examples of using Jersey](http://codahale.com/what-makes-jersey-interesting-parameter-classes/)
+and doing nice clean
 error handling of input. His examples are in Java, but translating them into Scala is a very simple
 exercise -- more or less a matter of removing the type declarations and the semicolons.
 
-But here
-comes the tricky bit. Given the beautiful code snippet above, how do you actually build and run the
+But here comes the tricky bit. Given the beautiful code snippet above, how do you actually build and run the
 thing? That is something I wrestled with for a while, and here I would like to reveal my solution.
 You can build it with
 [Maven](http://maven.apache.org/) (for the Ruby guys, it is basically
@@ -91,323 +84,203 @@ once your build is working, you can create resources and handle them in Scala to
 content. And for a bonus, see below for a Capistrano recipe which allows you to easily deploy the
 resulting war file to a Tomcat server, again and again.
 
-<p>First, put the following in a file called
-<code>pom.xml</code> in the base directory of your
-project:
-<pre lang="xml" line="1">
-< ?xml version="1.0"
-encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
-
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-<modelversion>4.0.0</modelversion>
-
-<groupid>com.example</groupid>
-
-<artifactid>restapi</artifactid>
-
-<packaging>war</packaging>
-
-<version>1.0-SNAPSHOT</version>
-
-<name>restapi</name>
-
-
-<dependencies>
-<!-- Scala standard library -->
-
-<dependency>
-
-<groupid>org.scala-lang</groupid>
-
-<artifactid>scala-library</artifactid>
-
-<version>2.7.2</version>
-</dependency>
-
-<!-- JUnit for testing -->
-
-<dependency>
-
-<groupid>junit</groupid>
-
-<artifactid>junit</artifactid>
-
-<version>3.8.2</version>
-
-<scope>test</scope>
-</dependency>
-
-<!-- Jersey and Servlet (for the REST API) -->
-
-<dependency>
-
-<groupid>com.sun.jersey</groupid>
-
-<artifactid>jersey-server</artifactid>
-
-<version>1.0.3</version>
-</dependency>
-
-
-<dependency>
-
-<groupid>javax.servlet</groupid>
-
-<artifactid>servlet-api</artifactid>
-
-<version>2.4</version>
-
-<scope>provided</scope>
-</dependency>
-
-
-<dependency>
-
-<groupid>com.sun.jersey.test.framework</groupid>
-
-<artifactid>jersey-test-framework</artifactid>
-
-<version>1.0.3</version>
-
-<scope>test</scope>
-</dependency>
-</dependencies>
-
-
-<build>
-
-<plugins>
-<!-- Compile to Java 1.6 -->
-
-<plugin>
-
-<groupid>org.apache.maven.plugins</groupid>
-
-<artifactid>maven-compiler-plugin</artifactid>
-
-<configuration>
-
-<source>1.6</source>
-
-<target>1.6</target>
-</configuration>
-
-<executions>
-
-<execution>
-
-<phase>compile</phase>
-
-<goals>
-
-<goal>compile</goal>
-</goals>
-</execution>
-</executions>
-
-</plugin>
-
-<!-- Build Scala sources -->
-
-<plugin>
-
-<groupid>org.scala-tools</groupid>
-
-<artifactid>maven-scala-plugin</artifactid>
-
-<version>2.10</version>
-
-<executions>
-
-<execution>
-
-<id>scala-compile-first</id>
-
-<phase>process-resources</phase>
-
-<goals>
-
-<goal>add-source</goal>
-
-<goal>compile</goal>
-</goals>
-</execution>
-
-<execution>
-
-<id>scala-test-compile</id>
-
-<phase>process-test-resources</phase>
-
-<goals>
-
-<goal>testCompile</goal>
-</goals>
-</execution>
-</executions>
-
-</plugin>
-
-<!-- Run the application using "mvn glassfish:run" -->
-
-<plugin>
-
-<groupid>org.glassfish</groupid>
-
-<artifactid>maven-glassfish-plugin</artifactid>
-</plugin>
-</plugins>
-
-
-<pluginmanagement>
-
-<plugins>
-
-<plugin>
-
-<groupid>org.scala-tools</groupid>
-
-<artifactid>maven-scala-plugin</artifactid>
-
-<version>2.9.1</version>
-</plugin>
-
-
-<plugin>
-
-<groupid>org.apache.maven.plugins</groupid>
-
-<artifactid>maven-compiler-plugin</artifactid>
-
-<version>2.0.2</version>
-</plugin>
-</plugins>
-</pluginmanagement>
-</build>
-
-
-<!-- List of repositories where the various dependencies and plugins can be found -->
-
-<repositories>
-
-<repository>
-
-<id>scala-tools.org</id>
-
-<name>Scala-tools Maven2 Repository</name>
-
-<url>http://scala-tools.org/repo-releases</url>
-</repository>
-
-
-<repository>
-
-<id>maven2-repository.dev.java.net</id>
-
-<name>Java.net Repository for Maven</name>
-
-<url>http://download.java.net/maven/2/</url>
-
-<layout>default</layout>
-</repository>
-
-
-<repository>
-
-<id>glassfish-repository</id>
-
-<name>Java.net Repository for Glassfish</name>
-
-<url>http://download.java.net/maven/glassfish</url>
-</repository>
-</repositories>
-
-
-<pluginrepositories>
-
-<pluginrepository>
-
-<id>scala-tools.org</id>
-
-<name>Scala-tools Maven2 Repository</name>
-
-<url>http://scala-tools.org/repo-releases</url>
-</pluginrepository>
-
-
-<pluginrepository>
-
-<id>maven2-repository.dev.java.net</id>
-
-<name>Java.net Repository for Maven</name>
-
-<url>http://download.java.net/maven/2/</url>
-
-<p><layout>default</layout>
-</pluginrepository>
-</pluginrepositories>
-</project></pre>
-That was a
-terrible mouthful. Urgh. But worry not, the worst is over. Just one other XML file, and this one
-goes in
-<code>src/main/webapp/WEB-INF/web.xml</code> (sorry, no syntax highlighting on this one due to a bug
-in my syntax highlighting
-plugin):
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;web-app version="2.4"
-xmlns="http://java.sun.com/xml/ns/j2ee"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
-
-xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
-http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"&gt;
-&lt;servlet&gt;
-
-&lt;servlet-name&gt;Example.com REST API&lt;/servlet-name&gt;
-
-&lt;servlet-class&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-class&gt;
-
-&lt;init-param&gt;
-
-&lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;
-
-&lt;param-value&gt;com.example.restapi&lt;/param-value&gt;
-&lt;/init-param&gt;
-
-&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
-&lt;/servlet&gt;
-&lt;servlet-mapping&gt;
-
-&lt;servlet-name&gt;Example.com REST API&lt;/servlet-name&gt;
-
-&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
-&lt;session-config&gt;
-
-&lt;session-timeout&gt;30&lt;/session-timeout&gt;
-
-<p>&lt;/session-config&gt;
-&lt;/web-app&gt;</pre>
-And that's all the boilerplate you need. You can now
-write the actual code, with Scala source files in
-<code>src/main/scala</code> and Java source files in
-<code>src/main/java</code> (if you want to use Java alongside Scala). For example, place the source
-for the Hello resource above in
-<code>src/main/scala/com/example/restapi/Hello.scala</code>. Tests go in
-<code>src/test/scala</code> and
-<code>src/test/java</code> respectively.</p>
-
-<p>Now go and build it! (You need to have Maven 2.0.9 or
-newer installed.) The two most useful commands are
-<code>mvn package</code>, which compiles and packages your project, and places the result in
-<code>target/restapi-1.0-SNAPSHOT.war</code>, and
-<code>mvn glassfish:run</code>, which launches an embedded
+First, put the following in a file called `pom.xml` in the base directory of your project:
+
+{% highlight xml %}
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelversion>4.0.0</modelversion>
+    <groupid>com.example</groupid>
+    <artifactid>restapi</artifactid>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>restapi</name>
+
+    <dependencies>
+        <!-- Scala standard library -->
+        <dependency>
+            <groupid>org.scala-lang</groupid>
+            <artifactid>scala-library</artifactid>
+            <version>2.7.2</version>
+        </dependency>
+
+        <!-- JUnit for testing -->
+        <dependency>
+            <groupid>junit</groupid>
+            <artifactid>junit</artifactid>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Jersey and Servlet (for the REST API) -->
+        <dependency>
+            <groupid>com.sun.jersey</groupid>
+            <artifactid>jersey-server</artifactid>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupid>javax.servlet</groupid>
+            <artifactid>servlet-api</artifactid>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupid>com.sun.jersey.test.framework</groupid>
+            <artifactid>jersey-test-framework</artifactid>
+            <version>1.0.3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Compile to Java 1.6 -->
+            <plugin>
+                <groupid>org.apache.maven.plugins</groupid>
+                <artifactid>maven-compiler-plugin</artifactid>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals><goal>compile</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Build Scala sources -->
+            <plugin>
+                <groupid>org.scala-tools</groupid>
+                <artifactid>maven-scala-plugin</artifactid>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <goals><goal>testCompile</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Run the application using "mvn glassfish:run" -->
+            <plugin>
+                <groupid>org.glassfish</groupid>
+                <artifactid>maven-glassfish-plugin</artifactid>
+            </plugin>
+        </plugins>
+
+        <pluginmanagement>
+            <plugins>
+                <plugin>
+                    <groupid>org.scala-tools</groupid>
+                    <artifactid>maven-scala-plugin</artifactid>
+                    <version>2.9.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupid>org.apache.maven.plugins</groupid>
+                    <artifactid>maven-compiler-plugin</artifactid>
+                    <version>2.0.2</version>
+                </plugin>
+            </plugins>
+        </pluginmanagement>
+    </build>
+
+    <!-- List of repositories where the various dependencies and plugins can be found -->
+    <repositories>
+        <repository>
+            <id>scala-tools.org</id>
+            <name>Scala-tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </repository>
+
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
+
+        <repository>
+            <id>glassfish-repository</id>
+            <name>Java.net Repository for Glassfish</name>
+            <url>http://download.java.net/maven/glassfish</url>
+        </repository>
+    </repositories>
+
+    <pluginrepositories>
+        <pluginrepository>
+            <id>scala-tools.org</id>
+            <name>Scala-tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </pluginrepository>
+
+        <pluginrepository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </pluginrepository>
+    </pluginrepositories>
+</project>
+{% endhighlight %}
+
+
+That was a terrible mouthful. Urgh. But worry not, the worst is over. Just one other XML file, and this one
+goes in `src/main/webapp/WEB-INF/web.xml`:
+
+
+{% highlight xml %}
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <servlet>
+        <servlet-name>Example.com REST API</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>com.example.restapi</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Example.com REST API</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+</web-app>
+{% endhighlight %}
+
+
+And that's all the boilerplate you need. You can now write the actual code, with Scala source files in
+`src/main/scala` and Java source files in `src/main/java` (if you want to use Java alongside Scala).
+For example, place the source for the Hello resource above in
+`src/main/scala/com/example/restapi/Hello.scala`. Tests go in `src/test/scala` and
+`src/test/java` respectively.
+
+Now go and build it! (You need to have Maven 2.0.9 or newer installed.) The two most useful commands are
+`mvn package`, which compiles and packages your project, and places the result in
+`target/restapi-1.0-SNAPSHOT.war`, and `mvn glassfish:run`, which launches an embedded
 [Glassfish](https://glassfish.dev.java.net/) application server and serves your new REST API on
-<code>http://localhost:8080/</code> for local testing. The example resource which we defined above
-would then be accessible at
-<code>http://localhost:8080/hello</code> in your web browser.</p>
+`http://localhost:8080/` for local testing. The example resource which we defined above
+would then be accessible at `http://localhost:8080/hello` in your web browser.
 
 If you don't have the dependencies
 yet, Maven will go away and download them. This will take a while, but they won't be re-downloaded
@@ -420,174 +293,154 @@ world. In our case this is
 [Tomcat](http://tomcat.apache.org/), but any standard Java web container should do. I wanted to use
 [Capistrano](http://www.capify.org/) for deployment, because it gets a lot of things right and also
 fits well into the rest of our system which does have a lot of Ruby in it. There is an existing
-[Capistrano recipe for deploying war files to
-Tomcat](http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat), but it needed a bit
-of improvement, so my own version is included below.
+[Capistrano recipe for deploying war files to Tomcat](http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat),
+but it needed a bit of improvement, so my own version is included below.
 
-<p>These deployment instructions assume you're
-running a
+These deployment instructions assume you're running a
 [Debian Lenny](http://www.debian.org/releases/stable/) system, with a
-<code>restapi</code> user account; for other systems, you'll need to customise it to suit.</p>
+`restapi` user account; for other systems, you'll need to customise it to suit.
 
-<p>Create
-the following shell script in
-<code>/etc/tomcat5.5/symlink-webapp</code> and make it
-executable:
-<pre lang="bash" line="1">#!/bin/sh
-# Allows an unprivileged user to deploy an
-application to Tomcat. Add a rule for this
-# script and /etc/init.d/tomcat to /etc/sudoers. Then to
-deploy an application, call:
-#     sudo /etc/tomcat5.5/symlink-webapp webapp-name
-/location/of/war/file
+Create the following shell script in `/etc/tomcat5.5/symlink-webapp` and make it executable:
+
+
+{% highlight bash %}
+#!/bin/sh
+# Allows an unprivileged user to deploy an application to Tomcat. Add a rule for this
+# script and /etc/init.d/tomcat to /etc/sudoers. Then to deploy an application, call:
+#     sudo /etc/tomcat5.5/symlink-webapp webapp-name /location/of/war/file
 NAME=`echo "$1" | sed -e 's/\[^a-zA-Z0-9\\.-\]//g'`
-echo "ln -f -s \\"$2\\"
-/var/lib/tomcat5.5/webapps/$NAME"
-ln -f -s "$2" /var/lib/tomcat5.5/webapps/$NAME</pre>
-Next, add the
-following line to
-<code>/etc/sudoers</code>:
-<pre>restapi ALL = NOPASSWD: /etc/init.d/tomcat5.5,
-/etc/tomcat5.5/symlink-webapp</pre>
-With that set up, here's the
-<code>Capfile</code> for you to put in the base directory of your
-project:
-<pre lang="ruby" line="1"># This recipe is based on:
-#
-http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat</p>
+echo "ln -f -s \"$2\" /var/lib/tomcat5.5/webapps/$NAME"
+ln -f -s "$2" /var/lib/tomcat5.5/webapps/$NAME
+{% endhighlight %}
+
+
+Next, add the following line to `/etc/sudoers`:
+
+
+{% highlight text %}
+restapi ALL = NOPASSWD: /etc/init.d/tomcat5.5, /etc/tomcat5.5/symlink-webapp
+{% endhighlight %}
+
+
+With that set up, here's the `Capfile` for you to put in the base directory of your project:
+
+
+{% highlight ruby %}
+# This recipe is based on:
+# http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat
 
 load 'deploy'
-set
-:application, "restapi"
+set :application, "restapi"
 
 # DEPLOYMENT SCHEME
 set :scm, :none
 set :deploy_via, :copy
-set :repository
-do
-fetch(:deploy_from)
+set :repository do
+  fetch(:deploy_from)
 end
 
 # LOCAL
 set :war_path, "#{File.dirname(__FILE__)}/target/*.war"
 
-#
-TOMCAT SERVERS
+# TOMCAT SERVERS
 role :webserver, "server.example.com"
 set :tomcat_home, "/var/lib/tomcat5.5"
-set
-:tomcat_ctrl, "/etc/init.d/tomcat5.5"
+set :tomcat_ctrl, "/etc/init.d/tomcat5.5"
 set :deploy_to, "/home/restapi/deploy"
 
 # USER LOGIN
-set
-:user, "restapi"
-ssh_options\[:keys\] = File.expand_path('~/.ssh/my_private_ssh_key')
-set :use_sudo,
-false
-default_run_options\[:pty\] = true
+set :user, "restapi"
+ssh_options[:keys] = File.expand_path('~/.ssh/my_private_ssh_key')
+set :use_sudo, false
+default_run_options[:pty] = true
 
 set :deploy_from do
-dir = "/tmp/prep_#{release_name}"
-
-system("mkdir -p #{dir}")
-dir
+  dir = "/tmp/prep_#{release_name}"
+  system("mkdir -p #{dir}")
+  dir
 end
+
 
 # simple interactions with the tomcat server
-namespace :tomcat
-do
-desc "start tomcat"
-task :start do
-sudo "#{tomcat_ctrl} start"
+namespace :tomcat do
+  desc "start tomcat"
+  task :start do
+    sudo "#{tomcat_ctrl} start"
+  end
+
+  desc "stop tomcat"
+  task :stop do
+    sudo "#{tomcat_ctrl} stop"
+  end
+
+  desc "stop and start tomcat"
+  task :restart do
+    tomcat.stop
+    tomcat.start
+  end
+
+  desc "tail :tomcat_home/logs/*.log and logs/catalina.out"
+  task :tail do
+    stream "tail -f #{tomcat_home}/logs/*.log #{tomcat_home}/logs/catalina.out"
+  end
 end
 
-desc "stop
-tomcat"
-task :stop do
-sudo "#{tomcat_ctrl} stop"
-end
 
-desc "stop and start tomcat"
-task
-:restart do
-tomcat.stop
-tomcat.start
-end
-
-desc "tail :tomcat_home/logs/*.log and
-logs/catalina.out"
-task :tail do
-stream "tail -f #{tomcat_home}/logs/*.log
-#{tomcat_home}/logs/catalina.out"
-end
-end
-
-# Before everything else, build the application with
-maven and copy
+# Before everything else, build the application with maven and copy
 # the war file to a temporary directory.
 before 'deploy:update_code' do
-cmd = "mvn
-clean package"
-puts cmd; system cmd or raise "\\"#{cmd}\\" failed"
-set :war,
-Dir\[war_path\].first
-cmd = "cp #{war} #{deploy_from}"
-puts cmd; system cmd or raise
-"\\"#{cmd}\\" failed"
+  cmd = "mvn clean package"
+  puts cmd; system cmd or raise "\"#{cmd}\" failed"
+  set :war, Dir[war_path].first
+  cmd = "cp #{war} #{deploy_from}"
+  puts cmd; system cmd or raise "\"#{cmd}\" failed"
 end
+
 
 # Restart tomcat at the end of deployment
 namespace :deploy do
-task
-:restart do
-cmd = "/etc/tomcat5.5/symlink-webapp #{application}.war
-#{deploy_to}/current/`basename #{war}`"
-puts cmd
-sudo cmd
-tomcat.restart
-end
+  task :restart do
+    cmd = "/etc/tomcat5.5/symlink-webapp #{application}.war #{deploy_to}/current/`basename #{war}`"
+    puts cmd
+    sudo cmd
+    tomcat.restart
+  end
 end
 
-#
-Disable all the default tasks that
+
+# Disable all the default tasks that
 # either don't apply, or I haven't made work.
-namespace :deploy
-do
-\[ :upload, :cold, :start, :stop, :migrate, :migrations \].each do |default_task|
-desc
-"\[internal\] disabled"
-task default_task do
-# disabled
-end
-end
+namespace :deploy do
+  [ :upload, :cold, :start, :stop, :migrate, :migrations ].each do |default_task|
+    desc "[internal] disabled"
+    task default_task do
+      # disabled
+    end
+  end
 
-namespace :web
-do
-\[ :disable, :enable \].each do |default_task|
-desc "\[internal\] disabled"
-task
-default_task do
-# disabled
-end
-end
-end
+  namespace :web do
+    [ :disable, :enable ].each do |default_task|
+      desc "[internal] disabled"
+      task default_task do
+        # disabled
+      end
+    end
+  end
 
-namespace :pending do
-\[ :default,
-:diff \].each do |default_task|
-desc "\[internal\] disabled"
-task default_task do
+  namespace :pending do
+    [ :default, :diff ].each do |default_task|
+      desc "[internal] disabled"
+      task default_task do
+        # disabled
+      end
+    end
+  end
+end
+{% endhighlight %}
 
-# disabled
-end
-end
-end
-end</pre>
 
-<p>So there we go. For the first time use
-<code>cap deploy:setup</code> to create the directories on the server, and thereafter always type
-<code>cap deploy</code>. Those 11 keystrokes are all you need to fetch all the dependencies (no more
+So there we go. For the first time use `cap deploy:setup` to create the directories on the server, and
+thereafter always type `cap deploy`. Those 11 keystrokes are all you need to fetch all the dependencies (no more
 troubles replicating your build environment on different development machines), build a clean copy
 of the entire app, ship it off to the server and run it. And your app can be all in beautiful,
-concise and type-safe Scala. I have survived the XML deluge and I am happy :-)</p>
+concise and type-safe Scala. I have survived the XML deluge and I am happy :-)

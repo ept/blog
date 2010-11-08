@@ -51,51 +51,43 @@ an XML document as payload. That document can then automatically be processed by
 (hopefully) they can pay on time, and both the bank and the Unseen University can automagically
 calculate their taxes.
 
-<p>That XML document, if based on the UBL 2.0 Invoice schema, would have the
-following
-form:
-<pre>Invoice:
-ID: 147815
-IssueDate: 2008-11-09</p>
+That XML document, if based on the UBL 2.0 Invoice schema, would have the following form:
 
-AccountingSupplierParty:
+    Invoice:
+        ID: 147815
+        IssueDate: 2008-11-09
 
-PartyName: Name: The Unseen University
-PostalAddress:
-BuildingName: The Tower of
-Art
-CityName: Ankh-Morpork
-Country Name: Discworld
+        AccountingSupplierParty:
+            PartyName: Name: The Unseen University
+            PostalAddress:
+                BuildingName: The Tower of Art
+                CityName: Ankh-Morpork
+                Country Name: Discworld
 
+        AccountingCustomerParty:
+            PartyName: The Big Bank
+            PostalAddress:
+                StreetName: Paved With Gold Street
+                CityName: London
+                PostalZone: E14 5HQ
+                Country IdentificationCode: GB
 
-AccountingCustomerParty:
-PartyName: The Big Bank
-PostalAddress:
+        TaxTotal:
+            TaxAmount (currencyID: GBP): 16.00
 
-StreetName: Paved With Gold Street
-CityName: London
-PostalZone: E14 5HQ
+        LegalMonetaryTotal:
+            TaxExclusiveAmount (currencyID: GBP): 159.95
+            PayableAmount (currencyID: GBP): 175.95
 
-Country IdentificationCode: GB
+        InvoiceLine:
+            ID: Anteater_8
+            LineExtensionAmount (currencyID: GBP): 175.95
+            Item Description: One Magic Anteater
 
-TaxTotal:
-TaxAmount (currencyID: GBP): 16.00
-
-
-LegalMonetaryTotal:
-TaxExclusiveAmount (currencyID: GBP): 159.95
-PayableAmount
-(currencyID: GBP): 175.95
-
-<p>InvoiceLine:
-ID: Anteater_8
-LineExtensionAmount
-(currencyID: GBP): 175.95
-Item Description: One Magic Anteater</pre>
-And that, ladies and
-gentlemen, is really not that bad. Ok, I've simplified it a little; I have left out the XML
-namespaces and the angle brackets to make it more readable. [Here is the UBL 2.0 Invoice example
-XML file](/static/2008/11/invoice.xml) which validates fully against the schema.</p>
+And that, ladies and gentlemen, is really not that bad. Ok, I've simplified it a little;
+I have left out the XML namespaces and the angle brackets to make it more readable.
+[Here is the UBL 2.0 Invoice example XML file](/static/2008/11/invoice.xml)
+which validates fully against the schema.
 
 This is of course
 just a basic example; the schema goes much further still, so you can give a machine-readable
@@ -108,8 +100,7 @@ already make our lives easier if our bookkeeping software supported it.
 
 Why is this a big deal?
 Because it's a standard which is actually in use out there! For instance,
-[if you want to sell anything to any public institution in Denmark, you've got to use the UBL
-schema](http://www.idealliance.org/proceedings/xtech05/papers/03-05-02/). Governments and
-enterprises are more likely to use these formats at first, because they deal with millions of
+[if you want to sell anything to any public institution in Denmark, you've got to use the UBL schema](http://www.idealliance.org/proceedings/xtech05/papers/03-05-02/).
+Governments and enterprises are more likely to use these formats at first, because they deal with millions of
 invoices each year, and automating such quantities translates into very substantial cost savings.
 But I think that even for small businesses, we have a lot to gain in terms of interoperability.
