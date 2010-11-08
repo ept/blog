@@ -1,0 +1,80 @@
+body {
+	background-color:#000;
+	color:#ccc;
+}
+
+a,
+a:visited {
+	color:#fff;
+	font-weight:bold;
+}
+
+#header,
+#footer {clear:both;}
+
+#header a,
+#footer a {
+	background:#111;
+	display:block;
+	padding:10px;
+}
+#header a:hover,
+#footer a:hover {background:#222;}
+
+#content {
+	float:left;
+	margin:20px 0;
+	width:50%;
+}
+
+.figure-info {
+	background:#0f0f0f;
+	border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	-moz-border-radius:5px;
+	margin:20px 0 0;
+	padding:10px;
+}
+.figure-info .title {
+ 	margin:0;
+}
+.figure-info .caption {
+	color:#777;
+}
+.figure-info .caption p {
+	font-size: 1.16666667em; /* 14 */
+	line-height: 1.28571429;
+	margin-bottom:1.28571429em;
+	margin-top:.25em;
+}
+
+.entry-attachment {
+	text-align:center;
+}
+
+.previous-attachment,
+.next-attachment {
+	float:left;
+	padding:50px 0;
+	text-align:center;
+	width:25%;
+}
+
+.previous-attachment img,
+.next-attachment img{
+	background:#222 url(../images/attachment-next.png) no-repeat right center;
+	padding:8px;
+	border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	-moz-border-radius:5px;
+}
+.previous-attachment img {
+	background-image:url(../images/attachment-previous.png);
+	background-position:left center;
+	padding-left:50px;
+}
+.next-attachment img {
+	padding-right:50px;
+}

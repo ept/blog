@@ -1,0 +1,55 @@
+/* hasLayout fixes */
+#content,
+#sidebar,
+#navigation,
+#navigation ul,
+#navigation li,
+#all-categories ul,
+#all-categories li,
+.full,
+ol#comments-list li.hentry,
+#comment-form,
+#comment-form .section,
+.comment,
+h2#comments,
+.widget,
+.pagination,
+#carrington-about .about {zoom:1;}
+
+/* Suckerfish dropdowns stick in IE7 without this bit */
+#navigation li:hover,
+#all-categories li:hover {
+    position:static;
+}
+
+/* Since we have to give layout to the .full div, the box model is different, messing with spacing. */
+.full{
+	margin-bottom:0;
+}
+
+/* Border dotted looks like junk in IE. */
+ol.archive,
+.excerpt,
+#content .search,
+ol#comments-list li,
+.pingback,
+.trackback,
+#carrington-archives ul,
+#carrington-archives li {
+	border-style:solid;
+}
+
+/* IE6 doesn't understand inherit */
+address.author {
+	font-style:normal;
+}
+
+/* IE doesn't comprehend the short-notation override */
+#navigation ul,
+#all-categories ul {list-style-image: none;}
+
+/* lo-fi png fix */
+#footer p#developer-link a,
+#footer p#developer-link a:visited {
+	background-image: url(../images/by-crowd-favorite.gif);
+}
