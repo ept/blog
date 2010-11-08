@@ -1,0 +1,4 @@
+source: src
+destination: static
+pygments: true
+paginate: 5
