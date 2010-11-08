@@ -10,7 +10,7 @@ the irritation, but things very quickly return to normal.
 
 The bad things keep sticking around and
 irritating us, whereas the good things are quickly taken for granted. The bad things are often easy
-to describe, whereas the good things are sometimes just the absence of a bad thing — the absence
+to describe, whereas the good things are sometimes just the absence of a bad thing &mdash; the absence
 of some irritation.
 
 This is a fundamental asymmetry, and it has lots of implications, big and
