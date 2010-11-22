@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 
-set :public, Proc.new { File.join(root, "static") }
-
 # This before filter ensures that your pages are only ever served 
 # once (per deploy) by Sinatra, and then by Varnish after that
 #before do
@@ -30,4 +28,13 @@ end
 
 get '/' do
   File.open('static/index.html', &:read)
+end
+
+# static files route (reimplemented outside of Sinatra to make host-dependent redirect work)
+get(/.*[^\/]$/) do
+  public_dir = File.expand_path('static')
+  path = File.expand_path(public_dir + unescape(request.path_info))
+  pass if path[0, public_dir.length] != public_dir
+  pass unless File.file?(path)
+  send_file path, :disposition => nil
 end
