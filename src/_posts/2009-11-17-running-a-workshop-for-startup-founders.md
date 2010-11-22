@@ -36,7 +36,7 @@ workshop to make it more than just a chat. Together with
   [Go Test It](http://go-test.it/) as case study since it is one of the companies in their
   ["accidental incubator"](http://blog.businessofsoftware.org/2009/08/the-accidental-incubator.html).
 * To structure the group discussion, we give each team a
-  [worksheet with ten key questions](/2009/11/18/10-crucial-questions-for-b2b-startup-founders-a-workshop-at-business-of-software-2009/).
+  [worksheet with ten key questions](/2009/11/18/10-crucial-questions-for-b2b-startup-founders-a-workshop-at-business-of-software-2009.html).
   The worksheet is printed on large-format paper (about A1 poster size) so that it can be filled in
   with marker pens and all team members can sit around it easily.
 * Neil, Simon, Amir and I rotate around the room as facilitators. We don't just ask
@@ -51,7 +51,7 @@ workshop to make it more than just a chat. Together with
   is a potential for the workshop to be a lot more than the sum of its parts.
 
 We had
-[put a lot of thought into the worksheet](/2009/11/18/10-crucial-questions-for-b2b-startup-founders-a-workshop-at-business-of-software-2009/)
+[put a lot of thought into the worksheet](/2009/11/18/10-crucial-questions-for-b2b-startup-founders-a-workshop-at-business-of-software-2009.html)
 beforehand, trying to make it a comprehensive but concise summary of the key ingredients to
 successfully marketing and selling a product. We found that it worked very well, but we had to be
 very careful at the same time: those boxes on the sheet, designed with open-ended questions to

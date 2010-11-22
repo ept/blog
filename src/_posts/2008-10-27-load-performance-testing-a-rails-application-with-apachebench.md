@@ -11,7 +11,7 @@ width="375" height="95" align="right" /></a>
 Just over 3 days until
 [Bid for Wine](http://www.bidforwine.co.uk/) goes online! It's great to see this massive project,
 which
-[I've blogged about before](/2008/09/22/bid-for-wine-online-wine-auctions-coming-soon/), finally
+[I've blogged about before](/2008/09/22/bid-for-wine-online-wine-auctions-coming-soon.html), finally
 complete. We will launch on Friday 31 October, the first lots for sale are already lined up
 (including
 [a remarkable bottle](http://bidforwine.wordpress.com/2008/09/28/a-unique-chance/) -- a unique item

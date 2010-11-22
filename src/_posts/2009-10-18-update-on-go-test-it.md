@@ -17,7 +17,7 @@ tips. I will keep this blog as my personal space, for general thoughts on softwa
 I won't inundate you with marketing messages, honestly! :-)
 
 On a personal level, you might recall that
-[I was going to start a PhD](/2009/03/31/doing-a-phd/) around this time. That was back at the
+[I was going to start a PhD](/2009/03/31/doing-a-phd.html) around this time. That was back at the
 beginning of this year, when I didn't know whether Go Test It was really going to go
 anywhere.
 

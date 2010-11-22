@@ -12,7 +12,7 @@ contracts, and had started to build my automated web testing tool,
 [Go Test It](http://go-test.it). At the time I thought Go Test It was going to be a small, simple
 product which would take a few months to build and then mostly look after itself. (In retrospect:
 Hahaha!) I wasn't sure where it was going to go, but I wanted to keep my options open, so I also
-[applied to do a PhD](/2009/03/31/doing-a-phd/) in Cambridge.
+[applied to do a PhD](/2009/03/31/doing-a-phd.html) in Cambridge.
 
 I had to propose a PhD topic, and I
 made up something ad-hoc. I realised that most interesting things are created by individuals, not

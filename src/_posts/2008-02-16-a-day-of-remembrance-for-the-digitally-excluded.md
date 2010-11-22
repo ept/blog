@@ -26,7 +26,7 @@ But then, take a step back. Why are they still distributing
 paper phone books for free? Because there are still many, many people who do not have internet
 access. Many millions in the UK -- and outside the industrialised world it's the vast majority of
 people. That
-[online oxygen](/2007/12/07/trends-2008-web-access-everywhere-e-commerce/) which I take so
+[online oxygen](/2007/12/07/trends-2008-web-access-everywhere-e-commerce.html) which I take so
 completely for granted, it's not actually as omnipresent as I would like to think.
 
 The internet has

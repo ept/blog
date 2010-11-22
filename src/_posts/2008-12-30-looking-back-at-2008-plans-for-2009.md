@@ -44,7 +44,7 @@ future. Without giving away too much detail ahead of time, these are the two mai
 areas:
 
 1. I have
-[previously mentioned how we use Selenium](/2008/09/27/selenium-automated-testing-web-applications/)
+[previously mentioned how we use Selenium](/2008/09/27/selenium-automated-testing-web-applications.html)
 for automated testing of our web applications, and that I would love to use a hosted service which
 will run the tests for us if I could find a service which met our needs. The problem: such a service
 doesn't exist. But it will soon -- we're working on it. **Our automated testing service** will be
@@ -62,7 +62,7 @@ framework to provide a flexible but powerful basis for an invoicing and payments
 next months I will be developing a **free and open source framework** which anybody can use to
 easily create a powerful and flexible invoicing and payment system. It will be **both
 developer-friendly and accountant-friendly** and based on open standards (such as
-[UBL, which I have explored previously](/2008/11/10/the-most-boring-topic-in-the-world-except-for-the-terry-pratchett-references/)).
+[UBL, which I have explored previously](/2008/11/10/the-most-boring-topic-in-the-world-except-for-the-terry-pratchett-references.html)).
 Initially it will be designed for Ruby on Rails apps, but hopefully it will get ported to other
 languages and frameworks later on.
 

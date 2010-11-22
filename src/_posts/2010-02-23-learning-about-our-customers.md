@@ -4,7 +4,7 @@ title: "Learning about our customers"
 ---
 
 Back in December I
-[wrote about my realisation](/2009/12/31/how-we-totally-ignored-our-customers/) that we had not been
+[wrote about my realisation](/2009/12/31/how-we-totally-ignored-our-customers.html) that we had not been
 spending enough time learning about our customers at Go Test It. Since then, I have been working
 hard to catch up in this area, and the last two months have been an incredible experience.
 

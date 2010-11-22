@@ -9,7 +9,7 @@ This afternoon I gave a talk at
 [continuous integration](http://martinfowler.com/articles/continuousIntegration.html)/regression
 testing on the
 [Bid for Wine project which I wrote about
-before](/2008/09/22/bid-for-wine-online-wine-auctions-coming-soon/).
+before](/2008/09/22/bid-for-wine-online-wine-auctions-coming-soon.html).
 
 Here are the slides from my
 presentation:

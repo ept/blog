@@ -22,7 +22,7 @@ found:
 (Most of these sites show their iPhone look only to web browsers which identify themselves as Safari
 Mobile.
 [To test them in a desktop web browser, see this
-article](/2008/01/03/imitating-the-iphone-user-agent-in-firefox/).)
+article](/2008/01/03/imitating-the-iphone-user-agent-in-firefox.html).)
 
 iPhone specific development is
 fashionable, it seems. Some of those sites actually borrow and incorporate iPhone design elements

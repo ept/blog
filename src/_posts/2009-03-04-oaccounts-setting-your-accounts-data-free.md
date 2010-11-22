@@ -19,7 +19,7 @@ matter which email application you use, it just works. Those are open standards.
 
 I have been doing a fair bit of accounting-related work recently, both in keeping my company's
 accounts and in developing the
-[Ruby invoicing gem](/2009/02/12/ruby-invoicing-gem-released/). And I can tell you, all accounting
+[Ruby invoicing gem](/2009/02/12/ruby-invoicing-gem-released.html). And I can tell you, all accounting
 software packages I have seen have proprietary formats, and getting them to work together is a
 nightmare. Espen Antonsen wrote today on
 [CloudAve](http://www.cloudave.com/), a widely-read blog on web-based accounting software and cloud
@@ -57,7 +57,7 @@ specification and a reference implementation for a data format and protocol for 
 interchanging and synchronising accounting data between different software packages. Of course it
 will all be free and open. In particular, I want it to be easier for developers to create
 applications and tools which create/process transactions and do reporting (my
-[Ruby invoicing gem](/2009/02/12/ruby-invoicing-gem-released/) of course falls into this category).
+[Ruby invoicing gem](/2009/02/12/ruby-invoicing-gem-released.html) of course falls into this category).
 
 Many web-based accounting systems have APIs, either RESTful or SOAP, but they are all
 different, and some are woefully incomplete. If a third-party developer wants to integrate with

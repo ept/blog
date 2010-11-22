@@ -24,7 +24,7 @@ addressed if the mobile web wants to move forward.
 Site load time is a tricky problem to address,
 because
 [slowness is mainly due to packet round-trip times on mobile data
-services](/2007/11/23/why-the-mobile-web-is-so-slow/). I see Ajax and Flash to be the most promising
+services](/2007/11/23/why-the-mobile-web-is-so-slow.html). I see Ajax and Flash to be the most promising
 approaches to beat the network latency -- i.e. transferring more data up front in order to make the
 site more responsive once it's loaded. Site navigation is mainly a question of information
 architects figuring out how to present information most effectively on a mobile, and there are

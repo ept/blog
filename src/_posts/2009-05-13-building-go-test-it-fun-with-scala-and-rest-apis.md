@@ -7,7 +7,7 @@ title: "Building Go Test It: Fun with Scala and REST APIs"
 
 [Go Test It](http://go-test.it/), the awesome new web testing product I am currently working on, was
 [announced](http://twitter.com/martinkl/status/1763467765) on Monday. I had
-[hinted at it](/2008/12/30/looking-back-at-2008-plans-for-2009/) back in December, but now that it
+[hinted at it](/2008/12/30/looking-back-at-2008-plans-for-2009.html) back in December, but now that it
 is taking shape it was time for me to start spreading the word.
 
 Please see the

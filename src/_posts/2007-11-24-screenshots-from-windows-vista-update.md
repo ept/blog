@@ -5,7 +5,7 @@ title: "Screenshots from Windows Vista Update"
 
 Jimmy sent me some screenshots of Windows Vista which exemplify
 [my complaints about unclear labelling of
-buttons](/2007/07/19/yes-no-cancel-causes-aspirin-sales-to-soar/) -- a usability problem which
+buttons](/2007/07/19/yes-no-cancel-causes-aspirin-sales-to-soar.html) -- a usability problem which
 occurs so frequently that I've named this whole blog after it. He was running Windows Update, which
 was installing a bunch of software
 updates:

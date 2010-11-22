@@ -4,8 +4,8 @@ title: "Update on German train ticket machines"
 ---
 
 A while ago I wrote some posts about the user interfaces of ticket machines in Germany
-([article 1](/2007/07/24/train-ticket-machines-uk-vs-germany/),
-[article 2](/2007/11/13/train-ticket-machines-in-germany-uk-vs-germany-part-2/)). Meanwhile I am
+([article 1](/2007/07/24/train-ticket-machines-uk-vs-germany.html),
+[article 2](/2007/11/13/train-ticket-machines-in-germany-uk-vs-germany-part-2.html)). Meanwhile I am
 told that they have been improved considerably: the 'Fast purchase' route is now considerably
 faster, requiring a minimum of only 4 or 5 clicks to buy a standard ticket (compare that to 16
 clicks previously!). The way they have done that is to skip the whole timetable thing; instead you

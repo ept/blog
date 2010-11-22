@@ -11,7 +11,7 @@ design errors which can render a product pointless for most of its potential use
 these handy hints together in the form of a calendar -- the
 [Bad Usability Calendar](http://www.badusability.com/). You can download it and print out a copy for
 yourself. Such as I have done, see the photo (which includes a gratuitous reference to
-[potted plants](/2008/01/12/potted-plants-and-the-mobile-web/)). Thanks to
+[potted plants](/2008/01/12/potted-plants-and-the-mobile-web.html)). Thanks to
 [Johannes](http://www.jhauser.de/) for pointing it out to me.</p>
 
 Amusing though the exercise is, it

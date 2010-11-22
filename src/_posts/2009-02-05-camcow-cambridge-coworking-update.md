@@ -28,4 +28,4 @@ all went off to the pub, I gave a quick update on our progress on setting up a
 </div>
 
 If you're interested in looking around the new coworking space
-or want to find out more, please [get in touch](/contact/).
+or want to find out more, please [get in touch](/contact.html).

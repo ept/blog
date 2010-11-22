@@ -31,4 +31,4 @@ Please help me spread the word: take a look at
 [give the gem a try](http://ept.github.com/invoicing/getting_started.html), browse
 [the docs](http://invoicing.rubyforge.org/doc/) and
 [the source](http://github.com/ept/invoicing/), and
-[let me know what you think](/contact/)!
+[let me know what you think](/contact.html)!

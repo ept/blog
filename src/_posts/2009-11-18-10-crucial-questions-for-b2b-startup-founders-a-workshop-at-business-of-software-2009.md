@@ -63,7 +63,7 @@ we created for this workshop under a
 [Creative Commons license](http://creativecommons.org/licenses/by/2.0/uk/) and make them available
 to startups everywhere. You can
 [download the worksheet (PDF)](/2009/11/bos-worksheet.pdf). I have also written up
-[how we structured the workshop and what we learnt in the process](/2009/11/17/running-a-workshop-for-startup-founders/).
+[how we structured the workshop and what we learnt in the process](/2009/11/17/running-a-workshop-for-startup-founders.html).
 
 <p style="text-align: center">
     <a href="/2009/11/bos-worksheet.pdf">
@@ -250,7 +250,7 @@ With all these questions, keep a few principles in mind:
 [an example we filled in](/2009/11/bos-worksheet-example.pdf) (a contrived example based on
 the fast food industry -- not model answers, just to illustrate the kind of answers we're looking
 for). Please also see my
-[separate post on how we ran the workshop](/2009/11/17/running-a-workshop-for-startup-founders/).
+[separate post on how we ran the workshop](/2009/11/17/running-a-workshop-for-startup-founders.html).
 
 Did you find this useful? Please
 [leave a comment](/2009/11/18/10-crucial-questions-for-b2b-startup-founders-a-workshop-at-business-of-software-2009/#respond),

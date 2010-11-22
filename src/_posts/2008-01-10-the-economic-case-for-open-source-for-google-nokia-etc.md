@@ -45,7 +45,7 @@ that company is trying to sell. For instance:
 
 * Google want to sell advertising on mobile web sites. Mobile web browsers and
 mobile operating systems are complements of mobile web sites, so Google make
-[Android](/2007/11/20/android-googles-throw-away-mobile-operating-system/) and release it freely in
+[Android](/2007/11/20/android-googles-throw-away-mobile-operating-system.html) and release it freely in
 order to drive down the price of these
 complements.
 * Our friends at [Collabora](http://www.collabora.co.uk/) are

@@ -4,7 +4,7 @@ title: "Semantic web updates"
 ---
 
 A few weeks ago I
-[noted down some links to current developments of the semantic web](/2008/09/07/barcamp-brighton-notes/). After hearing
+[noted down some links to current developments of the semantic web](/2008/09/07/barcamp-brighton-notes.html). After hearing
 [Tom Morris](http://tommorris.org/) speak again on "The State of the Semantic Web" at
 [BarCampLondon5](http://barcamp.org/BarCampLondon5), here are some
 more:

@@ -50,7 +50,7 @@ could have seemed a bad idea:
 * although I had access to Java libraries, I knew that I would have to write library
   wrappers of my own to make use of the Scala language features;
 * setting up a proper build process was
-  [pretty horrible](/2009/05/13/building-go-test-it-fun-with-scala-and-rest-apis/).
+  [pretty horrible](/2009/05/13/building-go-test-it-fun-with-scala-and-rest-apis.html).
 
 Scala also had some technical merits; particularly the actor model for multithreaded programming was a
 good fit for our problem. Still, in a purely technical consideration, it probably wouldn't have made

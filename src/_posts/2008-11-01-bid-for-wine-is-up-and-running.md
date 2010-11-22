@@ -58,6 +58,6 @@ forum](http://www.wine-pages.com/ubb/ultimatebb.php?ubb=get_topic;f=1;t=017868).
 [Decanter magazine](http://www.decanter.com/), the biggest UK wine magazine, will appear this week
 with an article on Bid for Wine -- I'll be watching the server logs, but
 [having done some thorough load
-testing](/2008/10/27/load-performance-testing-a-rails-application-with-apachebench/), I'm confident
+testing](/2008/10/27/load-performance-testing-a-rails-application-with-apachebench.html), I'm confident
 that we can withstand the wine community's equivalent of a
 [slashdotting](http://en.wikipedia.org/wiki/Slashdot_effect). :-)

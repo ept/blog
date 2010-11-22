@@ -58,7 +58,7 @@ I have no excuse whatsoever for ignoring our customers like I did. Hell, we even
 detailing the steps of a user-centred design process. (Some years ago I thought our company was
 going to be a usability consultancy -- that was before we got into web development and ultimately
 into building Go Test It. Hahaha! By the way, that's
-[why this blog is called Yes/No/Cancel](/2007/07/19/yes-no-cancel-causes-aspirin-sales-to-soar/).)
+[why this blog is called Yes/No/Cancel](/2007/07/19/yes-no-cancel-causes-aspirin-sales-to-soar.html).)
 And nevertheless I totally ignored it. We were not doing anything like user-centred design, let
 alone Customer Development as proposed by Steve Blank, which is a lot further-reaching.
 

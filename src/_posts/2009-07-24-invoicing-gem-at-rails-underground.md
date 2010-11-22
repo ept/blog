@@ -8,7 +8,7 @@ I spoke today at the
 [Ruby Invoicing Gem](http://ept.github.com/invoicing/), the financial transactions library which we
 have been developing as a side-effect of our work on
 [Go Test It](http://go-test.it/) and some client projects. Unlike
-[my previous talk at LRUG](/2009/04/24/my-talk-on-the-invoicing-gem-02/), this was a more
+[my previous talk at LRUG](/2009/04/24/my-talk-on-the-invoicing-gem-02.html), this was a more
 slides-based talk with more on general background and motivation. The
 [slides are now up on Slideshare](http://www.slideshare.net/martinkleppmann/invoicing-gem-sales-payments-in-your-app)
 and also embedded below:

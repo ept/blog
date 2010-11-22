@@ -81,7 +81,7 @@ variables, because there is a need for simple and objective decision-making in o
 conflict and to allow contracts to run smoothly. In non-business life, we instinctively take many
 more things into account. For example, if a friend wants to borrow my bike, I will of course lend it
 to them for free. That doesn't mean that my bike has no value to me (in fact,
-[it is rather important to me](/2008/04/09/tour-de-france-entrepreneurship/)), but rather that I
+[it is rather important to me](/2008/04/09/tour-de-france-entrepreneurship.html)), but rather that I
 think that asking for money would damage our friendship, and I value the friendship much more highly
 than a few pounds.
 

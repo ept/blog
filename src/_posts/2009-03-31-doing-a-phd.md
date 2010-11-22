@@ -58,7 +58,7 @@ from across the web is currently a time-consuming manual process.
 
 My own digital identity, for
 example, is spread all over the interwebs. It manifests itself in
-[my blog](http://www.yes-no-cancel.co.uk/) (which you are currently reading),
+[my blog](/) (which you are currently reading),
 [my LinkedIn profile](http://www.linkedin.com/in/martinkleppmann),
 [my undergraduate dissertation](http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html),
 [my open source projects](http://github.com/ept/),

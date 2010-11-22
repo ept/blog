@@ -98,7 +98,7 @@ I would like to have a discussion with people working independently in and aroun
 Cambridge, to gauge the level of interest. Apparently there was a recent thread on the
 [Refresh Cambridge](http://www.refreshcambridge.org/) mailing list, which is an encouraging starting
 point. Please use the comment facility below or
-[send me an email](/contact/), and please spread the word. If we can get a critical mass together, I
+[send me an email](/contact.html), and please spread the word. If we can get a critical mass together, I
 think we should seriously consider setting up something like this in Cambridge.
 
 **EDIT:** There is currently a lively discussion on the
