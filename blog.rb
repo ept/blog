@@ -13,7 +13,7 @@ set :public, Proc.new { File.join(root, "static") }
 # requests for old yes-no-cancel.co.uk pages
 before do
   if !%w(martin.kleppmann.com localhost).include?(request.host) &&
-      request.path =~ /\A\/[a-zA-Z0-9_!\$%&\(\)\*\+,\-\.\/:;<=>\?@\[\]\^\{\}\|~]+\Z/
+      request.path =~ /\A\/[a-zA-Z0-9_!\$%&\(\)\*\+,\-\.\/:;<=>\?@\[\]\^\{\}\|~]*\Z/
     new_path = request.path.gsub %r{\A(/\d+/\d+/\d+/.*)/\z}, '\1.html'
     halt 301, {"Location" => "http://martin.kleppmann.com#{new_path}"}, <<-HTML
     <h1>Moved Permanently</h1>
