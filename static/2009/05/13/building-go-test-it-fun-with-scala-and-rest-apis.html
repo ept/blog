@@ -1,0 +1,493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Building Go Test It: Fun with Scala and REST APIs &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>Building Go Test It: Fun with Scala and REST APIs</h1>
+            <img class='size-full wp-image-279' src='/2009/05/go-test-it.png' height='177' alt='Go Test It' width='285' />
+<p><a href='http://go-test.it/'>Go Test It</a>, the awesome new web testing product I am currently working on, was <a href='http://twitter.com/martinkl/status/1763467765'>announced</a> on Monday. I had <a href='/2008/12/30/looking-back-at-2008-plans-for-2009/'>hinted at it</a> back in December, but now that it is taking shape it was time for me to start spreading the word.</p>
+
+<p>Please see the <a href='http://go-test.it/'>Go Test It website</a> for details about the product; in summary, it allows web developers and QA teams to very quickly and easily record functional tests on their web application, and plays them back in our own cloud-hosted cross-browser infrastructure. It is going to be the fastest way ever to get started with cross-browser testing, and also provide great tools for running your existing test suites. With <a href='http://go-test.it/'>Go Test It</a>, there will be no more excuses for not having great coverage of automated functional tests.</p>
+
+<p>On this blog I would like to share from time to time some of the technical challenges we have overcome in the process of building this product.</p>
+
+<p><strong>Today: Simple REST APIs in Scala</strong></p>
+
+<p>The Go Test It system consists of a number of different components using different programming languages, different frameworks, different infrastructures. The main user front-end is a <a href='http://rubyonrails.org/'>Rails</a> app, but not all tasks are so well suited to Ruby. In particular, the multi-threaded parts of the system which do a lot of the internal coordination are being written in <a href='http://www.scala-lang.org/'>Scala</a>, a very elegant JVM-based language which lends itself well to this sort of thing.</p>
+
+<p>The various components of the system need to communicate, and depending on the type of interaction needed, we&#8217;re using a combination of a <a href='http://www.rabbitmq.com/'>message queue</a> and <a href='http://en.wikipedia.org/wiki/Representational_State_Transfer'>REST APIs</a>. There is good Java library support for both, and since Scala can seamlessly use Java libraries, it all fits together very nicely.</p>
+
+<p><a href='https://jersey.dev.java.net/'>Jersey</a> is a really neat Java (and, by extension, Scala) library for writing REST APIs. (It falls into a similar category as <a href='http://www.sinatrarb.com/'>Sinatra</a> in the Ruby world.) For example, a resource which returns a HTML document can be written in just a few lines of Scala code:</p>
+<div class='highlight'><pre><span class='k'>package</span> <span class='nn'>com.example.restapi</span>
+<span class='k'>import</span> <span class='nn'>javax.ws.rs._</span>
+
+<span class='nd'>@Path</span><span class='o'>(</span><span class='s'>&quot;/hello&quot;</span><span class='o'>)</span>
+<span class='k'>class</span> <span class='nc'>Hello</span> <span class='o'>{</span>
+  <span class='nd'>@GET</span> <span class='nd'>@Produces</span><span class='o'>(</span><span class='nc'>Array</span><span class='o'>(</span><span class='s'>&quot;text/html&quot;</span><span class='o'>))</span>
+  <span class='k'>def</span> <span class='n'>doGet</span> <span class='k'>=</span> <span class='s'>&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello jersey/scala world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+<span class='o'>}</span>
+</pre>
+</div>
+<p>A resource is defined by a class, annotated with the path(s) under which it can be accessed, and has one or more methods to handle different HTTP verbs (GET, POST, PUT, DELETE), and if you want, also different methods for different content types.</p>
+
+<p>Coda Hale has written up <a href='http://codahale.com/what-makes-jersey-interesting-parameter-classes/'>some really nice examples of using Jersey</a> and doing nice clean error handling of input. His examples are in Java, but translating them into Scala is a very simple exercise &#8211; more or less a matter of removing the type declarations and the semicolons.</p>
+
+<p>But here comes the tricky bit. Given the beautiful code snippet above, how do you actually build and run the thing? That is something I wrestled with for a while, and here I would like to reveal my solution. You can build it with <a href='http://maven.apache.org/'>Maven</a> (for the Ruby guys, it is basically <a href='http://rubyforge.org/projects/rubygems/'>RubyGems</a> and <a href='http://rake.rubyforge.org/'>Rake</a> rolled into one, intended for building Java projects with automatic dependency management). The process is a bit scary, but once it works, it is magic &#8211; it automatically downloads all the right packages, sets the right classpaths and packages up the results of your build into a war file (web archive).</p>
+
+<p>But the scary bit first. You need to declare your dependencies and build properties to Maven, and the prescribed way of doing that is using the most ugly XML configuration file on the planet. I&#8217;m really sorry for the ugliness, but I think it&#8217;s worth it. However, the good news is that you only need to set it up once and never touch it again; once your build is working, you can create resources and handle them in Scala to your heart&#8217;s content. And for a bonus, see below for a Capistrano recipe which allows you to easily deploy the resulting war file to a Tomcat server, again and again.</p>
+
+<p>First, put the following in a file called <code>pom.xml</code> in the base directory of your project:</p>
+<div class='highlight'><pre><span class='cp'>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class='nt'>&lt;project</span> <span class='na'>xmlns=</span><span class='s'>&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class='na'>xmlns:xsi=</span><span class='s'>&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+        <span class='na'>xsi:schemaLocation=</span><span class='s'>&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class='nt'>&gt;</span>
+    <span class='nt'>&lt;modelversion&gt;</span>4.0.0<span class='nt'>&lt;/modelversion&gt;</span>
+    <span class='nt'>&lt;groupid&gt;</span>com.example<span class='nt'>&lt;/groupid&gt;</span>
+    <span class='nt'>&lt;artifactid&gt;</span>restapi<span class='nt'>&lt;/artifactid&gt;</span>
+    <span class='nt'>&lt;packaging&gt;</span>war<span class='nt'>&lt;/packaging&gt;</span>
+    <span class='nt'>&lt;version&gt;</span>1.0-SNAPSHOT<span class='nt'>&lt;/version&gt;</span>
+    <span class='nt'>&lt;name&gt;</span>restapi<span class='nt'>&lt;/name&gt;</span>
+
+    <span class='nt'>&lt;dependencies&gt;</span>
+        <span class='c'>&lt;!-- Scala standard library --&gt;</span>
+        <span class='nt'>&lt;dependency&gt;</span>
+            <span class='nt'>&lt;groupid&gt;</span>org.scala-lang<span class='nt'>&lt;/groupid&gt;</span>
+            <span class='nt'>&lt;artifactid&gt;</span>scala-library<span class='nt'>&lt;/artifactid&gt;</span>
+            <span class='nt'>&lt;version&gt;</span>2.7.2<span class='nt'>&lt;/version&gt;</span>
+        <span class='nt'>&lt;/dependency&gt;</span>
+
+        <span class='c'>&lt;!-- JUnit for testing --&gt;</span>
+        <span class='nt'>&lt;dependency&gt;</span>
+            <span class='nt'>&lt;groupid&gt;</span>junit<span class='nt'>&lt;/groupid&gt;</span>
+            <span class='nt'>&lt;artifactid&gt;</span>junit<span class='nt'>&lt;/artifactid&gt;</span>
+            <span class='nt'>&lt;version&gt;</span>3.8.2<span class='nt'>&lt;/version&gt;</span>
+            <span class='nt'>&lt;scope&gt;</span>test<span class='nt'>&lt;/scope&gt;</span>
+        <span class='nt'>&lt;/dependency&gt;</span>
+
+        <span class='c'>&lt;!-- Jersey and Servlet (for the REST API) --&gt;</span>
+        <span class='nt'>&lt;dependency&gt;</span>
+            <span class='nt'>&lt;groupid&gt;</span>com.sun.jersey<span class='nt'>&lt;/groupid&gt;</span>
+            <span class='nt'>&lt;artifactid&gt;</span>jersey-server<span class='nt'>&lt;/artifactid&gt;</span>
+            <span class='nt'>&lt;version&gt;</span>1.0.3<span class='nt'>&lt;/version&gt;</span>
+        <span class='nt'>&lt;/dependency&gt;</span>
+        <span class='nt'>&lt;dependency&gt;</span>
+            <span class='nt'>&lt;groupid&gt;</span>javax.servlet<span class='nt'>&lt;/groupid&gt;</span>
+            <span class='nt'>&lt;artifactid&gt;</span>servlet-api<span class='nt'>&lt;/artifactid&gt;</span>
+            <span class='nt'>&lt;version&gt;</span>2.4<span class='nt'>&lt;/version&gt;</span>
+            <span class='nt'>&lt;scope&gt;</span>provided<span class='nt'>&lt;/scope&gt;</span>
+        <span class='nt'>&lt;/dependency&gt;</span>
+        <span class='nt'>&lt;dependency&gt;</span>
+            <span class='nt'>&lt;groupid&gt;</span>com.sun.jersey.test.framework<span class='nt'>&lt;/groupid&gt;</span>
+            <span class='nt'>&lt;artifactid&gt;</span>jersey-test-framework<span class='nt'>&lt;/artifactid&gt;</span>
+            <span class='nt'>&lt;version&gt;</span>1.0.3<span class='nt'>&lt;/version&gt;</span>
+            <span class='nt'>&lt;scope&gt;</span>test<span class='nt'>&lt;/scope&gt;</span>
+        <span class='nt'>&lt;/dependency&gt;</span>
+    <span class='nt'>&lt;/dependencies&gt;</span>
+
+    <span class='nt'>&lt;build&gt;</span>
+        <span class='nt'>&lt;plugins&gt;</span>
+            <span class='c'>&lt;!-- Compile to Java 1.6 --&gt;</span>
+            <span class='nt'>&lt;plugin&gt;</span>
+                <span class='nt'>&lt;groupid&gt;</span>org.apache.maven.plugins<span class='nt'>&lt;/groupid&gt;</span>
+                <span class='nt'>&lt;artifactid&gt;</span>maven-compiler-plugin<span class='nt'>&lt;/artifactid&gt;</span>
+                <span class='nt'>&lt;configuration&gt;</span>
+                    <span class='nt'>&lt;source&gt;</span>1.6<span class='nt'>&lt;/source&gt;</span>
+                    <span class='nt'>&lt;target&gt;</span>1.6<span class='nt'>&lt;/target&gt;</span>
+                <span class='nt'>&lt;/configuration&gt;</span>
+                <span class='nt'>&lt;executions&gt;</span>
+                    <span class='nt'>&lt;execution&gt;</span>
+                        <span class='nt'>&lt;phase&gt;</span>compile<span class='nt'>&lt;/phase&gt;</span>
+                        <span class='nt'>&lt;goals&gt;&lt;goal&gt;</span>compile<span class='nt'>&lt;/goal&gt;&lt;/goals&gt;</span>
+                    <span class='nt'>&lt;/execution&gt;</span>
+                <span class='nt'>&lt;/executions&gt;</span>
+            <span class='nt'>&lt;/plugin&gt;</span>
+
+            <span class='c'>&lt;!-- Build Scala sources --&gt;</span>
+            <span class='nt'>&lt;plugin&gt;</span>
+                <span class='nt'>&lt;groupid&gt;</span>org.scala-tools<span class='nt'>&lt;/groupid&gt;</span>
+                <span class='nt'>&lt;artifactid&gt;</span>maven-scala-plugin<span class='nt'>&lt;/artifactid&gt;</span>
+                <span class='nt'>&lt;version&gt;</span>2.10<span class='nt'>&lt;/version&gt;</span>
+                <span class='nt'>&lt;executions&gt;</span>
+                    <span class='nt'>&lt;execution&gt;</span>
+                        <span class='nt'>&lt;id&gt;</span>scala-compile-first<span class='nt'>&lt;/id&gt;</span>
+                        <span class='nt'>&lt;phase&gt;</span>process-resources<span class='nt'>&lt;/phase&gt;</span>
+                        <span class='nt'>&lt;goals&gt;</span>
+                            <span class='nt'>&lt;goal&gt;</span>add-source<span class='nt'>&lt;/goal&gt;</span>
+                            <span class='nt'>&lt;goal&gt;</span>compile<span class='nt'>&lt;/goal&gt;</span>
+                        <span class='nt'>&lt;/goals&gt;</span>
+                    <span class='nt'>&lt;/execution&gt;</span>
+                    <span class='nt'>&lt;execution&gt;</span>
+                        <span class='nt'>&lt;id&gt;</span>scala-test-compile<span class='nt'>&lt;/id&gt;</span>
+                        <span class='nt'>&lt;phase&gt;</span>process-test-resources<span class='nt'>&lt;/phase&gt;</span>
+                        <span class='nt'>&lt;goals&gt;&lt;goal&gt;</span>testCompile<span class='nt'>&lt;/goal&gt;&lt;/goals&gt;</span>
+                    <span class='nt'>&lt;/execution&gt;</span>
+                <span class='nt'>&lt;/executions&gt;</span>
+            <span class='nt'>&lt;/plugin&gt;</span>
+
+            <span class='c'>&lt;!-- Run the application using &quot;mvn glassfish:run&quot; --&gt;</span>
+            <span class='nt'>&lt;plugin&gt;</span>
+                <span class='nt'>&lt;groupid&gt;</span>org.glassfish<span class='nt'>&lt;/groupid&gt;</span>
+                <span class='nt'>&lt;artifactid&gt;</span>maven-glassfish-plugin<span class='nt'>&lt;/artifactid&gt;</span>
+            <span class='nt'>&lt;/plugin&gt;</span>
+        <span class='nt'>&lt;/plugins&gt;</span>
+
+        <span class='nt'>&lt;pluginmanagement&gt;</span>
+            <span class='nt'>&lt;plugins&gt;</span>
+                <span class='nt'>&lt;plugin&gt;</span>
+                    <span class='nt'>&lt;groupid&gt;</span>org.scala-tools<span class='nt'>&lt;/groupid&gt;</span>
+                    <span class='nt'>&lt;artifactid&gt;</span>maven-scala-plugin<span class='nt'>&lt;/artifactid&gt;</span>
+                    <span class='nt'>&lt;version&gt;</span>2.9.1<span class='nt'>&lt;/version&gt;</span>
+                <span class='nt'>&lt;/plugin&gt;</span>
+
+                <span class='nt'>&lt;plugin&gt;</span>
+                    <span class='nt'>&lt;groupid&gt;</span>org.apache.maven.plugins<span class='nt'>&lt;/groupid&gt;</span>
+                    <span class='nt'>&lt;artifactid&gt;</span>maven-compiler-plugin<span class='nt'>&lt;/artifactid&gt;</span>
+                    <span class='nt'>&lt;version&gt;</span>2.0.2<span class='nt'>&lt;/version&gt;</span>
+                <span class='nt'>&lt;/plugin&gt;</span>
+            <span class='nt'>&lt;/plugins&gt;</span>
+        <span class='nt'>&lt;/pluginmanagement&gt;</span>
+    <span class='nt'>&lt;/build&gt;</span>
+
+    <span class='c'>&lt;!-- List of repositories where the various dependencies and plugins can be found --&gt;</span>
+    <span class='nt'>&lt;repositories&gt;</span>
+        <span class='nt'>&lt;repository&gt;</span>
+            <span class='nt'>&lt;id&gt;</span>scala-tools.org<span class='nt'>&lt;/id&gt;</span>
+            <span class='nt'>&lt;name&gt;</span>Scala-tools Maven2 Repository<span class='nt'>&lt;/name&gt;</span>
+            <span class='nt'>&lt;url&gt;</span>http://scala-tools.org/repo-releases<span class='nt'>&lt;/url&gt;</span>
+        <span class='nt'>&lt;/repository&gt;</span>
+
+        <span class='nt'>&lt;repository&gt;</span>
+            <span class='nt'>&lt;id&gt;</span>maven2-repository.dev.java.net<span class='nt'>&lt;/id&gt;</span>
+            <span class='nt'>&lt;name&gt;</span>Java.net Repository for Maven<span class='nt'>&lt;/name&gt;</span>
+            <span class='nt'>&lt;url&gt;</span>http://download.java.net/maven/2/<span class='nt'>&lt;/url&gt;</span>
+            <span class='nt'>&lt;layout&gt;</span>default<span class='nt'>&lt;/layout&gt;</span>
+        <span class='nt'>&lt;/repository&gt;</span>
+
+        <span class='nt'>&lt;repository&gt;</span>
+            <span class='nt'>&lt;id&gt;</span>glassfish-repository<span class='nt'>&lt;/id&gt;</span>
+            <span class='nt'>&lt;name&gt;</span>Java.net Repository for Glassfish<span class='nt'>&lt;/name&gt;</span>
+            <span class='nt'>&lt;url&gt;</span>http://download.java.net/maven/glassfish<span class='nt'>&lt;/url&gt;</span>
+        <span class='nt'>&lt;/repository&gt;</span>
+    <span class='nt'>&lt;/repositories&gt;</span>
+
+    <span class='nt'>&lt;pluginrepositories&gt;</span>
+        <span class='nt'>&lt;pluginrepository&gt;</span>
+            <span class='nt'>&lt;id&gt;</span>scala-tools.org<span class='nt'>&lt;/id&gt;</span>
+            <span class='nt'>&lt;name&gt;</span>Scala-tools Maven2 Repository<span class='nt'>&lt;/name&gt;</span>
+            <span class='nt'>&lt;url&gt;</span>http://scala-tools.org/repo-releases<span class='nt'>&lt;/url&gt;</span>
+        <span class='nt'>&lt;/pluginrepository&gt;</span>
+
+        <span class='nt'>&lt;pluginrepository&gt;</span>
+            <span class='nt'>&lt;id&gt;</span>maven2-repository.dev.java.net<span class='nt'>&lt;/id&gt;</span>
+            <span class='nt'>&lt;name&gt;</span>Java.net Repository for Maven<span class='nt'>&lt;/name&gt;</span>
+            <span class='nt'>&lt;url&gt;</span>http://download.java.net/maven/2/<span class='nt'>&lt;/url&gt;</span>
+            <span class='nt'>&lt;layout&gt;</span>default<span class='nt'>&lt;/layout&gt;</span>
+        <span class='nt'>&lt;/pluginrepository&gt;</span>
+    <span class='nt'>&lt;/pluginrepositories&gt;</span>
+<span class='nt'>&lt;/project&gt;</span>
+</pre>
+</div>
+<p>That was a terrible mouthful. Urgh. But worry not, the worst is over. Just one other XML file, and this one goes in <code>src/main/webapp/WEB-INF/web.xml</code>:</p>
+<div class='highlight'><pre><span class='cp'>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class='nt'>&lt;web-app</span> <span class='na'>xmlns=</span><span class='s'>&quot;http://java.sun.com/xml/ns/j2ee&quot;</span> <span class='na'>version=</span><span class='s'>&quot;2.4&quot;</span>
+        <span class='na'>xmlns:xsi=</span><span class='s'>&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+        <span class='na'>xsi:schemaLocation=</span><span class='s'>&quot;http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;</span><span class='nt'>&gt;</span>
+
+    <span class='nt'>&lt;servlet&gt;</span>
+        <span class='nt'>&lt;servlet-name&gt;</span>Example.com REST API<span class='nt'>&lt;/servlet-name&gt;</span>
+        <span class='nt'>&lt;servlet-class&gt;</span>com.sun.jersey.spi.container.servlet.ServletContainer<span class='nt'>&lt;/servlet-class&gt;</span>
+        <span class='nt'>&lt;init-param&gt;</span>
+            <span class='nt'>&lt;param-name&gt;</span>com.sun.jersey.config.property.packages<span class='nt'>&lt;/param-name&gt;</span>
+            <span class='nt'>&lt;param-value&gt;</span>com.example.restapi<span class='nt'>&lt;/param-value&gt;</span>
+        <span class='nt'>&lt;/init-param&gt;</span>
+        <span class='nt'>&lt;load-on-startup&gt;</span>1<span class='nt'>&lt;/load-on-startup&gt;</span>
+    <span class='nt'>&lt;/servlet&gt;</span>
+
+    <span class='nt'>&lt;servlet-mapping&gt;</span>
+        <span class='nt'>&lt;servlet-name&gt;</span>Example.com REST API<span class='nt'>&lt;/servlet-name&gt;</span>
+        <span class='nt'>&lt;url-pattern&gt;</span>/*<span class='nt'>&lt;/url-pattern&gt;</span>
+    <span class='nt'>&lt;/servlet-mapping&gt;</span>
+
+    <span class='nt'>&lt;session-config&gt;</span>
+        <span class='nt'>&lt;session-timeout&gt;</span>30<span class='nt'>&lt;/session-timeout&gt;</span>
+    <span class='nt'>&lt;/session-config&gt;</span>
+<span class='nt'>&lt;/web-app&gt;</span>
+</pre>
+</div>
+<p>And that&#8217;s all the boilerplate you need. You can now write the actual code, with Scala source files in <code>src/main/scala</code> and Java source files in <code>src/main/java</code> (if you want to use Java alongside Scala). For example, place the source for the Hello resource above in <code>src/main/scala/com/example/restapi/Hello.scala</code>. Tests go in <code>src/test/scala</code> and <code>src/test/java</code> respectively.</p>
+
+<p>Now go and build it! (You need to have Maven 2.0.9 or newer installed.) The two most useful commands are <code>mvn package</code>, which compiles and packages your project, and places the result in <code>target/restapi-1.0-SNAPSHOT.war</code>, and <code>mvn glassfish:run</code>, which launches an embedded <a href='https://glassfish.dev.java.net/'>Glassfish</a> application server and serves your new REST API on <code>http://localhost:8080/</code> for local testing. The example resource which we defined above would then be accessible at <code>http://localhost:8080/hello</code> in your web browser.</p>
+
+<p>If you don&#8217;t have the dependencies yet, Maven will go away and download them. This will take a while, but they won&#8217;t be re-downloaded once you have them. It&#8217;s a bit frightening at first to watch Maven doing its magic, but in my limited experience so far it has always done a good job.</p>
+
+<p>Now for the bonus points. Just building your app locally is not enough; you also need to deploy it to a server and make it accessible to the world. In our case this is <a href='http://tomcat.apache.org/'>Tomcat</a>, but any standard Java web container should do. I wanted to use <a href='http://www.capify.org/'>Capistrano</a> for deployment, because it gets a lot of things right and also fits well into the rest of our system which does have a lot of Ruby in it. There is an existing <a href='http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat'>Capistrano recipe for deploying war files to Tomcat</a>, but it needed a bit of improvement, so my own version is included below.</p>
+
+<p>These deployment instructions assume you&#8217;re running a <a href='http://www.debian.org/releases/stable/'>Debian Lenny</a> system, with a <code>restapi</code> user account; for other systems, you&#8217;ll need to customise it to suit.</p>
+
+<p>Create the following shell script in <code>/etc/tomcat5.5/symlink-webapp</code> and make it executable:</p>
+<div class='highlight'><pre><span class='c'>#!/bin/sh</span>
+<span class='c'># Allows an unprivileged user to deploy an application to Tomcat. Add a rule for this</span>
+<span class='c'># script and /etc/init.d/tomcat to /etc/sudoers. Then to deploy an application, call:</span>
+<span class='c'>#     sudo /etc/tomcat5.5/symlink-webapp webapp-name /location/of/war/file</span>
+<span class='nv'>NAME</span><span class='o'>=</span><span class='sb'>`</span><span class='nb'>echo</span> <span class='s2'>&quot;$1&quot;</span> | sed -e <span class='s1'>&#39;s/\[^a-zA-Z0-9\\.-\]//g&#39;</span><span class='sb'>`</span>
+<span class='nb'>echo</span> <span class='s2'>&quot;ln -f -s \&quot;$2\&quot; /var/lib/tomcat5.5/webapps/$NAME&quot;</span>
+ln -f -s <span class='s2'>&quot;$2&quot;</span> /var/lib/tomcat5.5/webapps/<span class='nv'>$NAME</span>
+</pre>
+</div>
+<p>Next, add the following line to <code>/etc/sudoers</code>:</p>
+<div class='highlight'><pre>restapi ALL = NOPASSWD: /etc/init.d/tomcat5.5, /etc/tomcat5.5/symlink-webapp
+</pre>
+</div>
+<p>With that set up, here&#8217;s the <code>Capfile</code> for you to put in the base directory of your project:</p>
+<div class='highlight'><pre><span class='c1'># This recipe is based on:</span>
+<span class='c1'># http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat</span>
+
+<span class='nb'>load</span> <span class='s1'>&#39;deploy&#39;</span>
+<span class='n'>set</span> <span class='ss'>:application</span><span class='p'>,</span> <span class='s2'>&quot;restapi&quot;</span>
+
+<span class='c1'># DEPLOYMENT SCHEME</span>
+<span class='n'>set</span> <span class='ss'>:scm</span><span class='p'>,</span> <span class='ss'>:none</span>
+<span class='n'>set</span> <span class='ss'>:deploy_via</span><span class='p'>,</span> <span class='ss'>:copy</span>
+<span class='n'>set</span> <span class='ss'>:repository</span> <span class='k'>do</span>
+  <span class='n'>fetch</span><span class='p'>(</span><span class='ss'>:deploy_from</span><span class='p'>)</span>
+<span class='k'>end</span>
+
+<span class='c1'># LOCAL</span>
+<span class='n'>set</span> <span class='ss'>:war_path</span><span class='p'>,</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='no'>File</span><span class='o'>.</span><span class='n'>dirname</span><span class='p'>(</span><span class='bp'>__FILE__</span><span class='p'>)</span><span class='si'>}</span><span class='s2'>/target/*.war&quot;</span>
+
+<span class='c1'># TOMCAT SERVERS</span>
+<span class='n'>role</span> <span class='ss'>:webserver</span><span class='p'>,</span> <span class='s2'>&quot;server.example.com&quot;</span>
+<span class='n'>set</span> <span class='ss'>:tomcat_home</span><span class='p'>,</span> <span class='s2'>&quot;/var/lib/tomcat5.5&quot;</span>
+<span class='n'>set</span> <span class='ss'>:tomcat_ctrl</span><span class='p'>,</span> <span class='s2'>&quot;/etc/init.d/tomcat5.5&quot;</span>
+<span class='n'>set</span> <span class='ss'>:deploy_to</span><span class='p'>,</span> <span class='s2'>&quot;/home/restapi/deploy&quot;</span>
+
+<span class='c1'># USER LOGIN</span>
+<span class='n'>set</span> <span class='ss'>:user</span><span class='p'>,</span> <span class='s2'>&quot;restapi&quot;</span>
+<span class='n'>ssh_options</span><span class='o'>[</span><span class='ss'>:keys</span><span class='o'>]</span> <span class='o'>=</span> <span class='no'>File</span><span class='o'>.</span><span class='n'>expand_path</span><span class='p'>(</span><span class='s1'>&#39;~/.ssh/my_private_ssh_key&#39;</span><span class='p'>)</span>
+<span class='n'>set</span> <span class='ss'>:use_sudo</span><span class='p'>,</span> <span class='kp'>false</span>
+<span class='n'>default_run_options</span><span class='o'>[</span><span class='ss'>:pty</span><span class='o'>]</span> <span class='o'>=</span> <span class='kp'>true</span>
+
+<span class='n'>set</span> <span class='ss'>:deploy_from</span> <span class='k'>do</span>
+  <span class='n'>dir</span> <span class='o'>=</span> <span class='s2'>&quot;/tmp/prep_</span><span class='si'>#{</span><span class='n'>release_name</span><span class='si'>}</span><span class='s2'>&quot;</span>
+  <span class='nb'>system</span><span class='p'>(</span><span class='s2'>&quot;mkdir -p </span><span class='si'>#{</span><span class='n'>dir</span><span class='si'>}</span><span class='s2'>&quot;</span><span class='p'>)</span>
+  <span class='n'>dir</span>
+<span class='k'>end</span>
+
+
+<span class='c1'># simple interactions with the tomcat server</span>
+<span class='n'>namespace</span> <span class='ss'>:tomcat</span> <span class='k'>do</span>
+  <span class='n'>desc</span> <span class='s2'>&quot;start tomcat&quot;</span>
+  <span class='n'>task</span> <span class='ss'>:start</span> <span class='k'>do</span>
+    <span class='n'>sudo</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>tomcat_ctrl</span><span class='si'>}</span><span class='s2'> start&quot;</span>
+  <span class='k'>end</span>
+
+  <span class='n'>desc</span> <span class='s2'>&quot;stop tomcat&quot;</span>
+  <span class='n'>task</span> <span class='ss'>:stop</span> <span class='k'>do</span>
+    <span class='n'>sudo</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>tomcat_ctrl</span><span class='si'>}</span><span class='s2'> stop&quot;</span>
+  <span class='k'>end</span>
+
+  <span class='n'>desc</span> <span class='s2'>&quot;stop and start tomcat&quot;</span>
+  <span class='n'>task</span> <span class='ss'>:restart</span> <span class='k'>do</span>
+    <span class='n'>tomcat</span><span class='o'>.</span><span class='n'>stop</span>
+    <span class='n'>tomcat</span><span class='o'>.</span><span class='n'>start</span>
+  <span class='k'>end</span>
+
+  <span class='n'>desc</span> <span class='s2'>&quot;tail :tomcat_home/logs/*.log and logs/catalina.out&quot;</span>
+  <span class='n'>task</span> <span class='ss'>:tail</span> <span class='k'>do</span>
+    <span class='n'>stream</span> <span class='s2'>&quot;tail -f </span><span class='si'>#{</span><span class='n'>tomcat_home</span><span class='si'>}</span><span class='s2'>/logs/*.log </span><span class='si'>#{</span><span class='n'>tomcat_home</span><span class='si'>}</span><span class='s2'>/logs/catalina.out&quot;</span>
+  <span class='k'>end</span>
+<span class='k'>end</span>
+
+
+<span class='c1'># Before everything else, build the application with maven and copy</span>
+<span class='c1'># the war file to a temporary directory.</span>
+<span class='n'>before</span> <span class='s1'>&#39;deploy:update_code&#39;</span> <span class='k'>do</span>
+  <span class='n'>cmd</span> <span class='o'>=</span> <span class='s2'>&quot;mvn clean package&quot;</span>
+  <span class='nb'>puts</span> <span class='n'>cmd</span><span class='p'>;</span> <span class='nb'>system</span> <span class='n'>cmd</span> <span class='ow'>or</span> <span class='k'>raise</span> <span class='s2'>&quot;</span><span class='se'>\&quot;</span><span class='si'>#{</span><span class='n'>cmd</span><span class='si'>}</span><span class='se'>\&quot;</span><span class='s2'> failed&quot;</span>
+  <span class='n'>set</span> <span class='ss'>:war</span><span class='p'>,</span> <span class='no'>Dir</span><span class='o'>[</span><span class='n'>war_path</span><span class='o'>].</span><span class='n'>first</span>
+  <span class='n'>cmd</span> <span class='o'>=</span> <span class='s2'>&quot;cp </span><span class='si'>#{</span><span class='n'>war</span><span class='si'>}</span><span class='s2'> </span><span class='si'>#{</span><span class='n'>deploy_from</span><span class='si'>}</span><span class='s2'>&quot;</span>
+  <span class='nb'>puts</span> <span class='n'>cmd</span><span class='p'>;</span> <span class='nb'>system</span> <span class='n'>cmd</span> <span class='ow'>or</span> <span class='k'>raise</span> <span class='s2'>&quot;</span><span class='se'>\&quot;</span><span class='si'>#{</span><span class='n'>cmd</span><span class='si'>}</span><span class='se'>\&quot;</span><span class='s2'> failed&quot;</span>
+<span class='k'>end</span>
+
+
+<span class='c1'># Restart tomcat at the end of deployment</span>
+<span class='n'>namespace</span> <span class='ss'>:deploy</span> <span class='k'>do</span>
+  <span class='n'>task</span> <span class='ss'>:restart</span> <span class='k'>do</span>
+    <span class='n'>cmd</span> <span class='o'>=</span> <span class='s2'>&quot;/etc/tomcat5.5/symlink-webapp </span><span class='si'>#{</span><span class='n'>application</span><span class='si'>}</span><span class='s2'>.war </span><span class='si'>#{</span><span class='n'>deploy_to</span><span class='si'>}</span><span class='s2'>/current/`basename </span><span class='si'>#{</span><span class='n'>war</span><span class='si'>}</span><span class='s2'>`&quot;</span>
+    <span class='nb'>puts</span> <span class='n'>cmd</span>
+    <span class='n'>sudo</span> <span class='n'>cmd</span>
+    <span class='n'>tomcat</span><span class='o'>.</span><span class='n'>restart</span>
+  <span class='k'>end</span>
+<span class='k'>end</span>
+
+
+<span class='c1'># Disable all the default tasks that</span>
+<span class='c1'># either don&#39;t apply, or I haven&#39;t made work.</span>
+<span class='n'>namespace</span> <span class='ss'>:deploy</span> <span class='k'>do</span>
+  <span class='o'>[</span> <span class='ss'>:upload</span><span class='p'>,</span> <span class='ss'>:cold</span><span class='p'>,</span> <span class='ss'>:start</span><span class='p'>,</span> <span class='ss'>:stop</span><span class='p'>,</span> <span class='ss'>:migrate</span><span class='p'>,</span> <span class='ss'>:migrations</span> <span class='o'>].</span><span class='n'>each</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>default_task</span><span class='o'>|</span>
+    <span class='n'>desc</span> <span class='s2'>&quot;[internal] disabled&quot;</span>
+    <span class='n'>task</span> <span class='n'>default_task</span> <span class='k'>do</span>
+      <span class='c1'># disabled</span>
+    <span class='k'>end</span>
+  <span class='k'>end</span>
+
+  <span class='n'>namespace</span> <span class='ss'>:web</span> <span class='k'>do</span>
+    <span class='o'>[</span> <span class='ss'>:disable</span><span class='p'>,</span> <span class='ss'>:enable</span> <span class='o'>].</span><span class='n'>each</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>default_task</span><span class='o'>|</span>
+      <span class='n'>desc</span> <span class='s2'>&quot;[internal] disabled&quot;</span>
+      <span class='n'>task</span> <span class='n'>default_task</span> <span class='k'>do</span>
+        <span class='c1'># disabled</span>
+      <span class='k'>end</span>
+    <span class='k'>end</span>
+  <span class='k'>end</span>
+
+  <span class='n'>namespace</span> <span class='ss'>:pending</span> <span class='k'>do</span>
+    <span class='o'>[</span> <span class='ss'>:default</span><span class='p'>,</span> <span class='ss'>:diff</span> <span class='o'>].</span><span class='n'>each</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>default_task</span><span class='o'>|</span>
+      <span class='n'>desc</span> <span class='s2'>&quot;[internal] disabled&quot;</span>
+      <span class='n'>task</span> <span class='n'>default_task</span> <span class='k'>do</span>
+        <span class='c1'># disabled</span>
+      <span class='k'>end</span>
+    <span class='k'>end</span>
+  <span class='k'>end</span>
+<span class='k'>end</span>
+</pre>
+</div>
+<p>So there we go. For the first time use <code>cap deploy:setup</code> to create the directories on the server, and thereafter always type <code>cap deploy</code>. Those 11 keystrokes are all you need to fetch all the dependencies (no more troubles replicating your build environment on different development machines), build a clean copy of the entire app, ship it off to the server and run it. And your app can be all in beautiful, concise and type-safe Scala. I have survived the XML deluge and I am happy :-)</p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2009/05/13/building-go-test-it-fun-with-scala-and-rest-apis.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

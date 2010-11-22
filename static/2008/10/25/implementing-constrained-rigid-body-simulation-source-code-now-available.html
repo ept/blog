@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Implementing constrained rigid body simulation - source code now available &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>Implementing constrained rigid body simulation - source code now available</h1>
+            <p>My final-year project at university was on &#8221;<a href='http://maniation.com/'>Rigid body simulation for 3D character animation</a>&#8221;, which is a very fancy way of saying that I spent a year trying to make a video of a person falling down a flight of stairs. Without hurting any real people obviously &#8211; it&#8217;s all simulated and 3D animated, and most of the content of the project is working out the maths and the algorithms to calculate how bodies move and rotate in space, how they collide, and how they react when they are being held together by joints. I started out on that project thinking it would be fun, and it actually turned out to be fairly hard, so I <a href='http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html'>published the results in a technical report</a> of the University of Cambridge afterwards.</p>
+
+<p>More importantly, <a href='http://www.youtube.com/watch?v=WJLJlTx0M0E'>here&#8217;s the video</a> which was the end result of the project. It presents several scenes of increasing complexity:</p>
+
+<ul>
+<li>starting with simple pendulums (2 pendulums joined together, as well as 3-part, 8-part and 25-part pendulums &#8211; demonstrating basic rigid body movement and simple joint constraints),</li>
+
+<li>continuing with <a href='http://en.wikipedia.org/wiki/Newton&apos;s_cradle'>Newton&#8217;s Cradle</a> (aka Newton&#8217;s Balls) with both fully elastic and less ideal collisions,</li>
+
+<li>followed by a scene of 10 cubes falling, bouncing off a table and off each other (demonstrating more complex collisions and resting contact between bodies),</li>
+
+<li>and ending with two scenes in which a human figure (Alfred) falls down a straight staircase and a spiral staircase (lots of complex joints, collisions and interactions going on).</li>
+</ul>
+<object height='350' classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' width='425' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0'><param name='src' value='http://www.youtube.com/v/WJLJlTx0M0E' /><embed src='http://www.youtube.com/v/WJLJlTx0M0E' type='application/x-shockwave-flash' height='350' width='425' /></object>
+<p>There&#8217;s a better quality MPEG download on <a href='http://www.maniation.com'>maniation.com</a>. Feel free to <a href='http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html'>download and read the report</a>; it&#8217;s not the most exciting read and contains a lot of maths, but it does contain one or two minor new discoveries. I tried to make it unpretentious and useful by explaining the material in such a way that it serves as a readable and useful introduction to the topic (mainly because I struggled to find decent introductory texts myself).</p>
+
+<p>And in fact, in the 2 years since I completed the project I have had a few people contact me and ask for further details and/or bits of source code for their own projects. I have not developed it any further and probably won&#8217;t be doing so anytime soon, but I&#8217;m still keen to hear from anybody who&#8217;s doing things in this space. And as a help for anybody working on their own physics engine, I am now releasing some of the source code from my project.</p>
+
+<p><strong>SOURCE CODE NOW AVAILABLE</strong></p>
+
+<p>The code is in Java 5 and covers some of the fundamental data structures and algorithms which I needed to implement:</p>
+
+<ul>
+<li>A bunch of mathematical datatypes: vectors, matrices, sparse matrices, quaternions etc.</li>
+
+<li>Some numerical algorithms: a Runge-Kutta ODE solver and a conjugate gradient solver for systems of linear equations. These are taken from <a href='http://www.nr.com/'>Numerical Recipes</a>.</li>
+
+<li>Implementations of a number of different constraint and collision types, as described in the report. This includes code for the Jacobians, those crazy matrices which get unbelievably complicated for some of the more tricky types of constraint.</li>
+
+<li>An implementation of the simulation loop using constraints and collisions, variable step sizes, and backtracking to find the time of a collision.</li>
+</ul>
+
+<p>Note that this is not elegant, optimised or even particularly robust code; if you&#8217;re writing a computer game and need a physics engine, consider using something like the <a href='http://www.ode.org/'>Open Dynamics Engine</a> (open source), <a href='http://www.tokamakphysics.com/'>Tokamak</a> (open source) or <a href='http://www.havok.com/'>Havok</a> (commercial). But if you want to learn how to make a simulation like this using <a href='http://en.wikipedia.org/wiki/Lagrange_multiplier'>Lagrange multiplier</a> methods, then maybe this is for you.&lt;/p&gt;</p>
+
+<p>You will quickly notice that the source is not complete. Hell, there&#8217;s not even a &#8216;main&#8217; method. That&#8217;s deliberate &#8211; this code is there to help you figure out how this stuff works, it&#8217;s not intended to work out of the box. If you want to write an application which uses it, you&#8217;re probably going to have read the whole report and some of the papers it references, read all of the code, think about it for a while, get annoyed about the fact that I didn&#8217;t put more comments in the code (sorry), and then start writing some stuff around it.</p>
+
+<p>Nevertheless, I hope it will be useful. I release it under a <a href='http://www.opensource.org/licenses/mit-license.php'>MIT license</a>.</p>
+
+<p><a href='http://www.maniation.com/maniation.zip'>Download the source code</a></p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2008/10/25/implementing-constrained-rigid-body-simulation-source-code-now-available.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

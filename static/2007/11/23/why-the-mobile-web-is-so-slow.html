@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Why the mobile web is so slow &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>Why the mobile web is so slow</h1>
+            <p>On the &#8220;desktop/laptop web&#8221; (in contrast to the mobile web), we&#8217;ve become used to a page loading in about a second. On mobile phones, we are still far from seeing anything near that responsiveness &#8211; for most people, the mobile web experience is still agonisingly slow. Personally, I start to get irritated after about five seconds, and after as little as ten seconds there is a strong chance that I will go away and do something else. And currently it&#8217;s still a challenge to get a page to load within that timeframe on a mobile.</p>
+
+<p>Ever wondered why it is so slow? Yesterday I was reading a few articles, and I repeatedly came across people who made a very simplistic assumption: namely that the available network bandwidth is fully used. For example, they will say: on a standard 3G/UMTS connection, each subscriber can transfer 384 kbit/s, therefore a 24 kB web page (text and a few small pictures) will load in 0.5 seconds. Honestly, if you&#8217;ve <em>ever</em> tried to access even a simple web page from a phone you know that this figure is just laughably wrong. It is <em>never</em> that fast.</p>
+
+<p>Finally, after lots of searching, I found <a href='http://research.microsoft.com/~pablo/papers/www04.pdf'>this paper</a> by <a href='http://blog.rodriguezrodriguez.com/'>Pablo Rodriguez</a>, <a href='http://www1.bell-labs.com/user/sarit/'>Sarit Mukherjee</a> and Sampath Rangarajan. And they give some good reasons why this is the case:</p>
+
+<ul>
+<li>The round-trip time for packets is between 400 and 1000 ms in a typical 3G cell.</li>
+
+<li>Packets loss is inevitable in wireless transmissions because of radio interference. There are two approaches to packet loss: either let TCP deal with retransmission (in which case it thinks the network is congested, and reduces the transfer rate), or to retransmit lost packets in a low-level protocol (in which case the round-trip times observed by TCP can vary wildly, which confuses TCP and also reduces the transfer rate).</li>
+</ul>
+
+<p>In a nutshell, TCP is really not up to the job, but it&#8217;s so widely used that there is basically no chance that it is going to be replaced anytime so on. (WAP included a layer called the <a href='http://www.protocols.com/pbook/wap.htm'>Wireless Transaction Protocol</a>, which attempted to be a better replacement for TCP. But we know what happened to WAP &#8211; nobody wants to use it.) In their paper, Rodriguez et al. go on to describe a method for partially getting round the problem by rewriting DNS and HTTP responses &#8211; it&#8217;s not ideal, but at least it removes some of the worst problems.</p>
+
+<p>The real problem here is that round-trip time though. On a normal broadband connection I&#8217;d expect a round-trip time between 25 ms (within the UK) and 125 ms (across the Atlantic). On 3G, even though the bandwidth is not that much lower than broadband, we&#8217;ve got a round-trip time 8 to 15 times higher. And this time really becomes noticeable every time you click on a link:</p>
+
+<ul>
+<li>Send a DNS request for the hostname we want to contact, and wait for the response. (Unless we&#8217;ve cached the DNS record on the handset.)</li>
+
+<li>Send a TCP SYN packet to the server we want to contact, and wait for the response.</li>
+
+<li>Send the HTTP query over the established TCP connection.</li>
+</ul>
+
+<p>This means that every time we click a link, we have to wait 2 or 3 round trip times &#8211; i.e. between 0.8 and 3.0 seconds &#8211; until we get the very first few bytes of the page we requested. That&#8217;s assuming that none of those first few packets got lost (because if one of them was lost, there would be no way of telling &#8211; all you can do is wait for a timeout and try again). And then we still have to transfer the whole page, and have all the TCP issues to deal with.</p>
+
+<p>I just hope that mobile phones nowadays use <a href='http://en.wikipedia.org/wiki/HTTP_persistent_connection'>persistent HTTP connections</a> or <a href='http://en.wikipedia.org/wiki/HTTP_pipelining'>pipelining</a> which would remove some of the overheads. Does anybody know if they do? I&#8217;d like to hear from you.</p>
+
+<p>PS. I thought I had accidentally deleted this post &#8211; fortunately I managed to find it again, hidden away in a binary mess, in the MySQL log file! :-)</p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2007/11/23/why-the-mobile-web-is-so-slow.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

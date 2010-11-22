@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>i18n and social web: We still haven't figured it out &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>i18n and social web: We still haven't figured it out</h1>
+            <p>Internationalisation (i18n for short, where 18 represents the 18 letters in the middle of this long word) is still an unsolved problem.</p>
+
+<p>A lot of things fall under i18n, such as correct handling of character sets (not everybody uses the Latin alphabet), time zones (not everybody uses PST or GMT), numbers (not everybody uses the dot as decimal separator), currencies (there is a world outside the US dollar), writing direction (not everybody writes from left to right) and of course translation into different languages. Traditionally, i18n has been an issue which software engineers have loved to ignore, because (a) it&#8217;s difficult, (b) it&#8217;s not cool, and (c) if you&#8217;re in North America, you can find enough customers in North America for the first few years, so there isn&#8217;t a strong business requirement to work internationally.</p>
+
+<p>Now that we have the web, and people from many different languages and cultures interacting on the web, getting internationalisation right is absolutely essential. And it&#8217;s getting better &#8211; I think most developers now appreciate that you&#8217;ve got to use Unicode, that you&#8217;ve got to store dates and times with timezones, that you need to make text translatable. Ok, at least that&#8217;s something. But I think that soon we will get to a point where the traditional approach to translating applications breaks down.</p>
+
+<p>Let me explain.</p>
+
+<p>The way software engineers usually make their applications work in multiple languages is to mark every human-readable bit of text in the program in some particular way, to extract those bits of text, give them to a translation bureau, and get back an equivalent set of texts to substitute in-place. The result should hopefully be that the application appears entirely in a new language.</p>
+
+<p>Even this simple form of translation isn&#8217;t working everywhere. For example, if you update your Twitter status in a German web browser, it says that you updated &#8221;weniger als 5 Sekunden ago&#8221;. Here &#8220;ago&#8221; is an English word, but the rest is German; to a German-speaker, this reads like &#8220;vor less than 5 seconds&#8221; reads to an English-speaker. This is simply a case of some of those bits of text getting forgotten; not a big problem, and I&#8217;m sure they will fix it soon, but enough to make German-speakers uncomfortable using the application because it&#8217;s constantly offending against their sense of language.</p>
+
+<p>However, things get harder once you start building sentences based on variables which may change. The Twitter message is a simple example of this: the time is a variable, and because it&#8217;s in the past (not in the future), we need to stick &#8220;ago&#8221; on the end, in English at least. The code which does this will look something like this:</p>
+<div class='highlight'><pre><span class='n'>time_in_words</span> <span class='o'>=</span> <span class='n'>distance_of_time_in_words</span><span class='p'>(</span><span class='n'>time_of_last_update</span><span class='p'>,</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
+<span class='n'>time_in_words</span> <span class='o'>=</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>time_in_words</span><span class='si'>}</span><span class='s2'> ago&quot;</span><span class='err'> </span><span class='k'>if</span> <span class='p'>(</span><span class='n'>time_of_last_update</span> <span class='o'>&lt;</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
+</pre>
+</div>
+<p>To translate this program, make sure that the function <code>distance_of_time_in_words</code> returns words in the right language (e.g. for German, &#8220;weniger als 5 Sekunden&#8221; &#8211; Twitter does this correctly), and replace <code>&quot;#{time_in_words} ago&quot;</code> with the right grammatical construction for the target language (e.g. for German, <code>&quot;vor #{time_in_words}&quot;</code> &#8211; this is the bit Twitter has missed out).</p>
+
+<p>The way we use <code>time_in_words</code> as a variable we can insert words before or after it to make the right grammatical construction. Fairly flexible, but is this enough?</p>
+
+<p>Over the past few days I have been developing a Facebook application. It&#8217;s not even internationalised, it&#8217;s just plain English, but nevertheless I have come across a problem of grammatical constructions. Take for example a message in the news feed, which might look different depending on who looks at it:</p>
+
+<ul>
+<li>Mike has given John a pat on the shoulder because he has done well. (seen by a bystander)</li>
+
+<li>Mike has given you a pat on the shoulder because you have done well. (seen by John)</li>
+
+<li>You have given John a pat on the shoulder because he has done well. (seen by Mike)</li>
+</ul>
+
+<p>First of all, note that the subject (Mike) and object (John) can be either a name, or &#8216;you&#8217;. Facebook offers the facility to do this using the <a href='http://wiki.developers.facebook.com/index.php/Fb:name'><code>&lt;fb:name&gt;</code> tag</a>; as developers, we are even given the opportunity to say whether we want the &#8220;you&#8221; to start with a capital letter (depending on whether it occurs at the beginning or in the middle of the sentence). Next, we use a pronoun &#8211; &#8220;because <strong>he</strong> has done well&#8221;. This depends on the gender of John, but we know from his profile that he is male, so it has to be &#8220;he&#8221; not &#8220;she&#8221;. Facebook does this using the <a href='http://wiki.developers.facebook.com/index.php/Fb:pronoun'><code>&lt;fb:pronoun&gt;</code> tag</a>.</p>
+
+<p>So far, so good. Now note that the verb form changes between second and third person (have/has). There is no way in Facebook to do this (it was <a href='http://wiki.developers.facebook.com/index.php/Requested_FBML_Tags#.3Cfb:verb.3E'>requested more than a year ago</a> but <a href='http://bugs.developers.facebook.com/show_bug.cgi?id=514'>still hasn&#8217;t happened</a>). In case you ever wondered why the Facebook news feed is always in the simple past but never in present perfect &#8211; that&#8217;s because in English, the verb forms for second and third person are the same in simple past, which is not the case in other tenses! (In &#8220;You threw a banana at Bob&#8221; and &#8220;Alice threw a banana at you&#8221;, the verb is &#8220;threw&#8221; in both cases; in &#8220;You have thrown a banana at Bob&#8221; and &#8220;Alice has thrown a banana at you&#8221;, the verb forms &#8220;have thrown&#8221; and &#8220;has thrown&#8221; are not the same.)</p>
+
+<p>The part &#8220;a pat on the shoulder&#8221; stays the same in all sentences, but that&#8217;s just because English happens to work that way &#8211; in other languages or cultures, it may have to be modified depending on e.g. the gender or even the age of the people involved. Or the verb (have/has given) may have to change depending on some parameter of the direct object (&#8216;a pat on the shoulder&#8217;). There may be languages in which the name of a person changes if it is used as an indirect object. And so on.</p>
+
+<p>You can get up to a certain point by duplicating text, e.g. providing a separate snippet of text for each possible combination of values which may occur; then translators can deal with each individually, and ensure that it is correct. But very quickly you get into a situation where the number of combinations is so large that this approach just doesn&#8217;t scale.</p>
+
+<p>The bottom line is that in general you can&#8217;t build a grammatically correct sentence by just sticking words together, even if you make the word order variable. In languages with declension and other grammatical changes to words, or languages where the word order changes depending on some variable, or languages with separable verbs&#8230; well, I don&#8217;t know what happens then. It&#8217;s an unsolved problem.</p>
+
+<p>(There is another subtle point here, which is that cultural differences may mean that even if you translate something in a grammatically correct way, it may have the wrong connotations in the reader&#8217;s culture; for instance, consider a culture in which patting on the shoulder is considered offensive. But in such cases, it could be replaced with another gesture which has the desired meaning. I will just concentrate on the grammatical level for now.)</p>
+
+<p>The only step I&#8217;ve seen so far towards making internationalisable grammar is the <a href='http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflections.html#M001044'>&#8216;pluralize&#8217;</a> function which you find in some frameworks such as Rails. It takes a number (such as 0, 1, 2, 29 or 518514) and a singular noun (such as &#8216;camel&#8217;) and returns the text in the appropriate singular or plural form (e.g. &#8220;29 camels&#8221;) &#8211; and it works in a wide selection of languages (e.g. in German, <code>pluralize(29, &#39;Kamel&#39;) == &#39;29 Kamele&#39;</code>).</p>
+
+<p>To illustrate the problem, here is one of the source files from <a href='http://www.bidforwine.co.uk/'>Bid for Wine</a>. It is a very minor feature &#8211; it just creates a short paragraph of text explaining the purpose of a particular form which a buyer needs to fill in. However, there can be a lot of different things in that form, depending on the type of auction. This generated text gets sent out by email (to both the seller and the buyer) and is also displayed on the website, and few people will ever notice how much effort has gone into building that paragraph of text.</p>
+<div class='highlight'><pre><span class='k'>case</span> <span class='n'>grammatical_person</span>
+<span class='k'>when</span> <span class='mi'>2</span>
+  <span class='n'>you_or_they</span> <span class='o'>=</span> <span class='s1'>&#39;you&#39;</span>
+  <span class='n'>your_or_their</span> <span class='o'>=</span> <span class='s1'>&#39;your&#39;</span>
+  <span class='n'>you_or_them</span> <span class='o'>=</span> <span class='s1'>&#39;you&#39;</span>
+  <span class='n'>yourself_or_themselves</span> <span class='o'>=</span> <span class='s1'>&#39;yourself&#39;</span>
+<span class='k'>when</span> <span class='mi'>3</span>
+  <span class='n'>you_or_they</span> <span class='o'>=</span> <span class='s1'>&#39;they&#39;</span>
+  <span class='n'>your_or_their</span> <span class='o'>=</span> <span class='s1'>&#39;their&#39;</span>
+  <span class='n'>you_or_them</span> <span class='o'>=</span> <span class='s1'>&#39;them&#39;</span>
+  <span class='n'>yourself_or_themselves</span> <span class='o'>=</span> <span class='s1'>&#39;themselves&#39;</span>
+<span class='k'>end</span>
+
+<span class='n'>things_to_do</span> <span class='o'>=</span> <span class='o'>[]</span>
+
+<span class='k'>if</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>in_bond</span>
+  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;specify whether </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like to keep </span><span class='si'>#{</span><span class='n'>your_or_their</span><span class='si'>}</span><span class='s2'> wine in bond&quot;</span>
+<span class='k'>end</span>
+
+<span class='k'>if</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>is_consignment_auction?</span>
+  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;choose if </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like to have the wine shipped to &quot;</span> <span class='o'>+</span>
+                  <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>you_or_them</span><span class='si'>}</span><span class='s2'> or rather pick it up from the warehouse&quot;</span>
+
+<span class='k'>elsif</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>can_be_collected</span> <span class='o'>&amp;&amp;</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>can_be_shipped</span>
+  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;choose if </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like to have the wine shipped to &quot;</span> <span class='o'>+</span>
+                  <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>you_or_them</span><span class='si'>}</span><span class='s2'> or rather collect it </span><span class='si'>#{</span><span class='n'>yourself_or_themselves</span><span class='si'>}</span><span class='s2'>&quot;</span>
+
+<span class='k'>elsif</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>can_be_collected</span>
+  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;confirm collection of the wine&quot;</span>
+
+<span class='k'>else</span>
+  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;specify where </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like the wine to be delivered&quot;</span>
+<span class='k'>end</span>
+
+<span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;provide a billing address&quot;</span>
+
+<span class='k'>if</span> <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>length</span> <span class='o'>&gt;=</span> <span class='mi'>2</span>
+  <span class='n'>last_thing</span> <span class='o'>=</span> <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>pop</span>
+  <span class='n'>last_but_one</span> <span class='o'>=</span> <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>pop</span>
+  <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>push</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>last_but_one</span><span class='si'>}</span><span class='s2'>, and </span><span class='si'>#{</span><span class='n'>last_thing</span><span class='si'>}</span><span class='s2'>&quot;</span> <span class='c1'># Oxford comma</span>
+<span class='k'>end</span>
+
+<span class='s2'>&quot;On this form </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> can </span><span class='si'>#{</span><span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>join</span><span class='p'>(</span><span class='s1'>&#39;, &#39;</span><span class='p'>)</span><span class='si'>}</span><span class='s2'>.&quot;</span>
+</pre>
+</div>
+<p>And you thought English was simple? You can even even see the remains of grammatical cases (<code>you_or_they</code> vs. <code>you_or_them</code>). If this needs to be translated one day, we will need to duplicate the logic and mess about with the way variables are inserted into the snippets of text to make the grammar work. It will be horrible to maintain. But that&#8217;s the best we can do with the state of the art. Shouldn&#8217;t there be a better way?</p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2008/11/24/i18n-and-social-web-we-still-havent-figured-it-out.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

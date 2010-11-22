@@ -1,1 +1,473 @@
-<p>Hello world!</p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
+            <a href="/2010/10/30/intuition-has-no-transfer-encoding.html" rel="bookmark">Intuition has no transfer encoding</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            <p><strong>Intuition is really annoying sometimes.</strong></p>
+
+<p>Actually, I love intuition, because almost all my thinking is based on it. I don’t think I am very good at analysing and thinking things through logically. Often I just have a feeling about how something should be, and then sometimes I post-rationalise it.</p>
+
+<p>Not everybody’s mind works this way; if yours works like this too, you will think this is completely obvious. If not, you probably know people of this type, who can just assert “I think we should do it this way” and turn out to be right in maybe 75% of cases. Intuition is never perfect, but I love it, because it often gives a “good enough” answer very quickly, or at least provides some pointers towards places where it would be worth spending a bit more time analysing.</p>
+
+<p>The thing that I find so annoying about intuition is that it is <strong>very hard to communicate</strong>. Let me explain.</p>
+
+<p>Intuition is built from a large number of experiences: you grow up, you go through life, you meet people, you go to places, you read stuff, you make up stuff. There is no chance you can remember all the things you ever experience in factual detail, because that would be an overwhelmingly huge amount of information. But those things are nevertheless not forgotten: each experience leaves a trace, a tiny shadow of memory, so your thinking afterwards is ever so slightly different from the way it was before.</p>
+
+<p>Over the course of years, those tiny traces are aggregated, and what you get out at the end is an intuitive understanding of how the world works (or rather, how those parts of the world which you have experienced work). Think of it like very light crayon touches, in the hands of an artist, gradually forming to be a beautiful picture — except that the picture is never complete, and always evolving.</p>
+<object height='311' width='508'>
+    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' />
+    <param name='allowFullScreen' value='true' />
+    <param name='allowscriptaccess' value='always' />
+    <embed src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' allowfullscreen='true' type='application/x-shockwave-flash' allowscriptaccess='always' height='311' width='508' />
+</object>
+<p>With that intuition, when you encounter a new situation, it doesn’t matter that you haven’t encountered the exact same situation before: your brain does an approximate matching of the new situation with your mental model of the world, and immediately predicts the right answer. It doesn’t even need to search through memories, because the picture of the world in your head is already the fully aggregated sum of your experiences.</p>
+
+<p>(As a second step, you will typically compare your gut reaction to specific memories, to check whether the results agree. But that’s another topic.)</p>
+
+<p><strong>A tale of bitmaps and vector graphics</strong></p>
+
+<p>The way I imagine the brain stores intuition is a bit like a huge bitmap image, with lots and lots of pixels [<a href='#intuition-footnote'>1</a>]. When a new piece of information comes in, the brain’s massively parallel processing structure takes the new information, combines it with the existing image, correlates, interpolates, extrapolates, and produces an answer in an instant.</p>
+
+<p>But what if you want to teach your intuition to someone else? You can’t tell that person all the things you ever experienced in your life, because that would be far too much, and you’ve forgotten and assimilated most of those memories anyway. But that mental bitmap is also a terrible transfer format: our mouths and hands are extremely slow communication channels, making it impossible to get the bitmap out of your brain. Imagine reading out the individual pixel values of a bitmap image over the phone. It would take hours before the other person had even the vaguest, blurriest idea of the outlines of the image. And it would take years to fill in the detail.</p>
+
+<p>So&#8230; if you want to transfer that bitmap out of your brain and into someone else’s, even approximately, you have to turn that bitmap into a vector graphic.</p>
+
+<p>In vector graphics, if you choose your points and curves carefully, you can communicate the general structure of a picture very succinctly. You can enable the other person to very quickly get a rough idea of your thinking. Of course it won’t have all the colourful detail until you add lots more information, but that’s ok. And once you have analysed your picture into a vector form, you have actually gained a better understanding of what it is really about, you can zoom in to see a higher resolution, and you may be able to spot patterns that you weren’t previously aware of.</p>
+
+<p>Of course, the problem: turning bitmaps into vector graphics is hard. Computer Vision researchers are always thinking about better algorithms for doing it.</p>
+
+<p>And to return from our image analogy to the topic of intuition: expressing intuitive knowledge in a structured form is really hard.</p>
+
+<p><strong>Vectorising intuition</strong></p>
+
+<p>As a child, when you learn your first language by imitating sounds and by being continually corrected by your parents, you are building an intuition for the way that language works. You start off with <em>ga ga ga</em>, and it takes years before you can speak a coherent sentence; later, as time goes on and you grow up, you get quite good at it. Because your brain stores a pre-rendered representation of the language, you can speak and understand it easily and quickly.</p>
+
+<p>When an adult learns a foreign language, by contrast, the usual way of learning it is by studying grammar, vocabulary and carefully chosen texts. The rules of grammar and the structure of the syllabus are a kind of vector representation of the language, optimised for giving the learner a rough overview of the language structure and helping them construct useful sentences as quickly as possible.</p>
+
+<p>It is perfectly possible for an adult to go to a foreign country with no prior knowledge of the language, and to learn to speak it without formal grammar or syllabus, in the same way as a child does. However, most adults prefer to learn a language in a systematic manner, presumably because learning in “vectorised” form allows you to be much faster in getting to the stage where you can have an interesting conversation.</p>
+
+<p>No matter which way you learn the basics, it always takes years to reach native proficiency in a language; that is unavoidable, because in the end you can’t get around learning a huge amount of subtle details and building your own intuition. (Even if represented in vector form, complicated curves and shadings require a large number of points.) The difference is in the time it takes to grok the core concepts.</p>
+
+<p><strong>But here comes the important bit.</strong> When it comes to learning languages, most languages have benefitted from decades (if not centuries) of research and systematisation efforts by many intelligent people. For most languages, grammar and learning techniques are very well understood. But what if you want to communicate some intuition that <strong>only you</strong> have? Well, you have to do the vectorising yourself.</p>
+
+<p>When you have built an intuition in a specific area that is not well-known — say, with regard to some arcane or new technology, or with regard to your company’s business strategy — then there is no existing grammar you can refer to. You are like a linguist, <a href='http://en.wikipedia.org/wiki/Daniel_Everett'>going into the Amazonian Jungle</a> to document mysterious languages not yet known to the outside world. You have to observe the systematic parts and the exceptions, and formulate the grammar yourself.</p>
+
+<p>Turning your intuitive bitmap into a vector form that you can communicate&#8230; is hard. Very hard. But you need to figure it out.</p>
+
+<p><strong>Why is this important?</strong></p>
+
+<p>Well, there’s only so far that a single person’s intuition can reach. If you want to build great things and change the world, you need much more than a single person’s brain can hold. You need both depth and breadth: fine-grained intuition in specific technical fields requiring expertise, and also a greater variety of perspectives than a single person can have experienced.</p>
+
+<p>You need to combine the intuitions of several people, i.e. you have to form a team. And in order to combine your intuitions, you need to communicate and explain them. Why? Because otherwise you have no way of resolving differences, and no way of learning from each other and improving.</p>
+
+<p>By default, intuition comes without a reason attached: you ‘simply know’ that the answer is X, but you don’t know why. The problem arises when your colleague ‘simply knows’ that the answer is Y, where X≠Y, and doesn’t know a reason either. (Maybe X and Y are not completely contradictory, but rather partially overlapping ideas or differences in emphasis. Different nevertheless.) At that point either one has to overrule the other (which would defeat the goal of forming a team in the first place), or you have to rationalise the intuition, untangle the pre-aggregated reasoning, and communicate it in terms which the other person can understand.</p>
+
+<p>What if you could understand the structure of both X and Y, and the reasoning behind it, and thus manage to synthesise the two? That is a lot of effort, but I am increasingly thinking that figuring out how to communicate your intuition is one of the most valuable things you can do in a team. For if you can combine your mental image of the world with other people’s, you can build something much greater than each of you. Your thoughts can be superhuman, in some sense. And that, if you can figure it out, is a huge advantage you can have.</p>
+
+<p>A startup is a really interesting environment to try this kind of thing, because you can be as choosy as you want about the people you work with. You can pick like-minded people, and together work towards that shared intuition. You can build a good, well-founded, shared intuition of who your customers are and what they want. And if you can attain that shared intuition, you&#8217;re well underway to success.</p>
+
+<p><strong>Footnote:</strong></p>
+<a name='intuition-footnote'>
+</a>
+<p>[1] I&#8217;m not sure what each individual pixel represents. In mathematical terms, a picture is a function mapping from 2D space to colour, and a bitmap approximates this function by sampling at regularly spaced values of the input. Along that line of thinking, the mind is probably a function mapping from sensory inputs and memories to explanations and actions (or something along those lines — I&#8217;m not a neuroscientist). This function can be represented as lots of individual data points (&#8220;London &#38; lunchtime &#38; hunger &#38; last had Falafel 10 days ago → go to the King of Falafel&#8221;), which is bitmap-like, or in some systematic manner (&#8220;I like to eat falafel for lunch. For example, in London, the King of Falafel is good.&#8221;), which is vector-like, omitting redundant information (lunchtime and hunger are strongly correlated, so mentioning both is fairly redundant) and emphasising structure or dependencies (the King of Falafel only exists in London). However, as you can see, his only vaguely makes sense. The bitmap/vector analogy is itself an example of a piece of intuition that I&#8217;m trying to communicate to you right now.</p>
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="Liquid error: undefined method `xmlschema' for nil:NilClass">30 Oct 2010</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="/2010/10/30/intuition-has-no-transfer-encoding.html#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
+            <a href="/2010/08/31/good-things-are-hard-to-articulate.html" rel="bookmark">Good things are hard to articulate</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            <p>If you have a stone in your shoe, it&#8217;s easy to articulate what is wrong (&#8220;something is hurting my foot!&#8221;). But if you don&#8217;t have a stone in your shoe, you don&#8217;t go around rejoicing with every step. If you have just removed a stone, you may be pleased for a few seconds to have removed the irritation, but things very quickly return to normal.</p>
+
+<p>The bad things keep sticking around and irritating us, whereas the good things are quickly taken for granted. The bad things are often easy to describe, whereas the good things are sometimes just the absence of a bad thing &#8212; the absence of some irritation.</p>
+
+<p>This is a fundamental asymmetry, and it has lots of implications, big and small. For example, a big implication is the development of human society and technology. Because we are more prone to noticing bad things, and bad things keep bugging us, we try to fix bad things and make them go away. So humans invented tools (to stop hurting their fingers), agriculture (to stop hunger and laborious hunting/gathering), medicine (to stop their family members from dying), writing (to stop forgetfulness) and the internet (to stop the slowness of paper communication). Over history, humans have continuously taken stuff that is bad, and tried to make it better. Now that we have all these good things (tools, agriculture, medicine, writing, internet), we mostly take them for granted and don&#8217;t think about them any more.</p>
+
+<p>(Some things that humans invented turned out to have bad side-effects besides their intended good effect. Take weapons as an example: intended to stop the hungry neighbours from stealing our food, but the idea got taken a bit too far. But that&#8217;s a different story.)</p>
+
+<p>There are also other, less grandiose consequences of bad things being more noticeable. For example, when I was writing music and song lyrics, I found it comparatively easy to write about themes like conflict, struggle and sadness; writing about good things, however, was much harder. It would often just sound trite, banal and uninteresting.</p>
+
+<p>How do you articulate those things that are good? Part of the point of this very essay is to see if I can write about things being good without just being incredibly boring. And what do I do? Complain about the fact that it&#8217;s hard to express things that are good. I complain. I am irritated that bad things are easier to write about than good things. And so I write about that irritation, thereby locking myself in a self-referential loop.</p>
+
+<p>How annoying. Let&#8217;s talk about the good things again.</p>
+
+<p>An observation. If bad things are much more noticeable than good things, that means that it&#8217;s very easy to lose sight of all the good things. In fact, it probably means that we are surrounded by lots of wonderful things that we&#8217;ve simply forgotten about. It might even be that the vast majority of things around us are good, and we are just failing to notice them!</p>
+
+<p>We need to consciously remind ourselves of the good things from time to time, to avoid getting too bogged down in the bad things. That cannot mean getting complacent; it just means enjoying and appreciating life.</p>
+
+<p>For example, I am writing this essay on a mobile phone (good) connected to the internet (good) while sitting in the sunshine (good) in a park (good) in San Francisco (good). I am wearing comfortable clothes (good) and don&#8217;t have any stones in my shoes (good). I live in a peaceful age (good) in a peaceful society (good). I am educated (good), healthy (good), don&#8217;t need to worry about being able to afford the rent (good) and I have a wonderful family (good). I look forward to sending this essay to Rita (good) to see what she thinks. (Hopefully it&#8217;s not too bad.)</p>
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="Liquid error: undefined method `xmlschema' for nil:NilClass">31 Aug 2010</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="/2010/08/31/good-things-are-hard-to-articulate.html#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
+            <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html" rel="bookmark">Valuation caps on convertible notes, explained with graphs</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            <p>When you&#8217;re an entrepreneur out to raise funding, you&#8217;re faced with a whole lot of legal and financial jargon, and getting your head around it takes a lot of valuable time &#8211; that&#8217;s time in which you&#8217;re not doing the things which really matter (namely making your product better, making your existing customers happy and acquiring new customers).</p>
+
+<p>But actually, if explained properly, most of the legal and financial stuff isn&#8217;t that complicated. The legal documents do a terrible job of explaining, because they define everything in legalese prose. Graphs make it much clearer, as Leo Dirac has shown in his wonderful <a href='http://www.slideshare.net/leodirac/5minute-primer-on-vc-term-sheets'>graphical explanation of liquidation preferences</a>. You should go and look at that presentation.</p>
+
+<p>I&#8217;d like to explain a different financial concept, namely the <strong>valuation cap on convertible notes</strong>. It took me several hours to get my head around it, so I&#8217;d like to save you those hours.</p>
+
+<p><strong>The pros and cons of convertible notes</strong></p>
+
+<p>I assume you know what a convertible note (aka convertible loan) is: instead of buying shares in your startup, the investor just gives you the money on a loan with some nominal interest rate. And you promise that when you raise your next round of funding, the loan converts into shares as if they had put that money in during that second round. Since the investor took additional risk by backing you early, they get a discounted share price (they get more shares than someone who puts in the same amount of money in the second round), and that discount is fixed and agreed upon beforehand. It&#8217;s typically between about 15% and 30%.</p>
+
+<p>The good thing about convertible notes is that they require less paperwork (and are thus faster to get done), and &#8211; in theory &#8211; don&#8217;t require you to set a valuation, because the share price will be determined in the next round. However, many investors don&#8217;t like them. If the company is really successful (as everybody hopes it will be) and the valuation in the next round is high, then the investors don&#8217;t get any of that increase in value &#8211; they just get their fixed discount, and that&#8217;s it.</p>
+
+<p>With some <a href='http://www.crunchbase.com/person/ron-conway'>big-name investors</a>, the company&#8217;s value goes up simply by being associated with the big name. Naturally, the investor will also want to benefit from that increase in value, because otherwise there&#8217;s not much incentive for them to help.</p>
+
+<p>Enter the valuation cap, which appears to now be a standard term of convertible notes, in Silicon Valley at least. The cap is the convertible note investor basically saying: <em>&#8220;If things go ok, I&#8217;m happy with my fixed 20% discount. But if you do really well, I want us to treat it as if I had bought shares in the first place.&#8221;</em> (That way they benefit more from the success.)</p>
+
+<p>So you went for a convertible note hoping that you wouldn&#8217;t have to set a valuation for your startup. Well, with the valuation cap you don&#8217;t strictly have a valuation, but you <em>do</em> have a <em>range of valuations</em>: the company is certainly not worth less than X, and not worth more than Y.</p>
+
+<p>In effect, someone has now got to decide on a valuation, which is a notoriously unscientific thing. How do you come up with reasonable numbers? You need to somehow build an intuition for what this stuff means.</p>
+
+<p><strong>How to determine your valuation cap</strong></p>
+
+<p>The best way to think about it is to start with some guesswork numbers, consider a range of different scenarios, and work out the consequences. Then you can decide which consequences are unacceptable, and work backwards.</p>
+
+<p>Let&#8217;s work through an example. Say you&#8217;re a small startup team raising your first seed round, and you expect to raise a Series A from VCs sometime in future. Your input variables are:</p>
+
+<ul>
+<li>the amount you&#8217;re raising on the convertible note (say $500k),</li>
+
+<li>the conversion discount of the note (say 20%),</li>
+
+<li>the pre-money valuation cap of the note (say $4m),</li>
+
+<li>the percentage of your company which the VCs will take in your Series A (say 30%),</li>
+
+<li>the amount of money you expect to raise in your Series A (say somewhere between $1m and $5m).</li>
+</ul>
+
+<p>There are a few other parameters (like the interest rate on the loan, and the time between the seed round and the series A), but they ought to have only a minor impact.</p>
+
+<p>The biggest unknown here is the amount you&#8217;ll want to raise in your Series A, so let&#8217;s look at a range of scenarios for that value, and take the other variables to be fixed.</p>
+
+<p>There are two consequences of the numbers which are useful to think about:</p>
+
+<p><strong>1. What share of the company do the convertible note investors own after the Series A?</strong></p>
+
+<p>We assumed above that after the Series A, the Series A investors own 30% of the company. But how much do the seed investors own after converting their note into shares?</p>
+<img class='aligncenter size-full wp-image-379' src='/2010/05/Valuation-Cap-demo-1.png' height='402' alt='How much equity does the note convert into?' width='550' />
+<p>Without the valuation cap, the seed investors end up with an ever diminishing share of the company as the valuation increases. The effect of the cap is that the convertible note investors are guaranteed a certain share of the company, even if you get a <a href='http://techcrunch.com/2010/03/25/four-vc-firms-battle-for-foursquare-valuation-goes-stratospheric/'>Foursquare valuation</a>.</p>
+
+<p>That minimum share is: (1 &#8211; [series A investor ownership] ) * [amount raised on conv note] / [valuation cap]. (The first factor takes into account the Series A dilution.) In this example, the note will convert into a minimum of (1&#8211;0.3) * $0.5m / $4m = 8.75% of the company&#8217;s shares.</p>
+
+<p><strong>2. What effective discount are the convertible note investors getting relative to the Series A investors?</strong></p>
+
+<p>If you didn&#8217;t have a cap, you would simply give a fixed (say 20%) discount when the note converts into shares. But when you have a cap, and your Series A valuation hits the cap, you&#8217;re fixing the price for the early investors, while the incoming Series A investors might be paying a lot more per share. So you are effectively giving a greater than 20% discount in that case.</p>
+<img class='aligncenter size-full wp-image-380' src='/2010/05/Valuation-Cap-demo-2.png' height='403' alt='Effective discount on conversion' width='550' />
+<p>I find this graph interesting, because it&#8217;s basically a measure of &#8220;how annoyed the VCs are going to be about the convertible note&#8221;. &#8211; Imagine you&#8217;re at the theatre, and you know that for the same ticket you paid 2 or even 3 times as much as the guy sitting next to you. You would not be happy, because it just doesn&#8217;t feel fair. If your valuation goes substantially above the cap, there can be a big difference in share price.</p>
+
+<p>Of course, if your startup is awesome and investors are desperate to be part of your round, this probably won&#8217;t be an issue. And of course, maybe such a large discount is entirely fair if your Angel investors add a lot of value beyond the money they put in. But it&#8217;s a factor to keep in mind. At least with a graph like this you can start thinking about your numbers usefully.</p>
+
+<p><strong>Postscript</strong></p>
+
+<p>None of this gives you an immediate answer to the question &#8220;what should we write on our convertible note term sheet?&#8221;, but at least you should now be able to think about valuation caps from a few different angles.</p>
+
+<p>Disclaimer: neither am I a lawyer nor do I have much experience with this stuff, so my explanation may be horribly flawed or simply wrong. (If you find a mistake, please let me know.)</p>
+
+<p>You can <a href='/2010/05/Valuation-Cap-demo-for-blog.xlsx.zip'>download the Excel spreadsheet</a> which I used to generate these graphs. An interesting alternative way of looking at this would be to assume a fixed Series A amount, and instead work out what happens when you vary the valuation cap. I&#8217;ll leave that as an exercise for you, dear reader.</p>
+
+<p>Incidentally, our awesome startup, <a href='http://rapportive.com'>Rapportive</a>, is raising a seed round at the moment. It&#8217;s filling up quickly, so please <a href='mailto:martin@rapportive.com'>get in touch soon</a> if you may be interested. The terms may have certain similarities with my example here, or they may not &#8211; I couldn&#8217;t say. ;-)</p>
+
+<p><strong>Update (11 June 2010):</strong> Packed the Excel spreadsheet in a ZIP file to fix download problems.</p>
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="Liquid error: undefined method `xmlschema' for nil:NilClass">05 May 2010</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
+            <a href="/2010/04/09/our-social-future.html" rel="bookmark">Our social future</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            <p>You know you&#8217;re doing something good if someone you&#8217;ve never met before spontaneously comes up to you and asks: &#8220;Are you with Rapportive? Just wanted to say that I love it.&#8221;</p>
+
+<p>He could recognise me because we had exchanged emails, and he had therefore seen my photo in Rapportive next to my email.</p>
+
+<p>This is our social future. We&#8217;re busy creating it.</p>
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="Liquid error: undefined method `xmlschema' for nil:NilClass">09 Apr 2010</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="/2010/04/09/our-social-future.html#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
+            <a href="/2010/03/31/hey-what-happened-just-then.html" rel="bookmark">Hey, what happened just then?</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            <p>There are moments in life where everything suddenly changes. Do you know what I mean? Those moments are rare, but on some occasions, your entire outlook on life can fundamentally change overnight.</p>
+
+<p>This particular story begins about a year ago. I had just finished a few web development contracts, and had started to build my automated web testing tool, <a href='http://go-test.it'>Go Test It</a>. At the time I thought Go Test It was going to be a small, simple product which would take a few months to build and then mostly look after itself. (In retrospect: Hahaha!) I wasn&#8217;t sure where it was going to go, but I wanted to keep my options open, so I also <a href='/2009/03/31/doing-a-phd/'>applied to do a PhD</a> in Cambridge.</p>
+
+<p>I had to propose a PhD topic, and I made up something ad-hoc. I realised that most interesting things are created by individuals, not organisations, and that the reputation and personal network of those individual people is key. And I saw a problem: most things happen online, but fragmented across lots of different websites (including private databases such as CRM systems), so the information is barely useful. I wanted to pull this together and analyse it; I saw this as a route to learning more effectively, by using my network of professional contacts.</p>
+
+<p>To make it sound more academic and less startuppy, I padded the PhD proposal with a bit of blah-blah about machine learning, natural language processing, citation analysis and social graph analysis. But of course my plan was to turn it into a startup eventually. I got my place in Cambridge, got the research funding, moved back into college &#8211; then realised that doing Go Test It and a PhD at the same time was madness, changed my mind, and withdrew from the PhD just a week after I had started. Oh well, interesting experience. I hope I didn&#8217;t waste too many people&#8217;s time.</p>
+
+<p>Around that time I was talking to <a href='http://www.red-gate.com/'>Red Gate</a>, who were interested in acquiring Go Test It, and we closed that deal in November 2009. The plan was that I would stay there for 10 months to hand it over and get it standing on its own feet. We embarked on a big customer development push to figure out who our customers really were and what they really wanted, and we learnt a lot. It was good.</p>
+
+<p><strong>Rapportive comes into being</strong></p>
+
+<p>Other things were happening around that time. My friends <a href='http://twitter.com/rahulvohra'>Rahul</a> and <a href='http://www.samstokes.co.uk/'>Sam</a> were interested in doing a new startup, having worked together at <a href='http://mo.jo'>mo.jo</a> before. I had talked to them about my ideas, originally intended for the PhD, of &#8220;fixing CRM&#8221; by integrating it with social data, and we started thinking about turning it into a startup sooner rather than later.</p>
+
+<p>Rahul came up with some user interface ideas and started coding them up in January; Sam joined in and engineered the backend. Our plan was that I would stay full-time on Go Test It, and fund the other two from my earn-out until October 2010, which is when Go Test It was to be fully handed over to Red Gate. Then I would join them full-time on the new startup. It sounded like a good plan.</p>
+
+<p>Rahul and Sam put together a prototype of Rapportive in a few weeks; we showed it to a few people and they seemed to like it. We put up a simple one-page website, with a few pictures and an install button, so that we had something we could show to potential investors. It wasn&#8217;t much. We hadn&#8217;t even written a privacy policy because we were expecting it to only go out to a small number of people.</p>
+
+<p><strong>And then&#8230; OMGWTFBBQ</strong></p>
+
+<p>What happened then was <a href='http://twitter.com/plc/status/9968421868'>a tweet</a> by our friend <a href='http://twitter.com/plc'>Pete</a> to <a href='http://twitter.com/zee'>Zee</a> of <a href='http://thenextweb.com/'>The Next Web</a>. I had never imagined that a single tweet could be so powerful. Zee loved what he saw and <a href='http://thenextweb.com/apps/2010/03/04/gmail-slick-social-crm-tool/'>wrote it up immediately</a>. Within a day we also had rave write-ups on <a href='http://www.readwriteweb.com/archives/gmail_social_crm_plugin_rapportive.php'>ReadWriteWeb</a> (&#8220;stop what you are doing and install this plug-in!&#8221;), then <a href='http://lifehacker.com/5486082/rapportive-replaces-gmail-ads-with-contact-info-is-very-cool'>Lifehacker</a> and <a href='http://webworkerdaily.com/2010/03/05/rapportive-gmail-crm/'>WebWorkerDaily</a> and dozens of smaller blogs and news sites&#8230; thousands of people raving about us on Twitter&#8230; and within that day, over 10,000 users signed up.</p>
+
+<p>10,000 users in one day. That&#8217;s like a fairly large stadium full of people using our software. I had never worked on anything with more than a couple of hundred users before. It&#8217;s hard to describe how that felt.</p>
+
+<p>We were doing nothing but frantically commenting on blog posts, replying to tweets, emails and Skype contacts, and scaling up our servers. Thank goodness for <a href='http://heroku.com/'>Heroku</a>, which made the scaling incredibly easy. We had a few periods of slowness and had to temporarily disable some features, but we never went down. Our servers were continuously handling over 20 requests per second, but we were taking care of our users and giving individual responses to everyone who needed one.</p>
+
+<p>We got a tremendous amount of love from our users, both for the product and for responding swiftly and helpfully to any queries. The vast majority of people who originally signed up are continuing to use it now, and new people are signing up every day.</p>
+
+<p>All of a sudden, our time is incredibly precious. We want to continue to develop Rapportive quickly and continue making something which people really want. We are moving at a very rapid pace, because every day, we have the opportunity to make tens of thousands of people happy.</p>
+
+<p><strong>So&#8230; what about Go Test It?</strong></p>
+
+<p>This success, great as it was, put me in a difficult situation. I was still full-time on Go Test It, and we were just ramping up development to build several big, important features which our customers really wanted. And at the same time, Rapportive needed me more every day.</p>
+
+<p>We had always been very open with the directors of Red Gate as to what was was going on with Rapportive, and so we discussed what we should do. Eventually we decided that Rapportive needed me most, and Go Test It wasn&#8217;t yet ready to stand on its own feet, so we would shut Go Test It down gracefully.</p>
+
+<p>It was a very hard decision, probably one of the hardest I have yet had to make. Red Gate, I and all the others who had worked on it had put a lot of time, effort and money into Go Test It. I was also emotionally invested; after all, this was my first own product. But the opportunity offered by Rapportive was just so disproportionately huge. Killing Go Test It quickly and painlessly was the right decision.</p>
+
+<p>Fortunately the damage was quite limited. Only a small number of customers were using Go Test It regularly, and we found alternative solutions for them. We had a vesting schedule, so the majority of the money from the acquisition went back to Red Gate. There were a few other people working on the project too; they had to find new things to work on, but they are all very talented so it&#8217;s not difficult for them to find work. And most importantly, for me at least: I managed to stay friends with everybody involved. So I think we achieved a good outcome overall.</p>
+
+<p><strong>Onwards and upwards</strong></p>
+
+<p>So here we go: I&#8217;m now a full-time co-founder at Rapportive, and together the three of us are going full steam ahead. We have tens of thousands of people who love what we are doing. We have investors knocking on our door. And we have bucketloads of plans and bright ideas combined with the energy and passion to make them happen.</p>
+
+<p>Life never moves in straight lines; it is full of unexpected surprises. But hey, most surprises turn out to be good ones if you make the most of them. And that&#8217;s what we&#8217;re doing right now.</p>
+
+<p>We&#8217;re in San Francisco and the Bay Area from now until mid-April, so if you&#8217;d like to meet us in person, please <a href='mailto:martin@rapportive.com'>drop me a note</a> &#8211; we&#8217;d love to hear from you!</p>
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="Liquid error: undefined method `xmlschema' for nil:NilClass">31 Mar 2010</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="/2010/03/31/hey-what-happened-just-then.html#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+
+
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = 'http://disqus.com/forums/' + disqus_shortname + '/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

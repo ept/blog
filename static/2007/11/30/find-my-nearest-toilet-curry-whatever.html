@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Find my nearest toilet, curry, whatever &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>Find my nearest toilet, curry, whatever</h1>
+            <p>Some interesting developments in so-called <a href='http://en.wikipedia.org/wiki/Location-based_service'>location based services</a> have hit the news in the last few days:</p>
+
+<ul>
+<li>The city of Westminster, London, is running a trial of a system which recommends your nearest public toilet if you send a text message to a shortcode. The name: &#8220;SatLav&#8221;. (<a href='http://www.telegraph.co.uk/news/main.jhtml?xml=/news/2007/11/29/nsatlav129.xml'>Telegraph article</a>, <a href='http://www.computing.co.uk/vnunet/news/2204758/satlav-scheme-finds-toilets'>Computing article</a>)</li>
+
+<li>The <a href='http://www.google.com/gmm/'>Google Maps application</a> on mobile phones can now <a href='http://www.youtube.com/watch?v=mIG-Dx7kF3Q'>show your current location</a> on the map at your request. (<a href='http://www.vodafonebetavine.net/web/guest/projects/resources/location_enhanced_services'>Analysis by Steve Harrop</a>)</li>
+</ul>
+
+<p>Although it can undoubtedly be very useful in many circumstances (I can certainly see myself using both the toilet service and the map service), these developments do raise questions: How do they know where I am? Does Google now know my location as well as my web searches, emails, contacts, diaries, YouTube video preferences and everything else? How easy is it for a somebody to track where I am, and can they do it without me noticing?</p>
+
+<p>In case you were wondering, this is not GPS. There are phones with in-build GPS, but they are still pretty rare and expensive. The remarkable thing about these location technologies is that they work pretty well with a far broader range of handsets (although Google Maps is more accurate if you have GPS).</p>
+
+<p>So how does it work? As far as I know, there are the following ways of finding your location:</p>
+
+<ul>
+<li>GPS (only on a few phones such as the Nokia N95)</li>
+
+<li>Operator-based location lookup (<a href='http://www.mxtelecom.com/uk/lbs'>as offered by MX Telecom</a>, for example) &#8211; this is what SatLav uses.</li>
+
+<li>Cell ID and cell location &#8211; this is what Google uses.</li>
+</ul>
+
+<p>GPS I won&#8217;t discuss any further: it can be accessed only by applications installed on the phone, which need to be given permission to do so &#8211; the phone itself controls the information, so the chances of abuse are pretty low. (But see the Google-related caveat below.)</p>
+
+<p>Operator lookup is a bit more concerning. To find out somebody&#8217;s location, you need to know their phone number. You send a location request for that number to the operator whom you are registered with. The operator sends a text message to the person you are trying to locate, to ask for their consent. If they agree to release the location, that information (latitude, longitude and an accuracy value) is sent to you who requested it. (I think that&#8217;s how it works anyway &#8211; I&#8217;ve not seen it in action yet, and I can&#8217;t try it out since I&#8217;m on the only mobile network in the UK which has not yet implemented location requests). The consent is valid for only one look-up, so you don&#8217;t need to be concerned about the toilet finder service being able to track you for the rest of your life just because you needed a loo in Westminster once.</p>
+
+<p>The advantage of operator-based lookup is that it works on any phone, provided that phone&#8217;s network supports location lookups. (In the UK, Vodafone, T-Mobile, O2 and Orange all do.) No software needs to be installed, and it appears to be reasonably secure too. On the downside, the operators charge for the service &#8211; about £0.10 a go, plus a monthly fee. And if you want to use a location-based service (for example, to find your nearest xyz shop) you need to give that shop your mobile number, risking that you may receive unwanted text message advertising from them in future.</p>
+
+<p>Cell location is a very different beast, and more difficult to understand too. You may know that the mobile phone network is split into cells, each cell being the area covered by one particular receiver/transmitter (e.g. on the roof of a building). Cells can be pretty small (a few dozen meters radius) in urban areas, and much larger (several kilometers radius) in the countryside. A mobile phone is usually locked onto one particular cell, and each cell has a unique identifier. On many handsets it is possible for an application running on the phone to find out the identifier of the cell to which it is connected.</p>
+
+<p>So what does that give us? Only the cell ID is not worth much. But if you have a big database which contains approximate locations for every cell in the world, you can make a pretty good guess at where you are (provided you&#8217;re in a small cell at least). The problem: there does not seem to be such a database. At least it&#8217;s not possible for normal people to get hold of it. The operators (who have built all those cells) know where they are of course, but they won&#8217;t simply give away that valuable information.</p>
+
+<p>A number of collaborative projects are attempting to gather location information of cells by combining many volunteering users&#8217; contributions. Among these are <a href='http://www.cellspotting.com/'>CellSpotting</a>, <a href='http://gsmloc.org/'>GSM Location</a> and <a href='http://www.navizon.com/'>Navizon</a>. The general idea here is: people who have GPS in their handsets walk/drive around, and every time the phone comes across a new cell, it sends the identifier of that cell together with the GPS coordinates to the database. Over time, the database gets a pretty good idea of the range of locations in which you lock onto a particular cell. Then people who don&#8217;t have GPS can send their cell ID to the database to get an averaged value of their probable location.</p>
+
+<p>(A note on the side: people talk a lot in theory about using triangulation &#8211; measuring signal strengths, angles of directional antennas, signal timings from several adjacent cells and so on. In principle, these techniques could be used to provide a location which is more accurate than simply &#8220;you are in cell X, and cell X covers this and that area&#8221;. In practise, I don&#8217;t think triangulation is feasible on phones for all sorts of reasons &#8211; software limitations, hardware support etc. The operator-based location lookup, which uses the cells rather than the handsets to measure timings, may well use it &#8211; I don&#8217;t know.)</p>
+
+<p>Now how does Google Maps get its location information for non-GPS handsets? I have not yet heard a definite answer, but the general suspicion is that they use precisely one of these databases. They might have bought it off the operators, but that&#8217;s a bit unlikely. Chances are they merged together several open source projects, and also drove around in a car themselves, mapping cells to GPS locations. And now that Google have released the application to the public, they do exactly the same as Google always does: collect the data from as many users as possible. Most probably, those people with GPS handsets who use Google Maps are unknowingly helping to expand Google&#8217;s cell ID database. When a GPS user encounters a new cell, Google learns both the location and the cell ID. Over time, their cell coverage and location accuracy will increase for the benefit of non-GPS users.</p>
+
+<p>So, does Google know where you are? Yes. If you do a location lookup, at least. They claim to anonymise that data, so you can only hope that they are telling the truth.</p>
+
+<p>One final note: the mobile web does not come into this at all. That means, if a phone accesses a website, there is in general no way of telling where that user is located (unless they explicitly give the site their phone number and the site performs an operator location lookup).</p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2007/11/30/find-my-nearest-toilet-curry-whatever.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

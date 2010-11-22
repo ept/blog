@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>The most boring topic in the world (except for the Terry Pratchett references) &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>The most boring topic in the world (except for the Terry Pratchett references)</h1>
+            <p>Invoicing, finances, bookkeeping, accounts and payments. It has surely got to be the most boring topic in the world.</p>
+
+<p>Unfortunately, it&#8217;s not going to go away, no matter how hard we try to forget. Death and taxes, the two most certain things, and also the most wished-away. So although we technology people can&#8217;t do too much about death (although a healthy diet and exercise probably help), at least we should be making the tedious parts of taxes and finance as automated as possible, so that we have to worry about them as little as possible.</p>
+
+<p>Say, for example, you&#8217;re a small web technology business. If you&#8217;re a consultancy, it&#8217;s ok &#8211; you just have a handful of clients, you prepare invoices in a spreadsheet and email them out at the end of the month. Now and then you look at your online banking to see whether they&#8217;ve paid yet. But if you have lots of small customers, it&#8217;s a different matter. You quickly get into a rather large number of small-value invoices and payments flying around, and you really don&#8217;t want to be processing them manually. It&#8217;s a waste of time, error-prone, and will bore you to death.</p>
+
+<p>Given that we automate so many things with scripts, how come we&#8217;re still sending invoices as PDFs by email, so that the recipient has to manually type the numbers into their bookkeeping software? It seems so obviously wasteful.</p>
+
+<p>Of course I&#8217;m not the first to realise this, but the solutions are not very mainstream yet, maybe because many developers find this topic so dull that they refuse to work on it. So I did a bit of research into formats and APIs for business transactions, and it turns out that the open standards organisation <a href='http://www.oasis-open.org/'>OASIS</a> has spent a long time thinking about XML schemas for describing invoices and related things, and the result is called the <a href='http://www.oasis-open.org/committees/ubl/'>Universal Business Language or UBL</a>.</p>
+
+<p>The problem with standards can be that they are written in formal language (&#8216;standardese&#8217;) and cover lots of bizarre cases, so they can seem overly complicated and unappealing, leading to lots of people independently inventing simpler ad-hoc alternatives, and a resulting mess of incompatible formats. I feared the UBL (in all its Universality) may be a case like this; but I wanted to give it the benefit of the doubt and see how a simple invoice would look using UBL. (Why has nobody published simple examples to get people started?) Therefore, by trawling through the XML Schema definitions and with the help of a schema-aware XML editor, I constructed an example&#8230;</p>
+
+<p>Say, for example, you&#8217;re <a href='http://wiki.lspace.org/wiki/Mustrum_Ridcully'>Mustrum Ridcully</a> at the Unseen University, and a large London-based bank has just ordered a Magic Anteater from you to help sort out their liquidity problems. (Not sure why anteaters help, but they do.) So you send off the anteater, as requested, and now you want to charge them for it. To do that, you ask your Bursar to perform a RESTful HTTP POST to a URL on the bank&#8217;s servers (probably over SSL and authenticated in some sensible way), with an XML document as payload. That document can then automatically be processed by the bank, so that (hopefully) they can pay on time, and both the bank and the Unseen University can automagically calculate their taxes.</p>
+
+<p>That XML document, if based on the UBL 2.0 Invoice schema, would have the following form:</p>
+
+<pre><code>Invoice:
+    ID: 147815
+    IssueDate: 2008-11-09
+
+    AccountingSupplierParty:
+        PartyName: Name: The Unseen University
+        PostalAddress:
+            BuildingName: The Tower of Art
+            CityName: Ankh-Morpork
+            Country Name: Discworld
+
+    AccountingCustomerParty:
+        PartyName: The Big Bank
+        PostalAddress:
+            StreetName: Paved With Gold Street
+            CityName: London
+            PostalZone: E14 5HQ
+            Country IdentificationCode: GB
+
+    TaxTotal:
+        TaxAmount (currencyID: GBP): 16.00
+
+    LegalMonetaryTotal:
+        TaxExclusiveAmount (currencyID: GBP): 159.95
+        PayableAmount (currencyID: GBP): 175.95
+
+    InvoiceLine:
+        ID: Anteater_8
+        LineExtensionAmount (currencyID: GBP): 175.95
+        Item Description: One Magic Anteater</code></pre>
+
+<p>And that, ladies and gentlemen, is really not that bad. Ok, I&#8217;ve simplified it a little; I have left out the XML namespaces and the angle brackets to make it more readable. <a href='/2008/11/invoice.xml'>Here is the UBL 2.0 Invoice example XML file</a> which validates fully against the schema.</p>
+
+<p>This is of course just a basic example; the schema goes much further still, so you can give a machine-readable definition of payment terms, or properties of the goods (e.g. 5 kegs of beer at 3.7% alcohol by volume, since UBL supports <a href='http://twitter.com/martinkl/status/997815268'>a huge variety of units</a>), or the transit route of shipping; in principle you could then automatically validate that everything matches the purchase order and agreed supplier contract. But you don&#8217;t have to; even the simple bit of data above would already make our lives easier if our bookkeeping software supported it.</p>
+
+<p>Why is this a big deal? Because it&#8217;s a standard which is actually in use out there! For instance, <a href='http://www.idealliance.org/proceedings/xtech05/papers/03-05-02/'>if you want to sell anything to any public institution in Denmark, you&#8217;ve got to use the UBL schema</a>. Governments and enterprises are more likely to use these formats at first, because they deal with millions of invoices each year, and automating such quantities translates into very substantial cost savings. But I think that even for small businesses, we have a lot to gain in terms of interoperability.</p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2008/11/10/the-most-boring-topic-in-the-world-except-for-the-terry-pratchett-references.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

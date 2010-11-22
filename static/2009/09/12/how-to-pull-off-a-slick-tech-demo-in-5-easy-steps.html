@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>How to pull off a slick tech demo (in 5 easy steps) &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>How to pull off a slick tech demo (in 5 easy steps)</h1>
+            <p>On Thursday I gave a demo of <a href='http://go-test.it/'>Go Test It, our cross-browser testing product</a>, at the Cambridge Tech Demo Night. The audience was a mixture of startups, investors, business owners, developers and researchers &#8211; a fantastic group of people. This was a great opportunity to show to a larger group of people that Go Test It is now a solid, usable product. How do you make the best use of such an opportunity?</p>
+
+<p>Demoing alongside me were four other startups: <a href='http://camvine.com/'>CamVine</a>, <a href='http://mbed.org/'>mbed</a>, <a href='http://www.cyclestreets.net/'>CycleStreets</a> and <a href='http://webticketing.net'>WebTicketing</a>. I thought that all of them had very slick, impressive and credible demos (and judging by the positive feedback I got, my own one seemed to go down quite well too). I had not seen most of them before, but the message they got across in just seven minutes was so powerful that I&#8217;m immediately convinced of their potential, and since the demo night I&#8217;ve even been going around telling other people how awesome these startups are. That&#8217;s powerful stuff.</p>
+
+<p>So how do you make a demo which will convince others that you are great and that they should tell all their friends about you?</p>
+
+<p>Well, first you actually need something substantial to show. A product, a web application, something which is new and interesting and solidly built. I don&#8217;t believe in vapourware demos; you&#8217;ve got to show the real thing. However, for most companies I know in Cambridge that&#8217;s really not a problem &#8211; many have very impressive products, they just don&#8217;t know how to communicate them.</p>
+
+<p>Even if you have a great product, you can still wreck it with a bad presentation. I&#8217;ve seen that happen and it feels tragic, so please do yourself and your audience a favour and make it a good demo. It&#8217;s not that hard, and these are the guidelines I set myself when preparing my demo. They may not work for everybody, but they worked well for me.</p>
+
+<p><strong>1. Know what you&#8217;re going to say</strong></p>
+
+<p>When I was at school, the only role I was allowed to play in the drama club was to be the lighting technician at the back of the room &#8211; no chance anyone would let me near acting. That&#8217;s because I can&#8217;t remember scripts word-by-word for the life of me, and even if I could, I feel really silly when reciting learnt lines. Therefore I have no choice but to speak freely.</p>
+
+<p>However, you do need to have a pretty clear idea of what you are going to talk about, and how long it is going to take, if you want your presentation to be slick. You do need a script in the sense that you need to decide beforehand:</p>
+
+<ul>
+<li>exactly which buttons you are going to click, and</li>
+
+<li>which topics you are going to address.</li>
+</ul>
+
+<p>Then speak the whole thing out loud twice. I find twice is a good number because I get a good feeling for how long the demo is going to take &#8211; essential when the presentation is strictly timed! &#8211; but I don&#8217;t feel over-rehearsed and therefore silly either.</p>
+
+<p>I like things to start with a few slides introducing the issues your product solves. This gives the audience a context and makes your solution look stronger. But I wouldn&#8217;t spend more than 20% of the time in Powerpoint/Keynote mode; for example, in a seven-minute presentation, you should be in the actual demo after about 80 or 90 seconds.</p>
+
+<p>Embrace these time constraints. They force you to be clear and to-the-point. Twitter is so successful precisely <em>because</em> it forces you to be short; it wouldn&#8217;t have worked without the 140 character limit. The same is true in presentations and demos.</p>
+
+<p><strong>2. Make it work offline</strong></p>
+
+<p>Don&#8217;t underestimate this issue. There are almost always technical problems in any venue, and most usually they are either bad internet access or problems with the projectors. Bad internet access is the most common. There&#8217;s no point in relying on a 3G card either, because probably reception will be bad in the Faraday cage that is your demo venue, and if not, the network will be overloaded because everyone is tweeting. There&#8217;s no way round it: your app has got to work offline.</p>
+
+<p>And even though you probably have a full development environment on your laptop on which you can run your app, there are plenty of places where you&#8217;re accidentally relying on internet access. Some of my favourites:</p>
+
+<ul>
+<li>You&#8217;ve copied and pasted the Google Analytics/UserVoice/whatever JavaScript snippet into your page. When you&#8217;re offline, that script won&#8217;t load until the network times out, and so the browser&#8217;s page load event doesn&#8217;t get fired until 30 seconds later. But all your funky graphical effects only get initialised when the page is fully loaded, and suddenly you have no animations, no Ajax, nothing! It&#8217;s almost like the 1990s!</li>
+
+<li>You want to demonstrate clicking a link from an email, which opens a particular feature in your application; however, that email you sent to the test account contains the production site&#8217;s URL, not the address on your local machine.</li>
+
+<li>You are relying on hostnames provided by a DNS server on another network.</li>
+
+<li>Some easily forgotten part of your infrastructure (your mail server, memcached, message queue, mashed-up web service, &#8230;) is not on your own machine.</li>
+
+<li>Your Delicious Bookmarks Firefox extension (or other) tries to connect to its home server via an SSL connection. Since you&#8217;re a new guest to the network, the wireless access point intercepts the connection and inserts its own login page; of course its SSL certificate is invalid though. The result? An annoying SSL certificate warning dialog which pops out of nothing every two minutes.</li>
+</ul>
+
+<p>To make sure your application works offline, fully disconnect the network on your laptop (or even better: go to a café with a dodgy public WiFi that intercepts SSL!), clear your browser cache, and make sure every step of your demo still works flawlessly. Make sure you leave enough preparation time to fix things that don&#8217;t work &#8211; it took me the best part of a day to make Go Test It work without an internet connection! And I had to use, believe it or not, various entries in my <code>/etc/hosts</code> file and even an <code>ssh</code> tunnel to localhost (for remapping ports). Yes, a bit crazy, but it worked.</p>
+
+<p>In the demo night on Thursday we actually had the projector problem rather than the internet problem. But you&#8217;re on the web, right? It shouldn&#8217;t be hard for you to demonstrate your application on someone else&#8217;s computer. Even the hardware guys, mbed and CamVine, pulled off their demos smoothly using a computer they had never touched before!</p>
+
+<p><strong>3. Make it 100% reproducible</strong></p>
+
+<p>An interesting demo probably involves manipulating data somehow, and once data has been manipulated, it usually doesn&#8217;t like going back into the state it previously was.</p>
+
+<p>You, however, should be able to run your demo several times, doing exactly the same steps each time. That means after each run of your demo, you need a way of quickly and reliably getting back to square one. And of course you need a well-defined square one in the first place.</p>
+
+<p>Your development database will probably contain lots of edge-cases: excessively long strings, weird international characters, and other oddities from the times when you&#8217;ve been testing error handling. That&#8217;s not what your typical user&#8217;s data would look like, so I suggest having a separate database for demo purposes, with selected and nice representative example data.</p>
+
+<p>Then you must write down the steps for getting back to the starting state you expect at the start of your demo: the database records you need to delete or add, the files you need to restore, the sessions from which you need to log out, the cookies which you need to clear. Or even write a shell script to do that for you. The last thing you&#8217;d want is that you can&#8217;t demonstrate a key feature of your application because some old data from your last trial run got stuck in there!</p>
+
+<p>Another thing which you should write down, if you haven&#8217;t already, is exactly how to get your development environment up and running after a reboot. For a full <a href='http://go-test.it/'>Go Test It</a> development setup I need about a dozen terminal windows open, each running a different process with an arcane command line, each providing a different part of our infrastructure puzzle. When I&#8217;m under stress I probably won&#8217;t remember every command correctly. They are all documented, of course &#8211; on our wiki, which is only accessible on the web. Print it off beforehand.</p>
+
+<p><strong>4. Clean laptop setup</strong></p>
+
+<p>If you&#8217;re anything like me, you&#8217;ll have tons of files on your desktop, a whole host of applications running, alerts popping up from time to time, and more. Some of this might be confidential. None of this should be appearing on the large projected image of your screen.</p>
+
+<p>The easiest solution, I find, is to have a separate system user account to which I log in only for demos. It is stripped down to the minimum:</p>
+
+<ul>
+<li>blank desktop,</li>
+
+<li>menus only contain the apps which are absolutely required,</li>
+
+<li>no unnecessary Firefox extensions (see the Delicious problems above),</li>
+
+<li>screensaver disabled.</li>
+</ul>
+
+<p>When using the second user account, you can still stay logged in to your primary account at the same time, and have all your terminal windows and stuff open there. It makes sense though to shut down all applications which are not required for the demo: TweetDeck, for example, is a notorious memory hog, and it would be a shame if one of the pages in your demo suddenly takes 10 seconds to load because a shortage of memory caused Firefox, your application server or your database to be paged out to disk.</p>
+
+<p>Also keep in mind that projectors typically have a resolution of 1024x768 &#8211; make sure you&#8217;ve tested in advance what your website looks like at that width.</p>
+
+<p>If you need to press arcane key combinations on your laptop to enable an external monitor, make sure you know exactly what those keys are, and that you&#8217;ve tried them beforehand.</p>
+
+<p><strong>5. And now, enjoy it</strong></p>
+
+<p>With all that preparation, there is nothing which could possibly go wrong. Sit back, take a deep breath and relax. Public speaking is an honour and a privilege, something to be enjoyed and relished, not something to be nervous about. Do your best to be focussed and relaxed, speak loudly and clearly, and smile at your audience. And it will work like a charm.</p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2009/09/12/how-to-pull-off-a-slick-tech-demo-in-5-easy-steps.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

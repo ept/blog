@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Selenium in real-world projects: Automated testing for web applications &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="/js/carrington.js"></script>
+
+<link rel="stylesheet" href="http://disqus.com/stylesheets/martinkl/disqus.css?v=2.0" type="text/css" media="screen" />
+
+<script type="text/javascript">
+var CFCT_URL = "http://www.yes-no-cancel.co.uk";
+var CFCT_AJAX_LOAD = true;
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>Selenium in real-world projects: Automated testing for web applications</h1>
+            <p>This afternoon I gave a talk at <a href='http://barcamp.org/BarCampLondon5'>BarcampLondon5</a> about how we are using the <a href='http://selenium.openqa.org/'>Selenium web test automation tool</a>, amongst other things, for <a href='http://martinfowler.com/articles/continuousIntegration.html'>continuous integration</a>/regression testing on the <a href='/2008/09/22/bid-for-wine-online-wine-auctions-coming-soon/'>Bid for Wine project which I wrote about before</a>.</p>
+
+<p>Here are the slides from my presentation:</p>
+<div id='__ss_621966' style='width: 425px; text-align:
+left;'><object height='355' classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' width='425' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0'><param name='allowFullScreen' value='true' /><param name='allowScriptAccess' value='always' /><param name='src' value='http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&amp;rel=0&amp;stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation' /><embed src='http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&amp;rel=0&amp;stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation' allowfullscreen='true' type='application/x-shockwave-flash' allowscriptaccess='always' height='355' width='425' /></object></div><p>(<a href='http://www.slideshare.net/martinkleppmann/selenium-in-realworld-projects-automated-testing-for-web-applications-presentation?type=powerpoint' title='Selenium in real-world projects:
+Automated testing for web applications'>View
+on SlideShare</a> or
+[download as
+PDF](http://www.slideshare.net/martinkleppmann/selenium-in-realworld-projects-automated-testing-for-web-applications-presentation/download))</p>
+<p>I had some very good conversations with several people after this presentation, amongst others <a href='http://jonathanmelhuish.com/'>Jonathan Melhuish</a> who pointed out that about two years ago there was a start-up called Autoriginate, founded by <a href='http://lightbody.net/blog/'>Patrick Lightbody</a>, which aimed to provide a hosted on-demand Selenium-based testing service called HostedQA. HostedQA does not appear to exist any more in its current form, and I only found <a href='http://web.archive.org/web/20070206184828/http://blog.autoriginate.com/'>a bit of information about Autoriginate and HostedQA in the Wayback Machine</a>.</p>
+
+<p>I&#8217;m not completely sure what happened to HostedQA, but the evidence suggests that Autoriginate was acquired by <a href='http://www.gomez.com/'>Gomez</a> and became what is now their <a href='http://www.gomez.com/products/functional-testing.php'>Reality Check XF</a> product.</p>
+
+<p>We use Selenium quite a bit now, and I know that it&#8217;s a bit of a hassle to set up so that it works neatly; so one might think that I should be attracted to buying their solution. I don&#8217;t mind paying for tools which make us more productive (we pay for <a href='http://www.highrisehq.com/'>Highrise</a> and <a href='http://www.fogcreek.com/FogBugz/'>FogBugz</a>, for example), but somehow Gomez looks very unappealing to me. At least part of that is because they don&#8217;t provide pricing information on their website, and don&#8217;t have a sign-up button. A while ago I was considering them and actually tried quite hard to find out more from them. They were not particularly responsive by email, and they made me speak to two of their people in a phone conference for 20 minutes before they would tell me how much they charged! Maybe that sort of sales strategy works when selling to large enterprises, but for small development houses like ourselves, the attractiveness is zero. Bizarre. Maybe their technology is fine (if they did acquire Patrick Lightbody&#8217;s work it may even be very good), but for me they are irrelevant because of their sales methods.</p>
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                      <li>05 May 2010: <a href="/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html">Valuation caps on convertible notes, explained with graphs</a></li>
+                    
+                      <li>09 Apr 2010: <a href="/2010/04/09/our-social-future.html">Our social future</a></li>
+                    
+                      <li>31 Mar 2010: <a href="/2010/03/31/hey-what-happened-just-then.html">Hey, what happened just then?</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">        
+        <p id="generator-link">
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to Jekyll by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2008/09/27/selenium-automated-testing-web-applications.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>
