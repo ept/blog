@@ -47,5 +47,5 @@ failure of WAP to match expectations) onto the *Slope of Enlightenment*.
 
 I think this calls for a graph.
 
-<img src="/static/2008/02/mobilestats.png" alt="Graph showing the number of UK mobile phone
+<img src="/2008/02/mobilestats.png" alt="Graph showing the number of UK mobile phone
 and mobile internet users." />

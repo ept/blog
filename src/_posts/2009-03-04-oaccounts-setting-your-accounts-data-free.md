@@ -42,7 +42,7 @@ data, it's about linking it up continually:
 > that data values that are linked to external integrated services are overlooked in many data exports.
 
 <a href="http://www.w3.org/2009/Talks/0204-ted-tbl/#(7)">
-    <img src="/static/2009/03/linkeddata.png" alt="Linked Data Standards (Image from Ted Berners-Lee's TED talk)"
+    <img src="/2009/03/linkeddata.png" alt="Linked Data Standards (Image from Ted Berners-Lee's TED talk)"
         title="Linked Data Standards" width="400" height="225" class="size-full wp-image-240" />
 </a>
 
@@ -66,7 +66,7 @@ implement each API separately. And if a user of one accounting system wants to u
 third-party extensions, such as payment processing, shopping carts and advanced reporting, they will
 have to integrate each extension separately. The result is a complete mess:
 
-<img src="/static/2009/03/integration-without-oaccounts.png"
+<img src="/2009/03/integration-without-oaccounts.png"
     alt="Integration of accounting systems without OAccounts"
     width="323" height="142" class="aligncenter size-full wp-image-247" />
 
@@ -76,7 +76,7 @@ should implement each API once, and have an open standard which provides the com
 all those integrations. This is what OAccounts sets out to
 achieve:
 
-<img src="/static/2009/03/integration-with-oaccounts.png"
+<img src="/2009/03/integration-with-oaccounts.png"
     alt="Integration of accounting systems with OAccounts"
     width="357" height="142" class="aligncenter size-full wp-image-246" />
 

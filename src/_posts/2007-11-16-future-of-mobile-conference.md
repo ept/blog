@@ -3,8 +3,8 @@ layout: ync-post
 title: "Future of Mobile conference"
 ---
 
-<p><a href="/static/2007/11/davidburke.jpg" title="David Burke of Google, talking about
-Android"><img src="/static/2007/11/davidburke.jpg" alt="David Burke of Google, talking about
+<p><a href="/2007/11/davidburke.jpg" title="David Burke of Google, talking about
+Android"><img src="/2007/11/davidburke.jpg" alt="David Burke of Google, talking about
 Android" align="right" /></a>On Wednesday I went to the
 [Future of Mobile](http://www.future-of-mobile.com/) conference in London. It was an exciting event
 -- lots of people had high hopes, in particular for the future of data services on mobile devices

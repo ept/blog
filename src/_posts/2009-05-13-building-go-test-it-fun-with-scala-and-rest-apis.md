@@ -3,7 +3,7 @@ layout: ync-post
 title: "Building Go Test It: Fun with Scala and REST APIs"
 ---
 
-<img src="/static/2009/05/go-test-it.png" alt="Go Test It" width="285" height="177" class="size-full wp-image-279" />
+<img src="/2009/05/go-test-it.png" alt="Go Test It" width="285" height="177" class="size-full wp-image-279" />
 
 [Go Test It](http://go-test.it/), the awesome new web testing product I am currently working on, was
 [announced](http://twitter.com/martinkl/status/1763467765) on Monday. I had

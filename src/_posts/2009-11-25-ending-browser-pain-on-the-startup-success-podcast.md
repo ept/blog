@@ -5,7 +5,7 @@ title: "Ending Browser Pain on the Startup Success Podcast"
 
 <a href="http://startuppodcast.wordpress.com/2009/11/24/show-46-ending-browser-pain-martin-kleppmann-go-test-it/">
     <img class="alignleft size-full wp-image-339" title="Startup Success Podcast"
-        src="/static/2009/11/ssplogo3.jpg" alt="Startup Success Podcast" width="261" height="147" />
+        src="/2009/11/ssplogo3.jpg" alt="Startup Success Podcast" width="261" height="147" />
 </a>
 
 I was lucky to get a chance to be interviewed by the great

@@ -18,7 +18,7 @@ selling something, you want to charge as much as you can get away with. The high
 better for you, i.e. the higher the monetary benefit of the sale to
 you.
 
-<img src="/static/2010/01/graph1.jpg" alt="Graph: Value over price (1)" width="500"
+<img src="/2010/01/graph1.jpg" alt="Graph: Value over price (1)" width="500"
     height="299" class="aligncenter size-full" />
 
 The first bit of money makes a big difference --
@@ -45,7 +45,7 @@ your price will depend on a lot of factors (the market value of what you have to
 charged them previously, how much they can afford, etc). But in general there will be some sort of
 function describing how happy they are depending on the price (BogoGraph alert!):
 
-<img src="/static/2010/01/graph2.jpg" alt="Graph: Value over price (2)" width="500"
+<img src="/2010/01/graph2.jpg" alt="Graph: Value over price (2)" width="500"
 height="368" class="aligncenter size-full" />
 
 Here I plotted in blue the buyer's "goodwill" (not in
@@ -71,7 +71,7 @@ intangible benefits, such as keeping open potential future deals, recommendation
 general happiness and warm fuzzy feelings). You want both, so let's just add the two curves
 together:
 
-<img src="/static/2010/01/graph3.jpg" alt="Graph: Value over price (3)" width="500"
+<img src="/2010/01/graph3.jpg" alt="Graph: Value over price (3)" width="500"
 height="364" class="aligncenter size-full" />
 
 The red line is simply the sum of the blue and the

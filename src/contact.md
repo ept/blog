@@ -3,7 +3,7 @@ layout: ync-post
 title: "Contact/Copyright"
 ---
 
-<p><img src="/static/2007/07/martin_kleppmann.jpg" alt="Photo of Martin Kleppmann" align="right"
+<p><img src="/2007/07/martin_kleppmann.jpg" alt="Photo of Martin Kleppmann" align="right"
 hspace="20" width="170" height="237" />www.yes-no-cancel.co.uk is managed by Martin Kleppmann. All
 articles, comments and quotes are copyright by the respective authors. I do not take any
 responsibility for the content of comments left by visitors. An active discussion is encouraged,

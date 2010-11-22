@@ -4,8 +4,8 @@ title: "Load/performance testing a Rails application with ApacheBench"
 ---
 
 <a
-href="/static/2008/09/bidforwine.png"><img class="size-full wp-image-140 alignright" style="margin:
-20px;" title="Bid for Wine logo" src="/static/2008/09/bidforwine.png" alt="Bid for Wine logo"
+href="/2008/09/bidforwine.png"><img class="size-full wp-image-140 alignright" style="margin:
+20px;" title="Bid for Wine logo" src="/2008/09/bidforwine.png" alt="Bid for Wine logo"
 width="375" height="95" align="right" /></a>
 
 Just over 3 days until
@@ -63,8 +63,8 @@ views.
 
 <p style="text-align: center;
 "><a
-href="/static/2008/10/test4.png"><img class="size-full wp-image-169 aligncenter"
-src="/static/2008/10/test4.png" alt="Maximum response time for a given proportion of requests
+href="/2008/10/test4.png"><img class="size-full wp-image-169 aligncenter"
+src="/2008/10/test4.png" alt="Maximum response time for a given proportion of requests
 (server not saturated)" width="500" height="358" /></a></p>
 
 How to read this graph: e.g. see that
@@ -99,8 +99,8 @@ what happens when we hit the site harder? In the next test I increased the concu
 
 <p style="text-align: center;
 "><a
-href="/static/2008/10/test5.png"><img class="size-full wp-image-170 aligncenter"
-src="/static/2008/10/test5.png" alt="Maximum response time for a given proportion of requests
+href="/2008/10/test5.png"><img class="size-full wp-image-170 aligncenter"
+src="/2008/10/test5.png" alt="Maximum response time for a given proportion of requests
 (server saturated)" width="500" height="351" /></a></p>
 
 Ignore the red one for now. The shape of
@@ -178,8 +178,8 @@ meaning.)
 
 <p style="text-align: center;
 "><a
-href="/static/2008/10/distribution.png"><img class="size-full wp-image-168 aligncenter"
-src="/static/2008/10/distribution.png" alt="Distribution of client-side response times" width="500"
+href="/2008/10/distribution.png"><img class="size-full wp-image-168 aligncenter"
+src="/2008/10/distribution.png" alt="Distribution of client-side response times" width="500"
 height="364" /></a></p>
 
 I don't quite know yet what to make of this. Ok, the behaviour doesn't

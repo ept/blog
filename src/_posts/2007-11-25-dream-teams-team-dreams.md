@@ -16,7 +16,7 @@ consultancy again. I found something fundamentally and instinctively repulsive a
 worked, although I found it hard to put my finger on
 it.
 
-<p><img src="/static/2007/11/peopleware.jpg" alt="Book cover of “Peopleware”" align="right"
+<p><img src="/2007/11/peopleware.jpg" alt="Book cover of “Peopleware”" align="right"
 />Fast forward to the present: I started
 [my business](http://www.eptcomputing.com/) anyway, without the consultancy background (I gained
 some business awareness through the excellent

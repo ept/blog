@@ -23,8 +23,8 @@ selection -- something which could easily be accomodated on the next page. One c
 before we've even
 started.
 
-<a href="/static/2007/11/img_5932.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5932.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5932.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5932.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 2**: You'd think that not much could go wrong with just 3 buttons (plus a language selector, a help
@@ -37,8 +37,8 @@ Strangely, the logo for Stuttgart's local transport system (VVS) appears both on
 you have been given a place name and don't know whether it's local or long-distance... you're
 stuck.
 
-<a href="/static/2007/11/img_5933.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5933.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5933.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5933.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 3**: I clicked the blue button for long-distance trains. It shows me that the machine is assuming
@@ -49,8 +49,8 @@ for destinations is also pretty clear -- six common destinations to choose one, 
 others. I'd prefer a QWERTZ layout, but this one is ok
 too.
 
-<a href="/static/2007/11/img_5934.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5934.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5934.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5934.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 4**: I chose Munich as destination. This is where it gets sticky. I now have 7 options: *fast
@@ -61,8 +61,8 @@ realise that both *ticket purchase* and *fast purchase* allow you to purchase a 
 *"fast"* one simply asking fewer pointless
 questions.
 
-<a href="/static/2007/11/img_5935.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5935.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5935.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5935.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 5**: If I had chosen the slow track, the next question would have been how many adults and how many
@@ -79,16 +79,16 @@ effect. I have repeatedly seen people trying to press deactivated or red buttons
 in the dark blue area, which are actually important for making progress to the next
 screen.
 
-<a href="/static/2007/11/img_5936.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5936.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5936.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5936.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 6**: I selected that I have a second-class BahnCard, but that is not enough: the machine needs to
 know whether it is a type of card which gives a 25% reduction, or one which gives a 50%
 reduction.
 
-<a href="/static/2007/11/img_5937.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5937.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5937.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5937.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 7**: The next screen contains a really annoying question: do you want to pay by direct debit? Hell,
@@ -96,8 +96,8 @@ I don't even know yet how much the ticket is going to cost! And it only works if
 registered your BahnCard for direct debit anyway. I say no, leave me alone, you marketing
 people.
 
-<a href="/static/2007/11/img_5938.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5938.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5938.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5938.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 8**: Notice that in the meantime a lot more boxes in the left-hand column have silently been filled
@@ -112,8 +112,8 @@ If you were to select a return journey, you'd have to choose the date and
 time for your return. Skip to screen 14 to see what this looks
 like.
 
-<a href="/static/2007/11/img_5939.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5939.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5939.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5939.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 9**: Did you find the button on the last screen which you need to press in order to confirm? It's in
@@ -128,16 +128,16 @@ connection is simultaneously the button you need to press to select it? (The tex
 drücken"*, i.e. *"Please press here"*, gives it away. Very easy to miss
 though.)
 
-<a href="/static/2007/11/img_5940.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5940.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5940.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5940.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 10**: It asks me to confirm the ticket type and conditions -- that's ok. Except that the red
 highlight is now on the "confirm" button -- on previous screens, red had been a marker for optional
 buttons.
 
-<a href="/static/2007/11/img_5941.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5941.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5941.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5941.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 11**: I have the option of reserving a seat, for an additional 1.50 €. I am already thoroughly fed
@@ -146,15 +146,15 @@ machine whether I want a window or aisle seat, compartment or saloon coach seat,
 non-smoking, ... too many
 choices!).
 
-<a href="/static/2007/11/img_5942.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5942.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5942.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5942.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 12**: Do I want to collect points on my loyalty card? Argh, go away, give me the
 ticket!
 
-<a href="/static/2007/11/img_5943.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5943.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5943.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5943.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 13**: Hurrah, payment stage at last. Note this number of screens is the minimum you can possibly get
@@ -162,8 +162,8 @@ away with in order to buy a single ticket. If you don't choose the fast track or
 convoluted menu system at any stage, you can easily expect to spend a lot longer in front of the
 machine...
 
-<a href="/static/2007/11/img_5944.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5944.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5944.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5944.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen 14**: Here are a few more screens illustrating what happens if you choose to buy a return ticket.
 You also get similar screens even for a single ticket if you don't choose the fast track. This
@@ -179,16 +179,16 @@ departure and arrival dates will be the same. The intellectual effort of figurin
 to press is actually quite significant. And what if you have 3 minutes to go before your train
 departs?
 
-<a href="/static/2007/11/img_5945.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5945.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5945.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5945.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 15**: Ok, so I chose that I want the return on a different day, not today. I get a calendar --
 that's easy
 enough.
 
-<a href="/static/2007/11/img_5946.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5946.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5946.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5946.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 16**: Having chosen a date (the box *Abfahrt* (departure) under *Rückfahrt* (return journey) in the
@@ -196,15 +196,15 @@ left-hand column has been updated), I am asked for the time. This is important b
 recall, every different route may have a different
 price...
 
-<a href="/static/2007/11/img_5947.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5947.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5947.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5947.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 17**: I selected 10:00 as time of departure. Now we're back on the confirmation screen (similar to
 screen 8).
 
-<a href="/static/2007/11/img_5948.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5948.jpg" alt="Ticket machine screenshot" /></a>
+<a href="/2007/11/img_5948.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5948.jpg" alt="Ticket machine screenshot" /></a>
 
 **Screen
 18**: This is the equivalent of screen 9 if you have selected a return ticket. You need to choose
@@ -223,8 +223,8 @@ a maths degree and half an hour to spare, you could probably understand what it 
 average Joe Bloggs is supposed to manage in a hurry, I have no
 idea.
 
-<a href="/static/2007/11/img_5949.jpg" title="Ticket machine
-screenshot"><img src="/static/2007/11/img_5949.jpg" alt="Ticket machine screenshot"
+<a href="/2007/11/img_5949.jpg" title="Ticket machine
+screenshot"><img src="/2007/11/img_5949.jpg" alt="Ticket machine screenshot"
 /></a>
 
 Confirming one of these tickets will go back to the screens shown previously, from screen 9

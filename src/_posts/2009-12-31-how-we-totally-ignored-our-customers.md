@@ -4,7 +4,7 @@ title: "How we totally ignored our customers"
 ---
 
 <a href="http://www.cafepress.com/kandsranch">
-    <img src="/static/2009/12/epiphany.jpg" alt="The Four Steps to the Epiphany"
+    <img src="/2009/12/epiphany.jpg" alt="The Four Steps to the Epiphany"
         width="240" height="240" class="alignleft size-full wp-image-353" />
 </a>
 

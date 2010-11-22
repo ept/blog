@@ -11,17 +11,17 @@ was installing a bunch of software
 updates:
 
 <p
-align="center"><a href="/static/2007/11/winupdate1.png" title="Screenshot of Windows Update
-running"><img src="/static/2007/11/winupdate1.png" alt="Screenshot of Windows Update running"
+align="center"><a href="/2007/11/winupdate1.png" title="Screenshot of Windows Update
+running"><img src="/2007/11/winupdate1.png" alt="Screenshot of Windows Update running"
 /></a></p>
 
 It turned out that he didn't actually want to install those updates now,
 so he hit the *"Stop installation"* button. Up pops a dialog box:
 
 <p style="text-align:
-center"><a href="/static/2007/11/winupdate2.png" title="Screenshot of dialog box: Windows needs your
+center"><a href="/2007/11/winupdate2.png" title="Screenshot of dialog box: Windows needs your
 permission to continue. Continue,
-cancel."><img src="/static/2007/11/winupdate2.png" alt="Screenshot of dialog box: Windows needs your
+cancel."><img src="/2007/11/winupdate2.png" alt="Screenshot of dialog box: Windows needs your
 permission to continue. Continue, cancel."
 /></a></p>
 
@@ -37,9 +37,9 @@ the answer and tell us what button to press. So we click
 *"Details"*:
 
 <p style="text-align:
-center"><a href="/static/2007/11/winupdate3.png" title="Screenshot: the details of the operation are
+center"><a href="/2007/11/winupdate3.png" title="Screenshot: the details of the operation are
 revealed to be a string of letters and
-numbers."><img src="/static/2007/11/winupdate3.png" alt="Screenshot: the details of the operation
+numbers."><img src="/2007/11/winupdate3.png" alt="Screenshot: the details of the operation
 are revealed to be a string of letters and numbers." /></a></p>
 
 Oh, that was really useful. You know, we love hexadecimal numbers. Thank you, Microsoft!

@@ -51,14 +51,14 @@ close a document without having saved it. Like
 this:
 
 <p style="text-align:
-center"><img src="/static/2007/07/yesnocancel1-en.png" alt="Do you want to save the changes?
+center"><img src="/2007/07/yesnocancel1-en.png" alt="Do you want to save the changes?
 Yes/No/Cancel" /></p>
 
 Nice of it to ask, you say -- you had completely forgotten to save. Ok. Now
 compare it to this one:
 
 <p style="text-align:
-center"><img src="/static/2007/07/yesnocancel2-en.png" alt="Do you really want to quit without
+center"><img src="/2007/07/yesnocancel2-en.png" alt="Do you really want to quit without
 saving? Yes/No/Cancel" /></p>
 
 Can you believe it? It's asking the opposite question! Now even if you
@@ -95,9 +95,9 @@ Apple have tried to avoid this problem by not labelling the buttons Yes/No/Cance
 more descriptively:
 
 <p
-align="center"><a href="/static/2007/07/yesnocancel3-en.png" title="Do you want to save changes to
+align="center"><a href="/2007/07/yesnocancel3-en.png" title="Do you want to save changes to
 this document before closing? Don’t
-Save/Cancel/Save"><img src="/static/2007/07/yesnocancel3-en.png" alt="Do you want to save changes to
+Save/Cancel/Save"><img src="/2007/07/yesnocancel3-en.png" alt="Do you want to save changes to
 this document before closing? Don’t Save/Cancel/Save" /></a></p>
 
 Using a verb (in this case "save") is recommended in Apple's
@@ -117,7 +117,7 @@ the programmer clearly couldn't be bothered to make his own buttons, and instead
 on the user:
 
 <p style="text-align:
-center"><img src="/static/2007/07/yesnocancel4-en.png" alt="The connection failed. Click Yes to try
+center"><img src="/2007/07/yesnocancel4-en.png" alt="The connection failed. Click Yes to try
 again, No to ignore the error, or Cancel to quit the application." /></p>
 
 You really need to switch
@@ -125,7 +125,7 @@ on your brain to decide which button to press. And by phrasing the question badl
 worse:
 
 <p style="text-align:
-center"><img src="/static/2007/07/yesnocancel5-en.png" alt="It is not recommended that you continue
+center"><img src="/2007/07/yesnocancel5-en.png" alt="It is not recommended that you continue
 without overwriting this file…" /></p>
 
 At this point, I very much hope that you will have run out
@@ -137,7 +137,7 @@ to do something (the positive)? I find this occurring particularly frequently wi
 checkboxes:
 
 <p style="text-align:
-center"><img src="/static/2007/07/yesnocancel6-en.png" alt="Disable nuclear missiles?" /></p>
+center"><img src="/2007/07/yesnocancel6-en.png" alt="Disable nuclear missiles?" /></p>
 
 It is counterintuitive to put a tick in a box for something you don't want. Just don't ask negative
 questions. But that's a story for another day.

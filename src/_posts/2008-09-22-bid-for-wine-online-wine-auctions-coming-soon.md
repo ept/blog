@@ -5,8 +5,8 @@ title: "Bid for Wine, online wine auctions coming soon"
 
 <div
 style="float:right"><a
-href="/static/2008/09/bidforwine.png"><img class="size-full wp-image-140" title="Bid for Wine logo"
-src="/static/2008/09/bidforwine.png" alt="Bid for Wine logo" width="375" height="95" /></a></div>
+href="/2008/09/bidforwine.png"><img class="size-full wp-image-140" title="Bid for Wine logo"
+src="/2008/09/bidforwine.png" alt="Bid for Wine logo" width="375" height="95" /></a></div>
 
 I
 should write a few words on one of the big projects we've currently got going on at

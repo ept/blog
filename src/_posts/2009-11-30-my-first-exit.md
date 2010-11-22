@@ -12,7 +12,7 @@ favourite songs off the radio, experimented with electronic sound effects, playe
 aspiration, a dream, a journey of discovery.
 
 <a href="http://www.flickr.com/photos/andrewscott/660559536/">
-    <img src="/static/2009/11/my_first_sony.jpg" width="500" height="268"
+    <img src="/2009/11/my_first_sony.jpg" width="500" height="268"
         alt="My First Sony by Andrew Scott on Flickr (Creative Commons)" />
 </a>
 

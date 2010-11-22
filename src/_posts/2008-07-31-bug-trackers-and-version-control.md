@@ -31,6 +31,6 @@ blog](http://markphip.blogspot.com/2007/01/integrating-subversion-with-your-issu
 Here's what it looks like:
 
 <p><a
-href="/static/2008/07/screenshot.png"><img class="size-medium wp-image-95" title="Screenshot of bug
-tracker, subversion and eclipse integration" src="/static/2008/07/screenshot.png" alt="Screenshot of
+href="/2008/07/screenshot.png"><img class="size-medium wp-image-95" title="Screenshot of bug
+tracker, subversion and eclipse integration" src="/2008/07/screenshot.png" alt="Screenshot of
 bug tracker, subversion and eclipse integration" width="300" height="272" /></a></p>

@@ -3,7 +3,7 @@ layout: ync-post
 title: "Bad usability calendar"
 ---
 
-<p><img src="/static/2008/01/28012008_small.jpg" alt="Photo of the Bad Usability Calendar at Ept
+<p><img src="/2008/01/28012008_small.jpg" alt="Photo of the Bad Usability Calendar at Ept
 Computing’s office" align="right" hspace="20" vspace="20" />[Netlife
 Research](http://www.netliferesearch.no/), a usability consultancy from Norway, has come up with a
 neat humorous way of pointing out some design elements which can help improve usability (or rather,

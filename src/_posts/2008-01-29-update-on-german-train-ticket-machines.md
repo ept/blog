@@ -3,8 +3,8 @@ layout: ync-post
 title: "Update on German train ticket machines"
 ---
 
-A while ago I wrote some posts about the user interfaces of ticket machines in Germany ([article
-1](/2007/07/24/train-ticket-machines-uk-vs-germany/),
+A while ago I wrote some posts about the user interfaces of ticket machines in Germany
+([article 1](/2007/07/24/train-ticket-machines-uk-vs-germany/),
 [article 2](/2007/11/13/train-ticket-machines-in-germany-uk-vs-germany-part-2/)). Meanwhile I am
 told that they have been improved considerably: the 'Fast purchase' route is now considerably
 faster, requiring a minimum of only 4 or 5 clicks to buy a standard ticket (compare that to 16
@@ -21,13 +21,13 @@ found himself looking around for the "next" button to press. There was just some
 non-obvious bit of text on screen explaining that you were now ready to
 pay.
 
-<p><a href="/static/2008/01/automaten-vhs-kurs-med.jpg" title="Scan of a newspaper article on a
+<p><a href="/2008/01/automaten-vhs-kurs-med.jpg" title="Scan of a newspaper article on a
 training course for train ticket
-machines"><img src="/static/2008/01/automaten-vhs-kurs-med.thumbnail.jpg" alt="Scan of a newspaper
+machines"><img src="/2008/01/automaten-vhs-kurs-med.thumbnail.jpg" alt="Scan of a newspaper
 article on a training course for train ticket machines" align="left" hspace="20" vspace="20" /></a>
 In fact the usability problems of German train ticket machines are still so pronounced that the
 national rail company (DB) is now offering courses to teach people how to use them. (See the
-[scanned newspaper article](/static/2008/01/automaten-vhs-kurs-med.jpg), taken from Aalener
+<a href="/2008/01/automaten-vhs-kurs-med.jpg">scanned newspaper article</a>, taken from Aalener
 Nachrichten/Schwäbische Zeitung, Tuesday 18th December 2007. Sorry that it's more than a month old,
 I've not had much time to blog recently.)</p>
 
@@ -39,7 +39,7 @@ up a fuss and explaining that this is just not acceptable.
 
 Some highlights from the article:
 
-<blockquote><em>Moschner \[the course instructor\] says that the new ticket machines have a
+<blockquote><em>Moschner [the course instructor] says that the new ticket machines have a
 more visible display and also accept cash besides credit and debit cards. "Are they just as
 cumbersome as the old ones?" an over-70-year-old lady enquires. The course instructor remains calm:
 "They are not cumbersome."</em></blockquote>

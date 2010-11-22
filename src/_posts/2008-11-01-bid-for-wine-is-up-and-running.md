@@ -4,7 +4,7 @@ title: "Bid for Wine is up and running"
 ---
 
 <p><img class="size-full wp-image-140 alignright" style="margin: 20px;" title="Bid for Wine logo"
-src="/static/2008/09/bidforwine.png" alt="Bid for Wine logo" width="375" height="95" align="right"
+src="/2008/09/bidforwine.png" alt="Bid for Wine logo" width="375" height="95" align="right"
 />[Bid for Wine](http://www.bidforwine.co.uk/), the website which has been in development by
 [my company](http://www.eptcomputing.com/) for the last 6 months, finally launched yesterday. It's
 very exciting -- Lionel and the team had arranged listings with a number of sellers beforehand, and

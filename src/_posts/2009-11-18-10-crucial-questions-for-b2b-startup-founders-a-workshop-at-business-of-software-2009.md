@@ -31,7 +31,7 @@ targeting a particular niche.
 <p style="text-align:
 center">
     <a href="http://www.flickr.com/photos/jmpk/4102424024/">
-        <img src="/static/2009/11/joel_bos2009.jpg"
+        <img src="/2009/11/joel_bos2009.jpg"
             alt="Joel Spolsky at Business of Software 2009. By John of Austin on Flickr; Creative Commons." />
     </a>
 </p>
@@ -66,8 +66,8 @@ to startups everywhere. You can
 [how we structured the workshop and what we learnt in the process](/2009/11/17/running-a-workshop-for-startup-founders/).
 
 <p style="text-align: center">
-    <a href="/static/2009/11/bos-worksheet.pdf">
-        <img src="/static/2009/11/bos-worksheet.png"/>
+    <a href="/2009/11/bos-worksheet.pdf">
+        <img src="/2009/11/bos-worksheet.png"/>
     </a>
 </p>
 

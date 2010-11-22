@@ -86,7 +86,7 @@ That XML document, if based on the UBL 2.0 Invoice schema, would have the follow
 
 And that, ladies and gentlemen, is really not that bad. Ok, I've simplified it a little;
 I have left out the XML namespaces and the angle brackets to make it more readable.
-[Here is the UBL 2.0 Invoice example XML file](/static/2008/11/invoice.xml)
+[Here is the UBL 2.0 Invoice example XML file](/2008/11/invoice.xml)
 which validates fully against the schema.
 
 This is of course

@@ -24,8 +24,8 @@ is a device which I interact with pretty much every day, and it is therefore imp
 comfortable using
 it.
 
-<a href="/static/2007/07/img_5863.jpg" title="View of a gas
-cooker"><img src="/static/2007/07/img_5863.thumbnail.jpg" title="View of a gas cooker" alt="View of
+<a href="/2007/07/img_5863.jpg" title="View of a gas
+cooker"><img src="/2007/07/img_5863.thumbnail.jpg" title="View of a gas cooker" alt="View of
 a gas cooker" align="left" hspace="15" vspace="10" /></a>
 
 Here is a photo of it -- click it for a
@@ -53,13 +53,13 @@ arrangement which is unambiguous but requires hardly any additional
 space:
 
 <p style="text-align:
-center"><img src="/static/2007/07/cooker.png" alt="Alternative knob arrangement for the cooker"
+center"><img src="/2007/07/cooker.png" alt="Alternative knob arrangement for the cooker"
 /></p>
 
 (Comments on whether it is more aesthetically pleasing are welcome.)
 
-<a href="/static/2007/07/img_5865.jpg" title="Knob to control one of the
-hobs"><img src="/static/2007/07/img_5865.thumbnail.jpg" title="Knob to control one of the hobs"
+<a href="/2007/07/img_5865.jpg" title="Knob to control one of the
+hobs"><img src="/2007/07/img_5865.thumbnail.jpg" title="Knob to control one of the hobs"
 alt="Knob to control one of the hobs" align="right" hspace="15" vspace="10" /></a>
 
 I've not finished

@@ -87,7 +87,7 @@ There are two consequences of the numbers which are useful to think about:
 We assumed above that after the Series A, the Series A investors own 30% of the company.
 But how much do the seed investors own after converting their note into shares?
 
-<img src="/static/2010/05/Valuation-Cap-demo-1.png" alt="How much equity does the note convert into?"
+<img src="/2010/05/Valuation-Cap-demo-1.png" alt="How much equity does the note convert into?"
     width="550" height="402" class="aligncenter size-full wp-image-379" />
 
 Without the valuation cap, the seed investors end up with an ever diminishing share of the company as the
@@ -108,7 +108,7 @@ note converts into shares. But when you have a cap, and your Series A valuation 
 fixing the price for the early investors, while the incoming Series A investors might be paying a
 lot more per share. So you are effectively giving a greater than 20% discount in that case.
 
-<img src="/static/2010/05/Valuation-Cap-demo-2.png" alt="Effective discount on conversion"
+<img src="/2010/05/Valuation-Cap-demo-2.png" alt="Effective discount on conversion"
     width="550" height="403" class="aligncenter size-full wp-image-380" />
 
 I find this graph interesting, because it's basically a measure of "how annoyed the VCs are going to be about
@@ -134,7 +134,7 @@ Disclaimer: neither am I a lawyer nor do I have much
 experience with this stuff, so my explanation may be horribly flawed or simply wrong. (If you find a
 mistake, please let me know.)
 
-You can [download the Excel spreadsheet](/static/2010/05/Valuation-Cap-demo-for-blog.xlsx.zip)
+You can [download the Excel spreadsheet](/2010/05/Valuation-Cap-demo-for-blog.xlsx.zip)
 which I used to generate these graphs. An interesting alternative way of looking at this would be to
 assume a fixed Series A amount, and instead work out what happens when you vary the valuation cap.
 I'll leave that as an exercise for you, dear reader.
