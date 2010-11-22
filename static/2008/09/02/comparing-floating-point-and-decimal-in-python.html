@@ -21,7 +21,7 @@
 <div id="header">
     <div class="wrapper">
         <strong id="blog-title">
-            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
         </strong>
         <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
     </div>
@@ -88,7 +88,7 @@
 </div>
 <p>I&#8217;m filing bugs about this, but I do find this quite entertaining in a &#8216;oh-my-God-I-always-believed-Python-was-a-well-behaved-language&#8217; sort of way.</p>
 
-<p><strong>Edit:</strong> Edward Loper from NLTK gave <a href='https://sourceforge.net/tracker/?func=detail&amp;amp;atid=400896&amp;amp;aid=2089412&amp;amp;group_id=30982'>an explanation</a> why this is the case &#8211; it&#8217;s not because of NLTK, but because of Python&#8217;s internal handling of the comparison operator on floating-point numbers:</p>
+<p><strong>Edit:</strong> Edward Loper from NLTK gave <a href='https://sourceforge.net/tracker/?func=detail&amp;atid=400896&amp;aid=2089412&amp;group_id=30982'>an explanation</a> why this is the case &#8211; it&#8217;s not because of NLTK, but because of Python&#8217;s internal handling of the comparison operator on floating-point numbers:</p>
 <blockquote>Apparently, you're only allowed to use comparison operators to compare
 <code>Decimal</code> objects to (i) other
 <code>Decimal</code> objects; (ii) integers; (iii) longs. Here, you're comparing it to a

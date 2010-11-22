@@ -21,7 +21,7 @@
 <div id="header">
     <div class="wrapper">
         <strong id="blog-title">
-            <a href="http://martin.kleppmann.com/" title="Home" rel="home">Martin Kleppmann</a>
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
         </strong>
         <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
     </div>
@@ -57,7 +57,7 @@
 
 <p>However, things get harder once you start building sentences based on variables which may change. The Twitter message is a simple example of this: the time is a variable, and because it&#8217;s in the past (not in the future), we need to stick &#8220;ago&#8221; on the end, in English at least. The code which does this will look something like this:</p>
 <div class='highlight'><pre><span class='n'>time_in_words</span> <span class='o'>=</span> <span class='n'>distance_of_time_in_words</span><span class='p'>(</span><span class='n'>time_of_last_update</span><span class='p'>,</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
-<span class='n'>time_in_words</span> <span class='o'>=</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>time_in_words</span><span class='si'>}</span><span class='s2'> ago&quot;</span><span class='err'> </span><span class='k'>if</span> <span class='p'>(</span><span class='n'>time_of_last_update</span> <span class='o'>&lt;</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
+<span class='n'>time_in_words</span> <span class='o'>=</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>time_in_words</span><span class='si'>}</span><span class='s2'> ago&quot;</span> <span class='k'>if</span> <span class='p'>(</span><span class='n'>time_of_last_update</span> <span class='o'>&lt;</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
 </pre>
 </div>
 <p>To translate this program, make sure that the function <code>distance_of_time_in_words</code> returns words in the right language (e.g. for German, &#8220;weniger als 5 Sekunden&#8221; &#8211; Twitter does this correctly), and replace <code>&quot;#{time_in_words} ago&quot;</code> with the right grammatical construction for the target language (e.g. for German, <code>&quot;vor #{time_in_words}&quot;</code> &#8211; this is the bit Twitter has missed out).</p>
