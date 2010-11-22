@@ -1,0 +1,15 @@
+---
+layout: front-page
+---
+
+<h1>Archive</h1>
+
+<p>This is the full archive of posts on Martin Kleppmann's blog (formerly Yes/No/Cancel).
+My thinking has been developing rapidly, and some of the older stuff is quite embarrassing
+to my present self. So please treat it with the appropriate scepticism :)</p>
+
+<ul>
+{% for post in site.posts %}
+  <li>{{ post.date | date_to_string }}: <a href="{{ post.url }}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
