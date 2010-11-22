@@ -12,7 +12,7 @@ set :public, Proc.new { File.join(root, "static") }
 # Redirect traffic for any domain to martin.kleppmann.com, and catch
 # requests for old yes-no-cancel.co.uk pages
 before do
-  if !%w(martin.kleppmann.com localhost).include?(request.host) &&
+  if !%w(martin.kleppmann.com localhost localhost:9292).include?(request.env['HTTP_HOST']) &&
       request.path =~ /\A\/[a-zA-Z0-9_!\$%&\(\)\*\+,\-\.\/:;<=>\?@\[\]\^\{\}\|~]*\Z/
     new_path = request.path.gsub %r{\A(/\d+/\d+/\d+/.*)/\z}, '\1.html'
     halt 301, {"Location" => "http://martin.kleppmann.com#{new_path}"}, <<-HTML
