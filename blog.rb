@@ -21,7 +21,7 @@ before do
 end
 
 get '/' do
-  File.open('static/index.html', &:read)
+  send_file 'static/index.html'
 end
 
 # static files route (reimplemented outside of Sinatra to make host-dependent redirect work)
