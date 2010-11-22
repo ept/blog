@@ -1,1 +1,29 @@
-<p>Hello world!</p>
+---
+layout: front-page
+---
+{% for post in site.posts limit:5 %}
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
+            <a href="{{ post.url }}" rel="bookmark">{{ post.title }}</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            {{ post.content }}
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="{{ post.data | date_to_xmlschema }}">{{ post.date | date_to_string }}</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="{{ post.url }}#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+{% endfor %}
