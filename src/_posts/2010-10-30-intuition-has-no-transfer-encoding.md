@@ -54,7 +54,7 @@ check whether the results agree. But that’s another topic.)
 **A tale of bitmaps and vector graphics**
 
 The way I imagine the brain stores intuition is a bit like a huge bitmap image, with lots
-and lots of pixels \[1\]. When a new piece of information
+and lots of pixels \[[1](#intuition-footnote)\]. When a new piece of information
 comes in, the brain’s massively parallel processing structure takes the new information,
 combines it with the existing image, correlates, interpolates, extrapolates, and produces an
 answer in an instant.
@@ -167,6 +167,9 @@ intuition, you're well underway to success.
 
 
 **Footnote:**
+
+<a name="intuition-footnote">
+</a>
 
 \[1\] I'm not sure what each individual pixel
 represents. In mathematical terms, a picture is a function mapping from 2D space to colour,
