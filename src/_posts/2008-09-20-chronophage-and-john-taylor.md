@@ -13,8 +13,8 @@ unveiling ceremony was led by none other than
 [attracted](http://www.usatoday.com/tech/science/2008-09-19-corpus-clock-cambridge_N.htm)
 [quite](http://www.telegraph.co.uk/news/2991932/Stephen-Hawking-unveils-strange-new-way-to-tell-the-time---a-little-late.html)
 [a bit](http://www.timesonline.co.uk/tol/news/uk/science/article4783450.ece)
-[of](http://www.guardian.co.uk/artanddesign/2008/sep/18/corpus.clock)[
-media](http://hosted.ap.org/dynamic/stories/E/EU_BRITAIN_CHRONOPHAGE?SITE=CAGRA&amp;SECTION=HOME&amp;TEMPLATE=DEFAULT)
+[of](http://www.guardian.co.uk/artanddesign/2008/sep/18/corpus.clock)
+[media](http://hosted.ap.org/dynamic/stories/E/EU_BRITAIN_CHRONOPHAGE?SITE=CAGRA&SECTION=HOME&TEMPLATE=DEFAULT)
 [attention](http://www.sfgate.com/cgi-bin/article.cgi?f=/c/a/2008/09/20/MNPR131H98.DTL).
 
 The
@@ -68,7 +68,7 @@ the thermostat switches off, otherwise the steam causes unwanted condensation in
 Asia, it is tuned differently, because the water should be kept on hard boil for close to a minute
 to ensure germs are killed off. In the UK, electric kettles have been popular for a long time, but
 they didn't really catch on in Germany; this was due to the popular opinion amongst traditional
-[*Hausfrauen*](http://dict.leo.org/ende?lang=en&amp;search=Hausfrau) who found the heating
+[*Hausfrauen*](http://dict.leo.org/ende?lang=en&search=Hausfrau) who found the heating
 element 'dirty' when calcium deposits accumulated on it. Taylor figured out that the heating element
 could be concealed beneath a flat kettle base, making it much easier to clean and descale, and
 electric kettle sales took off in Germany too.
@@ -204,7 +204,7 @@ building in which I lived for a year, which dates from the 14th Century.
 It is expensive? True, but
 amazing things rarely come free; think of all the artists, craftsmen and engineers who helped to
 make it happen; think of what it might cost to
-[build a cathedral](/2008/03/30/on-the-importance-of-ambition).
+[build a cathedral](/2008/03/30/on-the-importance-of-ambition.html).
 
 It is an astonishing piece of
 engineering? Indeed, and I'm delighted that we can still celebrate and marvel at a mechanical

@@ -20,21 +20,17 @@ codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#ve
 name="allowFullScreen" value="true"
 /><param name="allowScriptAccess" value="always"
 /><param name="src"
-value="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&amp;rel=0&amp;stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
+value="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&rel=0&stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
 /><embed type="application/x-shockwave-flash" width="425" height="355"
-src="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&amp;rel=0&amp;stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
+src="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&rel=0&stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
 allowscriptaccess="always"
 allowfullscreen="true"></embed></object></div>
 
-<p>(<a title="Selenium in real-world projects:
-Automated testing for web applications"
-href="http://www.slideshare.net/martinkleppmann/selenium-in-realworld-projects-automated-testing-for-web-applications-presentation?type=powerpoint">View
-on SlideShare</a> or
-[download as
-PDF](http://www.slideshare.net/martinkleppmann/selenium-in-realworld-projects-automated-testing-for-web-applications-presentation/download))</p>
+<p>(<a title="Selenium in real-world projects: Automated testing for web applications"
+href="http://www.slideshare.net/martinkleppmann/selenium-in-realworld-projects-automated-testing-for-web-applications-presentation?type=powerpoint">View on SlideShare</a> or
+<a href="http://www.slideshare.net/martinkleppmann/selenium-in-realworld-projects-automated-testing-for-web-applications-presentation/download">download as PDF</a>)</p>
 
-I
-had some very good conversations with several people after this presentation, amongst others
+I had some very good conversations with several people after this presentation, amongst others
 [Jonathan Melhuish](http://jonathanmelhuish.com/) who pointed out that about two years ago there was
 a start-up called Autoriginate, founded by
 [Patrick Lightbody](http://lightbody.net/blog/), which aimed to provide a hosted on-demand

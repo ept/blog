@@ -58,7 +58,7 @@ I'm filing bugs about this, but I do find this quite entertaining in a
 'oh-my-God-I-always-believed-Python-was-a-well-behaved-language' sort of way.
 
 **Edit:** Edward Loper from NLTK gave
-[an explanation](https://sourceforge.net/tracker/?func=detail&amp;atid=400896&amp;aid=2089412&amp;group_id=30982)
+[an explanation](https://sourceforge.net/tracker/?func=detail&atid=400896&aid=2089412&group_id=30982)
 why this is the case -- it's not because of NLTK, but because of Python's internal handling of the
 comparison operator on floating-point
 numbers:

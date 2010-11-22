@@ -33,10 +33,10 @@ hands of an artist, gradually forming to be a beautiful picture — except that 
 never complete, and always evolving.
 
 <object width="508" height="311">
-    <param name="movie" value="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US"></param>
+    <param name="movie" value="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US"></param>
     <param name="allowFullScreen" value="true"></param>
     <param name="allowscriptaccess" value="always"></param>
-    <embed src="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US"
+    <embed src="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US"
         type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"
         width="508" height="311"></embed>
 </object>
@@ -177,7 +177,7 @@ and a bitmap approximates this function by sampling at regularly spaced values o
 Along that line of thinking, the mind is probably a function mapping from sensory inputs and
 memories to explanations and actions (or something along those lines — I'm not a
 neuroscientist). This function can be represented as lots of individual data points
-("London &amp; lunchtime &amp; hunger &amp; last had Falafel 10 days ago → go to
+("London & lunchtime & hunger & last had Falafel 10 days ago → go to
 the King of Falafel"), which is bitmap-like, or in some systematic manner ("I
 like to eat falafel for lunch. For example, in London, the King of Falafel is good."),
 which is vector-like, omitting redundant information (lunchtime and hunger are strongly

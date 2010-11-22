@@ -122,5 +122,4 @@ advance.
 
 All in all, I think it was a very useful workshop for everyone, and the feedback we
 received was uniformly positive. If you have any thoughts, please
-[leave a comment](/2009/11/17/running-a-workshop-for-startup-founders/#respond) or
-[drop me a note on Twitter](http://twitter.com/martinkl).
+[leave a comment](#disqus_thread) or [drop me a note on Twitter](http://twitter.com/martinkl).

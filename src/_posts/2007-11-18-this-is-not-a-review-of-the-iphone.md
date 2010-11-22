@@ -12,19 +12,18 @@ and anyone has written a review of it already, and there is no need for me to ad
 Still, there's something special about it. If I mention the words 'mobile' and 'user experience' to
 anybody in conversation, I almost inevitably get 'iPhone' back. Why?
 
-<blockquote>"First Apple made the hype, and released the hype as a product. Then they released
-the iPhone as the follow-up product."
-<p align="right">--
-[Charles McCathieNevile](http://www.opera.com/company/speakers/mccathienevile/) (Opera Software) at
-[FoM2007](http://www.future-of-mobile.com/)</p></blockquote>
+> "First Apple made the hype, and released the hype as a product. Then they released
+> the iPhone as the follow-up product."
+>
+> -- [Charles McCathieNevile](http://www.opera.com/company/speakers/mccathienevile/) (Opera Software) at
+> [FoM2007](http://www.future-of-mobile.com/)
 
 Maybe the right question should not be why the
 iPhone is so good, but rather why the handsets of much more established manufacturers are so bad (in
 some respects, notably usability). Some interesting insight came from
 [Tom Hume](http://www.tomhume.org/) and
 [Marek Pawlowski](http://www.pmn.co.uk/) on a
-[FoM2007](http://www.future-of-mobile.com/) panel
-discussion:
+[FoM2007](http://www.future-of-mobile.com/) panel discussion:
 
 * The mobile handset industry has a structural problem. The manufacturers are
 very focused on R&D and on features, and within a single company there may actually be different

@@ -3,12 +3,14 @@ layout: ync-post
 title: "Future of Mobile conference"
 ---
 
-<p><a href="/2007/11/davidburke.jpg" title="David Burke of Google, talking about
-Android"><img src="/2007/11/davidburke.jpg" alt="David Burke of Google, talking about
-Android" align="right" /></a>On Wednesday I went to the
+<a href="/2007/11/davidburke.jpg" title="David Burke of Google, talking about Android">
+  <img src="/2007/11/davidburke.jpg" alt="David Burke of Google, talking about Android" align="right" />
+</a>
+
+On Wednesday I went to the
 [Future of Mobile](http://www.future-of-mobile.com/) conference in London. It was an exciting event
 -- lots of people had high hopes, in particular for the future of data services on mobile devices
-(i.e. the internet). Some of my main take-home messages were:</p>
+(i.e. the internet). Some of my main take-home messages were:
 
 * The mobile market is HUGE. Seriously. Billions of people worldwide have mobile
 phones, and more people worldwide access the web from mobile devices than from desktop or laptop
@@ -39,9 +41,7 @@ his presentation.
 Finally an interesting quote, very much in rhythm with the drum I am
 bashing:
 
-<blockquote> "Mobile users are ready and willing to engage with their favourite brands on
-mobile devices."
-<p align="right">--
-[Matt Millar](http://www.future-of-mobile.com/speakers.html#MattMillar), Director of Mobile and
-Devices EMEA at Adobe</p>
-</blockquote>
+> "Mobile users are ready and willing to engage with their favourite brands on mobile devices."
+>
+> -- [Matt Millar](http://www.future-of-mobile.com/speakers.html#MattMillar), Director of Mobile and
+> Devices EMEA at Adobe

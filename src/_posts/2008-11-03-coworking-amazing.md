@@ -20,7 +20,7 @@ Watch this video ([from Podtech](http://www.podtech.net/home/3454/co-working-ind
     <param name="id" value="player8661d6d658544dd99f935d2eec63714f" />
     <param name="align" value="middle" />
     <param name="allowScriptAccess" value="always" />
-    <param name="FlashVars" value="content=http://media1.podtech.net/media/2007/06/PID_011747/Podtech_RyanIsHungry_CoWorking.flv&amp;totalTime=392000&amp;permalink=http://www.podtech.net/home/3454/co-working-independent-workers-unite&amp;breadcrumb=8661d6d658544dd99f935d2eec63714f"/>
+    <param name="FlashVars" value="content=http://media1.podtech.net/media/2007/06/PID_011747/Podtech_RyanIsHungry_CoWorking.flv&totalTime=392000&permalink=http://www.podtech.net/home/3454/co-working-independent-workers-unite&breadcrumb=8661d6d658544dd99f935d2eec63714f"/>
     <param name="quality" value="high" />
     <param name="scale" value="noscale" />
     <param name="bgcolor" value="#000000" />
@@ -28,7 +28,7 @@ Watch this video ([from Podtech](http://www.podtech.net/home/3454/co-working-ind
     <embed id="player8661d6d658544dd99f935d2eec63714f" type="application/x-shockwave-flash" width="480" height="299"
         src="http://www.podtech.net/player/podtech-player.swf?bc=8661d6d658544dd99f935d2eec63714f"
         bgcolor="#000000" scale="noscale" quality="high"
-         flashvars="content=http://media1.podtech.net/media/2007/06/PID_011747/Podtech_RyanIsHungry_CoWorking.flv&amp;totalTime=392000&amp;permalink=http://www.podtech.net/home/3454/co-working-independent-workers-unite&amp;breadcrumb=8661d6d658544dd99f935d2eec63714f"
+         flashvars="content=http://media1.podtech.net/media/2007/06/PID_011747/Podtech_RyanIsHungry_CoWorking.flv&totalTime=392000&permalink=http://www.podtech.net/home/3454/co-working-independent-workers-unite&breadcrumb=8661d6d658544dd99f935d2eec63714f"
         allowscriptaccess="always" align="middle"></embed>
 </object>
 

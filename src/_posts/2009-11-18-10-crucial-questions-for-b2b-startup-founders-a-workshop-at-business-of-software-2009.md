@@ -253,7 +253,7 @@ for). Please also see my
 [separate post on how we ran the workshop](/2009/11/17/running-a-workshop-for-startup-founders.html).
 
 Did you find this useful? Please
-[leave a comment](/2009/11/18/10-crucial-questions-for-b2b-startup-founders-a-workshop-at-business-of-software-2009/#respond),
+[leave a comment](#disqus_thread),
 [subscribe to my RSS feed](http://feeds2.feedburner.com/yes-no-cancel) or
 [follow me on Twitter](http://twitter.com/martinkl)!
 

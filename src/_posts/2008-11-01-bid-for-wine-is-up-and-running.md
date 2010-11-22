@@ -3,9 +3,10 @@ layout: ync-post
 title: "Bid for Wine is up and running"
 ---
 
-<p><img class="size-full wp-image-140 alignright" style="margin: 20px;" title="Bid for Wine logo"
-src="/2008/09/bidforwine.png" alt="Bid for Wine logo" width="375" height="95" align="right"
-/>[Bid for Wine](http://www.bidforwine.co.uk/), the website which has been in development by
+<img class="size-full wp-image-140 alignright" style="margin: 20px;" title="Bid for Wine logo"
+src="/2008/09/bidforwine.png" alt="Bid for Wine logo" width="375" height="95" align="right"/>
+
+[Bid for Wine](http://www.bidforwine.co.uk/), the website which has been in development by
 [my company](http://www.eptcomputing.com/) for the last 6 months, finally launched yesterday. It's
 very exciting -- Lionel and the team had arranged listings with a number of sellers beforehand, and
 we gave those sellers special advance access to the site so that they could prepare their auction
@@ -13,41 +14,29 @@ listings and upload photos. That meant that the moment we opened the doors to th
 virtual shelves were already full with wonderful wines and people could immediately have a
 mouth-watering browse around the listings. And even though it's another a week until the first
 auctions close, we have already received a number of bids, and a good number of people have signed
-up.</p>
+up.
 
-<p>I like numbers, so here are a few vital
-statistics:
-<ul>
-<li>26270 lines of lovingly hand-crafted
-code</li>
-<li>2100 hours of
-work</li>
-<li>1219 svn
-commits</li>
-<li>589 successful automated
-builds</li>
-<li>491 closed
-bugs</li>
-<li>4
-developers</li>
-<li>2 bugs found in the Ruby
-interpreter</li>
-<li>1 awesome piece of software :-)</li>
-</ul>
+I like numbers, so here are a few vital statistics:
+
+* 26270 lines of lovingly hand-crafted code
+* 2100 hours of work
+* 1219 svn commits
+* 589 successful automated builds
+* 491 closed bugs
+* 4 developers
+* 2 bugs found in the Ruby interpreter
+* 1 awesome piece of software :-)
+
 We don't currently seem to have a
 page which gives due credit to all the people who made it happen, so at the very least I should give
-a few names
-here:
-<ul>
-<li>The team at Bid for Wine -- Lionel Nierop, Spenser Hilliard, Keith
-Prothero</li>
-<li>Ept Computing developers -- Patrick Dietrich, Conrad Irwin, Michael Arnold, Martin
-Kleppmann</li>
-<li>Design &amp; User Experience -- Ella Romanos, Martin Darby, Martin
-Carlson</li>
-</ul>
+a few names here:
+
+* The team at Bid for Wine -- Lionel Nierop, Spenser Hilliard, Keith Prothero
+* Ept Computing developers -- Patrick Dietrich, Conrad Irwin, Michael Arnold, Martin Kleppmann
+* Design & User Experience -- Ella Romanos, Martin Darby, Martin Carlson
+
 Thank you to everyone for good and hard work, and I think it's great to see the
-results of our efforts online and being used.</p>
+results of our efforts online and being used.
 
 Talking Drinks had
 [an article on Bid for Wine

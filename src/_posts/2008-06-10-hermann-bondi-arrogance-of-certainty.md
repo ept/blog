@@ -33,7 +33,7 @@ I neither fully agree or disagree with this article, but I think it is well wort
 reading. Without any further comment, here it is.
 
 <blockquote><p>Hermann Bondi</p>
-<p>**Arrogance of certainty**</p>
+<p><strong>Arrogance of certainty</strong></p>
 <p>I am a non-believer in any revealed religion and a scientist. In my acquaintance
 with scientists I find both belief and non-belief. I know sufficient numbers of scientists of each
 persuasion to be willing to classify two statements as both being stupid and palpably untrue
@@ -94,7 +94,6 @@ morality.</p>
 <p>Of course we must recognize the great role religion has played in history but need
 not support it. Being an anti-revelationist is in no way arid. It allows one to enjoy freely all
 that human genius has produced; it allows one to engage untrammelled in the search that is the real
-joy of
-living.</p>
-<p>*Sir Hermann Bondi, FRS, was Master of Churchill College,
-Cambridge.*</p></blockquote>
+joy of living.</p>
+<p><em>Sir Hermann Bondi, FRS, was Master of Churchill College, Cambridge.</em></p>
+</blockquote>

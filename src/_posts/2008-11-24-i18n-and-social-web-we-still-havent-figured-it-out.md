@@ -46,7 +46,7 @@ look something like this:
 
 {% highlight ruby %}
 time_in_words = distance_of_time_in_words(time_of_last_update, Time.now)
-time_in_words = "#{time_in_words} ago" if (time_of_last_update < Time.now)
+time_in_words = "#{time_in_words} ago" if (time_of_last_update < Time.now)
 {% endhighlight %}
 
 To translate this program, make sure that the function

@@ -16,8 +16,9 @@ consultancy again. I found something fundamentally and instinctively repulsive a
 worked, although I found it hard to put my finger on
 it.
 
-<p><img src="/2007/11/peopleware.jpg" alt="Book cover of “Peopleware”" align="right"
-/>Fast forward to the present: I started
+<img src="/2007/11/peopleware.jpg" alt="Book cover of “Peopleware”" align="right" />
+
+Fast forward to the present: I started
 [my business](http://www.eptcomputing.com/) anyway, without the consultancy background (I gained
 some business awareness through the excellent
 [Ignite programme](http://www.cfel.jbs.cam.ac.uk/programmes/ignite/) instead), and at the moment I'm
@@ -26,7 +27,7 @@ reading the book
 excellent manifesto on how to build a company (such as a software company) which relies on the
 intelligence and creativity of its people. The one-sentence summary might be: *People in your
 organisation are human beings, not parts of a machine; with a good working and social environment,
-they will enjoy what they do and do an excellent job.*</p>
+they will enjoy what they do and do an excellent job.*
 
 One of the key phenomena which the authors
 identify with success are what they call "jelled teams". They define this as: *"\[...\] a group of
@@ -59,19 +60,17 @@ company.
 Finally an interesting and inspiring quote on the subject of trust in teams -- an
 extremely important matter, presented here with a philosophical slant:
 
-<blockquote><p>"Once you've decided to go with a given group, your best tactic is to trust them.
-Any defensive measure taken to guarantee success in spite of them will only make things worse. It
-may give you some relief from worry in the short term, but it won't help in the long run, and it
-will poison any chance for the team to jell. \[...\]</p>
-
-<p>Most managers give themselves excellent grades
-on knowing when to trust their people and when not to. But in our experience, too many managers err
-on the side of mistrust. They follow the basic premise that their people may operate completely
-autonomously, as long as they operate correctly. This amounts to no autonomy at all. The only
-freedom that has any meaning is the freedom to proceed differently from the way your manager would
-have proceeded. This is true in a broader sense, too: The right to be right (in your manager's eyes
-or your government's eyes) is irrelevant; it's only the right to be wrong that makes you
-free."</p>
-<p align="right">-- Tom DeMarco and Timothy Lister:
-[Peopleware](http://www.dorsethouse.com/books/pw.html), p. 133-134</p>
-</blockquote>
+> "Once you've decided to go with a given group, your best tactic is to trust them.
+> Any defensive measure taken to guarantee success in spite of them will only make things worse. It
+> may give you some relief from worry in the short term, but it won't help in the long run, and it
+> will poison any chance for the team to jell. \[...\]
+>
+> Most managers give themselves excellent grades
+> on knowing when to trust their people and when not to. But in our experience, too many managers err
+> on the side of mistrust. They follow the basic premise that their people may operate completely
+> autonomously, as long as they operate correctly. This amounts to no autonomy at all. The only
+> freedom that has any meaning is the freedom to proceed differently from the way your manager would
+> have proceeded. This is true in a broader sense, too: The right to be right (in your manager's eyes
+> or your government's eyes) is irrelevant; it's only the right to be wrong that makes you free."
+>
+> -- Tom DeMarco and Timothy Lister: [Peopleware](http://www.dorsethouse.com/books/pw.html), p. 133-134

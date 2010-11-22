@@ -26,20 +26,17 @@ would come that they would announce the mobile web as a major consumer trend. An
 [8 important consumer trends in 2008](http://www.trendwatching.com/briefing/)
 ([PDF](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)):
 
-<blockquote>"Five years
-ago, we introduced ONLINE OXYGEN as the engine behind all this excitement: control-craving consumers
-needing online access as much as they need oxygen. \[...\] If there's one device that's going to
-introduce another few hundred million people to the online world, it's the phone. And yes,
-initiatives like Google's Android and 'their bidding on the 700MHz band' and WiMax and so on are
-definitely going to speed things up. \[...\] don't count on consumers' insatiable demand to be
-online 24/7 to remain unmet
-forever."
-<p align="right">-- Trendwatching.com,
-["Online Oxygen"](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)</p>
-</blockquote>
+> "Five years ago, we introduced ONLINE OXYGEN as the engine behind all this excitement: control-craving consumers
+> needing online access as much as they need oxygen. \[...\] If there's one device that's going to
+> introduce another few hundred million people to the online world, it's the phone. And yes,
+> initiatives like Google's Android and 'their bidding on the 700MHz band' and WiMax and so on are
+> definitely going to speed things up. \[...\] don't count on consumers' insatiable demand to be
+> online 24/7 to remain unmet forever."
+>
+> -- Trendwatching.com,
+> ["Online Oxygen"](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)
 
-Although
-still a bit cautious in their wording, and emphasising that it won't happen overnight, the
+Although still a bit cautious in their wording, and emphasising that it won't happen overnight, the
 trendwatchers have confirmed that the mobile web is not just a bubble. The signs are set for
 internet access anywhere, at any time, on almost any device, and it's looking as though we won't be
 able to imagine a world without it in a reasonably small number of years' time.
@@ -54,22 +51,20 @@ have risen by 29% since last year, reaching £130bn). And Trendwatching.com are 
 trend is going to
 continue:
 
-<blockquote><p>"Sometimes, the Next Big Thing can be right under your nose. Consider the
-online riches to be reaped in 2008 from... ecommerce! Sure, it's been around for years and years,
-but prepare for a forceful 'sequel'. After all, never before have so many consumers been willing to
-overcome security threats, still shockingly bad (or boring) design, and delivery screwups. In other
-words, 2008 could be a goldmine for smart e-tailers, who, if they get their act together, could make
-billions and billions of dollars, euros, pounds, yen, kroner, lira and rand that are impatiently
-waiting to be spent by web-savvy consumers around the world.</p>
-
-<p>So in 2008, spend blood, sweat and
-tears on improving your ecommerce presence; the pay-off will be immediate, and far more substantial
-than investing in Web 2.0
-me-toos!"</p>
-<p align="right">-- Trendwatching.com,
-["Online
-Oxygen"](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)</p>
-</blockquote>
+> "Sometimes, the Next Big Thing can be right under your nose. Consider the
+> online riches to be reaped in 2008 from... ecommerce! Sure, it's been around for years and years,
+> but prepare for a forceful 'sequel'. After all, never before have so many consumers been willing to
+> overcome security threats, still shockingly bad (or boring) design, and delivery screwups. In other
+> words, 2008 could be a goldmine for smart e-tailers, who, if they get their act together, could make
+> billions and billions of dollars, euros, pounds, yen, kroner, lira and rand that are impatiently
+> waiting to be spent by web-savvy consumers around the world.</p>
+>
+> So in 2008, spend blood, sweat and
+> tears on improving your ecommerce presence; the pay-off will be immediate, and far more substantial
+> than investing in Web 2.0 me-toos!"
+>
+>-- Trendwatching.com,
+> ["Online Oxygen"](http://www.trendwatching.com/trends/pdf/2007_12_8trends2008.pdf)
 
 Consider that this market research organisation spends most of their time talking about brand psychology,
 status symbols, and the purchasing habits of particular sections of society. They are not

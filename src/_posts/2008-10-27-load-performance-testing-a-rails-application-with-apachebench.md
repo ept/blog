@@ -16,7 +16,7 @@ complete. We will launch on Friday 31 October, the first lots for sale are alrea
 (including
 [a remarkable bottle](http://bidforwine.wordpress.com/2008/09/28/a-unique-chance/) -- a unique item
 from a private bottling of the famous
-[Guigal Family](http://www.guigal.com/vignoble.php?langue=en&amp;rub=1&amp;srub=1), and probably the
+[Guigal Family](http://www.guigal.com/vignoble.php?langue=en&rub=1&srub=1), and probably the
 only bottle of its kind on the open market!), some big wine magazines are going to be reporting, and
 everybody is getting very excited.
 

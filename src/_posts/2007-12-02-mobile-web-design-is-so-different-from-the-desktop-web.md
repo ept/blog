@@ -9,22 +9,21 @@ started"](http://www.guardian.co.uk/technology/2007/oct/25/comment.mobilephones)
 some of the
 benefits...
 
-<blockquote>"It is interesting why so few of us use one of the breakthroughs of recent
-years: the ability to search the web from wherever we are with a mobile phone. This ought to be
-hugely empowering, enabling us to answer any question from wherever we happen to be instead of
-having to wait until we are within reach of a computer."</blockquote>
+> "It is interesting why so few of us use one of the breakthroughs of recent
+> years: the ability to search the web from wherever we are with a mobile phone. This ought to be
+> hugely empowering, enabling us to answer any question from wherever we happen to be instead of
+> having to wait until we are within reach of a computer."
 
 ...as also the main reasons for its slow start:
 
-<blockquote><p>"There are a number of reasons why this hasn't happened and why it may be about
-to change. It is partly because the operators have been shamefully greedy in trying to raid our
-pockets by charging for all the data we download \[...\] the user experience is still not good
-enough. Mobiles were designed to make telephone calls. Now things are
-changing."</p>
-<p align="right">-- Victor Keegan,
-["The mobile web is finally getting
-started"](http://www.guardian.co.uk/technology/2007/oct/25/comment.mobilephones)</p>
-</blockquote>
+> "There are a number of reasons why this hasn't happened and why it may be about
+> to change. It is partly because the operators have been shamefully greedy in trying to raid our
+> pockets by charging for all the data we download \[...\] the user experience is still not good
+> enough. Mobiles were designed to make telephone calls. Now things are
+> changing."
+>
+>-- Victor Keegan,
+> ["The mobile web is finally getting started"](http://www.guardian.co.uk/technology/2007/oct/25/comment.mobilephones)
 
 I recently came across some great examples demonstrating why for complex web sites, there is no
 alternative to designing a specifically mobile version. This is not so much for technical reasons,
@@ -34,17 +33,15 @@ to be instantly accessible. After all, think why a user may want to use the mobi
 the desktop web: it's very much tied to now, an instantaneous requirement. In the words of Sarah
 Lipman, from an interesting paper on mobile search paradigms:
 
-<blockquote><p>"'Mobile Search' = I want it NOW. I can’t wait, I won’t wait.</p>
-
-<p>When a
-user gets the sense that 'I'm not going to find what I want right now' he stops looking, because
-that is almost always the path of least resistance. At the same time, he will also have a small
-sense of failure. \[...\] If search cannot deliver on the promise of 'I want it NOW', it won't be
-utilized."</p>
-<p align="right">-- Sarah Lipman,
-["Search patterns in nature: Informing computer search
-interfaces"](http://www.mobileuserexperience.com/mex-sarahlipman.pdf)</p>
-</blockquote>
+> "'Mobile Search' = I want it NOW. I can’t wait, I won’t wait.
+>
+> When a user gets the sense that 'I'm not going to find what I want right now' he stops looking, because
+> that is almost always the path of least resistance. At the same time, he will also have a small
+> sense of failure. \[...\] If search cannot deliver on the promise of 'I want it NOW', it won't be
+> utilized."
+>
+> -- Sarah Lipman,
+> ["Search patterns in nature: Informing computer search interfaces"](http://www.mobileuserexperience.com/mex-sarahlipman.pdf)
 
 For mobile
 users it is even more important than for normal web users that the designer has figured out exactly
@@ -86,4 +83,4 @@ be.
 
 [Blue Flavor](http://www.blueflavor.com/) has also produced
 [a presentation on the basics of good mobile web
-design](http://www.scribd.com/doc/39925/Everything-you-wanted-to-know-about-the-mobile-web-but-were-afraid-to-askblueflavorcom).</p>
+design](http://www.scribd.com/doc/39925/Everything-you-wanted-to-know-about-the-mobile-web-but-were-afraid-to-askblueflavorcom).

@@ -3,16 +3,16 @@ layout: ync-post
 title: "The economic case for open source (for Google, Nokia etc.)"
 ---
 
-<p><img src="/2008/01/joelonsoftware.jpg" alt="“Joel on Software” book cover (Image source:
-amazon.com)" align="right" />Over the Christmas holidays I was reading
-[Joel on
-Software](http://www.amazon.com/Joel-Software-Occasionally-Developers-Designers/dp/1590593898), the
-book summarising some of the most interesting material from
+<img src="/2008/01/joelonsoftware.jpg" alt="“Joel on Software” book cover (Image source: amazon.com)" align="right" />
+
+Over the Christmas holidays I was reading
+[Joel on Software](http://www.amazon.com/Joel-Software-Occasionally-Developers-Designers/dp/1590593898),
+the book summarising some of the most interesting material from
 [Joel Spolsky's blog](http://www.joelonsoftware.com/). (The book is worth reading, although I did
 find it quite a shame that it was pretty much verbatim the blog contents pressed on paper for easier
 reading. It would have been nicer if the writing style had been changed from the slightly rambling,
 disconnected style of blogs to a more coherent style expected from a book. But the stuff Joel talks
-about is definitely worth reading for software engineers, in whatever form.)</p>
+about is definitely worth reading for software engineers, in whatever form.)
 
 The article which I
 found most interesting is his "Strategy Letter V" (page 281), which is also

@@ -18,7 +18,7 @@ people have wondered how our human languages fit into this framework. There has 
 discussion about this in the academic community, and currently the general opinion seems to be that
 most human languages are more or less context-free, but there are a few exceptions, such as a
 [context-sensitive construction in Swiss
-German](http://books.google.com/books?id=JOjoWrP4tnIC&amp;pg=PA165&amp;lpg=PA165&amp;dq=swiss+german+context-free&amp;source=web&amp;ots=Dd9UlGjRYA&amp;sig=fwZ8R_ewKbFYuONyV6caulpHpRk&amp;hl=en&amp;sa=X&amp;oi=book_result&amp;resnum=1&amp;ct=result).
+German](http://books.google.com/books?id=JOjoWrP4tnIC&pg=PA165&lpg=PA165&dq=swiss+german+context-free&source=web&ots=Dd9UlGjRYA&sig=fwZ8R_ewKbFYuONyV6caulpHpRk&hl=en&sa=X&oi=book_result&resnum=1&ct=result).
 
 In
 my work at the moment I am trying to help improve the accuracy of computer understanding of certain

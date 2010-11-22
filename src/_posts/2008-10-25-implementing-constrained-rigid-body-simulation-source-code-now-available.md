@@ -81,7 +81,7 @@ a physics engine, consider using something like the
 [Havok](http://www.havok.com/) (commercial). But if you want to learn how to make a simulation like
 this using
 [Lagrange multiplier](http://en.wikipedia.org/wiki/Lagrange_multiplier) methods, then maybe this is
-for you.</p>
+for you.
 
 You will quickly notice that the source is not complete. Hell, there's not even a 'main'
 method. That's deliberate -- this code is there to help you figure out how this stuff works, it's

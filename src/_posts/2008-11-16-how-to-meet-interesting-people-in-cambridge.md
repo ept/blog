@@ -20,7 +20,7 @@ One useful resource which doesn't fit into any of the categories is
 newsgroups).
 
 Please also
-[see the comments](#comments) where several more groups have been added. Thanks to
+[see the comments](#disqus_thread) where several more groups have been added. Thanks to
 [Wallis](http://younoodle.com/people/wallis_motta) and others who have contributed to this list. If
 you have any further opinions or information, please let me know and I'll edit this post (or put it
 on a Wiki somewhere).
@@ -49,7 +49,7 @@ technology.
   to pitch their startups to likeminded people.
 * [CamTechNet](http://www.camtechnet.co.uk/) is a nascent aggregator of events and news from
   businesses in Cambridge.
-* [CETC](http://www.cetc.info), the Cambridge Enterprise &amp; Technology Club,
+* [CETC](http://www.cetc.info), the Cambridge Enterprise & Technology Club,
   have monthly talks/networking across a wide range of topic (not so technology-specific). I've been
   to one or two events and met some interesting people; better for the commercial end of things.
 * [Cambridge Business Lectures](http://www.cambridgebusinesslectures.com/) started

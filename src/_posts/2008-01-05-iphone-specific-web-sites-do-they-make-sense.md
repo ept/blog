@@ -29,16 +29,14 @@ fashionable, it seems. Some of those sites actually borrow and incorporate iPhon
 (such as the style of lists and tabs, animation and icons), further blurring the distinction between
 web sites and applications.
 [A List Apart](http://www.alistapart.com/), a widely respected resource for web developers, has even
-published a long article on how to develop iPhone-specific web sites ([Part
-I](http://www.alistapart.com/articles/putyourcontentinmypocket),
+published a long article on how to develop iPhone-specific web sites
+([Part I](http://www.alistapart.com/articles/putyourcontentinmypocket),
 [Part II](http://www.alistapart.com/articles/putyourcontentinmypocketpart2)).
 [Apple themselves also offer in-depth information](http://developer.apple.com/iphone/devcenter/).
 [iPhoneApplicationList.com](http://iphoneapplicationlist.com/) maintains an extensive list of
-iPhone-optimised web
-applications.
+iPhone-optimised web applications.
 
-[Christopher Schmitt
-argues](http://christopherschmitt.com/2007/09/11/iphone-specific-web-development-misguided/) that
+[Christopher Schmitt argues](http://christopherschmitt.com/2007/09/11/iphone-specific-web-development-misguided/) that
 making websites accessible for people with disabilities would expand a website's reach far more than
 making an iPhone-specific site does. And
 [Scott Gilbertson of WIRED thinks](http://blog.wired.com/monkeybites/2007/08/the-iphone-is-i.html)
@@ -72,22 +70,22 @@ However, Ray Anderson, CEO of
 [Bango](http://bango.com/), points out that these figures are
 misleading:
 
-<blockquote><p>Hitslink produced this report by using data from their analytics customers.
-These people operate HTML/PC websites. They say: "You simply paste a small piece of HTML code on
-each page you wish to track statistics on".</p>
-
-<p>The 300 million or so mobile phone browser users (say
-50 million S60) can't or don't browse HTML sites. They browse mobile friendly sites (WAP or XHTML or
-iMode) which will not have this HTML code in.</p>
-
-<p>Considering that organizations like Bango, Admob,
-Peperonity, Vodafone report mobile browser traffic in the billions of pages per day, most of thse
-being S40 or S60 its clear that by ignoring non-HTML sites these stats are misleading and
-mistaken.</p>
-<p align="right">-- Ray Anderson, in an email to
-[Mobile Monday London mailing list](http://tech.groups.yahoo.com/group/momolondon/), 5 Dec
-2007</p>
-</blockquote>
+> Hitslink produced this report by using data from their analytics customers.
+> These people operate HTML/PC websites. They say: "You simply paste a small piece of HTML code on
+> each page you wish to track statistics on".
+>
+> The 300 million or so mobile phone browser users (say
+> 50 million S60) can't or don't browse HTML sites. They browse mobile friendly sites (WAP or XHTML or
+> iMode) which will not have this HTML code in.
+>
+> Considering that organizations like Bango, Admob,
+> Peperonity, Vodafone report mobile browser traffic in the billions of pages per day, most of thse
+> being S40 or S60 its clear that by ignoring non-HTML sites these stats are misleading and
+> mistaken.
+>
+> -- Ray Anderson, in an email to
+> [Mobile Monday London mailing list](http://tech.groups.yahoo.com/group/momolondon/),
+> 5 Dec 2007
 
 In other words, all that Hitslink's statistics say is that
 iPhone users are more likely to visit more desktop web sites, but it doesn't say anything at all

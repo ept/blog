@@ -3,16 +3,17 @@ layout: ync-post
 title: "Bad usability calendar"
 ---
 
-<p><img src="/2008/01/28012008_small.jpg" alt="Photo of the Bad Usability Calendar at Ept
-Computing’s office" align="right" hspace="20" vspace="20" />[Netlife
-Research](http://www.netliferesearch.no/), a usability consultancy from Norway, has come up with a
+<img src="/2008/01/28012008_small.jpg" align="right" hspace="20" vspace="20"
+alt="Photo of the Bad Usability Calendar at Ept Computing’s office" />
+
+[Netlife Research](http://www.netliferesearch.no/), a usability consultancy from Norway, has come up with a
 neat humorous way of pointing out some design elements which can help improve usability (or rather,
 design errors which can render a product pointless for most of its potential users). They have put
 these handy hints together in the form of a calendar -- the
 [Bad Usability Calendar](http://www.badusability.com/). You can download it and print out a copy for
 yourself. Such as I have done, see the photo (which includes a gratuitous reference to
 [potted plants](/2008/01/12/potted-plants-and-the-mobile-web.html)). Thanks to
-[Johannes](http://www.jhauser.de/) for pointing it out to me.</p>
+[Johannes](http://www.jhauser.de/) for pointing it out to me.
 
 Amusing though the exercise is, it
 proves once again how hard it can be to practise what you preach. The Bad Usability Calendar

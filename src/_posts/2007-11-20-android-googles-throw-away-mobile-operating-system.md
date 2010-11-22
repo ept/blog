@@ -11,17 +11,14 @@ to build an operating system for mobile devices (an alternative to
 [Windows Mobile](http://www.microsoft.com/windowsmobile/)), and to make it freely available. But
 why?
 
-<blockquote>"So what is in it for Google? Why would it go to the expense of building and
-supporting a fully-fledged mobile OS and then give it away with very few restrictions on its usage?
-\[...\] Its \[Google's\] primary objective is simply to catalyse internet usage on mobile devices by
-ensuring as many as possible can support web services. Android is a means to an end. By doing some
-of the hard work on their behalf, Google is hoping it will encourage handset manufacturers and
-network operators to extend internet connectivity to more mobile users, more
-quickly."
-<p align="right">--
-[Marek Pawlowski,
-PNM](http://www.mobileuserexperience.com/?p=448)</p>
-</blockquote>
+> "So what is in it for Google? Why would it go to the expense of building and
+> supporting a fully-fledged mobile OS and then give it away with very few restrictions on its usage?
+> \[...\] Its \[Google's\] primary objective is simply to catalyse internet usage on mobile devices by
+> ensuring as many as possible can support web services. Android is a means to an end. By doing some
+> of the hard work on their behalf, Google is hoping it will encourage handset manufacturers and
+> network operators to extend internet connectivity to more mobile users, more quickly."
+>
+> -- [Marek Pawlowski, PNM](http://www.mobileuserexperience.com/?p=448)
 
 Marek has got it
 spot on: discussions on the technical details of the platform really miss the point. It isn't even
@@ -54,9 +51,8 @@ But that doesn't mean it's bad -- to the contrary, I am very supportive of Andro
 reasons explained
 above.
 
-<blockquote>"Will Google end up capturing the lion’s share of the
-value in the mobile business by dominating mobile
-advertising?"</blockquote>
+> "Will Google end up capturing the lion’s share of the
+> value in the mobile business by dominating mobile advertising?"
 
 There is certainly a fair chance that Google will
 take a large chunk of the mobile advertising market. But let's remember that although it has fuelled

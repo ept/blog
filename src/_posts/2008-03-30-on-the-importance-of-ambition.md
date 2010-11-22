@@ -3,8 +3,7 @@ layout: ync-post
 title: "On the importance of ambition"
 ---
 
-The
-[Sagrada Familia cathedral](http://www.sagradafamilia.org/eng/index.htm) in Barcelona is an
+The [Sagrada Familia cathedral](http://www.sagradafamilia.cat/sf-eng/) in Barcelona is an
 astonishing experience. And that has not so much to do with its size, its architecture, its
 intricate artwork or any such outward aspects, although they aren't bad either. The astonishing
 thing is that the construction of the building started about 130 years ago, and they've still not
