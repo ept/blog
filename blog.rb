@@ -22,6 +22,10 @@ before do
   end
 end
 
+get '/test' do
+  request.env.inspect
+end
+
 get '/' do
   File.open('static/index.html', &:read)
 end
