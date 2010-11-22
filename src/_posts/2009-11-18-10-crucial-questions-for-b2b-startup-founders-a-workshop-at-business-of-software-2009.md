@@ -62,7 +62,7 @@ The workshops worked out really well, and so we would like to release the materi
 we created for this workshop under a
 [Creative Commons license](http://creativecommons.org/licenses/by/2.0/uk/) and make them available
 to startups everywhere. You can
-[download the worksheet (PDF)](/static/2009/11/bos-worksheet.pdf). I have also written up
+[download the worksheet (PDF)](/2009/11/bos-worksheet.pdf). I have also written up
 [how we structured the workshop and what we learnt in the process](/2009/11/17/running-a-workshop-for-startup-founders/).
 
 <p style="text-align: center">
@@ -246,8 +246,8 @@ With all these questions, keep a few principles in mind:
 * Argue **why** the actions you chose are the most appropriate, given the product,
   the market and any constraints.
 
-[Download the worksheet (PDF)](/static/2009/11/bos-worksheet.pdf) and
-[an example we filled in](/static/2009/11/bos-worksheet-example.pdf) (a contrived example based on
+[Download the worksheet (PDF)](/2009/11/bos-worksheet.pdf) and
+[an example we filled in](/2009/11/bos-worksheet-example.pdf) (a contrived example based on
 the fast food industry -- not model answers, just to illustrate the kind of answers we're looking
 for). Please also see my
 [separate post on how we ran the workshop](/2009/11/17/running-a-workshop-for-startup-founders/).
