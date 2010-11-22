@@ -20,7 +20,8 @@ is given.
 Postcards etc.:
 
 Martin Kleppmann  
-30 Silverwood Close  
-Cambridge  
-CB1 3HA  
-United Kingdom
+Rapportive, Inc.  
+548 Market St # 92225  
+San Francisco  
+CA 94104  
+United States
