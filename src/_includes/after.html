@@ -27,9 +27,12 @@
 
         <div id="secondary-sidebar">
             <div id="carrington-archives" class="widget">
-                <h2 class="title">Archives</h2>
+                <h2 class="title">Recent posts</h2>
                 <ul>
-                    <!-- TODO archives -->
+                    {% for post in site.posts limit:5 %}
+                      <li>{{ post.date | date_to_string }}: <a href="{{ post.url }}">{{ post.title }}</a></li>
+                    {% endfor %}
+                    <li><a href="/archive.html">Full archive</a></li>
                 </ul>
             </div>
         </div>
