@@ -70,7 +70,7 @@ So what have we learnt?
   and disputes being particularly bad in this regard. That is true, and I would add server
   firefighting, recruitment and immigration to the list.
 
-* In order get back into a flow of product development, we are now deliberately shunning
+* In order to get back into a flow of product development, we are now deliberately shunning
   distractions like recruitment and fundraising. We obviously can't ignore these things forever,
   but for now it's best for the business if we stay focussed on the thing we do best: making a
   [product that people want](http://www.paulgraham.com/good.html). (We're keeping one distraction,
