@@ -42,8 +42,8 @@ hand, I am of course hugely grateful for our users who use and
 [love our product](http://rapportive.com/buzz) every day. I wouldn't have it any other way.
 
 <p style="text-align: center">
-  <a href="http://www.inc.com/ss/can-paul-graham-mass-produce-start">
-    <img src="yc_whiteboard.jpg" width="285" height="203" alt="Photo of whiteboard at YC, showing 'The Process'" />
+  <a href="http://adam.heroku.com/past/2008/4/23/the_startup_curve/">
+    <img src="yc_whiteboard.jpg" width="500" height="379" alt="Photo of whiteboard at YC, showing 'The Process'" />
   </a>
 </p>
 
