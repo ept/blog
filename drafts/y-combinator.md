@@ -61,6 +61,29 @@ robust, and most importantly, our product development is moving again. We have s
 stuff coming soon. The hope is real. And we seem to have managed to avoid the
 *"Crash of Ineptitude"*.
 
-Sometimes you just have to wade through a patch of mud, and there's no way round it. But as
-long as you keep your eyes forward and keep moving, you'll get through it, and things will
-brighten up.
+So what have we learnt?
+
+* Visibly iterating and improving the product is arguably the most important thing a startup
+  should be doing, but sadly, other stuff has an uncanny ability to distract you away from
+  product work. [Paul Graham has written](http://www.paulgraham.com/top.html) about money matters
+  and disputes being particularly bad in this regard. That is true, and I would add server
+  firefighting, recruitment and immigration to the list.
+
+* In order get back into a flow of product development, we are now deliberately shunning
+  distractions like recruitment and fundraising. We obviously can't ignore these things forever,
+  but for now it's best for the business if we stay focussed on the thing we do best: making a
+  [product that people want](http://www.paulgraham.com/good.html). (We're keeping one distraction,
+  namely support, because it is so important. But we are rotating support duties so that most of
+  the team can ignore it at any given moment.)
+
+* Be grateful if you carry a US passport.
+
+* Sometimes you just have to wade through a patch of mud, and there's no way round it. But as
+  long as you keep your eyes forward and keep moving, you'll get through it, and things will
+  brighten up.
+
+<p style="text-align: center">
+  <a href="http://www.flickr.com/photos/performable/4792109640/sizes/l/in/set-72157623602121734/">
+    <img src="strategic_plan.jpg" width="500" height="335" alt="Poster: We have a strategic plan. It's called doing things."/>
+  </a>
+</p>
