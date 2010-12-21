@@ -54,8 +54,8 @@ they've launched, the novelty will wear off, and they will find themselves in th
 It's not very much fun.
 
 But here is good news: Rapportive now seems to have journeyed on to the next phase,
-we have made *"Releases of Improvement"*, and things are looking hopeful -- must be those
-*"Wiggles of False Hope"*?. Hey, the money is in the bank, the visas are in our passports, the
+we have made *"Releases of Improvement"*, and things are looking hopeful. Maybe those
+*"Wiggles of False Hope"*? Hey, the money is in the bank, the visas are in our passports, the
 infrastructure has got a lot more robust. We have released
 [new features](http://blog.rapportive.com/grow-your-network-with-rapportive),
 and lots of really exciting product development is in progress. We are once again moving our
