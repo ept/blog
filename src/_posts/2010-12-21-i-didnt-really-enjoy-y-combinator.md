@@ -43,7 +43,8 @@ hand, I am of course hugely grateful for our users who use and
 
 <p style="text-align: center">
   <a href="http://adam.heroku.com/past/2008/4/23/the_startup_curve/">
-    <img src="yc_whiteboard.jpg" width="500" height="379" alt="Photo of whiteboard at YC, showing 'The Process'" />
+    <img src="/2010/12/yc_whiteboard.jpg" width="500" height="379"
+         alt="Photo of whiteboard at YC, showing curve of The Process"/>
   </a>
 </p>
 
@@ -84,6 +85,7 @@ So what have we learnt?
 
 <p style="text-align: center">
   <a href="http://www.flickr.com/photos/performable/4792109640/sizes/l/in/set-72157623602121734/">
-    <img src="strategic_plan.jpg" width="500" height="335" alt="Poster: We have a strategic plan. It's called doing things."/>
+    <img src="/2010/12/strategic_plan.jpg" width="500" height="335"
+         alt="Poster: We have a strategic plan. It's called doing things."/>
   </a>
 </p>
