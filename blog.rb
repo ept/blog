@@ -29,6 +29,19 @@ get(/.*[^\/]$/) do
   public_dir = File.expand_path('static')
   path = File.expand_path(public_dir + unescape(request.path_info))
   pass if path[0, public_dir.length] != public_dir
-  pass unless File.file?(path)
+
+  unless File.file?(path)
+    puts "path_info = #{request.path_info.inspect}"
+    if request.path_info =~ %r{^/2010/12/21/.*}
+      new_url = "http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html"
+      halt 301, {"Location" => new_url}, <<-HTML
+        <h1>Moved Permanently</h1>
+        <p>This document has moved <a href="#{new_url}">here</a>.</p>
+      HTML
+    else
+      pass
+    end
+  end
+
   send_file path, :disposition => nil
 end

@@ -1,19 +1,18 @@
 ---
 layout: ync-post
-title: I didn't really enjoy Y Combinator
+title: Having a launched product is hard
 ---
 
-I didn't really enjoy our three months at [Y Combinator](http://ycombinator.com/).
+Over the last 6 months, [we](http://rapportive.com) have been learning what it means to support
+a launched product.
 
-Let me clarify: none of that was YC's fault --- quite the opposite. They made the time bearable.
-I don't doubt for a second that joining YC in Summer 2010 was the right choice for us. But our
-experience of YC was different from the experience that many YC startups get.
+Some background: Rapportive [launched](http://blog.rapportive.com/the-accidental-launch) in
+March 2010, and we joined [Y Combinator](http://ycombinator.com/) for the Summer 2010 batch from
+June to August. Even though it was fantastic to have users and solid growth, it was actually a
+very frustrating time for us as a team.
 
-The difference? We had [already launched](http://blog.rapportive.com/the-accidental-launch).
-
-You'd think that hey, it's fantastic to have launched, particularly as successfully as we did!
-Well, yes, but the downside is that we spent the entire 3 months of YC (and probably another
-month either side) doing the following:
+We found the downside of having launched, namely that we ended up spending the entire 3 months of
+Y Combinator (and probably another month either side) doing the following:
 
 * Answering many, many support emails and tweets
 * Raising [our seed round](http://techcrunch.com/2010/08/02/rapportive-funding/)
