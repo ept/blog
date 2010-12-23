@@ -12,13 +12,15 @@ a moment's doubt.
 The long answer deserves a bit more explanation.
 
 On the surface, it seems like the Y Combinator formula is *"money and mentoring for equity"*. That
-seems like a simple enough formula, and incubators around the world are rushing to replicate it.
+seems like a simple enough formula, and clones around the world are rushing to replicate it.
 Unfortunately I think they mostly miss the point, because there is so much more to YC which the
-clones lack, and I try to explain this below. For many YC startups, the $15-20k in funding is
-almost irrelevant, because much larger funding rounds are just round the corner. And "mentoring"
-is an unhelpfully broad, generic term. (An additional element is press, but to be honest, we've
-not had any trouble getting press. If you're doing something interesting, bloggers will write about
-you anyway, and if what you're doing is not interesting, you're probably doing something wrong.)
+others lack, and I try to explain this below.
+
+To start with, the $15-20k in funding is almost irrelevant for many YC startups, because much
+larger funding rounds are just round the corner. And "mentoring" is an unhelpfully broad,
+generic term. (Another frequently cited benefit is press exposure, but to be honest, we've not
+had any trouble getting press. If you're doing something interesting, bloggers will write about
+you anyway, and if what you're doing is not interesting, you're got bigger problems.)
 
 The real benefits of Y Combinator are less frequently talked about. In my opinion, these are
 some of the most important ones:
@@ -34,24 +36,24 @@ some of the most important ones:
   give practical advice, make introductions and recommendations, etc. They are real friends, not
   just utilitarian business contacts. This culture is truly remarkable.
 
-* It sounds trite, but the YC partners are all really great people. They are outspoken, brutally
-  honest, straight-to-the-point and totally bullshit-free -- hardly anyone else I know even comes
-  near in terms of these qualities. They have lots of time for their companies (surprisingly,
-  given the number of companies they've funded), and I have only ever seen them do things that
-  are good for founders. Not because they are altruistic, but because they have understood that
-  it's the best strategy for them, too.
+* It sounds trite, but the YC partners are all really great people. They are exceptionally
+  bright and talented, outspoken, honest, straight-to-the-point and totally bullshit-free --
+  hardly anyone else I know even comes near in terms of these qualities. They have lots of time
+  for their companies (surprisingly, given the number of companies they've funded), and I have
+  only ever seen them do things that are good for founders. Not because they are altruistic, but
+  because they have understood that it's the best strategy for them, too.
 
-* Between them, given the number of companies they have funded, the YC partners have seen it all.
-  They've seen big exits and small exits, profitable companies and train-wrecks, fast growth and
-  slow growth, dream teams and founder disputes, and all manner of great ideas and screw-ups.
-  Startups are unpredictable; you never know what surprises lie around the next corner. With the
-  team of YC partners in our back, I feel a lot more confident about facing that uncertainty,
-  because I know that whatever happens, if we're unsure what to do, we can turn to PG et al. and
-  get their advice. And because they have seen it all, I know that our situation won't faze them;
-  chances are, they have seen the situation before, and their pattern-matching will enable them
-  to make good predictions.
+* Between them, the YC partners have seen it all. They've seen big exits and small exits,
+  profitable companies and train-wrecks, fast growth and slow growth, dream teams and founder
+  disputes, and all manner of great ideas and screw-ups. Startups are unpredictable; you never
+  know what surprises lie around the next corner. With the team of YC partners behind us, I feel a
+  lot more confident about facing that uncertainty, because I know that whatever happens, if we're
+  unsure what to do, we can turn to PG et al. and get their advice. And because they have seen it
+  all, I know that our situation won't faze them; chances are, they have seen the situation
+  before, and their pattern-matching will enable them to make good predictions.
 
 * The YC team know everybody who's worth knowing in the startup scene, and everyone respects them.
+  This makes them ideally placed for introducing you to the kind of people you want to meet.
   Demo day is one aspect of this, a maximum-efficiency batch process for introducing startups and
   investors to each other, but in fact also YC make individual introductions all the time.
 
@@ -61,15 +63,16 @@ some of the most important ones:
   you get to hear about these changes first, something that you can use to your advantage.
 
 * If you are new to Silicon Valley, like we were, YC is a fantastic way to get yourself
-  established. You'll meet lots of really lovely, intelligent and interesting people who have
-  set out to change the world. You couldn't ask for a better group of people to hang out with.
+  established and finding your feet. You'll meet lots of really lovely, intelligent and
+  interesting people who have set out to change the world. You couldn't ask for a better group of
+  people to hang out with.
 
-But the main thing I want to get across is that Y Combinator is simply
-[number one](http://blog.businessofsoftware.org/2009/09/joel-spolskys-talk-at-business-of-software-2008-on-being-number-one.html).
+But the main thing I want to get across is that **Y Combinator is simply
+[number one](http://blog.businessofsoftware.org/2009/09/joel-spolskys-talk-at-business-of-software-2008-on-being-number-one.html)**.
 Being number one (iPod) is very different from being number two (Zune) or any number below.
 
-One friend from our YC batch remarked at demo day: "This room contains the future of the IT
-industry." He was right. Since many of the world's best startups go through YC, they collectively
+One friend from our YC batch remarked at demo day: *"This room contains the future of the IT
+industry."* He was right. Since many of the world's best startups go through YC, they collectively
 form a force which has the power and drive to shape the entire industry for many years to come.
 That's not because there is any centralised agenda; it's more comparable to being a graduate from
 one of the top universities in the world. Ever wonder why so many leading figures in business,
@@ -85,15 +88,16 @@ weaken your odds?
 
 **But is it worth the cost?**
 
-Y Combinator takes around 2--10% (typically 5--8%) of your company's equity. How do you figure
+Y Combinator takes 2--10% (typically 5--8%) of your company's equity. How do you figure
 out whether the value you get from YC is worth the cost? If you are wondering whether to apply
 for YC, this is probably the question you're trying to answer.
 
-Firstly, note this: dilution is incremental. Giving an extra 1% to an investor reduces your
+Firstly, note this: **dilution is incremental**. Giving an extra 1% to an investor reduces your
 pay-out by 1% if you sell the company. However, the **probability of success is highly
 non-linear**. Compare these scenarios: say you give 1% of the company to...
 
-* someone who later makes that one critical introduction that saves your company.
+* someone who later makes that one critical introduction that leads to the deal which saves your
+  company.
 * someone who helps you negotiate with your acquirer and doubles the value of your exit.
 * someone who encourages you to make a particular pivot, which turns out to unlock a
   billion-dollar market.
@@ -109,10 +113,10 @@ epic fail and massive win. A bit of equity may buy you an "unfair advantage", or
 complete waste.
 
 Your job as founder is to figure out how to play your cards such as to maximise the chances of
-massive win. Dilution changes incrementally, but probability is much more variable. Therefore,
-if you can figure out a way of substantially increasing your chances of success (putting yourself
-on the good side of those discontinuities), the equity cost is secondary. It's not irrelevant, but
-as long as it's in the right ballpark, it's ok.
+massive win. Dilution changes incrementally, but probability of success is much more variable.
+Therefore, if you can figure out a way of substantially increasing your chances of success
+(putting yourself on the good side of some of those discontinuities), the equity cost is
+secondary. It's not irrelevant, but as long as it's in the right ballpark, it's ok.
 
 Of course you should be prudent to whom you give equity, but I would argue that if someone can
 give you "unfair advantages", it's well worth bringing them on board and not worrying too much
@@ -131,16 +135,18 @@ impact on your chances of success?
 
 I'd say yes. If you don't need any of the benefits mentioned above, maybe not... but honestly, I'd
 be very surprised if your network and your group of advisors is already so perfect that you
-wouldn't benefit from YC.
+wouldn't benefit from YC. For example, whether you've launched or not makes very little difference.
 
 YC is a package consisting of a variety of good things. In principle you may be able to assemble
 yourself a similar package from component parts --- e.g. using [AngelList](http://angel.co/) for
 your investor intros, asking around to find suitable advisors, and spending lots of time
 networking to build a network. But somehow that feels to me like buying individual CPUs and RAM
-and rack-mount cases to assemble your servers, while you could just spend 10 minutes to get
+and rack-mount cases to assemble your servers, when you could just spend 10 minutes to buy
 computing resources from Heroku, EC2 or Rackspace. It might make sense for some people, but for
-most of us, the time saving and quality you get from a good pre-built package is well worth a
-bit of extra cost. (That doesn't mean you can't use component parts *as well* -- for example, we
-used AngelList to fill up our [seed round](http://techcrunch.com/2010/08/02/rapportive-funding/).)
+most of us, the time saving and assured quality you get from a good pre-built package is well
+worth a bit of extra cost. (That doesn't mean you can't use component parts *as well* -- for
+example, we used AngelList to fill up our
+[seed round](http://techcrunch.com/2010/08/02/rapportive-funding/).)
 
 And even if you make it yourself, your homemade MP3 player just won't be an iPod.
+Unless you're in the business of making MP3 players, I'd just go for the iPod.
