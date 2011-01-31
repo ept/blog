@@ -692,8 +692,8 @@ form#comment-form {
 	margin:7px 0 0;
 	text-transform:uppercase;
 }
-#carrington-subscribe a,
-#carrington-subscribe a:visited {
+#carrington-subscribe a.feed,
+#carrington-subscribe a.feed:visited {
 	background:url(../images/rss-button.gif) no-repeat left top;
 	float:right;
 	height:26px;
