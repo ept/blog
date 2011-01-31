@@ -31,8 +31,9 @@ Some examples:
   Even though we know that past performance is no guarantee of future results, we see that
   upwards trend, and a small irrational belief whispers "hey, surely it'll continue for another
   bit". Combine small amounts of irrationality from lots of people, and sometimes a
-  supply-constrained market will amplify it into a bubble. The correlation starts reinforcing
-  itself, and becomes a cause for itself.
+  supply-constrained market will amplify it into a bubble; in small doses, this is called
+  [momentum investing](http://en.wikipedia.org/wiki/Momentum_investing). The correlation starts
+  reinforcing itself, and becomes a cause for itself.
 
 * **Reputation of an institution**, for example a university. Imagine you're hiring for a job,
   and you see two CVs: one candidate went to the venerable University of Cambridge, whilst the
