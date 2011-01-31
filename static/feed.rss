@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:sy="http://purl.org/rss/1.0/modules/syndication/">
+
+    <channel>
+        <title>Martin Kleppmann's blog</title>
+        <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
+        <link>http://martin.kleppmann.com/</link>
+        <description>Entrepreneurship, web technology and the user experience</description>
+        <lastBuildDate>Sun, 30 Jan 2011 21:25:06 PST</lastBuildDate>
+        <language>en</language>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>1</sy:updateFrequency>
+
+        
+            <item>
+                <title>Having a launched product is hard</title>
+                <link>http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html</link>
+                <comments>http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html#disqus_thread</comments>
+                <pubDate>Tue, 21 Dec 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html</guid>
+                
+                <description><![CDATA[ Over the last 6 months, we have been learning what it means to support a launched product. Some background: Rapportive launched in March 2010, and we joined Y Combinator for the Summer 2010 batch from June to August. Even though it was fantastic to have users and solid growth, it... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>Over the last 6 months, <a href='http://rapportive.com'>we</a> have been learning what it means to support a launched product.</p>
+
+<p>Some background: Rapportive <a href='http://blog.rapportive.com/the-accidental-launch'>launched</a> in March 2010, and we joined <a href='http://ycombinator.com/'>Y Combinator</a> for the Summer 2010 batch from June to August. Even though it was fantastic to have users and solid growth, it was actually a very frustrating time for us as a team.</p>
+
+<p>We found the downside of having launched, namely that we ended up spending the entire 3 months of Y Combinator (and probably another month either side) doing the following:</p>
+
+<ul>
+<li>Answering many, many support emails and tweets</li>
+
+<li>Raising <a href='http://techcrunch.com/2010/08/02/rapportive-funding/'>our seed round</a></li>
+
+<li>Stopping our infrastructure from collapsing under our user growth</li>
+
+<li>Responding to press and bloggers</li>
+
+<li>Reading resumés and interviewing job candidates</li>
+
+<li>Fixing gnarly bugs in production</li>
+
+<li>Applying for visas, so that we could work in the US</li>
+
+<li>Attending YC dinners and office hours</li>
+</ul>
+
+<p>By contrast, the ideal world of Y Combinator involves spending 3 months:</p>
+
+<ul>
+<li>Moving your product forward</li>
+
+<li>Attending YC dinners and office hours</li>
+</ul>
+
+<p>Although all the things we were doing were valuable &#8212; even spending so much time on support is valuable, because we learnt a lot about our users, and we turned lots of people from angry strangers into enthusiastic supporters &#8212; it was incredibly frustrating. Our product development was almost stalled for months on end. And all the while, our YC batchmates were demoing new features every week, and getting a massive high from the productive flow of developing their products at a rapid pace.</p>
+
+<p>So I am perhaps a bit envious of those who could move ahead rapidly and build their product without having to worry about supporting users or keeping their database alive. On the other hand, I am of course hugely grateful for our users who use and <a href='http://rapportive.com/buzz'>love our product</a> every day. I wouldn&#8217;t have it any other way.</p>
+<p style='text-align: center'>
+  <a href='http://adam.heroku.com/past/2008/4/23/the_startup_curve/'>
+    <img src='http://martin.kleppmann.com/2010/12/yc_whiteboard.jpg' height='379' alt='Photo of whiteboard at YC, showing curve of The Process' width='500' />
+  </a>
+</p>
+<p>Fortunately, we are not the first to experience this. At the YC office there is a whiteboard, now carrying somewhat iconic status, which reminds every single YC founder of <em>&#8220;The Process&#8221;</em>: once a startup has launched, the novelty will wear off, and the team will find itself in the <em>&#8220;Trough of Sorrow&#8221;</em>. We know what the Trough of Sorrow looks like. I have just described it. It&#8217;s not very much fun.</p>
+
+<p>But here is good news: Rapportive now seems to have journeyed on to the next phase, we have made <a href='http://blog.rapportive.com/grow-your-network-with-rapportive'><em>&#8220;Releases of Improvement&#8221;</em></a>, and things are looking hopeful. Are we in those <em>&#8220;Wiggles of False Hope&#8221;</em>? Who knows. But hey, the money is in the bank, the visas are in our passports, the infrastructure has got a lot more robust, and most importantly, our product development is moving again. We have some really cool stuff coming soon. The hope is real. And we seem to have managed to avoid the <em>&#8220;Crash of Ineptitude&#8221;</em>.</p>
+
+<p>So what have we learnt?</p>
+
+<ul>
+<li>
+<p>Visibly iterating and improving the product is arguably the most important thing a startup should be doing, but sadly, other stuff has an uncanny ability to distract you away from product work. <a href='http://www.paulgraham.com/top.html'>Paul Graham has written</a> about money matters and disputes being particularly bad in this regard. That is true, and I would add server firefighting, recruitment and immigration to the list.</p>
+</li>
+
+<li>
+<p>In order to get back into a flow of product development, we are now deliberately shunning distractions like recruitment and fundraising. We obviously can&#8217;t ignore these things forever, but for now it&#8217;s best for the business if we stay focussed on the thing we do best: making a <a href='http://www.paulgraham.com/good.html'>product that people want</a>. (We&#8217;re keeping one distraction, namely support, because it is so important. But we are rotating support duties so that most of the team can ignore it at any given moment.)</p>
+</li>
+
+<li>
+<p>Be grateful if you carry a US passport.</p>
+</li>
+
+<li>
+<p>Sometimes you just have to wade through a patch of mud, and there&#8217;s no way round it. But as long as you keep your eyes forward and keep moving, you&#8217;ll get through it, and things will brighten up.</p>
+</li>
+</ul>
+<p style='text-align: center'>
+  <a href='http://www.flickr.com/photos/performable/4792109640/sizes/l/in/set-72157623602121734/'>
+    <img src='http://martin.kleppmann.com/2010/12/strategic_plan.jpg' height='335' alt='Poster: We have a strategic plan. It&apos;s called doing things.' width='500' />
+  </a>
+</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Intuition has no transfer encoding</title>
+                <link>http://martin.kleppmann.com/2010/10/30/intuition-has-no-transfer-encoding.html</link>
+                <comments>http://martin.kleppmann.com/2010/10/30/intuition-has-no-transfer-encoding.html#disqus_thread</comments>
+                <pubDate>Sat, 30 Oct 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=400</guid>
+                
+                <description><![CDATA[ Intuition is really annoying sometimes. Actually, I love intuition, because almost all my thinking is based on it. I don’t think I am very good at analysing and thinking things through logically. Often I just have a feeling about how something should be, and then sometimes I post-rationalise it. Not... ]]></description>
+                <content:encoded><![CDATA[
+                    <p><strong>Intuition is really annoying sometimes.</strong></p>
+
+<p>Actually, I love intuition, because almost all my thinking is based on it. I don’t think I am very good at analysing and thinking things through logically. Often I just have a feeling about how something should be, and then sometimes I post-rationalise it.</p>
+
+<p>Not everybody’s mind works this way; if yours works like this too, you will think this is completely obvious. If not, you probably know people of this type, who can just assert “I think we should do it this way” and turn out to be right in maybe 75% of cases. Intuition is never perfect, but I love it, because it often gives a “good enough” answer very quickly, or at least provides some pointers towards places where it would be worth spending a bit more time analysing.</p>
+
+<p>The thing that I find so annoying about intuition is that it is <strong>very hard to communicate</strong>. Let me explain.</p>
+
+<p>Intuition is built from a large number of experiences: you grow up, you go through life, you meet people, you go to places, you read stuff, you make up stuff. There is no chance you can remember all the things you ever experience in factual detail, because that would be an overwhelmingly huge amount of information. But those things are nevertheless not forgotten: each experience leaves a trace, a tiny shadow of memory, so your thinking afterwards is ever so slightly different from the way it was before.</p>
+
+<p>Over the course of years, those tiny traces are aggregated, and what you get out at the end is an intuitive understanding of how the world works (or rather, how those parts of the world which you have experienced work). Think of it like very light crayon touches, in the hands of an artist, gradually forming to be a beautiful picture — except that the picture is never complete, and always evolving.</p>
+<object height='311' width='508'>
+    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US' />
+    <param name='allowFullScreen' value='true' />
+    <param name='allowscriptaccess' value='always' />
+    <embed src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US' allowfullscreen='true' type='application/x-shockwave-flash' allowscriptaccess='always' height='311' width='508' />
+</object>
+<p>With that intuition, when you encounter a new situation, it doesn’t matter that you haven’t encountered the exact same situation before: your brain does an approximate matching of the new situation with your mental model of the world, and immediately predicts the right answer. It doesn’t even need to search through memories, because the picture of the world in your head is already the fully aggregated sum of your experiences.</p>
+
+<p>(As a second step, you will typically compare your gut reaction to specific memories, to check whether the results agree. But that’s another topic.)</p>
+
+<p><strong>A tale of bitmaps and vector graphics</strong></p>
+
+<p>The way I imagine the brain stores intuition is a bit like a huge bitmap image, with lots and lots of pixels [<a href='#intuition-footnote'>1</a>]. When a new piece of information comes in, the brain’s massively parallel processing structure takes the new information, combines it with the existing image, correlates, interpolates, extrapolates, and produces an answer in an instant.</p>
+
+<p>But what if you want to teach your intuition to someone else? You can’t tell that person all the things you ever experienced in your life, because that would be far too much, and you’ve forgotten and assimilated most of those memories anyway. But that mental bitmap is also a terrible transfer format: our mouths and hands are extremely slow communication channels, making it impossible to get the bitmap out of your brain. Imagine reading out the individual pixel values of a bitmap image over the phone. It would take hours before the other person had even the vaguest, blurriest idea of the outlines of the image. And it would take years to fill in the detail.</p>
+
+<p>So&#8230; if you want to transfer that bitmap out of your brain and into someone else’s, even approximately, you have to turn that bitmap into a vector graphic.</p>
+
+<p>In vector graphics, if you choose your points and curves carefully, you can communicate the general structure of a picture very succinctly. You can enable the other person to very quickly get a rough idea of your thinking. Of course it won’t have all the colourful detail until you add lots more information, but that’s ok. And once you have analysed your picture into a vector form, you have actually gained a better understanding of what it is really about, you can zoom in to see a higher resolution, and you may be able to spot patterns that you weren’t previously aware of.</p>
+
+<p>Of course, the problem: turning bitmaps into vector graphics is hard. Computer Vision researchers are always thinking about better algorithms for doing it.</p>
+
+<p>And to return from our image analogy to the topic of intuition: expressing intuitive knowledge in a structured form is really hard.</p>
+
+<p><strong>Vectorising intuition</strong></p>
+
+<p>As a child, when you learn your first language by imitating sounds and by being continually corrected by your parents, you are building an intuition for the way that language works. You start off with <em>ga ga ga</em>, and it takes years before you can speak a coherent sentence; later, as time goes on and you grow up, you get quite good at it. Because your brain stores a pre-rendered representation of the language, you can speak and understand it easily and quickly.</p>
+
+<p>When an adult learns a foreign language, by contrast, the usual way of learning it is by studying grammar, vocabulary and carefully chosen texts. The rules of grammar and the structure of the syllabus are a kind of vector representation of the language, optimised for giving the learner a rough overview of the language structure and helping them construct useful sentences as quickly as possible.</p>
+
+<p>It is perfectly possible for an adult to go to a foreign country with no prior knowledge of the language, and to learn to speak it without formal grammar or syllabus, in the same way as a child does. However, most adults prefer to learn a language in a systematic manner, presumably because learning in “vectorised” form allows you to be much faster in getting to the stage where you can have an interesting conversation.</p>
+
+<p>No matter which way you learn the basics, it always takes years to reach native proficiency in a language; that is unavoidable, because in the end you can’t get around learning a huge amount of subtle details and building your own intuition. (Even if represented in vector form, complicated curves and shadings require a large number of points.) The difference is in the time it takes to grok the core concepts.</p>
+
+<p><strong>But here comes the important bit.</strong> When it comes to learning languages, most languages have benefitted from decades (if not centuries) of research and systematisation efforts by many intelligent people. For most languages, grammar and learning techniques are very well understood. But what if you want to communicate some intuition that <strong>only you</strong> have? Well, you have to do the vectorising yourself.</p>
+
+<p>When you have built an intuition in a specific area that is not well-known — say, with regard to some arcane or new technology, or with regard to your company’s business strategy — then there is no existing grammar you can refer to. You are like a linguist, <a href='http://en.wikipedia.org/wiki/Daniel_Everett'>going into the Amazonian Jungle</a> to document mysterious languages not yet known to the outside world. You have to observe the systematic parts and the exceptions, and formulate the grammar yourself.</p>
+
+<p>Turning your intuitive bitmap into a vector form that you can communicate&#8230; is hard. Very hard. But you need to figure it out.</p>
+
+<p><strong>Why is this important?</strong></p>
+
+<p>Well, there’s only so far that a single person’s intuition can reach. If you want to build great things and change the world, you need much more than a single person’s brain can hold. You need both depth and breadth: fine-grained intuition in specific technical fields requiring expertise, and also a greater variety of perspectives than a single person can have experienced.</p>
+
+<p>You need to combine the intuitions of several people, i.e. you have to form a team. And in order to combine your intuitions, you need to communicate and explain them. Why? Because otherwise you have no way of resolving differences, and no way of learning from each other and improving.</p>
+
+<p>By default, intuition comes without a reason attached: you ‘simply know’ that the answer is X, but you don’t know why. The problem arises when your colleague ‘simply knows’ that the answer is Y, where X≠Y, and doesn’t know a reason either. (Maybe X and Y are not completely contradictory, but rather partially overlapping ideas or differences in emphasis. Different nevertheless.) At that point either one has to overrule the other (which would defeat the goal of forming a team in the first place), or you have to rationalise the intuition, untangle the pre-aggregated reasoning, and communicate it in terms which the other person can understand.</p>
+
+<p>What if you could understand the structure of both X and Y, and the reasoning behind it, and thus manage to synthesise the two? That is a lot of effort, but I am increasingly thinking that figuring out how to communicate your intuition is one of the most valuable things you can do in a team. For if you can combine your mental image of the world with other people’s, you can build something much greater than each of you. Your thoughts can be superhuman, in some sense. And that, if you can figure it out, is a huge advantage you can have.</p>
+
+<p>A startup is a really interesting environment to try this kind of thing, because you can be as choosy as you want about the people you work with. You can pick like-minded people, and together work towards that shared intuition. You can build a good, well-founded, shared intuition of who your customers are and what they want. And if you can attain that shared intuition, you&#8217;re well underway to success.</p>
+
+<p><strong>Footnote:</strong></p>
+<a name='intuition-footnote'>
+</a>
+<p>[1] I&#8217;m not sure what each individual pixel represents. In mathematical terms, a picture is a function mapping from 2D space to colour, and a bitmap approximates this function by sampling at regularly spaced values of the input. Along that line of thinking, the mind is probably a function mapping from sensory inputs and memories to explanations and actions (or something along those lines — I&#8217;m not a neuroscientist). This function can be represented as lots of individual data points (&#8220;London &amp; lunchtime &amp; hunger &amp; last had Falafel 10 days ago → go to the King of Falafel&#8221;), which is bitmap-like, or in some systematic manner (&#8220;I like to eat falafel for lunch. For example, in London, the King of Falafel is good.&#8221;), which is vector-like, omitting redundant information (lunchtime and hunger are strongly correlated, so mentioning both is fairly redundant) and emphasising structure or dependencies (the King of Falafel only exists in London). However, as you can see, his only vaguely makes sense. The bitmap/vector analogy is itself an example of a piece of intuition that I&#8217;m trying to communicate to you right now.</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Good things are hard to articulate</title>
+                <link>http://martin.kleppmann.com/2010/08/31/good-things-are-hard-to-articulate.html</link>
+                <comments>http://martin.kleppmann.com/2010/08/31/good-things-are-hard-to-articulate.html#disqus_thread</comments>
+                <pubDate>Tue, 31 Aug 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=394</guid>
+                
+                <description><![CDATA[ If you have a stone in your shoe, it&#8217;s easy to articulate what is wrong (&#8220;something is hurting my foot!&#8221;). But if you don&#8217;t have a stone in your shoe, you don&#8217;t go around rejoicing with every step. If you have just removed a stone, you may be pleased for... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>If you have a stone in your shoe, it&#8217;s easy to articulate what is wrong (&#8220;something is hurting my foot!&#8221;). But if you don&#8217;t have a stone in your shoe, you don&#8217;t go around rejoicing with every step. If you have just removed a stone, you may be pleased for a few seconds to have removed the irritation, but things very quickly return to normal.</p>
+
+<p>The bad things keep sticking around and irritating us, whereas the good things are quickly taken for granted. The bad things are often easy to describe, whereas the good things are sometimes just the absence of a bad thing &#8212; the absence of some irritation.</p>
+
+<p>This is a fundamental asymmetry, and it has lots of implications, big and small. For example, a big implication is the development of human society and technology. Because we are more prone to noticing bad things, and bad things keep bugging us, we try to fix bad things and make them go away. So humans invented tools (to stop hurting their fingers), agriculture (to stop hunger and laborious hunting/gathering), medicine (to stop their family members from dying), writing (to stop forgetfulness) and the internet (to stop the slowness of paper communication). Over history, humans have continuously taken stuff that is bad, and tried to make it better. Now that we have all these good things (tools, agriculture, medicine, writing, internet), we mostly take them for granted and don&#8217;t think about them any more.</p>
+
+<p>(Some things that humans invented turned out to have bad side-effects besides their intended good effect. Take weapons as an example: intended to stop the hungry neighbours from stealing our food, but the idea got taken a bit too far. But that&#8217;s a different story.)</p>
+
+<p>There are also other, less grandiose consequences of bad things being more noticeable. For example, when I was writing music and song lyrics, I found it comparatively easy to write about themes like conflict, struggle and sadness; writing about good things, however, was much harder. It would often just sound trite, banal and uninteresting.</p>
+
+<p>How do you articulate those things that are good? Part of the point of this very essay is to see if I can write about things being good without just being incredibly boring. And what do I do? Complain about the fact that it&#8217;s hard to express things that are good. I complain. I am irritated that bad things are easier to write about than good things. And so I write about that irritation, thereby locking myself in a self-referential loop.</p>
+
+<p>How annoying. Let&#8217;s talk about the good things again.</p>
+
+<p>An observation. If bad things are much more noticeable than good things, that means that it&#8217;s very easy to lose sight of all the good things. In fact, it probably means that we are surrounded by lots of wonderful things that we&#8217;ve simply forgotten about. It might even be that the vast majority of things around us are good, and we are just failing to notice them!</p>
+
+<p>We need to consciously remind ourselves of the good things from time to time, to avoid getting too bogged down in the bad things. That cannot mean getting complacent; it just means enjoying and appreciating life.</p>
+
+<p>For example, I am writing this essay on a mobile phone (good) connected to the internet (good) while sitting in the sunshine (good) in a park (good) in San Francisco (good). I am wearing comfortable clothes (good) and don&#8217;t have any stones in my shoes (good). I live in a peaceful age (good) in a peaceful society (good). I am educated (good), healthy (good), don&#8217;t need to worry about being able to afford the rent (good) and I have a wonderful family (good). I look forward to sending this essay to Rita (good) to see what she thinks. (Hopefully it&#8217;s not too bad.)</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Valuation caps on convertible notes, explained with graphs</title>
+                <link>http://martin.kleppmann.com/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html</link>
+                <comments>http://martin.kleppmann.com/2010/05/05/valuation-caps-on-convertible-notes-explained-with-graphs.html#disqus_thread</comments>
+                <pubDate>Wed, 05 May 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=378</guid>
+                
+                <description><![CDATA[ When you&#8217;re an entrepreneur out to raise funding, you&#8217;re faced with a whole lot of legal and financial jargon, and getting your head around it takes a lot of valuable time &#8211; that&#8217;s time in which you&#8217;re not doing the things which really matter (namely making your product better, making... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>When you&#8217;re an entrepreneur out to raise funding, you&#8217;re faced with a whole lot of legal and financial jargon, and getting your head around it takes a lot of valuable time &#8211; that&#8217;s time in which you&#8217;re not doing the things which really matter (namely making your product better, making your existing customers happy and acquiring new customers).</p>
+
+<p>But actually, if explained properly, most of the legal and financial stuff isn&#8217;t that complicated. The legal documents do a terrible job of explaining, because they define everything in legalese prose. Graphs make it much clearer, as Leo Dirac has shown in his wonderful <a href='http://www.slideshare.net/leodirac/5minute-primer-on-vc-term-sheets'>graphical explanation of liquidation preferences</a>. You should go and look at that presentation.</p>
+
+<p>I&#8217;d like to explain a different financial concept, namely the <strong>valuation cap on convertible notes</strong>. It took me several hours to get my head around it, so I&#8217;d like to save you those hours.</p>
+
+<p><strong>The pros and cons of convertible notes</strong></p>
+
+<p>I assume you know what a convertible note (aka convertible loan) is: instead of buying shares in your startup, the investor just gives you the money on a loan with some nominal interest rate. And you promise that when you raise your next round of funding, the loan converts into shares as if they had put that money in during that second round. Since the investor took additional risk by backing you early, they get a discounted share price (they get more shares than someone who puts in the same amount of money in the second round), and that discount is fixed and agreed upon beforehand. It&#8217;s typically between about 15% and 30%.</p>
+
+<p>The good thing about convertible notes is that they require less paperwork (and are thus faster to get done), and &#8211; in theory &#8211; don&#8217;t require you to set a valuation, because the share price will be determined in the next round. However, many investors don&#8217;t like them. If the company is really successful (as everybody hopes it will be) and the valuation in the next round is high, then the investors don&#8217;t get any of that increase in value &#8211; they just get their fixed discount, and that&#8217;s it.</p>
+
+<p>With some <a href='http://www.crunchbase.com/person/ron-conway'>big-name investors</a>, the company&#8217;s value goes up simply by being associated with the big name. Naturally, the investor will also want to benefit from that increase in value, because otherwise there&#8217;s not much incentive for them to help.</p>
+
+<p>Enter the valuation cap, which appears to now be a standard term of convertible notes, in Silicon Valley at least. The cap is the convertible note investor basically saying: <em>&#8220;If things go ok, I&#8217;m happy with my fixed 20% discount. But if you do really well, I want us to treat it as if I had bought shares in the first place.&#8221;</em> (That way they benefit more from the success.)</p>
+
+<p>So you went for a convertible note hoping that you wouldn&#8217;t have to set a valuation for your startup. Well, with the valuation cap you don&#8217;t strictly have a valuation, but you <em>do</em> have a <em>range of valuations</em>: the company is certainly not worth less than X, and not worth more than Y.</p>
+
+<p>In effect, someone has now got to decide on a valuation, which is a notoriously unscientific thing. How do you come up with reasonable numbers? You need to somehow build an intuition for what this stuff means.</p>
+
+<p><strong>How to determine your valuation cap</strong></p>
+
+<p>The best way to think about it is to start with some guesswork numbers, consider a range of different scenarios, and work out the consequences. Then you can decide which consequences are unacceptable, and work backwards.</p>
+
+<p>Let&#8217;s work through an example. Say you&#8217;re a small startup team raising your first seed round, and you expect to raise a Series A from VCs sometime in future. Your input variables are:</p>
+
+<ul>
+<li>the amount you&#8217;re raising on the convertible note (say $500k),</li>
+
+<li>the conversion discount of the note (say 20%),</li>
+
+<li>the pre-money valuation cap of the note (say $4m),</li>
+
+<li>the percentage of your company which the VCs will take in your Series A (say 30%),</li>
+
+<li>the amount of money you expect to raise in your Series A (say somewhere between $1m and $5m).</li>
+</ul>
+
+<p>There are a few other parameters (like the interest rate on the loan, and the time between the seed round and the series A), but they ought to have only a minor impact.</p>
+
+<p>The biggest unknown here is the amount you&#8217;ll want to raise in your Series A, so let&#8217;s look at a range of scenarios for that value, and take the other variables to be fixed.</p>
+
+<p>There are two consequences of the numbers which are useful to think about:</p>
+
+<p><strong>1. What share of the company do the convertible note investors own after the Series A?</strong></p>
+
+<p>We assumed above that after the Series A, the Series A investors own 30% of the company. But how much do the seed investors own after converting their note into shares?</p>
+<img class='aligncenter size-full wp-image-379' src='http://martin.kleppmann.com/2010/05/Valuation-Cap-demo-1.png' height='402' alt='How much equity does the note convert into?' width='550' />
+<p>Without the valuation cap, the seed investors end up with an ever diminishing share of the company as the valuation increases. The effect of the cap is that the convertible note investors are guaranteed a certain share of the company, even if you get a <a href='http://techcrunch.com/2010/03/25/four-vc-firms-battle-for-foursquare-valuation-goes-stratospheric/'>Foursquare valuation</a>.</p>
+
+<p>That minimum share is: (1 &#8211; [series A investor ownership] ) * [amount raised on conv note] / [valuation cap]. (The first factor takes into account the Series A dilution.) In this example, the note will convert into a minimum of (1&#8211;0.3) * $0.5m / $4m = 8.75% of the company&#8217;s shares.</p>
+
+<p><strong>2. What effective discount are the convertible note investors getting relative to the Series A investors?</strong></p>
+
+<p>If you didn&#8217;t have a cap, you would simply give a fixed (say 20%) discount when the note converts into shares. But when you have a cap, and your Series A valuation hits the cap, you&#8217;re fixing the price for the early investors, while the incoming Series A investors might be paying a lot more per share. So you are effectively giving a greater than 20% discount in that case.</p>
+<img class='aligncenter size-full wp-image-380' src='http://martin.kleppmann.com/2010/05/Valuation-Cap-demo-2.png' height='403' alt='Effective discount on conversion' width='550' />
+<p>I find this graph interesting, because it&#8217;s basically a measure of &#8220;how annoyed the VCs are going to be about the convertible note&#8221;. &#8211; Imagine you&#8217;re at the theatre, and you know that for the same ticket you paid 2 or even 3 times as much as the guy sitting next to you. You would not be happy, because it just doesn&#8217;t feel fair. If your valuation goes substantially above the cap, there can be a big difference in share price.</p>
+
+<p>Of course, if your startup is awesome and investors are desperate to be part of your round, this probably won&#8217;t be an issue. And of course, maybe such a large discount is entirely fair if your Angel investors add a lot of value beyond the money they put in. But it&#8217;s a factor to keep in mind. At least with a graph like this you can start thinking about your numbers usefully.</p>
+
+<p><strong>Postscript</strong></p>
+
+<p>None of this gives you an immediate answer to the question &#8220;what should we write on our convertible note term sheet?&#8221;, but at least you should now be able to think about valuation caps from a few different angles.</p>
+
+<p>Disclaimer: neither am I a lawyer nor do I have much experience with this stuff, so my explanation may be horribly flawed or simply wrong. (If you find a mistake, please let me know.)</p>
+
+<p>You can <a href='http://martin.kleppmann.com/2010/05/Valuation-Cap-demo-for-blog.xlsx.zip'>download the Excel spreadsheet</a> which I used to generate these graphs. An interesting alternative way of looking at this would be to assume a fixed Series A amount, and instead work out what happens when you vary the valuation cap. I&#8217;ll leave that as an exercise for you, dear reader.</p>
+
+<p>Incidentally, our awesome startup, <a href='http://rapportive.com'>Rapportive</a>, is raising a seed round at the moment. It&#8217;s filling up quickly, so please <a href='mailto:martin@rapportive.com'>get in touch soon</a> if you may be interested. The terms may have certain similarities with my example here, or they may not &#8211; I couldn&#8217;t say. ;-)</p>
+
+<p><strong>Update (11 June 2010):</strong> Packed the Excel spreadsheet in a ZIP file to fix download problems.</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Our social future</title>
+                <link>http://martin.kleppmann.com/2010/04/09/our-social-future.html</link>
+                <comments>http://martin.kleppmann.com/2010/04/09/our-social-future.html#disqus_thread</comments>
+                <pubDate>Fri, 09 Apr 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=376</guid>
+                
+                <description><![CDATA[ You know you&#8217;re doing something good if someone you&#8217;ve never met before spontaneously comes up to you and asks: &#8220;Are you with Rapportive? Just wanted to say that I love it.&#8221; He could recognise me because we had exchanged emails, and he had therefore seen my photo in Rapportive next... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>You know you&#8217;re doing something good if someone you&#8217;ve never met before spontaneously comes up to you and asks: &#8220;Are you with Rapportive? Just wanted to say that I love it.&#8221;</p>
+
+<p>He could recognise me because we had exchanged emails, and he had therefore seen my photo in Rapportive next to my email.</p>
+
+<p>This is our social future. We&#8217;re busy creating it.</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Hey, what happened just then?</title>
+                <link>http://martin.kleppmann.com/2010/03/31/hey-what-happened-just-then.html</link>
+                <comments>http://martin.kleppmann.com/2010/03/31/hey-what-happened-just-then.html#disqus_thread</comments>
+                <pubDate>Wed, 31 Mar 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=372</guid>
+                
+                <description><![CDATA[ There are moments in life where everything suddenly changes. Do you know what I mean? Those moments are rare, but on some occasions, your entire outlook on life can fundamentally change overnight. This particular story begins about a year ago. I had just finished a few web development contracts, and... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>There are moments in life where everything suddenly changes. Do you know what I mean? Those moments are rare, but on some occasions, your entire outlook on life can fundamentally change overnight.</p>
+
+<p>This particular story begins about a year ago. I had just finished a few web development contracts, and had started to build my automated web testing tool, <a href='http://go-test.it'>Go Test It</a>. At the time I thought Go Test It was going to be a small, simple product which would take a few months to build and then mostly look after itself. (In retrospect: Hahaha!) I wasn&#8217;t sure where it was going to go, but I wanted to keep my options open, so I also <a href='http://martin.kleppmann.com/2009/03/31/doing-a-phd.html'>applied to do a PhD</a> in Cambridge.</p>
+
+<p>I had to propose a PhD topic, and I made up something ad-hoc. I realised that most interesting things are created by individuals, not organisations, and that the reputation and personal network of those individual people is key. And I saw a problem: most things happen online, but fragmented across lots of different websites (including private databases such as CRM systems), so the information is barely useful. I wanted to pull this together and analyse it; I saw this as a route to learning more effectively, by using my network of professional contacts.</p>
+
+<p>To make it sound more academic and less startuppy, I padded the PhD proposal with a bit of blah-blah about machine learning, natural language processing, citation analysis and social graph analysis. But of course my plan was to turn it into a startup eventually. I got my place in Cambridge, got the research funding, moved back into college &#8211; then realised that doing Go Test It and a PhD at the same time was madness, changed my mind, and withdrew from the PhD just a week after I had started. Oh well, interesting experience. I hope I didn&#8217;t waste too many people&#8217;s time.</p>
+
+<p>Around that time I was talking to <a href='http://www.red-gate.com/'>Red Gate</a>, who were interested in acquiring Go Test It, and we closed that deal in November 2009. The plan was that I would stay there for 10 months to hand it over and get it standing on its own feet. We embarked on a big customer development push to figure out who our customers really were and what they really wanted, and we learnt a lot. It was good.</p>
+
+<p><strong>Rapportive comes into being</strong></p>
+
+<p>Other things were happening around that time. My friends <a href='http://twitter.com/rahulvohra'>Rahul</a> and <a href='http://www.samstokes.co.uk/'>Sam</a> were interested in doing a new startup, having worked together at <a href='http://mo.jo'>mo.jo</a> before. I had talked to them about my ideas, originally intended for the PhD, of &#8220;fixing CRM&#8221; by integrating it with social data, and we started thinking about turning it into a startup sooner rather than later.</p>
+
+<p>Rahul came up with some user interface ideas and started coding them up in January; Sam joined in and engineered the backend. Our plan was that I would stay full-time on Go Test It, and fund the other two from my earn-out until October 2010, which is when Go Test It was to be fully handed over to Red Gate. Then I would join them full-time on the new startup. It sounded like a good plan.</p>
+
+<p>Rahul and Sam put together a prototype of Rapportive in a few weeks; we showed it to a few people and they seemed to like it. We put up a simple one-page website, with a few pictures and an install button, so that we had something we could show to potential investors. It wasn&#8217;t much. We hadn&#8217;t even written a privacy policy because we were expecting it to only go out to a small number of people.</p>
+
+<p><strong>And then&#8230; OMGWTFBBQ</strong></p>
+
+<p>What happened then was <a href='http://twitter.com/plc/status/9968421868'>a tweet</a> by our friend <a href='http://twitter.com/plc'>Pete</a> to <a href='http://twitter.com/zee'>Zee</a> of <a href='http://thenextweb.com/'>The Next Web</a>. I had never imagined that a single tweet could be so powerful. Zee loved what he saw and <a href='http://thenextweb.com/apps/2010/03/04/gmail-slick-social-crm-tool/'>wrote it up immediately</a>. Within a day we also had rave write-ups on <a href='http://www.readwriteweb.com/archives/gmail_social_crm_plugin_rapportive.php'>ReadWriteWeb</a> (&#8220;stop what you are doing and install this plug-in!&#8221;), then <a href='http://lifehacker.com/5486082/rapportive-replaces-gmail-ads-with-contact-info-is-very-cool'>Lifehacker</a> and <a href='http://webworkerdaily.com/2010/03/05/rapportive-gmail-crm/'>WebWorkerDaily</a> and dozens of smaller blogs and news sites&#8230; thousands of people raving about us on Twitter&#8230; and within that day, over 10,000 users signed up.</p>
+
+<p>10,000 users in one day. That&#8217;s like a fairly large stadium full of people using our software. I had never worked on anything with more than a couple of hundred users before. It&#8217;s hard to describe how that felt.</p>
+
+<p>We were doing nothing but frantically commenting on blog posts, replying to tweets, emails and Skype contacts, and scaling up our servers. Thank goodness for <a href='http://heroku.com/'>Heroku</a>, which made the scaling incredibly easy. We had a few periods of slowness and had to temporarily disable some features, but we never went down. Our servers were continuously handling over 20 requests per second, but we were taking care of our users and giving individual responses to everyone who needed one.</p>
+
+<p>We got a tremendous amount of love from our users, both for the product and for responding swiftly and helpfully to any queries. The vast majority of people who originally signed up are continuing to use it now, and new people are signing up every day.</p>
+
+<p>All of a sudden, our time is incredibly precious. We want to continue to develop Rapportive quickly and continue making something which people really want. We are moving at a very rapid pace, because every day, we have the opportunity to make tens of thousands of people happy.</p>
+
+<p><strong>So&#8230; what about Go Test It?</strong></p>
+
+<p>This success, great as it was, put me in a difficult situation. I was still full-time on Go Test It, and we were just ramping up development to build several big, important features which our customers really wanted. And at the same time, Rapportive needed me more every day.</p>
+
+<p>We had always been very open with the directors of Red Gate as to what was was going on with Rapportive, and so we discussed what we should do. Eventually we decided that Rapportive needed me most, and Go Test It wasn&#8217;t yet ready to stand on its own feet, so we would shut Go Test It down gracefully.</p>
+
+<p>It was a very hard decision, probably one of the hardest I have yet had to make. Red Gate, I and all the others who had worked on it had put a lot of time, effort and money into Go Test It. I was also emotionally invested; after all, this was my first own product. But the opportunity offered by Rapportive was just so disproportionately huge. Killing Go Test It quickly and painlessly was the right decision.</p>
+
+<p>Fortunately the damage was quite limited. Only a small number of customers were using Go Test It regularly, and we found alternative solutions for them. We had a vesting schedule, so the majority of the money from the acquisition went back to Red Gate. There were a few other people working on the project too; they had to find new things to work on, but they are all very talented so it&#8217;s not difficult for them to find work. And most importantly, for me at least: I managed to stay friends with everybody involved. So I think we achieved a good outcome overall.</p>
+
+<p><strong>Onwards and upwards</strong></p>
+
+<p>So here we go: I&#8217;m now a full-time co-founder at Rapportive, and together the three of us are going full steam ahead. We have tens of thousands of people who love what we are doing. We have investors knocking on our door. And we have bucketloads of plans and bright ideas combined with the energy and passion to make them happen.</p>
+
+<p>Life never moves in straight lines; it is full of unexpected surprises. But hey, most surprises turn out to be good ones if you make the most of them. And that&#8217;s what we&#8217;re doing right now.</p>
+
+<p>We&#8217;re in San Francisco and the Bay Area from now until mid-April, so if you&#8217;d like to meet us in person, please <a href='mailto:martin@rapportive.com'>drop me a note</a> &#8211; we&#8217;d love to hear from you!</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Learning about our customers</title>
+                <link>http://martin.kleppmann.com/2010/02/23/learning-about-our-customers.html</link>
+                <comments>http://martin.kleppmann.com/2010/02/23/learning-about-our-customers.html#disqus_thread</comments>
+                <pubDate>Tue, 23 Feb 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=368</guid>
+                
+                <description><![CDATA[ Back in December I wrote about my realisation that we had not been spending enough time learning about our customers at Go Test It. Since then, I have been working hard to catch up in this area, and the last two months have been an incredible experience. Although there&#8217;s still... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>Back in December I <a href='http://martin.kleppmann.com/2009/12/31/how-we-totally-ignored-our-customers.html'>wrote about my realisation</a> that we had not been spending enough time learning about our customers at Go Test It. Since then, I have been working hard to catch up in this area, and the last two months have been an incredible experience.</p>
+
+<p>Although there&#8217;s still a long way to go, we have learnt a lot, and we are getting a much clearer idea of where we need to go in future. And I feel that I am developing another startup skill which will no doubt be valuable in future.</p>
+
+<p>I will be writing about our customer discovery process and things we have learnt in a series of blog posts on the <a href='http://go-test.it/blog'>Go Test It blog</a>. A slightly provocative teaser from my first post of the series:</p>
+
+<blockquote>
+<p>A startup&#8217;s purpose is not to make money (at least not initially). Nor is its purpose to build a product (although it won&#8217;t go far without a product). No, the real reason why a startup exists is to <strong>learn</strong> about potential customers and to define a market.</p>
+</blockquote>
+
+<p><a href='http://go-test.it/blog/2010/02/22/learning-about-our-customers.html'>Start reading the new series on the Go Test It blog</a>, <a href='http://feeds.feedburner.com/gotestit'>subscribe to the Go Test It RSS feed</a> and <a href='http://twitter.com/martinkl'>follow me on Twitter</a> to keep track of new posts.</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>How to negotiate a price: Return on Indignation</title>
+                <link>http://martin.kleppmann.com/2010/01/30/how-to-negotiate-a-price-return-on-indignation.html</link>
+                <comments>http://martin.kleppmann.com/2010/01/30/how-to-negotiate-a-price-return-on-indignation.html#disqus_thread</comments>
+                <pubDate>Sat, 30 Jan 2010 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=356</guid>
+                
+                <description><![CDATA[ As an entrepreneur you have to negotiate things: customer contracts, freelance rates, investments, acquisitions and more. These things are really important, but you probably grew up in a western country where you buy the bar of chocolate for the price it says on the shelf, no more and no less.... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>As an entrepreneur you have to negotiate things: customer contracts, freelance rates, investments, acquisitions and more. These things are really important, but you probably grew up in a western country where you buy the bar of chocolate for the price it says on the shelf, no more and no less. We&#8217;re not used to negotiating things. So how do you determine a good price?</p>
+
+<p>I&#8217;m sure much has been written about this already, but I&#8217;ve not really read any of it. Instead I made up some principles based on my own bit of experience and a bit of common sense, and maybe you will find them useful.</p>
+
+<p>So let&#8217;s take a look at a negotiation from the point of view of the seller. When you&#8217;re selling something, you want to charge as much as you can get away with. The higher the price, the better for you, i.e. the higher the monetary benefit of the sale to you.</p>
+<img class='aligncenter size-full' src='http://martin.kleppmann.com/2010/01/graph1.jpg' height='299' alt='Graph: Value over price (1)' width='500' />
+<p>The first bit of money makes a big difference &#8211; maybe you really need it so that you can pay the rent, otherwise you&#8217;ll get kicked out of your house. Within this range, having more money is clearly a lot more valuable for you. However, as the amounts increase and you have secured an acceptable standard of living, I would argue that the <em>benefit</em> of the money <em>to you</em> slows down. Frankly, a top-paid investment banker would barely notice the difference if their salary or bonus was increased or decreased by 50%.</p>
+
+<p>But nevertheless, although it gradually flattens a bit, the line is always increasing. If you can get more out of a deal, it&#8217;s a better deal. At first glance anyway.</p>
+
+<p>However, that&#8217;s not the end of the story. When I am negotiating with someone, this is usually someone I actually <em>want</em> to work with, and I want to stay friends with them. You don&#8217;t want to charge so much that they will simply walk away. And if you&#8217;re in a strong position where the buyer doesn&#8217;t have much choice (eg. because it&#8217;s something urgent and they don&#8217;t have time to find someone else), you don&#8217;t want to abuse your position, as otherwise you will get a bad reputation as someone who takes advantage of others.</p>
+
+<p>Therefore, you should be taking your relationship with the buyer into account. How indignant they will be about your price will depend on a lot of factors (the market value of what you have to offer, how much you charged them previously, how much they can afford, etc). But in general there will be some sort of function describing how happy they are depending on the price (BogoGraph alert!):</p>
+<img class='aligncenter size-full' src='http://martin.kleppmann.com/2010/01/graph2.jpg' height='368' alt='Graph: Value over price (2)' width='500' />
+<p>Here I plotted in blue the buyer&#8217;s &#8220;goodwill&#8221; (not in any financial sense, just in the sense of &#8220;how much they like you&#8221;). If you charge too much, they will obviously hate you, so the graph goes downhill very rapidly beyond a certain point. You probably don&#8217;t want to go there. I think it is also possible to charge too little, which conveys the message that what you have is not particularly good and not worth very much; but that won&#8217;t offend your buyer nearly as much as overcharging them. So I&#8217;d say that the graph first goes up a little bit, and then goes down a lot.</p>
+
+<p>How do you figure out the shape of that curve for your buyer? That&#8217;s hard. You need to get a few data points, for example you might try asking them for a pretty high price and observing how upset they get. But you&#8217;ve got to be very careful &#8211; don&#8217;t abuse their trust and don&#8217;t waste their time. The longer you spend trying to measure the blue curve, the lower it gets overall (i.e. the more irritated they get with you). It&#8217;s better if you can use external things as reference points &#8211; how much an alternative solution would cost them, how much they have paid for comparable things in the past, the size of their budget (which they probably won&#8217;t tell you but you might be able to guess indirectly).</p>
+
+<p>The value you get out of making the sale is twofold: on the one side the money you get out of it, and on the other side the buyer&#8217;s goodwill (with all of its intangible benefits, such as keeping open potential future deals, recommendations, referrals, general happiness and warm fuzzy feelings). You want both, so let&#8217;s just add the two curves together:</p>
+<img class='aligncenter size-full' src='http://martin.kleppmann.com/2010/01/graph3.jpg' height='364' alt='Graph: Value over price (3)' width='500' />
+<p>The red line is simply the sum of the blue and the black, and represents the total value you&#8217;re getting out of the sale. Some things to observe:</p>
+
+<ol>
+<li>There is a very clear maximum for the total value. This is what you should be aiming at.</li>
+
+<li>The price at which the seller&#8217;s value is maximised is always higher than the ideal price for the buyer (i.e. the red line&#8217;s maximum is further to the right than the blue line&#8217;s maximum). Of course the buyer would prefer to pay less &#8211; if that is not the case, you&#8217;re definitely charging too little.</li>
+
+<li>The blue graph is like quantum mechanics: it changes when you measure it. Keep your negotiations short, simple and clear. Don&#8217;t keep changing your mind, because that just reduces goodwill and thus the total value. Keep in mind that the whole point of this exercise is to stay friends!</li>
+
+<li>The optimal price depends on your weighting of blue curve vs. black curve &#8211; the less you care about the buyer&#8217;s goodwill, the higher the optimal price.</li>
+
+<li>Even if you are playing hard-nosed, it&#8217;s a game of diminishing returns. By pushing harder you will get a bit more money, but the buyer will also get <em>a lot</em> more indignant. The harder you push, the smaller your marginal gains.</li>
+</ol>
+
+<p>This brings us to an interesting concept: you can trade in buyer&#8217;s goodwill for more money by adjusting how much you care about how the other party feels. There is a <strong>return on the indignation</strong> of the other party, and it&#8217;s up to you to choose what you want this return to be.</p>
+
+<p>It depends on your character and on the strategic value of the particular deal. I generally work with quite a low return on indignation, i.e. I value goodwill quite highly and won&#8217;t readily trade it for a bit more money. That&#8217;s because:</p>
+
+<ol>
+<li>I don&#8217;t find it fun to be hard-nosed, so I&#8217;ll much rather be nice (assuming the other party is also nice), and</li>
+
+<li>I think in terms of long-term value, and I believe that goodwill stays around for a long time, so I&#8217;ll much rather invest in building good long-term relationships than try to extract the maximum monetary value in the short term.</li>
+</ol>
+
+<p>That&#8217;s my approach, and I&#8217;m sure others will think differently. But at least, with a framework like this, you can be conscious about your return on indignation.</p>
+
+<p>By the way, if you&#8217;re into pricing products which are not individually negotiated &#8211; quite a different topic &#8211; you should definitely read <a href='http://www.neildavidson.com/dontjustrollthedice.html'>Don&#8217;t just roll the dice</a> by <a href='http://www.neildavidson.com/'>Neil Davidson</a>.</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>How we totally ignored our customers</title>
+                <link>http://martin.kleppmann.com/2009/12/31/how-we-totally-ignored-our-customers.html</link>
+                <comments>http://martin.kleppmann.com/2009/12/31/how-we-totally-ignored-our-customers.html#disqus_thread</comments>
+                <pubDate>Thu, 31 Dec 2009 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=352</guid>
+                
+                <description><![CDATA[ It&#8217;s the end of the year, a good time to take a step back and reflect on the past year and what it means for the future. For me, 2009 has been dominated by building Go Test It and then selling it to Red Gate. That&#8217;s a pretty successful year... ]]></description>
+                <content:encoded><![CDATA[
+                    <a href='http://www.cafepress.com/kandsranch'>
+    <img class='alignleft size-full wp-image-353' src='http://martin.kleppmann.com/2009/12/epiphany.jpg' height='240' alt='The Four Steps to the Epiphany' width='240' />
+</a>
+<p>It&#8217;s the end of the year, a good time to take a step back and reflect on the past year and what it means for the future. For me, 2009 has been dominated by building <a href='http://go-test.it/'>Go Test It</a> and then <a href='http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html'>selling it to Red Gate</a>. That&#8217;s a pretty successful year in my book.</p>
+
+<p>Over Christmas I finally had time to read <a href='http://www.cafepress.com/kandsranch'>The Four Steps to the Epiphany</a> by <a href='http://steveblank.com/'>Steve Blank</a>. I had heard from a few people that it was the best book in the world for startups, but of course you take that sort of recommendation with a grain of salt. When I finally got round to ordering it, my first impression was not very impressed. The graphics are misaligned, the typography is ugly, there are plenty of typos, the cover picture is cheesy, the CafePress binding is flimsy. All in all, not a good start.</p>
+
+<p>Well, don&#8217;t judge this book by its cover. Despite those apparent flaws, it is absolutely brilliant. And yes, if you have any sort of startup ambitions, you should go out and read it immediately.</p>
+
+<p>In fact, maybe the book is deliberately &#8216;unprofessional&#8217;, because that would be consistent with a theme which runs through the entire book: focus relentlessly on what really matters and what really adds value. What really matters to me with Steve Blank&#8217;s book is purely its content (which is clearly articulated and deeply insightful); professional design or editing wouldn&#8217;t have changed this book&#8217;s value to me. Similarly, what really matters with a startup is to discover and learn what customers need, how the product fits into their lives, and how you are going to get it into their hands. &#8216;Professionally&#8217; executing a strategy comes later. First you&#8217;ve got to learn and discover what the strategy is going to be.</p>
+
+<p>This sounds trivially obvious, but it is not.</p>
+
+<p>Let me digress for a minute. Something else I read recently is <a href='http://www.userfocus.co.uk/fable/'>The Fable of the User-Centred Designer</a> by David Travis (a short but beautifully written eBook &#8211; well worth reading but quite different from the Four Steps to the Epiphany). It made me realise how badly we had gone wrong with Go Test It. Steve Blank&#8217;s book further strengthened that feeling. Ok, we built a product which works alright. We did a few informal usability tests (looking over people&#8217;s shoulder while they use it for the first time) and we got some useful feedback from the beta tests. And clearly the result was promising enough that Red Gate wanted to acquire it.</p>
+
+<p>Here is my confession: I cannot truthfully say that we really engaged customers in the process. I had some ideas about use cases and I did a few pencil sketches of the user interface before it was implemented. But did I actually go out to potential customers and test my ideas on them? Not a single bit! We thought about the ideas for a few minutes by ourselves, nodded our heads, and then just went ahead and hacked it together.</p>
+
+<p>I have no excuse whatsoever for ignoring our customers like I did. Hell, we even had a poster from the <a href='http://www.upassoc.org/'>Usability Professionals&#8217; Association</a> hanging in our office for a while, detailing the steps of a user-centred design process. (Some years ago I thought our company was going to be a usability consultancy &#8211; that was before we got into web development and ultimately into building Go Test It. Hahaha! By the way, that&#8217;s <a href='http://martin.kleppmann.com/2007/07/19/yes-no-cancel-causes-aspirin-sales-to-soar.html'>why this blog is called Yes/No/Cancel</a>.) And nevertheless I totally ignored it. We were not doing anything like user-centred design, let alone Customer Development as proposed by Steve Blank, which is a lot further-reaching.</p>
+
+<p>The only thing which saved us was that I was basically building a product to solve my own problem. I had worked on a big, JavaScript-intensive web app project, and had felt the pain of getting it to work in different versions of IE. So I had an idea of the kind of tool I had wanted to make that project less painful.</p>
+
+<p>So: building something which scratches your own itch is better than building something which you don&#8217;t even need yourself. But it&#8217;s still a pretty bad starting point, because you are only one data point. How do you know that you&#8217;re not an outlier? In our case, I was even a pretty bad data point. I had only worked on two significant commercial web app projects &#8211; not exactly a great deal of experience. I had never worked in a proper web agency, or a larger software company, or an established e-commerce retailer, or in fact any company which looked remotely like the type of company we&#8217;re trying to sign up as customers.</p>
+
+<p>What we should have done &#8211; and I understand this now &#8211; is to follow a Customer Development route from the start, alongside building our product. Before the coding started, I should have at least made my hypotheses explicit, tested them on my target market, and refined the product idea. Basically, I should have read The Four Steps to the Epiphany a year ago and then followed it.</p>
+
+<p>In my defence, it&#8217;s difficult when you are a sole founder. In principle you could multitask between Customer Development and Product Development, but I think the two activities require very different mindsets, and the context switching overhead between the activities is huge. Therefore I suspect that a sole founder doing both will take much more than twice as long compared to two cofounders who specialise in Customer Development and Product Development respectively. Hence it&#8217;s extremely tempting for a technical founder like me to pretend that the Customer Development side doesn&#8217;t exist, and focus exclusively on the product.</p>
+
+<p>Well, late insight is better than never. <a href='http://twitter.com/amirmc'>Amir</a> is joining me on the Customer Development side of Go Test It, and we have a lot of catching-up to do. In 2010 there will be soul-searching and maybe some changes of plans, but I am really looking forward to it, because I am confident that we can figure out how to turn Go Test It from something ok into a product which you simply must have.</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>My first exit</title>
+                <link>http://martin.kleppmann.com/2009/11/30/my-first-exit.html</link>
+                <comments>http://martin.kleppmann.com/2009/11/30/my-first-exit.html#disqus_thread</comments>
+                <pubDate>Mon, 30 Nov 2009 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=344</guid>
+                
+                <description><![CDATA[ If you&#8217;re a similar age to me, you may remember the &#8220;My first Sony&#8221; cassette players/recorders from your childhood (see the photo, thanks to Andrew Scott on Flickr). I actually had a different brand of cassette recorder, but it carried the same meaning: with it, I recorded my favourite songs... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>If you&#8217;re a similar age to me, you may remember the &#8220;My first Sony&#8221; cassette players/recorders from your childhood (see the photo, thanks to <a href='http://www.flickr.com/photos/andrewscott/660559536/'>Andrew Scott on Flickr</a>). I actually had a different brand of cassette recorder, but it carried the same meaning: with it, I recorded my favourite songs off the radio, experimented with electronic sound effects, played my mother&#8217;s &#8220;Queen&#8217;s Greatest Hits&#8221; cassette over and over, and produced a simple radio drama. It was an aspiration, a dream, a journey of discovery.</p>
+<a href='http://www.flickr.com/photos/andrewscott/660559536/'>
+    <img src='http://martin.kleppmann.com/2009/11/my_first_sony.jpg' height='268' alt='My First Sony by Andrew Scott on Flickr (Creative Commons)' width='500' />
+</a>
+<p>Today we announced that <a href='http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html'>we are selling our startup to Red Gate</a>. Investors refer to this as an <em>exit</em>: at this point they typically sell their shares, so they get the money back which they invested some time before &#8211; or rather, they are supposed to get quite a bit more money back. I had one investor, <a href='http://www.petercowley.org/'>Peter Cowley</a>, and in total, he got more than 15 times his money back within 2.5 years: that&#8217;s a hell of a lot better than if he had stuck it in a savings account!</p>
+
+<p>A few exits are huge (think Google buying YouTube), many are medium-sized, and many are small. This is one of the small ones: although I&#8217;m getting some money out of it, it&#8217;s certainly not making me rich. However, I am very happy with it: the hard work of the last few years is paying off.</p>
+
+<p>For the founder (that&#8217;s me), it&#8217;s not really an exit: I have to and want to continue working hard on Go Test It for another year or so. As Simon from Red Gate put it, they need me to continue making the product better, and they need time to get everything out of my head and into someone else&#8217;s head. (Do they really want <em>everything</em> out of my head? Even those childhood memories of listening to the Queen cassette? Well, if they want them, they can have them.)</p>
+
+<p>Anyway, the reason I started this post with a bout of nostalgia is that this is pretty much how I feel today. It&#8217;s like a 10-year-old proudly playing back his first attempt at making spooky ghost noises on a cassette recorder. He knows that it&#8217;s not perfect, and that his work will change the world only a tiny little bit, but he learnt a lot, and right now, it feels like the greatest success and the most important thing in the world.</p>
+
+<p>The aspect of learning is probably the most important one for me. I learnt an incredible amount by starting a company and taking it to exit, and I expect to learn a lot more over the coming year: how to take a product from &#8220;it works pretty well&#8221; to &#8220;it is absolutely amazing&#8221;; how to work with more than the bare minimum resources I have been used to; how to scale the business, attracting and retaining lots of happy customers.</p>
+
+<p>That name &#8220;My first Sony&#8221; is evocative: it is oriented towards the future. The &#8220;first&#8221; implies that there will be a &#8220;second&#8221; and a &#8220;third&#8221;; of course they want you to buy many more Sonies during the rest of your life. But not only that: the &#8220;first&#8221; of something signifies a turn of events. From now on you are sonified. Before its first Sony, the child could only store sounds in its head; from now on, it can record them on cassette. Before, it could only listen to music and audiobooks when the parents gave permission to use the hi-fi; from now on, all available cassettes can be listened to at any time. Even secretly under the blankets.</p>
+
+<p>My first exit is a bit like that: it also is oriented towards the future. I can&#8217;t predict what the future will bring, but evidence suggests that entrepreneurs tend not to be satisfied with just one successful startup, but want to try it again and again. But even if I do start another company, and even if I do have another exit, there will always be something special about that first one. The one which proved that I <em>can</em> do it.</p>
+
+<p>Of course, saying that <em>I</em> built this company is about as true as saying that Vespasian built the Colosseum. I bet he didn&#8217;t lift a single stone himself. Therefore, at this point &#8211; clich&#233;d though it may seem, I mean this very genuinely and sincerely &#8211; all I want to say is a huge round of thanks to everyone who has helped me along this journey. None of this would have been possible without you. Thank you to:</p>
+
+<ul>
+<li><a href='http://twitter.com/galbraithsimon'>Simon</a> and <a href='http://www.neildavidson.com/'>Neil</a>, joint CEOs of Red Gate: you have built a company with a fantastic culture and great people, and I respect you deeply.</li>
+
+<li><a href='http://www.petercowley.org/'>Peter</a>, my mentor, advisor, investor and friend;</li>
+
+<li><a href='http://en.wiktionary.org/wiki/User:Conrad.Irwin'>Conrad</a>, <a href='http://samstokes.co.uk/'>Sam</a>, <a href='http://www.cloud9.co.uk/'>James</a> and <a href='http://www.zarkonnen.com/'>David</a>, who helped build it;</li>
+
+<li><a href='http://hi.im/rahul'>Rahul</a>, who helped evangelise it;</li>
+
+<li><a href='http://twitter.com/patdie'>Patrick</a>, who came up with the name;</li>
+
+<li>all the open source projects which are the foundation of our work, particularly <a href='http://seleniumhq.org/'>Selenium</a>, <a href='http://www.getwindmill.com/'>Windmill</a>, <a href='http://www.ruby-lang.org/'>Ruby</a>, <a href='http://rubyonrails.org/'>Rails</a> and <a href='http://www.scala-lang.org/'>Scala</a> &#8211; we will show our gratitude by contributing as much as possible back to the community;</li>
+
+<li>the <a href='http://blog.businessofsoftware.org/2009/08/the-accidental-incubator.html'>Accidentals</a> and the <a href='http://springboard.com/'>Springboarders</a>, who form such a supportive startup community;</li>
+
+<li><a href='http://www.eptcomputing.com/projects/'>our clients</a>, whose business funded much of the development of Go Test It to this point;</li>
+
+<li>all the Go Test It trial and beta users, for your valuable feedback;</li>
+
+<li>everyone who has supported, encouraged and inspired us;</li>
+
+<li>my friends, for bearing with my obsessive-compulsive attitude to work;</li>
+
+<li>my family, because no mountaineer can reach the top without a solid base camp;</li>
+
+<li>Rita, for your endless supply of smiles.</li>
+</ul>
+
+<p>&#8230;</p>
+
+<p>Ok, well, that was nice and romantic. Anyway &#8211; let&#8217;s get back to changing the world!</p>
+                ]]></content:encoded>
+            </item>
+        
+    </channel>
+</rss>
