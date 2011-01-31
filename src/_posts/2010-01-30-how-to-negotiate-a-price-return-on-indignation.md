@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "How to negotiate a price: Return on Indignation"
+guid: http://www.yes-no-cancel.co.uk/?p=356
 ---
 
 As an entrepreneur you have to negotiate things: customer contracts, freelance rates, investments,

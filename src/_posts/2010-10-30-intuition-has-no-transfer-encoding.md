@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Intuition has no transfer encoding"
+guid: http://www.yes-no-cancel.co.uk/?p=400
 ---
 
 **Intuition is really annoying sometimes.**

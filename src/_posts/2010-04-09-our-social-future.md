@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Our social future"
+guid: http://www.yes-no-cancel.co.uk/?p=376
 ---
 
 You know you're doing something good if someone you've never met before spontaneously comes up to

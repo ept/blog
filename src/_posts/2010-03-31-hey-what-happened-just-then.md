@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Hey, what happened just then?"
+guid: http://www.yes-no-cancel.co.uk/?p=372
 ---
 
 There are moments in life where everything suddenly changes. Do you know what I mean? Those moments

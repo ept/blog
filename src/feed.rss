@@ -1,0 +1,40 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:sy="http://purl.org/rss/1.0/modules/syndication/">
+
+    <channel>
+        <title>Martin Kleppmann's blog</title>
+        <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
+        <link>http://martin.kleppmann.com/</link>
+        <description>Entrepreneurship, web technology and the user experience</description>
+        <lastBuildDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %Z" }}</lastBuildDate>
+        <language>en</language>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>1</sy:updateFrequency>
+
+        {% for post in site.posts limit:10 %}
+            <item>
+                <title>{{ post.title }}</title>
+                <link>http://martin.kleppmann.com{{ post.url }}</link>
+                <comments>http://martin.kleppmann.com{{ post.url }}#disqus_thread</comments>
+                <pubDate>{{ post.date | date: "%a, %d %b %Y 00:00:00 +0000" }}</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                {% if post.guid %}
+                    <guid isPermaLink="false">{{ post.guid }}</guid>
+                {% else %}
+                    <guid isPermaLink="true">http://martin.kleppmann.com{{ post.url }}</guid>
+                {% endif %}
+                <description><![CDATA[ {{ post.content | strip_html | truncatewords: 50 }} ]]></description>
+                <content:encoded><![CDATA[
+                    {{ post.content | replace:" href='/", " href='http://martin.kleppmann.com/" | replace:" src='/", " src='http://martin.kleppmann.com/" }}
+                ]]></content:encoded>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

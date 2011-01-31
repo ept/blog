@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Learning about our customers"
+guid: http://www.yes-no-cancel.co.uk/?p=368
 ---
 
 Back in December I

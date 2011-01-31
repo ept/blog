@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "How we totally ignored our customers"
+guid: http://www.yes-no-cancel.co.uk/?p=352
 ---
 
 <a href="http://www.cafepress.com/kandsranch">

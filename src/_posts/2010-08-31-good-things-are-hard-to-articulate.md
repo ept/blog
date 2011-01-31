@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Good things are hard to articulate"
+guid: http://www.yes-no-cancel.co.uk/?p=394
 ---
 
 If you have a stone in your shoe, it's easy to articulate what is wrong ("something is hurting

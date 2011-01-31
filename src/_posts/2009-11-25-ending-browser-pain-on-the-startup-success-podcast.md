@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Ending Browser Pain on the Startup Success Podcast"
+guid: http://www.yes-no-cancel.co.uk/?p=338
 ---
 
 <a href="http://startuppodcast.wordpress.com/2009/11/24/show-46-ending-browser-pain-martin-kleppmann-go-test-it/">

@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "My first exit"
+guid: http://www.yes-no-cancel.co.uk/?p=344
 ---
 
 If you're a similar age to me, you may remember the "My first Sony" cassette players/recorders
