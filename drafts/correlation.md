@@ -63,8 +63,10 @@ Some examples:
   correlated with the success of the companies they invested in. No investor is perfect, but if
   they pick a few big winners, and not too many of the others fail, their portfolio can generate a
   positive return overall. Copying the decisions of someone who has made good choices in the past
-  seems like a reasonably sound strategy (in the absence of anything better).
-  
+  seems like a
+  [reasonably sound strategy](http://www.quora.com/Is-social-proof-a-rational-approach-to-investment-selection)
+  (at least in the absence of anything better).
+
   When several people follow the lead of another investor, a self-reinforcing effect emerges:
   demand to "be in the deal" increases, it becomes "hot", other highly-regarded investors start
   taking interest, and so on, until the round is oversubscribed. With some highly connected,
