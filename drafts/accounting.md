@@ -36,17 +36,17 @@ Each transaction is an edge in our graph, and the edge is labelled with the amou
 An edge always goes from one node to another. What are those nodes? Well, you can define
 them as you like (although there are some conventions). For now, let's say:
 
-    Credit card ------ $5 ------> Bagel shop
-
-    Checking account ----- $500 ----> Random startup
+<p><a href="/2011/03/accounting1.dot.png">
+  <img src="/2011/03/accounting1.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 Let's add some more details. You pay the $5 credit card bill from the company account. And where
 did the money in the company account come from in the first place? Ah, I see, you
 put in $5,000 of your savings to start the company. Ok, now the graph looks like this:
 
-    Founders ---- $5,000 ----> Checking account ------ $500 -----> Random startup
-                                 \
-                                  ----- $5 -----> Credit card ---- $5 ------> Bagel shop
+<p><a href="/2011/03/accounting2.dot.png">
+  <img src="/2011/03/accounting2.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 Hungry once again, you go to the taqueria and buy a Super Burrito for $8 on the credit card.
 Now we could create another node for the taqueria, but this is starting to get messy -- we
@@ -54,9 +54,9 @@ don't really care how much money we spent on bagels vs. how much on burritos. Le
 lump them together as "food". Also, "Random startup" is a bit unhelpful -- I've already
 forgotten what those $500 were for. Let's call it "furniture" instead.
 
-    Founders ---- $5,000 ----> Checking account ------ $500 -----> Furniture
-                                   \
-                                    ----- $5 -----> Credit card ---- $5, $8 ------> Food
+<p><a href="/2011/03/accounting3.dot.png">
+  <img src="/2011/03/accounting3.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 See, that's perfectly fine. We can have nodes which represent actual bank accounts or cards,
 others which represent people or companies, and others again which represent abstract
@@ -80,10 +80,9 @@ determined completely by the transactions in and out of the account:
 After you've processed all the edges, the value at each node is that account's balance. Our
 graph now looks like this:
 
-    Founders ---- $5,000 ----> Checking account [$4,495] ------ $500 -----> Furniture [$500]
-    [$-5,000]                      \
-                                    ----- $5 -----> Credit card [$-8] ---- $13 ------> Food [$13]
-
+<p><a href="/2011/03/accounting4.dot.png">
+  <img src="/2011/03/accounting4.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 Note that the account balances have two nice properties:
 
@@ -107,13 +106,9 @@ promised.
 So you received $5,000 + $2,500 in cash from your customers, wired straight the company bank
 account. Let's add that to the graph:
 
-    Cust2 [$-2,500] --- $2,500 --------
-                                       \
-    Cust1 [$-5,000] --- $5,000 ----     \
-                                   \     \
-    Founders ---- $5,000 ----> Checking account [$11,995] ------ $500 -----> Furniture [$500]
-    [$-5,000]                      \
-                                    ----- $5 -----> Credit card [$-8] ---- $13 ------> Food [$13]
+<p><a href="/2011/03/accounting5.dot.png">
+  <img src="/2011/03/accounting5.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 But that's not quite right. The price was $5,000 for each customer, and now it looks like you
 charged two different prices. How do we represent our arrangement with customer 2?
@@ -122,13 +117,9 @@ The solution is to deconstruct the deal into two separate transactions: the actu
 the buyer agrees to buy, but no actual money changes hands) and the payment (when the cash
 actually hits your bank account). We can draw it like this:
 
-      Sales --5k--> Cust2 [$2,500] ---- $2,500 --------
-      [-$10k]                                          \
-        \-----5k--> Cust1 [$0] -------- $5,000 ----     \
-                                                   \     \
-      Founders ---- $5,000 ----> Checking account [$11,995] ------ $500 -----> Furniture [$500]
-      [$-5,000]                      \
-                                      ----- $5 -----> Credit card [$-8] ---- $13 ------> Food [$13]
+<p><a href="/2011/03/accounting6.dot.png">
+  <img src="/2011/03/accounting6.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 See what I've done here? I've just made up a new node, generically called it "sales", and
 added the actual $5,000 sales as a transaction from this "sales" account to the customer
@@ -164,7 +155,9 @@ and you'll have other things to worry about than chairs).
 
 The resulting graph now looks like this:
 
-    [graph]
+<p><a href="/2011/03/accounting7.dot.png">
+  <img src="/2011/03/accounting7.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 Note how I have represented the transactions:
 
@@ -197,7 +190,9 @@ what the hell they mean.
 In order to produce these statements, I need to get out the crayons. Here is the same graph
 as before, with the nodes coloured in:
 
-    [[graph]]
+<p><a href="/2011/03/accounting8.dot.png">
+  <img src="/2011/03/accounting8.dot.png" width="550" alt="Graph representation of accounts">
+</a></p>
 
 Explaining the colours (putting the accounting terminology in brackets, since you're likely to
 encounter these words):
