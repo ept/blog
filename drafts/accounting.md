@@ -9,9 +9,12 @@ which helps you make sense of the world. Although dealing with money is not much
 an unavoidable part of life, so you might as well take a few minutes to understand it.
 
 Sadly, in my opinion, most accountants do a terrible job of explaining their work in an
-accessible way; it's a field full of jargon, acronyms and weird historical legacies. (We
-computing people are of course guilty of the same offence.) Even "Bookkeeping for Dummies"
-makes my head spin. Surely this stuff can't be that difficult?
+accessible way; it's a field full of jargon, acronyms and weird historical legacies. Even
+"Bookkeeping for Dummies" makes my head spin. Surely this stuff can't be that difficult?
+
+(We computing people are probably guilty of the same offence of bad explanations and jargon.
+The problem is, once you have become intimately familiar with a field, it's very hard to
+imagine how you thought about things before you understood it.)
 
 Eventually I figured it out: basic accounting is just graph theory. The traditional ways
 of representing financial information hide that structure astonishingly well, but once I
@@ -20,16 +23,17 @@ had figured out that it was just a graph, it suddenly all made sense.
 I'm a computer scientist, and I think of stuff in graphs all the time. If only someone had
 explained it like that in the first place! It would have saved me so much confusion. So I
 want to try to fix that. If you like graphs, then by the time you reach the end of this
-article, you should know everything you need in order to understand a small company's
-financial statements (and even calculate them yourself). It's really not that hard.
+article, you should know everything you need in order to understand the financial statements
+for a small company/startup (and even calculate them yourself, in a spreadsheet or
+programming language of your choice).
 
-Let's go!
+It's really not that hard. Let's go!
 
 
 **Accounts = Nodes, Transactions = Edges**
 
 Say you go to the bagel shop and buy a Super Club bagel for $5 on the company credit card.
-You also visit a Silicon Valley startup and buy one of their surplus Aeron chairs, second
+You also visit some random Silicon Valley startup and buy one of their surplus Aeron chairs, second
 hand, for $500 (by writing a cheque from the company account). Those are two transactions.
 Each transaction is an edge in our graph, and the edge is labelled with the amount.
 
@@ -47,6 +51,8 @@ put in $5,000 of your savings to start the company. Ok, now the graph looks like
 <p><a href="/2011/03/accounting2.dot.png">
   <img src="/2011/03/accounting2.dot.png" width="550" alt="Graph representation of accounts">
 </a></p>
+
+Hopefully pretty self-explanatory so far. Money flows in the direction of the arrows.
 
 Hungry once again, you go to the taqueria and buy a Super Burrito for $8 on the credit card.
 Now we could create another node for the taqueria, but this is starting to get messy -- we
@@ -69,7 +75,7 @@ a total of $13 on food.)
 
 **Accounts have balances**
 
-Every node in this graph is an *account* in accountant-speak (whether or not is held by a bank),
+Every node in this graph is an *account* in accountant-speak (whether or not it is held by a bank),
 and every account has a *balance*. The balance is a single number for each account, and it is
 determined completely by the transactions in and out of the account:
 
@@ -89,7 +95,8 @@ Note that the account balances have two nice properties:
 1. Because every transaction appears twice -- once positive and once negative -- the sum of
    all account balances is always zero.
 2. If you partition the set of nodes into any two disjoint sets, and add up all of the balances
-   in each set, then the sum for the one set is always minus the sum of the other set.
+   in each set, then the sum for the one set is always the negative sum of the other set
+   (because, after all, they have to add up to zero).
 
 These properties are useful for sanity-checking your numbers; if they are violated,
 *"ur doin it wrong"*. (This is what accountants mean when they talk about "balancing the books".)
@@ -113,7 +120,7 @@ account. Let's add that to the graph:
 But that's not quite right. The price was $5,000 for each customer, and now it looks like you
 charged two different prices. How do we represent our arrangement with customer 2?
 
-The solution is to deconstruct the deal into two separate transactions: the actual sale (in which
+The solution is to deconstruct the deal into two separate transactions: the sale (in which
 the buyer agrees to buy, but no actual money changes hands) and the payment (when the cash
 actually hits your bank account). We can draw it like this:
 
@@ -151,7 +158,7 @@ some strange reason they are obsessed with correctly accounting for your office 
 they want it to depreciate over four years, i.e. its value is gradually reduced to zero over
 the course of that time. Fair enough, you say (even though you couldn't care less what your
 chair will be worth in four years' time --- surely by that time you'll be the next Google
-and you'll have other things to worry about than chairs).
+or Facebook, and you'll have other things to worry about than chairs).
 
 The resulting graph now looks like this:
 
@@ -184,8 +191,8 @@ At this point, if you're getting weary, I don't blame you. But the good news: we
 building our graph! Now I will show you how this graph representation maps to two standard
 financial statements most commonly used in managing a company: the profit and loss statement
 ("P&L"), and the balance sheet. This is useful, because as a startup founder you'll sooner
-or later have to discuss these documents with your board, and so you might as well learn
-what the hell they mean.
+or later have to discuss these documents with your investors/advisors, and so you might as
+well learn what the hell they mean.
 
 In order to produce these statements, I need to get out the crayons. Here is the same graph
 as before, with the nodes coloured in:
