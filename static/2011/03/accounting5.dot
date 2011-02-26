@@ -12,9 +12,9 @@ digraph G {
     bank -> creditcard [label="$5"];
     creditcard -> food [label="$13"];
 
-    customer1    [label="Customer 1\n-$5,000"];
-    customer2    [label="Customer 2\n-$2,500"];
-    capital      [label="Founders\n-$5,000"];
+    customer1    [label="Customer 1\n$-5,000"];
+    customer2    [label="Customer 2\n$-2,500"];
+    capital      [label="Founders\n$-5,000"];
     bank         [label="Bank account\n$11,995"];
     furniture    [label="Furniture\n$500"];
     creditcard   [label="Credit card\n$-8"];

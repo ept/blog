@@ -10,7 +10,7 @@ digraph G {
     bank -> creditcard [label="$5"];
     creditcard -> food [label="$13"];
 
-    capital      [label="Founders\n-$5,000"];
+    capital      [label="Founders\n$-5,000"];
     bank         [label="Bank account\n$4,495"];
     furniture    [label="Furniture\n$500"];
     creditcard   [label="Credit card\n$-8"];

@@ -19,7 +19,7 @@ digraph G {
     sales        [label="Sales\n$-10,000",      fillcolor=lightskyblue];
     customer1    [label="Customer 1\n$0",       fillcolor=palegreen1];
     customer2    [label="Customer 2\n$2,500",   fillcolor=palegreen1];
-    capital      [label="Capital\n-$25,000",    fillcolor=lightpink];
+    capital      [label="Capital\n$-25,000",    fillcolor=lightpink];
     bank         [label="Bank account\n$23,995",fillcolor=palegreen1];
     furniture    [label="Furniture\n$375",      fillcolor=palegreen1];
     depreciation [label="Depreciation\n$125",   fillcolor=lightskyblue];
