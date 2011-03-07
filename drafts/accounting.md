@@ -130,10 +130,10 @@ actually hits your bank account). We can draw it like this:
 
 See what I've done here? I've just made up a new node, generically called it "sales", and
 added the actual $5,000 sales as a transaction from this "sales" account to the customer
-accounts. Your actual bank account balance hasn't changed at all.
+accounts. Adding this extra node hasn't changed your bank balance.
 
-This makes sense when you think about the intuitive meaning of the balances. When you write
-it like this, the balance of each customer's account is the amount they owe you: customer 1
+This makes sense when you think about the intuitive meaning of the balances.
+The balance of each customer's account is the amount they owe you: customer 1
 has fully paid up (their incoming and outgoing transactions add up to the same), so their balance
 is zero; customer 2 has contractually agreed to give you $5,000, but has so far only given you
 half of that, so their balance is $2,500.
@@ -206,37 +206,170 @@ encounter these words):
 
 * Green for **stuff that you have** (*"assets"*), e.g. money in the bank, or things which you
   bought and you could sell again, such as furniture. Also green for people/companies who
-  owe you money (*"debtors"*, such as Customer 2), and people/companies to whom you owe
-  money (*"liabilities"/"creditors"*, such as your upcoming credit card bill for that burrito).
-* Blue for **sales of your product** (*"revenue"*) and **money you spent** that you're not going
+  **owe you money** (*"debtors"*, such as Customer 2), and people/companies to whom **you owe
+  money** (*"liabilities"/"creditors"*, such as your upcoming credit card bill for that burrito).
+* Blue for **sales of your product/service** (*"revenue"*) and **money you spent** that you're not going
   to get back (*"expenses"/"overheads"*). The office chair is green, because you could sell it
   again if you wanted to, but the bagel is blue, because once you've bought (and eaten) the
   bagel, that's it -- no going back.
 * Pink for **money from investors** (or yourself) that you got by selling shares (*"capital"*).
   (If you get a bank loan, that's green, not pink, because you owe the bank to pay it back.)
 
+Every one of your nodes should fall into exactly one of these categories. If not, something
+has gone wrong, or you have discovered some bit of the accounting world that I don't yet know
+about.
+
+With these colours set, the profit and loss statement is simply **a list of all the blue nodes**,
+and the profit or loss of the company is the sum of all of the blue nodes' balances. The way we've
+calculated things, a negative value is a profit, and a positive value is a loss. That's confusing,
+so you typically flip the sign when reporting the number (so that a profit is positive).
+
+Written in the standard way, our P&L looks like this:
+
+<table style="margin: 1.5em 0">
+  <tr>
+    <th rowspan="2" style="font-variant: small-caps;">Revenue</th>
+    <td style="border-bottom: 1px solid #888;">Sales</td>
+    <td style="border-bottom: 1px solid #888; text-align: right;">$10,000</td>
+  </tr>
+  <tr>
+    <th style="border-bottom: 1px solid #888;">Total revenue</th>
+    <th style="border-bottom: 1px solid #888; text-align: right;">$10,000</th>
+  </tr>
+  <tr style="height: 0.7em"></tr>
+  <tr style="margin-top: 1em">
+    <th rowspan="4" style="font-variant: small-caps;">Expenses</th>
+    <td>Payroll</td>
+    <td style="text-align: right;">$8,000</td>
+  </tr>
+  <tr>
+    <td>Depreciation</td>
+    <td style="text-align: right;">$125</td>
+  </tr>
+  <tr>
+    <td style="border-bottom: 1px solid #888;">Food</td>
+    <td style="border-bottom: 1px solid #888; text-align: right;">$13</td>
+  </tr>
+  <tr>
+    <th style="border-bottom: 1px solid #888;">Total expenses</th>
+    <th style="border-bottom: 1px solid #888; text-align: right;">$8,138</th>
+  </tr>
+  <tr style="height: 0.7em"></tr>
+  <tr style="margin-top: 1em">
+    <th style="padding-top: 1em" style="font-variant: small-caps;">Total</th>
+    <th style="border-bottom: 1px solid #888; font-weight: bold;">Profit/Loss</th>
+    <th style="border-bottom: 1px solid #888; font-weight: bold; text-align: right;">$1,862</th>
+    <td>(= total revenue - total expenses)</td>
+  </tr>
+</table>
+
+The meaning is fairly intuitive. You sold $10,000 worth of stuff, and spent only $8,138 in the
+process, so you made $1,862 profit.
+
+The profit and loss statement is calculated over a period of time (usually a month, a quarter or a
+year), and it's often interesting to compare two different periods. To calculate it for a period,
+filter your transactions to only include those which occurred within that period, and add up the
+account balances for just those transactions.
+
+One thing to watch out for: profit doesn't say anything about your bank account. The bank account
+is a green node, but we're only looking at blue nodes here. In this example, you ended up with
+$23,995 in the bank, even though investors put in $25,000: you made a profit, yet still have less
+money in the bank than you did before, because Customer 2 hasn't yet fully paid. That's why it's
+possible for a company to be profitable but still run out of money!
 
 
+**The Balance Sheet**
 
-Positive: assets, expenses
-Negative: liabilities, revenue, equity
+The balance sheet is a bit less intuitive than the P&L, but it's quite a powerful document. It
+summarises what the company currently has and doesn't have, and why.
 
-Balance sheet:
-assets (bank + fixed assets + debtors) - liabilities = capital + profit/loss (sales - expenses)
+Remember what I said earlier about partitioning the nodes into two disjoint sets, and their
+summed balances adding to zero? That's exactly what happens on the balance sheet. We take all of
+the nodes in the graph; on the one side we consider all of the green nodes, and on the other side
+all the blue and pink nodes. The sum of all of the blue and pink nodes' balances is minus the sum
+of all of the green nodes' balances.
 
+Now, by convention, accountants flip the sign on all of the blue and pink nodes' balances, which
+means that the two sums end up being equal. And that's why it's called a balance sheet.
 
-p&l:
+In our example, it looks like this:
 
-sales         $10,000
-depreciation     $125
-payroll        $8,000
-food              $13
-            =  $1,862
+<table style="margin: 1.5em 0">
+  <tr>
+    <th rowspan="4" style="font-variant: small-caps;">Assets</th>
+    <td>Bank account</td>
+    <td style="text-align: right;">$23,995</td>
+  </tr>
+  <tr>
+    <td>Debtors</td>
+    <td style="text-align: right;">$2,500</td>
+  </tr>
+  <tr>
+    <td style="border-bottom: 1px solid #888;">Furniture</td>
+    <td style="border-bottom: 1px solid #888; text-align: right;">$375</td>
+  </tr>
+  <tr>
+    <th style="border-bottom: 1px solid #888;">Total assets</th>
+    <th style="border-bottom: 1px solid #888; text-align: right;">$26,870</th>
+  </tr>
+  <tr style="height: 0.7em"></tr>
+  <tr style="margin-top: 1em">
+    <th rowspan="2" style="font-variant: small-caps;">Liabilities</th>
+    <td style="border-bottom: 1px solid #888;">Credit card</td>
+    <td style="border-bottom: 1px solid #888; text-align: right;">$8</td>
+  </tr>
+  <tr>
+    <th style="border-bottom: 1px solid #888;">Total liabilities</th>
+    <th style="border-bottom: 1px solid #888; text-align: right;">$8</th>
+  </tr>
+  <tr style="height: 0.7em"></tr>
+  <tr>
+    <th colspan="2" style="border-bottom: 1px solid #888; font-weight: bold;">Total assets less total liabilities</th>
+    <th style="border-bottom: 1px solid #888; font-weight: bold; text-align: right;">$26,862</th>
+  </tr>
+  <tr style="height: 0.7em"></tr>
+  <tr style="margin-top: 1em">
+    <th rowspan="3" style="padding-top: 1em" style="font-variant: small-caps;">Equity</th>
+    <td>Profit/Loss</td>
+    <td style="text-align: right;">$1,862</td>
+  </tr>
+  <tr>
+    <td style="border-bottom: 1px solid #888;">Capital</td>
+    <td style="border-bottom: 1px solid #888; text-align: right;">$25,000</td>
+  </tr>
+  <tr>
+    <th style="border-bottom: 1px solid #888; font-weight: bold;">Total equity</th>
+    <th style="border-bottom: 1px solid #888; font-weight: bold; text-align: right;">$26,862</th>
+  </tr>
+</table>
 
-balance:
+The top block (assets and liabilities) corresponds to the green nodes in the graph, whilst
+the bottom block contains the pink node (capital) and the sum of all of the blue nodes. We already
+showed all of the detail for the blue nodes on the Profit and Loss statement above; on the balance
+sheet we can sum them all up to a single number.
 
-bank           23,995         capital     25,000
-debtors         2,500         p&l          1,862
-furniture         375
-liabilities        -8
-             = 26,862                   = 26,862
+Some more sign-flipping has occurred here: I've written liabilities, equity and P&L with their
+signs flipped (which usually, but not always, has the effect of making the numbers positive).
+That doesn't change anything fundamental about the graph structure, it just puts things into the
+conventional schema.
+
+So how can you interpret the balance sheet? There are various things you can read from it. You can
+see how much money is in the bank, and how much of that money has already been promised to other
+people (liabilities). You can see how much of the money in the bank came from investors, vs. how
+much came from sales. And it shows how much money is due to come in soon, from sales that have
+closed but haven't yet been fully paid.
+
+The total of the balance sheet is a lower bound on the value of your company. It's a very
+pessimistic figure --- it assumes that your team, your technology, your brand etc. are all worth
+precisely nothing; if your company raises money from investors, your valuation will be much higher
+than the balance sheet figure, since that valuation includes the value of team, technology, brand
+etc in the form of a wild guess. In established companies you can find "intangible assets" on the
+balance sheet, but since they are very hard to value, I suspect it's not worth bothering with
+unless you know what you are doing.
+
+That's the end of our whirlwind tour through the world of accounting. If you're a real accountant
+reading this, please forgive my simplifications; if you spot any mistakes, please let me know.
+For everyone else, I hope this has been useful. To find out when I write something new, please
+[follow me on Twitter](http://twitter.com/martinkl) or put your email address in this box:
+
+{% include mailchimp.html %}
