@@ -10,11 +10,277 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Sun, 30 Jan 2011 23:54:25 PST</lastBuildDate>
+        <lastBuildDate>Mon, 07 Mar 2011 12:07:15 PST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
+        
+            <item>
+                <title>Accounting for Computer Scientists</title>
+                <link>http://martin.kleppmann.com/2011/03/07/accounting-for-computer-scientists.html</link>
+                <comments>http://martin.kleppmann.com/2011/03/07/accounting-for-computer-scientists.html#disqus_thread</comments>
+                <pubDate>Mon, 07 Mar 2011 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2011/03/07/accounting-for-computer-scientists.html</guid>
+                
+                <description><![CDATA[ Every educated person really ought to have a basic understanding of accounting. Just like maths, science, programming, music, literature, history, etc., it&#8217;s one of those things which helps you make sense of the world. Although dealing with money is not much fun, it&#8217;s an unavoidable part of life, so you... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>Every educated person really ought to have a basic understanding of accounting. Just like maths, science, programming, music, literature, history, etc., it&#8217;s one of those things which helps you make sense of the world. Although dealing with money is not much fun, it&#8217;s an unavoidable part of life, so you might as well take a few minutes to understand it.</p>
+
+<p>Sadly, in my opinion, most accountants do a terrible job of explaining their work in an accessible way; it&#8217;s a field full of jargon, acronyms and weird historical legacies. Even &#8220;Bookkeeping for Dummies&#8221; makes my head spin. Surely this stuff can&#8217;t be that difficult?</p>
+
+<p>(We computing people are probably guilty of the same offence of bad explanations and jargon. The problem is, once you have become intimately familiar with a field, it&#8217;s very hard to imagine how you thought about things before you understood it.)</p>
+
+<p>Eventually I figured it out: basic accounting is just graph theory. The traditional ways of representing financial information hide that structure astonishingly well, but once I had figured out that it was just a graph, it suddenly all made sense.</p>
+
+<p>I&#8217;m a computer scientist, and I think of stuff in graphs all the time. If only someone had explained it like that in the first place! It would have saved me so much confusion. So I want to try to fix that. If you like graphs, then by the time you reach the end of this article, you should know everything you need in order to understand the financial statements for a small company/startup (and even calculate them yourself, in a spreadsheet or programming language of your choice).</p>
+
+<p>It&#8217;s really not that hard. Let&#8217;s go!</p>
+
+<p><strong>Accounts = Nodes, Transactions = Edges</strong></p>
+
+<p>Say you go to the bagel shop and buy a Super Club bagel for $5 on the company credit card. You also visit some random Silicon Valley startup and buy one of their surplus Aeron chairs, second hand, for $500 (by writing a cheque from the company account). Those are two transactions. Each transaction is an edge in our graph, and the edge is labelled with the amount.</p>
+
+<p>An edge always goes from one node to another. What are those nodes? Well, you can define them as you like (although there are some conventions). For now, let&#8217;s say:</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting1.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting1.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>Let&#8217;s add some more details. You pay the $5 credit card bill from the company account. And where did the money in the company account come from in the first place? Ah, I see, you put in $5,000 of your savings to start the company. Ok, now the graph looks like this:</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting2.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting2.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>Hopefully pretty self-explanatory so far. Money flows in the direction of the arrows.</p>
+
+<p>Hungry once again, you go to the taqueria and buy a Super Burrito for $8 on the credit card. Now we could create another node for the taqueria, but this is starting to get messy &#8211; we don&#8217;t really care how much money we spent on bagels vs. how much on burritos. Let&#8217;s just lump them together as &#8220;food&#8221;. Also, &#8220;Random startup&#8221; is a bit unhelpful &#8211; I&#8217;ve already forgotten what those $500 were for. Let&#8217;s call it &#8220;furniture&#8221; instead.</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting3.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting3.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>See, that&#8217;s perfectly fine. We can have nodes which represent actual bank accounts or cards, others which represent people or companies, and others again which represent abstract categories like &#8220;food&#8221; or &#8220;furniture&#8221;. Just throw it all into the same graph.</p>
+
+<p>Note also that you can have several edges between the same pair of nodes. You can keep track of the individual edges, or you can simply add them up. (Using the credit card, you spent a total of $13 on food.)</p>
+
+<p><strong>Accounts have balances</strong></p>
+
+<p>Every node in this graph is an <em>account</em> in accountant-speak (whether or not it is held by a bank), and every account has a <em>balance</em>. The balance is a single number for each account, and it is determined completely by the transactions in and out of the account:</p>
+
+<ol>
+<li>At the beginning of time, the value at each node is zero.</li>
+
+<li>At each node, for each incoming edge, add the edge&#8217;s label to the node&#8217;s value; for each outgoing edge, subtract the edge&#8217;s label from the value.</li>
+</ol>
+
+<p>After you&#8217;ve processed all the edges, the value at each node is that account&#8217;s balance. Our graph now looks like this:</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting4.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting4.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>Note that the account balances have two nice properties:</p>
+
+<ol>
+<li>Because every transaction appears twice &#8211; once positive and once negative &#8211; the sum of all account balances is always zero.</li>
+
+<li>If you partition the set of nodes into any two disjoint sets, and add up all of the balances in each set, then the sum for the one set is always the negative sum of the other set (because, after all, they have to add up to zero).</li>
+</ol>
+
+<p>These properties are useful for sanity-checking your numbers; if they are violated, <em>&#8220;ur doin it wrong&#8221;</em>. (This is what accountants mean when they talk about &#8220;balancing the books&#8221;.)</p>
+
+<p><strong>Doing business</strong></p>
+
+<p>Strengthened by a bagel and a burrito, you go out and talk to some potential customers. And hey, they love your product! It has a price tag of $5,000, and you sell it to two big enterprise customers. One pays you right away (good stuff!); the other gives you $2,500 up front, but insists that before they pay the rest, you need to implement that additional feature you foolishly promised.</p>
+
+<p>So you received $5,000 + $2,500 in cash from your customers, wired straight the company bank account. Let&#8217;s add that to the graph:</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting5.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting5.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>But that&#8217;s not quite right. The price was $5,000 for each customer, and now it looks like you charged two different prices. How do we represent our arrangement with customer 2?</p>
+
+<p>The solution is to deconstruct the deal into two separate transactions: the sale (in which the buyer agrees to buy, but no actual money changes hands) and the payment (when the cash actually hits your bank account). We can draw it like this:</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting6.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting6.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>See what I&#8217;ve done here? I&#8217;ve just made up a new node, generically called it &#8220;sales&#8221;, and added the actual $5,000 sales as a transaction from this &#8220;sales&#8221; account to the customer accounts. Adding this extra node hasn&#8217;t changed your bank balance.</p>
+
+<p>This makes sense when you think about the intuitive meaning of the balances. The balance of each customer&#8217;s account is the amount they owe you: customer 1 has fully paid up (their incoming and outgoing transactions add up to the same), so their balance is zero; customer 2 has contractually agreed to give you $5,000, but has so far only given you half of that, so their balance is $2,500.</p>
+
+<p>And the balance on the sales account is the value of stuff you&#8217;ve sold. Or rather, the negative value. That looks a bit weird&#8230; but I&#8217;ll come back to that later. (BTW, if you wanted to separately track sales for different customers or different products, no problem &#8212; just add whatever nodes make sense for you. Just make sure that every transaction appears only once as an edge, otherwise you&#8217;re making stuff up!)</p>
+
+<p><strong>Finishing off the example</strong></p>
+
+<p>To round it off, let me add some more events to the story (= some more edges to the graph).</p>
+
+<p>Not only have you made some sales, but now you also receive a $20,000 investment from Y Combinator &#8212; congratulations! You and your co-founder can now afford to pay yourselves a salary. You take $8,000 out of the company account.</p>
+
+<p>Then you get set up with a company accountant, and they talk lots of jargon at you. For some strange reason they are obsessed with correctly accounting for your office chair; they want it to depreciate over four years, i.e. its value is gradually reduced to zero over the course of that time. Fair enough, you say (even though you couldn&#8217;t care less what your chair will be worth in four years&#8217; time &#8212; surely by that time you&#8217;ll be the next Google or Facebook, and you&#8217;ll have other things to worry about than chairs).</p>
+
+<p>The resulting graph now looks like this:</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting7.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting7.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>Note how I have represented the transactions:</p>
+
+<ul>
+<li>
+<p>I have lumped together your founder investment with that of Y Combinator, under the heading of &#8220;capital&#8221;. Put simply, this is money you got into the company by selling your company&#8217;s shares, rather than by selling a product or service to a customer. As usual, you can split founders and YC into separate accounts if you feel like it.</p>
+</li>
+
+<li>
+<p>I&#8217;ve represented payroll (salaries) as just money straight out of the bank account. In reality it&#8217;s a bit more complicated due to taxes, healthcare, benefits, etc. but the principles stay the same. It&#8217;s just more nodes and edges in the graph.</p>
+</li>
+
+<li>
+<p>I made depreciation for one year (one quarter of $500 = $125) go <em>away</em> from the &#8220;furniture&#8221; account. Intuitively, this means that the balance of the &#8220;furniture&#8221; account is the value that your furniture still has now. Each year, you add another $125 edge from &#8220;furniture&#8221; to &#8220;depreciation&#8221;, until after four years, the balance of &#8220;furniture&#8221; drops to zero (assuming you haven&#8217;t bought any more chairs in the meantime, in your quest for world domination).</p>
+</li>
+</ul>
+
+<p><strong>The profit and loss statement</strong></p>
+
+<p>At this point, if you&#8217;re getting weary, I don&#8217;t blame you. But the good news: we&#8217;ve finished building our graph! Now I will show you how this graph representation maps to two standard financial statements most commonly used in managing a company: the profit and loss statement (&#8220;P&amp;L&#8221;), and the balance sheet. This is useful, because as a startup founder you&#8217;ll sooner or later have to discuss these documents with your investors/advisors, and so you might as well learn what the hell they mean.</p>
+
+<p>In order to produce these statements, I need to get out the crayons. Here is the same graph as before, with the nodes coloured in:</p>
+<p><a href='http://martin.kleppmann.com/2011/03/accounting8.dot.png'>
+  <img src='http://martin.kleppmann.com/2011/03/accounting8.dot.png' alt='Graph representation of accounts' width='550' />
+</a></p>
+<p>Explaining the colours (putting the accounting terminology in brackets, since you&#8217;re likely to encounter these words):</p>
+
+<ul>
+<li>Green for <strong>stuff that you have</strong> (<em>&#8220;assets&#8221;</em>), e.g. money in the bank, or things which you bought and you could sell again, such as furniture. Also green for people/companies who <strong>owe you money</strong> (<em>&#8220;debtors&#8221;</em>, such as Customer 2), and people/companies to whom <strong>you owe money</strong> (<em>&#8220;liabilities&#8221;/&#8221;creditors&#8221;</em>, such as your upcoming credit card bill for that burrito).</li>
+
+<li>Blue for <strong>sales of your product/service</strong> (<em>&#8220;revenue&#8221;</em>) and <strong>money you spent</strong> that you&#8217;re not going to get back (<em>&#8220;expenses&#8221;/&#8221;overheads&#8221;</em>). The office chair is green, because you could sell it again if you wanted to, but the bagel is blue, because once you&#8217;ve bought (and eaten) the bagel, that&#8217;s it &#8211; no going back.</li>
+
+<li>Pink for <strong>money from investors</strong> (or yourself) that you got by selling shares (<em>&#8220;capital&#8221;</em>). (If you get a bank loan, that&#8217;s green, not pink, because you owe the bank to pay it back.)</li>
+</ul>
+
+<p>Every one of your nodes should fall into exactly one of these categories. If not, something has gone wrong, or you have discovered some bit of the accounting world that I don&#8217;t yet know about.</p>
+
+<p>With these colours set, the profit and loss statement is simply <strong>a list of all the blue nodes</strong>, and the profit or loss of the company is the sum of all of the blue nodes&#8217; balances. The way we&#8217;ve calculated things, a negative value is a profit, and a positive value is a loss. That&#8217;s confusing, so you typically flip the sign when reporting the number (so that a profit is positive).</p>
+
+<p>Written in the standard way, our P&amp;L looks like this:</p>
+<table style='margin: 1.5em 0'>
+  <tr>
+    <th rowspan='2' style='font-variant: small-caps;'>Revenue</th>
+    <td style='border-bottom: 1px solid #888;'>Sales</td>
+    <td style='border-bottom: 1px solid #888; text-align: right;'>$10,000</td>
+  </tr>
+  <tr>
+    <th style='border-bottom: 1px solid #888;'>Total revenue</th>
+    <th style='border-bottom: 1px solid #888; text-align: right;'>$10,000</th>
+  </tr>
+  <tr style='height: 0.7em' />
+  <tr style='margin-top: 1em'>
+    <th rowspan='4' style='font-variant: small-caps;'>Expenses</th>
+    <td>Payroll</td>
+    <td style='text-align: right;'>$8,000</td>
+  </tr>
+  <tr>
+    <td>Depreciation</td>
+    <td style='text-align: right;'>$125</td>
+  </tr>
+  <tr>
+    <td style='border-bottom: 1px solid #888;'>Food</td>
+    <td style='border-bottom: 1px solid #888; text-align: right;'>$13</td>
+  </tr>
+  <tr>
+    <th style='border-bottom: 1px solid #888;'>Total expenses</th>
+    <th style='border-bottom: 1px solid #888; text-align: right;'>$8,138</th>
+  </tr>
+  <tr style='height: 0.7em' />
+  <tr style='margin-top: 1em'>
+    <th style='font-variant: small-caps;'>Total</th>
+    <th style='border-bottom: 1px solid #888; font-weight: bold;'>Profit/Loss</th>
+    <th style='border-bottom: 1px solid #888; font-weight: bold; text-align: right;'>$1,862</th>
+    <td>(= total revenue - total expenses)</td>
+  </tr>
+</table>
+<p>The meaning is fairly intuitive. You sold $10,000 worth of stuff, and spent only $8,138 in the process, so you made $1,862 profit.</p>
+
+<p>The profit and loss statement is calculated over a period of time (usually a month, a quarter or a year), and it&#8217;s often interesting to compare two different periods. To calculate it for a period, filter your transactions to only include those which occurred within that period, and add up the account balances for just those transactions.</p>
+
+<p>One thing to watch out for: profit doesn&#8217;t say anything about your bank account. The bank account is a green node, but we&#8217;re only looking at blue nodes here. In this example, you ended up with $23,995 in the bank, even though investors put in $25,000: you made a profit, yet still have less money in the bank than you did before, because Customer 2 hasn&#8217;t yet fully paid. That&#8217;s why it&#8217;s possible for a company to be profitable but still run out of money!</p>
+
+<p><strong>The Balance Sheet</strong></p>
+
+<p>The balance sheet is a bit less intuitive than the P&amp;L, but it&#8217;s quite a powerful document. It summarises what the company currently has and doesn&#8217;t have, and why.</p>
+
+<p>Remember what I said earlier about partitioning the nodes into two disjoint sets, and their summed balances adding to zero? That&#8217;s exactly what happens on the balance sheet. We take all of the nodes in the graph; on the one side we consider all of the green nodes, and on the other side all the blue and pink nodes. The sum of all of the blue and pink nodes&#8217; balances is minus the sum of all of the green nodes&#8217; balances.</p>
+
+<p>Now, by convention, accountants flip the sign on all of the blue and pink nodes&#8217; balances, which means that the two sums end up being equal. And that&#8217;s why it&#8217;s called a balance sheet.</p>
+
+<p>In our example, it looks like this:</p>
+<table style='margin: 1.5em 0'>
+  <tr>
+    <th rowspan='4' style='font-variant: small-caps;'>Assets</th>
+    <td>Bank account</td>
+    <td style='text-align: right;'>$23,995</td>
+  </tr>
+  <tr>
+    <td>Debtors</td>
+    <td style='text-align: right;'>$2,500</td>
+  </tr>
+  <tr>
+    <td style='border-bottom: 1px solid #888;'>Furniture</td>
+    <td style='border-bottom: 1px solid #888; text-align: right;'>$375</td>
+  </tr>
+  <tr>
+    <th style='border-bottom: 1px solid #888;'>Total assets</th>
+    <th style='border-bottom: 1px solid #888; text-align: right;'>$26,870</th>
+  </tr>
+  <tr style='height: 0.7em' />
+  <tr style='margin-top: 1em'>
+    <th rowspan='2' style='font-variant: small-caps;'>Liabilities</th>
+    <td style='border-bottom: 1px solid #888;'>Credit card</td>
+    <td style='border-bottom: 1px solid #888; text-align: right;'>$8</td>
+  </tr>
+  <tr>
+    <th style='border-bottom: 1px solid #888;'>Total liabilities</th>
+    <th style='border-bottom: 1px solid #888; text-align: right;'>$8</th>
+  </tr>
+  <tr style='height: 0.7em' />
+  <tr>
+    <th colspan='2' style='border-bottom: 1px solid #888; font-weight: bold;'>Total assets less total liabilities</th>
+    <th style='border-bottom: 1px solid #888; font-weight: bold; text-align: right;'>$26,862</th>
+  </tr>
+  <tr style='height: 0.7em' />
+  <tr style='margin-top: 1em'>
+    <th rowspan='3' style='font-variant: small-caps;'>Equity</th>
+    <td>Profit/Loss</td>
+    <td style='text-align: right;'>$1,862</td>
+  </tr>
+  <tr>
+    <td style='border-bottom: 1px solid #888;'>Capital</td>
+    <td style='border-bottom: 1px solid #888; text-align: right;'>$25,000</td>
+  </tr>
+  <tr>
+    <th style='border-bottom: 1px solid #888; font-weight: bold;'>Total equity</th>
+    <th style='border-bottom: 1px solid #888; font-weight: bold; text-align: right;'>$26,862</th>
+  </tr>
+</table>
+<p>The top block (assets and liabilities) corresponds to the green nodes in the graph, whilst the bottom block contains the pink node (capital) and the sum of all of the blue nodes. We already showed all of the detail for the blue nodes on the Profit and Loss statement above; on the balance sheet we can sum them all up to a single number.</p>
+
+<p>Some more sign-flipping has occurred here: I&#8217;ve written liabilities, equity and P&amp;L with their signs flipped (which usually, but not always, has the effect of making the numbers positive). That doesn&#8217;t change anything fundamental about the graph structure, it just puts things into the conventional schema.</p>
+
+<p>So how can you interpret the balance sheet? There are various things you can read from it. You can see how much money is in the bank, and how much of that money has already been promised to other people (liabilities). You can see how much of the money in the bank came from investors, vs. how much came from sales. And it shows how much money is due to come in soon, from sales that have closed but haven&#8217;t yet been fully paid.</p>
+
+<p>The total of the balance sheet is a lower bound on the value of your company. It&#8217;s a very pessimistic figure &#8212; it assumes that your team, your technology, your brand etc. are all worth precisely nothing; if your company raises money from investors, your valuation will be much higher than the balance sheet figure, since that valuation includes the value of team, technology, brand etc in the form of a wild guess. In established companies you can find &#8220;intangible assets&#8221; on the balance sheet, but since they are very hard to value, I suspect it&#8217;s not worth bothering with unless you know what you are doing.</p>
+
+<p>That&#8217;s the end of our whirlwind tour through the world of accounting. If you&#8217;re a real accountant reading this, please forgive my simplifications; if you spot any mistakes, please let me know. For everyone else, I hope this has been useful. To find out when I write something new, please <a href='http://twitter.com/martinkl'>follow me on Twitter</a> or put your email address in this box:</p>
+<form name='mc-embedded-subscribe-form' class='validate' method='post' action='http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6' id='mc-embedded-subscribe-form' target='_blank'>
+    <fieldset>
+        <div class='mc-field-group'>
+            <label for='mce-EMAIL'>Email:</label>
+            <input name='EMAIL' class='required email' id='mce-EMAIL' type='text' value='' />
+            <input name='subscribe' class='btn' id='mc-embedded-subscribe' type='submit' value='Subscribe' />
+        </div>
+        <div id='mce-responses'>
+            <div class='response' id='mce-error-response' style='display:none' />
+            <div class='response' id='mce-success-response' style='display:none' />
+        </div>
+    </fieldset>
+</form><p class='disclaimer'>
+    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+</p>
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Having a launched product is hard</title>
@@ -502,71 +768,6 @@
 <p>In my defence, it&#8217;s difficult when you are a sole founder. In principle you could multitask between Customer Development and Product Development, but I think the two activities require very different mindsets, and the context switching overhead between the activities is huge. Therefore I suspect that a sole founder doing both will take much more than twice as long compared to two cofounders who specialise in Customer Development and Product Development respectively. Hence it&#8217;s extremely tempting for a technical founder like me to pretend that the Customer Development side doesn&#8217;t exist, and focus exclusively on the product.</p>
 
 <p>Well, late insight is better than never. <a href='http://twitter.com/amirmc'>Amir</a> is joining me on the Customer Development side of Go Test It, and we have a lot of catching-up to do. In 2010 there will be soul-searching and maybe some changes of plans, but I am really looking forward to it, because I am confident that we can figure out how to turn Go Test It from something ok into a product which you simply must have.</p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>My first exit</title>
-                <link>http://martin.kleppmann.com/2009/11/30/my-first-exit.html</link>
-                <comments>http://martin.kleppmann.com/2009/11/30/my-first-exit.html#disqus_thread</comments>
-                <pubDate>Mon, 30 Nov 2009 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=344</guid>
-                
-                <description><![CDATA[ If you&#8217;re a similar age to me, you may remember the &#8220;My first Sony&#8221; cassette players/recorders from your childhood (see the photo, thanks to Andrew Scott on Flickr). I actually had a different brand of cassette recorder, but it carried the same meaning: with it, I recorded my favourite songs... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>If you&#8217;re a similar age to me, you may remember the &#8220;My first Sony&#8221; cassette players/recorders from your childhood (see the photo, thanks to <a href='http://www.flickr.com/photos/andrewscott/660559536/'>Andrew Scott on Flickr</a>). I actually had a different brand of cassette recorder, but it carried the same meaning: with it, I recorded my favourite songs off the radio, experimented with electronic sound effects, played my mother&#8217;s &#8220;Queen&#8217;s Greatest Hits&#8221; cassette over and over, and produced a simple radio drama. It was an aspiration, a dream, a journey of discovery.</p>
-<a href='http://www.flickr.com/photos/andrewscott/660559536/'>
-    <img src='http://martin.kleppmann.com/2009/11/my_first_sony.jpg' height='268' alt='My First Sony by Andrew Scott on Flickr (Creative Commons)' width='500' />
-</a>
-<p>Today we announced that <a href='http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html'>we are selling our startup to Red Gate</a>. Investors refer to this as an <em>exit</em>: at this point they typically sell their shares, so they get the money back which they invested some time before &#8211; or rather, they are supposed to get quite a bit more money back. I had one investor, <a href='http://www.petercowley.org/'>Peter Cowley</a>, and in total, he got more than 15 times his money back within 2.5 years: that&#8217;s a hell of a lot better than if he had stuck it in a savings account!</p>
-
-<p>A few exits are huge (think Google buying YouTube), many are medium-sized, and many are small. This is one of the small ones: although I&#8217;m getting some money out of it, it&#8217;s certainly not making me rich. However, I am very happy with it: the hard work of the last few years is paying off.</p>
-
-<p>For the founder (that&#8217;s me), it&#8217;s not really an exit: I have to and want to continue working hard on Go Test It for another year or so. As Simon from Red Gate put it, they need me to continue making the product better, and they need time to get everything out of my head and into someone else&#8217;s head. (Do they really want <em>everything</em> out of my head? Even those childhood memories of listening to the Queen cassette? Well, if they want them, they can have them.)</p>
-
-<p>Anyway, the reason I started this post with a bout of nostalgia is that this is pretty much how I feel today. It&#8217;s like a 10-year-old proudly playing back his first attempt at making spooky ghost noises on a cassette recorder. He knows that it&#8217;s not perfect, and that his work will change the world only a tiny little bit, but he learnt a lot, and right now, it feels like the greatest success and the most important thing in the world.</p>
-
-<p>The aspect of learning is probably the most important one for me. I learnt an incredible amount by starting a company and taking it to exit, and I expect to learn a lot more over the coming year: how to take a product from &#8220;it works pretty well&#8221; to &#8220;it is absolutely amazing&#8221;; how to work with more than the bare minimum resources I have been used to; how to scale the business, attracting and retaining lots of happy customers.</p>
-
-<p>That name &#8220;My first Sony&#8221; is evocative: it is oriented towards the future. The &#8220;first&#8221; implies that there will be a &#8220;second&#8221; and a &#8220;third&#8221;; of course they want you to buy many more Sonies during the rest of your life. But not only that: the &#8220;first&#8221; of something signifies a turn of events. From now on you are sonified. Before its first Sony, the child could only store sounds in its head; from now on, it can record them on cassette. Before, it could only listen to music and audiobooks when the parents gave permission to use the hi-fi; from now on, all available cassettes can be listened to at any time. Even secretly under the blankets.</p>
-
-<p>My first exit is a bit like that: it also is oriented towards the future. I can&#8217;t predict what the future will bring, but evidence suggests that entrepreneurs tend not to be satisfied with just one successful startup, but want to try it again and again. But even if I do start another company, and even if I do have another exit, there will always be something special about that first one. The one which proved that I <em>can</em> do it.</p>
-
-<p>Of course, saying that <em>I</em> built this company is about as true as saying that Vespasian built the Colosseum. I bet he didn&#8217;t lift a single stone himself. Therefore, at this point &#8211; clich&#233;d though it may seem, I mean this very genuinely and sincerely &#8211; all I want to say is a huge round of thanks to everyone who has helped me along this journey. None of this would have been possible without you. Thank you to:</p>
-
-<ul>
-<li><a href='http://twitter.com/galbraithsimon'>Simon</a> and <a href='http://www.neildavidson.com/'>Neil</a>, joint CEOs of Red Gate: you have built a company with a fantastic culture and great people, and I respect you deeply.</li>
-
-<li><a href='http://www.petercowley.org/'>Peter</a>, my mentor, advisor, investor and friend;</li>
-
-<li><a href='http://en.wiktionary.org/wiki/User:Conrad.Irwin'>Conrad</a>, <a href='http://samstokes.co.uk/'>Sam</a>, <a href='http://www.cloud9.co.uk/'>James</a> and <a href='http://www.zarkonnen.com/'>David</a>, who helped build it;</li>
-
-<li><a href='http://hi.im/rahul'>Rahul</a>, who helped evangelise it;</li>
-
-<li><a href='http://twitter.com/patdie'>Patrick</a>, who came up with the name;</li>
-
-<li>all the open source projects which are the foundation of our work, particularly <a href='http://seleniumhq.org/'>Selenium</a>, <a href='http://www.getwindmill.com/'>Windmill</a>, <a href='http://www.ruby-lang.org/'>Ruby</a>, <a href='http://rubyonrails.org/'>Rails</a> and <a href='http://www.scala-lang.org/'>Scala</a> &#8211; we will show our gratitude by contributing as much as possible back to the community;</li>
-
-<li>the <a href='http://blog.businessofsoftware.org/2009/08/the-accidental-incubator.html'>Accidentals</a> and the <a href='http://springboard.com/'>Springboarders</a>, who form such a supportive startup community;</li>
-
-<li><a href='http://www.eptcomputing.com/projects/'>our clients</a>, whose business funded much of the development of Go Test It to this point;</li>
-
-<li>all the Go Test It trial and beta users, for your valuable feedback;</li>
-
-<li>everyone who has supported, encouraged and inspired us;</li>
-
-<li>my friends, for bearing with my obsessive-compulsive attitude to work;</li>
-
-<li>my family, because no mountaineer can reach the top without a solid base camp;</li>
-
-<li>Rita, for your endless supply of smiles.</li>
-</ul>
-
-<p>&#8230;</p>
-
-<p>Ok, well, that was nice and romantic. Anyway &#8211; let&#8217;s get back to changing the world!</p>
                 ]]></content:encoded>
             </item>
         
