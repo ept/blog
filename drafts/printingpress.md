@@ -93,6 +93,13 @@ amend/retract what we said, if it was clear who said what, if the system was mer
 Unfortunately I don't know of good software for doing that, so you'll have to leave your comments
 in the Disqus box for now.
 
+
+"I wish that Social Media tools could not only help organize protests, but also help
+democratically fill the void of power after revolution."
+http://twitter.com/bill_gross/status/31740255052763136
+
+TODO: see "Libraries and the beauty of insight" in Evernote
+
 For this to work, there will need to be filtering systems
 
 Personal reputation will become even more precious than it is now, as it decides whether your
