@@ -50,16 +50,14 @@ about:
 * Between them, the YC partners have seen it all. They've seen big exits and small exits,
   profitable companies and train-wrecks, fast growth and slow growth, dream teams and founder
   disputes, and all manner of great ideas and screw-ups. Startups are unpredictable; you never
-  know what surprises lie around the next corner. With the team of YC partners behind us, I feel a
-  lot more confident about facing that uncertainty, because I know that whatever happens, if we're
-  unsure what to do, we can turn to PG et al. and get their advice. And because they have seen it
-  all, I know that our situation won't faze them; chances are, they have seen the situation
-  before, and their pattern-matching will enable them to make good predictions.
+  know what surprises lie around the next corner. When we talk to YC, no matter whether we have
+  good news or bad news, chances are that they've seen the situation before, and their
+  pattern-matching will enable them to make good predictions.
 
 * The YC team know everybody who's worth knowing in the startup scene, and everyone respects them.
   This makes them ideally placed for introducing you to the kind of people you want to meet.
   Demo day is one aspect of this, a maximum-efficiency batch process for introducing startups and
-  investors to each other, but in fact YC also make individual introductions all the time.
+  investors to each other, but YC also make individual introductions all the time.
 
 * If there is a [change in the startup ecosystem](http://www.paulgraham.com/future.html), YC are
   amongst the first to see it --- because they have insight into a uniquely high proportion of
@@ -72,9 +70,14 @@ about:
   go well, and to get encouragement from them in hard times. You couldn't ask for a better group
   of people to hang out with.
 
+* Because YC has a proven track record of funding great companies, being accepted to YC carries a
+  strong signalling effect, making it more likely for others to
+  [believe](http://thenextweb.com/industry/2011/02/07/y-combinator-partner-harjeet-taggar-start-fund-is-bad-news-for-bad-investors-interview/)
+  that you are doing something interesting by default.
+
 But the main thing I want to get across is that **Y Combinator is simply
 [number one](http://blog.businessofsoftware.org/2009/09/joel-spolskys-talk-at-business-of-software-2008-on-being-number-one.html)**.
-Being number one (iPod) is very different from being number two (Zune) or any number below.
+Being number one is very different from being number two or any number below.
 
 One friend from our YC batch remarked at demo day: *"This room contains the future of the IT
 industry."* He was right. Since many of the world's best startups go through YC, they collectively
@@ -119,9 +122,6 @@ company to...
 * someone who encourages you to make a particular pivot, which turns out to unlock a
   billion-dollar market.
 * someone who prevents you from making a stupid mistake that would have set you back by 12 months.
-* someone who just gives you dollars, i.e. a hands-off investor; if you later find that you
-  didn't need the money to get to the next stage, that dilution had absolutely no effect on your
-  chances of success.
 
 Whether any of these scenarios will actually happen is unknown in advance, but my point is:
 probability of success tends to move in discontinuous jumps. An extra per cent of equity may make
@@ -138,7 +138,7 @@ secondary. It's not irrelevant, but as long as it's in the right ballpark, it's 
 
 Of course you should be prudent to whom you give equity, but I would argue that if someone can
 give you "unfair advantages", it's well worth bringing them on board and not worrying too much
-about the cost. 
+about the cost.
 
 (Side-note:
 in my opinion, the main reason to be careful with distribution of equity is not because dilution
@@ -154,7 +154,7 @@ impact on your chances of success?
 
 I'd say yes. If you don't need any of the benefits mentioned above, maybe not... but honestly, I'd
 be very surprised if your network and your group of advisors is already so perfect that you
-wouldn't benefit from YC. For example, whether you've launched or not makes very little difference.
+wouldn't benefit from YC. Whether you've already launched or not makes very little difference.
 
 YC is a package consisting of a variety of good things. In principle you may be able to assemble
 yourself a similar package from component parts --- e.g. using [AngelList](http://angel.co/) for
