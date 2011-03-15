@@ -17,15 +17,18 @@ seems like a simple enough formula, and clones around the world are rushing to r
 Unfortunately I think they mostly miss the point, because there is so much more to YC which the
 others lack.
 
-When we applied to YC, we had already [launched](http://blog.rapportive.com/the-accidental-launch)
+When [we](http://rapportive.com) applied to YC, we had already [launched](http://blog.rapportive.com/the-accidental-launch)
 and didn't really need the $20k they were offering (investors had started contacting us from the
 day that Rapportive first hit the press). Looking at the other startups who joined YC at the same
-time of us, most of them got profitable or secured substantial angel/VC funding at good valuations.
-So although the money is nice, it can't be the main attraction.
+time of us, most of them got profitable or secured substantial angel/VC funding at good valuations
+soon afterwards. So although the money is nice, it's probably not the main attraction.
 
 As to mentoring, press and investor contacts... as an entrepreneur, you're probably already quite
 good at getting attention and feedback from relevant people, using your personal network. How much
 more value could you get?
+
+
+**Network and knowledge**
 
 The things that are really special about Y Combinator, in my opinion, are less frequently talked
 about:
@@ -34,7 +37,7 @@ about:
   claim to have strong alumni networks, but I have often found these claims to be empty words:
   often, the only participants in these networks are those who want to take, not those who want
   to give, because those who have something to give feel their time is wasted. It is hard to
-  maintain a high standard in a network, and YC's alumni are the only example I have seen where
+  maintain a high standard in a network, and YC's is the only example I have seen where
   the high standard is consistently upheld. Even the most busy founders of the most successful startups
   are genuinely supportive, and will spend surprisingly large amounts of time to answer questions,
   give practical advice, make introductions and recommendations, etc. They are real friends, not
@@ -56,8 +59,10 @@ about:
 
 * The YC team know everybody who's worth knowing in the startup scene, and everyone respects them.
   This makes them ideally placed for introducing you to the kind of people you want to meet.
-  Demo day is one aspect of this, a maximum-efficiency batch process for introducing startups and
-  investors to each other, but YC also make individual introductions all the time.
+  Demo Day is one aspect of this, a maximum-efficiency batch process for introducing startups and
+  investors to each other, but YC also make individual introductions all the time. They also know
+  who is worth talking to, who is actively investing, and which people are just fishing for
+  information.
 
 * If there is a [change in the startup ecosystem](http://www.paulgraham.com/future.html), YC are
   amongst the first to see it --- because they have insight into a uniquely high proportion of
@@ -65,8 +70,8 @@ about:
   you get to hear about these changes first, something that you can use to your advantage.
 
 * If you are new to Silicon Valley, like we were, YC is a fantastic way to get yourself
-  established and find your feet. You'll meet lots of really lovely, intelligent and
-  interesting people who have set out to change the world. You can celebrate with them when things
+  established and find your feet. They are welcoming to outsiders, and you can bootstrap your valley
+  network from those who already know their way around. You can celebrate with them when things
   go well, and to get encouragement from them in hard times. You couldn't ask for a better group
   of people to hang out with.
 
@@ -75,11 +80,14 @@ about:
   [believe](http://thenextweb.com/industry/2011/02/07/y-combinator-partner-harjeet-taggar-start-fund-is-bad-news-for-bad-investors-interview/)
   that you are doing something interesting by default.
 
-But the main thing I want to get across is that **Y Combinator is simply
+
+**Being part of the best**
+
+The general theme I want to get across is that **Y Combinator is simply
 [number one](http://blog.businessofsoftware.org/2009/09/joel-spolskys-talk-at-business-of-software-2008-on-being-number-one.html)**.
 Being number one is very different from being number two or any number below.
 
-One friend from our YC batch remarked at demo day: *"This room contains the future of the IT
+One friend from our YC batch remarked at Demo Day: *"This room contains the future of the IT
 industry."* He was right. Since many of the world's best startups go through YC, they collectively
 form a force which has the power and drive to shape the entire industry for many years to come.
 That's not because there is any centralised agenda; it's more comparable to being a graduate from
@@ -92,7 +100,7 @@ get two valuable things from a top university:
 
 1. a signalling effect: other people can see that a reputable organisation thinks that at one
    point in your life (when you took your exams), you were reasonably motivated and not entirely stupid;
-2. you become part of a network of people.
+2. you build a network of talented people.
 
 I think we are seeing something similar with YC. The fact that YC has brought forth a number of
 successful startups is merely a correlation; by itself it doesn't say anything about cause and
@@ -138,16 +146,7 @@ secondary. It's not irrelevant, but as long as it's in the right ballpark, it's 
 
 Of course you should be prudent to whom you give equity, but I would argue that if someone can
 give you "unfair advantages", it's well worth bringing them on board and not worrying too much
-about the cost.
-
-(Side-note:
-in my opinion, the main reason to be careful with distribution of equity is not because dilution
-reduces the size of your payout, but rather because you should avoid odd-looking things on your
-cap table. Later investors will see weird things on the cap table during due diligence, may assume
-that you are irresponsible in the way you run the business, and pull out of the deal. That's
-something you can avoid by keeping your capital structure nice and clean. But honestly, no investor
-in the world could possibly object to seeing YC on your cap table, because they know perfectly well
-how much value YC brings. So that concern is irrelevant here.)
+about the cost.\[[1](#footnote-cap-table)\]
 
 So, does Y Combinator give you that big advantage which has a disproportionately large positive
 impact on your chances of success?
@@ -168,3 +167,14 @@ example, we used AngelList to fill up our
 [seed round](http://techcrunch.com/2010/08/02/rapportive-funding/).)
 
 I hope you find this useful when deciding whether to apply to YC. :)
+
+* * *
+
+<p id="footnote-cap-table">[1]
+In my opinion, the main reason to be careful with distribution of equity is not because dilution
+reduces the size of your payout, but rather because you should avoid odd-looking things on your
+cap table. Later investors will see weird things on the cap table during due diligence, may assume
+that you are irresponsible in the way you run the business, and pull out of the deal. That's
+something you can avoid by keeping your capital structure nice and clean. But honestly, no investor
+in the world could possibly object to seeing YC on your cap table, because they know perfectly well
+how much value YC brings. So that concern is irrelevant here.</p>
