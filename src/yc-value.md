@@ -83,7 +83,8 @@ about:
 
 **Being part of the best**
 
-The general theme I want to get across is that **Y Combinator is simply
+A lot of the points above are remarkable, but not intrinsically unique to Y Combinator; what's
+particularly special about YC is that it is **simply
 [number one](http://blog.businessofsoftware.org/2009/09/joel-spolskys-talk-at-business-of-software-2008-on-being-number-one.html)**.
 Being number one is very different from being number two or any number below.
 
