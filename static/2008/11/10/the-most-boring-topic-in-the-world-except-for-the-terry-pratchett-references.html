@@ -37,7 +37,7 @@
     <div class="wrapper">
         <div id="navigation">
             <ul>
-                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,17 @@
 <div class="wrapper">
 
         <div id="content">
-            <h1>The most boring topic in the world (except for the Terry Pratchett references)</h1>
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                The most boring topic in the world (except for the Terry Pratchett references)
+            </h1>
+
             <p>Invoicing, finances, bookkeeping, accounts and payments. It has surely got to be the most boring topic in the world.</p>
 
 <p>Unfortunately, it&#8217;s not going to go away, no matter how hard we try to forget. Death and taxes, the two most certain things, and also the most wished-away. So although we technology people can&#8217;t do too much about death (although a healthy diet and exercise probably help), at least we should be making the tedious parts of taxes and finance as automated as possible, so that we have to worry about them as little as possible.</p>
@@ -101,6 +111,8 @@
 <p>This is of course just a basic example; the schema goes much further still, so you can give a machine-readable definition of payment terms, or properties of the goods (e.g. 5 kegs of beer at 3.7% alcohol by volume, since UBL supports <a href='http://twitter.com/martinkl/status/997815268'>a huge variety of units</a>), or the transit route of shipping; in principle you could then automatically validate that everything matches the purchase order and agreed supplier contract. But you don&#8217;t have to; even the simple bit of data above would already make our lives easier if our bookkeeping software supported it.</p>
 
 <p>Why is this a big deal? Because it&#8217;s a standard which is actually in use out there! For instance, <a href='http://www.idealliance.org/proceedings/xtech05/papers/03-05-02/'>if you want to sell anything to any public institution in Denmark, you&#8217;ve got to use the UBL schema</a>. Governments and enterprises are more likely to use these formats at first, because they deal with millions of invoices each year, and automating such quantities translates into very substantial cost savings. But I think that even for small businesses, we have a lot to gain in terms of interoperability.</p>
+
+            
 
             <div id="disqus_thread"></div>
         </div>
@@ -191,11 +203,17 @@
 <hr class="divider" />
 
 <div id="footer">
-    <div class="wrapper">        
+    <div class="wrapper">
         <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
             Theme borrowed from
             <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-            ported to Jekyll by Martin Kleppmann.
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
         </p>
     </div>
 </div>

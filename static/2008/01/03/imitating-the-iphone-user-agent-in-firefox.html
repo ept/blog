@@ -37,7 +37,7 @@
     <div class="wrapper">
         <div id="navigation">
             <ul>
-                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,17 @@
 <div class="wrapper">
 
         <div id="content">
-            <h1>Imitating the iPhone User Agent in Firefox</h1>
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Imitating the iPhone User Agent in Firefox
+            </h1>
+
             <p>There are a number of web sites out there which provide specifically optimised versions for the iPhone. I was curious to test them (and to look at their source code to see what they are doing), but don&#8217;t have an iPhone myself. Many sites will only give a visitor the iPhone version of their site if the web browser identifies itself as Safari Mobile. How do you get it?</p>
 
 <p>The solution is the &#8221;<a href='http://en.wikipedia.org/wiki/User_agent'>user agent</a>&#8221; &#8211; a string sent by the web browser to the server as part of every request. It contains the name and version of the browser software you are using, the operating system, and a few other bits and pieces. It&#8217;s a very useful piece of information to website administrators, who can use it to compile anonymous statistics about the people who visit their site.</p>
@@ -63,6 +73,8 @@ Gecko) Version/3.0 Mobile/3B48b Safari/419.3</blockquote>
 <p>One big caveat: you shouldn&#8217;t really be doing this! Use it only briefly for testing a site, then reset the user agent to the Firefox default. Otherwise you&#8217;ll end up sending the iPhone user agent to all other web sites you visit too, and that isn&#8217;t good for anybody. You may up being locked out of certain web sites or getting the wrong version, and administrators of web sites will hate you because you mess up their statistics.</p>
 
 <p>So please, please reset the user agent to the default when you&#8217;ve finished testing.</p>
+
+            
 
             <div id="disqus_thread"></div>
         </div>
@@ -153,11 +165,17 @@ Gecko) Version/3.0 Mobile/3B48b Safari/419.3</blockquote>
 <hr class="divider" />
 
 <div id="footer">
-    <div class="wrapper">        
+    <div class="wrapper">
         <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
             Theme borrowed from
             <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-            ported to Jekyll by Martin Kleppmann.
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
         </p>
     </div>
 </div>

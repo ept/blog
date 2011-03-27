@@ -37,7 +37,7 @@
     <div class="wrapper">
         <div id="navigation">
             <ul>
-                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,17 @@
 <div class="wrapper">
 
         <div id="content">
-            <h1>i18n and social web: We still haven't figured it out</h1>
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                i18n and social web: We still haven't figured it out
+            </h1>
+
             <p>Internationalisation (i18n for short, where 18 represents the 18 letters in the middle of this long word) is still an unsolved problem.</p>
 
 <p>A lot of things fall under i18n, such as correct handling of character sets (not everybody uses the Latin alphabet), time zones (not everybody uses PST or GMT), numbers (not everybody uses the dot as decimal separator), currencies (there is a world outside the US dollar), writing direction (not everybody writes from left to right) and of course translation into different languages. Traditionally, i18n has been an issue which software engineers have loved to ignore, because (a) it&#8217;s difficult, (b) it&#8217;s not cool, and (c) if you&#8217;re in North America, you can find enough customers in North America for the first few years, so there isn&#8217;t a strong business requirement to work internationally.</p>
@@ -142,6 +152,8 @@
 </div>
 <p>And you thought English was simple? You can even even see the remains of grammatical cases (<code>you_or_they</code> vs. <code>you_or_them</code>). If this needs to be translated one day, we will need to duplicate the logic and mess about with the way variables are inserted into the snippets of text to make the grammar work. It will be horrible to maintain. But that&#8217;s the best we can do with the state of the art. Shouldn&#8217;t there be a better way?</p>
 
+            
+
             <div id="disqus_thread"></div>
         </div>
             <div id="sidebar">
@@ -231,11 +243,17 @@
 <hr class="divider" />
 
 <div id="footer">
-    <div class="wrapper">        
+    <div class="wrapper">
         <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
             Theme borrowed from
             <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-            ported to Jekyll by Martin Kleppmann.
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
         </p>
     </div>
 </div>

@@ -37,7 +37,7 @@
     <div class="wrapper">
         <div id="navigation">
             <ul>
-                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,17 @@
 <div class="wrapper">
 
         <div id="content">
-            <h1>Ubuntu upgrade woes</h1>
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Ubuntu upgrade woes
+            </h1>
+
             <p>This page has been offline for the last 24 hours because I messed up the server on which it was running (now I&#8217;ve moved it to another one). I officially <strong>hate</strong> system maintenance&#8230;</p>
 
 <p>The server was running Ubuntu Feisty (7.04) which is now getting a bit old and gradually coming towards the end of its support lifetime. An upgrade would be necessary before too long anyway, so I decided to try updating it using the <a href='http://www.howtoforge.com/upgrade-ubuntu-7.04-server-to-7.10'>do-release-upgrade</a> tool. My setup is pretty sane, using only standard packages, so I thought the tool would be able to handle the upgrade smoothly.</p>
@@ -68,6 +78,8 @@
 <p>I have already built myself a tool for generating <a href='http://aws.amazon.com/ec2'>Amazon EC2</a> images &#8211; effectively a few Python and Shell scripts which take a barebones install and configure it completely for a particular application; I keep these scripts in version control so the build process is completely transparent and reproducible. However, if I make any modification to the image by hand, I need to remember to enter the same changes into the scripts, so that they still correctly reflect the build process. Really what I want is that manual step to go away.</p>
 
 <p>I&#8217;m thinking that it oughtn&#8217;t be too hard to build such a system configuration management framework by putting /etc in a standard version control system, recording changes elsewhere in the filesystem, and making clever wrappers for a few standard maintenance tools such as apt-get (which just remembers somewhere which packages have been installed). Has nobody built something like that yet?</p>
+
+            
 
             <div id="disqus_thread"></div>
         </div>
@@ -158,11 +170,17 @@
 <hr class="divider" />
 
 <div id="footer">
-    <div class="wrapper">        
+    <div class="wrapper">
         <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
             Theme borrowed from
             <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-            ported to Jekyll by Martin Kleppmann.
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
         </p>
     </div>
 </div>

@@ -37,7 +37,7 @@
     <div class="wrapper">
         <div id="navigation">
             <ul>
-                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,17 @@
 <div class="wrapper">
 
         <div id="content">
-            <h1>Why the mobile web is so slow</h1>
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Why the mobile web is so slow
+            </h1>
+
             <p>On the &#8220;desktop/laptop web&#8221; (in contrast to the mobile web), we&#8217;ve become used to a page loading in about a second. On mobile phones, we are still far from seeing anything near that responsiveness &#8211; for most people, the mobile web experience is still agonisingly slow. Personally, I start to get irritated after about five seconds, and after as little as ten seconds there is a strong chance that I will go away and do something else. And currently it&#8217;s still a challenge to get a page to load within that timeframe on a mobile.</p>
 
 <p>Ever wondered why it is so slow? Yesterday I was reading a few articles, and I repeatedly came across people who made a very simplistic assumption: namely that the available network bandwidth is fully used. For example, they will say: on a standard 3G/UMTS connection, each subscriber can transfer 384 kbit/s, therefore a 24 kB web page (text and a few small pictures) will load in 0.5 seconds. Honestly, if you&#8217;ve <em>ever</em> tried to access even a simple web page from a phone you know that this figure is just laughably wrong. It is <em>never</em> that fast.</p>
@@ -78,6 +88,8 @@
 <p>I just hope that mobile phones nowadays use <a href='http://en.wikipedia.org/wiki/HTTP_persistent_connection'>persistent HTTP connections</a> or <a href='http://en.wikipedia.org/wiki/HTTP_pipelining'>pipelining</a> which would remove some of the overheads. Does anybody know if they do? I&#8217;d like to hear from you.</p>
 
 <p>PS. I thought I had accidentally deleted this post &#8211; fortunately I managed to find it again, hidden away in a binary mess, in the MySQL log file! :-)</p>
+
+            
 
             <div id="disqus_thread"></div>
         </div>
@@ -168,11 +180,17 @@
 <hr class="divider" />
 
 <div id="footer">
-    <div class="wrapper">        
+    <div class="wrapper">
         <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
             Theme borrowed from
             <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-            ported to Jekyll by Martin Kleppmann.
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
         </p>
     </div>
 </div>

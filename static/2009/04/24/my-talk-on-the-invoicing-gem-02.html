@@ -37,7 +37,7 @@
     <div class="wrapper">
         <div id="navigation">
             <ul>
-                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,17 @@
 <div class="wrapper">
 
         <div id="content">
-            <h1>My talk on the Invoicing Gem 0.2</h1>
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                My talk on the Invoicing Gem 0.2
+            </h1>
+
             <p>On Monday I did a talk in front of 80 or so of London&#8217;s finest Ruby developers at <a href='http://lrug.org/'>LRUG</a>, to present the new v0.2 release of the <a href='http://ept.github.com/invoicing/'>Ruby invoicing gem</a>. The main new feature of this release is a <a href='http://rubigen.rubyforge.org/'>Rails generator script</a> which can be invoked with <code>script/generate invoicing_ledger</code> in the root directory of a Rails project. This generates a default set of model objects, a database migration, a controller, views and some routes; enough to get started with using the gem&#8217;s features very quickly.</p>
 
 <p>Note that the Invoicing Gem still isn&#8217;t Rails-specific &#8211; although the generator currently only works with Rails controllers and templates, the core of the gem depends only on ActiveRecord and can be used with framework components of your choice.</p>
@@ -65,6 +75,8 @@
 <p>It&#8217;s a bit hard to see exactly what I&#8217;m typing in that video, but you can follow the exact steps from <a href='http://ept.github.com/invoicing/2009/04/21/invoicing-0-2-generator.html'>the notes I wrote myself for that presentation</a>, and the example application I used, <a href='http://github.com/ept/cracktastic'><em>cracktastic</em>, is also on GitHub</a>.</p>
 
 <p>I have the feeling that I still need a lot of practise to improve my public speaking, but it&#8217;s not too dreadful either.</p>
+
+            
 
             <div id="disqus_thread"></div>
         </div>
@@ -155,11 +167,17 @@
 <hr class="divider" />
 
 <div id="footer">
-    <div class="wrapper">        
+    <div class="wrapper">
         <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
             Theme borrowed from
             <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-            ported to Jekyll by Martin Kleppmann.
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
         </p>
     </div>
 </div>

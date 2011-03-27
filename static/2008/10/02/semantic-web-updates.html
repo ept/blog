@@ -37,7 +37,7 @@
     <div class="wrapper">
         <div id="navigation">
             <ul>
-                <li class="page_item"><a href="/contact.html" title="Contact/Copyright">Contact/Copyright</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,17 @@
 <div class="wrapper">
 
         <div id="content">
-            <h1>Semantic web updates</h1>
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Semantic web updates
+            </h1>
+
             <p>A few weeks ago I <a href='/2008/09/07/barcamp-brighton-notes.html'>noted down some links to current developments of the semantic web</a>. After hearing <a href='http://tommorris.org/'>Tom Morris</a> speak again on &#8220;The State of the Semantic Web&#8221; at <a href='http://barcamp.org/BarCampLondon5'>BarCampLondon5</a>, here are some more:</p>
 
 <ul>
@@ -80,6 +90,8 @@
 <p>This move by Yahoo starts giving a first convincing answer to the chicken-and-egg problem of the semantic web: <em>&#8220;why would anybody bother to annotate their data in a machine-readable way?&#8221;</em> There has got to be some reward attached to it, and doing search engine optimisation (SEO) for Yahoo is a very good reason for creating some semantic metadata! (It&#8217;s unlikely to really fly until Google also adopts the idea, but surely that&#8217;s just a matter of time.)</p>
 
 <p>What I wonder about: what attempts will there be to parse structured data out of unstructured data sources? There are a few companies doing more or less this, for example <a href='http://www.globrix.com/'>Globrix</a> extracts structured information about properties (rent or buy, location, price, number of bedrooms and bathrooms, etc.) from plain text descriptions on estate agents&#8217; websites, and <a href='http://mydeco.com/'>Mydeco</a> extracts structured information about furniture (type of item, colour, width/depth/height, weight, retailer&#8217;s location, etc.) from similar unstructured text. There is no technical reason why they couldn&#8217;t release that information in a machine-readable RDF format, although there may well be commercial reasons for them wanting to keep it to themselves.</p>
+
+            
 
             <div id="disqus_thread"></div>
         </div>
@@ -170,11 +182,17 @@
 <hr class="divider" />
 
 <div id="footer">
-    <div class="wrapper">        
+    <div class="wrapper">
         <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
             Theme borrowed from
             <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-            ported to Jekyll by Martin Kleppmann.
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
         </p>
     </div>
 </div>
