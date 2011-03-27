@@ -1,3 +1,10 @@
+.hackernews {
+    height: 30px;
+    background: url(/images/hackernews.png) top left no-repeat;
+    padding: 10px 0 0 55px;
+    margin-bottom: 18px;
+}
+
 #mc_embed_signup {
     clear: both;
     padding-top: 1.5em;

@@ -23,6 +23,13 @@
 
             {{ content }}
 
+            {% for hn_link in page.hackernews %}
+            <div class="hackernews">
+                Join the discussion about this article
+                <a href="{{ hn_link }}" target="_blank">on Hacker News</a>.
+            </div>
+            {% endfor %}
+
             <div id="disqus_thread"></div>
         </div>
         {% include after.html %}

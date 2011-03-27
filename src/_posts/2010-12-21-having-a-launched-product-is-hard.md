@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Having a launched product is hard
+hackernews: http://news.ycombinator.com/item?id=2027655
 ---
 
 Over the last 6 months, [we](http://rapportive.com) have been learning what it means to support
