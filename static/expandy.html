@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Evolution of Rapportive's new design &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?2" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://downloads.mailchimp.com/js/jquery.form-n-validate.js" type="text/javascript"></script>
+<script src="/form.js" type="text/javascript"></script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Evolution of Rapportive's new design
+            </h1>
+
+            <p>Today we are launching a new design for Rapportive. We put a huge amount of effort into this design, because we all believe deeply in the importance of great user experience, and we know that our users really appreciate it too.</p>
+
+<p>In this post I&#8217;d like to explain some of our process and thinking in the creation of the new design.</p>
+
+<p>Our old design, which we had <a href='http://blog.rapportive.com/the-accidental-launch'>since launch</a>, has served us very well. It was subtle, simple, effective, and blended in well with Gmail. Unfortunately, it was beginning to show some limitations:</p>
+<a href='/2011/05/tall_profile.png' style='float: right; padding-left: 20px'><img src='/2011/05/tall_profile.png' alt='Example of very tall Rapportive profile' width='40' /></a>
+<ol>
+<li>If you&#8217;re using Gmail on a small screen, on a laptop or even a netbook, the Rapportive sidebar would often be too tall to fit on screen. Of course you can scroll down, but the main Gmail scrollbar is already used to scroll down in the conversation. We hooked into the page scrolling, but if you were on a long conversation, you had to scroll all the way to the bottom of the conversation if you wanted to see the rest of the Rapportive sidebar. That was really annoying.</li>
+
+<li>Over the months we&#8217;ve been adding more and more useful stuff to the sidebar: <a href='http://blog.rapportive.com/address-book-inbox-together-at-last'>phone numbers</a>, <a href='http://blog.rapportive.com/40551428'>Facebook status updates</a>, <a href='http://blog.rapportive.com/grow-your-network-with-rapportive'>LinkedIn invitations</a>, and a choice of <a href='http://raplets.com/'>Raplets</a> for a <a href='http://thenextweb.com/apps/2010/04/29/rapportive/'>variety of</a> <a href='http://blog.rapportive.com/get-out-of-your-inbox-and-meet-people-in-pers'>different</a> <a href='http://blog.rapportive.com/rapportive-for-developers-bitbucket-github-st'>purposes</a>. What that meant is that some profiles ended up getting <a href='/2011/05/tall_profile.png'>unmanageably tall</a>.</li>
+
+<li>Different people find different parts of the sidebar useful. Some find <a href='http://twitter.com/GraemeF/status/25286282993213440'>recent tweets</a> most useful, others swear by our <a href='http://twitter.com/smsbnyc/status/40436337681104896'>CRM raplets</a>, others again leave <a href='http://twitter.com/nickcernis/status/15001395635691520'>lots of notes</a> about their contacts. But it sucks if the thing you&#8217;re most interested is often scrolled off the bottom of the screen because the things higher up in the sidebar are taking all the space.</li>
+</ol>
+
+<p>As we add more features to Rapportive, these problems would only get worse, so we decided that it was time to rethink our design.</p>
+
+<p>We had several guiding principles for the redesign. Rapportive should:</p>
+
+<ul>
+<li>Remain very subtle and unobtrusive: Rapportive should be there for you when you want it, but should not try to grab your attention or use more space than necessary. Your <em>email</em> is what&#8217;s important, not the sidebar!</li>
+
+<li>Allow you to serendipitously discover things about your contacts: the information should simply be there when you glance at the sidebar, and shouldn&#8217;t require a lot of clicking or scrolling.</li>
+
+<li>Look good on both large and small screens, both with lots of data and little data. That means it has to make efficient use of screen space.</li>
+
+<li>Avoid configuration dialogs. The interface should just do the right thing.</li>
+
+<li>Be clear, obvious to use, beautiful and <em>enjoyable</em> to interact with :)</li>
+</ul>
+
+<p>First of all, I started with some graphical tweaking. Here are some nice buttons:</p>
+<p style='text-align:center'>
+<a href='/2011/05/connect_buttons.png'><img src='/2011/05/connect_buttons.png' alt='Different sylings for &apos;add friend&apos;/&apos;connect&apos; buttons' /></a>
+</p>
+<p>A nice excuse to play with some CSS gradients and drop shadows, but it doesn&#8217;t actually solve the big problems. So how do we fix the problems with the sidebar?</p>
+
+<p>The first thought: we could simply give the Rapportive sidebar its own scrollbar. That would avoid having to scroll down to the bottom of a long conversation, because you could scroll the sidebar separately. But that approach is pretty bad. A large part of the sidebar may still end up being hidden off-screen, which means you have to go out of your way to scroll down, making it unlikely that you&#8217;ll discover things serendipitously.</p>
+
+<p>Another idea that we ruled out quickly was a &#8216;tabbed&#8217; interface. Tabs work well in a browser, where you have exactly one web page per tab, and each tab is independent. Rapportive isn&#8217;t like that: we might have several pages of information for one person (i.e. the tabs aren&#8217;t independent), and while we have several full tabs for one person, the information for another person might be a lot more sparse. That means that either you have to either have to waste a lot of space (e.g. always have a tab for tweets, even if the person doesn&#8217;t have a Twitter account), or you have things appearing in different places for different people (which is confusing). Finally, tabs require a lot of laborious clicking: you can&#8217;t see what&#8217;s in a tab without clicking it, and you can&#8217;t see the contents of two tabs at the same time. Tabs would have been an unpleasant, clunky interface.</p>
+
+<p>An &#8216;accordion&#8217; interface, like you find in Outlook for example, seemed like a step in a more promising direction:</p>
+<p style='text-align:center'>
+<a href='/2011/05/accordion.png'><img src='/2011/05/accordion.png' alt='Accordion interface example' /></a>
+</p>
+<p>You can have several sections, and each section can expand to show additional information when you click it. When you expand one section, another one collapses to make room. (In the screenshot above, I could click &#8216;Contacts&#8217; to see my list of contacts; the list of mailboxes under the &#8216;Mail&#8217; heading would be hidden to make room for the list of contacts.)</p>
+
+<p>Accordions are fairly efficient when space is very limited, but they suck if you have a large screen. If you have enough space that all your sections could be comfortably expanded side-by-side, why limit it to only one expanded section at a time? I don&#8217;t want to have to click a section to see what&#8217;s inside. It&#8217;s the same problem as with tabs.</p>
+
+<p>So I started experimenting with a kind of adaptive accordion which could have several sections expanded at the same time, if there was enough screen space available. Here are some early design ideas:</p>
+<p style='text-align:center'>
+<a href='/2011/05/section_headings.png'><img src='/2011/05/section_headings.png' alt='Three designs for separators/headings between sidebar sections' width='550' /></a>
+</p>
+<p>The designs were fairly ugly, but I could see an algorithm emerging here. I figured that we needed an accordion with the following improvements:</p>
+
+<ul>
+<li>It should be possible for several sections to be expanded at the same time, up to a maximum of what will fit on screen without scrolling.</li>
+
+<li>When you expand a section, other sections may need to collapse in order to make space on screen. The application should be intelligent about which sections to collapse &#8211; for example, if you haven&#8217;t clicked a section in a long time, you probably find it less useful than a section which you clicked just now. So we should keep the recently-used sections expanded, if possible.</li>
+
+<li>The collapsed version of a section should be useful too; for example, the collapsed Twitter section could show just the username, whereas the expanded version could show the username and three most recent tweets. If the contact doesn&#8217;t have a Twitter account, we shouldn&#8217;t show the section at all, since it would just be a waste of space.</li>
+
+<li>Sometimes a section gets very tall, for example a Facebook status with lots of comments. In that case, we need to limit the section&#8217;s height and give it a scrollbar, to avoid it dominating the entire sidebar. But if we can avoid scrollbars, we should do without.</li>
+</ul>
+
+<p>Even scrollbars, despite being such a standard part of user interface design, have their problems:</p>
+<p style='text-align:center'>
+<a href='/2011/05/scrolling.png'><img src='/2011/05/scrolling.png' alt='Misalignment of text due to scrollbar spacing' /></a>
+</p>
+<p>Fortunately such spacing issues are easy to iron out. A harder question is: how do we communicate to the user that they can expand a section?</p>
+
+<p>In the old design, if you clicked someone&#8217;s Twitter username, we would open up a new browser tab to show their tweet stream. In an accordion design, however, you&#8217;d expect that clicking the collapsed section will cause it to expand (i.e. show recent tweets, not open a new browser tab). Do we break the old interaction and force users to learn a new behaviour, or do we add an extra button for expanding a section?</p>
+<p style='text-align:center'>
+<a href='/2011/05/expand1.png'><img src='/2011/05/expand1.png' alt='Up/down arrow button to trigger expansion of a section' /></a>
+</p>
+<p>That was my first attempt. The arrows serve two purposes: to indicate that the section can be expanded, and to act as a button to trigger the actual expanding. But I didn&#8217;t like it. Some sections would have arrows and others wouldn&#8217;t (because we don&#8217;t always have additional information), so the &#8220;connect&#8221;/&#8221;add friend&#8221; buttons could become strangely misaligned. It also made the interface look more cluttered and complicated.</p>
+
+<p>Surely we could do better? For example, could we show the button for expanding a section only when you hover over it? That&#8217;s an interesting idea. What&#8217;s more, we could then calculate how tall the section would be if it was expanded, and indicate it with the height of the arrow:</p>
+<p style='text-align:center'>
+<a href='/2011/05/expand2.png'><img src='/2011/05/expand2.png' alt='Large arrow when hovering mouse over expanded section; click the arrow to expand' width='550' /></a>
+</p>
+<p>At this point we&#8217;re really moving away from established user interface patterns. Will users notice the arrow, and understand what it means? Will they figure out that you can click it? It contains a lot of information: the fact that the section can be expanded, how big it will be and where it will be placed when expanded. It&#8217;s also a much bigger click target than the previous arrow button, which is good. But it still has the problem of not looking particularly like a button. (It goes grey when you hover over it, to indicate that you can interact with it, but still it&#8217;s not exactly obvious.)</p>
+
+<p>I was starting to get sick of this redesign, but fortunately, inspiration struck again. If we&#8217;re already using an arrow on hover to indicate how tall the expanded section will be, well&#8230; why don&#8217;t we use <em>the expanded section itself</em> to indicate how tall it will be? Yes, we can just show the expanded section itself on hover!</p>
+<p style='text-align:center'>
+<a href='/2011/05/expand3.png'><img src='/2011/05/expand3.png' alt='Showing the expanded version when hovering over a collapsed section' width='550' /></a>
+</p>
+<p>It&#8217;s obvious in retrospect, but it took a surprisingly long time to come up with this design. I call it the <a href='http://en.wikipedia.org/wiki/Jinn_in_popular_culture'>&#8220;genie&#8221;</a> because it looks like a ghost that has come out of an oil lamp. Although the version above still isn&#8217;t pretty, it really got to the bottom of many of the challenges I discussed at the beginning:</p>
+
+<ul>
+<li>When you&#8217;re not hovering your mouse over the sidebar, Rapportive remains minimalistic and uncluttered. No more buttons than necessary.</li>
+
+<li>If you&#8217;re on a large screen, the sections of the sidebar expand to fill the screen space, so you can see everything at a glance. No need to click anything (unless you want to add them as a friend, of course).</li>
+
+<li>If you&#8217;re on a smaller screen, we collapse your lesser-used sections to make them more compact; in most cases, this allows us to fit everything on screen without need for scrolling.</li>
+
+<li>When you&#8217;re interacting with the sidebar, we allow Rapportive to pop up additional information outside of the sidebar. But we don&#8217;t encroach on your email space when you&#8217;re not interacting with the sidebar.</li>
+
+<li>The visual cues makes it pretty obvious that the expanded section is a bigger, more verbose version of the collapsed section. (I think it&#8217;s a bit like a magnifying glass.)</li>
+
+<li>If there are several collapsed sections next to each other in the sidebar, you can skim the content of all of them by slowly moving the mouse across each of the collapsed sections. As the mouse moves from one section to another, the genie for the previous section disappears and the one for the new section appears. Wonderful for getting a quick overview of someone&#8217;s online activity before you reply to their email.</li>
+</ul>
+
+<p>Not all is great though. If there is space, we&#8217;d still like to show you the expanded section in the sidebar right away, without you having to hover the mouse. But how do we make clear to users that sections can be expanded?</p>
+
+<p>In the screenshot above, I tried using a button with an arrow pointing right. If you clicked it, the expanded section would slide into the sidebar, and the other sections would move out of the way to make room. I liked the animation, but the button was ugly. Fortunately, Rahul had the idea that we could use a right-pointing mouse cursor to indicate the same thing. So now you can click anywhere on the genie and it will slide into the sidebar.</p>
+
+<p>After some graphical tweaking, this is what the final design looks like:</p>
+<p style='text-align:center'>
+<a href='/2011/05/expand4.png'><img src='/2011/05/expand4.png' alt='End result: Rapportive&apos;s new sidebar design with collapsible section' width='550' /></a>
+</p>
+<p>I hope you&#8217;ll agree that it is <em>gorgeous</em>. We have added very little new user interface (and we&#8217;ve taken a lot away, compared to earlier designs), but the result is very effective. It fits neatly on both big and small screens, it is easy to use, and it is actually lots of fun to play with. Give it a try for yourself, and let us know what you think!</p>
+
+<p>Usability without design is dreary. Design without usability is pretentious. Design and usability together are delightful.</p>
+
+            
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-subscribe" class="widget">
+            <h2 class="widget-title">Subscribe</h2>
+            <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+                Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+            </a>
+
+            <div id="mc_embed_signup">
+                <p>
+                    Enjoyed this? To get notified when I write something new,
+                    <a href="http://twitter.com/martinkl">follow me</a> on Twitter,
+                    <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+                    or type in your email address:
+                </p>
+
+                <form action="http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    <fieldset>
+                        <div class="mc-field-group">
+                            <label for="mce-EMAIL">Email:</label>
+                            <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+                        </div>
+                        <div id="mce-responses">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About Martin Kleppmann</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
+                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
+                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
+                making stuff that people want, great people and culture, the web and its future,
+                marvellous user experiences, maintainable code and scalable architecture.</p>
+
+                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
+                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
+                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
+                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
+                    
+                      <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
+                    
+                      <li>21 Dec 2010: <a href="/2010/12/21/having-a-launched-product-is-hard.html">Having a launched product is hard</a></li>
+                    
+                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
+                    
+                      <li>31 Aug 2010: <a href="/2010/08/31/good-things-are-hard-to-articulate.html">Good things are hard to articulate</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>
