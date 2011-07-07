@@ -59,8 +59,8 @@
                 Load/performance testing a Rails application with ApacheBench
             </h1>
 
-            <a href='/2008/09/bidforwine.png'><img class='size-full wp-image-140 alignright' title='Bid for Wine logo' src='/2008/09/bidforwine.png' height='95' align='right' alt='Bid for Wine logo' style='margin:
-20px;' width='375' /></a>
+            <a href='/2008/09/bidforwine.png'><img align='right' alt='Bid for Wine logo' class='size-full wp-image-140 alignright' height='95' src='/2008/09/bidforwine.png' style='margin:
+20px;' title='Bid for Wine logo' width='375' /></a>
 <p>Just over 3 days until <a href='http://www.bidforwine.co.uk/'>Bid for Wine</a> goes online! It&#8217;s great to see this massive project, which <a href='/2008/09/22/bid-for-wine-online-wine-auctions-coming-soon.html'>I&#8217;ve blogged about before</a>, finally complete. We will launch on Friday 31 October, the first lots for sale are already lined up (including <a href='http://bidforwine.wordpress.com/2008/09/28/a-unique-chance/'>a remarkable bottle</a> &#8211; a unique item from a private bottling of the famous <a href='http://www.guigal.com/vignoble.php?langue=en&amp;rub=1&amp;srub=1'>Guigal Family</a>, and probably the only bottle of its kind on the open market!), some big wine magazines are going to be reporting, and everybody is getting very excited.</p>
 
 <p>The application is deployed to the servers (we are running on <a href='http://engineyard.com/'>Engine Yard</a>), the DNS is updated, the load balancers are configured, the holding page and contact form are already getting a fair bit of traffic, everything seems ready. We just need to flick a switch and users will start hitting the site.</p>
@@ -77,8 +77,8 @@
 
 <p>The first graph is for a test with four concurrent connections, i.e. the server should be pretty relaxed. It shows which proportion of pages were served in less than a particular time (i.e. the percentiles). The graph is generated from timings of 10,000 page views.</p>
 <p style='text-align: center;
-'><a href='/2008/10/test4.png'><img class='size-full wp-image-169 aligncenter' src='/2008/10/test4.png' height='358' alt='Maximum response time for a given proportion of requests
-(server not saturated)' width='500' /></a></p>
+'><a href='/2008/10/test4.png'><img alt='Maximum response time for a given proportion of requests
+(server not saturated)' class='size-full wp-image-169 aligncenter' height='358' src='/2008/10/test4.png' width='500' /></a></p>
 <p>How to read this graph: e.g. see that the red line crosses 0.16 seconds at about 80%; that means that the client (ApacheBench) reported that 80% of requests were served in 0.16 seconds <strong>or less</strong>. The highest point at 100% is the longest time which it ever took in the test.</p>
 
 <p>I measured four quantities: the time per page view reported by ApacheBench (the client), the total time per page view reported by the server, and the values for rendering time and database time reported by the server. (The blue line is the sum of the green and the orange lines.) I would call this pretty well-behaved: 84% of page requests are received by the client within 200 milliseconds, and 95% within 300ms; rendering time is quite variable while database time hardly ever exceeds 100ms. And the client times are just a constant amount above the server times, to account for the fact that the request and response have to go across a network, through a proxy/load balancer etc.</p>
@@ -89,8 +89,8 @@
 
 <p>Now, what happens when we hit the site harder? In the next test I increased the concurrency parameter to 16, more than twice the number of mongrels. Now I would expect all mongrels to be busy all the time (saturated with requests), and response times to go up. And this is the graph we get:</p>
 <p style='text-align: center;
-'><a href='/2008/10/test5.png'><img class='size-full wp-image-170 aligncenter' src='/2008/10/test5.png' height='351' alt='Maximum response time for a given proportion of requests
-(server saturated)' width='500' /></a></p>
+'><a href='/2008/10/test5.png'><img alt='Maximum response time for a given proportion of requests
+(server saturated)' class='size-full wp-image-170 aligncenter' height='351' src='/2008/10/test5.png' width='500' /></a></p>
 <p>Ignore the red one for now. The shape of the three server-side curves is still pretty much the same as before, and overall they are taking 50% to 100% longer to respond compared to the test above. That is simply because the CPU is now fully occupied with all three mongrels, whereas previously there might only be one or two mongrels wanting CPU at the same time. When I ran further tests, increasing concurrency of the client to 64 (more than ten times the number of mongrels), these server curves stayed exactly the same, and server-side times didn&#8217;t increase any further. This is good news: although the server is overloaded, this doesn&#8217;t cause any loss of throughput (which might be the case if there were inefficiencies).</p>
 
 <p>For a saturated server, the kernel load average was between about 3.0 and 4.0, no matter how many concurrent clients there were. This makes sense, since the load is determined by the length of the scheduler&#8217;s run queue, and if you only have 3 server processes (mongrels) plus a few of background housekeeping processes with small requirements, there&#8217;s no reason why it should go any higher.</p>
@@ -118,7 +118,7 @@ on its own EC2 instance, no keep-alive, each making 2,500 requests.</li>
 
 <p>(This diagram is what you get if you flip the one above by a diagonal axis and then differentiate the function by response time. Note also that the colours now have a different meaning.)</p>
 <p style='text-align: center;
-'><a href='/2008/10/distribution.png'><img class='size-full wp-image-168 aligncenter' src='/2008/10/distribution.png' height='364' alt='Distribution of client-side response times' width='500' /></a></p>
+'><a href='/2008/10/distribution.png'><img alt='Distribution of client-side response times' class='size-full wp-image-168 aligncenter' height='364' src='/2008/10/distribution.png' width='500' /></a></p>
 <p>I don&#8217;t quite know yet what to make of this. Ok, the behaviour doesn&#8217;t differ too drastically, so if you just want a rough idea of the performance of your application, it seems like ApacheBench&#8217;s concurrency option is perfectly fine. I am just a bit intrigued by the differences.</p>
 
 <p>The green line is most like what I expected, because it most resembles an exponential distribution, which is what queueing theory predicts in many cases. Interestingly, this is the setup in which the four ApacheBench processes are most likely to get in each other&#8217;s way, contending for I/O on the EC2 instance &#8211; maybe this causes some jitter, blurring an otherwise regular pattern. In the two cases with one ApacheBench process per machine (blue and yellow lines) the distribution is more flat between about 1 and 3 seconds response time; in particular, the blue and yellow setup are noticeably more likely to see 2-3 second response times than the green setup.</p>
@@ -130,7 +130,7 @@ on its own EC2 instance, no keep-alive, each making 2,500 requests.</li>
 <p>In order to produce these statistics, I wrote a few simple shell scripts to gather and process the data. I&#8217;ll put them here in case somebody finds them useful (and so that I can find them again when I need them next time!).</p>
 
 <p>First I have two scripts which run on the servers with the mongrels. In our setup, each virtual machine has its own logfile, so the scripts need to be run on each virtual machine. They select the portion of the logfile which was written during the duration of the test, and also log load averages from the kernel. Set an environment variable like <strong>export LOGFILE=/path/to/my/production.log</strong> before running these scripts. The first is called <strong>before-test.sh</strong> and should be run before the test starts:</p>
-<div class='highlight'><pre><span class='c'>#!/bin/sh</span>
+<div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/sh</span>
 <span class='k'>if</span> <span class='o'>[</span> ! -f <span class='s2'>&quot;$LOGFILE&quot;</span> <span class='o'>]</span>; <span class='k'>then </span><span class='nb'>echo</span> <span class='s2'>&quot;LOGFILE not found&quot;</span>; <span class='nb'>exit </span>1; <span class='k'>fi</span>
 <span class='nb'>echo</span> <span class='s2'>&quot;time,1min,5min,10min,running,procs,lastproc&quot;</span> &gt; /tmp/loadavg.csv
 <span class='o'>(</span> <span class='k'>while </span><span class='nb'>true</span>; <span class='k'>do</span>
@@ -142,10 +142,10 @@ sleep 1
 <span class='k'>done</span> <span class='o'>)</span> &amp;
 <span class='nb'>echo</span> <span class='nv'>$!</span> &gt; /tmp/loadavg.pid
 wc -l <span class='nv'>$LOGFILE</span> | awk <span class='s1'>&#39;{print $1}&#39;</span> &gt; /tmp/skip_log_lines
-</pre>
+</code></pre>
 </div>
 <p>And <strong>after-test.sh</strong> should be run when the test has ended:</p>
-<div class='highlight'><pre><span class='c'>#!/bin/sh</span>
+<div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/sh</span>
 <span class='nb'>kill</span> <span class='sb'>`</span>cat /tmp/loadavg.pid<span class='sb'>`</span>
 <span class='nb'>echo</span> <span class='s2'>&quot;total,render,db,url&quot;</span> &gt; /tmp/requests.csv
 <span class='nv'>skip</span><span class='o'>=</span><span class='sb'>`</span>cat /tmp/skip_log_lines<span class='sb'>`</span>
@@ -153,12 +153,12 @@ tail -n +<span class='sb'>`</span>expr <span class='nv'>$skip</span> + 1<span cl
 <span class='s1'>&#39;^Completed in&#39;</span> | <span class='se'>\\</span>
 awk <span class='s1'>&#39;{print $3 &quot;,&quot; $8 &quot;,&quot; $12 &quot;,&quot; $17}&#39;</span> &gt;&gt; /tmp/requests.csv
 rm -f /tmp/loadavg.pid /tmp/skip_log_lines
-</pre>
+</code></pre>
 </div>
 <p>As you can see, it filters the processing times reported by the server out of the logfile and formats them as CSV for post-processing in your favourite spreadsheet application.</p>
 
 <p>To execute the test (potentially with several processes at the same time), I ran something like the following on an EC2 instance:</p>
-<div class='highlight'><pre>apt-get update
+<div class='highlight'><pre><code class='bash'>apt-get update
 apt-get -y dist-upgrade
 apt-get -y install
 apache2-utils
@@ -174,14 +174,14 @@ mkdir loadtest
 <span class='nv'>$AB</span> -g list4.log <span class='nv'>$COOKIE</span> <span class='s2'>&quot;${HOST}/path/to/test&quot;</span> &amp;
 <span class='nb'>wait</span>
 <span class='k'>for </span><span class='nb'>test </span>in <span class='nv'>$TESTS</span>; <span class='k'>do</span>
-awk -F <span class='s1'>&#39;\&#39;</span> <span class='s2'>&quot;{print \\$4 \\&quot;</span>,<span class='se'>\\</span><span class='s2'>&quot; \\$5 \\&quot;</span>,<span class='se'>\\</span><span class='s2'>&quot; \\$6 \\&quot;</span>,<span class='nv'>$test</span><span class='se'>\\</span><span class='s2'>&quot;}&quot;</span> &lt; <span class='nv'>$test</span>.log | tail -n +2 &gt; <span class='nv'>$test</span>
+awk -F <span class='err'>&#39;</span><span class='se'>\&#39;</span> <span class='s2'>&quot;{print \\$4 \\&quot;</span>,<span class='se'>\\</span><span class='s2'>&quot; \\$5 \\&quot;</span>,<span class='se'>\\</span><span class='s2'>&quot; \\$6 \\&quot;</span>,<span class='nv'>$test</span><span class='se'>\\</span><span class='s2'>&quot;}&quot;</span> &lt; <span class='nv'>$test</span>.log | tail -n +2 &gt; <span class='nv'>$test</span>
 <span class='k'>done</span>
 <span class='nb'>echo</span> <span class='s2'>&quot;dtime,ttime,wait,test&quot;</span> &gt; bench.csv
 cat <span class='nv'>$TESTS</span> &gt;&gt; bench.csv
-</pre>
+</code></pre>
 </div>
 <p>Then copying and aggregating all the logs onto my machine for making pretty graphs:</p>
-<div class='highlight'><pre><span class='nv'>TEST</span><span class='o'>=</span>test7
+<div class='highlight'><pre><code class='bash'><span class='nv'>TEST</span><span class='o'>=</span>test7
 <span class='nv'>CLIENTS</span><span class='o'>=</span><span class='s2'>&quot;ec2-75-101-204-213&quot;</span>
 <span class='nv'>KEYFILE</span><span class='o'>=</span><span class='s2'>&quot;path/to/private/key/file/for/ec2/instance&quot;</span>
 <span class='k'>for </span>host in prod1 prod2; <span class='k'>do</span>
@@ -197,7 +197,7 @@ paste -d <span class='s1'>&#39;,&#39;</span> loadavg-prod1.csv loadavg-prod2.csv
 cat requests-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv &gt; <span class='nv'>$TEST</span>/requests.csv
 cat client*.csv &gt; <span class='nv'>$TEST</span>/clients.csv
 mv loadavg-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv requests-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv client*.csv <span class='nv'>$TEST</span>
-</pre>
+</code></pre>
 </div>
 <p>Obviously these scripts are still pretty rough around the edges, but they did the job of being simple and telling me what I wanted to know.</p>
 
@@ -259,7 +259,7 @@ mv loadavg-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv reques
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 

@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Thu, 19 May 2011 16:17:11 PDT</lastBuildDate>
+        <lastBuildDate>Wed, 06 Jul 2011 23:41:59 PDT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -160,17 +160,17 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>An edge always goes from one node to another. What are those nodes? Well, you can define them as you like (although there are some conventions). For now, let&#8217;s say:</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting1.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting1.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting1.dot.png' width='550' />
 </a></p>
 <p>Let&#8217;s add some more details. You pay the $5 credit card bill from the company account. And where did the money in the company account come from in the first place? Ah, I see, you put in $5,000 of your savings to start the company. Ok, now the graph looks like this:</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting2.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting2.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting2.dot.png' width='550' />
 </a></p>
 <p>Hopefully pretty self-explanatory so far. Money flows in the direction of the arrows.</p>
 
 <p>Hungry once again, you go to the taqueria and buy a Super Burrito for $8 on the credit card. Now we could create another node for the taqueria, but this is starting to get messy &#8211; we don&#8217;t really care how much money we spent on bagels vs. how much on burritos. Let&#8217;s just lump them together as &#8220;food&#8221;. Also, &#8220;Random startup&#8221; is a bit unhelpful &#8211; I&#8217;ve already forgotten what those $500 were for. Let&#8217;s call it &#8220;furniture&#8221; instead.</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting3.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting3.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting3.dot.png' width='550' />
 </a></p>
 <p>See, that&#8217;s perfectly fine. We can have nodes which represent actual bank accounts or cards, others which represent people or companies, and others again which represent abstract categories like &#8220;food&#8221; or &#8220;furniture&#8221;. Just throw it all into the same graph.</p>
 
@@ -188,7 +188,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>After you&#8217;ve processed all the edges, the value at each node is that account&#8217;s balance. Our graph now looks like this:</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting4.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting4.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting4.dot.png' width='550' />
 </a></p>
 <p>Note that the account balances have two nice properties:</p>
 
@@ -206,13 +206,13 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>So you received $5,000 + $2,500 in cash from your customers, wired straight the company bank account. Let&#8217;s add that to the graph:</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting5.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting5.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting5.dot.png' width='550' />
 </a></p>
 <p>But that&#8217;s not quite right. The price was $5,000 for each customer, and now it looks like you charged two different prices. How do we represent our arrangement with customer 2?</p>
 
 <p>The solution is to deconstruct the deal into two separate transactions: the sale (in which the buyer agrees to buy, but no actual money changes hands) and the payment (when the cash actually hits your bank account). We can draw it like this:</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting6.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting6.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting6.dot.png' width='550' />
 </a></p>
 <p>See what I&#8217;ve done here? I&#8217;ve just made up a new node, generically called it &#8220;sales&#8221;, and added the actual $5,000 sales as a transaction from this &#8220;sales&#8221; account to the customer accounts. Adding this extra node hasn&#8217;t changed your bank balance.</p>
 
@@ -230,7 +230,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>The resulting graph now looks like this:</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting7.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting7.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting7.dot.png' width='550' />
 </a></p>
 <p>Note how I have represented the transactions:</p>
 
@@ -254,7 +254,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>In order to produce these statements, I need to get out the crayons. Here is the same graph as before, with the nodes coloured in:</p>
 <p><a href='http://martin.kleppmann.com/2011/03/accounting8.dot.png'>
-  <img src='http://martin.kleppmann.com/2011/03/accounting8.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='http://martin.kleppmann.com/2011/03/accounting8.dot.png' width='550' />
 </a></p>
 <p>Explaining the colours (putting the accounting terminology in brackets, since you&#8217;re likely to encounter these words):</p>
 
@@ -301,7 +301,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
   </tr>
   <tr style='height: 0.7em' />
   <tr style='margin-top: 1em'>
-    <th style='font-variant: small-caps;'>Total</th>
+    <th style='padding-top: 1em; font-variant: small-caps;'>Total</th>
     <th style='border-bottom: 1px solid #888; font-weight: bold;'>Profit/Loss</th>
     <th style='border-bottom: 1px solid #888; font-weight: bold; text-align: right;'>$1,862</th>
     <td>(= total revenue - total expenses)</td>
@@ -357,7 +357,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
   </tr>
   <tr style='height: 0.7em' />
   <tr style='margin-top: 1em'>
-    <th rowspan='3' style='font-variant: small-caps;'>Equity</th>
+    <th rowspan='3' style='padding-top: 1em; font-variant: small-caps;'>Equity</th>
     <td>Profit/Loss</td>
     <td style='text-align: right;'>$1,862</td>
   </tr>
@@ -379,12 +379,12 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p>The total of the balance sheet is a lower bound on the value of your company. It&#8217;s a very pessimistic figure &#8212; it assumes that your team, your technology, your brand etc. are all worth precisely nothing; if your company raises money from investors, your valuation will be much higher than the balance sheet figure, since that valuation includes the value of team, technology, brand etc in the form of a wild guess. In established companies you can find &#8220;intangible assets&#8221; on the balance sheet, but since they are very hard to value, I suspect it&#8217;s not worth bothering with unless you know what you are doing.</p>
 
 <p>That&#8217;s the end of our whirlwind tour through the world of accounting. If you&#8217;re a real accountant reading this, please forgive my simplifications; if you spot any mistakes, please let me know. For everyone else, I hope this has been useful. To find out when I write something new, please <a href='http://twitter.com/martinkl'>follow me on Twitter</a> or put your email address in this box:</p>
-<form name='mc-embedded-subscribe-form' class='validate' method='post' action='http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6' id='mc-embedded-subscribe-form' target='_blank'>
+<form action='http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6' class='validate' id='mc-embedded-subscribe-form' method='post' name='mc-embedded-subscribe-form' target='_blank'>
     <fieldset>
         <div class='mc-field-group'>
             <label for='mce-EMAIL'>Email:</label>
-            <input name='EMAIL' class='required email' id='mce-EMAIL' type='text' value='' />
-            <input name='subscribe' class='btn' id='mc-embedded-subscribe' type='submit' value='Subscribe' />
+            <input class='required email' id='mce-EMAIL' name='EMAIL' type='text' value='' />
+            <input class='btn' id='mc-embedded-subscribe' name='subscribe' type='submit' value='Subscribe' />
         </div>
         <div id='mce-responses'>
             <div class='response' id='mce-error-response' style='display:none' />
@@ -445,7 +445,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p>So I am perhaps a bit envious of those who could move ahead rapidly and build their product without having to worry about supporting users or keeping their database alive. On the other hand, I am of course hugely grateful for our users who use and <a href='http://rapportive.com/buzz'>love our product</a> every day. I wouldn&#8217;t have it any other way.</p>
 <p style='text-align: center'>
   <a href='http://adam.heroku.com/past/2008/4/23/the_startup_curve/'>
-    <img src='http://martin.kleppmann.com/2010/12/yc_whiteboard.jpg' height='379' alt='Photo of whiteboard at YC, showing curve of The Process' width='500' />
+    <img alt='Photo of whiteboard at YC, showing curve of The Process' height='379' src='http://martin.kleppmann.com/2010/12/yc_whiteboard.jpg' width='500' />
   </a>
 </p>
 <p>Fortunately, we are not the first to experience this. At the YC office there is a whiteboard, now carrying somewhat iconic status, which reminds every single YC founder of <em>&#8220;The Process&#8221;</em>: once a startup has launched, the novelty will wear off, and the team will find itself in the <em>&#8220;Trough of Sorrow&#8221;</em>. We know what the Trough of Sorrow looks like. I have just described it. It&#8217;s not very much fun.</p>
@@ -473,7 +473,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 </ul>
 <p style='text-align: center'>
   <a href='http://www.flickr.com/photos/performable/4792109640/sizes/l/in/set-72157623602121734/'>
-    <img src='http://martin.kleppmann.com/2010/12/strategic_plan.jpg' height='335' alt='Poster: We have a strategic plan. It&apos;s called doing things.' width='500' />
+    <img alt='Poster: We have a strategic plan. It&apos;s called doing things.' height='335' src='http://martin.kleppmann.com/2010/12/strategic_plan.jpg' width='500' />
   </a>
 </p>
                 ]]></content:encoded>
@@ -502,10 +502,10 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>Over the course of years, those tiny traces are aggregated, and what you get out at the end is an intuitive understanding of how the world works (or rather, how those parts of the world which you have experienced work). Think of it like very light crayon touches, in the hands of an artist, gradually forming to be a beautiful picture — except that the picture is never complete, and always evolving.</p>
 <object height='311' width='508'>
-    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US' />
+    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' />
     <param name='allowFullScreen' value='true' />
     <param name='allowscriptaccess' value='always' />
-    <embed src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US' allowfullscreen='true' type='application/x-shockwave-flash' allowscriptaccess='always' height='311' width='508' />
+    <embed allowfullscreen='true' allowscriptaccess='always' height='311' src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' width='508' />
 </object>
 <p>With that intuition, when you encounter a new situation, it doesn’t matter that you haven’t encountered the exact same situation before: your brain does an approximate matching of the new situation with your mental model of the world, and immediately predicts the right answer. It doesn’t even need to search through memories, because the picture of the world in your head is already the fully aggregated sum of your experiences.</p>
 
@@ -651,7 +651,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p><strong>1. What share of the company do the convertible note investors own after the Series A?</strong></p>
 
 <p>We assumed above that after the Series A, the Series A investors own 30% of the company. But how much do the seed investors own after converting their note into shares?</p>
-<img class='aligncenter size-full wp-image-379' src='http://martin.kleppmann.com/2010/05/Valuation-Cap-demo-1.png' height='402' alt='How much equity does the note convert into?' width='550' />
+<img alt='How much equity does the note convert into?' class='aligncenter size-full wp-image-379' height='402' src='http://martin.kleppmann.com/2010/05/Valuation-Cap-demo-1.png' width='550' />
 <p>Without the valuation cap, the seed investors end up with an ever diminishing share of the company as the valuation increases. The effect of the cap is that the convertible note investors are guaranteed a certain share of the company, even if you get a <a href='http://techcrunch.com/2010/03/25/four-vc-firms-battle-for-foursquare-valuation-goes-stratospheric/'>Foursquare valuation</a>.</p>
 
 <p>That minimum share is: (1 &#8211; [series A investor ownership] ) * [amount raised on conv note] / [valuation cap]. (The first factor takes into account the Series A dilution.) In this example, the note will convert into a minimum of (1&#8211;0.3) * $0.5m / $4m = 8.75% of the company&#8217;s shares.</p>
@@ -659,7 +659,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p><strong>2. What effective discount are the convertible note investors getting relative to the Series A investors?</strong></p>
 
 <p>If you didn&#8217;t have a cap, you would simply give a fixed (say 20%) discount when the note converts into shares. But when you have a cap, and your Series A valuation hits the cap, you&#8217;re fixing the price for the early investors, while the incoming Series A investors might be paying a lot more per share. So you are effectively giving a greater than 20% discount in that case.</p>
-<img class='aligncenter size-full wp-image-380' src='http://martin.kleppmann.com/2010/05/Valuation-Cap-demo-2.png' height='403' alt='Effective discount on conversion' width='550' />
+<img alt='Effective discount on conversion' class='aligncenter size-full wp-image-380' height='403' src='http://martin.kleppmann.com/2010/05/Valuation-Cap-demo-2.png' width='550' />
 <p>I find this graph interesting, because it&#8217;s basically a measure of &#8220;how annoyed the VCs are going to be about the convertible note&#8221;. &#8211; Imagine you&#8217;re at the theatre, and you know that for the same ticket you paid 2 or even 3 times as much as the guy sitting next to you. You would not be happy, because it just doesn&#8217;t feel fair. If your valuation goes substantially above the cap, there can be a big difference in share price.</p>
 
 <p>Of course, if your startup is awesome and investors are desperate to be part of your round, this probably won&#8217;t be an issue. And of course, maybe such a large discount is entirely fair if your Angel investors add a lot of value beyond the money they put in. But it&#8217;s a factor to keep in mind. At least with a graph like this you can start thinking about your numbers usefully.</p>
@@ -799,7 +799,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p>I&#8217;m sure much has been written about this already, but I&#8217;ve not really read any of it. Instead I made up some principles based on my own bit of experience and a bit of common sense, and maybe you will find them useful.</p>
 
 <p>So let&#8217;s take a look at a negotiation from the point of view of the seller. When you&#8217;re selling something, you want to charge as much as you can get away with. The higher the price, the better for you, i.e. the higher the monetary benefit of the sale to you.</p>
-<img class='aligncenter size-full' src='http://martin.kleppmann.com/2010/01/graph1.jpg' height='299' alt='Graph: Value over price (1)' width='500' />
+<img alt='Graph: Value over price (1)' class='aligncenter size-full' height='299' src='http://martin.kleppmann.com/2010/01/graph1.jpg' width='500' />
 <p>The first bit of money makes a big difference &#8211; maybe you really need it so that you can pay the rent, otherwise you&#8217;ll get kicked out of your house. Within this range, having more money is clearly a lot more valuable for you. However, as the amounts increase and you have secured an acceptable standard of living, I would argue that the <em>benefit</em> of the money <em>to you</em> slows down. Frankly, a top-paid investment banker would barely notice the difference if their salary or bonus was increased or decreased by 50%.</p>
 
 <p>But nevertheless, although it gradually flattens a bit, the line is always increasing. If you can get more out of a deal, it&#8217;s a better deal. At first glance anyway.</p>
@@ -807,13 +807,13 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p>However, that&#8217;s not the end of the story. When I am negotiating with someone, this is usually someone I actually <em>want</em> to work with, and I want to stay friends with them. You don&#8217;t want to charge so much that they will simply walk away. And if you&#8217;re in a strong position where the buyer doesn&#8217;t have much choice (eg. because it&#8217;s something urgent and they don&#8217;t have time to find someone else), you don&#8217;t want to abuse your position, as otherwise you will get a bad reputation as someone who takes advantage of others.</p>
 
 <p>Therefore, you should be taking your relationship with the buyer into account. How indignant they will be about your price will depend on a lot of factors (the market value of what you have to offer, how much you charged them previously, how much they can afford, etc). But in general there will be some sort of function describing how happy they are depending on the price (BogoGraph alert!):</p>
-<img class='aligncenter size-full' src='http://martin.kleppmann.com/2010/01/graph2.jpg' height='368' alt='Graph: Value over price (2)' width='500' />
+<img alt='Graph: Value over price (2)' class='aligncenter size-full' height='368' src='http://martin.kleppmann.com/2010/01/graph2.jpg' width='500' />
 <p>Here I plotted in blue the buyer&#8217;s &#8220;goodwill&#8221; (not in any financial sense, just in the sense of &#8220;how much they like you&#8221;). If you charge too much, they will obviously hate you, so the graph goes downhill very rapidly beyond a certain point. You probably don&#8217;t want to go there. I think it is also possible to charge too little, which conveys the message that what you have is not particularly good and not worth very much; but that won&#8217;t offend your buyer nearly as much as overcharging them. So I&#8217;d say that the graph first goes up a little bit, and then goes down a lot.</p>
 
 <p>How do you figure out the shape of that curve for your buyer? That&#8217;s hard. You need to get a few data points, for example you might try asking them for a pretty high price and observing how upset they get. But you&#8217;ve got to be very careful &#8211; don&#8217;t abuse their trust and don&#8217;t waste their time. The longer you spend trying to measure the blue curve, the lower it gets overall (i.e. the more irritated they get with you). It&#8217;s better if you can use external things as reference points &#8211; how much an alternative solution would cost them, how much they have paid for comparable things in the past, the size of their budget (which they probably won&#8217;t tell you but you might be able to guess indirectly).</p>
 
 <p>The value you get out of making the sale is twofold: on the one side the money you get out of it, and on the other side the buyer&#8217;s goodwill (with all of its intangible benefits, such as keeping open potential future deals, recommendations, referrals, general happiness and warm fuzzy feelings). You want both, so let&#8217;s just add the two curves together:</p>
-<img class='aligncenter size-full' src='http://martin.kleppmann.com/2010/01/graph3.jpg' height='364' alt='Graph: Value over price (3)' width='500' />
+<img alt='Graph: Value over price (3)' class='aligncenter size-full' height='364' src='http://martin.kleppmann.com/2010/01/graph3.jpg' width='500' />
 <p>The red line is simply the sum of the blue and the black, and represents the total value you&#8217;re getting out of the sale. Some things to observe:</p>
 
 <ol>

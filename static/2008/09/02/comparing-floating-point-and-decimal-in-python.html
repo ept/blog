@@ -60,7 +60,7 @@
             </h1>
 
             <p>Bizarre happenings in the world of Python. It seems that you are really not supposed to compare floating-point and decimal numbers, as this example shows:</p>
-<div class='highlight'><pre><span class='go'>Python 2.5.1 (r251:54863, Jan 17 2008, 19:35:17)</span>
+<div class='highlight'><pre><code class='pycon'><span class='go'>Python 2.5.1 (r251:54863, Jan 17 2008, 19:35:17)</span>
 <span class='go'>[GCC 4.0.1 (Apple Inc. build 5465)] on darwin</span>
 <span class='go'>Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='kn'>from</span> <span class='nn'>decimal</span> <span class='kn'>import</span> <span class='n'>Decimal</span>
@@ -80,10 +80,10 @@
 <span class='go'>True</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
 <span class='go'>True</span>
-</pre>
+</code></pre>
 </div>
 <p>But that&#8217;s not the end yet. I have <a href='http://nltk.sourceforge.net/'>NLTK</a> 0.9.4 installed, and watch how truth is reversed if I simply import the NLTK package:</p>
-<div class='highlight'><pre><span class='gp'>&gt;&gt;&gt; </span><span class='kn'>import</span> <span class='nn'>nltk</span>
+<div class='highlight'><pre><code class='pycon'><span class='gp'>&gt;&gt;&gt; </span><span class='kn'>import</span> <span class='nn'>nltk</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span> <span class='o'>&gt;</span> <span class='mf'>2.0</span>
 <span class='go'>True</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span> <span class='o'>&gt;</span> <span class='mf'>2.0</span>
@@ -100,7 +100,7 @@
 <span class='go'>False</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
 <span class='go'>False</span>
-</pre>
+</code></pre>
 </div>
 <p>I&#8217;m filing bugs about this, but I do find this quite entertaining in a &#8216;oh-my-God-I-always-believed-Python-was-a-well-behaved-language&#8217; sort of way.</p>
 
@@ -109,11 +109,11 @@
 <code>Decimal</code> objects to (i) other
 <code>Decimal</code> objects; (ii) integers; (iii) longs. Here, you're comparing it to a
 <code>float</code>, which isn't allowed, as evidenced by the
-following:</blockquote><div class='highlight'><pre><span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;.1&#39;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>__cmp__</span><span class='p'>(</span><span class='mi'>1</span><span class='p'>)</span>
+following:</blockquote><div class='highlight'><pre><code class='pycon'><span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;.1&#39;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>__cmp__</span><span class='p'>(</span><span class='mi'>1</span><span class='p'>)</span>
 <span class='go'>-1</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;.1&#39;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>__cmp__</span><span class='p'>(</span><span class='o'>.</span><span class='mi'>3</span><span class='p'>)</span>
 <span class='go'>NotImplemented</span>
-</pre>
+</code></pre>
 </div><blockquote><p>Since Decimal's
 <code>__cmp__</code> method returns
 <code>NotImplemented</code>, python falls back on using
@@ -186,7 +186,7 @@ the pointer address of the
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 

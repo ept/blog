@@ -198,17 +198,17 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>An edge always goes from one node to another. What are those nodes? Well, you can define them as you like (although there are some conventions). For now, let&#8217;s say:</p>
 <p><a href='/2011/03/accounting1.dot.png'>
-  <img src='/2011/03/accounting1.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting1.dot.png' width='550' />
 </a></p>
 <p>Let&#8217;s add some more details. You pay the $5 credit card bill from the company account. And where did the money in the company account come from in the first place? Ah, I see, you put in $5,000 of your savings to start the company. Ok, now the graph looks like this:</p>
 <p><a href='/2011/03/accounting2.dot.png'>
-  <img src='/2011/03/accounting2.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting2.dot.png' width='550' />
 </a></p>
 <p>Hopefully pretty self-explanatory so far. Money flows in the direction of the arrows.</p>
 
 <p>Hungry once again, you go to the taqueria and buy a Super Burrito for $8 on the credit card. Now we could create another node for the taqueria, but this is starting to get messy &#8211; we don&#8217;t really care how much money we spent on bagels vs. how much on burritos. Let&#8217;s just lump them together as &#8220;food&#8221;. Also, &#8220;Random startup&#8221; is a bit unhelpful &#8211; I&#8217;ve already forgotten what those $500 were for. Let&#8217;s call it &#8220;furniture&#8221; instead.</p>
 <p><a href='/2011/03/accounting3.dot.png'>
-  <img src='/2011/03/accounting3.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting3.dot.png' width='550' />
 </a></p>
 <p>See, that&#8217;s perfectly fine. We can have nodes which represent actual bank accounts or cards, others which represent people or companies, and others again which represent abstract categories like &#8220;food&#8221; or &#8220;furniture&#8221;. Just throw it all into the same graph.</p>
 
@@ -226,7 +226,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>After you&#8217;ve processed all the edges, the value at each node is that account&#8217;s balance. Our graph now looks like this:</p>
 <p><a href='/2011/03/accounting4.dot.png'>
-  <img src='/2011/03/accounting4.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting4.dot.png' width='550' />
 </a></p>
 <p>Note that the account balances have two nice properties:</p>
 
@@ -244,13 +244,13 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>So you received $5,000 + $2,500 in cash from your customers, wired straight the company bank account. Let&#8217;s add that to the graph:</p>
 <p><a href='/2011/03/accounting5.dot.png'>
-  <img src='/2011/03/accounting5.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting5.dot.png' width='550' />
 </a></p>
 <p>But that&#8217;s not quite right. The price was $5,000 for each customer, and now it looks like you charged two different prices. How do we represent our arrangement with customer 2?</p>
 
 <p>The solution is to deconstruct the deal into two separate transactions: the sale (in which the buyer agrees to buy, but no actual money changes hands) and the payment (when the cash actually hits your bank account). We can draw it like this:</p>
 <p><a href='/2011/03/accounting6.dot.png'>
-  <img src='/2011/03/accounting6.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting6.dot.png' width='550' />
 </a></p>
 <p>See what I&#8217;ve done here? I&#8217;ve just made up a new node, generically called it &#8220;sales&#8221;, and added the actual $5,000 sales as a transaction from this &#8220;sales&#8221; account to the customer accounts. Adding this extra node hasn&#8217;t changed your bank balance.</p>
 
@@ -268,7 +268,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>The resulting graph now looks like this:</p>
 <p><a href='/2011/03/accounting7.dot.png'>
-  <img src='/2011/03/accounting7.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting7.dot.png' width='550' />
 </a></p>
 <p>Note how I have represented the transactions:</p>
 
@@ -292,7 +292,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>In order to produce these statements, I need to get out the crayons. Here is the same graph as before, with the nodes coloured in:</p>
 <p><a href='/2011/03/accounting8.dot.png'>
-  <img src='/2011/03/accounting8.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting8.dot.png' width='550' />
 </a></p>
 <p>Explaining the colours (putting the accounting terminology in brackets, since you&#8217;re likely to encounter these words):</p>
 
@@ -339,7 +339,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
   </tr>
   <tr style='height: 0.7em' />
   <tr style='margin-top: 1em'>
-    <th style='font-variant: small-caps;'>Total</th>
+    <th style='padding-top: 1em; font-variant: small-caps;'>Total</th>
     <th style='border-bottom: 1px solid #888; font-weight: bold;'>Profit/Loss</th>
     <th style='border-bottom: 1px solid #888; font-weight: bold; text-align: right;'>$1,862</th>
     <td>(= total revenue - total expenses)</td>
@@ -395,7 +395,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
   </tr>
   <tr style='height: 0.7em' />
   <tr style='margin-top: 1em'>
-    <th rowspan='3' style='font-variant: small-caps;'>Equity</th>
+    <th rowspan='3' style='padding-top: 1em; font-variant: small-caps;'>Equity</th>
     <td>Profit/Loss</td>
     <td style='text-align: right;'>$1,862</td>
   </tr>
@@ -417,12 +417,12 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p>The total of the balance sheet is a lower bound on the value of your company. It&#8217;s a very pessimistic figure &#8212; it assumes that your team, your technology, your brand etc. are all worth precisely nothing; if your company raises money from investors, your valuation will be much higher than the balance sheet figure, since that valuation includes the value of team, technology, brand etc in the form of a wild guess. In established companies you can find &#8220;intangible assets&#8221; on the balance sheet, but since they are very hard to value, I suspect it&#8217;s not worth bothering with unless you know what you are doing.</p>
 
 <p>That&#8217;s the end of our whirlwind tour through the world of accounting. If you&#8217;re a real accountant reading this, please forgive my simplifications; if you spot any mistakes, please let me know. For everyone else, I hope this has been useful. To find out when I write something new, please <a href='http://twitter.com/martinkl'>follow me on Twitter</a> or put your email address in this box:</p>
-<form name='mc-embedded-subscribe-form' class='validate' method='post' action='http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6' id='mc-embedded-subscribe-form' target='_blank'>
+<form action='http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6' class='validate' id='mc-embedded-subscribe-form' method='post' name='mc-embedded-subscribe-form' target='_blank'>
     <fieldset>
         <div class='mc-field-group'>
             <label for='mce-EMAIL'>Email:</label>
-            <input name='EMAIL' class='required email' id='mce-EMAIL' type='text' value='' />
-            <input name='subscribe' class='btn' id='mc-embedded-subscribe' type='submit' value='Subscribe' />
+            <input class='required email' id='mce-EMAIL' name='EMAIL' type='text' value='' />
+            <input class='btn' id='mc-embedded-subscribe' name='subscribe' type='submit' value='Subscribe' />
         </div>
         <div id='mce-responses'>
             <div class='response' id='mce-error-response' style='display:none' />
@@ -493,7 +493,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p>So I am perhaps a bit envious of those who could move ahead rapidly and build their product without having to worry about supporting users or keeping their database alive. On the other hand, I am of course hugely grateful for our users who use and <a href='http://rapportive.com/buzz'>love our product</a> every day. I wouldn&#8217;t have it any other way.</p>
 <p style='text-align: center'>
   <a href='http://adam.heroku.com/past/2008/4/23/the_startup_curve/'>
-    <img src='/2010/12/yc_whiteboard.jpg' height='379' alt='Photo of whiteboard at YC, showing curve of The Process' width='500' />
+    <img alt='Photo of whiteboard at YC, showing curve of The Process' height='379' src='/2010/12/yc_whiteboard.jpg' width='500' />
   </a>
 </p>
 <p>Fortunately, we are not the first to experience this. At the YC office there is a whiteboard, now carrying somewhat iconic status, which reminds every single YC founder of <em>&#8220;The Process&#8221;</em>: once a startup has launched, the novelty will wear off, and the team will find itself in the <em>&#8220;Trough of Sorrow&#8221;</em>. We know what the Trough of Sorrow looks like. I have just described it. It&#8217;s not very much fun.</p>
@@ -521,7 +521,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
 </ul>
 <p style='text-align: center'>
   <a href='http://www.flickr.com/photos/performable/4792109640/sizes/l/in/set-72157623602121734/'>
-    <img src='/2010/12/strategic_plan.jpg' height='335' alt='Poster: We have a strategic plan. It&apos;s called doing things.' width='500' />
+    <img alt='Poster: We have a strategic plan. It&apos;s called doing things.' height='335' src='/2010/12/strategic_plan.jpg' width='500' />
   </a>
 </p>
         </div>
@@ -560,10 +560,10 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
 <p>Over the course of years, those tiny traces are aggregated, and what you get out at the end is an intuitive understanding of how the world works (or rather, how those parts of the world which you have experienced work). Think of it like very light crayon touches, in the hands of an artist, gradually forming to be a beautiful picture — except that the picture is never complete, and always evolving.</p>
 <object height='311' width='508'>
-    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US' />
+    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' />
     <param name='allowFullScreen' value='true' />
     <param name='allowscriptaccess' value='always' />
-    <embed src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US' allowfullscreen='true' type='application/x-shockwave-flash' allowscriptaccess='always' height='311' width='508' />
+    <embed allowfullscreen='true' allowscriptaccess='always' height='311' src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' width='508' />
 </object>
 <p>With that intuition, when you encounter a new situation, it doesn’t matter that you haven’t encountered the exact same situation before: your brain does an approximate matching of the new situation with your mental model of the world, and immediately predicts the right answer. It doesn’t even need to search through memories, because the picture of the world in your head is already the fully aggregated sum of your experiences.</p>
 
@@ -732,7 +732,7 @@ how much value YC brings. So that concern is irrelevant here.</p>
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 

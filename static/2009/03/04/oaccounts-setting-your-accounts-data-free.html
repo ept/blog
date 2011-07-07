@@ -75,16 +75,16 @@
 <p>Taking data with you from one service to another is not just about the data in the system you are moving from but also about maintaining links to other systems. I suspect that data values that are linked to external integrated services are overlooked in many data exports.</p>
 </blockquote>
 <a href='http://www.w3.org/2009/Talks/0204-ted-tbl/#(7)'>
-    <img title='Linked Data Standards' class='size-full wp-image-240' src='/2009/03/linkeddata.png' height='225' alt='Linked Data Standards (Image from Ted Berners-Lee&apos;s TED talk)' width='400' />
+    <img alt='Linked Data Standards (Image from Ted Berners-Lee&apos;s TED talk)' class='size-full wp-image-240' height='225' src='/2009/03/linkeddata.png' title='Linked Data Standards' width='400' />
 </a>
 <p><strong>Open standards for accounting data</strong></p>
 
 <p>I have started working on an <a href='http://ept.github.com/oaccounts/'>open standard for accounting data called OAccounts</a>, which is an attempt to accomplish exactly this. (The name was probably inspired by <a href='http://oauth.net/'>OAuth</a>.) With the help of other interested parties I would like to draw up a specification and a reference implementation for a data format and protocol for storing, interchanging and synchronising accounting data between different software packages. Of course it will all be free and open. In particular, I want it to be easier for developers to create applications and tools which create/process transactions and do reporting (my <a href='/2009/02/12/ruby-invoicing-gem-released.html'>Ruby invoicing gem</a> of course falls into this category).</p>
 
 <p>Many web-based accounting systems have APIs, either RESTful or SOAP, but they are all different, and some are woefully incomplete. If a third-party developer wants to integrate with several different accounting systems, to have the broadest possible customer base, they will have to implement each API separately. And if a user of one accounting system wants to use several third-party extensions, such as payment processing, shopping carts and advanced reporting, they will have to integrate each extension separately. The result is a complete mess:</p>
-<img class='aligncenter size-full wp-image-247' src='/2009/03/integration-without-oaccounts.png' height='142' alt='Integration of accounting systems without OAccounts' width='323' />
+<img alt='Integration of accounting systems without OAccounts' class='aligncenter size-full wp-image-247' height='142' src='/2009/03/integration-without-oaccounts.png' width='323' />
 <p>Well, implementing APIs is going to be unavoidable if we want to integrate several different applications. But if we&#8217;re doing that, we should implement each API once, and have an open standard which provides the common language across all those integrations. This is what OAccounts sets out to achieve:</p>
-<img class='aligncenter size-full wp-image-246' src='/2009/03/integration-with-oaccounts.png' height='142' alt='Integration of accounting systems with OAccounts' width='357' />
+<img alt='Integration of accounting systems with OAccounts' class='aligncenter size-full wp-image-246' height='142' src='/2009/03/integration-with-oaccounts.png' width='357' />
 <p><strong>Why all of this?</strong></p>
 
 <p>Starting OAccounts for me was primarily motivated by my move from one accounting software package to another. I had been using Sage in my small business for somewhere around 18 months, but I wanted to move away from it, and I wanted to take my data with me. I preferably wanted something web-based with all the Software-as-a-Service advantages.</p>
@@ -159,7 +159,7 @@
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 

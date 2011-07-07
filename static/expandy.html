@@ -64,7 +64,7 @@
 <p>In this post I&#8217;d like to explain some of our process and thinking in the creation of the new design.</p>
 
 <p>Our old design, which we had <a href='http://blog.rapportive.com/the-accidental-launch'>since launch</a>, has served us very well. It was subtle, simple, effective, and blended in well with Gmail. Unfortunately, it was beginning to show some limitations:</p>
-<a href='/2011/05/tall_profile.png' style='float: right; padding-left: 20px'><img src='/2011/05/tall_profile.png' alt='Example of very tall Rapportive profile' width='40' /></a>
+<a href='/2011/05/tall_profile.png' style='float: right; padding-left: 20px'><img alt='Example of very tall Rapportive profile' src='/2011/05/tall_profile.png' width='40' /></a>
 <ol>
 <li>If you&#8217;re using Gmail on a small screen, on a laptop or even a netbook, the Rapportive sidebar would often be too tall to fit on screen. Of course you can scroll down, but the main Gmail scrollbar is already used to scroll down in the conversation. We hooked into the page scrolling, but if you were on a long conversation, you had to scroll all the way to the bottom of the conversation if you wanted to see the rest of the Rapportive sidebar. That was really annoying.</li>
 
@@ -91,7 +91,7 @@
 
 <p>First of all, I started with some graphical tweaking. Here are some nice buttons:</p>
 <p style='text-align:center'>
-<a href='/2011/05/connect_buttons.png'><img src='/2011/05/connect_buttons.png' alt='Different sylings for &apos;add friend&apos;/&apos;connect&apos; buttons' /></a>
+<a href='/2011/05/connect_buttons.png'><img alt='Different sylings for &apos;add friend&apos;/&apos;connect&apos; buttons' src='/2011/05/connect_buttons.png' /></a>
 </p>
 <p>A nice excuse to play with some CSS gradients and drop shadows, but it doesn&#8217;t actually solve the big problems. So how do we fix the problems with the sidebar?</p>
 
@@ -101,7 +101,7 @@
 
 <p>An &#8216;accordion&#8217; interface, like you find in Outlook for example, seemed like a step in a more promising direction:</p>
 <p style='text-align:center'>
-<a href='/2011/05/accordion.png'><img src='/2011/05/accordion.png' alt='Accordion interface example' /></a>
+<a href='/2011/05/accordion.png'><img alt='Accordion interface example' src='/2011/05/accordion.png' /></a>
 </p>
 <p>You can have several sections, and each section can expand to show additional information when you click it. When you expand one section, another one collapses to make room. (In the screenshot above, I could click &#8216;Contacts&#8217; to see my list of contacts; the list of mailboxes under the &#8216;Mail&#8217; heading would be hidden to make room for the list of contacts.)</p>
 
@@ -109,7 +109,7 @@
 
 <p>So I started experimenting with a kind of adaptive accordion which could have several sections expanded at the same time, if there was enough screen space available. Here are some early design ideas:</p>
 <p style='text-align:center'>
-<a href='/2011/05/section_headings.png'><img src='/2011/05/section_headings.png' alt='Three designs for separators/headings between sidebar sections' width='550' /></a>
+<a href='/2011/05/section_headings.png'><img alt='Three designs for separators/headings between sidebar sections' src='/2011/05/section_headings.png' width='550' /></a>
 </p>
 <p>The designs were fairly ugly, but I could see an algorithm emerging here. I figured that we needed an accordion with the following improvements:</p>
 
@@ -125,25 +125,25 @@
 
 <p>Even scrollbars, despite being such a standard part of user interface design, have their problems:</p>
 <p style='text-align:center'>
-<a href='/2011/05/scrolling.png'><img src='/2011/05/scrolling.png' alt='Misalignment of text due to scrollbar spacing' /></a>
+<a href='/2011/05/scrolling.png'><img alt='Misalignment of text due to scrollbar spacing' src='/2011/05/scrolling.png' /></a>
 </p>
 <p>Fortunately such spacing issues are easy to iron out. A harder question is: how do we communicate to the user that they can expand a section?</p>
 
 <p>In the old design, if you clicked someone&#8217;s Twitter username, we would open up a new browser tab to show their tweet stream. In an accordion design, however, you&#8217;d expect that clicking the collapsed section will cause it to expand (i.e. show recent tweets, not open a new browser tab). Do we break the old interaction and force users to learn a new behaviour, or do we add an extra button for expanding a section?</p>
 <p style='text-align:center'>
-<a href='/2011/05/expand1.png'><img src='/2011/05/expand1.png' alt='Up/down arrow button to trigger expansion of a section' /></a>
+<a href='/2011/05/expand1.png'><img alt='Up/down arrow button to trigger expansion of a section' src='/2011/05/expand1.png' /></a>
 </p>
 <p>That was my first attempt. The arrows serve two purposes: to indicate that the section can be expanded, and to act as a button to trigger the actual expanding. But I didn&#8217;t like it. Some sections would have arrows and others wouldn&#8217;t (because we don&#8217;t always have additional information), so the &#8220;connect&#8221;/&#8221;add friend&#8221; buttons could become strangely misaligned. It also made the interface look more cluttered and complicated.</p>
 
 <p>Surely we could do better? For example, could we show the button for expanding a section only when you hover over it? That&#8217;s an interesting idea. What&#8217;s more, we could then calculate how tall the section would be if it was expanded, and indicate it with the height of the arrow:</p>
 <p style='text-align:center'>
-<a href='/2011/05/expand2.png'><img src='/2011/05/expand2.png' alt='Large arrow when hovering mouse over expanded section; click the arrow to expand' width='550' /></a>
+<a href='/2011/05/expand2.png'><img alt='Large arrow when hovering mouse over expanded section; click the arrow to expand' src='/2011/05/expand2.png' width='550' /></a>
 </p>
 <p>At this point we&#8217;re really moving away from established user interface patterns. Will users notice the arrow, and understand what it means? Will they figure out that you can click it? It contains a lot of information: the fact that the section can be expanded, how big it will be and where it will be placed when expanded. It&#8217;s also a much bigger click target than the previous arrow button, which is good. But it still has the problem of not looking particularly like a button. (It goes grey when you hover over it, to indicate that you can interact with it, but still it&#8217;s not exactly obvious.)</p>
 
 <p>I was starting to get sick of this redesign, but fortunately, inspiration struck again. If we&#8217;re already using an arrow on hover to indicate how tall the expanded section will be, well&#8230; why don&#8217;t we use <em>the expanded section itself</em> to indicate how tall it will be? Yes, we can just show the expanded section itself on hover!</p>
 <p style='text-align:center'>
-<a href='/2011/05/expand3.png'><img src='/2011/05/expand3.png' alt='Showing the expanded version when hovering over a collapsed section' width='550' /></a>
+<a href='/2011/05/expand3.png'><img alt='Showing the expanded version when hovering over a collapsed section' src='/2011/05/expand3.png' width='550' /></a>
 </p>
 <p>It&#8217;s obvious in retrospect, but it took a surprisingly long time to come up with this design. I call it the <a href='http://en.wikipedia.org/wiki/Jinn_in_popular_culture'>&#8220;genie&#8221;</a> because it looks like a ghost that has come out of an oil lamp. Although the version above still isn&#8217;t pretty, it really got to the bottom of many of the challenges I discussed at the beginning:</p>
 
@@ -167,7 +167,7 @@
 
 <p>After some graphical tweaking, this is what the final design looks like:</p>
 <p style='text-align:center'>
-<a href='/2011/05/expand4.png'><img src='/2011/05/expand4.png' alt='End result: Rapportive&apos;s new sidebar design with collapsible section' width='550' /></a>
+<a href='/2011/05/expand4.png'><img alt='End result: Rapportive&apos;s new sidebar design with collapsible section' src='/2011/05/expand4.png' width='550' /></a>
 </p>
 <p>I hope you&#8217;ll agree that it is <em>gorgeous</em>. We have added very little new user interface (and we&#8217;ve taken a lot away, compared to earlier designs), but the result is very effective. It fits neatly on both big and small screens, it is easy to use, and it is actually lots of fun to play with. Give it a try for yourself, and let us know what you think!</p>
 
@@ -231,7 +231,7 @@
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 
@@ -283,7 +283,7 @@
 
     <script type="text/javascript">
         var disqus_shortname = 'martinkl';
-        var disqus_url = 'http://martin.kleppmann.com';
+        var disqus_url = 'http://martin.kleppmann.com/expandy.html';
         var disqus_identifier = disqus_url;
 
         (function() {

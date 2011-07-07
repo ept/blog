@@ -77,17 +77,17 @@
 
 <p>An edge always goes from one node to another. What are those nodes? Well, you can define them as you like (although there are some conventions). For now, let&#8217;s say:</p>
 <p><a href='/2011/03/accounting1.dot.png'>
-  <img src='/2011/03/accounting1.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting1.dot.png' width='550' />
 </a></p>
 <p>Let&#8217;s add some more details. You pay the $5 credit card bill from the company account. And where did the money in the company account come from in the first place? Ah, I see, you put in $5,000 of your savings to start the company. Ok, now the graph looks like this:</p>
 <p><a href='/2011/03/accounting2.dot.png'>
-  <img src='/2011/03/accounting2.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting2.dot.png' width='550' />
 </a></p>
 <p>Hopefully pretty self-explanatory so far. Money flows in the direction of the arrows.</p>
 
 <p>Hungry once again, you go to the taqueria and buy a Super Burrito for $8 on the credit card. Now we could create another node for the taqueria, but this is starting to get messy &#8211; we don&#8217;t really care how much money we spent on bagels vs. how much on burritos. Let&#8217;s just lump them together as &#8220;food&#8221;. Also, &#8220;Random startup&#8221; is a bit unhelpful &#8211; I&#8217;ve already forgotten what those $500 were for. Let&#8217;s call it &#8220;furniture&#8221; instead.</p>
 <p><a href='/2011/03/accounting3.dot.png'>
-  <img src='/2011/03/accounting3.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting3.dot.png' width='550' />
 </a></p>
 <p>See, that&#8217;s perfectly fine. We can have nodes which represent actual bank accounts or cards, others which represent people or companies, and others again which represent abstract categories like &#8220;food&#8221; or &#8220;furniture&#8221;. Just throw it all into the same graph.</p>
 
@@ -105,7 +105,7 @@
 
 <p>After you&#8217;ve processed all the edges, the value at each node is that account&#8217;s balance. Our graph now looks like this:</p>
 <p><a href='/2011/03/accounting4.dot.png'>
-  <img src='/2011/03/accounting4.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting4.dot.png' width='550' />
 </a></p>
 <p>Note that the account balances have two nice properties:</p>
 
@@ -123,13 +123,13 @@
 
 <p>So you received $5,000 + $2,500 in cash from your customers, wired straight the company bank account. Let&#8217;s add that to the graph:</p>
 <p><a href='/2011/03/accounting5.dot.png'>
-  <img src='/2011/03/accounting5.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting5.dot.png' width='550' />
 </a></p>
 <p>But that&#8217;s not quite right. The price was $5,000 for each customer, and now it looks like you charged two different prices. How do we represent our arrangement with customer 2?</p>
 
 <p>The solution is to deconstruct the deal into two separate transactions: the sale (in which the buyer agrees to buy, but no actual money changes hands) and the payment (when the cash actually hits your bank account). We can draw it like this:</p>
 <p><a href='/2011/03/accounting6.dot.png'>
-  <img src='/2011/03/accounting6.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting6.dot.png' width='550' />
 </a></p>
 <p>See what I&#8217;ve done here? I&#8217;ve just made up a new node, generically called it &#8220;sales&#8221;, and added the actual $5,000 sales as a transaction from this &#8220;sales&#8221; account to the customer accounts. Adding this extra node hasn&#8217;t changed your bank balance.</p>
 
@@ -147,7 +147,7 @@
 
 <p>The resulting graph now looks like this:</p>
 <p><a href='/2011/03/accounting7.dot.png'>
-  <img src='/2011/03/accounting7.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting7.dot.png' width='550' />
 </a></p>
 <p>Note how I have represented the transactions:</p>
 
@@ -171,7 +171,7 @@
 
 <p>In order to produce these statements, I need to get out the crayons. Here is the same graph as before, with the nodes coloured in:</p>
 <p><a href='/2011/03/accounting8.dot.png'>
-  <img src='/2011/03/accounting8.dot.png' alt='Graph representation of accounts' width='550' />
+  <img alt='Graph representation of accounts' src='/2011/03/accounting8.dot.png' width='550' />
 </a></p>
 <p>Explaining the colours (putting the accounting terminology in brackets, since you&#8217;re likely to encounter these words):</p>
 
@@ -218,7 +218,7 @@
   </tr>
   <tr style='height: 0.7em' />
   <tr style='margin-top: 1em'>
-    <th style='font-variant: small-caps;'>Total</th>
+    <th style='padding-top: 1em; font-variant: small-caps;'>Total</th>
     <th style='border-bottom: 1px solid #888; font-weight: bold;'>Profit/Loss</th>
     <th style='border-bottom: 1px solid #888; font-weight: bold; text-align: right;'>$1,862</th>
     <td>(= total revenue - total expenses)</td>
@@ -274,7 +274,7 @@
   </tr>
   <tr style='height: 0.7em' />
   <tr style='margin-top: 1em'>
-    <th rowspan='3' style='font-variant: small-caps;'>Equity</th>
+    <th rowspan='3' style='padding-top: 1em; font-variant: small-caps;'>Equity</th>
     <td>Profit/Loss</td>
     <td style='text-align: right;'>$1,862</td>
   </tr>
@@ -296,12 +296,12 @@
 <p>The total of the balance sheet is a lower bound on the value of your company. It&#8217;s a very pessimistic figure &#8212; it assumes that your team, your technology, your brand etc. are all worth precisely nothing; if your company raises money from investors, your valuation will be much higher than the balance sheet figure, since that valuation includes the value of team, technology, brand etc in the form of a wild guess. In established companies you can find &#8220;intangible assets&#8221; on the balance sheet, but since they are very hard to value, I suspect it&#8217;s not worth bothering with unless you know what you are doing.</p>
 
 <p>That&#8217;s the end of our whirlwind tour through the world of accounting. If you&#8217;re a real accountant reading this, please forgive my simplifications; if you spot any mistakes, please let me know. For everyone else, I hope this has been useful. To find out when I write something new, please <a href='http://twitter.com/martinkl'>follow me on Twitter</a> or put your email address in this box:</p>
-<form name='mc-embedded-subscribe-form' class='validate' method='post' action='http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6' id='mc-embedded-subscribe-form' target='_blank'>
+<form action='http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6' class='validate' id='mc-embedded-subscribe-form' method='post' name='mc-embedded-subscribe-form' target='_blank'>
     <fieldset>
         <div class='mc-field-group'>
             <label for='mce-EMAIL'>Email:</label>
-            <input name='EMAIL' class='required email' id='mce-EMAIL' type='text' value='' />
-            <input name='subscribe' class='btn' id='mc-embedded-subscribe' type='submit' value='Subscribe' />
+            <input class='required email' id='mce-EMAIL' name='EMAIL' type='text' value='' />
+            <input class='btn' id='mc-embedded-subscribe' name='subscribe' type='submit' value='Subscribe' />
         </div>
         <div id='mce-responses'>
             <div class='response' id='mce-error-response' style='display:none' />
@@ -312,11 +312,6 @@
     I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
 </p>
 
-            
-            <div class="hackernews">
-                Join the discussion about this article
-                <a href="http://news.ycombinator.com/item?id=2298471" target="_blank">on Hacker News</a>.
-            </div>
             
 
             <div id="disqus_thread"></div>
@@ -375,7 +370,7 @@
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 

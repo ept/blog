@@ -82,11 +82,11 @@
 <p>How does Flickr know that a particular file upload is coming from the real Uploadr application? That is ensured by <a href='http://www.flickr.com/services/api/auth.spec.html#signing'>signing each API request with a secret key</a>. The secret key is a 64-bit number, usually written as 16 hex digits. And where is that secret key stored? Naturally, somewhere within the Flickr Uploadr application itself. If you download Uploadr, that secret is somewhere on your own hard drive.</p>
 
 <p>Curious as I am, I searched for hex strings within the application binaries:</p>
-<div class='highlight'><pre><span class='nb'>cd</span> /Applications/Flickr<span class='se'>\ </span>Uploadr.app/
+<div class='highlight'><pre><code class='bash'><span class='nb'>cd</span> /Applications/Flickr<span class='se'>\ </span>Uploadr.app/
 <span class='k'>for </span>file in <span class='sb'>`</span>find . -type f<span class='sb'>`</span>; <span class='k'>do</span>
 <span class='k'>  </span>strings <span class='nv'>$file</span> | grep -Ei <span class='s1'>&#39;[0-9a-f]{16}&#39;</span>
 <span class='k'>done</span>
-</pre>
+</code></pre>
 </div>
 <p>In the output you can easily spot the application&#8217;s API key (a5c4c07991a15c6b56b88005a76e7774) &#8211; a 128-bit number which also uniquely identifies the application, but isn&#8217;t secret. (Extra points if you can guess correctly how many times the string &#8216;0123456789abcdef&#8217; is found. ;-) ) There&#8217;s no 64-bit number which looks like it might be the secret. However, with a small amount of experimentation I was also able to find the secret in the binaries. I won&#8217;t give it away here, but it should be a simple exercise for anybody who <a href='http://xkcd.com/208/'>knows regular expressions</a>.</p>
 
@@ -180,7 +180,7 @@
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 

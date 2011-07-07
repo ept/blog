@@ -72,9 +72,9 @@
 <p>Even this simple form of translation isn&#8217;t working everywhere. For example, if you update your Twitter status in a German web browser, it says that you updated &#8221;weniger als 5 Sekunden ago&#8221;. Here &#8220;ago&#8221; is an English word, but the rest is German; to a German-speaker, this reads like &#8220;vor less than 5 seconds&#8221; reads to an English-speaker. This is simply a case of some of those bits of text getting forgotten; not a big problem, and I&#8217;m sure they will fix it soon, but enough to make German-speakers uncomfortable using the application because it&#8217;s constantly offending against their sense of language.</p>
 
 <p>However, things get harder once you start building sentences based on variables which may change. The Twitter message is a simple example of this: the time is a variable, and because it&#8217;s in the past (not in the future), we need to stick &#8220;ago&#8221; on the end, in English at least. The code which does this will look something like this:</p>
-<div class='highlight'><pre><span class='n'>time_in_words</span> <span class='o'>=</span> <span class='n'>distance_of_time_in_words</span><span class='p'>(</span><span class='n'>time_of_last_update</span><span class='p'>,</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
+<div class='highlight'><pre><code class='ruby'><span class='n'>time_in_words</span> <span class='o'>=</span> <span class='n'>distance_of_time_in_words</span><span class='p'>(</span><span class='n'>time_of_last_update</span><span class='p'>,</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
 <span class='n'>time_in_words</span> <span class='o'>=</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>time_in_words</span><span class='si'>}</span><span class='s2'> ago&quot;</span> <span class='k'>if</span> <span class='p'>(</span><span class='n'>time_of_last_update</span> <span class='o'>&lt;</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
-</pre>
+</code></pre>
 </div>
 <p>To translate this program, make sure that the function <code>distance_of_time_in_words</code> returns words in the right language (e.g. for German, &#8220;weniger als 5 Sekunden&#8221; &#8211; Twitter does this correctly), and replace <code>&quot;#{time_in_words} ago&quot;</code> with the right grammatical construction for the target language (e.g. for German, <code>&quot;vor #{time_in_words}&quot;</code> &#8211; this is the bit Twitter has missed out).</p>
 
@@ -105,7 +105,7 @@
 <p>The only step I&#8217;ve seen so far towards making internationalisable grammar is the <a href='http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflections.html#M001044'>&#8216;pluralize&#8217;</a> function which you find in some frameworks such as Rails. It takes a number (such as 0, 1, 2, 29 or 518514) and a singular noun (such as &#8216;camel&#8217;) and returns the text in the appropriate singular or plural form (e.g. &#8220;29 camels&#8221;) &#8211; and it works in a wide selection of languages (e.g. in German, <code>pluralize(29, &#39;Kamel&#39;) == &#39;29 Kamele&#39;</code>).</p>
 
 <p>To illustrate the problem, here is one of the source files from <a href='http://www.bidforwine.co.uk/'>Bid for Wine</a>. It is a very minor feature &#8211; it just creates a short paragraph of text explaining the purpose of a particular form which a buyer needs to fill in. However, there can be a lot of different things in that form, depending on the type of auction. This generated text gets sent out by email (to both the seller and the buyer) and is also displayed on the website, and few people will ever notice how much effort has gone into building that paragraph of text.</p>
-<div class='highlight'><pre><span class='k'>case</span> <span class='n'>grammatical_person</span>
+<div class='highlight'><pre><code class='ruby'><span class='k'>case</span> <span class='n'>grammatical_person</span>
 <span class='k'>when</span> <span class='mi'>2</span>
   <span class='n'>you_or_they</span> <span class='o'>=</span> <span class='s1'>&#39;you&#39;</span>
   <span class='n'>your_or_their</span> <span class='o'>=</span> <span class='s1'>&#39;your&#39;</span>
@@ -148,7 +148,7 @@
 <span class='k'>end</span>
 
 <span class='s2'>&quot;On this form </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> can </span><span class='si'>#{</span><span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>join</span><span class='p'>(</span><span class='s1'>&#39;, &#39;</span><span class='p'>)</span><span class='si'>}</span><span class='s2'>.&quot;</span>
-</pre>
+</code></pre>
 </div>
 <p>And you thought English was simple? You can even even see the remains of grammatical cases (<code>you_or_they</code> vs. <code>you_or_them</code>). If this needs to be translated one day, we will need to duplicate the logic and mess about with the way variables are inserted into the snippets of text to make the grammar work. It will be horrible to maintain. But that&#8217;s the best we can do with the state of the art. Shouldn&#8217;t there be a better way?</p>
 
@@ -210,7 +210,7 @@
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
-                <a href="/contact.html">contact me directly</a>.</p>
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
             </div>
         </div>
 
