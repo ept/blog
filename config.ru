@@ -1,2 +1,2 @@
-require 'blog'
+require './blog'
 run Sinatra::Application
