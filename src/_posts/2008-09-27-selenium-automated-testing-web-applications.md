@@ -20,9 +20,9 @@ codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#ve
 name="allowFullScreen" value="true"
 /><param name="allowScriptAccess" value="always"
 /><param name="src"
-value="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&rel=0&stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
+value="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&amp;rel=0&amp;stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
 /><embed type="application/x-shockwave-flash" width="425" height="355"
-src="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&rel=0&stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
+src="http://static.slideshare.net/swf/ssplayer2.swf?doc=barcamplondon5selenium-1222547324657971-8&amp;rel=0&amp;stripped_title=selenium-in-realworld-projects-automated-testing-for-web-applications-presentation"
 allowscriptaccess="always"
 allowfullscreen="true"></embed></object></div>
 

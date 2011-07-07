@@ -15,10 +15,10 @@ and also embedded below:
 
 <div style="width:425px;text-align:left" id="__ss_1760986">
     <object style="margin:0px" width="425" height="355">
-        <param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=railsundergroundinvoicing-090723154443-phpapp02&stripped_title=invoicing-gem-sales-payments-in-your-app" />
+        <param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=railsundergroundinvoicing-090723154443-phpapp02&amp;stripped_title=invoicing-gem-sales-payments-in-your-app" />
         <param name="allowFullScreen" value="true"/>
         <param name="allowScriptAccess" value="always"/>
-        <embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=railsundergroundinvoicing-090723154443-phpapp02&stripped_title=invoicing-gem-sales-payments-in-your-app"
+        <embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=railsundergroundinvoicing-090723154443-phpapp02&amp;stripped_title=invoicing-gem-sales-payments-in-your-app"
             type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"
             width="425" height="355"></embed>
     </object>
@@ -32,8 +32,8 @@ I believe the talk was also recorded on video, and
 <object width="550px" height="512px">
     <param name="allowfullscreen" value="true" />
     <param name="allowscriptaccess" value="always" />
-    <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=5771395&server=vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=00ADEF&fullscreen=1" />
-    <embed src="http://vimeo.com/moogaloop.swf?clip_id=5771395&server=vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=00ADEF&fullscreen=1"
+    <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=5771395&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" />
+    <embed src="http://vimeo.com/moogaloop.swf?clip_id=5771395&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1"
         type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always"
         width="550px" height="512px"></embed>
 </object>

@@ -257,7 +257,7 @@ Written in the standard way, our P&L looks like this:
   </tr>
   <tr style="height: 0.7em"></tr>
   <tr style="margin-top: 1em">
-    <th style="padding-top: 1em" style="font-variant: small-caps;">Total</th>
+    <th style="padding-top: 1em; font-variant: small-caps;">Total</th>
     <th style="border-bottom: 1px solid #888; font-weight: bold;">Profit/Loss</th>
     <th style="border-bottom: 1px solid #888; font-weight: bold; text-align: right;">$1,862</th>
     <td>(= total revenue - total expenses)</td>
@@ -330,7 +330,7 @@ In our example, it looks like this:
   </tr>
   <tr style="height: 0.7em"></tr>
   <tr style="margin-top: 1em">
-    <th rowspan="3" style="padding-top: 1em" style="font-variant: small-caps;">Equity</th>
+    <th rowspan="3" style="padding-top: 1em; font-variant: small-caps;">Equity</th>
     <td>Profit/Loss</td>
     <td style="text-align: right;">$1,862</td>
   </tr>

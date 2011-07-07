@@ -23,7 +23,7 @@ doesn't really do it justice, but it's the best I could find so
 far.
 
 <object type="application/x-shockwave-flash" width="350" height="300" data="http://downloads.sms.csx.cam.ac.uk/mediaplayer.swf?file=http://downloads.sms.csx.cam.ac.uk/110-1522/110-1522-sms_archive-flv_medium_default_stream.flv">
-<param name="movie" value="http://downloads.sms.csx.cam.ac.uk/mediaplayer.swf?file=http://downloads.sms.csx.cam.ac.uk/110-1522/110-1522-sms_archive-flv_medium_default_stream.flv&allowfullscreen=true&usefullscreen=true&allowscriptaccess=sameDomain" />
+<param name="movie" value="http://downloads.sms.csx.cam.ac.uk/mediaplayer.swf?file=http://downloads.sms.csx.cam.ac.uk/110-1522/110-1522-sms_archive-flv_medium_default_stream.flv&amp;allowfullscreen=true&amp;usefullscreen=true&amp;allowscriptaccess=sameDomain" />
 </object>
 
 The Chronophage is a beast which eats away time. Dr John Taylor conceived it as a

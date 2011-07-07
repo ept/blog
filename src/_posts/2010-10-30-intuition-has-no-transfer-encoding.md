@@ -35,10 +35,10 @@ hands of an artist, gradually forming to be a beautiful picture — except that 
 never complete, and always evolving.
 
 <object width="508" height="311">
-    <param name="movie" value="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US"></param>
+    <param name="movie" value="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US"></param>
     <param name="allowFullScreen" value="true"></param>
     <param name="allowscriptaccess" value="always"></param>
-    <embed src="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&hl=en_US"
+    <embed src="http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US"
         type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"
         width="508" height="311"></embed>
 </object>

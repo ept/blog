@@ -18,10 +18,10 @@ all went off to the pub, I gave a quick update on our progress on setting up a
 
 <div style="width:425px;text-align:left" id="__ss_991691">
     <object style="margin:0px" width="425" height="355">
-        <param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=camcowrefresh20090204-1233824337412768-2&rel=0&stripped_title=camcow-building-a-coworking-space-for-cambridge" />
+        <param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=camcowrefresh20090204-1233824337412768-2&amp;rel=0&amp;stripped_title=camcow-building-a-coworking-space-for-cambridge" />
         <param name="allowFullScreen" value="true"/>
         <param name="allowScriptAccess" value="always"/>
-        <embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=camcowrefresh20090204-1233824337412768-2&rel=0&stripped_title=camcow-building-a-coworking-space-for-cambridge"
+        <embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=camcowrefresh20090204-1233824337412768-2&amp;rel=0&amp;stripped_title=camcow-building-a-coworking-space-for-cambridge"
             type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"
             width="425" height="355"></embed>
     </object>
