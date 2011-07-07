@@ -23,6 +23,7 @@ that are scattered across the interwebs:</p>
 <li><a rel="me" href="http://flickr.com/photos/martinkleppmann/">My photos on Flickr</a></li>
 <li><a rel="me" href="http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html">My undergraduate dissertation</a></li>
 <li><a rel="me" href="http://www.facebook.com/martinkl">My Facebook profile</a></li>
+<li><a rel="me" href="https://plus.google.com/106672307997469524646/about">My Google+ profile</a></li>
 <li><a rel="me" href="http://www.last.fm/user/mk428">My music listening profile on Last.fm</a></li>
 <li><a rel="me" href="http://plancast.com/mk">My upcoming events on Plancast</a></li>
 <li><a rel="me" href="http://delicious.com/martinkl">My bookmarks on Delicious</a></li>
