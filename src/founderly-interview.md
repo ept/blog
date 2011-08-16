@@ -28,7 +28,7 @@ and a transcript is below.
   <a href="http://vimeo.com/25790604">View on Vimeo</a>
 </iframe>
 
-[Martin Kleppmann interview, part 1](http://vimeo.com/25790604) from
+[Martin Kleppmann interview, part 2](http://vimeo.com/25790604) from
 [FounderLY](http://vimeo.com/founderly) on [Vimeo](http://vimeo.com)
 
 
