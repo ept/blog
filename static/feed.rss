@@ -10,11 +10,162 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Wed, 06 Jul 2011 23:41:59 PDT</lastBuildDate>
+        <lastBuildDate>Tue, 16 Aug 2011 10:51:23 PDT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
+        
+            <item>
+                <title>My FounderLY interview</title>
+                <link>http://martin.kleppmann.com/2011/08/16/founderly-interview.html</link>
+                <comments>http://martin.kleppmann.com/2011/08/16/founderly-interview.html#disqus_thread</comments>
+                <pubDate>Tue, 16 Aug 2011 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2011/08/16/founderly-interview.html</guid>
+                
+                <description><![CDATA[ Matthew from FounderLY wondered what it would have been like to watch raw video footage of Steve Jobs, Bill Gates, and other tech founders during their formative years. So he&#8217;s been going around interviewing young startup founders, for posterity and for other founders&#8217; inspiration. A pretty interesting effort. A few... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>Matthew from <a href='http://www.founderly.com/'>FounderLY</a> wondered what it would have been like to watch raw video footage of Steve Jobs, Bill Gates, and other tech founders during their formative years. So he&#8217;s been going around interviewing young startup founders, for posterity and for other founders&#8217; inspiration. A pretty interesting effort.</p>
+
+<p>A few weeks ago he asked whether he could <a href='http://www.founderly.com/2011/07/martin-kleppmann-rapportive-1-of-2/'>interview me</a> for the site. Although it would be rather presumptious to put myself in the category of potential future Steve Jobses, I agreed.</p>
+
+<p>So here you go &#8211; a tidily scripted set of questions from Matthew, and some chaotically unscripted stream-of-consciousness replies from me. The video comes in two parts, about 22 minutes in total, and a transcript is below.</p>
+<iframe frameborder='0' height='309' src='http://player.vimeo.com/video/25790273?title=0&amp;byline=0&amp;portrait=0' width='549'>
+  <a href='http://vimeo.com/25790273'>View on Vimeo</a>
+</iframe>
+<p><a href='http://vimeo.com/25790273'>Martin Kleppmann interview, part 1</a> from <a href='http://vimeo.com/founderly'>FounderLY</a> on <a href='http://vimeo.com'>Vimeo</a></p>
+<iframe frameborder='0' height='309' src='http://player.vimeo.com/video/25790604?title=0&amp;byline=0&amp;portrait=0' width='549'>
+  <a href='http://vimeo.com/25790604'>View on Vimeo</a>
+</iframe>
+<p><a href='http://vimeo.com/25790604'>Martin Kleppmann interview, part 2</a> from <a href='http://vimeo.com/founderly'>FounderLY</a> on <a href='http://vimeo.com'>Vimeo</a></p>
+
+<p><strong>Transcript</strong></p>
+
+<p><strong>Matthew Wise:</strong> Hi this is Matthew Wise with FounderLY.com. We empower entrepreneurs to have a voice and share their story with the world, enabling others to learn about building products and starting companies.</p>
+
+<p>I&#8217;m really excited today because I&#8217;m here with Martin Kleppmann, founder of Rapportive. Rapportive shows you everything about your contacts inside your email box, enabling you to see who people are and where they are based, so that you can connect and collaborate over shared interests. So, Martin, we&#8217;d love you to give our audience a brief bio.</p>
+
+<p><strong>Martin:</strong> Sure. I&#8217;m originally from Germany, which explains my weird accent, and then I went to the UK for several years to study computer science. That was in Cambridge. After that, I started a startup; it was called Go Test It, we made a tool for automated cross-browser testing of websites. That was pretty cool, and it was acquired a few years ago. After that, I was looking around for something new to do, and together with two friends we started Rapportive.</p>
+
+<p>What we do now is to pull photos, job details from LinkedIn, recent tweets and all of this stuff into Gmail, and show it right there.</p>
+
+<p><strong>Matthew:</strong> What makes Rapportive unique, who is it for and why are you so passionate about it?</p>
+
+<p><strong>Martin:</strong> It&#8217;s really for people who do a lot of email, particularly emailing with people who you don&#8217;t really know well. If you only ever email with ten different people, then you wouldn&#8217;t need it — but most of us, particularly startup founders, are constantly dealing with investors, outside advisors, users emailing us, potential customers, potential partners, people on emailing lists… all of these people, we vaguely know who they are, but not really. And actually, it is really important that you build this personal contact with them, and get to know them personally.</p>
+
+<p>Previously, when people got an email from someone, they would go and search Google, try to find their Twitter account, try to find them on LinkedIn, and this just takes a lot of time. And we&#8217;ve just automated all of that. The idea is that now, you can actually respond to people personally and build up that personal connection. It&#8217;s little things: even just being able to see the photo of someone in your email… firstly, that&#8217;s a deep visceral connection: you connect much more with them than if you&#8217;re just looking at a wall of text; and also, if you meet them in real life, well, you&#8217;re much more likely to be able to recognise them. I think that makes your email a better place; it&#8217;s really excellent.</p>
+
+<p><strong>Matthew:</strong> What are some of the technology and market trends that currently exist, and how do you see things developing in the future in your space?</p>
+
+<p><strong>Martin:</strong> I&#8217;m not sure about the big trends. There are a lot of things, but they are all very subtle things. For example, people caring a lot about user experience, and we take that really seriously. We put ridiculous amounts of effort into making sure that stuff works really nicely.</p>
+
+<p>Other things that are happening: we are having to deal with more and more people, and people expect that you don&#8217;t just get an automated stock reply, but that people actually engage with you personally. That&#8217;s the future, I think. We&#8217;ve already got that in one-to-one communication between individuals, but the big trend is that companies as a whole are starting to be more personal with the outside. They are no longer this corporate brand, this cold, anonymous thing, but you actually expect to be able to see the people behind that brand, and be able to engage with them directly and build a relationship. And those relationships are what matter, because… if you&#8217;re just competing on price, your customers can just go somewhere else, but if you can build up a relationship with your customers, that&#8217;s really really powerful.</p>
+
+<p>We think that&#8217;s what we are enabling, by giving you this social substrate for your communications.</p>
+
+<p><strong>Matthew:</strong> Can you tell us what inspired you to start Rapportive? Was there an &#8220;aha&#8221; moment, or did market research lead you to the opportunity? What’s the story behind it?</p>
+
+<p><strong>Martin:</strong> It really came from something we wanted ourselves. I think everyone says this! In my previous startup (and my cofounders also had a previous startup), we were all trying to do a lot of engaging with people personally, getting out there, learning a lot from people, really understanding where they were coming from. And that was so much effort! I’d keep lists of people in a custom database or in spreadsheets or in CRM systems like Highrise, and I&#8217;d have to keep them up to date by hand. I’d make a lot of notes about people, even just for myself, just so that I could remember when I came back to them six months later: what interactions I’d had with them, what we’d talked about.</p>
+
+<p>But I then found that all of this information would go stale: for example, I had entered someone&#8217;s job details and then they’d change job… and I’m not going to go and re-enter all of this stuff! It’s already out there on the web — really, software should just do this stuff automatically; there’s no reason why I should have to type this in again.</p>
+
+<p>And then, also, why should I have to always change over to another browser tab in order to search for something, and have five tabs open with different searches for stuff? It’s just ridiculous, this stuff should be in the tool which I use all the time anyway, which is email.</p>
+
+<p>And so, those are the two premises we started with. We wanted something which keeps itself up-to-date automatically from all the data which is already out there; you shouldn’t have to re-enter anything. And secondly, it should be in the workflow of the tool you already use, which, for most of us is primarily email. And on that premise we said: what can we build? Oh, well, let’s just stick something on the side of Gmail, see how it works. And people loved it.</p>
+
+<p><strong>Matthew:</strong> Excellent! Who is your cofounder, how did you meet, what qualities were you looking for in a cofounder, and how did you know they’d be a good fit?</p>
+
+<p><strong>Martin:</strong> I have two cofounders, Rahul and Sam; there are three of us. They are both really excellent people. I had known them for a while before starting: we were together in an office space, a kind of co-working space in Cambridge, UK. They were working on their previous startup, and I was working on my previous startup; we worked together a bit, we had lunch together every day, and just ended up talking about a lot of things.</p>
+
+<p>We found that partly we thought the same in a lot of ways, and partly we also had different but nicely complementary ways of thinking. We had a shared culture but often different perspectives, which helped us to together find the best way of doing stuff. And that’s really the basis on which we work. I think we have a very strong sense of a culture and making sure we work together very well, so we are constantly getting better at what we do.</p>
+
+<p><strong>Matthew:</strong> From idea to product launch, how long did it take, and when did you actually launch?</p>
+
+<p><strong>Martin:</strong> It was pretty quick actually: from first UI mockups to launch it was less than two months. We weren’t actually intending to launch: we had just put up this little website. We were applying for Y Combinator at the time and we also had some other people who were interested, so we wanted to show some potential investors what we were doing. Put up a little website; it wasn’t protected, but just at unknown URL.</p>
+
+<p>And then somehow the press got hold of this, and within a day we found ourselves with 10,000 users on our hands, because it just went wild through all of the blogs. That was a totally crazy experience: we had thought, &#8220;well, we’ve built this little thing, let’s give it to 10 people and see how it works&#8221;, and suddenly we have this massive load of people coming in. And we were working, working very hard, firstly trying to keep the servers up, but fortunately they held up quite nicely. Then also responding to all of the tweets, responding to all of the emails that were coming in. There was lots and lots of stuff happening very quickly; at that point we knew that we were on to something pretty exciting.</p>
+
+<p><strong>Matthew:</strong> And then you formally launched when?</p>
+
+<p><strong>Martin:</strong> We considered that our launch after the fact; we then said, &#8220;Well, OK, I guess we’ve launched now. Oh well, we’ve launched.&#8221; And then since then we’ve, at times, launched new features but that original bit of press we regard as our real launch.</p>
+
+<p><strong>Matthew:</strong> Are there any unique metrics or social proof about Rapportive that you’d like to share with our audience?</p>
+
+<p><strong>Martin:</strong> I think the thing I find most exciting: we always have a Twitter search going on — we have a big screen in the office, showing what people are saying about Rapportive on Twitter — and there’s just this constant stream of people loving it. I’m really humbled all of the time I see this. Every hour there’s stuff coming in from people saying things like, &#8220;This product has changed our life.&#8221;</p>
+
+<p>And that’s just amazing: when people will actually go out of their way to say something like that, and we’re not even particularly prompting them. So yeah, we have hundreds of thousands of users at the moment, but the important thing is really how much people care about it.</p>
+
+<p><strong>Matthew:</strong> We know founders face unique challenges when they start a company. What was the hardest part about launching or starting Rapportive, and how did you overcome this obstacle?</p>
+
+<p><strong>Martin:</strong> So we had a bit of a frustrating phase over the last summer. We were working very, very hard and there was lots going on, but our product was making very little visible progress, because we were spending all of our time firefighting, scaling our database because we had so much stuff coming in that we had to do a lot of work to re-architect it. We were doing a lot of groundwork for features which are just coming out now, but in technical groundwork there are months of work which is just invisible. We were moving country because we were all coming from the UK, moving to San Francisco, and we were fighting with US immigration. We were also spending a lot of time on support — which is good, it’s really valuable, because we learn a lot about the problems that people have, but again it’s very time consuming.</p>
+
+<p>So, with all of those things, it’s all useful stuff; there’s nothing really wasteful there. But on the other hand, our product wasn’t making progress, and people were starting to ask, &#8220;Well, you’ve been around for six months now, nine months now, and you’ve not really released any exciting new features. What’s going on?&#8221; And we were just saying, &#8220;Yeah, we’re trying to get to it, we’re doing what we can!&#8221;</p>
+
+<p>And then I was so happy when, towards the end of 2010, we got over this big hump of stuff, and now we’re putting out features again and there is much more visible progress. So that was a fairly hard phase to go through, but I’m really glad we got over it. In the end you just have to work through it. You just have to not give up, just keep on going, keep on going, even if it’s getting tough.</p>
+
+<p><strong>Matthew:</strong> Since you’ve been in operation, what have you learned about your business and your users that you didn’t realize before you launched?</p>
+
+<p><strong>Martin:</strong> When we first launched I was a bit cautious. I was wondering: &#8220;are people going to be really freaked out by seeing how much information is actually publicly available about them on the web?&#8221; You know, when you think about it rationally, it’s obvious: you can just search for someone on Google, and for most people you’ll actually get a pretty good idea of who this person is just by looking at the search results. And we’ve just taken away a step by automating a lot of that search, making it more convenient by putting it in email.</p>
+
+<p>And so I was expecting that there’d be a lot of people who would go, &#8220;Oh my God, no, privacy is dead!&#8221; But we tried to manage that very carefully: whenever anyone was concerned, we listen to them and respond to any concerns very quickly, and explain what we’re doing, why we’re doing it and why we think it’s absolutely fine. We are all very privacy conscious and we make that very clear as well. We don’t mess around with people’s private data; we only show information which people actually want to be public.</p>
+
+<p>And that is something I found surprising: just how quickly we can defuse any situation. If anyone was upset we’d just talk to them quietly, patiently, and explain what’s going on. If there was any problem, fix it quickly — and all the problems suddenly go away. And that’s really encouraging, because it means that we seem to actually be doing the right thing: pushing the envelope a bit. But yes, it works.</p>
+
+<p><strong>Matthew:</strong> What is it that you make look easy? What skill or talent comes easy or intuitively to you, and what has been difficult and how do you manage that?</p>
+
+<p><strong>Martin:</strong> I’d say: what we, as a team, are particularly good at is product design. Making something which is very neat, stays out of your way, but is still powerful; which does exactly the stuff you need, not more, not less; and just behaves the way people expect it to behave, without running into a weird corner where you don’t know what to do.</p>
+
+<p>And that is actually really hard to achieve. The amount of time we spend on optimizing the workflows for different users, depending on which starting state they’re coming from, which screens they have to go through and exactly what button we can show in which place, exactly what copy we use, what words we use to describe things, then taking them through the flow… and then, to the user, all it looks like is: &#8220;oh, I clicked a button, a pop-up appeared, I clicked another button and it worked.&#8221;</p>
+
+<p>That’s something we really enjoy: making that look easy, but a lot of work goes into it. In the end people just appreciate it as a product which is really nicely designed, which just works and which gives them a kind of warm, fuzzy feeling.</p>
+
+<p><strong>Matthew:</strong> What’s the most important lesson you’ve learned since launching Rapportive?</p>
+
+<p><strong>Martin:</strong> The most important lesson? I’ve not really graded them in a particular priority.</p>
+
+<p>I’d say, off the top of my head: caring about user experience and caring about users was something we thought from the start was really important — and that has really been validated. People appreciate us for having a product which just works nicely, and which has the little details thought out.</p>
+
+<p>People appreciate that we get back to them quickly, that we’re always very friendly when responding to them, that we’re trying to be personal where we can.</p>
+
+<p><strong>Matthew:</strong> Martin, what bit of advice do you wish you would have known before starting Rapportive?</p>
+
+<p><strong>Martin:</strong> I think what’s really interesting is that in a startup everything is magnified. If you have any issue early on, that will just continue, continue, get bigger and bigger, so if you have any issue early on then make sure you fix it early on. I think we’ve generally done a pretty good job of that. But it’s worth doing that really consciously.</p>
+
+<p>Certain things are really hard, but you need to get good at them. For example, communicating and sharing intuitions, that’s a topic that I’ve been thinking about a lot. We find that, since we’re three cofounders, we often have similar ideas about things, but and then often find that they differ in subtle ways. Really what we want to do is to combine our three intuitions into one, so that together, we have a really good broad and also deep insight into what people want. That requires that you find ways of explaining to the others not just <em>what</em> you think, but <em>why</em> you think it.</p>
+
+<p>And that’s really hard to learn, and we’ve gradually been getting better at that. As you go about things, just be conscious of the fact that it’s going to take a lot of effort and time, even just to learn to speak the same language. You think you all speak English, but then you find, of course, that you make up your own words to describe the domain you’re working in. A lot of things are just completely non-obvious.</p>
+
+<p>You get a lot of conflicting advice from outside mentors. We have a lot of really good investors, advisors, mentors, and often they say completely contradictory things — and that’s fine. You just need to learn to absorb those things into your own intuition, and within the team work out how you can share those intuitions. Then you can have a coherent vision, all together, for what you’re going to build, why it’s important, how you’re going to go forward.</p>
+
+<p><strong>Matthew:</strong> What bit of advice would you like to share with our audience about launching a startup? If you have to distill it, what are the key elements?</p>
+
+<p><strong>Martin:</strong> One thing, which worked in our favor but is not necessarily particularly replicable: if your product works well for journalists, then journalists will write about it quite a lot. We didn’t realize this initially, but it happened to be the fact that, Rapportive works really well for people who deal with a lot of incoming weird stuff from lots of people they don’t know, and need to assess very quickly whether the sources are reliable. And, well, that’s pretty much what journalists do.</p>
+
+<p>It was also the case that when we started Rapportive, a lot of the data we had about people was not particularly great, but bloggers tend to be the kind of people who are very present on social media, so we had really great data for them! And that worked in our favor. Since then we’ve got a lot better at data for everyone else, and now we’ve got a pretty high coverage rate for everyone. But for that initial launch, just working well for reporters and bloggers was pretty good.</p>
+
+<p>But of course, you can’t choose your startup based on the fact that it’s going to be useful for bloggers, so that’s not very useful advice.</p>
+
+<p>There are lots of different schools of thought for launching and they all kind of make sense. There’s the &#8220;launch small and make sure that you’re continuously learning&#8221; school, and that makes a lot of sense. And then there’s also the school which observes that, if you can get a lot of very quick press that generates a lot of excitement and a lot of buzz, that’s also valuable. In the end, with these things there’s never a right answer; you just have to take in all of the bits of advice you hear and create your personal conglomerate of what makes sense.</p>
+
+<p><strong>Matthew:</strong> Before we close, I would love for you to give our audience your vision of Rapportive and how you hope it will change the world.</p>
+
+<p><strong>Martin:</strong> We’ve got a lot of really exciting things coming. I don’t want to talk about them in too much detail, but to give a rough outline:</p>
+
+<p>I think, firstly, the inbox is a really, really interesting place, because that’s where all of your communications come together. Email is the primary one we use at the moment; I don’t know, maybe it’ll be Facebook mail within two years’ time, but that doesn’t really matter, that’s beside the point.</p>
+
+<p>The point is that people are really, really opinionated about which tool they want to use, and getting people to change tool is really, really hard. So we’re building Rapportive in the philosophy that we don’t people to change behavior; we just want people to continue doing what they’re doing already, and just make it better.</p>
+
+<p>Just add those little magic touches, add little things which either save you time, or which take something which was previously laborious (and required switching to other browser tabs and required re-entering of data), and make all of that go away. Just make it be there, and make common tasks feel natural.</p>
+
+<p>That’s the philosophy with which we’re going about things, and that seems to be working pretty well.</p>
+
+<p><strong>Matthew:</strong> Excellent. Well, Martin, it’s been a pleasure having you as a guest on FounderLY. We’re rooting for your success at Rapportive. For those in our audience who’d like to learn more you can visit their website at www.rapportive.com and register to become a user and join their community. This is Matthew Wise with FounderLY. Thanks so much, Martin.</p>
+
+<p><strong>Martin:</strong> Thank you, Matthew.</p>
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>What's so special about Y Combinator?</title>
@@ -780,67 +931,6 @@ how much value YC brings. So that concern is irrelevant here.</p>
 </blockquote>
 
 <p><a href='http://go-test.it/blog/2010/02/22/learning-about-our-customers.html'>Start reading the new series on the Go Test It blog</a>, <a href='http://feeds.feedburner.com/gotestit'>subscribe to the Go Test It RSS feed</a> and <a href='http://twitter.com/martinkl'>follow me on Twitter</a> to keep track of new posts.</p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>How to negotiate a price: Return on Indignation</title>
-                <link>http://martin.kleppmann.com/2010/01/30/how-to-negotiate-a-price-return-on-indignation.html</link>
-                <comments>http://martin.kleppmann.com/2010/01/30/how-to-negotiate-a-price-return-on-indignation.html#disqus_thread</comments>
-                <pubDate>Sat, 30 Jan 2010 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=356</guid>
-                
-                <description><![CDATA[ As an entrepreneur you have to negotiate things: customer contracts, freelance rates, investments, acquisitions and more. These things are really important, but you probably grew up in a western country where you buy the bar of chocolate for the price it says on the shelf, no more and no less.... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>As an entrepreneur you have to negotiate things: customer contracts, freelance rates, investments, acquisitions and more. These things are really important, but you probably grew up in a western country where you buy the bar of chocolate for the price it says on the shelf, no more and no less. We&#8217;re not used to negotiating things. So how do you determine a good price?</p>
-
-<p>I&#8217;m sure much has been written about this already, but I&#8217;ve not really read any of it. Instead I made up some principles based on my own bit of experience and a bit of common sense, and maybe you will find them useful.</p>
-
-<p>So let&#8217;s take a look at a negotiation from the point of view of the seller. When you&#8217;re selling something, you want to charge as much as you can get away with. The higher the price, the better for you, i.e. the higher the monetary benefit of the sale to you.</p>
-<img alt='Graph: Value over price (1)' class='aligncenter size-full' height='299' src='http://martin.kleppmann.com/2010/01/graph1.jpg' width='500' />
-<p>The first bit of money makes a big difference &#8211; maybe you really need it so that you can pay the rent, otherwise you&#8217;ll get kicked out of your house. Within this range, having more money is clearly a lot more valuable for you. However, as the amounts increase and you have secured an acceptable standard of living, I would argue that the <em>benefit</em> of the money <em>to you</em> slows down. Frankly, a top-paid investment banker would barely notice the difference if their salary or bonus was increased or decreased by 50%.</p>
-
-<p>But nevertheless, although it gradually flattens a bit, the line is always increasing. If you can get more out of a deal, it&#8217;s a better deal. At first glance anyway.</p>
-
-<p>However, that&#8217;s not the end of the story. When I am negotiating with someone, this is usually someone I actually <em>want</em> to work with, and I want to stay friends with them. You don&#8217;t want to charge so much that they will simply walk away. And if you&#8217;re in a strong position where the buyer doesn&#8217;t have much choice (eg. because it&#8217;s something urgent and they don&#8217;t have time to find someone else), you don&#8217;t want to abuse your position, as otherwise you will get a bad reputation as someone who takes advantage of others.</p>
-
-<p>Therefore, you should be taking your relationship with the buyer into account. How indignant they will be about your price will depend on a lot of factors (the market value of what you have to offer, how much you charged them previously, how much they can afford, etc). But in general there will be some sort of function describing how happy they are depending on the price (BogoGraph alert!):</p>
-<img alt='Graph: Value over price (2)' class='aligncenter size-full' height='368' src='http://martin.kleppmann.com/2010/01/graph2.jpg' width='500' />
-<p>Here I plotted in blue the buyer&#8217;s &#8220;goodwill&#8221; (not in any financial sense, just in the sense of &#8220;how much they like you&#8221;). If you charge too much, they will obviously hate you, so the graph goes downhill very rapidly beyond a certain point. You probably don&#8217;t want to go there. I think it is also possible to charge too little, which conveys the message that what you have is not particularly good and not worth very much; but that won&#8217;t offend your buyer nearly as much as overcharging them. So I&#8217;d say that the graph first goes up a little bit, and then goes down a lot.</p>
-
-<p>How do you figure out the shape of that curve for your buyer? That&#8217;s hard. You need to get a few data points, for example you might try asking them for a pretty high price and observing how upset they get. But you&#8217;ve got to be very careful &#8211; don&#8217;t abuse their trust and don&#8217;t waste their time. The longer you spend trying to measure the blue curve, the lower it gets overall (i.e. the more irritated they get with you). It&#8217;s better if you can use external things as reference points &#8211; how much an alternative solution would cost them, how much they have paid for comparable things in the past, the size of their budget (which they probably won&#8217;t tell you but you might be able to guess indirectly).</p>
-
-<p>The value you get out of making the sale is twofold: on the one side the money you get out of it, and on the other side the buyer&#8217;s goodwill (with all of its intangible benefits, such as keeping open potential future deals, recommendations, referrals, general happiness and warm fuzzy feelings). You want both, so let&#8217;s just add the two curves together:</p>
-<img alt='Graph: Value over price (3)' class='aligncenter size-full' height='364' src='http://martin.kleppmann.com/2010/01/graph3.jpg' width='500' />
-<p>The red line is simply the sum of the blue and the black, and represents the total value you&#8217;re getting out of the sale. Some things to observe:</p>
-
-<ol>
-<li>There is a very clear maximum for the total value. This is what you should be aiming at.</li>
-
-<li>The price at which the seller&#8217;s value is maximised is always higher than the ideal price for the buyer (i.e. the red line&#8217;s maximum is further to the right than the blue line&#8217;s maximum). Of course the buyer would prefer to pay less &#8211; if that is not the case, you&#8217;re definitely charging too little.</li>
-
-<li>The blue graph is like quantum mechanics: it changes when you measure it. Keep your negotiations short, simple and clear. Don&#8217;t keep changing your mind, because that just reduces goodwill and thus the total value. Keep in mind that the whole point of this exercise is to stay friends!</li>
-
-<li>The optimal price depends on your weighting of blue curve vs. black curve &#8211; the less you care about the buyer&#8217;s goodwill, the higher the optimal price.</li>
-
-<li>Even if you are playing hard-nosed, it&#8217;s a game of diminishing returns. By pushing harder you will get a bit more money, but the buyer will also get <em>a lot</em> more indignant. The harder you push, the smaller your marginal gains.</li>
-</ol>
-
-<p>This brings us to an interesting concept: you can trade in buyer&#8217;s goodwill for more money by adjusting how much you care about how the other party feels. There is a <strong>return on the indignation</strong> of the other party, and it&#8217;s up to you to choose what you want this return to be.</p>
-
-<p>It depends on your character and on the strategic value of the particular deal. I generally work with quite a low return on indignation, i.e. I value goodwill quite highly and won&#8217;t readily trade it for a bit more money. That&#8217;s because:</p>
-
-<ol>
-<li>I don&#8217;t find it fun to be hard-nosed, so I&#8217;ll much rather be nice (assuming the other party is also nice), and</li>
-
-<li>I think in terms of long-term value, and I believe that goodwill stays around for a long time, so I&#8217;ll much rather invest in building good long-term relationships than try to extract the maximum monetary value in the short term.</li>
-</ol>
-
-<p>That&#8217;s my approach, and I&#8217;m sure others will think differently. But at least, with a framework like this, you can be conscious about your return on indignation.</p>
-
-<p>By the way, if you&#8217;re into pricing products which are not individually negotiated &#8211; quite a different topic &#8211; you should definitely read <a href='http://www.neildavidson.com/dontjustrollthedice.html'>Don&#8217;t just roll the dice</a> by <a href='http://www.neildavidson.com/'>Neil Davidson</a>.</p>
                 ]]></content:encoded>
             </item>
         
