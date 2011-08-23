@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: My FounderLY interview
+hackernews: http://news.ycombinator.com/item?id=2892308
 ---
 
 Matthew from [FounderLY](http://www.founderly.com/) wondered what it would have been like to watch
