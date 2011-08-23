@@ -147,3 +147,7 @@ so please
 certain similarities with my example here, or they may not -- I couldn't say. ;-)
 
 **Update (11 June 2010):** Packed the Excel spreadsheet in a ZIP file to fix download problems.
+
+**Update (23 August 2011):** [Daniel Odio](http://www.danielodio.com/) has made this into a
+[Google Docs spreadsheet](http://go.DanielOdio.com/convertible-note) -- you can just fill in
+your numbers and see the results immediately. Awesome!
