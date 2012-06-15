@@ -3,7 +3,7 @@ layout: ync-post
 title: Java's hashCode is not safe for distributed systems
 ---
 
-Hash functions serve many different purposes:
+As you probably know, hash functions serve many different purposes:
 
 1. Network and storage systems use them (in the guise of checksums) to detect accidental
    corruption of data.
@@ -36,24 +36,25 @@ and then puts the key and value in that bucket in the table. If there's already 
 hash collision), a linked list typically takes care of storing the keys and values within the same
 hash bucket. In Ruby, for example:
 
-    $ pry
-    [1] pry(main)> hash_table = {'answer' => 42}
-    => {"answer"=>42}
-    [2] pry(main)> 'answer'.hash
-    => -1246806696
-    [3] pry(main)> 'answer'.hash
-    => -1246806696
-    [4] pry(main)> ^D
+<pre><span class="ansi1 ansi31">$</span> ruby --version
+ruby 1.8.7 (2011-06-30 patchlevel 352) [i686-darwin11.0.0]
 
-    $ pry
-    [1] pry(main)> 'answer'.hash
-    => -1246806696
-    [2] pry(main)> "don't panic".hash
-    => -464783873
-    [3] pry(main)> ^D
+<span class="ansi1 ansi31">$</span> pry
+[1] pry(main)&gt; hash_table = {<span class="ansi1 ansi32">'</span><span class="ansi32">answer</span><span class="ansi1 ansi32">'</span> =&gt; <span class="ansi1 ansi34">42</span>}
+=&gt; {<span class="ansi1 ansi32">&quot;</span><span class="ansi32">answer</span><span class="ansi1 ansi32">&quot;</span>=&gt;<span class="ansi1 ansi34">42</span>}
+[2] pry(main)&gt; <span class="ansi1 ansi32">'</span><span class="ansi32">answer</span><span class="ansi1 ansi32">'</span>.hash
+=&gt; <span class="ansi1 ansi34">-1246806696</span>
+[3] pry(main)&gt; <span class="ansi1 ansi32">'</span><span class="ansi32">answer</span><span class="ansi1 ansi32">'</span>.hash
+=&gt; <span class="ansi1 ansi34">-1246806696</span>
+[4] pry(main)&gt; ^D
 
-    $ ruby --version
-    ruby 1.8.7 (2011-06-30 patchlevel 352) [i686-darwin11.0.0]
+<span class="ansi1 ansi31">$</span> pry
+[1] pry(main)&gt; <span class="ansi1 ansi32">'</span><span class="ansi32">answer</span><span class="ansi1 ansi32">'</span>.hash
+=&gt; <span class="ansi1 ansi34">-1246806696</span>
+[2] pry(main)&gt; <span class="ansi1 ansi32">&quot;</span><span class="ansi32">don't panic</span><span class="ansi1 ansi32">&quot;</span>.hash
+=&gt; <span class="ansi1 ansi34">-464783873</span>
+[3] pry(main)&gt; ^D
+</pre>
 
 When you add the key `'answer'` to the hash table, Ruby internally calls the `#hash` method on
 that string object. The method returns an arbitrary number, and as you see above, the number is
@@ -63,26 +64,27 @@ get a large number of collisions in normal operation.
 
 The problem with the example above: when I quit Ruby (`^D`) and start it again, and compute the hash
 for the same string, I still get the same result. *But why is that a problem,* you say, *isn't that
-what a hash function is supposed to do?* -- Well, the problem is that I can now use my evil genius
-to generate a list of strings that all have the same hash code:
+what a hash function is supposed to do?* -- Well, the problem is that I can now put on my evil
+genius hat, and generate a list of strings that all have the same hash code:
 
-    $ pry
-    [1] pry(main)> "a".hash
-    => 100
-    [2] pry(main)> "\0a".hash
-    => 100
-    [3] pry(main)> "\0\0a".hash
-    => 100
-    [4] pry(main)> "\0\0\0a".hash
-    => 100
-    [5] pry(main)> "\0\0\0\0a".hash
-    => 100
-    [6] pry(main)> "\0\0\0\0\0a".hash
-    => 100
+<pre><span class="ansi1 ansi31">$</span> pry
+[1] pry(main)&gt; <span class="ansi1 ansi32">&quot;</span><span class="ansi32">a</span><span class="ansi1 ansi32">&quot;</span>.hash
+=&gt; <span class="ansi1 ansi34">100</span>
+[2] pry(main)&gt; <span class="ansi1 ansi32">&quot;\0</span><span class="ansi32">a</span><span class="ansi1 ansi32">&quot;</span>.hash
+=&gt; <span class="ansi1 ansi34">100</span>
+[3] pry(main)&gt; <span class="ansi1 ansi32">&quot;\0\0</span><span class="ansi32">a</span><span class="ansi1 ansi32">&quot;</span>.hash
+=&gt; <span class="ansi1 ansi34">100</span>
+[4] pry(main)&gt; <span class="ansi1 ansi32">&quot;\0\0\0</span><span class="ansi32">a</span><span class="ansi1 ansi32">&quot;</span>.hash
+=&gt; <span class="ansi1 ansi34">100</span>
+[5] pry(main)&gt; <span class="ansi1 ansi32">&quot;\0\0\0\0</span><span class="ansi32">a</span><span class="ansi1 ansi32">&quot;</span>.hash
+=&gt; <span class="ansi1 ansi34">100</span>
+[6] pry(main)&gt; <span class="ansi1 ansi32">&quot;\0\0\0\0\0</span><span class="ansi32">a</span><span class="ansi1 ansi32">&quot;</span>.hash
+=&gt; <span class="ansi1 ansi34">100</span>
+</pre>
 
 Any server in the world running the same version of Ruby will get the same hash values. This means
 that I can send a specially crafted web request to your server, in which the request parameters
-contains lots of those strings with the same hash code. Your web framework will probably parse the
+contain lots of those strings with the same hash code. Your web framework will probably parse the
 parameters into a hash table, and they will all end up in the same hash bucket, no matter how big
 you make the hash table. Whenever you want to access the parameters, you now have to iterate over a
 long list of hash collisions, and your swift O(1) hash table lookup is suddenly a crawling slow O(n).
@@ -96,20 +98,21 @@ it only became widely known last year, when Java, Ruby, Python, PHP and Node.js 
 The solution is for the hash code to be consistent within one process, but to be different for
 different processes. For example, here is a more recent version in Ruby, in which the flaw is fixed:
 
-    $ pry
-    [1] pry(main)> 'answer'.hash
-    => 968518855724416885
-    [2] pry(main)> 'answer'.hash
-    => 968518855724416885
-    [3] pry(main)> ^D
+<pre><span class="ansi1 ansi31">$</span> ruby --version
+ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
 
-    $ pry
-    [1] pry(main)> 'answer'.hash
-    => -150894376904371785
-    [2] pry(main)> ^D
+<span class="ansi1 ansi31">$</span> pry
+[1] pry(main)&gt; <span class="ansi1 ansi32">'</span><span class="ansi32">answer</span><span class="ansi1 ansi32">'</span>.hash
+=&gt; <span class="ansi1 ansi34">968518855724416885</span>
+[2] pry(main)&gt; <span class="ansi1 ansi32">'</span><span class="ansi32">answer</span><span class="ansi1 ansi32">'</span>.hash
+=&gt; <span class="ansi1 ansi34">968518855724416885</span>
+[3] pry(main)&gt; ^D
 
-    $ ruby --version
-    ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
+<span class="ansi1 ansi31">$</span> pry
+[1] pry(main)&gt; <span class="ansi1 ansi32">'</span><span class="ansi32">answer</span><span class="ansi1 ansi32">'</span>.hash
+=&gt; <span class="ansi1 ansi34">-150894376904371785</span>
+[2] pry(main)&gt; ^D
+</pre>
 
 When I quit Ruby and start it again, and ask for the hash code of the same string, I get a
 completely different answer. This is obviously not what you want for cryptographic hashes or
@@ -134,8 +137,8 @@ different hash codes for the same value, because you'd end up routing requests t
 You can't use the same hash function as the programming language uses for hash tables.
 
 Unfortunately, this is
-[exactly what Hadoop does](http://squarecog.wordpress.com/2011/02/20/hadoop-requires-stable-hashcode-implementations/).
-[Storm](http://storm-project.net/), a stream processing framework,
+[exactly](http://squarecog.wordpress.com/2011/02/20/hadoop-requires-stable-hashcode-implementations/)
+what Hadoop does. [Storm](http://storm-project.net/), a stream processing framework,
 [does too](https://github.com/nathanmarz/storm/blob/33a2ea5/src/clj/backtype/storm/tuple.clj#L7-8).
 Both use the Java Virtual Machine's
 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()">Object.hashCode()</a>
@@ -168,17 +171,17 @@ a hash function that can't always safely be used for communication between proce
 
 So what I'd like to ask for is this: if you're building a distributed framework based on the JVM,
 **please don't** use Java's `hashCode()` for anything that needs to work across different processes.
-Because it'll look like it works fine when you use it with strings and numbers, and then someday
-a brave soul will put (e.g.) a protocol buffers object in it, and then spend days banging their
-head against a wall trying to figure out why messages are getting sent to the wrong servers. (Not
-that something like that happened to me. Not at all.)
+Because it'll look like it works fine when you use it with strings and numbers, and then someday a
+brave soul will use (e.g.) a protocol buffers object, and then spend days banging their head against
+a wall trying to figure out why messages are getting sent to the wrong servers.
 
 What should you use instead? First, you probably need to serialize the object to a byte stream
 (which you need to do anyway if you're going to send it over the network). If you're using a
 serialization that always maps the same values to the same sequence of bytes, you can just hash that
-byte stream. A cryptographic hash such as MD5 or SHA-1 would be for many cases, but might be a bit
-heavyweight if you're dealing with a really high throughput service. I've heard good things about
-[MurmurHash](http://code.google.com/p/smhasher/), but not really in a position to recommend it.
+byte stream. A cryptographic hash such as MD5 or SHA-1 would be ok for many cases, but might be a bit
+heavyweight if you're dealing with a really high-throughput service. I've heard good things about
+[MurmurHash](http://code.google.com/p/smhasher/), which is non-cryptographic but lightweight and
+claims to be well-behaved.
 
 If your serialization doesn't always produce the same sequence of bytes for a given value, then you
 can still define a hash function on the objects themselves. Just please don't use `hashCode()`. It's
