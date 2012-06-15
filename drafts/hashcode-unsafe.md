@@ -26,6 +26,9 @@ something like [bcrypt](http://codahale.com/how-to-safely-store-a-password/), wh
 Anyway, that's all old news. Today I want to talk about points 4 and 5, and why they are also very
 different from each other.
 
+
+**Hashes for hash tables**
+
 We use hash tables (dictionaries) in programming languages all the time without thinking twice. When
 you insert an item into a hash table, the language computes a hash code (an integer) for the key,
 uses that number to choose a bucket in the hash table (typically `mod n` for a table of size `n`),
@@ -112,6 +115,9 @@ When I quit Ruby and start it again, and ask for the hash code of the same strin
 completely different answer. This is obviously not what you want for cryptographic hashes or
 checksums, since it would render them useless --- but for hash tables, it's exactly right.
 
+
+**Hashes for distributed systems**
+
 Now let's talk about distributed systems --- systems in which you have more than process, probably
 on more than one machine, and they are talking to each other. If you have something that's too big
 to fit on one machine (too much data to fit on one machine's disks, too many requests to be
@@ -151,16 +157,19 @@ in different processes -- [Protocol Buffers](http://code.google.com/p/protobuf/)
 [people get quite confused](https://groups.google.com/forum/?fromgroups#!topic/protobuf/MCk1moyWgIk).
 
 The problem is that although the documentation says `hashCode()` doesn't provide a consistency
-guarantee, the Java standard library behaves as if it did provide the guarantee. People start
+guarantee, the Java standard library behaves as if it *did* provide the guarantee. People start
 relying on it, and since backwards-compatibility is rated so highly in the Java community, it will
-probably never ever be changed. So the JVM gets the worst of both worlds: a hash table
-implementation that is open to DoS attacks, but also a hash function that can't always safely be
-used for communication between processes. :(
+probably never ever be changed, even though the documentation would allow it to be changed. So the
+JVM gets the worst of both worlds: a hash table implementation that is open to DoS attacks, but also
+a hash function that can't always safely be used for communication between processes. :(
 
-But what I'd like to ask for is this: if you're building a distributed framework based on the JVM,
-**please** don't use Java's `hashCode()` for anything that needs to work across different processes.
+
+**Therefore...**
+
+So what I'd like to ask for is this: if you're building a distributed framework based on the JVM,
+**please don't** use Java's `hashCode()` for anything that needs to work across different processes.
 Because it'll look like it works fine when you use it with strings and numbers, and then someday
-a brave soul will put an (e.g.) protocol buffers object in it, and then spend days banging their
+a brave soul will put (e.g.) a protocol buffers object in it, and then spend days banging their
 head against a wall trying to figure out why messages are getting sent to the wrong servers. (Not
 that something like that happened to me. Not at all.)
 
