@@ -178,5 +178,5 @@ ok for in-process hash tables, but distributed systems are a different matter.
 (Oh, and in case you were wondering: it looks like the web servers affected by Java's
 hashCode collisions fixed the problem not by changing to a different hash function, but
 simply by limiting the number of parameters:
-[http://svn.apache.org/viewvc/tomcat/tc7.0.x/trunk/java/org/apache/tomcat/util/http/Parameters.java?r1=1195977&r2=1195976&pathrev=1195977](Tomcat),
-[https://github.com/eclipse/jetty.project/commit/085c79d7d6cfbccc02821ffdb64968593df3e0bf](Jetty).)
+[Tomcat](http://svn.apache.org/viewvc/tomcat/tc7.0.x/trunk/java/org/apache/tomcat/util/http/Parameters.java?r1=1195977&r2=1195976&pathrev=1195977),
+[Jetty](https://github.com/eclipse/jetty.project/commit/085c79d7d6cfbccc02821ffdb64968593df3e0bf).)
