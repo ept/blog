@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?2" />
 <!--[if lt IE 8]>
     <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
@@ -49,6 +50,138 @@
 
         <div id="content">
             
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
+            <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html" rel="bookmark">Java's hashCode is not safe for distributed systems</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            <p>As you probably know, hash functions serve many different purposes:</p>
+
+<ol>
+<li>Network and storage systems use them (in the guise of checksums) to detect accidental corruption of data.</li>
+
+<li>Crypographic systems use them to detect malicious corruption of data and to implement signatures.</li>
+
+<li>Password authentication systems use them to make it harder to extract plaintext passwords from a database.</li>
+
+<li>Programming languages use them for hash maps, to determine in which hash bucket a key is placed.</li>
+
+<li>Distributed systems use them to determine which worker in a cluster should handle a part of a large job.</li>
+</ol>
+
+<p>All those purposes have different requirements, and different hash functions exist for the various purposes. For example, <a href='http://en.wikipedia.org/wiki/Cyclic_redundancy_check'>CRC32</a> is fine for detecting bit corruption in Ethernet, as it&#8217;s really fast and easy to implement in hardware, but it&#8217;s useless for cryptographic purposes. <a href='http://tools.ietf.org/html/rfc3174'>SHA-1</a> is fine for protecting the integrity of a message against attackers, as it&#8217;s cryptographically secure and also reasonably fast to compute; but if you&#8217;re storing passwords, you&#8217;re probably better off with something like <a href='http://codahale.com/how-to-safely-store-a-password/'>bcrypt</a>, which is <em>deliberately</em> slow in order to make brute-force attacks harder.</p>
+
+<p>Anyway, that&#8217;s all old news. Today I want to talk about points 4 and 5, and why they are also very different from each other.</p>
+
+<p><strong>Hashes for hash tables</strong></p>
+
+<p>We use hash tables (dictionaries) in programming languages all the time without thinking twice. When you insert an item into a hash table, the language computes a hash code (an integer) for the key, uses that number to choose a bucket in the hash table (typically <code>mod n</code> for a table of size <code>n</code>), and then puts the key and value in that bucket in the table. If there&#8217;s already a value there (a hash collision), a linked list typically takes care of storing the keys and values within the same hash bucket. In Ruby, for example:</p>
+<pre><span class='ansi1 ansi31'>$</span> ruby --version
+ruby 1.8.7 (2011-06-30 patchlevel 352) [i686-darwin11.0.0]
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; hash_table = {<span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span> =&gt; <span class='ansi1 ansi34'>42</span>}
+=&gt; {<span class='ansi1 ansi32'>&quot;</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>&quot;</span>=&gt;<span class='ansi1 ansi34'>42</span>}
+[2] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-1246806696</span>
+[3] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-1246806696</span>
+[4] pry(main)&gt; ^D
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-1246806696</span>
+[2] pry(main)&gt; <span class='ansi1 ansi32'>&quot;</span><span class='ansi32'>don't panic</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>-464783873</span>
+[3] pry(main)&gt; ^D
+</pre>
+<p>When you add the key <code>&#39;answer&#39;</code> to the hash table, Ruby internally calls the <code>#hash</code> method on that string object. The method returns an arbitrary number, and as you see above, the number is always the same for the same string. A different string usually has a different hash code. Occasionally you might get two keys with the same hash code, but it&#8217;s extremely unlikely that you get a large number of collisions in normal operation.</p>
+
+<p>The problem with the example above: when I quit Ruby (<code>^D</code>) and start it again, and compute the hash for the same string, I still get the same result. <em>But why is that a problem,</em> you say, <em>isn&#8217;t that what a hash function is supposed to do?</em> &#8211; Well, the problem is that I can now put on my evil genius hat, and generate a list of strings that all have the same hash code:</p>
+<pre><span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>&quot;</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[2] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[3] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[4] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[5] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[6] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0\0\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+</pre>
+<p>Any server in the world running the same version of Ruby will get the same hash values. This means that I can send a specially crafted web request to your server, in which the request parameters contain lots of those strings with the same hash code. Your web framework will probably parse the parameters into a hash table, and they will all end up in the same hash bucket, no matter how big you make the hash table. Whenever you want to access the parameters, you now have to iterate over a long list of hash collisions, and your swift O(1) hash table lookup is suddenly a crawling slow O(n).</p>
+
+<p>I just need to make a small number of these evil requests to your server and I&#8217;ve brought it to its knees. This type of denial of service attack was already <a href='http://www.cs.rice.edu/~scrosby/hash/CrosbyWallach_UsenixSec2003.pdf'>described</a> back in 2003, but it only became widely known last year, when Java, Ruby, Python, PHP and Node.js all suddenly <a href='http://www.ocert.org/advisories/ocert-2011-003.html'>scrambled</a> to fix the issue.</p>
+
+<p>The solution is for the hash code to be consistent within one process, but to be different for different processes. For example, here is a more recent version in Ruby, in which the flaw is fixed:</p>
+<pre><span class='ansi1 ansi31'>$</span> ruby --version
+ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>968518855724416885</span>
+[2] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>968518855724416885</span>
+[3] pry(main)&gt; ^D
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-150894376904371785</span>
+[2] pry(main)&gt; ^D
+</pre>
+<p>When I quit Ruby and start it again, and ask for the hash code of the same string, I get a completely different answer. This is obviously not what you want for cryptographic hashes or checksums, since it would render them useless &#8212; but for hash tables, it&#8217;s exactly right.</p>
+
+<p><strong>Hashes for distributed systems</strong></p>
+
+<p>Now let&#8217;s talk about distributed systems &#8212; systems in which you have more than process, probably on more than one machine, and they are talking to each other. If you have something that&#8217;s too big to fit on one machine (too much data to fit on one machine&#8217;s disks, too many requests to be handled by one machine&#8217;s CPUs, etc), you need to spread it across multiple machines.</p>
+
+<p>How do you know which machine to use for a given request? Unless you have some application-specific partitioning that makes more sense, a hash function is a simple and effective solution: hash the name of the thing you&#8217;re requesting, mod number of servers, and that&#8217;s your server number. (Though if you ever want to change the number of machines, <a href='http://michaelnielsen.org/blog/consistent-hashing/'>consistent hashing</a> is probably a better bet.)</p>
+
+<p>For this setup you obviously don&#8217;t want a hash function in which different processes may compute different hash codes for the same value, because you&#8217;d end up routing requests to the wrong server. You can&#8217;t use the same hash function as the programming language uses for hash tables.</p>
+
+<p>Unfortunately, this is <a href='http://squarecog.wordpress.com/2011/02/20/hadoop-requires-stable-hashcode-implementations/'>exactly</a> what Hadoop does. <a href='http://storm-project.net/'>Storm</a>, a stream processing framework, <a href='https://github.com/nathanmarz/storm/blob/33a2ea5/src/clj/backtype/storm/tuple.clj#L7-8'>does too</a>. Both use the Java Virtual Machine&#8217;s <a href='http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()'>Object.hashCode()</a> method.</p>
+
+<p>I understand the use of <code>hashCode()</code> &#8212; it&#8217;s very tempting. On strings, numbers and collection classes, <code>hashCode()</code> always returns a consistent value, apparently even across different JVM vendors. It&#8217;s like that despite the <a href='http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()'>documentation</a> for <code>hashCode()</code> explicitly <em>not</em> guaranteeing consistency across different processes:</p>
+
+<blockquote>
+<p>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. <em>This integer need not remain consistent from one execution of an application to another execution of the same application.</em></p>
+</blockquote>
+
+<p>And once in a while, a bold library comes along that actually returns different <code>hashCode()</code> values in different processes &#8211; <a href='http://code.google.com/p/protobuf/'>Protocol Buffers</a>, for example &#8211; and <a href='https://groups.google.com/forum/?fromgroups#!topic/protobuf/MCk1moyWgIk'>people get quite confused</a>.</p>
+
+<p>The problem is that although the documentation says <code>hashCode()</code> doesn&#8217;t provide a consistency guarantee, the Java standard library behaves as if it <em>did</em> provide the guarantee. People start relying on it, and since backwards-compatibility is rated so highly in the Java community, it will probably never ever be changed, even though the documentation would allow it to be changed. So the JVM gets the worst of both worlds: a hash table implementation that is open to DoS attacks, but also a hash function that can&#8217;t always safely be used for communication between processes. :(</p>
+
+<p><strong>Therefore&#8230;</strong></p>
+
+<p>So what I&#8217;d like to ask for is this: if you&#8217;re building a distributed framework based on the JVM, <strong>please don&#8217;t</strong> use Java&#8217;s <code>hashCode()</code> for anything that needs to work across different processes. Because it&#8217;ll look like it works fine when you use it with strings and numbers, and then someday a brave soul will use (e.g.) a protocol buffers object, and then spend days banging their head against a wall trying to figure out why messages are getting sent to the wrong servers.</p>
+
+<p>What should you use instead? First, you probably need to serialize the object to a byte stream (which you need to do anyway if you&#8217;re going to send it over the network). If you&#8217;re using a serialization that always maps the same values to the same sequence of bytes, you can just hash that byte stream. A cryptographic hash such as MD5 or SHA-1 would be ok for many cases, but might be a bit heavyweight if you&#8217;re dealing with a really high-throughput service. I&#8217;ve heard good things about <a href='http://code.google.com/p/smhasher/'>MurmurHash</a>, which is non-cryptographic but lightweight and claims to be well-behaved.</p>
+
+<p>If your serialization doesn&#8217;t always produce the same sequence of bytes for a given value, then you can still define a hash function on the objects themselves. Just please don&#8217;t use <code>hashCode()</code>. It&#8217;s ok for in-process hash tables, but distributed systems are a different matter.</p>
+
+<p>(Oh, and in case you were wondering: it looks like the web servers affected by Java&#8217;s hashCode collisions fixed the problem not by changing to a different hash function, but simply by limiting the number of parameters: <a href='http://svn.apache.org/viewvc/tomcat/tc7.0.x/trunk/java/org/apache/tomcat/util/http/Parameters.java?r1=1195977&amp;r2=1195976&amp;pathrev=1195977'>Tomcat</a>, <a href='https://github.com/eclipse/jetty.project/commit/085c79d7d6cfbccc02821ffdb64968593df3e0bf'>Jetty</a>.)</p>
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="2012-06-18T00:00:00-07:00">18 Jun 2012</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+
     <div class="hentry full p1 post publish">
         <h1 class="entry-title full-title">
             <a href="/2011/08/16/founderly-interview.html" rel="bookmark">My FounderLY interview</a>
@@ -703,97 +836,6 @@ how much value YC brings. So that concern is irrelevant here.</p>
         <div class="clear"></div>
     </div>
 
-    <div class="hentry full p1 post publish">
-        <h1 class="entry-title full-title">
-            <a href="/2010/10/30/intuition-has-no-transfer-encoding.html" rel="bookmark">Intuition has no transfer encoding</a>
-        </h1>
-
-        <div class="entry-content full-content">
-            <p><strong>Intuition is really annoying sometimes.</strong></p>
-
-<p>Actually, I love intuition, because almost all my thinking is based on it. I don’t think I am very good at analysing and thinking things through logically. Often I just have a feeling about how something should be, and then sometimes I post-rationalise it.</p>
-
-<p>Not everybody’s mind works this way; if yours works like this too, you will think this is completely obvious. If not, you probably know people of this type, who can just assert “I think we should do it this way” and turn out to be right in maybe 75% of cases. Intuition is never perfect, but I love it, because it often gives a “good enough” answer very quickly, or at least provides some pointers towards places where it would be worth spending a bit more time analysing.</p>
-
-<p>The thing that I find so annoying about intuition is that it is <strong>very hard to communicate</strong>. Let me explain.</p>
-
-<p>Intuition is built from a large number of experiences: you grow up, you go through life, you meet people, you go to places, you read stuff, you make up stuff. There is no chance you can remember all the things you ever experience in factual detail, because that would be an overwhelmingly huge amount of information. But those things are nevertheless not forgotten: each experience leaves a trace, a tiny shadow of memory, so your thinking afterwards is ever so slightly different from the way it was before.</p>
-
-<p>Over the course of years, those tiny traces are aggregated, and what you get out at the end is an intuitive understanding of how the world works (or rather, how those parts of the world which you have experienced work). Think of it like very light crayon touches, in the hands of an artist, gradually forming to be a beautiful picture — except that the picture is never complete, and always evolving.</p>
-<object height='311' width='508'>
-    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' />
-    <param name='allowFullScreen' value='true' />
-    <param name='allowscriptaccess' value='always' />
-    <embed allowfullscreen='true' allowscriptaccess='always' height='311' src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' width='508' />
-</object>
-<p>With that intuition, when you encounter a new situation, it doesn’t matter that you haven’t encountered the exact same situation before: your brain does an approximate matching of the new situation with your mental model of the world, and immediately predicts the right answer. It doesn’t even need to search through memories, because the picture of the world in your head is already the fully aggregated sum of your experiences.</p>
-
-<p>(As a second step, you will typically compare your gut reaction to specific memories, to check whether the results agree. But that’s another topic.)</p>
-
-<p><strong>A tale of bitmaps and vector graphics</strong></p>
-
-<p>The way I imagine the brain stores intuition is a bit like a huge bitmap image, with lots and lots of pixels [<a href='#intuition-footnote'>1</a>]. When a new piece of information comes in, the brain’s massively parallel processing structure takes the new information, combines it with the existing image, correlates, interpolates, extrapolates, and produces an answer in an instant.</p>
-
-<p>But what if you want to teach your intuition to someone else? You can’t tell that person all the things you ever experienced in your life, because that would be far too much, and you’ve forgotten and assimilated most of those memories anyway. But that mental bitmap is also a terrible transfer format: our mouths and hands are extremely slow communication channels, making it impossible to get the bitmap out of your brain. Imagine reading out the individual pixel values of a bitmap image over the phone. It would take hours before the other person had even the vaguest, blurriest idea of the outlines of the image. And it would take years to fill in the detail.</p>
-
-<p>So&#8230; if you want to transfer that bitmap out of your brain and into someone else’s, even approximately, you have to turn that bitmap into a vector graphic.</p>
-
-<p>In vector graphics, if you choose your points and curves carefully, you can communicate the general structure of a picture very succinctly. You can enable the other person to very quickly get a rough idea of your thinking. Of course it won’t have all the colourful detail until you add lots more information, but that’s ok. And once you have analysed your picture into a vector form, you have actually gained a better understanding of what it is really about, you can zoom in to see a higher resolution, and you may be able to spot patterns that you weren’t previously aware of.</p>
-
-<p>Of course, the problem: turning bitmaps into vector graphics is hard. Computer Vision researchers are always thinking about better algorithms for doing it.</p>
-
-<p>And to return from our image analogy to the topic of intuition: expressing intuitive knowledge in a structured form is really hard.</p>
-
-<p><strong>Vectorising intuition</strong></p>
-
-<p>As a child, when you learn your first language by imitating sounds and by being continually corrected by your parents, you are building an intuition for the way that language works. You start off with <em>ga ga ga</em>, and it takes years before you can speak a coherent sentence; later, as time goes on and you grow up, you get quite good at it. Because your brain stores a pre-rendered representation of the language, you can speak and understand it easily and quickly.</p>
-
-<p>When an adult learns a foreign language, by contrast, the usual way of learning it is by studying grammar, vocabulary and carefully chosen texts. The rules of grammar and the structure of the syllabus are a kind of vector representation of the language, optimised for giving the learner a rough overview of the language structure and helping them construct useful sentences as quickly as possible.</p>
-
-<p>It is perfectly possible for an adult to go to a foreign country with no prior knowledge of the language, and to learn to speak it without formal grammar or syllabus, in the same way as a child does. However, most adults prefer to learn a language in a systematic manner, presumably because learning in “vectorised” form allows you to be much faster in getting to the stage where you can have an interesting conversation.</p>
-
-<p>No matter which way you learn the basics, it always takes years to reach native proficiency in a language; that is unavoidable, because in the end you can’t get around learning a huge amount of subtle details and building your own intuition. (Even if represented in vector form, complicated curves and shadings require a large number of points.) The difference is in the time it takes to grok the core concepts.</p>
-
-<p><strong>But here comes the important bit.</strong> When it comes to learning languages, most languages have benefitted from decades (if not centuries) of research and systematisation efforts by many intelligent people. For most languages, grammar and learning techniques are very well understood. But what if you want to communicate some intuition that <strong>only you</strong> have? Well, you have to do the vectorising yourself.</p>
-
-<p>When you have built an intuition in a specific area that is not well-known — say, with regard to some arcane or new technology, or with regard to your company’s business strategy — then there is no existing grammar you can refer to. You are like a linguist, <a href='http://en.wikipedia.org/wiki/Daniel_Everett'>going into the Amazonian Jungle</a> to document mysterious languages not yet known to the outside world. You have to observe the systematic parts and the exceptions, and formulate the grammar yourself.</p>
-
-<p>Turning your intuitive bitmap into a vector form that you can communicate&#8230; is hard. Very hard. But you need to figure it out.</p>
-
-<p><strong>Why is this important?</strong></p>
-
-<p>Well, there’s only so far that a single person’s intuition can reach. If you want to build great things and change the world, you need much more than a single person’s brain can hold. You need both depth and breadth: fine-grained intuition in specific technical fields requiring expertise, and also a greater variety of perspectives than a single person can have experienced.</p>
-
-<p>You need to combine the intuitions of several people, i.e. you have to form a team. And in order to combine your intuitions, you need to communicate and explain them. Why? Because otherwise you have no way of resolving differences, and no way of learning from each other and improving.</p>
-
-<p>By default, intuition comes without a reason attached: you ‘simply know’ that the answer is X, but you don’t know why. The problem arises when your colleague ‘simply knows’ that the answer is Y, where X≠Y, and doesn’t know a reason either. (Maybe X and Y are not completely contradictory, but rather partially overlapping ideas or differences in emphasis. Different nevertheless.) At that point either one has to overrule the other (which would defeat the goal of forming a team in the first place), or you have to rationalise the intuition, untangle the pre-aggregated reasoning, and communicate it in terms which the other person can understand.</p>
-
-<p>What if you could understand the structure of both X and Y, and the reasoning behind it, and thus manage to synthesise the two? That is a lot of effort, but I am increasingly thinking that figuring out how to communicate your intuition is one of the most valuable things you can do in a team. For if you can combine your mental image of the world with other people’s, you can build something much greater than each of you. Your thoughts can be superhuman, in some sense. And that, if you can figure it out, is a huge advantage you can have.</p>
-
-<p>A startup is a really interesting environment to try this kind of thing, because you can be as choosy as you want about the people you work with. You can pick like-minded people, and together work towards that shared intuition. You can build a good, well-founded, shared intuition of who your customers are and what they want. And if you can attain that shared intuition, you&#8217;re well underway to success.</p>
-
-<p><strong>Footnote:</strong></p>
-<a name='intuition-footnote'>
-</a>
-<p>[1] I&#8217;m not sure what each individual pixel represents. In mathematical terms, a picture is a function mapping from 2D space to colour, and a bitmap approximates this function by sampling at regularly spaced values of the input. Along that line of thinking, the mind is probably a function mapping from sensory inputs and memories to explanations and actions (or something along those lines — I&#8217;m not a neuroscientist). This function can be represented as lots of individual data points (&#8220;London &amp; lunchtime &amp; hunger &amp; last had Falafel 10 days ago → go to the King of Falafel&#8221;), which is bitmap-like, or in some systematic manner (&#8220;I like to eat falafel for lunch. For example, in London, the King of Falafel is good.&#8221;), which is vector-like, omitting redundant information (lunchtime and hunger are strongly correlated, so mentioning both is fairly redundant) and emphasising structure or dependencies (the King of Falafel only exists in London). However, as you can see, his only vaguely makes sense. The bitmap/vector analogy is itself an example of a piece of intuition that I&#8217;m trying to communicate to you right now.</p>
-        </div>
-
-        <div class="by-line">
-            <address class="author vcard full-author">
-                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
-            </address>
-            <span class="date full-date">
-                <abbr class="published" title="2010-10-30T00:00:00-07:00">30 Oct 2010</abbr>
-            </span>
-        </div>
-
-        <p class="comments-link">
-            <a href="/2010/10/30/intuition-has-no-transfer-encoding.html#disqus_thread">Comments</a>
-        </p>
-
-        <div class="clear"></div>
-    </div>
-
 
         </div>
             <div id="sidebar">
@@ -834,20 +876,16 @@ how much value YC brings. So that concern is irrelevant here.</p>
 
         <div id="carrington-about" class="widget">
             <div class="about">
-                <h2 class="title">About Martin Kleppmann</h2>
+                <h2 class="title">About</h2>
 
-                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman in
-                <a href="http://en.wikipedia.org/wiki/San_Francisco">San Francisco</a> (previously in
-                <a href="http://en.wikipedia.org/wiki/Cambridge">Cambridge, UK</a>). I care about
-                making stuff that people want, great people and culture, the web and its future,
-                marvellous user experiences, maintainable code and scalable architecture.</p>
-
-                <p>I am co-founder of <a href="http://rapportive.com/">Rapportive</a>, together with
-                <a href="http://www.samstokes.co.uk/">Sam Stokes</a> and
-                <a href="http://twitter.com/rahulvohra">Rahul Vohra</a>. We make a nifty tool which
-                gives you profiles about your contacts right inside Gmail. Previously I founded Go Test It
-                (<a href="http://go-test.it/blog/2009/11/30/red-gate-acquires-go-test-it.html">acquired</a> by
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman.
+                I co-founded <a href="http://rapportive.com/">Rapportive</a>
+                (<a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a>
+                by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and Go Test It (acquired by 
                 <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I care about making stuff that people want, great people and culture, the web and
+                its future, marvellous user experiences, maintainable code and scalable architectures.</p>
 
                 <p>I'd love to hear from you, so please leave comments, or feel free to
                 <a rel="author" href="/contact.html">contact me directly</a>.</p>
@@ -863,6 +901,8 @@ how much value YC brings. So that concern is irrelevant here.</p>
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
+                    
                       <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                       <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
@@ -870,8 +910,6 @@ how much value YC brings. So that concern is irrelevant here.</p>
                       <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
                     
                       <li>21 Dec 2010: <a href="/2010/12/21/having-a-launched-product-is-hard.html">Having a launched product is hard</a></li>
-                    
-                      <li>30 Oct 2010: <a href="/2010/10/30/intuition-has-no-transfer-encoding.html">Intuition has no transfer encoding</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

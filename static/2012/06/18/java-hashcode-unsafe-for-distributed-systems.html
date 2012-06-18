@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Java's hashCode is not safe for distributed systems &mdash; Martin Kleppmann&lsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?2" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://downloads.mailchimp.com/js/jquery.form-n-validate.js" type="text/javascript"></script>
+<script src="/form.js" type="text/javascript"></script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Java's hashCode is not safe for distributed systems
+            </h1>
+
+            <p>As you probably know, hash functions serve many different purposes:</p>
+
+<ol>
+<li>Network and storage systems use them (in the guise of checksums) to detect accidental corruption of data.</li>
+
+<li>Crypographic systems use them to detect malicious corruption of data and to implement signatures.</li>
+
+<li>Password authentication systems use them to make it harder to extract plaintext passwords from a database.</li>
+
+<li>Programming languages use them for hash maps, to determine in which hash bucket a key is placed.</li>
+
+<li>Distributed systems use them to determine which worker in a cluster should handle a part of a large job.</li>
+</ol>
+
+<p>All those purposes have different requirements, and different hash functions exist for the various purposes. For example, <a href='http://en.wikipedia.org/wiki/Cyclic_redundancy_check'>CRC32</a> is fine for detecting bit corruption in Ethernet, as it&#8217;s really fast and easy to implement in hardware, but it&#8217;s useless for cryptographic purposes. <a href='http://tools.ietf.org/html/rfc3174'>SHA-1</a> is fine for protecting the integrity of a message against attackers, as it&#8217;s cryptographically secure and also reasonably fast to compute; but if you&#8217;re storing passwords, you&#8217;re probably better off with something like <a href='http://codahale.com/how-to-safely-store-a-password/'>bcrypt</a>, which is <em>deliberately</em> slow in order to make brute-force attacks harder.</p>
+
+<p>Anyway, that&#8217;s all old news. Today I want to talk about points 4 and 5, and why they are also very different from each other.</p>
+
+<p><strong>Hashes for hash tables</strong></p>
+
+<p>We use hash tables (dictionaries) in programming languages all the time without thinking twice. When you insert an item into a hash table, the language computes a hash code (an integer) for the key, uses that number to choose a bucket in the hash table (typically <code>mod n</code> for a table of size <code>n</code>), and then puts the key and value in that bucket in the table. If there&#8217;s already a value there (a hash collision), a linked list typically takes care of storing the keys and values within the same hash bucket. In Ruby, for example:</p>
+<pre><span class='ansi1 ansi31'>$</span> ruby --version
+ruby 1.8.7 (2011-06-30 patchlevel 352) [i686-darwin11.0.0]
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; hash_table = {<span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span> =&gt; <span class='ansi1 ansi34'>42</span>}
+=&gt; {<span class='ansi1 ansi32'>&quot;</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>&quot;</span>=&gt;<span class='ansi1 ansi34'>42</span>}
+[2] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-1246806696</span>
+[3] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-1246806696</span>
+[4] pry(main)&gt; ^D
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-1246806696</span>
+[2] pry(main)&gt; <span class='ansi1 ansi32'>&quot;</span><span class='ansi32'>don't panic</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>-464783873</span>
+[3] pry(main)&gt; ^D
+</pre>
+<p>When you add the key <code>&#39;answer&#39;</code> to the hash table, Ruby internally calls the <code>#hash</code> method on that string object. The method returns an arbitrary number, and as you see above, the number is always the same for the same string. A different string usually has a different hash code. Occasionally you might get two keys with the same hash code, but it&#8217;s extremely unlikely that you get a large number of collisions in normal operation.</p>
+
+<p>The problem with the example above: when I quit Ruby (<code>^D</code>) and start it again, and compute the hash for the same string, I still get the same result. <em>But why is that a problem,</em> you say, <em>isn&#8217;t that what a hash function is supposed to do?</em> &#8211; Well, the problem is that I can now put on my evil genius hat, and generate a list of strings that all have the same hash code:</p>
+<pre><span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>&quot;</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[2] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[3] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[4] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[5] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+[6] pry(main)&gt; <span class='ansi1 ansi32'>&quot;\0\0\0\0\0</span><span class='ansi32'>a</span><span class='ansi1 ansi32'>&quot;</span>.hash
+=&gt; <span class='ansi1 ansi34'>100</span>
+</pre>
+<p>Any server in the world running the same version of Ruby will get the same hash values. This means that I can send a specially crafted web request to your server, in which the request parameters contain lots of those strings with the same hash code. Your web framework will probably parse the parameters into a hash table, and they will all end up in the same hash bucket, no matter how big you make the hash table. Whenever you want to access the parameters, you now have to iterate over a long list of hash collisions, and your swift O(1) hash table lookup is suddenly a crawling slow O(n).</p>
+
+<p>I just need to make a small number of these evil requests to your server and I&#8217;ve brought it to its knees. This type of denial of service attack was already <a href='http://www.cs.rice.edu/~scrosby/hash/CrosbyWallach_UsenixSec2003.pdf'>described</a> back in 2003, but it only became widely known last year, when Java, Ruby, Python, PHP and Node.js all suddenly <a href='http://www.ocert.org/advisories/ocert-2011-003.html'>scrambled</a> to fix the issue.</p>
+
+<p>The solution is for the hash code to be consistent within one process, but to be different for different processes. For example, here is a more recent version in Ruby, in which the flaw is fixed:</p>
+<pre><span class='ansi1 ansi31'>$</span> ruby --version
+ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>968518855724416885</span>
+[2] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>968518855724416885</span>
+[3] pry(main)&gt; ^D
+
+<span class='ansi1 ansi31'>$</span> pry
+[1] pry(main)&gt; <span class='ansi1 ansi32'>'</span><span class='ansi32'>answer</span><span class='ansi1 ansi32'>'</span>.hash
+=&gt; <span class='ansi1 ansi34'>-150894376904371785</span>
+[2] pry(main)&gt; ^D
+</pre>
+<p>When I quit Ruby and start it again, and ask for the hash code of the same string, I get a completely different answer. This is obviously not what you want for cryptographic hashes or checksums, since it would render them useless &#8212; but for hash tables, it&#8217;s exactly right.</p>
+
+<p><strong>Hashes for distributed systems</strong></p>
+
+<p>Now let&#8217;s talk about distributed systems &#8212; systems in which you have more than process, probably on more than one machine, and they are talking to each other. If you have something that&#8217;s too big to fit on one machine (too much data to fit on one machine&#8217;s disks, too many requests to be handled by one machine&#8217;s CPUs, etc), you need to spread it across multiple machines.</p>
+
+<p>How do you know which machine to use for a given request? Unless you have some application-specific partitioning that makes more sense, a hash function is a simple and effective solution: hash the name of the thing you&#8217;re requesting, mod number of servers, and that&#8217;s your server number. (Though if you ever want to change the number of machines, <a href='http://michaelnielsen.org/blog/consistent-hashing/'>consistent hashing</a> is probably a better bet.)</p>
+
+<p>For this setup you obviously don&#8217;t want a hash function in which different processes may compute different hash codes for the same value, because you&#8217;d end up routing requests to the wrong server. You can&#8217;t use the same hash function as the programming language uses for hash tables.</p>
+
+<p>Unfortunately, this is <a href='http://squarecog.wordpress.com/2011/02/20/hadoop-requires-stable-hashcode-implementations/'>exactly</a> what Hadoop does. <a href='http://storm-project.net/'>Storm</a>, a stream processing framework, <a href='https://github.com/nathanmarz/storm/blob/33a2ea5/src/clj/backtype/storm/tuple.clj#L7-8'>does too</a>. Both use the Java Virtual Machine&#8217;s <a href='http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()'>Object.hashCode()</a> method.</p>
+
+<p>I understand the use of <code>hashCode()</code> &#8212; it&#8217;s very tempting. On strings, numbers and collection classes, <code>hashCode()</code> always returns a consistent value, apparently even across different JVM vendors. It&#8217;s like that despite the <a href='http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()'>documentation</a> for <code>hashCode()</code> explicitly <em>not</em> guaranteeing consistency across different processes:</p>
+
+<blockquote>
+<p>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. <em>This integer need not remain consistent from one execution of an application to another execution of the same application.</em></p>
+</blockquote>
+
+<p>And once in a while, a bold library comes along that actually returns different <code>hashCode()</code> values in different processes &#8211; <a href='http://code.google.com/p/protobuf/'>Protocol Buffers</a>, for example &#8211; and <a href='https://groups.google.com/forum/?fromgroups#!topic/protobuf/MCk1moyWgIk'>people get quite confused</a>.</p>
+
+<p>The problem is that although the documentation says <code>hashCode()</code> doesn&#8217;t provide a consistency guarantee, the Java standard library behaves as if it <em>did</em> provide the guarantee. People start relying on it, and since backwards-compatibility is rated so highly in the Java community, it will probably never ever be changed, even though the documentation would allow it to be changed. So the JVM gets the worst of both worlds: a hash table implementation that is open to DoS attacks, but also a hash function that can&#8217;t always safely be used for communication between processes. :(</p>
+
+<p><strong>Therefore&#8230;</strong></p>
+
+<p>So what I&#8217;d like to ask for is this: if you&#8217;re building a distributed framework based on the JVM, <strong>please don&#8217;t</strong> use Java&#8217;s <code>hashCode()</code> for anything that needs to work across different processes. Because it&#8217;ll look like it works fine when you use it with strings and numbers, and then someday a brave soul will use (e.g.) a protocol buffers object, and then spend days banging their head against a wall trying to figure out why messages are getting sent to the wrong servers.</p>
+
+<p>What should you use instead? First, you probably need to serialize the object to a byte stream (which you need to do anyway if you&#8217;re going to send it over the network). If you&#8217;re using a serialization that always maps the same values to the same sequence of bytes, you can just hash that byte stream. A cryptographic hash such as MD5 or SHA-1 would be ok for many cases, but might be a bit heavyweight if you&#8217;re dealing with a really high-throughput service. I&#8217;ve heard good things about <a href='http://code.google.com/p/smhasher/'>MurmurHash</a>, which is non-cryptographic but lightweight and claims to be well-behaved.</p>
+
+<p>If your serialization doesn&#8217;t always produce the same sequence of bytes for a given value, then you can still define a hash function on the objects themselves. Just please don&#8217;t use <code>hashCode()</code>. It&#8217;s ok for in-process hash tables, but distributed systems are a different matter.</p>
+
+<p>(Oh, and in case you were wondering: it looks like the web servers affected by Java&#8217;s hashCode collisions fixed the problem not by changing to a different hash function, but simply by limiting the number of parameters: <a href='http://svn.apache.org/viewvc/tomcat/tc7.0.x/trunk/java/org/apache/tomcat/util/http/Parameters.java?r1=1195977&amp;r2=1195976&amp;pathrev=1195977'>Tomcat</a>, <a href='https://github.com/eclipse/jetty.project/commit/085c79d7d6cfbccc02821ffdb64968593df3e0bf'>Jetty</a>.)</p>
+
+            
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-subscribe" class="widget">
+            <h2 class="widget-title">Subscribe</h2>
+            <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+                Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+            </a>
+
+            <div id="mc_embed_signup">
+                <p>
+                    Enjoyed this? To get notified when I write something new,
+                    <a href="http://twitter.com/martinkl">follow me</a> on Twitter,
+                    <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+                    or type in your email address:
+                </p>
+
+                <form action="http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    <fieldset>
+                        <div class="mc-field-group">
+                            <label for="mce-EMAIL">Email:</label>
+                            <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+                        </div>
+                        <div id="mce-responses">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman.
+                I co-founded <a href="http://rapportive.com/">Rapportive</a>
+                (<a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a>
+                by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and Go Test It (acquired by 
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I care about making stuff that people want, great people and culture, the web and
+                its future, marvellous user experiences, maintainable code and scalable architectures.</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
+                    
+                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
+                    
+                      <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
+                    
+                      <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
+                    
+                      <li>21 Dec 2010: <a href="/2010/12/21/having-a-launched-product-is-hard.html">Having a launched product is hard</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>
