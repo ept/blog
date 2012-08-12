@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Improving the security of your SSH private key files &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?2" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://downloads.mailchimp.com/js/jquery.form-n-validate.js" type="text/javascript"></script>
+<script src="/form.js" type="text/javascript"></script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Improving the security of your SSH private key files
+            </h1>
+
+            <p>Ever wondered how those key files in <code>~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
+
+<p>As you probably do too, I use ssh many times every single day &#8212; every <code>git fetch</code> and <code>git push</code>, every deploy, every login to a server. And recently I realised that to me, ssh was just some crypto voodoo that I had become accustomed to using, but I didn&#8217;t really understand. That&#8217;s a shame &#8212; I like to know how stuff works. So I went on a little journey of discovery, and here are some of the things I found.</p>
+
+<p>When you start reading about &#8220;crypto stuff&#8221;, you very quickly get buried in an avalanche of acronyms. I will briefly mention the acronyms as we go along; they don&#8217;t help you understand the concepts, but they are useful in case you want to Google for further details.</p>
+
+<p>Quick recap: If you&#8217;ve ever used public key authentication, you probably have a file <code>~/.ssh/id_rsa</code> or <code>~/.ssh/id_dsa</code> in your home directory. This is your RSA/DSA private key, and <code>~/.ssh/id_rsa.pub</code> or <code>~/.ssh/id_dsa.pub</code> is its public key counterpart. Any machine you want to log in to needs to have your public key in <code>~/.ssh/authorized_keys</code> on that machine. When you try to log in, your SSH client uses a digital signature to prove that you have the private key; the server checks that the signature is valid, and that the public key is authorized for your username; if all is well, you are granted access.</p>
+
+<p>So what is actually inside this private key file?</p>
+
+<h2 id='the_unencrypted_private_key_format'>The unencrypted private key format</h2>
+
+<p>Everyone recommends that you protect your private key with a passphrase (otherwise anybody who steals the file from you can log into everything you have access to). If you leave the passphrase blank, the key is not encrypted. Let&#8217;s look at this unencrypted format first, and consider passphrase protection later.</p>
+
+<p>A ssh private key file typically looks something like this:</p>
+
+<pre><code>-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEArCQG213utzqE5YVjTVF5exGRCkE9OuM7LCp/FOuPdoHrFUXk
+y2MQcwf29J3A4i8zxpES9RdSEU6iIEsow98wIi0x1/Lnfx6jG5Y0/iQsG1NRlNCC
+aydGvGaC+PwwWiwYRc7PtBgV4KOAVXMZdMB5nFRaekQ1ksdH/360KCGgljPtzTNl
+09e97QBwHFIZ3ea5Eih/HireTrRSnvF+ywmwuxX4ubDr0ZeSceuF2S5WLXH2+TV0
+   ... etc ... lots of base64 blah blah ...
+-----END RSA PRIVATE KEY-----</code></pre>
+
+<p>The private key is an <a href='http://en.wikipedia.org/wiki/ASN.1'>ASN.1</a> data structure, serialized to a byte string using <a href='http://en.wikipedia.org/wiki/ASN.1'>DER</a>, and then <a href='http://tools.ietf.org/html/rfc4648'>Base64</a>-encoded. ASN.1 is roughly comparable to JSON (it supports various data types such as integers, booleans, strings and lists/sequences that can be nested in a tree structure). It&#8217;s very widely used for cryptographic purposes, but it has somehow fallen out of fashion with the web generation (I don&#8217;t know why, it seems like a pretty decent format).</p>
+
+<p>To look inside, let&#8217;s generate a fake RSA key without passphrase using <a href='http://www.openbsd.org/cgi-bin/man.cgi?query=ssh-keygen&amp;sektion=1'>ssh-keygen</a>, and then decode it using <a href='http://www.openssl.org/docs/apps/asn1parse.html'>asn1parse</a>:</p>
+
+<pre><code>$ ssh-keygen -t rsa -N &#39;&#39; -f test_rsa_key
+$ openssl asn1parse -in test_rsa_key
+    0:d=0  hl=4 l=1189 cons: SEQUENCE
+    4:d=1  hl=2 l=   1 prim: INTEGER           :00
+    7:d=1  hl=4 l= 257 prim: INTEGER           :C36EB2429D429C7768AD9D879F98C...
+  268:d=1  hl=2 l=   3 prim: INTEGER           :010001
+  273:d=1  hl=4 l= 257 prim: INTEGER           :A27759F60AEA1F4D1D56878901E27...
+  534:d=1  hl=3 l= 129 prim: INTEGER           :F9D23EF31A387694F03AD0D050265...
+  666:d=1  hl=3 l= 129 prim: INTEGER           :C84415C26A468934F1037F99B6D14...
+  798:d=1  hl=3 l= 129 prim: INTEGER           :D0ACED4635B5CA5FB896F88BB9177...
+  930:d=1  hl=3 l= 128 prim: INTEGER           :511810DF9AFD590E11126397310A6...
+ 1061:d=1  hl=3 l= 129 prim: INTEGER           :E3A296AE14E7CAF32F7E493FDF474...</code></pre>
+
+<p>Alternatively, you can paste the Base64 string into Lapo Luchini&#8217;s excellent <a href='http://lapo.it/asn1js/'>JavaScript ASN.1 decoder</a>. You can see that ASN.1 structure is quite simple: a sequence of nine integers. Their meaning is defined in <a href='http://tools.ietf.org/html/rfc2313#section-7.2'>RFC2313</a>. The first integer is a version number (0), and the third number is quite small (65537) &#8211; the public exponent <em>e</em>. The two important numbers are the 2048-bit integers that appear second and fourth in the sequence: the RSA modulus <em>n</em>, and the private exponent <em>d</em>. These numbers are used directly in the <a href='http://en.wikipedia.org/wiki/RSA_%28algorithm%29'>RSA algorithm</a>. The remaining five numbers can be derived from <em>n</em> and <em>d</em>, and are only cached in the key file to speed up certain operations.</p>
+
+<p>DSA keys are similar, a <a href='http://blog.ngas.ch/archives/2008/10/23/asn_1_for_dsa_public_and_private_keys/index.html'>sequence of six integers</a>:</p>
+
+<pre><code>$ ssh-keygen -t dsa -N &#39;&#39; -f test_dsa_key
+$ openssl asn1parse -in test_dsa_key
+    0:d=0  hl=4 l= 444 cons: SEQUENCE
+    4:d=1  hl=2 l=   1 prim: INTEGER           :00
+    7:d=1  hl=3 l= 129 prim: INTEGER           :E497DFBFB5610906D18BCFB4C3CCD...
+  139:d=1  hl=2 l=  21 prim: INTEGER           :CF2478A96A941FB440C38A86F22CF...
+  162:d=1  hl=3 l= 129 prim: INTEGER           :83218C0CA49BA8F11BE40EE1A7C72...
+  294:d=1  hl=3 l= 128 prim: INTEGER           :16953EA4012988E914B466B9C37CB...
+  425:d=1  hl=2 l=  21 prim: INTEGER           :89A356E922688EDEB1D388258C825...</code></pre>
+
+<h2 id='passphraseprotected_keys'>Passphrase-protected keys</h2>
+
+<p>Next, in order to make life harder for an attacker who manages to steal your private key file, you protect it with a passphrase. How does this actually work?</p>
+
+<pre><code>$ ssh-keygen -t rsa -N &#39;super secret passphrase&#39; -f test_rsa_key
+$ cat test_rsa_key
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,D54228DB5838E32589695E83A22595C7
+
+3+Mz0A4wqbMuyzrvBIHx1HNc2ZUZU2cPPRagDc3M+rv+XnGJ6PpThbOeMawz4Cbu
+lQX/Ahbx+UadJZOFrTx8aEWyZoI0ltBh9O5+ODov+vc25Hia3jtayE51McVWwSXg
+wYeg2L6U7iZBk78yg+sIKFVijxiWnpA7W2dj2B9QV0X3ILQPxbU/cRAVTd7AVrKT
+    ... etc ...
+-----END RSA PRIVATE KEY-----</code></pre>
+
+<p>We&#8217;ve gained two header lines, and if you try to parse that Base64 text, you&#8217;ll find it&#8217;s no longer valid ASN.1. That&#8217;s because the entire ASN.1 structure we saw above has been encrypted, and the Base64 text is the output of the encryption. The header tells us the encryption algorithm that was used: <a href='http://en.wikipedia.org/wiki/Advanced_Encryption_Standard'>AES-128</a> in <a href='http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29'>CBC mode</a>. The 128-bit hex string in the <code>DEK-Info</code> header is the <a href='http://en.wikipedia.org/wiki/Initialization_vector'>initialization vector</a> (IV) for the cipher. This is pretty standard stuff; all common crypto libraries can handle it.</p>
+
+<p>But how do you get from the passphrase to the AES encryption key? I couldn&#8217;t find it documented anywhere, so I had to dig through the OpenSSL source to find it:</p>
+
+<ol>
+<li>Append the first 8 bytes of the IV to the passphrase, without a separator (serves as a salt).</li>
+
+<li>Take the MD5 hash of the resulting string (once).</li>
+</ol>
+
+<p>That&#8217;s it. To prove it, let&#8217;s decrypt the private key manually (using the IV/salt from the <code>DEK-Info</code> header above):</p>
+
+<pre><code>$ tail -n +4 test_rsa_key | grep -v &#39;END &#39; | base64 -D |    # get just the binary blob
+  openssl aes-128-cbc -d -iv D54228DB5838E32589695E83A22595C7 -K $(
+    ruby -rdigest/md5 -e &#39;puts Digest::MD5.hexdigest([&quot;super secret passphrase&quot;,0xD5,0x42,0x28,0xDB,0x58,0x38,0xE3,0x25].pack(&quot;a*cccccccc&quot;))&#39;
+  ) |
+  openssl asn1parse -inform DER</code></pre>
+
+<p>&#8230;which prints out the sequence of integers from the RSA key in the clear. Of course, if you want to inspect the key, it&#8217;s much easier to do this:</p>
+
+<pre><code>$ openssl rsa -text -in test_rsa_key -passin &#39;pass:super secret passphrase&#39;</code></pre>
+
+<p>but I wanted to demonstrate exactly how the AES key is derived from the password. This is important because the private key protection has two weaknesses:</p>
+
+<ul>
+<li>The digest algorithm is hard-coded to be MD5, which means that without changing the format, it&#8217;s not possible to upgrade to another hash function (e.g. SHA-1). This could be a problem if MD5 turns out not to be good enough.</li>
+
+<li>The hash function is only applied once &#8212; there is no <a href='http://en.wikipedia.org/wiki/Key_stretching'>stretching</a>. This is a problem because MD5 and AES are both fast to compute, and thus comparatively easy to break with brute force.</li>
+</ul>
+
+<p>If your private SSH key ever gets into the wrong hands, e.g. because someone steals your laptop or your backup hard drive, the attacker can try a huge number of possible passphrases, even with moderate computing resources. If your passphrase is a dictionary word, it can probably be broken in a matter of seconds.</p>
+
+<p>That was the bad news: the passphrase on your SSH key isn&#8217;t as useful as you thought it was. But there is good news: you can upgrade to a more secure private key format, and everything continues to work!</p>
+
+<h2 id='better_key_protection_with_pkcs8'>Better key protection with PKCS#8</h2>
+
+<p>What we want is to derive a symmetric encryption key from the passphrase, and we want this derivation to be slow to compute, so that an attacker needs to buy more computing time if they want to brute-force the passphrase. If you&#8217;ve seen the <a href='http://codahale.com/how-to-safely-store-a-password/'>use bcrypt</a> meme, this should sound very familiar.</p>
+
+<p>For SSH private keys, there are a few standards with clumsy names (acronym alert!) that can help us out:</p>
+
+<ul>
+<li><a href='http://tools.ietf.org/html/rfc2898#section-5.2'>PKCS #5 (RFC 2898)</a> defines <a href='http://en.wikipedia.org/wiki/PBKDF2'>PBKDF2</a> (Password-Based Key Derivation Function 2), an algorithm for deriving an encryption key from a password by applying a hash function repeatedly. PBES2 (Password-Based Encryption Scheme 2) is also defined here; it simply means using a PBKDF2-generated key with a symmetric cipher.</li>
+
+<li><a href='http://tools.ietf.org/html/rfc5208'>PKCS #8 (RFC 5208)</a> defines a format for storing encrypted private keys that supports PBKDF2. OpenSSL transparently supports private keys in PKCS#8 format, and OpenSSH uses OpenSSL, so if you&#8217;re using OpenSSH that means you can swap your traditional SSH key files for PKCS#8 files and everything continues to work as normal!</li>
+</ul>
+
+<p>I don&#8217;t know why <code>ssh-keygen</code> still generates keys in SSH&#8217;s traditional format, even though a better format has been available for years. Compatibility with servers is not a concern, because the private key never leaves your machine. Fortunately it&#8217;s easy enough to <a href='http://www.openssl.org/docs/apps/pkcs8.html'>convert to PKCS#8</a>:</p>
+
+<pre><code>$ mv test_rsa_key test_rsa_key.old
+$ openssl pkcs8 -topk8 -v2 des3 \
+    -in test_rsa_key.old -passin &#39;pass:super secret passphrase&#39; \
+    -out test_rsa_key -passout &#39;pass:super secret passphrase&#39;</code></pre>
+
+<p>If you try using this new PKCS#8 file with a SSH client, you should find that it works exactly the same as the file generated by <code>ssh-keygen</code>. But what&#8217;s inside it?</p>
+
+<pre><code>$ cat test_rsa_key
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIOu/S2/v547MCAggA
+MBQGCCqGSIb3DQMHBAh4q+o4ELaHnwSCBMjA+ho9K816gN1h9MAof4stq0akPoO0
+CNvXdtqLudIxBq0dNxX0AxvEW6exWxz45bUdLOjQ5miO6Bko0lFoNUrOeOo/Gq4H
+dMyI7Ot1vL9UvZRqLNj51cj/7B/bmfa4msfJXeuFs8jMtDz9J19k6uuCLUGlJscP
+    ... etc ...
+-----END ENCRYPTED PRIVATE KEY-----</code></pre>
+
+<p>Notice that the header/footer lines have changed (<code>BEGIN ENCRYPTED PRIVATE KEY</code> instead of <code>BEGIN RSA PRIVATE KEY</code>), and the plaintext <code>Proc-Type</code> and <code>DEK-Info</code> headers have gone. In fact, the whole key file is once again a ASN.1 structure:</p>
+
+<pre><code>$ openssl asn1parse -in test_rsa_key
+    0:d=0  hl=4 l=1294 cons: SEQUENCE
+    4:d=1  hl=2 l=  64 cons: SEQUENCE
+    6:d=2  hl=2 l=   9 prim: OBJECT            :PBES2
+   17:d=2  hl=2 l=  51 cons: SEQUENCE
+   19:d=3  hl=2 l=  27 cons: SEQUENCE
+   21:d=4  hl=2 l=   9 prim: OBJECT            :PBKDF2
+   32:d=4  hl=2 l=  14 cons: SEQUENCE
+   34:d=5  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:3AEFD2DBFBF9E3B3
+   44:d=5  hl=2 l=   2 prim: INTEGER           :0800
+   48:d=3  hl=2 l=  20 cons: SEQUENCE
+   50:d=4  hl=2 l=   8 prim: OBJECT            :des-ede3-cbc
+   60:d=4  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:78ABEA3810B6879F
+   70:d=1  hl=4 l=1224 prim: OCTET STRING      [HEX DUMP]:C0FA1A3D2BCD7A80DD61F4C0287F8B2D...</code></pre>
+
+<p>Use Lapo Luchini&#8217;s <a href='http://lapo.it/asn1js/'>JavaScript ASN.1 decoder</a> to display a nice ASN.1 tree structure:</p>
+
+<pre><code>Sequence (2 elements)
+|- Sequence (2 elements)
+|  |- Object identifier: 1.2.840.113549.1.5.13            // using PBES2 from PKCS#5
+|  `- Sequence (2 elements)
+|     |- Sequence (2 elements)
+|     |  |- Object identifier: 1.2.840.113549.1.5.12      // using PBKDF2 -- yay! :)
+|     |  `- Sequence (2 elements)
+|     |     |- Byte string (8 bytes): 3AEFD2DBFBF9E3B3    // salt
+|     |     `- Integer: 2048                              // iteration count
+|     `- Sequence (2 elements)
+|          Object identifier: 1.2.840.113549.3.7          // encrypted with Triple DES, CBC
+|          Byte string (8 bytes): 78ABEA3810B6879F        // initialization vector
+`- Byte string (1224 bytes): C0FA1A3D2BCD7A80DD61F4C0287F8B2DAB46A43E...  // encrypted key blob</code></pre>
+
+<p>The format uses <a href='http://en.wikipedia.org/wiki/Object_identifier'>OIDs</a>, numeric codes allocated by a registration authority to unambiguously refer to algorithms. The OIDs in this key file tell us that the encryption scheme is <a href='http://oid-info.com/get/1.2.840.113549.1.5.13'>pkcs5PBES2</a>, that the key derivation function is <a href='http://oid-info.com/get/1.2.840.113549.1.5.12'>PBKDF2</a>, and that the encryption is performed using <a href='http://oid-info.com/get/1.2.840.113549.3.7'>des-ede3-cbc</a>. The hash function can be explicitly specified if needed; here it&#8217;s omitted, which means that it <a href='http://tools.ietf.org/html/rfc3370#section-4.4.1'>defaults</a> to <a href='http://tools.ietf.org/html/rfc2104'>hMAC-SHA1</a>.</p>
+
+<p>The nice thing about having all those identifiers in the file is that if better algorithms are invented in future, we can upgrade the key file without having to change the container file format.</p>
+
+<p>You can also see that the key derivation function uses an iteration count of 2,048. Compared to just one iteration in the traditional SSH key format, that&#8217;s good &#8212; it means that it&#8217;s much slower to brute-force the passphrase. The number 2,048 is currently hard-coded in OpenSSL; I hope that it will be configurable in future, as you could probably increase it without any noticeable slowdown on a modern computer.</p>
+
+<h2 id='conclusion_better_protection_for_your_ssh_private_keys'>Conclusion: better protection for your SSH private keys</h2>
+
+<p>If you already have a strong passphrase on your SSH private key, then converting it from the traditional private key format to PKCS#8 is roughly comparable to adding an extra two keystrokes to your passphrase, but without any extra typing. And if you have a weak passphrase, you can take your private key protection from &#8220;easily breakable&#8221; to &#8220;somewhat harder to break&#8221;.</p>
+
+<p>It&#8217;s so easy, you can do it right now:</p>
+
+<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.old
+$ openssl pkcs8 -topk8 -v2 des3 -in ~/.ssh/id_rsa.old -out ~/.ssh/id_rsa
+$ chmod 600 ~/.ssh/id_rsa
+# Check that the converted key works; if yes, delete the old one:
+$ rm ~/.ssh/id_rsa.old</code></pre>
+
+<p>The <code>openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private key, and twice for the passphrase for the new key. It doesn&#8217;t matter whether you use a new passphrase for the converted key or keep it the same as the old key.</p>
+
+<p>Not all software can read the PKCS8 format, but that&#8217;s fine &#8212; only your SSH client needs to be able to read the private key, after all. From the server&#8217;s point of view, storing the private key in a different format changes nothing at all.</p>
+
+            
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-subscribe" class="widget">
+            <h2 class="widget-title">Subscribe</h2>
+            <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+                Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+            </a>
+
+            <div id="mc_embed_signup">
+                <p>
+                    Enjoyed this? To get notified when I write something new,
+                    <a href="http://twitter.com/martinkl">follow me</a> on Twitter,
+                    <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+                    or type in your email address:
+                </p>
+
+                <form action="http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    <fieldset>
+                        <div class="mc-field-group">
+                            <label for="mce-EMAIL">Email:</label>
+                            <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+                        </div>
+                        <div id="mce-responses">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman.
+                I co-founded <a href="http://rapportive.com/">Rapportive</a>
+                (<a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a>
+                by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and Go Test It (acquired by 
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I care about making stuff that people want, great people and culture, the web and
+                its future, marvellous user experiences, maintainable code and scalable architectures.</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
+                    
+                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
+                    
+                      <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
+                    
+                      <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
+                    
+                      <li>21 Dec 2010: <a href="/2010/12/21/having-a-launched-product-is-hard.html">Having a launched product is hard</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/ssh-keys.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>
