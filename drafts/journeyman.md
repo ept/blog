@@ -126,6 +126,17 @@ In your journeyman years, many of the medieval guidelines still hold today:
   them with open arms too.
 
 
+In the software engineering world, we call this sort of thing a *pattern*. I would describe the
+apprentice--journeyman--master journey as a pattern for what to do with your life, and the fact that
+it was as relevant 400 years ago as it seems to be today suggests that there is something quite
+powerful about it.
+
+Patterns are *not* restrictive sets of rules that you must follow without questioning. They are a
+convenient encapsulation of lessons learnt, often painfully, by previous generations. They are a
+starting point for your own thinking about your own life, and they are a shared language for
+describing your thoughts to yourself and to others. The extent to which they are tradition is just
+the extent to which they provide structure and reassurance, and save you from having to reinvent the
+wheel. That's what makes them valuable.
 
 
 http://en.wikipedia.org/wiki/Lieder_eines_fahrenden_Gesellen
