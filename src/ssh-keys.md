@@ -262,8 +262,8 @@ Conclusion: better protection for your SSH private keys
 
 If you already have a strong passphrase on your SSH private key, then converting it from the
 traditional private key format to PKCS#8 is roughly comparable to adding two extra keystrokes to
-your passphrase, without any extra typing. And if you have a weak passphrase, you can take your
-private key protection from "easily breakable" to "somewhat harder to break".
+your passphrase, for free. And if you have a weak passphrase, you can take your private key
+protection from "easily breakable" to "slightly harder to break".
 
 It's so easy, you can do it right now:
 
