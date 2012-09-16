@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Thoughts on a better architecture for web apps &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?2" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://downloads.mailchimp.com/js/jquery.form-n-validate.js" type="text/javascript"></script>
+<script src="/form.js" type="text/javascript"></script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                Thoughts on a better architecture for web apps
+            </h1>
+
+            <p>Having spent a lot of the last few years worrying about the scalability of data-heavy applications like <a href='http://rapportive.com/'>Rapportive</a>, I have started to get the feeling that maybe we have all been &#8220;doing it wrong&#8221;. Maybe what we consider to be &#8220;state of the art&#8221; application architecture is actually holding us back.</p>
+
+<p>I don&#8217;t have a definitive answer for how we should be doing things differently, but along with a few others I have been working on new architectural approaches which I&#8217;d like to put up for discussion. My hope is that we can develop ways of better managing scale (in terms of complexity, volume of data and volume of traffic) while keeping our applications nimble, easy and safe to modify and iterate.</p>
+
+<p>My biggest problem with web application architecture is how <strong>network communication concerns</strong> are often intermingled with <strong>business logic concerns</strong>. This makes it hard to rearrange the logic into new architectures.</p>
+
+<h2 id='an_example'>An example</h2>
+
+<p>To illustrate, consider the clichéd Rails blogging engine example:</p>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+  <span class='n'>attr_accessible</span> <span class='ss'>:title</span><span class='p'>,</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
+  <span class='n'>has_many</span> <span class='ss'>:comments</span>
+<span class='k'>end</span>
+
+<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+  <span class='n'>attr_accessible</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
+  <span class='n'>belongs_to</span> <span class='ss'>:post</span>
+<span class='k'>end</span>
+
+<span class='k'>class</span> <span class='nc'>PostsController</span> <span class='o'>&lt;</span> <span class='no'>ApplicationController</span>
+  <span class='k'>def</span> <span class='nf'>show</span>
+    <span class='vi'>@post</span> <span class='o'>=</span> <span class='no'>Post</span><span class='o'>.</span><span class='n'>find</span><span class='p'>(</span><span class='n'>params</span><span class='o'>[</span><span class='ss'>:id</span><span class='o'>]</span><span class='p'>)</span>
+    <span class='n'>respond_to</span> <span class='k'>do</span> <span class='o'>|</span><span class='nb'>format</span><span class='o'>|</span>
+      <span class='nb'>format</span><span class='o'>.</span><span class='n'>html</span>  <span class='c1'># show.html.erb</span>
+      <span class='nb'>format</span><span class='o'>.</span><span class='n'>json</span>  <span class='p'>{</span> <span class='n'>render</span> <span class='ss'>:json</span> <span class='o'>=&gt;</span> <span class='vi'>@post</span> <span class='p'>}</span>
+    <span class='k'>end</span>
+  <span class='k'>end</span>
+<span class='k'>end</span>
+
+<span class='c1'># posts/show.html.erb:</span>
+</code></pre>
+</div>
+<p><div class='highlight'><pre><code class='rhtml'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
+<span class='nt'>&lt;p</span> <span class='na'>class=</span><span class='s'>&quot;author&quot;</span><span class='nt'>&gt;</span>By <span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>author</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/p&gt;</span>
+<span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;content&quot;</span><span class='nt'>&gt;</span>
+  <span class='cp'>&lt;%=</span> <span class='n'>simple_format</span><span class='p'>(</span><span class='vi'>@post</span><span class='o'>.</span><span class='n'>content</span><span class='p'>)</span> <span class='cp'>%&gt;</span>
+<span class='nt'>&lt;/div&gt;</span>
+<span class='nt'>&lt;h2&gt;</span>Comments<span class='nt'>&lt;/h2&gt;</span>
+<span class='nt'>&lt;ul</span> <span class='na'>class=</span><span class='s'>&quot;comments&quot;</span><span class='nt'>&gt;</span>
+  <span class='cp'>&lt;%</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>comments</span><span class='o'>.</span><span class='n'>each</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>comment</span><span class='o'>|</span> <span class='cp'>%&gt;</span>
+    <span class='nt'>&lt;li&gt;</span>
+      <span class='nt'>&lt;blockquote&gt;</span><span class='cp'>&lt;%=</span> <span class='n'>simple_format</span><span class='p'>(</span><span class='n'>comment</span><span class='o'>.</span><span class='n'>content</span><span class='p'>)</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/blockquote&gt;</span>
+      <span class='nt'>&lt;p</span> <span class='na'>class=</span><span class='s'>&quot;author&quot;</span><span class='nt'>&gt;</span><span class='cp'>&lt;%=</span> <span class='n'>comment</span><span class='o'>.</span><span class='n'>author</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/p&gt;</span>
+    <span class='nt'>&lt;/li&gt;</span>
+  <span class='cp'>&lt;%</span> <span class='k'>end</span> <span class='cp'>%&gt;</span>
+<span class='nt'>&lt;/ul&gt;</span>
+</code></pre>
+</div></p>
+
+<p>Pretty good code by various standards, but it has always irked me a bit that I can&#8217;t see where the network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code> in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code> internally &#8211; unless the same query was already made recently, and ActiveRecord cached the result. And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the original post? Who knows.</p>
+
+<p>The execution flow for a MVC framework request like <code>PostsController#show</code> probably looks something like this:</p>
+<p><a href='/2012/09/architecture-high.png'><img alt='Typical MVC request flow' height='115' src='/2012/09/architecture.png' width='549' /></a></p>
+<p>Of course it is deliberately designed that way. Your template and your controller shouldn&#8217;t have to worry about database queries &#8212; those are encapsulated by the model for many good reasons. I am violating abstraction by even thinking about the database whilst I&#8217;m in the template code! I should just think of my models as pure, beautiful pieces of application state. How that state gets loaded from a database is a matter that only the models need to worry about.</p>
+
+<h2 id='adding_complexity'>Adding complexity</h2>
+
+<p>In the example above, the amount of logic in the model is minimal, but it typically doesn&#8217;t stay that way for long. As the application becomes popular (say, the blogging engine morphs to become Twitter, Tumblr, Reddit or Pinterest), all sorts of stuff gets added: memcache to stop the database from falling over, spam filtering, analytics features, email sending, notifications, A/B testing, more memcache, premium features, ads, upsells for viral loops, more analytics, even more memcache. As the application inevitably grows in complexity, the big monolithic beast is split into several smaller services, and different services end up being maintained by different teams.</p>
+
+<p>As all of this is happening, the programming model typically stays the same: each service in the architecture (which may be a user-facing web server, or an internal service e.g. for user authentication) communicates over the network with a bunch of other nodes (memcached instances, database servers, other application services), processes and combines the data in some way, and then serves it out to a client.</p>
+
+<p>That processing and combining of data we can abstractly call &#8220;business logic&#8221;. It might be trivially simple, or it might involve half a million lines of parsing, rendering or machine learning code. It might behave differently depending on which A/B test bucket the user is in. It might deal with hundreds of hairy edge cases. Whatever.</p>
+
+<p>At the root of the matter, business logic should be a <a href='http://en.wikipedia.org/wiki/Pure_function'>pure function</a>. It takes a bunch of inputs (request parameters from the client, data stored in various databases and caches, responses from various other services) and produces a bunch of outputs (data to return to the client, data to write back to various databases and caches). It is usually deterministic: given the same inputs, the business logic should produce exactly the same output again. It is also stateless: any data that is required to produce the output or to make a decision has to be provided as an input.</p>
+
+<p>By contrast, the network communication logic is all about &#8216;wiring&#8217;. It may end up having a lot of complexity in its own right: sending requests to the right node of a sharded database, retrying failed requests with exponential back-off, making requests to different services in parallel, cross-datacenter failover, service authentication, etc. But the network communication logic ought to be general-purpose and completely independent of your application&#8217;s business logic.</p>
+
+<p>Both business logic and network communication logic are needed to build a service. But how do you combine the two into a single process? Most commonly, we build abstractions for each type of logic, hiding the gory implementation details. Much like in the blog example above, you end up calling a method somewhere inside the business logic, not really knowing or caring whether it will immediately return a value that the object has already computed, or whether it will talk to another process on the same machine, or load the value from some remote cache, or make a query on a database cluster somewhere.</p>
+
+<p>It&#8217;s good that the business logic doesn&#8217;t need to worry about how and when the communication happens. And it&#8217;s good that the communication logic is general-purpose and not polluted with application-specific concerns. But I think it&#8217;s problematic that network communication may happen somewhere deeply inside a business logic call stack. Let me try to explain why.</p>
+
+<h2 id='precomputed_caches'>Precomputed caches</h2>
+
+<p>As your volume of data and your number of users grow, database access often becomes a bottleneck (there are more queries competing for I/O, and each query takes longer when there&#8217;s more data). The standard answer to the problem is of course caching. You can cache at many different levels: an individual database row, or a model object generated by combining several sources, or even an entire HTML page ready to serve to a client. I will focus on the mid-to-high-level caches, where the raw data has gone through some sort of business logic before it ends up in the cache.</p>
+
+<p>Most commonly, caches are set up in read-through style: on every query, you first check the cache, and return the value from the cache if it&#8217;s a hit; otherwise it&#8217;s a miss, so you do whatever is required to generate the value (query databases, apply business logic, perform voodoo), and return it to the client whilst also storing it in the cache for next time. As long as you can generate the value on the fly in a reasonable time, this works pretty well.</p>
+
+<p>I will gloss over cache invalidation and expiry for now, and return to it below.</p>
+
+<p>The most apparent problem with a read-through cache is that the first time a value is requested, it&#8217;s always slow. (And if your cache is too small to hold the entire dataset, rarely accessed values will get evicted and thus be slow every time.) That may or may not be a problem for you. One reason why it may be a problem is that on many sites, the first client to request a given page is typically the Googlebot, and Google <a href='http://www.mattcutts.com/blog/site-speed/'>penalises</a> slow sites in rankings. So if you have the kind of site where Google juice is lifeblood, then your SEO guys may tell you that a read-through cache is not good enough.</p>
+
+<p>So, can you make sure that the data is in the cache even before it is requested for the first time? Well, if your dataset isn&#8217;t too huge, you can actually <strong>precompute every possible cache entry</strong>, put them in a big distributed key-value store and serve them with minimal latency. That has a great advantage: cache misses no longer exist. If you&#8217;ve precomputed every possible cache entry, and a key isn&#8217;t in the cache, you can be sure that there&#8217;s no data for that key.</p>
+
+<p>If that sounds crazy to you, consider these points:</p>
+
+<ul>
+<li>A database index is a special case of a precomputed cache. For every value you might want to search for, the index tells you where to find occurrences of that value. If it&#8217;s not in the index, it&#8217;s not in the database. The initial index creation is a one-off batch job, and thereafter the database automatically keeps it in sync with the raw data. Yes, databases have been doing this for a long time.</li>
+
+<li>With Hadoop you can process terabytes of data without breaking a sweat. We can process every single one of LinkedIn&#8217;s 175 million member profiles within a couple of minutes. That is truly awesome power.</li>
+
+<li>There are several datastores that allow you to precompute their files in Hadoop, which makes them very well suited for serving the cache that you precomputed. We are currently using <a href='http://www.project-voldemort.com/voldemort/'>Voldemort</a> in read-only mode (<a href='http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf'>research paper</a>), but <a href='http://hbase.apache.org/book/arch.bulk.load.html'>HBase</a> and <a href='https://github.com/nathanmarz/elephantdb'>ElephantDB</a> can do this too.</li>
+</ul>
+
+<h2 id='separating_communication_from_business_logic'>Separating communication from business logic</h2>
+
+<p>Ok, say you&#8217;ve decided that you want to precompute a cache in Hadoop. As we&#8217;ve not yet addressed cache invalidation (see below), let&#8217;s just say you&#8217;re going to rebuild the entire cache once a day. That means the data you serve out of the cache will be stale, out of date by up to a day, but that&#8217;s still acceptable for some applications.</p>
+
+<p>The first step is to get your raw data into HDFS. That&#8217;s not hard, assuming you have daily database backups: you can take your existing backup, transform it into a more MapReduce-friendly format such as <a href='http://avro.apache.org/'>Avro</a>, and write it straight to HDFS. Do that with all your production databases and you&#8217;ve got a fantastic resource to work with in Hadoop.</p>
+
+<p>Now, to build your precomputed cache, you need to apply the same business logic to the same data as you would in an uncached service that does it on the fly. As described above, your business logic takes as input the request parameters from the user and any data that is loaded from databases or services in order to serve that request. If you have all that data in HDFS, and you can work out all possible request parameters, then in theory, you should be able to take your existing business logic implementation and run it in Hadoop.</p>
+
+<p>Business logic can be very complex, so you should probably aim to reuse the existing implementation rather than rewriting it. But doing so requires untangling the real business logic from all the network communication logic.</p>
+
+<p>When your business logic is running as a service processing individual requests, you&#8217;re used to making several small requests to databases, caches or other services as part of generating a response (see the blog example above). Those small requests constitute gathering all the inputs needed by the business logic in order to produce its output (e.g. a rendered HTML page).</p>
+
+<p>But when you&#8217;re running in Hadoop, this is all turned on its head. You don&#8217;t want to be making individual random-access requests to data, because that would be an order of magnitude too slow. Instead you need to use MapReduce to gather all the inputs for one particular evaluation of the business logic into one place, and then run the business logic given those inputs without any network communication. Rather than the business logic <em>pulling</em> together all the bits of data it needs in order to produce a response, the MapReduce job has already gathered all the data it knows the business logic is going to need, and <em>pushes</em> it into the business logic function.</p>
+
+<p>Let&#8217;s use the blog example to make this more concrete. The data dependency is fairly simple: when the blog post <code>params[:id]</code> is requested, we require the row in the <code>posts</code> table whose <code>id</code> column matches the requested post, and we require all the rows in the <code>comments</code> table whose <code>post_id</code> column matches the requested post. If the <code>posts</code> and <code>comments</code> tables are in HDFS, it&#8217;s a very simple MapReduce job to group together the post with <code>id = x</code> and all the comments with <code>post_id = x</code>.</p>
+
+<p>We can then use a mock database implementation to feed those database rows into the existing <code>Post</code> and <code>Comment</code> model objects. That way we can make the models think that they loaded the data from a database, even though actually we had already gathered all the data we knew it was going to need. The model objects can keep doing their job as normally, and the output they produce can be written straight to the cache.</p>
+
+<p>By this point, two problems should be painfully clear:</p>
+
+<ul>
+<li>How does the MapReduce job know what inputs the business logic is going to need in order to work?</li>
+
+<li>OMG, implementing mock database drivers, isn&#8217;t that a bit too much pain for limited gain? (Note that in testing frameworks it&#8217;s not unusual to mock out your database, so that you can run your unit tests without a real database. Still, it&#8217;s non-trivial and annoying.)</li>
+</ul>
+
+<p>Both problems have the same cause, namely that the network communication logic is triggered from deep inside the business logic.</p>
+
+<h2 id='data_dependencies'>Data dependencies</h2>
+
+<p>When you look at the business logic in the light of precomputing a cache, it seems like the following pattern would make more sense:</p>
+
+<ol>
+<li>Declare your data dependencies: &#8220;if you want me to render the blog post with ID <code>x</code>, I&#8217;m going to need the row in the <code>posts</code> table with <code>id = x</code>, and also all the rows in the <code>comments</code> table with <code>post_id = x</code>&#8221;.</li>
+
+<li>Let the communication logic deal with resolving those dependencies. If you&#8217;re running as a normal web app, that means making database (or memcache) queries to one or more databases, and maybe talking to other services. If you&#8217;re running in Hadoop, it means configuring the MapReduce job to group together all the pieces of data on which the business logic depends.</li>
+
+<li>Once all the dependencies have been loaded, the business logic is now a pure function, deterministic and side-effect-free, that produces our desired output. It can perform whatever complicated computation it needs to, but it&#8217;s not allowed access to the network or data stores that weren&#8217;t declared as dependencies up front.</li>
+</ol>
+
+<p>This separation would make application architecture very different from the way it is commonly done today. I think this new style would have several big advantages:</p>
+
+<ul>
+<li>By removing the assumption that the business logic is handling one request at a time, it becomes much easier to run the business logic in completely different contexts, such as in a batch job to precompute a cache. (No more mocking out database drivers.)</li>
+
+<li>Testing becomes much easier. All the tricky business logic for which you want to write unit tests is now just a function with a bunch of inputs and a bunch of outputs. You can easily vary what you put in, and easily check that the right thing comes out. Again, no more mocking out the database.</li>
+
+<li>The network communication logic can become a lot more helpful. For example, it can make several queries in parallel without burdening the business logic with a lot of complicated concurrency stuff, and it can deduplicate similar requests.</li>
+
+<li>Because the data dependencies are very clearly and explicitly modelled, the system becomes easier to understand, and it becomes easier to move modules around, split a big monolithic beast into smaller services, or combine smaller services into bigger, logical units.</li>
+</ul>
+
+<p>I hope you agree that this is a very exciting prospect. But is it practical?</p>
+
+<p>In most cases, I think it would not be very hard to make business logic pure (i.e. stop making database queries from deep within) &#8212; it&#8217;s mostly a matter of refactoring. I have done it to substantial chunks of the Rapportive code base, and it was a bit tedious but perfectly doable. And the network communication logic wouldn&#8217;t have to change much at all.</p>
+
+<p>The problem of making this architecture practical hinges on having a good mechanism for declaring data dependencies. The idea is not new &#8212; for instance, LinkedIn have an internal framework for resolving data dependencies that queries several services in parallel &#8212; but I&#8217;ve not yet seen a language or framework that really gets to the heart of the problem.</p>
+
+<p>In my spare time I have started working on a language called <strong>Flowquery</strong> (don&#8217;t bother searching, there&#8217;s nothing online yet) to solve the problem of declaring data dependencies. If I can figure it out, it should make precomputed caches and all the good things above very easy. But it&#8217;s not there yet, so I don&#8217;t want to oversell it.</p>
+
+<p>But wait, there is one more thing&#8230;</p>
+
+<h2 id='cache_invalidation'>Cache invalidation</h2>
+
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and naming things. &#8212; <a href='http://martinfowler.com/bliki/TwoHardThings.html'>Phil Karlton</a></p>
+</blockquote>
+
+<p>How important is it that the data in your cache is up-to-date and consistent with your &#8220;source of truth&#8221; database? The answer depends on the application and the circumstances. For example, if the user edits their own data, you almost certainly want to show them an up-to-date version of their own data post-editing, otherwise they will assume that your app is broken. But you might be able to get away with showing stale data to other users for a while. For data that is not directly edited by users, stale data may always be ok.</p>
+
+<p>If staleness is acceptable, caching is really simple: on a read-through cache you set an expiry time on a cache key, and when that time is reached, the entry falls out of the cache. On a precomputed cache you do nothing, and just wait until the next time you recompute the entire thing.</p>
+
+<p>In the many cases where consistency is required, you have to explicitly invalidate cache entries when the original data changes. If just one cache key is affected by a change, you can write-through to that cache key when the &#8220;source of truth&#8221; database is updated. If many keys may be affected, you can use <a href='http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works'>generational caching</a> and <a href='https://groups.google.com/forum/#!msg/memcached/OiScvRbGaU8/C1vny7DiGakJ'>clever generalisations thereof</a>. Whatever technique you use, it usually ends up being a lot of manually written, fiddly and error-prone code. Not a great joy to work with, hence the terribly clichéd quote above.</p>
+
+<p>But&#8230; observe the following: in our efforts to separate pure business logic from network communication logic, we decided that we needed to explicitly model the data dependencies, and only data sources declared there are permitted as inputs to the business logic. In other words, the data dependency framework knows exactly which pieces of data are required in order to generate a particular piece of output &#8212; and conversely, when a piece of (input) data changes, it can know exactly which outputs (cache entries) may be affected by the change!</p>
+
+<p>This means that if we have a real-time feed of changes to the underlying databases, we can feed it into a stream processing framework like <a href='http://storm-project.net/'>Storm</a>, run the data dependency analysis in reverse on every change, recompute the business logic for each output affected by the change in input, and write the results to another datastore. This store sits alongside the precomputed cache we generated in a batch process in Hadoop. When you want to query the cache, check both the output of the batch process and the output of the stream process. If the stream process has generated more recent data, use that, otherwise use the batch process output.</p>
+
+<p>If you&#8217;ve been following recent news in Big Data, you may recognise this as an application of Nathan Marz&#8217; <a href='http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html'>lambda architecture</a> (described in detail in his <a href='http://www.manning.com/marz/'>upcoming book</a>). I cannot thank Nathan enough for his amazing work in this area.</p>
+
+<p>In this architecture, you get the benefits of a precomputed cache (every request is fast, including the first one), it keeps itself up-to-date with the underlying data, and because you have already declared your data dependencies, you don&#8217;t need to manually write cache invalidation code! The same dependency declaration can be used in three different ways:</p>
+
+<ol>
+<li>In &#8216;online&#8217; mode in a service or web app, for driving the network communication logic in order to make all the required queries and requests in order to serve an incoming request, and to help with read-through caching.</li>
+
+<li>In &#8216;offline&#8217; mode in Hadoop, to configure a MapReduce pipeline that brings together all the required data in order to run it through the business logic and generate a precomputed cache of all possible queries.</li>
+
+<li>In &#8216;nearline&#8217; mode in Storm, to configure a stream processing topology that tracks changes to the underlying data, determines which cache keys need to be invalidated, and recomputes the cache values for those keys using the business logic.</li>
+</ol>
+
+<p>I am designing Flowquery so that it can be used in all three modes &#8212; you should be able to write your data dependencies just once, and let the framework take care of bringing all the necessary data together so that the business logic can act on it.</p>
+
+            
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-subscribe" class="widget">
+            <h2 class="widget-title">Subscribe</h2>
+            <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+                Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+            </a>
+
+            <div id="mc_embed_signup">
+                <p>
+                    Enjoyed this? To get notified when I write something new,
+                    <a href="http://twitter.com/martinkl">follow me</a> on Twitter,
+                    <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+                    or type in your email address:
+                </p>
+
+                <form action="http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    <fieldset>
+                        <div class="mc-field-group">
+                            <label for="mce-EMAIL">Email:</label>
+                            <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+                        </div>
+                        <div id="mce-responses">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman.
+                I co-founded <a href="http://rapportive.com/">Rapportive</a>
+                (<a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a>
+                by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and Go Test It (acquired by 
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I care about making stuff that people want, great people and culture, the web and
+                its future, marvellous user experiences, maintainable code and scalable architectures.</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
+                    
+                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
+                    
+                      <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
+                    
+                      <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
+                    
+                      <li>21 Dec 2010: <a href="/2010/12/21/having-a-launched-product-is-hard.html">Having a launched product is hard</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/datadep.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>

@@ -131,7 +131,7 @@ wYeg2L6U7iZBk78yg+sIKFVijxiWnpA7W2dj2B9QV0X3ILQPxbU/cRAVTd7AVrKT
     ... etc ...
 -----END RSA PRIVATE KEY-----</code></pre>
 
-<p>We&#8217;ve gained two header lines, and if you try to parse that Base64 text, you&#8217;ll find it&#8217;s no longer valid ASN.1. That&#8217;s because the entire ASN.1 structure we saw above has been encrypted, and the Base64 text is the output of the encryption. The header tells us the encryption algorithm that was used: <a href='http://en.wikipedia.org/wiki/Advanced_Encryption_Standard'>AES-128</a> in <a href='http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29'>CBC mode</a>. The 128-bit hex string in the <code>DEK-Info</code> header is the <a href='http://en.wikipedia.org/wiki/Initialization_vector'>initialization vector</a> (IV) for the cipher. This is pretty standard stuff; all common crypto libraries can handle it.</p>
+<p>We&#8217;ve gained two header lines, and if you try to parse that Base64 text, you&#8217;ll find it&#8217;s no longer valid ASN.1. That&#8217;s because the entire ASN.1 structure we saw above has been encrypted, and the Base64-encoded text is the output of the encryption. The header tells us the encryption algorithm that was used: <a href='http://en.wikipedia.org/wiki/Advanced_Encryption_Standard'>AES-128</a> in <a href='http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29'>CBC mode</a>. The 128-bit hex string in the <code>DEK-Info</code> header is the <a href='http://en.wikipedia.org/wiki/Initialization_vector'>initialization vector</a> (IV) for the cipher. This is pretty standard stuff; all common crypto libraries can handle it.</p>
 
 <p>But how do you get from the passphrase to the AES encryption key? I couldn&#8217;t find it documented anywhere, so I had to dig through the OpenSSL source to find it:</p>
 
@@ -158,7 +158,7 @@ wYeg2L6U7iZBk78yg+sIKFVijxiWnpA7W2dj2B9QV0X3ILQPxbU/cRAVTd7AVrKT
 <ul>
 <li>The digest algorithm is hard-coded to be MD5, which means that without changing the format, it&#8217;s not possible to upgrade to another hash function (e.g. SHA-1). This could be a problem if MD5 turns out not to be good enough.</li>
 
-<li>The hash function is only applied once &#8212; there is no <a href='http://en.wikipedia.org/wiki/Key_stretching'>stretching</a>. This is a problem because MD5 and AES are both fast to compute, and thus comparatively easy to break with brute force.</li>
+<li>The hash function is only applied once &#8212; there is no <a href='http://en.wikipedia.org/wiki/Key_stretching'>stretching</a>. This is a problem because MD5 and AES are both fast to compute, and thus a short passphrase is quite easy to break with brute force.</li>
 </ul>
 
 <p>If your private SSH key ever gets into the wrong hands, e.g. because someone steals your laptop or your backup hard drive, the attacker can try a huge number of possible passphrases, even with moderate computing resources. If your passphrase is a dictionary word, it can probably be broken in a matter of seconds.</p>
@@ -236,7 +236,7 @@ dMyI7Ot1vL9UvZRqLNj51cj/7B/bmfa4msfJXeuFs8jMtDz9J19k6uuCLUGlJscP
 
 <h2 id='conclusion_better_protection_for_your_ssh_private_keys'>Conclusion: better protection for your SSH private keys</h2>
 
-<p>If you already have a strong passphrase on your SSH private key, then converting it from the traditional private key format to PKCS#8 is roughly comparable to adding an extra two keystrokes to your passphrase, but without any extra typing. And if you have a weak passphrase, you can take your private key protection from &#8220;easily breakable&#8221; to &#8220;somewhat harder to break&#8221;.</p>
+<p>If you already have a strong passphrase on your SSH private key, then converting it from the traditional private key format to PKCS#8 is roughly comparable to adding two extra keystrokes to your passphrase, for free. And if you have a weak passphrase, you can take your private key protection from &#8220;easily breakable&#8221; to &#8220;slightly harder to break&#8221;.</p>
 
 <p>It&#8217;s so easy, you can do it right now:</p>
 
