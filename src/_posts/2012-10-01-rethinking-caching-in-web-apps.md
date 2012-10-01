@@ -1,6 +1,6 @@
 ---
 layout: ync-post
-title: Thoughts on a better architecture for web apps
+title: Rethinking caching in web apps
 ---
 
 Having spent a lot of the last few years worrying about the scalability of data-heavy applications
@@ -8,14 +8,16 @@ like [Rapportive](http://rapportive.com/), I have started to get the feeling tha
 been "doing it wrong". Maybe what we consider to be "state of the art" application architecture is
 actually holding us back.
 
-I don't have a definitive answer for how we should be doing things differently, but along with a few
-others I have been working on new architectural approaches which I'd like to put up for discussion.
-My hope is that we can develop ways of better managing scale (in terms of complexity, volume of data
-and volume of traffic) while keeping our applications nimble, easy and safe to modify and iterate.
+I don't have a definitive answer for how we should be architecting things differently, but in this
+post I'd like to outline a few ideas that I have been fascinated by recently. My hope is that we
+can develop ways of better managing scale (in terms of complexity, volume of data and volume of
+traffic) while keeping our applications nimble, easy and safe to modify, test and iterate.
 
 My biggest problem with web application architecture is how **network communication concerns** are
 often intermingled with **business logic concerns**. This makes it hard to rearrange the logic into
-new architectures.
+new architectures, such as the precomputed cache architecture described below. In this post I
+explore why it important to be able to try new architectures for things like caching, and what it
+would take to achieve that flexibility.
 
 
 An example
@@ -76,8 +78,8 @@ original post? Who knows.
 The execution flow for a MVC framework request like `PostsController#show` probably looks something
 like this:
 
-<p><a href="/2012/09/architecture-high.png"><img src="/2012/09/architecture.png"
-    alt="Typical MVC request flow" width="549" height="115"/></a></p>
+<p><a href="/2012/10/architecture-high-01.png"><img src="/2012/10/architecture-01.png"
+    alt="Typical MVC request flow" width="550" height="119"/></a></p>
 
 Of course it is deliberately designed that way. Your template and your controller shouldn't have to
 worry about database queries --- those are encapsulated by the model for many good reasons. I am
@@ -175,15 +177,18 @@ If that sounds crazy to you, consider these points:
   it's not in the database. The initial index creation is a one-off batch job, and thereafter the
   database automatically keeps it in sync with the raw data. Yes, databases have been doing this for
   a long time.
-* With Hadoop you can process terabytes of data without breaking a sweat. We can process every
-  single one of LinkedIn's 175 million member profiles within a couple of minutes. That is truly
-  awesome power.
+* With Hadoop you can process terabytes of data without breaking a sweat. That is truly awesome
+  power.
 * There are several datastores that allow you to precompute their files in Hadoop, which makes them
   very well suited for serving the cache that you precomputed. We are currently using
-  [Voldemort](http://www.project-voldemort.com/voldemort/) in read-only mode ([research
-  paper](http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf)), but
+  [Voldemort](http://www.project-voldemort.com/voldemort/) in read-only mode
+  ([research paper](http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf)), but
   [HBase](http://hbase.apache.org/book/arch.bulk.load.html) and
   [ElephantDB](https://github.com/nathanmarz/elephantdb) can do this too.
+* If you're currently storing data in denormalized form (to avoid joins on read queries), you can
+  stop doing that. You can keep your primary database in a very clean, normalized schema, and any
+  caches you derive from it can denormalize the data to your heart's content. This gives you the
+  best of both worlds.
 
 
 Separating communication from business logic
@@ -230,7 +235,7 @@ column matches the requested post. If the `posts` and `comments` tables are in H
 simple MapReduce job to group together the post with `id = x` and all the comments with
 `post_id = x`.
 
-We can then use a mock database implementation to feed those database rows into the existing `Post`
+We can then use a stub database implementation to feed those database rows into the existing `Post`
 and `Comment` model objects. That way we can make the models think that they loaded the data from a
 database, even though actually we had already gathered all the data we knew it was going to need.
 The model objects can keep doing their job as normally, and the output they produce can be written
@@ -239,8 +244,8 @@ straight to the cache.
 By this point, two problems should be painfully clear:
 
 * How does the MapReduce job know what inputs the business logic is going to need in order to work?
-* OMG, implementing mock database drivers, isn't that a bit too much pain for limited gain? (Note
-  that in testing frameworks it's not unusual to mock out your database, so that you can run your
+* OMG, implementing stub database drivers, isn't that a bit too much pain for limited gain? (Note
+  that in testing frameworks it's not unusual to stub out your database, so that you can run your
   unit tests without a real database. Still, it's non-trivial and annoying.)
 
 Both problems have the same cause, namely that the network communication logic is triggered from
@@ -270,10 +275,10 @@ today. I think this new style would have several big advantages:
 
 * By removing the assumption that the business logic is handling one request at a time, it becomes
   much easier to run the business logic in completely different contexts, such as in a batch job to
-  precompute a cache. (No more mocking out database drivers.)
+  precompute a cache. (No more stubbing out database drivers.)
 * Testing becomes much easier. All the tricky business logic for which you want to write unit tests
   is now just a function with a bunch of inputs and a bunch of outputs. You can easily vary what you
-  put in, and easily check that the right thing comes out. Again, no more mocking out the database.
+  put in, and easily check that the right thing comes out. Again, no more stubbing out the database.
 * The network communication logic can become a lot more helpful. For example, it can make several
   queries in parallel without burdening the business logic with a lot of complicated concurrency
   stuff, and it can deduplicate similar requests.
@@ -292,6 +297,17 @@ The problem of making this architecture practical hinges on having a good mechan
 data dependencies. The idea is not new --- for instance, LinkedIn have an internal framework for
 resolving data dependencies that queries several services in parallel --- but I've not yet seen a
 language or framework that really gets to the heart of the problem.
+
+Adapting the blog example above, this is what I imagine such an architecture would look like:
+
+<p><a href="/2012/10/architecture-high-02.png"><img src="/2012/10/architecture-02.png"
+    alt="Concept for using a dependency resolver" width="550" height="119"/></a></p>
+
+We still have models, and they are still used as encapsulations of state, but they are no longer
+wrappers around a database connection. Instead, the dependency resolver can take care of the messy
+business of talking to the database; the models are pure and can focus on the business logic. The
+models don't care whether they are instantiated in a web app or in a Hadoop cluster, and they don't
+care whether the data was loaded from a SQL database or from HDFS. That's the way it should be.
 
 In my spare time I have started working on a language called **Flowquery** (don't bother searching,
 there's nothing online yet) to solve the problem of declaring data dependencies. If I can figure it
@@ -314,11 +330,11 @@ data post-editing, otherwise they will assume that your app is broken. But you m
 away with showing stale data to other users for a while. For data that is not directly edited by
 users, stale data may always be ok.
 
-If staleness is acceptable, caching is really simple: on a read-through cache you set an expiry time
+If staleness is acceptable, caching is fairly simple: on a read-through cache you set an expiry time
 on a cache key, and when that time is reached, the entry falls out of the cache. On a precomputed
 cache you do nothing, and just wait until the next time you recompute the entire thing.
 
-In the many cases where consistency is required, you have to explicitly invalidate cache entries
+In cases where greater consistency is required, you have to explicitly invalidate cache entries
 when the original data changes. If just one cache key is affected by a change, you can write-through
 to that cache key when the "source of truth" database is updated. If many keys may be affected, you
 can use [generational caching](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)
@@ -364,3 +380,13 @@ dependency declaration can be used in three different ways:
 I am designing Flowquery so that it can be used in all three modes --- you should be able to write
 your data dependencies just once, and let the framework take care of bringing all the necessary data
 together so that the business logic can act on it.
+
+My hope is to make caching and cache invalidation as simple as database indexes. You declare an
+index once, the database runs a one-off batch job to build the index, and thereafter automatically
+keeps it up-to-date as the table contents change. It's so simple to use that we don't even think
+about it, and that's what we should be aiming for in the realm of caching.
+
+The project is still at a very early stage, but hopefully I'll be posting more about it as it
+progresses. If you'd like to hear more, please [leave your email address](http://eepurl.com/csJmf)
+and I'll send you a brief note when I post more. Or you can follow me on
+[Twitter](https://twitter.com/martinkl) or [App.net](https://alpha.app.net/martinkl).
