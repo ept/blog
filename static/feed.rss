@@ -10,11 +10,219 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Sun, 16 Sep 2012 15:23:35 PDT</lastBuildDate>
+        <lastBuildDate>Mon, 01 Oct 2012 15:27:48 PDT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
+        
+            <item>
+                <title>Rethinking caching in web apps</title>
+                <link>http://martin.kleppmann.com/2012/10/01/rethinking-caching-in-web-apps.html</link>
+                <comments>http://martin.kleppmann.com/2012/10/01/rethinking-caching-in-web-apps.html#disqus_thread</comments>
+                <pubDate>Mon, 01 Oct 2012 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2012/10/01/rethinking-caching-in-web-apps.html</guid>
+                
+                <description><![CDATA[ Having spent a lot of the last few years worrying about the scalability of data-heavy applications like Rapportive, I have started to get the feeling that maybe we have all been &#8220;doing it wrong&#8221;. Maybe what we consider to be &#8220;state of the art&#8221; application architecture is actually holding us... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>Having spent a lot of the last few years worrying about the scalability of data-heavy applications like <a href='http://rapportive.com/'>Rapportive</a>, I have started to get the feeling that maybe we have all been &#8220;doing it wrong&#8221;. Maybe what we consider to be &#8220;state of the art&#8221; application architecture is actually holding us back.</p>
+
+<p>I don&#8217;t have a definitive answer for how we should be architecting things differently, but in this post I&#8217;d like to outline a few ideas that I have been fascinated by recently. My hope is that we can develop ways of better managing scale (in terms of complexity, volume of data and volume of traffic) while keeping our applications nimble, easy and safe to modify, test and iterate.</p>
+
+<p>My biggest problem with web application architecture is how <strong>network communication concerns</strong> are often intermingled with <strong>business logic concerns</strong>. This makes it hard to rearrange the logic into new architectures, such as the precomputed cache architecture described below. In this post I explore why it important to be able to try new architectures for things like caching, and what it would take to achieve that flexibility.</p>
+
+<h2 id='an_example'>An example</h2>
+
+<p>To illustrate, consider the clichéd Rails blogging engine example:</p>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+  <span class='n'>attr_accessible</span> <span class='ss'>:title</span><span class='p'>,</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
+  <span class='n'>has_many</span> <span class='ss'>:comments</span>
+<span class='k'>end</span>
+
+<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+  <span class='n'>attr_accessible</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
+  <span class='n'>belongs_to</span> <span class='ss'>:post</span>
+<span class='k'>end</span>
+
+<span class='k'>class</span> <span class='nc'>PostsController</span> <span class='o'>&lt;</span> <span class='no'>ApplicationController</span>
+  <span class='k'>def</span> <span class='nf'>show</span>
+    <span class='vi'>@post</span> <span class='o'>=</span> <span class='no'>Post</span><span class='o'>.</span><span class='n'>find</span><span class='p'>(</span><span class='n'>params</span><span class='o'>[</span><span class='ss'>:id</span><span class='o'>]</span><span class='p'>)</span>
+    <span class='n'>respond_to</span> <span class='k'>do</span> <span class='o'>|</span><span class='nb'>format</span><span class='o'>|</span>
+      <span class='nb'>format</span><span class='o'>.</span><span class='n'>html</span>  <span class='c1'># show.html.erb</span>
+      <span class='nb'>format</span><span class='o'>.</span><span class='n'>json</span>  <span class='p'>{</span> <span class='n'>render</span> <span class='ss'>:json</span> <span class='o'>=&gt;</span> <span class='vi'>@post</span> <span class='p'>}</span>
+    <span class='k'>end</span>
+  <span class='k'>end</span>
+<span class='k'>end</span>
+
+<span class='c1'># posts/show.html.erb:</span>
+</code></pre>
+</div>
+<p><div class='highlight'><pre><code class='rhtml'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
+<span class='nt'>&lt;p</span> <span class='na'>class=</span><span class='s'>&quot;author&quot;</span><span class='nt'>&gt;</span>By <span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>author</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/p&gt;</span>
+<span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;content&quot;</span><span class='nt'>&gt;</span>
+  <span class='cp'>&lt;%=</span> <span class='n'>simple_format</span><span class='p'>(</span><span class='vi'>@post</span><span class='o'>.</span><span class='n'>content</span><span class='p'>)</span> <span class='cp'>%&gt;</span>
+<span class='nt'>&lt;/div&gt;</span>
+<span class='nt'>&lt;h2&gt;</span>Comments<span class='nt'>&lt;/h2&gt;</span>
+<span class='nt'>&lt;ul</span> <span class='na'>class=</span><span class='s'>&quot;comments&quot;</span><span class='nt'>&gt;</span>
+  <span class='cp'>&lt;%</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>comments</span><span class='o'>.</span><span class='n'>each</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>comment</span><span class='o'>|</span> <span class='cp'>%&gt;</span>
+    <span class='nt'>&lt;li&gt;</span>
+      <span class='nt'>&lt;blockquote&gt;</span><span class='cp'>&lt;%=</span> <span class='n'>simple_format</span><span class='p'>(</span><span class='n'>comment</span><span class='o'>.</span><span class='n'>content</span><span class='p'>)</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/blockquote&gt;</span>
+      <span class='nt'>&lt;p</span> <span class='na'>class=</span><span class='s'>&quot;author&quot;</span><span class='nt'>&gt;</span><span class='cp'>&lt;%=</span> <span class='n'>comment</span><span class='o'>.</span><span class='n'>author</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/p&gt;</span>
+    <span class='nt'>&lt;/li&gt;</span>
+  <span class='cp'>&lt;%</span> <span class='k'>end</span> <span class='cp'>%&gt;</span>
+<span class='nt'>&lt;/ul&gt;</span>
+</code></pre>
+</div></p>
+
+<p>Pretty good code by various standards, but it has always irked me a bit that I can&#8217;t see where the network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code> in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code> internally &#8211; unless the same query was already made recently, and ActiveRecord cached the result. And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the original post? Who knows.</p>
+
+<p>The execution flow for a MVC framework request like <code>PostsController#show</code> probably looks something like this:</p>
+<p><a href='http://martin.kleppmann.com/2012/10/architecture-high-01.png'><img alt='Typical MVC request flow' height='119' src='http://martin.kleppmann.com/2012/10/architecture-01.png' width='550' /></a></p>
+<p>Of course it is deliberately designed that way. Your template and your controller shouldn&#8217;t have to worry about database queries &#8212; those are encapsulated by the model for many good reasons. I am violating abstraction by even thinking about the database whilst I&#8217;m in the template code! I should just think of my models as pure, beautiful pieces of application state. How that state gets loaded from a database is a matter that only the models need to worry about.</p>
+
+<h2 id='adding_complexity'>Adding complexity</h2>
+
+<p>In the example above, the amount of logic in the model is minimal, but it typically doesn&#8217;t stay that way for long. As the application becomes popular (say, the blogging engine morphs to become Twitter, Tumblr, Reddit or Pinterest), all sorts of stuff gets added: memcache to stop the database from falling over, spam filtering, analytics features, email sending, notifications, A/B testing, more memcache, premium features, ads, upsells for viral loops, more analytics, even more memcache. As the application inevitably grows in complexity, the big monolithic beast is split into several smaller services, and different services end up being maintained by different teams.</p>
+
+<p>As all of this is happening, the programming model typically stays the same: each service in the architecture (which may be a user-facing web server, or an internal service e.g. for user authentication) communicates over the network with a bunch of other nodes (memcached instances, database servers, other application services), processes and combines the data in some way, and then serves it out to a client.</p>
+
+<p>That processing and combining of data we can abstractly call &#8220;business logic&#8221;. It might be trivially simple, or it might involve half a million lines of parsing, rendering or machine learning code. It might behave differently depending on which A/B test bucket the user is in. It might deal with hundreds of hairy edge cases. Whatever.</p>
+
+<p>At the root of the matter, business logic should be a <a href='http://en.wikipedia.org/wiki/Pure_function'>pure function</a>. It takes a bunch of inputs (request parameters from the client, data stored in various databases and caches, responses from various other services) and produces a bunch of outputs (data to return to the client, data to write back to various databases and caches). It is usually deterministic: given the same inputs, the business logic should produce exactly the same output again. It is also stateless: any data that is required to produce the output or to make a decision has to be provided as an input.</p>
+
+<p>By contrast, the network communication logic is all about &#8216;wiring&#8217;. It may end up having a lot of complexity in its own right: sending requests to the right node of a sharded database, retrying failed requests with exponential back-off, making requests to different services in parallel, cross-datacenter failover, service authentication, etc. But the network communication logic ought to be general-purpose and completely independent of your application&#8217;s business logic.</p>
+
+<p>Both business logic and network communication logic are needed to build a service. But how do you combine the two into a single process? Most commonly, we build abstractions for each type of logic, hiding the gory implementation details. Much like in the blog example above, you end up calling a method somewhere inside the business logic, not really knowing or caring whether it will immediately return a value that the object has already computed, or whether it will talk to another process on the same machine, or load the value from some remote cache, or make a query on a database cluster somewhere.</p>
+
+<p>It&#8217;s good that the business logic doesn&#8217;t need to worry about how and when the communication happens. And it&#8217;s good that the communication logic is general-purpose and not polluted with application-specific concerns. But I think it&#8217;s problematic that network communication may happen somewhere deeply inside a business logic call stack. Let me try to explain why.</p>
+
+<h2 id='precomputed_caches'>Precomputed caches</h2>
+
+<p>As your volume of data and your number of users grow, database access often becomes a bottleneck (there are more queries competing for I/O, and each query takes longer when there&#8217;s more data). The standard answer to the problem is of course caching. You can cache at many different levels: an individual database row, or a model object generated by combining several sources, or even an entire HTML page ready to serve to a client. I will focus on the mid-to-high-level caches, where the raw data has gone through some sort of business logic before it ends up in the cache.</p>
+
+<p>Most commonly, caches are set up in read-through style: on every query, you first check the cache, and return the value from the cache if it&#8217;s a hit; otherwise it&#8217;s a miss, so you do whatever is required to generate the value (query databases, apply business logic, perform voodoo), and return it to the client whilst also storing it in the cache for next time. As long as you can generate the value on the fly in a reasonable time, this works pretty well.</p>
+
+<p>I will gloss over cache invalidation and expiry for now, and return to it below.</p>
+
+<p>The most apparent problem with a read-through cache is that the first time a value is requested, it&#8217;s always slow. (And if your cache is too small to hold the entire dataset, rarely accessed values will get evicted and thus be slow every time.) That may or may not be a problem for you. One reason why it may be a problem is that on many sites, the first client to request a given page is typically the Googlebot, and Google <a href='http://www.mattcutts.com/blog/site-speed/'>penalises</a> slow sites in rankings. So if you have the kind of site where Google juice is lifeblood, then your SEO guys may tell you that a read-through cache is not good enough.</p>
+
+<p>So, can you make sure that the data is in the cache even before it is requested for the first time? Well, if your dataset isn&#8217;t too huge, you can actually <strong>precompute every possible cache entry</strong>, put them in a big distributed key-value store and serve them with minimal latency. That has a great advantage: cache misses no longer exist. If you&#8217;ve precomputed every possible cache entry, and a key isn&#8217;t in the cache, you can be sure that there&#8217;s no data for that key.</p>
+
+<p>If that sounds crazy to you, consider these points:</p>
+
+<ul>
+<li>A database index is a special case of a precomputed cache. For every value you might want to search for, the index tells you where to find occurrences of that value. If it&#8217;s not in the index, it&#8217;s not in the database. The initial index creation is a one-off batch job, and thereafter the database automatically keeps it in sync with the raw data. Yes, databases have been doing this for a long time.</li>
+
+<li>With Hadoop you can process terabytes of data without breaking a sweat. That is truly awesome power.</li>
+
+<li>There are several datastores that allow you to precompute their files in Hadoop, which makes them very well suited for serving the cache that you precomputed. We are currently using <a href='http://www.project-voldemort.com/voldemort/'>Voldemort</a> in read-only mode (<a href='http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf'>research paper</a>), but <a href='http://hbase.apache.org/book/arch.bulk.load.html'>HBase</a> and <a href='https://github.com/nathanmarz/elephantdb'>ElephantDB</a> can do this too.</li>
+
+<li>If you&#8217;re currently storing data in denormalized form (to avoid joins on read queries), you can stop doing that. You can keep your primary database in a very clean, normalized schema, and any caches you derive from it can denormalize the data to your heart&#8217;s content. This gives you the best of both worlds.</li>
+</ul>
+
+<h2 id='separating_communication_from_business_logic'>Separating communication from business logic</h2>
+
+<p>Ok, say you&#8217;ve decided that you want to precompute a cache in Hadoop. As we&#8217;ve not yet addressed cache invalidation (see below), let&#8217;s just say you&#8217;re going to rebuild the entire cache once a day. That means the data you serve out of the cache will be stale, out of date by up to a day, but that&#8217;s still acceptable for some applications.</p>
+
+<p>The first step is to get your raw data into HDFS. That&#8217;s not hard, assuming you have daily database backups: you can take your existing backup, transform it into a more MapReduce-friendly format such as <a href='http://avro.apache.org/'>Avro</a>, and write it straight to HDFS. Do that with all your production databases and you&#8217;ve got a fantastic resource to work with in Hadoop.</p>
+
+<p>Now, to build your precomputed cache, you need to apply the same business logic to the same data as you would in an uncached service that does it on the fly. As described above, your business logic takes as input the request parameters from the user and any data that is loaded from databases or services in order to serve that request. If you have all that data in HDFS, and you can work out all possible request parameters, then in theory, you should be able to take your existing business logic implementation and run it in Hadoop.</p>
+
+<p>Business logic can be very complex, so you should probably aim to reuse the existing implementation rather than rewriting it. But doing so requires untangling the real business logic from all the network communication logic.</p>
+
+<p>When your business logic is running as a service processing individual requests, you&#8217;re used to making several small requests to databases, caches or other services as part of generating a response (see the blog example above). Those small requests constitute gathering all the inputs needed by the business logic in order to produce its output (e.g. a rendered HTML page).</p>
+
+<p>But when you&#8217;re running in Hadoop, this is all turned on its head. You don&#8217;t want to be making individual random-access requests to data, because that would be an order of magnitude too slow. Instead you need to use MapReduce to gather all the inputs for one particular evaluation of the business logic into one place, and then run the business logic given those inputs without any network communication. Rather than the business logic <em>pulling</em> together all the bits of data it needs in order to produce a response, the MapReduce job has already gathered all the data it knows the business logic is going to need, and <em>pushes</em> it into the business logic function.</p>
+
+<p>Let&#8217;s use the blog example to make this more concrete. The data dependency is fairly simple: when the blog post <code>params[:id]</code> is requested, we require the row in the <code>posts</code> table whose <code>id</code> column matches the requested post, and we require all the rows in the <code>comments</code> table whose <code>post_id</code> column matches the requested post. If the <code>posts</code> and <code>comments</code> tables are in HDFS, it&#8217;s a very simple MapReduce job to group together the post with <code>id = x</code> and all the comments with <code>post_id = x</code>.</p>
+
+<p>We can then use a stub database implementation to feed those database rows into the existing <code>Post</code> and <code>Comment</code> model objects. That way we can make the models think that they loaded the data from a database, even though actually we had already gathered all the data we knew it was going to need. The model objects can keep doing their job as normally, and the output they produce can be written straight to the cache.</p>
+
+<p>By this point, two problems should be painfully clear:</p>
+
+<ul>
+<li>How does the MapReduce job know what inputs the business logic is going to need in order to work?</li>
+
+<li>OMG, implementing stub database drivers, isn&#8217;t that a bit too much pain for limited gain? (Note that in testing frameworks it&#8217;s not unusual to stub out your database, so that you can run your unit tests without a real database. Still, it&#8217;s non-trivial and annoying.)</li>
+</ul>
+
+<p>Both problems have the same cause, namely that the network communication logic is triggered from deep inside the business logic.</p>
+
+<h2 id='data_dependencies'>Data dependencies</h2>
+
+<p>When you look at the business logic in the light of precomputing a cache, it seems like the following pattern would make more sense:</p>
+
+<ol>
+<li>Declare your data dependencies: &#8220;if you want me to render the blog post with ID <code>x</code>, I&#8217;m going to need the row in the <code>posts</code> table with <code>id = x</code>, and also all the rows in the <code>comments</code> table with <code>post_id = x</code>&#8221;.</li>
+
+<li>Let the communication logic deal with resolving those dependencies. If you&#8217;re running as a normal web app, that means making database (or memcache) queries to one or more databases, and maybe talking to other services. If you&#8217;re running in Hadoop, it means configuring the MapReduce job to group together all the pieces of data on which the business logic depends.</li>
+
+<li>Once all the dependencies have been loaded, the business logic is now a pure function, deterministic and side-effect-free, that produces our desired output. It can perform whatever complicated computation it needs to, but it&#8217;s not allowed access to the network or data stores that weren&#8217;t declared as dependencies up front.</li>
+</ol>
+
+<p>This separation would make application architecture very different from the way it is commonly done today. I think this new style would have several big advantages:</p>
+
+<ul>
+<li>By removing the assumption that the business logic is handling one request at a time, it becomes much easier to run the business logic in completely different contexts, such as in a batch job to precompute a cache. (No more stubbing out database drivers.)</li>
+
+<li>Testing becomes much easier. All the tricky business logic for which you want to write unit tests is now just a function with a bunch of inputs and a bunch of outputs. You can easily vary what you put in, and easily check that the right thing comes out. Again, no more stubbing out the database.</li>
+
+<li>The network communication logic can become a lot more helpful. For example, it can make several queries in parallel without burdening the business logic with a lot of complicated concurrency stuff, and it can deduplicate similar requests.</li>
+
+<li>Because the data dependencies are very clearly and explicitly modelled, the system becomes easier to understand, and it becomes easier to move modules around, split a big monolithic beast into smaller services, or combine smaller services into bigger, logical units.</li>
+</ul>
+
+<p>I hope you agree that this is a very exciting prospect. But is it practical?</p>
+
+<p>In most cases, I think it would not be very hard to make business logic pure (i.e. stop making database queries from deep within) &#8212; it&#8217;s mostly a matter of refactoring. I have done it to substantial chunks of the Rapportive code base, and it was a bit tedious but perfectly doable. And the network communication logic wouldn&#8217;t have to change much at all.</p>
+
+<p>The problem of making this architecture practical hinges on having a good mechanism for declaring data dependencies. The idea is not new &#8212; for instance, LinkedIn have an internal framework for resolving data dependencies that queries several services in parallel &#8212; but I&#8217;ve not yet seen a language or framework that really gets to the heart of the problem.</p>
+
+<p>Adapting the blog example above, this is what I imagine such an architecture would look like:</p>
+<p><a href='http://martin.kleppmann.com/2012/10/architecture-high-02.png'><img alt='Concept for using a dependency resolver' height='119' src='http://martin.kleppmann.com/2012/10/architecture-02.png' width='550' /></a></p>
+<p>We still have models, and they are still used as encapsulations of state, but they are no longer wrappers around a database connection. Instead, the dependency resolver can take care of the messy business of talking to the database; the models are pure and can focus on the business logic. The models don&#8217;t care whether they are instantiated in a web app or in a Hadoop cluster, and they don&#8217;t care whether the data was loaded from a SQL database or from HDFS. That&#8217;s the way it should be.</p>
+
+<p>In my spare time I have started working on a language called <strong>Flowquery</strong> (don&#8217;t bother searching, there&#8217;s nothing online yet) to solve the problem of declaring data dependencies. If I can figure it out, it should make precomputed caches and all the good things above very easy. But it&#8217;s not there yet, so I don&#8217;t want to oversell it.</p>
+
+<p>But wait, there is one more thing&#8230;</p>
+
+<h2 id='cache_invalidation'>Cache invalidation</h2>
+
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and naming things. &#8212; <a href='http://martinfowler.com/bliki/TwoHardThings.html'>Phil Karlton</a></p>
+</blockquote>
+
+<p>How important is it that the data in your cache is up-to-date and consistent with your &#8220;source of truth&#8221; database? The answer depends on the application and the circumstances. For example, if the user edits their own data, you almost certainly want to show them an up-to-date version of their own data post-editing, otherwise they will assume that your app is broken. But you might be able to get away with showing stale data to other users for a while. For data that is not directly edited by users, stale data may always be ok.</p>
+
+<p>If staleness is acceptable, caching is fairly simple: on a read-through cache you set an expiry time on a cache key, and when that time is reached, the entry falls out of the cache. On a precomputed cache you do nothing, and just wait until the next time you recompute the entire thing.</p>
+
+<p>In cases where greater consistency is required, you have to explicitly invalidate cache entries when the original data changes. If just one cache key is affected by a change, you can write-through to that cache key when the &#8220;source of truth&#8221; database is updated. If many keys may be affected, you can use <a href='http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works'>generational caching</a> and <a href='https://groups.google.com/forum/#!msg/memcached/OiScvRbGaU8/C1vny7DiGakJ'>clever generalisations thereof</a>. Whatever technique you use, it usually ends up being a lot of manually written, fiddly and error-prone code. Not a great joy to work with, hence the terribly clichéd quote above.</p>
+
+<p>But&#8230; observe the following: in our efforts to separate pure business logic from network communication logic, we decided that we needed to explicitly model the data dependencies, and only data sources declared there are permitted as inputs to the business logic. In other words, the data dependency framework knows exactly which pieces of data are required in order to generate a particular piece of output &#8212; and conversely, when a piece of (input) data changes, it can know exactly which outputs (cache entries) may be affected by the change!</p>
+
+<p>This means that if we have a real-time feed of changes to the underlying databases, we can feed it into a stream processing framework like <a href='http://storm-project.net/'>Storm</a>, run the data dependency analysis in reverse on every change, recompute the business logic for each output affected by the change in input, and write the results to another datastore. This store sits alongside the precomputed cache we generated in a batch process in Hadoop. When you want to query the cache, check both the output of the batch process and the output of the stream process. If the stream process has generated more recent data, use that, otherwise use the batch process output.</p>
+
+<p>If you&#8217;ve been following recent news in Big Data, you may recognise this as an application of Nathan Marz&#8217; <a href='http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html'>lambda architecture</a> (described in detail in his <a href='http://www.manning.com/marz/'>upcoming book</a>). I cannot thank Nathan enough for his amazing work in this area.</p>
+
+<p>In this architecture, you get the benefits of a precomputed cache (every request is fast, including the first one), it keeps itself up-to-date with the underlying data, and because you have already declared your data dependencies, you don&#8217;t need to manually write cache invalidation code! The same dependency declaration can be used in three different ways:</p>
+
+<ol>
+<li>In &#8216;online&#8217; mode in a service or web app, for driving the network communication logic in order to make all the required queries and requests in order to serve an incoming request, and to help with read-through caching.</li>
+
+<li>In &#8216;offline&#8217; mode in Hadoop, to configure a MapReduce pipeline that brings together all the required data in order to run it through the business logic and generate a precomputed cache of all possible queries.</li>
+
+<li>In &#8216;nearline&#8217; mode in Storm, to configure a stream processing topology that tracks changes to the underlying data, determines which cache keys need to be invalidated, and recomputes the cache values for those keys using the business logic.</li>
+</ol>
+
+<p>I am designing Flowquery so that it can be used in all three modes &#8212; you should be able to write your data dependencies just once, and let the framework take care of bringing all the necessary data together so that the business logic can act on it.</p>
+
+<p>My hope is to make caching and cache invalidation as simple as database indexes. You declare an index once, the database runs a one-off batch job to build the index, and thereafter automatically keeps it up-to-date as the table contents change. It&#8217;s so simple to use that we don&#8217;t even think about it, and that&#8217;s what we should be aiming for in the realm of caching.</p>
+
+<p>The project is still at a very early stage, but hopefully I&#8217;ll be posting more about it as it progresses. If you&#8217;d like to hear more, please <a href='http://eepurl.com/csJmf'>leave your email address</a> and I&#8217;ll send you a brief note when I post more. Or you can follow me on <a href='https://twitter.com/martinkl'>Twitter</a> or <a href='https://alpha.app.net/martinkl'>App.net</a>.</p>
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Java's hashCode is not safe for distributed systems</title>
@@ -286,6 +494,151 @@ ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
 <p><strong>Matthew:</strong> Excellent. Well, Martin, it’s been a pleasure having you as a guest on FounderLY. We’re rooting for your success at Rapportive. For those in our audience who’d like to learn more you can visit their website at www.rapportive.com and register to become a user and join their community. This is Matthew Wise with FounderLY. Thanks so much, Martin.</p>
 
 <p><strong>Martin:</strong> Thank you, Matthew.</p>
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Evolution of Rapportive's new design</title>
+                <link>http://martin.kleppmann.com/2011/05/24/evolution-of-rapportive-new-design.html</link>
+                <comments>http://martin.kleppmann.com/2011/05/24/evolution-of-rapportive-new-design.html#disqus_thread</comments>
+                <pubDate>Tue, 24 May 2011 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2011/05/24/evolution-of-rapportive-new-design.html</guid>
+                
+                <description><![CDATA[ This is a re-post from the Rapportive blog. Today we are launching a new design for Rapportive. We put a huge amount of effort into this design, because we all believe deeply great user experience, and we know that our users really appreciate it too. Here it is (best viewed... ]]></description>
+                <content:encoded><![CDATA[
+                    <p><em>This is a re-post from the <a href='http://blog.rapportive.com/53827077'>Rapportive blog</a>.</em></p>
+
+<p>Today we are launching a new design for Rapportive. We put a huge amount of effort into this design, because we all believe deeply great user experience, and we know that our users really appreciate it too.</p>
+
+<p>Here it is (best viewed fullscreen):</p>
+<iframe allowfullscreen='allowfullscreen' frameborder='0' height='309' src='http://www.youtube.com/embed/DPaSxa2vopU' width='549'>
+  <a href='http://www.youtube.com/watch?v=DPaSxa2vopU'>View on YouTube</a>
+</iframe>
+<p>In this post I&#8217;d like to explain some of our process and thinking in the creation of the new design.</p>
+
+<p>Our old design, which we had <a href='http://blog.rapportive.com/the-accidental-launch'>since launch</a>, has served us very well. It was subtle, simple, effective, and blended in well with Gmail. Unfortunately, it was beginning to show some limitations:</p>
+
+<ol>
+<li>If you&#8217;re using Gmail on a small screen, on a laptop or even a netbook, the Rapportive sidebar would often be too tall to fit on screen. Of course you can scroll down, but the main Gmail scrollbar is already used to scroll down in the conversation. We hooked into the page scrolling, but if you were on a long conversation, you had to scroll all the way to the bottom of the conversation if you wanted to see the rest of the Rapportive sidebar. That was really annoying.</li>
+
+<li>Over the months we&#8217;ve been adding more and more useful stuff to the sidebar: <a href='http://blog.rapportive.com/address-book-inbox-together-at-last'>phone numbers</a>, <a href='http://blog.rapportive.com/40551428'>Facebook status updates</a>, <a href='http://blog.rapportive.com/grow-your-network-with-rapportive'>LinkedIn invitations</a>, and a choice of <a href='http://raplets.com/'>Raplets</a> for a <a href='http://thenextweb.com/apps/2010/04/29/rapportive/'>variety of</a> <a href='http://blog.rapportive.com/get-out-of-your-inbox-and-meet-people-in-pers'>different</a> <a href='http://blog.rapportive.com/rapportive-for-developers-bitbucket-github-st'>purposes</a>. This has pushed the previous design to its limits: some profiles would become unmanageably tall.</li>
+
+<li>Different people find different parts of the sidebar useful. Some find <a href='http://twitter.com/GraemeF/status/25286282993213440'>recent tweets</a> most useful, others swear by our <a href='http://twitter.com/smsbnyc/status/40436337681104896'>CRM raplets</a>, others again leave <a href='http://twitter.com/nickcernis/status/15001395635691520'>lots of notes</a> about their contacts. But it sucks if the thing you&#8217;re most interested is often scrolled off the bottom of the screen because the things higher up in the sidebar are taking all the space.</li>
+</ol>
+
+<p>These three points have a common theme: we do not handle long sidebars well.</p>
+
+<p>How long can a sidebar get? Well, here&#8217;s my sidebar, with the CrunchBase and the MailChimp Raplets:</p>
+<p style='text-align: center'>
+  <img alt='Example of very tall Rapportive profile' height='1361' src='http://martin.kleppmann.com/2011/05/tall_profile.png' width='230' />
+</p>
+<p>As we add more features to Rapportive, these problems would only get worse, so we decided that it was time to rethink our design.</p>
+
+<h2 id='our_design_principles'>Our design principles</h2>
+
+<p>We had several guiding principles for the redesign. Rapportive should:</p>
+
+<ul>
+<li>Remain very subtle and unobtrusive: Rapportive should be there for you when you want it, but should not try to grab your attention or use more space than necessary. Your <em>email</em> is what&#8217;s important, not the sidebar!</li>
+
+<li>Allow you to serendipitously discover things about your contacts: the information should simply be there when you glance at the sidebar, and shouldn&#8217;t require a lot of clicking or scrolling.</li>
+
+<li>Look good on both large and small screens, both with lots of data and little data. That means it has to make efficient use of screen space.</li>
+
+<li>Avoid configuration dialogs. The interface should just do the right thing.</li>
+
+<li>Be clear, obvious to use, beautiful and <em>enjoyable</em> to interact with :)</li>
+</ul>
+
+<h2 id='buttons'>Buttons</h2>
+
+<p>First of all, I started with some graphical tweaking. Here are some nice buttons:</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/connect_buttons.png'><img alt='Different sylings for &apos;add friend&apos;/&apos;connect&apos; buttons' src='http://martin.kleppmann.com/2011/05/connect_buttons.png' /></a>
+</p>
+<h2 id='how_do_we_handle_long_sidebars'>How do we handle long sidebars?</h2>
+
+<p>Our first thought: we could simply give the Rapportive sidebar its own scrollbar. That would avoid having to scroll down to the bottom of a long conversation, because you could scroll the sidebar separately. But that approach is pretty bad. A large part of the sidebar may still end up being hidden off-screen, which means you have to go out of your way to scroll down, making it unlikely that you&#8217;ll discover things serendipitously.</p>
+
+<p>Another idea that we ruled out quickly was a &#8216;tabbed&#8217; interface. Tabs work well in a browser, where you have exactly one web page per tab, and each tab is independent. Rapportive isn&#8217;t like that: we might have several pages of information for one person (i.e. the tabs aren&#8217;t independent), and while we have several full tabs for one person, the information for another person might be a lot more sparse. That means that either you have to either have to waste a lot of space (e.g. always have a tab for tweets, even if the person doesn&#8217;t have a Twitter account), or you have things appearing in different places for different people (which is confusing). Finally, tabs require a lot of laborious clicking: you can&#8217;t see what&#8217;s in a tab without clicking it, and you can&#8217;t see the contents of two tabs at the same time. Tabs would have been an unpleasant, clunky interface.</p>
+
+<p>An &#8216;accordion&#8217; interface, like you find in Outlook for example, seemed like a step in a more promising direction:</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/accordion.png'><img alt='Accordion interface example' src='http://martin.kleppmann.com/2011/05/accordion.png' /></a>
+</p>
+<p>You can have several sections, and each section can expand to show additional information when you click it. When you expand one section, another one collapses to make room. (In the screenshot above, I could click &#8216;Contacts&#8217; to see my list of contacts; the list of mailboxes under the &#8216;Mail&#8217; heading would be hidden to make room for the list of contacts.)</p>
+
+<p>Accordions are fairly efficient when space is very limited, but they suck if you have a large screen. If you have enough space that all your sections could be comfortably expanded side-by-side, why limit it to only one expanded section at a time? I don&#8217;t want to have to click a section to see what&#8217;s inside. It&#8217;s the same problem as with tabs.</p>
+
+<p>So I started experimenting with a kind of adaptive accordion which could have several sections expanded at the same time, if there was enough screen space available. Here are some early design ideas:</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/section_headings.png'><img alt='Three designs for separators/headings between sidebar sections' src='http://martin.kleppmann.com/2011/05/section_headings.png' width='550' /></a>
+</p>
+<p>The designs were fairly ugly, but I could see an algorithm emerging here. I figured that we needed an accordion with the following improvements:</p>
+
+<ul>
+<li>It should be possible for several sections to be expanded at the same time, up to a maximum of what will fit on screen without scrolling.</li>
+
+<li>When you expand a section, other sections may need to collapse in order to make space on screen. The application should be intelligent about which sections to collapse &#8211; for example, if you haven&#8217;t clicked a section in a long time, you probably find it less useful than a section which you clicked just now. So we should keep the recently-used sections expanded, if possible.</li>
+
+<li>The collapsed version of a section should be useful too; for example, the collapsed Twitter section could show just the username, whereas the expanded version could show the username and three most recent tweets. If the contact doesn&#8217;t have a Twitter account, we shouldn&#8217;t show the section at all, since it would just be a waste of space.</li>
+
+<li>Sometimes a section gets very tall, for example a Facebook status with lots of comments. In that case, we need to limit the section&#8217;s height and give it a scrollbar, to avoid it dominating the entire sidebar. But if we can avoid scrollbars, we should do without.</li>
+</ul>
+
+<p>Even scrollbars, despite being such a standard part of user interface design, have their problems:</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/scrolling.png'><img alt='Misalignment of text due to scrollbar spacing' src='http://martin.kleppmann.com/2011/05/scrolling.png' /></a>
+</p>
+<p>Fortunately such spacing issues are easy to iron out. A harder question is: how do we communicate to the user that they can expand a section?</p>
+
+<h2 id='expandable_sections'>Expandable sections</h2>
+
+<p>In the old design, if you clicked someone&#8217;s Twitter username, we would open up a new browser tab to show their tweet stream. In an accordion design, however, you&#8217;d expect that clicking the collapsed section will cause it to expand (i.e. show recent tweets, not open a new browser tab). Do we break the old interaction and force users to learn a new behaviour, or do we add an extra button for expanding a section?</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/expand1.png'><img alt='Up/down arrow button to trigger expansion of a section' src='http://martin.kleppmann.com/2011/05/expand1.png' /></a>
+</p>
+<p>That was my first attempt. The arrows serve two purposes: to indicate that the section can be expanded, and to act as a button to trigger the actual expanding. But I didn&#8217;t like it. Some sections would have arrows and others wouldn&#8217;t (because we don&#8217;t always have additional information), so the &#8220;connect&#8221;/&#8221;add friend&#8221; buttons could become strangely misaligned. It also made the interface look more cluttered and complicated.</p>
+
+<p>Surely we could do better? For example, could we show the button for expanding a section only when you hover over it? That&#8217;s an interesting idea. What&#8217;s more, we could then calculate how tall the section would be if it was expanded, and indicate it with the height of the arrow:</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/expand2.png'><img alt='Large arrow when hovering mouse over expanded section; click the arrow to expand' src='http://martin.kleppmann.com/2011/05/expand2.png' width='550' /></a>
+</p>
+<p>At this point we&#8217;re really moving away from established user interface patterns. Will users notice the arrow, and understand what it means? Will they figure out that you can click it? It contains a lot of information: the fact that the section can be expanded, how big it will be and where it will be placed when expanded. It&#8217;s also a much bigger click target than the previous arrow button, which is good. But it still has the problem of not looking particularly like a button. (It goes grey when you hover over it, to indicate that you can interact with it, but still it&#8217;s not exactly obvious.)</p>
+
+<p>I was starting to get sick of this redesign, but fortunately, inspiration struck again. If we&#8217;re already using an arrow on hover to indicate how tall the expanded section will be, well&#8230; why don&#8217;t we use <em>the expanded section itself</em> to indicate how tall it will be? Yes, we can just show the expanded section itself on hover!</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/expand3.png'><img alt='Showing the expanded version when hovering over a collapsed section' src='http://martin.kleppmann.com/2011/05/expand3.png' width='550' /></a>
+</p>
+<p>It&#8217;s obvious in retrospect, but it took a surprisingly long time to come up with this design. I call it the <a href='http://en.wikipedia.org/wiki/Jinn_in_popular_culture'>&#8220;genie&#8221;</a> because it looks like a ghost that has come out of an oil lamp. Although the version above still isn&#8217;t pretty, it really got to the bottom of many of the challenges I discussed at the beginning:</p>
+
+<ul>
+<li>When you&#8217;re not hovering your mouse over the sidebar, Rapportive remains minimalistic and uncluttered. No more buttons than necessary.</li>
+
+<li>If you&#8217;re on a large screen, the sections of the sidebar expand to fill the screen space, so you can see everything at a glance. No need to click anything (unless you want to add them as a friend, of course).</li>
+
+<li>If you&#8217;re on a smaller screen, we collapse your lesser-used sections to make them more compact; in most cases, this allows us to fit everything on screen without need for scrolling.</li>
+
+<li>When you&#8217;re interacting with the sidebar, we allow Rapportive to pop up additional information outside of the sidebar. But we don&#8217;t encroach on your email space when you&#8217;re not interacting with the sidebar.</li>
+
+<li>The visual cues makes it pretty obvious that the expanded section is a bigger, more verbose version of the collapsed section. (I think it&#8217;s a bit like a magnifying glass.)</li>
+
+<li>If there are several collapsed sections next to each other in the sidebar, you can skim the content of all of them by slowly moving the mouse across each of the collapsed sections. As the mouse moves from one section to another, the genie for the previous section disappears and the one for the new section appears. Wonderful for getting a quick overview of someone&#8217;s online activity before you reply to their email.</li>
+</ul>
+
+<p>Not all is great though. If there is space, we&#8217;d still like to show you the expanded section in the sidebar right away, without you having to hover the mouse. But how do we make clear to users that sections can be expanded?</p>
+
+<p>In the screenshot above, I tried using a button with an arrow pointing right. If you clicked it, the expanded section would slide into the sidebar, and the other sections would move out of the way to make room. I liked the animation, but the button was ugly. Fortunately, Rahul had the idea that we could use a right-pointing mouse cursor to indicate the same thing. So now you can click anywhere on the genie and it will slide into the sidebar.</p>
+
+<p>After some graphical tweaking, this is what the final design looks like:</p>
+<p style='text-align:center'>
+<a href='http://martin.kleppmann.com/2011/05/expand4.png'><img alt='End result: Rapportive&apos;s new sidebar design with collapsible section' src='http://martin.kleppmann.com/2011/05/expand4.png' width='550' /></a>
+</p>
+<p>I hope you&#8217;ll agree that it is <em>gorgeous</em>. We have added very little new user interface (and we&#8217;ve taken a lot away, compared to earlier designs), but the result is very effective. It fits neatly on both big and small screens, it is easy to use, and it is actually lots of fun to play with. Give it a try for yourself, and let us know what you think!</p>
+
+<p>Usability without design is dreary. Design without usability is pretentious. Design and usability together are delightful.</p>
                 ]]></content:encoded>
             </item>
         
@@ -950,86 +1303,6 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <p><strong>Update (11 June 2010):</strong> Packed the Excel spreadsheet in a ZIP file to fix download problems.</p>
 
 <p><strong>Update (23 August 2011):</strong> <a href='http://www.danielodio.com/'>Daniel Odio</a> has made this into a <a href='http://go.DanielOdio.com/convertible-note'>Google Docs spreadsheet</a> &#8211; you can just fill in your numbers and see the results immediately. Awesome!</p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Our social future</title>
-                <link>http://martin.kleppmann.com/2010/04/09/our-social-future.html</link>
-                <comments>http://martin.kleppmann.com/2010/04/09/our-social-future.html#disqus_thread</comments>
-                <pubDate>Fri, 09 Apr 2010 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=376</guid>
-                
-                <description><![CDATA[ You know you&#8217;re doing something good if someone you&#8217;ve never met before spontaneously comes up to you and asks: &#8220;Are you with Rapportive? Just wanted to say that I love it.&#8221; He could recognise me because we had exchanged emails, and he had therefore seen my photo in Rapportive next... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>You know you&#8217;re doing something good if someone you&#8217;ve never met before spontaneously comes up to you and asks: &#8220;Are you with Rapportive? Just wanted to say that I love it.&#8221;</p>
-
-<p>He could recognise me because we had exchanged emails, and he had therefore seen my photo in Rapportive next to my email.</p>
-
-<p>This is our social future. We&#8217;re busy creating it.</p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Hey, what happened just then?</title>
-                <link>http://martin.kleppmann.com/2010/03/31/hey-what-happened-just-then.html</link>
-                <comments>http://martin.kleppmann.com/2010/03/31/hey-what-happened-just-then.html#disqus_thread</comments>
-                <pubDate>Wed, 31 Mar 2010 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=372</guid>
-                
-                <description><![CDATA[ There are moments in life where everything suddenly changes. Do you know what I mean? Those moments are rare, but on some occasions, your entire outlook on life can fundamentally change overnight. This particular story begins about a year ago. I had just finished a few web development contracts, and... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>There are moments in life where everything suddenly changes. Do you know what I mean? Those moments are rare, but on some occasions, your entire outlook on life can fundamentally change overnight.</p>
-
-<p>This particular story begins about a year ago. I had just finished a few web development contracts, and had started to build my automated web testing tool, <a href='http://go-test.it'>Go Test It</a>. At the time I thought Go Test It was going to be a small, simple product which would take a few months to build and then mostly look after itself. (In retrospect: Hahaha!) I wasn&#8217;t sure where it was going to go, but I wanted to keep my options open, so I also <a href='http://martin.kleppmann.com/2009/03/31/doing-a-phd.html'>applied to do a PhD</a> in Cambridge.</p>
-
-<p>I had to propose a PhD topic, and I made up something ad-hoc. I realised that most interesting things are created by individuals, not organisations, and that the reputation and personal network of those individual people is key. And I saw a problem: most things happen online, but fragmented across lots of different websites (including private databases such as CRM systems), so the information is barely useful. I wanted to pull this together and analyse it; I saw this as a route to learning more effectively, by using my network of professional contacts.</p>
-
-<p>To make it sound more academic and less startuppy, I padded the PhD proposal with a bit of blah-blah about machine learning, natural language processing, citation analysis and social graph analysis. But of course my plan was to turn it into a startup eventually. I got my place in Cambridge, got the research funding, moved back into college &#8211; then realised that doing Go Test It and a PhD at the same time was madness, changed my mind, and withdrew from the PhD just a week after I had started. Oh well, interesting experience. I hope I didn&#8217;t waste too many people&#8217;s time.</p>
-
-<p>Around that time I was talking to <a href='http://www.red-gate.com/'>Red Gate</a>, who were interested in acquiring Go Test It, and we closed that deal in November 2009. The plan was that I would stay there for 10 months to hand it over and get it standing on its own feet. We embarked on a big customer development push to figure out who our customers really were and what they really wanted, and we learnt a lot. It was good.</p>
-
-<p><strong>Rapportive comes into being</strong></p>
-
-<p>Other things were happening around that time. My friends <a href='http://twitter.com/rahulvohra'>Rahul</a> and <a href='http://www.samstokes.co.uk/'>Sam</a> were interested in doing a new startup, having worked together at <a href='http://mo.jo'>mo.jo</a> before. I had talked to them about my ideas, originally intended for the PhD, of &#8220;fixing CRM&#8221; by integrating it with social data, and we started thinking about turning it into a startup sooner rather than later.</p>
-
-<p>Rahul came up with some user interface ideas and started coding them up in January; Sam joined in and engineered the backend. Our plan was that I would stay full-time on Go Test It, and fund the other two from my earn-out until October 2010, which is when Go Test It was to be fully handed over to Red Gate. Then I would join them full-time on the new startup. It sounded like a good plan.</p>
-
-<p>Rahul and Sam put together a prototype of Rapportive in a few weeks; we showed it to a few people and they seemed to like it. We put up a simple one-page website, with a few pictures and an install button, so that we had something we could show to potential investors. It wasn&#8217;t much. We hadn&#8217;t even written a privacy policy because we were expecting it to only go out to a small number of people.</p>
-
-<p><strong>And then&#8230; OMGWTFBBQ</strong></p>
-
-<p>What happened then was <a href='http://twitter.com/plc/status/9968421868'>a tweet</a> by our friend <a href='http://twitter.com/plc'>Pete</a> to <a href='http://twitter.com/zee'>Zee</a> of <a href='http://thenextweb.com/'>The Next Web</a>. I had never imagined that a single tweet could be so powerful. Zee loved what he saw and <a href='http://thenextweb.com/apps/2010/03/04/gmail-slick-social-crm-tool/'>wrote it up immediately</a>. Within a day we also had rave write-ups on <a href='http://www.readwriteweb.com/archives/gmail_social_crm_plugin_rapportive.php'>ReadWriteWeb</a> (&#8220;stop what you are doing and install this plug-in!&#8221;), then <a href='http://lifehacker.com/5486082/rapportive-replaces-gmail-ads-with-contact-info-is-very-cool'>Lifehacker</a> and <a href='http://webworkerdaily.com/2010/03/05/rapportive-gmail-crm/'>WebWorkerDaily</a> and dozens of smaller blogs and news sites&#8230; thousands of people raving about us on Twitter&#8230; and within that day, over 10,000 users signed up.</p>
-
-<p>10,000 users in one day. That&#8217;s like a fairly large stadium full of people using our software. I had never worked on anything with more than a couple of hundred users before. It&#8217;s hard to describe how that felt.</p>
-
-<p>We were doing nothing but frantically commenting on blog posts, replying to tweets, emails and Skype contacts, and scaling up our servers. Thank goodness for <a href='http://heroku.com/'>Heroku</a>, which made the scaling incredibly easy. We had a few periods of slowness and had to temporarily disable some features, but we never went down. Our servers were continuously handling over 20 requests per second, but we were taking care of our users and giving individual responses to everyone who needed one.</p>
-
-<p>We got a tremendous amount of love from our users, both for the product and for responding swiftly and helpfully to any queries. The vast majority of people who originally signed up are continuing to use it now, and new people are signing up every day.</p>
-
-<p>All of a sudden, our time is incredibly precious. We want to continue to develop Rapportive quickly and continue making something which people really want. We are moving at a very rapid pace, because every day, we have the opportunity to make tens of thousands of people happy.</p>
-
-<p><strong>So&#8230; what about Go Test It?</strong></p>
-
-<p>This success, great as it was, put me in a difficult situation. I was still full-time on Go Test It, and we were just ramping up development to build several big, important features which our customers really wanted. And at the same time, Rapportive needed me more every day.</p>
-
-<p>We had always been very open with the directors of Red Gate as to what was was going on with Rapportive, and so we discussed what we should do. Eventually we decided that Rapportive needed me most, and Go Test It wasn&#8217;t yet ready to stand on its own feet, so we would shut Go Test It down gracefully.</p>
-
-<p>It was a very hard decision, probably one of the hardest I have yet had to make. Red Gate, I and all the others who had worked on it had put a lot of time, effort and money into Go Test It. I was also emotionally invested; after all, this was my first own product. But the opportunity offered by Rapportive was just so disproportionately huge. Killing Go Test It quickly and painlessly was the right decision.</p>
-
-<p>Fortunately the damage was quite limited. Only a small number of customers were using Go Test It regularly, and we found alternative solutions for them. We had a vesting schedule, so the majority of the money from the acquisition went back to Red Gate. There were a few other people working on the project too; they had to find new things to work on, but they are all very talented so it&#8217;s not difficult for them to find work. And most importantly, for me at least: I managed to stay friends with everybody involved. So I think we achieved a good outcome overall.</p>
-
-<p><strong>Onwards and upwards</strong></p>
-
-<p>So here we go: I&#8217;m now a full-time co-founder at Rapportive, and together the three of us are going full steam ahead. We have tens of thousands of people who love what we are doing. We have investors knocking on our door. And we have bucketloads of plans and bright ideas combined with the energy and passion to make them happen.</p>
-
-<p>Life never moves in straight lines; it is full of unexpected surprises. But hey, most surprises turn out to be good ones if you make the most of them. And that&#8217;s what we&#8217;re doing right now.</p>
-
-<p>We&#8217;re in San Francisco and the Bay Area from now until mid-April, so if you&#8217;d like to meet us in person, please <a href='mailto:martin@rapportive.com'>drop me a note</a> &#8211; we&#8217;d love to hear from you!</p>
                 ]]></content:encoded>
             </item>
         

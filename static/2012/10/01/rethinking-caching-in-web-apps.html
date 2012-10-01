@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Thoughts on a better architecture for web apps &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Rethinking caching in web apps &mdash; Martin Kleppmann&rsquo;s blog</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -57,14 +57,14 @@
                     <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
                 </div>
 
-                Thoughts on a better architecture for web apps
+                Rethinking caching in web apps
             </h1>
 
             <p>Having spent a lot of the last few years worrying about the scalability of data-heavy applications like <a href='http://rapportive.com/'>Rapportive</a>, I have started to get the feeling that maybe we have all been &#8220;doing it wrong&#8221;. Maybe what we consider to be &#8220;state of the art&#8221; application architecture is actually holding us back.</p>
 
-<p>I don&#8217;t have a definitive answer for how we should be doing things differently, but along with a few others I have been working on new architectural approaches which I&#8217;d like to put up for discussion. My hope is that we can develop ways of better managing scale (in terms of complexity, volume of data and volume of traffic) while keeping our applications nimble, easy and safe to modify and iterate.</p>
+<p>I don&#8217;t have a definitive answer for how we should be architecting things differently, but in this post I&#8217;d like to outline a few ideas that I have been fascinated by recently. My hope is that we can develop ways of better managing scale (in terms of complexity, volume of data and volume of traffic) while keeping our applications nimble, easy and safe to modify, test and iterate.</p>
 
-<p>My biggest problem with web application architecture is how <strong>network communication concerns</strong> are often intermingled with <strong>business logic concerns</strong>. This makes it hard to rearrange the logic into new architectures.</p>
+<p>My biggest problem with web application architecture is how <strong>network communication concerns</strong> are often intermingled with <strong>business logic concerns</strong>. This makes it hard to rearrange the logic into new architectures, such as the precomputed cache architecture described below. In this post I explore why it important to be able to try new architectures for things like caching, and what it would take to achieve that flexibility.</p>
 
 <h2 id='an_example'>An example</h2>
 
@@ -112,7 +112,7 @@
 <p>Pretty good code by various standards, but it has always irked me a bit that I can&#8217;t see where the network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code> in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code> internally &#8211; unless the same query was already made recently, and ActiveRecord cached the result. And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the original post? Who knows.</p>
 
 <p>The execution flow for a MVC framework request like <code>PostsController#show</code> probably looks something like this:</p>
-<p><a href='/2012/09/architecture-high.png'><img alt='Typical MVC request flow' height='115' src='/2012/09/architecture.png' width='549' /></a></p>
+<p><a href='/2012/10/architecture-high-01.png'><img alt='Typical MVC request flow' height='119' src='/2012/10/architecture-01.png' width='550' /></a></p>
 <p>Of course it is deliberately designed that way. Your template and your controller shouldn&#8217;t have to worry about database queries &#8212; those are encapsulated by the model for many good reasons. I am violating abstraction by even thinking about the database whilst I&#8217;m in the template code! I should just think of my models as pure, beautiful pieces of application state. How that state gets loaded from a database is a matter that only the models need to worry about.</p>
 
 <h2 id='adding_complexity'>Adding complexity</h2>
@@ -148,7 +148,7 @@
 <ul>
 <li>A database index is a special case of a precomputed cache. For every value you might want to search for, the index tells you where to find occurrences of that value. If it&#8217;s not in the index, it&#8217;s not in the database. The initial index creation is a one-off batch job, and thereafter the database automatically keeps it in sync with the raw data. Yes, databases have been doing this for a long time.</li>
 
-<li>With Hadoop you can process terabytes of data without breaking a sweat. We can process every single one of LinkedIn&#8217;s 175 million member profiles within a couple of minutes. That is truly awesome power.</li>
+<li>With Hadoop you can process terabytes of data without breaking a sweat. That is truly awesome power.</li>
 
 <li>There are several datastores that allow you to precompute their files in Hadoop, which makes them very well suited for serving the cache that you precomputed. We are currently using <a href='http://www.project-voldemort.com/voldemort/'>Voldemort</a> in read-only mode (<a href='http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf'>research paper</a>), but <a href='http://hbase.apache.org/book/arch.bulk.load.html'>HBase</a> and <a href='https://github.com/nathanmarz/elephantdb'>ElephantDB</a> can do this too.</li>
 
@@ -171,14 +171,14 @@
 
 <p>Let&#8217;s use the blog example to make this more concrete. The data dependency is fairly simple: when the blog post <code>params[:id]</code> is requested, we require the row in the <code>posts</code> table whose <code>id</code> column matches the requested post, and we require all the rows in the <code>comments</code> table whose <code>post_id</code> column matches the requested post. If the <code>posts</code> and <code>comments</code> tables are in HDFS, it&#8217;s a very simple MapReduce job to group together the post with <code>id = x</code> and all the comments with <code>post_id = x</code>.</p>
 
-<p>We can then use a mock database implementation to feed those database rows into the existing <code>Post</code> and <code>Comment</code> model objects. That way we can make the models think that they loaded the data from a database, even though actually we had already gathered all the data we knew it was going to need. The model objects can keep doing their job as normally, and the output they produce can be written straight to the cache.</p>
+<p>We can then use a stub database implementation to feed those database rows into the existing <code>Post</code> and <code>Comment</code> model objects. That way we can make the models think that they loaded the data from a database, even though actually we had already gathered all the data we knew it was going to need. The model objects can keep doing their job as normally, and the output they produce can be written straight to the cache.</p>
 
 <p>By this point, two problems should be painfully clear:</p>
 
 <ul>
 <li>How does the MapReduce job know what inputs the business logic is going to need in order to work?</li>
 
-<li>OMG, implementing mock database drivers, isn&#8217;t that a bit too much pain for limited gain? (Note that in testing frameworks it&#8217;s not unusual to mock out your database, so that you can run your unit tests without a real database. Still, it&#8217;s non-trivial and annoying.)</li>
+<li>OMG, implementing stub database drivers, isn&#8217;t that a bit too much pain for limited gain? (Note that in testing frameworks it&#8217;s not unusual to stub out your database, so that you can run your unit tests without a real database. Still, it&#8217;s non-trivial and annoying.)</li>
 </ul>
 
 <p>Both problems have the same cause, namely that the network communication logic is triggered from deep inside the business logic.</p>
@@ -198,9 +198,9 @@
 <p>This separation would make application architecture very different from the way it is commonly done today. I think this new style would have several big advantages:</p>
 
 <ul>
-<li>By removing the assumption that the business logic is handling one request at a time, it becomes much easier to run the business logic in completely different contexts, such as in a batch job to precompute a cache. (No more mocking out database drivers.)</li>
+<li>By removing the assumption that the business logic is handling one request at a time, it becomes much easier to run the business logic in completely different contexts, such as in a batch job to precompute a cache. (No more stubbing out database drivers.)</li>
 
-<li>Testing becomes much easier. All the tricky business logic for which you want to write unit tests is now just a function with a bunch of inputs and a bunch of outputs. You can easily vary what you put in, and easily check that the right thing comes out. Again, no more mocking out the database.</li>
+<li>Testing becomes much easier. All the tricky business logic for which you want to write unit tests is now just a function with a bunch of inputs and a bunch of outputs. You can easily vary what you put in, and easily check that the right thing comes out. Again, no more stubbing out the database.</li>
 
 <li>The network communication logic can become a lot more helpful. For example, it can make several queries in parallel without burdening the business logic with a lot of complicated concurrency stuff, and it can deduplicate similar requests.</li>
 
@@ -212,6 +212,10 @@
 <p>In most cases, I think it would not be very hard to make business logic pure (i.e. stop making database queries from deep within) &#8212; it&#8217;s mostly a matter of refactoring. I have done it to substantial chunks of the Rapportive code base, and it was a bit tedious but perfectly doable. And the network communication logic wouldn&#8217;t have to change much at all.</p>
 
 <p>The problem of making this architecture practical hinges on having a good mechanism for declaring data dependencies. The idea is not new &#8212; for instance, LinkedIn have an internal framework for resolving data dependencies that queries several services in parallel &#8212; but I&#8217;ve not yet seen a language or framework that really gets to the heart of the problem.</p>
+
+<p>Adapting the blog example above, this is what I imagine such an architecture would look like:</p>
+<p><a href='/2012/10/architecture-high-02.png'><img alt='Concept for using a dependency resolver' height='119' src='/2012/10/architecture-02.png' width='550' /></a></p>
+<p>We still have models, and they are still used as encapsulations of state, but they are no longer wrappers around a database connection. Instead, the dependency resolver can take care of the messy business of talking to the database; the models are pure and can focus on the business logic. The models don&#8217;t care whether they are instantiated in a web app or in a Hadoop cluster, and they don&#8217;t care whether the data was loaded from a SQL database or from HDFS. That&#8217;s the way it should be.</p>
 
 <p>In my spare time I have started working on a language called <strong>Flowquery</strong> (don&#8217;t bother searching, there&#8217;s nothing online yet) to solve the problem of declaring data dependencies. If I can figure it out, it should make precomputed caches and all the good things above very easy. But it&#8217;s not there yet, so I don&#8217;t want to oversell it.</p>
 
@@ -225,9 +229,9 @@
 
 <p>How important is it that the data in your cache is up-to-date and consistent with your &#8220;source of truth&#8221; database? The answer depends on the application and the circumstances. For example, if the user edits their own data, you almost certainly want to show them an up-to-date version of their own data post-editing, otherwise they will assume that your app is broken. But you might be able to get away with showing stale data to other users for a while. For data that is not directly edited by users, stale data may always be ok.</p>
 
-<p>If staleness is acceptable, caching is really simple: on a read-through cache you set an expiry time on a cache key, and when that time is reached, the entry falls out of the cache. On a precomputed cache you do nothing, and just wait until the next time you recompute the entire thing.</p>
+<p>If staleness is acceptable, caching is fairly simple: on a read-through cache you set an expiry time on a cache key, and when that time is reached, the entry falls out of the cache. On a precomputed cache you do nothing, and just wait until the next time you recompute the entire thing.</p>
 
-<p>In the many cases where consistency is required, you have to explicitly invalidate cache entries when the original data changes. If just one cache key is affected by a change, you can write-through to that cache key when the &#8220;source of truth&#8221; database is updated. If many keys may be affected, you can use <a href='http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works'>generational caching</a> and <a href='https://groups.google.com/forum/#!msg/memcached/OiScvRbGaU8/C1vny7DiGakJ'>clever generalisations thereof</a>. Whatever technique you use, it usually ends up being a lot of manually written, fiddly and error-prone code. Not a great joy to work with, hence the terribly clichéd quote above.</p>
+<p>In cases where greater consistency is required, you have to explicitly invalidate cache entries when the original data changes. If just one cache key is affected by a change, you can write-through to that cache key when the &#8220;source of truth&#8221; database is updated. If many keys may be affected, you can use <a href='http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works'>generational caching</a> and <a href='https://groups.google.com/forum/#!msg/memcached/OiScvRbGaU8/C1vny7DiGakJ'>clever generalisations thereof</a>. Whatever technique you use, it usually ends up being a lot of manually written, fiddly and error-prone code. Not a great joy to work with, hence the terribly clichéd quote above.</p>
 
 <p>But&#8230; observe the following: in our efforts to separate pure business logic from network communication logic, we decided that we needed to explicitly model the data dependencies, and only data sources declared there are permitted as inputs to the business logic. In other words, the data dependency framework knows exactly which pieces of data are required in order to generate a particular piece of output &#8212; and conversely, when a piece of (input) data changes, it can know exactly which outputs (cache entries) may be affected by the change!</p>
 
@@ -246,6 +250,10 @@
 </ol>
 
 <p>I am designing Flowquery so that it can be used in all three modes &#8212; you should be able to write your data dependencies just once, and let the framework take care of bringing all the necessary data together so that the business logic can act on it.</p>
+
+<p>My hope is to make caching and cache invalidation as simple as database indexes. You declare an index once, the database runs a one-off batch job to build the index, and thereafter automatically keeps it up-to-date as the table contents change. It&#8217;s so simple to use that we don&#8217;t even think about it, and that&#8217;s what we should be aiming for in the realm of caching.</p>
+
+<p>The project is still at a very early stage, but hopefully I&#8217;ll be posting more about it as it progresses. If you&#8217;d like to hear more, please <a href='http://eepurl.com/csJmf'>leave your email address</a> and I&#8217;ll send you a brief note when I post more. Or you can follow me on <a href='https://twitter.com/martinkl'>Twitter</a> or <a href='https://alpha.app.net/martinkl'>App.net</a>.</p>
 
             
 
@@ -314,6 +322,8 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
+                    
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
                     
                       <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
@@ -321,8 +331,6 @@
                       <li>24 May 2011: <a href="/2011/05/24/evolution-of-rapportive-new-design.html">Evolution of Rapportive's new design</a></li>
                     
                       <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
-                    
-                      <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>
@@ -353,7 +361,7 @@
 
     <script type="text/javascript">
         var disqus_shortname = 'martinkl';
-        var disqus_url = 'http://martin.kleppmann.com/datadep.html';
+        var disqus_url = 'http://martin.kleppmann.com/2012/10/01/rethinking-caching-in-web-apps.html';
         var disqus_identifier = disqus_url;
 
         (function() {

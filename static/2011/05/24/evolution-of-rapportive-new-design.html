@@ -65,8 +65,9 @@
 <p>Today we are launching a new design for Rapportive. We put a huge amount of effort into this design, because we all believe deeply great user experience, and we know that our users really appreciate it too.</p>
 
 <p>Here it is (best viewed fullscreen):</p>
-<pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
-&lt;iframe width=&quot;549&quot; height=&quot;309&quot; src=&quot;http://www.youtube.com/embed/DPaSxa2vopU&quot; frameborder=&quot;0&quot; allowfullscreen/&gt;</pre>
+<iframe allowfullscreen='allowfullscreen' frameborder='0' height='309' src='http://www.youtube.com/embed/DPaSxa2vopU' width='549'>
+  <a href='http://www.youtube.com/watch?v=DPaSxa2vopU'>View on YouTube</a>
+</iframe>
 <p>In this post I&#8217;d like to explain some of our process and thinking in the creation of the new design.</p>
 
 <p>Our old design, which we had <a href='http://blog.rapportive.com/the-accidental-launch'>since launch</a>, has served us very well. It was subtle, simple, effective, and blended in well with Gmail. Unfortunately, it was beginning to show some limitations:</p>
@@ -82,7 +83,9 @@
 <p>These three points have a common theme: we do not handle long sidebars well.</p>
 
 <p>How long can a sidebar get? Well, here&#8217;s my sidebar, with the CrunchBase and the MailChimp Raplets:</p>
-<img alt='Example of very tall Rapportive profile' src='/2011/05/tall_profile.png' />
+<p style='text-align: center'>
+  <img alt='Example of very tall Rapportive profile' height='1361' src='/2011/05/tall_profile.png' width='230' />
+</p>
 <p>As we add more features to Rapportive, these problems would only get worse, so we decided that it was time to rethink our design.</p>
 
 <h2 id='our_design_principles'>Our design principles</h2>
@@ -256,6 +259,8 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
+                    
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
                     
                       <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
@@ -263,8 +268,6 @@
                       <li>24 May 2011: <a href="/2011/05/24/evolution-of-rapportive-new-design.html">Evolution of Rapportive's new design</a></li>
                     
                       <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
-                    
-                      <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>
@@ -295,7 +298,7 @@
 
     <script type="text/javascript">
         var disqus_shortname = 'martinkl';
-        var disqus_url = 'http://martin.kleppmann.com/expandy.html';
+        var disqus_url = 'http://martin.kleppmann.com/2011/05/24/evolution-of-rapportive-new-design.html';
         var disqus_identifier = disqus_url;
 
         (function() {
