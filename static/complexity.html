@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>The complexity of user experience &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?2" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://downloads.mailchimp.com/js/jquery.form-n-validate.js" type="text/javascript"></script>
+<script src="/form.js" type="text/javascript"></script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                The complexity of user experience
+            </h1>
+
+            <p>The problem of overly complex software is nothing new; it is almost as old as software itself. Over and over again, software systems become so complex that they become very difficult to maintain and very time-consuming and expensive to modify. Most developers hate working on such systems, yet nevertheless we keep creating new, overly complex systems all the time.</p>
+
+<p>Much has been written about this, including classic papers by Fred Brooks (<a href='http://people.eecs.ku.edu/~saiedian/Teaching/Sp08/816/Papers/Background-Papers/no-silver-bullet.pdf'>No Silver Bullet</a>), and Ben Moseley and Peter Marks (<a href='http://shaffner.us/cs/papers/tarpit.pdf'>Out of the Tar Pit</a>). They are much more worth reading than this post, and it is presumptuous of me to think I could add anything significant to this debate. But I will try nevertheless.</p>
+
+<p>Pretty much everyone agrees that if you have a choice between a simpler software design and a more complex design, all else being equal, that simpler is better. It is also widely thought to be worthwhile to deliberately invest in simplicity &#8212; for example, to spend effort refactoring existing code into a cleaner design &#8212; because the one-off cost of refactoring today is easily offset by the benefits of easier maintenance tomorrow. Also, much thought by many smart people has gone into finding ways of breaking down complex systems into manageable parts with manageable dependencies. I don&#8217;t wish to dispute any of that.</p>
+
+<p>But there is a subtlety that I have been missing in discussions about software complexity, that I feel somewhat ambivalent about, and that I think is worth discussing. It concerns the points where external humans (people outside of the team maintaining the system) touch the system &#8212; as developers using an API exposed by the system, or as end users interacting with a user interface. I will concentrate mostly on user interfaces, but much of this discussion applies to APIs too.</p>
+
+<h2 id='types_of_complexity'>Types of complexity</h2>
+
+<p>Brooks introduced the distinction between <strong>essential complexity</strong> (roughly speaking, performing the key operations that users care about) and <strong>accidental complexity</strong> (stuff that&#8217;s just required to grease the wheels, but isn&#8217;t visible to users). The former is beautiful, pure and typically fairly simple already, whereas the latter is typically messy, implementation-dependent and should be removed or abstracted away as much as possible.</p>
+
+<p>This distinction hinges crucially on the understanding of what <strong>user problem</strong> is being solved, and that&#8217;s where things start getting tricky. When you say that something is essential because it fulfils a <strong>user requirement</strong> (as opposed to an implementation constraint or a performance optimisation), that presupposes a very utilitarian view of software. It assumes that the user is trying to get a job done, and that they are a rational actor. But what if, say, you are taking an emotional approach and optimising for <strong>user delight</strong>?</p>
+
+<p>What if the user didn&#8217;t know they had a problem, but you solve it anyway? If you introduce complexity in the system for the sake of making things a little nicer for the user (but without providing new core functionality), is that complexity really essential? What if you add a little detail that is surprising but delightful?</p>
+
+<p>You can try to reduce an emotional decision down to a rational one &#8212; for example, you can say that when a user plays a game, it is solving the user&#8217;s problem of boredom by providing distraction. Thus any feature which substantially contributes towards alleviating boredom may be considered essential. Yes, such reductionism can sometimes provide useful angles of insight, but I think a lot would be lost by ignoring the emotional angle.</p>
+
+<p>You can state categorically that &#8220;great user experience is an essential feature&#8221;. But what does that mean? By itself, that statement is so general that could be used to argue for anything or nothing. User experience is subjective. What&#8217;s preferable for one user may be an annoyance for another user, even if both users are in the application&#8217;s target segment. Sometimes it just comes down to taste or fashion. User experience always has an emotional angle that makes it hard to fit into a rational reasoning framework.</p>
+
+<p>What I am trying to get at: there are things in software that introduce a lot of complexity (and that we should consequently be wary of), and that can&#8217;t be directly mapped to a bullet point on a list of user requirements, but that are nevertheless important and valuable. These things do not necessarily provide important functionality, but they contribute to how the user <strong>feels</strong> about the application. Their effect may be invisible or subconscious, but that doesn&#8217;t make them any less essential.</p>
+
+<p>Some examples may help (all based on real products that I have worked on at some point):</p>
+
+<ul>
+<li>You have an e-commerce site, and need to send out order confirmation emails that explain next steps to the customer. Those next steps differ depending on availability, the tax status of the product, the location of the customer, the type of account they have, and a myriad other parameters. You want the emails to only include the information that is applicable to this particular customer&#8217;s situation, and not burden them with edge cases that don&#8217;t apply to them. You also want the emails to read as coherent prose, not as a bunch of fragmented bullet points generated by <code>if</code> statements based on the order parameters. So you go and build a natural language grammar model for constructing emails based on sentence snippets (providing pluralisation, agreement, declension in languages that have it, etc), in such a way that for any one out of 100 million possible edge cases, the resulting email is grammatically correct and easy to understand.</li>
+
+<li>You have a multi-step user flow that is used in various different contexts, but ultimatively achieves the same thing in each context. (For example, <a href='http://rapportive.com/'>Rapportive</a> has several OAuth flows for connecting your account with various social networks, and there are several different buttons in different places that all lead into the same user flow.) The simple solution is to make the flow generic, and not care how the user got there. But if you want to make the user feel good, you need to imagine what state their mind was in when they entered the flow, and customise the images, text and structure of the flow in order to match their goal. This means you have to keep track of where the user came from, what they were trying to do, and thread that context through every step of the flow &#8212; fiddly and time-consuming.</li>
+
+<li>You have an application that requires some arcane configuration. You could take the stance that you will give the user a help page and they will have to figure it out from there. Or you could write a sophisticated auto-configuration tool that inspects the user&#8217;s environment, analyses thousands of possible software combinations and configurations (and updates this database as new versions of other products in the environment are released), and automatically chooses the correct settings &#8212; without having to ask the user for help. In the latter case, the users never even knew that they were spared a confusing configuration dialog. But somehow, word gets around that the product &#8220;just works&#8221;.</li>
+</ul>
+
+<p>What these examples have in common: as an application developer, you can choose whether to take on substantial additional complexity in the software in order to simplify or improve the experience for the user. The increased software complexity actually <strong>reduces</strong> the complexity from the user&#8217;s point of view. These examples also illustrate how user experience concerns are not just a matter of graphic design, but can also have a big impact on how things are engineered.</p>
+
+<p>The features described above do not contribute to the utility of the software &#8212; in the e-commerce example, orders will be fulfilled whether or not the confirmation emails are grammatical. In that sense, the complexity is unnecessary. But I would argue that these kind of user experience improvements are just as important as the utility of the product, because they determine how users <strong>feel</strong> about it. And how they feel ultimately determines whether they come back, and thus the success or failure of the product.</p>
+
+<p>One could even argue that the utility of a product is a subset of its user experience: if the software doesn&#8217;t do the job that it&#8217;s supposed to, then that&#8217;s a pretty bad experience. But there are many ways to create a bad experience while remaining fully functional from a utility point of view.</p>
+
+<p>The expression &#8220;icing on the cake&#8221; usually refers to something that is nice but not essential. Maybe that cake fulfils its nutritive utility perfectly well without icing; maybe the icing would even harm its dietary properties. But if most people choose to buy the cake <strong>with</strong> icing, then that icing sounds pretty damn essential to me.</p>
+
+<p>This is as far as my thinking has got: recognising that it is not just the utility of software, but also its user experience, that determines its essential complexity. But that still leaves me with some unanswered questions:</p>
+
+<ul>
+<li>Every budget is finite, so you have to prioritise things, and not everything will get done. When you consider building something that improves user experience without strictly adding utility, it has to be traded off against features that do add utility (is it better to shave a day off the delivery time than to have a nice confirmation email?), and the cost of the increased complexity (will that clever email generator be a nightmare to localise when we translate the site into other languages?). How do you reason about that kind of trade-offs?</li>
+
+<li>User experience choices are often emotional and <a href='http://martin.kleppmann.com/2010/10/30/intuition-has-no-transfer-encoding.html'>intuitive</a> (no number of focus groups and usability tests can replace good taste). That doesn&#8217;t make them any more or less important than rational arguments, but combining emotional and rational arguments can be tricky. Emotionally-driven people tend to let emotional choices overrule rational arguments, and rationally-driven people vice versa. How do you find the healthy middle ground?</li>
+
+<li>If you&#8217;re aiming for a minimum viable product in order to test out a market (as opposed to improving a mature product), does that change how you prioritise core utility relative to &#8220;icing&#8221;?</li>
+</ul>
+
+<p>I suspect that the answers to the questions above are <em>&#8220;it depends&#8221;</em>. More precisely, <em>&#8220;how one thing is valued relative to another is an aspect of your particular organisation&#8217;s culture, and there&#8217;s no one right answer&#8221;</em>. That would imply that each of us should think about it; you should have your own personal answers for how you decide these things in your own projects, and be able to articulate them. But it&#8217;s difficult &#8212; I don&#8217;t think hard-and-fast rules have a chance of working here.</p>
+
+<p>I&#8217;d love to hear your thoughts in the comments below.</p>
+
+            
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-subscribe" class="widget">
+            <h2 class="widget-title">Subscribe</h2>
+            <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+                Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+            </a>
+
+            <div id="mc_embed_signup">
+                <p>
+                    Enjoyed this? To get notified when I write something new,
+                    <a href="http://twitter.com/martinkl">follow me</a> on Twitter,
+                    <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+                    or type in your email address:
+                </p>
+
+                <form action="http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    <fieldset>
+                        <div class="mc-field-group">
+                            <label for="mce-EMAIL">Email:</label>
+                            <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+                        </div>
+                        <div id="mce-responses">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman.
+                I co-founded <a href="http://rapportive.com/">Rapportive</a>
+                (<a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a>
+                by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and Go Test It (acquired by 
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I care about making stuff that people want, great people and culture, the web and
+                its future, marvellous user experiences, maintainable code and scalable architectures.</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
+                    
+                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
+                    
+                      <li>15 Mar 2011: <a href="/2011/03/15/whats-so-special-about-y-combinator.html">What's so special about Y Combinator?</a></li>
+                    
+                      <li>07 Mar 2011: <a href="/2011/03/07/accounting-for-computer-scientists.html">Accounting for Computer Scientists</a></li>
+                    
+                      <li>21 Dec 2010: <a href="/2010/12/21/having-a-launched-product-is-hard.html">Having a launched product is hard</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/complexity.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>
