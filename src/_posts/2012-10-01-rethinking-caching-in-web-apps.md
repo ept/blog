@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Rethinking caching in web apps
+hackernews: http://news.ycombinator.com/item?id=4599685
 ---
 
 Having spent a lot of the last few years worrying about the scalability of data-heavy applications
@@ -390,3 +391,6 @@ The project is still at a very early stage, but hopefully I'll be posting more a
 progresses. If you'd like to hear more, please [leave your email address](http://eepurl.com/csJmf)
 and I'll send you a brief note when I post more. Or you can follow me on
 [Twitter](https://twitter.com/martinkl) or [App.net](https://alpha.app.net/martinkl).
+
+*Thanks to Nathan Marz, Pete Warden, Conrad Irwin, Rahul Vohra and Sam Stokes for feedback on drafts
+of this post.*
