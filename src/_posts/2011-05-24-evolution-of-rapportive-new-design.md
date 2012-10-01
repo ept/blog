@@ -3,9 +3,17 @@ layout: ync-post
 title: Evolution of Rapportive's new design
 ---
 
-Today we are launching a new design for Rapportive. We put a huge amount of effort into this
-design, because we all believe deeply in the importance of great user experience, and we know that
-our users really appreciate it too.
+*This is a re-post from the [Rapportive blog](http://blog.rapportive.com/53827077).*
+
+Today we are launching a new design for Rapportive. We put a huge amount of effort into this design,
+because we all believe deeply great user experience, and we know that our users really appreciate it
+too.
+
+Here it is (best viewed fullscreen):
+
+<iframe width="549" height="309" src="http://www.youtube.com/embed/DPaSxa2vopU" frameborder="0" allowfullscreen="allowfullscreen">
+  <a href="http://www.youtube.com/watch?v=DPaSxa2vopU">View on YouTube</a>
+</iframe>
 
 In this post I'd like to explain some of our process and thinking in the creation of the new design.
 
@@ -13,13 +21,10 @@ Our old design, which we had [since launch](http://blog.rapportive.com/the-accid
 served us very well. It was subtle, simple, effective, and blended in well with Gmail.
 Unfortunately, it was beginning to show some limitations:
 
-<a href="/2011/05/tall_profile.png" style="float: right; padding-left: 20px"><img
-    src="/2011/05/tall_profile.png" width="40" alt="Example of very tall Rapportive profile" /></a>
-
 1. If you're using Gmail on a small screen, on a laptop or even a netbook, the Rapportive sidebar
    would often be too tall to fit on screen. Of course you can scroll down, but the main Gmail
-   scrollbar is already used to scroll down in the conversation. We hooked into the page scrolling, but
-   if you were on a long conversation, you had to scroll all the way to the bottom of the
+   scrollbar is already used to scroll down in the conversation. We hooked into the page scrolling,
+   but if you were on a long conversation, you had to scroll all the way to the bottom of the
    conversation if you wanted to see the rest of the Rapportive sidebar. That was really annoying.
 2. Over the months we've been adding more and more useful stuff to the sidebar:
    [phone numbers](http://blog.rapportive.com/address-book-inbox-together-at-last),
@@ -29,16 +34,28 @@ Unfortunately, it was beginning to show some limitations:
    [variety of](http://thenextweb.com/apps/2010/04/29/rapportive/)
    [different](http://blog.rapportive.com/get-out-of-your-inbox-and-meet-people-in-pers)
    [purposes](http://blog.rapportive.com/rapportive-for-developers-bitbucket-github-st).
-   What that meant is that some profiles ended up getting [unmanageably tall](/2011/05/tall_profile.png).
-3. Different people find different parts of the sidebar useful. Some find
-   [recent tweets](http://twitter.com/GraemeF/status/25286282993213440) most useful, others swear by our
-   [CRM raplets](http://twitter.com/smsbnyc/status/40436337681104896), others again leave
-   [lots of notes](http://twitter.com/nickcernis/status/15001395635691520) about their contacts.
-   But it sucks if the thing you're most interested is often scrolled off the bottom of the screen
-   because the things higher up in the sidebar are taking all the space.
+   This has pushed the previous design to its limits: some profiles would become unmanageably tall.
+3. Different people find different parts of the sidebar useful. Some find [recent
+   tweets](http://twitter.com/GraemeF/status/25286282993213440) most useful, others swear by our
+   [CRM raplets](http://twitter.com/smsbnyc/status/40436337681104896), others again leave [lots of
+   notes](http://twitter.com/nickcernis/status/15001395635691520) about their contacts.  But it
+   sucks if the thing you're most interested is often scrolled off the bottom of the screen because
+   the things higher up in the sidebar are taking all the space.
+
+These three points have a common theme: we do not handle long sidebars well.
+
+How long can a sidebar get? Well, here's my sidebar, with the CrunchBase and the MailChimp Raplets:
+
+<p style="text-align: center">
+  <img src="/2011/05/tall_profile.png" alt="Example of very tall Rapportive profile" width="230" height="1361"/>
+</p>
 
 As we add more features to Rapportive, these problems would only get worse, so we decided that it
 was time to rethink our design.
+
+
+Our design principles
+---------------------
 
 We had several guiding principles for the redesign. Rapportive should:
 
@@ -52,6 +69,9 @@ We had several guiding principles for the redesign. Rapportive should:
 * Avoid configuration dialogs. The interface should just do the right thing.
 * Be clear, obvious to use, beautiful and *enjoyable* to interact with :)
 
+Buttons
+-------
+
 First of all, I started with some graphical tweaking. Here are some nice buttons:
 
 <p style="text-align:center">
@@ -59,10 +79,11 @@ First of all, I started with some graphical tweaking. Here are some nice buttons
 alt="Different sylings for 'add friend'/'connect' buttons"/></a>
 </p>
 
-A nice excuse to play with some CSS gradients and drop shadows, but it doesn't actually solve the
-big problems. So how do we fix the problems with the sidebar?
 
-The first thought: we could simply give the Rapportive sidebar its own scrollbar. That would avoid
+How do we handle long sidebars?
+-------------------------------
+
+Our first thought: we could simply give the Rapportive sidebar its own scrollbar. That would avoid
 having to scroll down to the bottom of a long conversation, because you could scroll the sidebar
 separately. But that approach is pretty bad. A large part of the sidebar may still end up being
 hidden off-screen, which means you have to go out of your way to scroll down, making it unlikely
@@ -129,6 +150,10 @@ Even scrollbars, despite being such a standard part of user interface design, ha
 
 Fortunately such spacing issues are easy to iron out. A harder question is: how do we communicate to
 the user that they can expand a section?
+
+
+Expandable sections
+-------------------
 
 In the old design, if you clicked someone's Twitter username, we would open up a new browser tab to
 show their tweet stream. In an accordion design, however, you'd expect that clicking the collapsed
