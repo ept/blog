@@ -5,6 +5,10 @@
     margin-bottom: 18px;
 }
 
+#disqus_thread ul {
+    list-style-image: none;
+}
+
 #mc_embed_signup {
     clear: both;
     padding-top: 1.5em;
