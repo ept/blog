@@ -47,7 +47,7 @@ Fortunately Thrift, Protobuf and Avro all support **schema evolution**: you can 
 you can have producers and consumers with different versions of the schema at the same time, and it
 all continues to work. That is an extremely valuable feature when you're dealing with a big
 production system, because it allows you to update different components of the system independently,
-at different times.
+at different times, without worrying about compatibility.
 
 Which brings us to the topic of today's post. I would like to explore how Protocol Buffers, Avro and
 Thrift actually encode data into bytes --- and this will also help explain how each of them deals
@@ -83,27 +83,38 @@ this schema, it uses 33 bytes, as follows:
 
 <a href="/2012/12/protobuf.png"><img src="/2012/12/protobuf_small.png" width="550" height="230"/></a>
 
-                            Field 2<<3|0 (varint)
-    Field 1<<3|2 (string)   |        Field 3<<3|2 (string)
-    |  'Martin' has 6 bytes |   1337 |  'daydreaming' has 11 bytes
-    ↓  ↓  M  a  r  t  i  n  ↓  /   \ ↓  ↓  d  a  y
-    0a 06 4d 61 72 74 69 6e 10 b9 0a 1a 0b 64 61 79
-    64 72 65 61 6d 69 6e 67 1a 07 68 61 63 6b 69 6e 67
-    d  r  e  a  m  i  n  g  ↑  ↑  h  a  c  k  i  n  g
-                            |  'hacking' has 7 bytes
-                            Field 3<<3|2 (string)
+Look exactly at how the binary representation is structured, byte by byte. The person record is just
+the concatentation of its fields. Each field starts with a byte that indicates its tag number (the
+numbers `1`, `2`, `3` in the schema above), and the type of the field. If the first byte of a field
+indicates that the field is a string, it is followed by the number of bytes in the string, and then
+the UTF-8 encoding of the string. If the first byte indicates that the field is an integer, a
+variable-length encoding of the number follows. There is no array type, but a tag number can appear
+multiple times to represent a multi-valued field.
+
+So when thinking about schema evolution in protocol buffers, it's clear that everything hinges on
+the tag numbers. You can rename fields, because field names don't exist in the binary serialization,
+but you can never change the meaning of a tag number. You can change an optional field to a repeated
+field, because the binary representation is the same.
+
+Say you add a field to your record, and give it a new tag. Now you have a writing process that
+produces data including the new field, but you have an older consuming process that is still
+expecting data in an older version of the schema. What does the consumer do when the newer data
+comes in?
+
+When the Protobuf parser sees a tag number that is not defined in its version of the schema, it has
+no way of knowing what that field is called. But it *does* roughly know what type it is, because a
+3-bit type code is included in the first byte of the field. This means that even though the parser
+can't exactly interpret the field, it can figure out how many bytes it needs to skip in order to
+find the next field in the record.
+
+This approach of using a tag number to represent each field is simple and effective. But as we'll
+see in a minute, it's not the only way of doing things.
 
 
-Schemaless (like JSON) but binary:
+Avro
+----
 
-Avro: http://avro.apache.org/docs/current/spec.html
-Proposal/discussion: http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/browser
-Avro is a bit more flexible: supports recursive datatypes (e.g. you can represent trees) and union
-types.
-Avro schema registry: https://issues.apache.org/jira/browse/AVRO-1124
-Advantage of versioning the entire schema, rather than individual fields: you can add extra metadata
-to the schema (e.g. describing application-level semantics for a field/record), and the reader will
-know exactly which schema version (and hence metadata) the writer was using.
+Avro schemas can be written in two ways, either in a JSON format:
 
 {% highlight js %}
 {
@@ -117,31 +128,94 @@ know exactly which schema version (and hence metadata) the writer was using.
 }
 {% endhighlight %}
 
+...or in an IDL:
+
     record Person {
         string               userName;
         union { null, long } favouriteNumber;
         array<string>        interests;
     }
 
-                         long, not null
-                         |         2 array elements follow
-    'Martin' has 6 bytes |   1337  |  'daydreaming' has 11 bytes
-    ↓  M  a  r  t  i  n  ↓  /   \  ↓  ↓ d  a  y  d
-    0c 4d 61 72 74 69 6e 02 f2 14 04 16 64 61 79 64  .Martin.....dayd
-    72 65 61 6d 69 6e 67 0e 68 61 63 6b 69 6e 67 00  reaming.hacking.
-    r  e  a  m  i  n  g  ↑  h  a  c  k  i  n  g  ↑
-                         'hacking' has 7 bytes   zero to terminate array
+Notice that there are no tag numbers in the schema! So how does it work?
+
+Here is the same example data [encoded](http://avro.apache.org/docs/current/spec.html) in just 32
+bytes:
+
+<a href="/2012/12/avro.png"><img src="/2012/12/avro_small.png" width="550" height="259"/></a>
+
+Strings are just a length prefix followed by UTF-8 bytes, but there's nothing in the bytestream that
+tells you that it is a string. It could just as well be a variable-length integer, or something else
+entirely. The only way you can parse this binary data is by reading it alongside the schema, and the
+schema tells you what type to expect next. You need to have the **exact same version** of the schema
+as the writer of the data used. If you have the wrong schema, the parser will not be able to make
+head or tail of the binary data.
+
+So how does Avro support schema evolution? Well, although you need to know the exact schema with
+which the data was written (the writer schema), that doesn't have to be the same as the schema the
+consumer is expecting (the reader schema). You can actually give *two different* schemas to the Avro
+parser, and it uses
+[resolution rules](http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html)
+to translate data from the writer schema into the reader schema. The fields in the reader and writer
+schema are matched by name, which is why no tag numbers are needed in Avro (and you can reorder your
+fields however you like, but renaming a field is harder).
+
+This leaves us with the problem of knowing the exact schema with which a given record was written.
+The best solution depends on the context in which your data is being used:
+
+* In Hadoop you typically have large files containing millions of records, all encoded with the same
+  schema. [Object container files](http://avro.apache.org/docs/1.7.2/spec.html#Object+Container+Files)
+  handle this case: they just include the schema once at the beginning of the file, and the rest of
+  the file can be decoded with that schema.
+* In an RPC context, it's probably too much overhead to send the schema with every request and
+  response. But if your RPC framework uses long-lived connections, it can negotiate the schema
+  once at the start of the connection, and amortize that overhead over many requests.
+* If you're storing records in a database one-by-one, you may end up with different schema versions
+  written at different times, and so you have to annotate each record with its schema version. If
+  storing the schema itself is too much overhead, you can use a
+  [hash](http://avro.apache.org/docs/1.7.2/spec.html#Schema+Fingerprints) of the schema, or a
+  sequential schema version number. You then need a
+  [schema registry](https://issues.apache.org/jira/browse/AVRO-1124) where you can look up the exact
+  schema definition for a given version number.
+
+One way of looking at it: in Protocol Buffers, every field in a record is tagged, whereas in Avro,
+the entire record, file or network connection is tagged with a schema version.
+
+At first glance it may seem that Avro's approach suffers from greater complexity, because you need
+to go to the additional effort of distributing schemas. However, I am beginning to think that Avro's
+approach also has some distinct advantages:
+
+* Object container files are wonderfully self-describing: the writer schema embedded in the file
+  contains all the field names and types, and even documentation strings (if the author of the
+  schema bothered to write some). This means you can load these files directly into interactive
+  tools like [Pig](http://pig.apache.org/), and it Just Works™ without any configuration.
+* As Avro schemas are JSON, you can add your own metadata to them, e.g. describing application-level
+  semantics for a field. And as you distribute schemas, that metadata automatically gets distributed
+  too.
+* A schema registry is probably a good thing in any case, serving as
+  [documentation](https://github.com/ept/avrodoc) and helping you to find and reuse data. And
+  because you simply can't parse Avro data without the schema, the schema registry is guaranteed to
+  be up-to-date. Of course you can set up a protobuf schema registry too, but since it's not
+  *required* for operation, it'll end up being on a best-effort basis.
 
 
-Thrift:
+Thrift
+------
 
-* DenseProtocol
-* CompactProtocol
-* BinaryProtocol
+Thrift is a much bigger project than Avro and Protocol Buffers, as it's not just a data
+serialization library, but also an entire RPC framework. It also has a somewhat different culture:
+whereas Avro and Protobuf standardize a single binary encoding, Thrift
+[embraces](http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E)
+a whole variety of different serialization formats (which it calls "protocols").
 
-"Thrift fundamentally standardizes an API, not a data format. Avro fundamentally is a data format
-specification, like XML."
-(http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3C49D6577F.4080307%40apache.org%3E)
+Indeed, Thrift has
+[two](https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TJSONProtocol.html)
+[different](https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TSimpleJSONProtocol.html)
+JSON encodings, and no fewer than three different binary encodings. (However, one of the binary
+encodings, DenseProtocol, is
+[only supported in the C++ implementation](http://wiki.apache.org/thrift/LibraryFeatures); since
+we're interested in cross-language serialization, I will focus on the other two.)
+
+All the encodings share the same schema definition, in Thrift IDL:
 
     struct Person {
       1: string       userName,
@@ -149,66 +223,23 @@ specification, like XML."
       3: list<string> interests
     }
 
+The BinaryProtocol encoding is very straightforward, but also fairly wasteful (it takes 59 bytes to
+encode our example record):
 
-Thrift BinaryProtocol:
+<a href="/2012/12/binaryprotocol.png"><img src="/2012/12/binaryprotocol_small.png" width="550" height="269"/></a>
 
-             string type                     i64 type
-             |  f#1  6 bytes                 |   field #2
-             ↓ /   \/BigEndia\ M a r  t i  n ↓  /  \
-    0000000: 0b00 0100 0000 064d 6172 7469 6e0a 0002  .......Martin...
+The CompactProtocol encoding is semantically equivalent, but using variable-length integers and bit
+packing to reduce the size to 34 bytes:
 
-                                 list    string items
-              ______1337_______  |  f#3  |  2 items
-             /                 \ ↓ /   \ ↓ /       \
-    0000010: 0000 0000 0000 0539 0f00 030b 0000 0002  .......9........
+<a href="/2012/12/compactprotocol.png"><img src="/2012/12/compactprotocol_small.png" width="550" height="276"/></a>
 
-              11 bytes
-             /       \                            /
-    0000020: 0000 000b 6461 7964 7265 616d 696e 6700  ....daydreaming.
+As you can see, Thrift's approach to schema evolution is the same as Protobuf's: each field is
+manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding,
+which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than
+Protobuf's repeated field approach, but otherwise the two are very similar.
 
-         ...7 bytes                   end of struct
-                   \                  ↓
-    0000030: 0000 0768 6163 6b69 6e67 00              ...hacking.
-
-
-Thrift CompactProtocol:
-
-                                 offset +1<<4|6 (i64)
-           field 1<<4|8(string)  |      offset +1<<4|9 (list)
-             | 6 bytes           | 1337 |  length 2<<4|8(string)
-             ↓ ↓                 ↓ /   \↓  ↓ 11 bytes
-    0000000: 1806 4d61 7274 696e 16f2 1419 280b 6461  ..Martin....(.da
-                                   7 bytes
-    0000010: 7964 7265 616d 696e 6707 6861 636b 696e  ydreaming.hackin
-               end of struct
-    0000020: 6700
-
-
-Thrift JSONProtocol:
-
-    0000000: 7b22 3122 3a7b 2273 7472 223a 224d 6172  {"1":{"str":"Mar
-    0000010: 7469 6e22 7d2c 2232 223a 7b22 6936 3422  tin"},"2":{"i64"
-    0000020: 3a31 3333 377d 2c22 3322 3a7b 226c 7374  :1337},"3":{"lst
-    0000030: 223a 5b22 7374 7222 2c32 2c22 6461 7964  ":["str",2,"dayd
-    0000040: 7265 616d 696e 6722 2c22 6861 636b 696e  reaming","hackin
-    0000050: 6722 5d7d 7d                             g"]}}
-
-Thrift SimpleJSONProtocol:
-
-    0000000: 7b22 7573 6572 4e61 6d65 223a 224d 6172  {"userName":"Mar
-    0000010: 7469 6e22 2c22 6661 766f 7572 6974 654e  tin","favouriteN
-    0000020: 756d 6265 7222 3a31 3333 372c 2269 6e74  umber":1337,"int
-    0000030: 6572 6573 7473 223a 5b22 6461 7964 7265  erests":["daydre
-    0000040: 616d 696e 6722 2c22 6861 636b 696e 6722  aming","hacking"
-    0000050: 5d7d                                     ]}
-
-Thrift's DenseProtocol is only supported in C++, none of the other languages.
-
-Comparisons between Thrift and Protocol Buffers:
-http://floatingsun.net/articles/thrift-vs-protocol-buffers/
-http://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/
-http://blog.mirthlab.com/2009/06/01/thrift-vs-protocol-bufffers-vs-json/
-http://tech.puredanger.com/2011/05/27/serialization-comparison/
-
-Protocol support matrix:
-http://wiki.apache.org/thrift/LibraryFeatures
+In terms of philosophy, the libraries are very different though. Thrift favours the "one-stop shop"
+style that gives you an entire integrated RPC framework and many choices (with
+[varying cross-language support](http://wiki.apache.org/thrift/LibraryFeatures)), whereas Protocol
+Buffers and Avro appear to follow much more of a
+["do one thing and do it well"](http://www.faqs.org/docs/artu/ch01s06.html) style.
