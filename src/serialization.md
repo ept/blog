@@ -151,9 +151,9 @@ as the writer of the data used. If you have the wrong schema, the parser will no
 head or tail of the binary data.
 
 So how does Avro support schema evolution? Well, although you need to know the exact schema with
-which the data was written (the writer schema), that doesn't have to be the same as the schema the
-consumer is expecting (the reader schema). You can actually give *two different* schemas to the Avro
-parser, and it uses
+which the data was written (the writer's schema), that doesn't have to be the same as the schema the
+consumer is expecting (the reader's schema). You can actually give *two different* schemas to the
+Avro parser, and it uses
 [resolution rules](http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html)
 to translate data from the writer schema into the reader schema. The fields in the reader and writer
 schema are matched by name, which is why no tag numbers are needed in Avro (and you can reorder your
@@ -201,7 +201,7 @@ approach also has some distinct advantages:
 Thrift
 ------
 
-Thrift is a much bigger project than Avro and Protocol Buffers, as it's not just a data
+Thrift is a much bigger project than Avro or Protocol Buffers, as it's not just a data
 serialization library, but also an entire RPC framework. It also has a somewhat different culture:
 whereas Avro and Protobuf standardize a single binary encoding, Thrift
 [embraces](http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E)
@@ -228,7 +228,7 @@ encode our example record):
 
 <a href="/2012/12/binaryprotocol.png"><img src="/2012/12/binaryprotocol_small.png" width="550" height="269"/></a>
 
-The CompactProtocol encoding is semantically equivalent, but using variable-length integers and bit
+The CompactProtocol encoding is semantically equivalent, but uses variable-length integers and bit
 packing to reduce the size to 34 bytes:
 
 <a href="/2012/12/compactprotocol.png"><img src="/2012/12/compactprotocol_small.png" width="550" height="276"/></a>
