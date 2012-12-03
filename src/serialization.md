@@ -91,21 +91,27 @@ the UTF-8 encoding of the string. If the first byte indicates that the field is 
 variable-length encoding of the number follows. There is no array type, but a tag number can appear
 multiple times to represent a multi-valued field.
 
-So when thinking about schema evolution in protocol buffers, it's clear that everything hinges on
-the tag numbers. You can rename fields, because field names don't exist in the binary serialization,
-but you can never change the meaning of a tag number. You can change an optional field to a repeated
-field, because the binary representation is the same.
+This encoding has consequences for schema evolution:
 
-Say you add a field to your record, and give it a new tag. Now you have a writing process that
-produces data including the new field, but you have an older consuming process that is still
-expecting data in an older version of the schema. What does the consumer do when the newer data
-comes in?
-
-When the Protobuf parser sees a tag number that is not defined in its version of the schema, it has
-no way of knowing what that field is called. But it *does* roughly know what type it is, because a
-3-bit type code is included in the first byte of the field. This means that even though the parser
-can't exactly interpret the field, it can figure out how many bytes it needs to skip in order to
-find the next field in the record.
+* There is no difference in the encoding between `optional`, `required` and `repeated` fields
+  (except for the number of times the tag number can appear). This means that you can change a field
+  from `optional` to `repeated` and vice versa (if the parser is expecting an `optional` field but
+  sees the same tag number multiple times in one record, it discards all but the last value).
+  `required` has an additional validation check, so if you change it, you risk runtime errors (if
+  the sender of a message thinks that it's optional, but the recipient thinks that it's required).
+* An `optional` field without a value, or a `repeated` field with zero values, does not appear in
+  the encoded data at all --- the field with that tag number is simply absent. Thus, it is safe to
+  remove that kind of field from the schema. However, you must never reuse the tag number for
+  another field in future, because you may still have data stored that uses that tag for the field
+  you deleted.
+* You can add a field to your record, as long as it is given a new tag number. If the Protobuf
+  parser parser sees a tag number that is not defined in its version of the schema, it has no way of
+  knowing what that field is called. But it *does* roughly know what type it is, because a 3-bit
+  type code is included in the first byte of the field. This means that even though the parser can't
+  exactly interpret the field, it can figure out how many bytes it needs to skip in order to find
+  the next field in the record.
+* You can rename fields, because field names don't exist in the binary serialization, but you can
+  never change a tag number.
 
 This approach of using a tag number to represent each field is simple and effective. But as we'll
 see in a minute, it's not the only way of doing things.
@@ -155,9 +161,36 @@ which the data was written (the writer's schema), that doesn't have to be the sa
 consumer is expecting (the reader's schema). You can actually give *two different* schemas to the
 Avro parser, and it uses
 [resolution rules](http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html)
-to translate data from the writer schema into the reader schema. The fields in the reader and writer
-schema are matched by name, which is why no tag numbers are needed in Avro (and you can reorder your
-fields however you like, but renaming a field is harder).
+to translate data from the writer schema into the reader schema.
+
+This has some interesting consequences for schema evolution:
+
+* The Avro encoding doesn't have an indicator to say which field is next; it just encodes one field
+  after another, in the order they appear in the schema. Since there is no way for the parser to
+  know that a field has been skipped, there is no such thing as an optional field in Avro. Instead,
+  if you want to be able to leave out a value, you can use a union type, like `union { null, long }`
+  above. This is encoded as a byte to tell the parser which of the possible union types to use,
+  followed by the value itself. By making a union with the `null` type (which is simply encoded as
+  zero bytes) you can make a field optional.
+* Union types are powerful, but you must take care when changing them. If you want to add a type to
+  a union, you first need to update all readers with the new schema, so that they know what to
+  expect. Only once all readers are updated, the writers
+  may start putting this new type in the records they generate.
+* You can reorder fields in a record however you like. Although the fields are encoded in the order
+  they are declared, the parser matches fields in the reader and writer schema by name, which is why
+  no tag numbers are needed in Avro.
+* Because fields are matched by name, changing the name of a field is tricky. You need to first
+  update all *readers* of the data to use the new field name, while keeping the old name as an alias
+  (since the name matching uses aliases from the reader's schema). Then you can update the writer's
+  schema to use the new field name.
+* You can add a field to a record, provided that you also give it a default value (e.g. `null` if
+  the field's type is a union with `null`). The default is necessary so that when a reader using the
+  new schema parses a record written with the old schema (and hence lacking the field), it can fill
+  in the default instead.
+* Conversely, you can remove a field from a record, provided that it previously had a default value.
+  (This is a good reason to give all your fields default values if possible.) This is so that when a
+  reader using the *old* schema parses a record written with the *new* schema, it can fall back to
+  the default.
 
 This leaves us with the problem of knowing the exact schema with which a given record was written.
 The best solution depends on the context in which your data is being used:
