@@ -104,11 +104,17 @@
 <a href='/2012/12/protobuf.png'><img height='230' src='/2012/12/protobuf_small.png' width='550' /></a>
 <p>Look exactly at how the binary representation is structured, byte by byte. The person record is just the concatentation of its fields. Each field starts with a byte that indicates its tag number (the numbers <code>1</code>, <code>2</code>, <code>3</code> in the schema above), and the type of the field. If the first byte of a field indicates that the field is a string, it is followed by the number of bytes in the string, and then the UTF-8 encoding of the string. If the first byte indicates that the field is an integer, a variable-length encoding of the number follows. There is no array type, but a tag number can appear multiple times to represent a multi-valued field.</p>
 
-<p>So when thinking about schema evolution in protocol buffers, it&#8217;s clear that everything hinges on the tag numbers. You can rename fields, because field names don&#8217;t exist in the binary serialization, but you can never change the meaning of a tag number. You can change an optional field to a repeated field, because the binary representation is the same.</p>
+<p>This encoding has consequences for schema evolution:</p>
 
-<p>Say you add a field to your record, and give it a new tag. Now you have a writing process that produces data including the new field, but you have an older consuming process that is still expecting data in an older version of the schema. What does the consumer do when the newer data comes in?</p>
+<ul>
+<li>There is no difference in the encoding between <code>optional</code>, <code>required</code> and <code>repeated</code> fields (except for the number of times the tag number can appear). This means that you can change a field from <code>optional</code> to <code>repeated</code> and vice versa (if the parser is expecting an <code>optional</code> field but sees the same tag number multiple times in one record, it discards all but the last value). <code>required</code> has an additional validation check, so if you change it, you risk runtime errors (if the sender of a message thinks that it&#8217;s optional, but the recipient thinks that it&#8217;s required).</li>
 
-<p>When the Protobuf parser sees a tag number that is not defined in its version of the schema, it has no way of knowing what that field is called. But it <em>does</em> roughly know what type it is, because a 3-bit type code is included in the first byte of the field. This means that even though the parser can&#8217;t exactly interpret the field, it can figure out how many bytes it needs to skip in order to find the next field in the record.</p>
+<li>An <code>optional</code> field without a value, or a <code>repeated</code> field with zero values, does not appear in the encoded data at all &#8212; the field with that tag number is simply absent. Thus, it is safe to remove that kind of field from the schema. However, you must never reuse the tag number for another field in future, because you may still have data stored that uses that tag for the field you deleted.</li>
+
+<li>You can add a field to your record, as long as it is given a new tag number. If the Protobuf parser parser sees a tag number that is not defined in its version of the schema, it has no way of knowing what that field is called. But it <em>does</em> roughly know what type it is, because a 3-bit type code is included in the first byte of the field. This means that even though the parser can&#8217;t exactly interpret the field, it can figure out how many bytes it needs to skip in order to find the next field in the record.</li>
+
+<li>You can rename fields, because field names don&#8217;t exist in the binary serialization, but you can never change a tag number.</li>
+</ul>
 
 <p>This approach of using a tag number to represent each field is simple and effective. But as we&#8217;ll see in a minute, it&#8217;s not the only way of doing things.</p>
 
@@ -140,7 +146,23 @@
 <a href='/2012/12/avro.png'><img height='259' src='/2012/12/avro_small.png' width='550' /></a>
 <p>Strings are just a length prefix followed by UTF-8 bytes, but there&#8217;s nothing in the bytestream that tells you that it is a string. It could just as well be a variable-length integer, or something else entirely. The only way you can parse this binary data is by reading it alongside the schema, and the schema tells you what type to expect next. You need to have the <strong>exact same version</strong> of the schema as the writer of the data used. If you have the wrong schema, the parser will not be able to make head or tail of the binary data.</p>
 
-<p>So how does Avro support schema evolution? Well, although you need to know the exact schema with which the data was written (the writer schema), that doesn&#8217;t have to be the same as the schema the consumer is expecting (the reader schema). You can actually give <em>two different</em> schemas to the Avro parser, and it uses <a href='http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html'>resolution rules</a> to translate data from the writer schema into the reader schema. The fields in the reader and writer schema are matched by name, which is why no tag numbers are needed in Avro (and you can reorder your fields however you like, but renaming a field is harder).</p>
+<p>So how does Avro support schema evolution? Well, although you need to know the exact schema with which the data was written (the writer&#8217;s schema), that doesn&#8217;t have to be the same as the schema the consumer is expecting (the reader&#8217;s schema). You can actually give <em>two different</em> schemas to the Avro parser, and it uses <a href='http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html'>resolution rules</a> to translate data from the writer schema into the reader schema.</p>
+
+<p>This has some interesting consequences for schema evolution:</p>
+
+<ul>
+<li>The Avro encoding doesn&#8217;t have an indicator to say which field is next; it just encodes one field after another, in the order they appear in the schema. Since there is no way for the parser to know that a field has been skipped, there is no such thing as an optional field in Avro. Instead, if you want to be able to leave out a value, you can use a union type, like <code>union { null, long }</code> above. This is encoded as a byte to tell the parser which of the possible union types to use, followed by the value itself. By making a union with the <code>null</code> type (which is simply encoded as zero bytes) you can make a field optional.</li>
+
+<li>Union types are powerful, but you must take care when changing them. If you want to add a type to a union, you first need to update all readers with the new schema, so that they know what to expect. Only once all readers are updated, the writers may start putting this new type in the records they generate.</li>
+
+<li>You can reorder fields in a record however you like. Although the fields are encoded in the order they are declared, the parser matches fields in the reader and writer schema by name, which is why no tag numbers are needed in Avro.</li>
+
+<li>Because fields are matched by name, changing the name of a field is tricky. You need to first update all <em>readers</em> of the data to use the new field name, while keeping the old name as an alias (since the name matching uses aliases from the reader&#8217;s schema). Then you can update the writer&#8217;s schema to use the new field name.</li>
+
+<li>You can add a field to a record, provided that you also give it a default value (e.g. <code>null</code> if the field&#8217;s type is a union with <code>null</code>). The default is necessary so that when a reader using the new schema parses a record written with the old schema (and hence lacking the field), it can fill in the default instead.</li>
+
+<li>Conversely, you can remove a field from a record, provided that it previously had a default value. (This is a good reason to give all your fields default values if possible.) This is so that when a reader using the <em>old</em> schema parses a record written with the <em>new</em> schema, it can fall back to the default.</li>
+</ul>
 
 <p>This leaves us with the problem of knowing the exact schema with which a given record was written. The best solution depends on the context in which your data is being used:</p>
 
@@ -166,7 +188,7 @@
 
 <h2 id='thrift'>Thrift</h2>
 
-<p>Thrift is a much bigger project than Avro and Protocol Buffers, as it&#8217;s not just a data serialization library, but also an entire RPC framework. It also has a somewhat different culture: whereas Avro and Protobuf standardize a single binary encoding, Thrift <a href='http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E'>embraces</a> a whole variety of different serialization formats (which it calls &#8220;protocols&#8221;).</p>
+<p>Thrift is a much bigger project than Avro or Protocol Buffers, as it&#8217;s not just a data serialization library, but also an entire RPC framework. It also has a somewhat different culture: whereas Avro and Protobuf standardize a single binary encoding, Thrift <a href='http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E'>embraces</a> a whole variety of different serialization formats (which it calls &#8220;protocols&#8221;).</p>
 
 <p>Indeed, Thrift has <a href='https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TJSONProtocol.html'>two</a> <a href='https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TSimpleJSONProtocol.html'>different</a> JSON encodings, and no fewer than three different binary encodings. (However, one of the binary encodings, DenseProtocol, is <a href='http://wiki.apache.org/thrift/LibraryFeatures'>only supported in the C++ implementation</a>; since we&#8217;re interested in cross-language serialization, I will focus on the other two.)</p>
 
@@ -180,7 +202,7 @@
 
 <p>The BinaryProtocol encoding is very straightforward, but also fairly wasteful (it takes 59 bytes to encode our example record):</p>
 <a href='/2012/12/binaryprotocol.png'><img height='269' src='/2012/12/binaryprotocol_small.png' width='550' /></a>
-<p>The CompactProtocol encoding is semantically equivalent, but using variable-length integers and bit packing to reduce the size to 34 bytes:</p>
+<p>The CompactProtocol encoding is semantically equivalent, but uses variable-length integers and bit packing to reduce the size to 34 bytes:</p>
 <a href='/2012/12/compactprotocol.png'><img height='276' src='/2012/12/compactprotocol_small.png' width='550' /></a>
 <p>As you can see, Thrift&#8217;s approach to schema evolution is the same as Protobuf&#8217;s: each field is manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding, which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than Protobuf&#8217;s repeated field approach, but otherwise the two are very similar.</p>
 
