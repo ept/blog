@@ -10,11 +10,172 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Mon, 08 Oct 2012 10:06:07 PDT</lastBuildDate>
+        <lastBuildDate>Wed, 05 Dec 2012 10:04:09 PST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
+        
+            <item>
+                <title>Schema evolution in Avro, Protocol Buffers and Thrift</title>
+                <link>http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html</link>
+                <comments>http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html#disqus_thread</comments>
+                <pubDate>Wed, 05 Dec 2012 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html</guid>
+                
+                <description><![CDATA[ So you have some data that you want to store in a file or send over the network. You may find yourself going through several phases of evolution: Using your programming language&#8217;s built-in serialization, such as Java serialization, Ruby&#8217;s marshal, or Python&#8217;s pickle. Or maybe you even invent your own... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>So you have some data that you want to store in a file or send over the network. You may find yourself going through several phases of evolution:</p>
+
+<ol>
+<li>Using your programming language&#8217;s built-in serialization, such as <a href='http://docs.oracle.com/javase/6/docs/platform/serialization/spec/serialTOC.html'>Java serialization</a>, Ruby&#8217;s <a href='http://www.ruby-doc.org/core-1.9.3/Marshal.html'>marshal</a>, or Python&#8217;s <a href='http://docs.python.org/3.3/library/pickle.html'>pickle</a>. Or maybe you even invent your own format.</li>
+
+<li>Then you realise that being locked into one programming language sucks, so you move to using a widely supported, language-agnostic format like JSON (or XML if you like to party like it&#8217;s 1999).</li>
+
+<li>Then you decide that JSON is too verbose and too slow to parse, you&#8217;re annoyed that it doesn&#8217;t differentiate integers from floating point, and think that you&#8217;d quite like binary strings as well as Unicode strings. So you invent some sort of binary format that&#8217;s kinda like JSON, but binary (<a href='http://msgpack.org/'>1</a>, <a href='http://bsonspec.org/'>2</a>, <a href='http://ubjson.org/'>3</a>, <a href='http://bjson.org/'>4</a>, <a href='http://kaijaeger.com/articles/introducing-bison-binary-interchange-standard.html'>5</a>, <a href='https://github.com/voldemort/voldemort/wiki/Binary-JSON-Serialization'>6</a>).</li>
+
+<li>Then you find that people are stuffing all sorts of random fields into their objects, using inconsistent types, and you&#8217;d quite like a <strong>schema</strong> and some <strong>documentation</strong>, thank you very much. Perhaps you&#8217;re also using a statically typed programming language and want to generate model classes from a schema. Also you realize that your binary JSON-lookalike actually isn&#8217;t all that compact, because you&#8217;re still storing field names over and over again; hey, if you had a schema, you could avoid storing objects&#8217; field names, and you could save some more bytes!</li>
+</ol>
+
+<p>Once you get to the fourth stage, your options are typically <a href='http://thrift.apache.org/'>Thrift</a>, <a href='http://code.google.com/p/protobuf/'>Protocol Buffers</a> or <a href='http://avro.apache.org/'>Avro</a>. All three provide efficient, cross-language serialization of data using a schema, and code generation for the Java folks.</p>
+
+<p>Plenty of comparisons have been written about them already (<a href='http://floatingsun.net/articles/thrift-vs-protocol-buffers/'>1</a>, <a href='http://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/'>2</a>, <a href='http://blog.mirthlab.com/2009/06/01/thrift-vs-protocol-bufffers-vs-json/'>3</a>, <a href='http://tech.puredanger.com/2011/05/27/serialization-comparison/'>4</a>). However, many posts overlook a detail that seems mundane at first, but is actually cruicial: <strong>What happens if the schema changes?</strong></p>
+
+<p>In real life, data is always in flux. The moment you think you have finalised a schema, someone will come up with a use case that wasn&#8217;t anticipated, and wants to &#8220;just quickly add a field&#8221;. Fortunately Thrift, Protobuf and Avro all support <strong>schema evolution</strong>: you can change the schema, you can have producers and consumers with different versions of the schema at the same time, and it all continues to work. That is an extremely valuable feature when you&#8217;re dealing with a big production system, because it allows you to update different components of the system independently, at different times, without worrying about compatibility.</p>
+
+<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are intesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
+
+<p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
+<div class='highlight'><pre><code class='js'><span class='p'>{</span>
+    <span class='s2'>&quot;userName&quot;</span><span class='o'>:</span> <span class='s2'>&quot;Martin&quot;</span><span class='p'>,</span>
+    <span class='s2'>&quot;favouriteNumber&quot;</span><span class='o'>:</span> <span class='mi'>1337</span><span class='p'>,</span>
+    <span class='s2'>&quot;interests&quot;</span><span class='o'>:</span> <span class='p'>[</span><span class='s2'>&quot;daydreaming&quot;</span><span class='p'>,</span> <span class='s2'>&quot;hacking&quot;</span><span class='p'>]</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
+
+<h2 id='protocol_buffers'>Protocol Buffers</h2>
+
+<p>The Protocol Buffers schema for the person object might look something like this:</p>
+
+<pre><code>message Person {
+    required string user_name        = 1;
+    optional int64  favourite_number = 2;
+    repeated string interests        = 3;
+}</code></pre>
+
+<p>When we <a href='https://developers.google.com/protocol-buffers/docs/encoding'>encode</a> the data above using this schema, it uses 33 bytes, as follows:</p>
+<a href='http://martin.kleppmann.com/2012/12/protobuf.png'><img height='230' src='http://martin.kleppmann.com/2012/12/protobuf_small.png' width='550' /></a>
+<p>Look exactly at how the binary representation is structured, byte by byte. The person record is just the concatentation of its fields. Each field starts with a byte that indicates its tag number (the numbers <code>1</code>, <code>2</code>, <code>3</code> in the schema above), and the type of the field. If the first byte of a field indicates that the field is a string, it is followed by the number of bytes in the string, and then the UTF-8 encoding of the string. If the first byte indicates that the field is an integer, a variable-length encoding of the number follows. There is no array type, but a tag number can appear multiple times to represent a multi-valued field.</p>
+
+<p>This encoding has consequences for schema evolution:</p>
+
+<ul>
+<li>There is no difference in the encoding between <code>optional</code>, <code>required</code> and <code>repeated</code> fields (except for the number of times the tag number can appear). This means that you can change a field from <code>optional</code> to <code>repeated</code> and vice versa (if the parser is expecting an <code>optional</code> field but sees the same tag number multiple times in one record, it discards all but the last value). <code>required</code> has an additional validation check, so if you change it, you risk runtime errors (if the sender of a message thinks that it&#8217;s optional, but the recipient thinks that it&#8217;s required).</li>
+
+<li>An <code>optional</code> field without a value, or a <code>repeated</code> field with zero values, does not appear in the encoded data at all &#8212; the field with that tag number is simply absent. Thus, it is safe to remove that kind of field from the schema. However, you must never reuse the tag number for another field in future, because you may still have data stored that uses that tag for the field you deleted.</li>
+
+<li>You can add a field to your record, as long as it is given a new tag number. If the Protobuf parser parser sees a tag number that is not defined in its version of the schema, it has no way of knowing what that field is called. But it <em>does</em> roughly know what type it is, because a 3-bit type code is included in the first byte of the field. This means that even though the parser can&#8217;t exactly interpret the field, it can figure out how many bytes it needs to skip in order to find the next field in the record.</li>
+
+<li>You can rename fields, because field names don&#8217;t exist in the binary serialization, but you can never change a tag number.</li>
+</ul>
+
+<p>This approach of using a tag number to represent each field is simple and effective. But as we&#8217;ll see in a minute, it&#8217;s not the only way of doing things.</p>
+
+<h2 id='avro'>Avro</h2>
+
+<p>Avro schemas can be written in two ways, either in a JSON format:</p>
+<div class='highlight'><pre><code class='js'><span class='p'>{</span>
+    <span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='s2'>&quot;record&quot;</span><span class='p'>,</span>
+    <span class='s2'>&quot;name&quot;</span><span class='o'>:</span> <span class='s2'>&quot;Person&quot;</span><span class='p'>,</span>
+    <span class='s2'>&quot;fields&quot;</span><span class='o'>:</span> <span class='p'>[</span>
+        <span class='p'>{</span><span class='s2'>&quot;name&quot;</span><span class='o'>:</span> <span class='s2'>&quot;userName&quot;</span><span class='p'>,</span>        <span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='s2'>&quot;string&quot;</span><span class='p'>},</span>
+        <span class='p'>{</span><span class='s2'>&quot;name&quot;</span><span class='o'>:</span> <span class='s2'>&quot;favouriteNumber&quot;</span><span class='p'>,</span> <span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='p'>[</span><span class='s2'>&quot;null&quot;</span><span class='p'>,</span> <span class='s2'>&quot;long&quot;</span><span class='p'>]},</span>
+        <span class='p'>{</span><span class='s2'>&quot;name&quot;</span><span class='o'>:</span> <span class='s2'>&quot;interests&quot;</span><span class='p'>,</span>       <span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='p'>{</span><span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='s2'>&quot;array&quot;</span><span class='p'>,</span> <span class='s2'>&quot;items&quot;</span><span class='o'>:</span> <span class='s2'>&quot;string&quot;</span><span class='p'>}}</span>
+    <span class='p'>]</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+<p>&#8230;or in an IDL:</p>
+
+<pre><code>record Person {
+    string               userName;
+    union { null, long } favouriteNumber;
+    array&lt;string&gt;        interests;
+}</code></pre>
+
+<p>Notice that there are no tag numbers in the schema! So how does it work?</p>
+
+<p>Here is the same example data <a href='http://avro.apache.org/docs/current/spec.html'>encoded</a> in just 32 bytes:</p>
+<a href='http://martin.kleppmann.com/2012/12/avro.png'><img height='259' src='http://martin.kleppmann.com/2012/12/avro_small.png' width='550' /></a>
+<p>Strings are just a length prefix followed by UTF-8 bytes, but there&#8217;s nothing in the bytestream that tells you that it is a string. It could just as well be a variable-length integer, or something else entirely. The only way you can parse this binary data is by reading it alongside the schema, and the schema tells you what type to expect next. You need to have the <strong>exact same version</strong> of the schema as the writer of the data used. If you have the wrong schema, the parser will not be able to make head or tail of the binary data.</p>
+
+<p>So how does Avro support schema evolution? Well, although you need to know the exact schema with which the data was written (the writer&#8217;s schema), that doesn&#8217;t have to be the same as the schema the consumer is expecting (the reader&#8217;s schema). You can actually give <em>two different</em> schemas to the Avro parser, and it uses <a href='http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html'>resolution rules</a> to translate data from the writer schema into the reader schema.</p>
+
+<p>This has some interesting consequences for schema evolution:</p>
+
+<ul>
+<li>The Avro encoding doesn&#8217;t have an indicator to say which field is next; it just encodes one field after another, in the order they appear in the schema. Since there is no way for the parser to know that a field has been skipped, there is no such thing as an optional field in Avro. Instead, if you want to be able to leave out a value, you can use a union type, like <code>union { null, long }</code> above. This is encoded as a byte to tell the parser which of the possible union types to use, followed by the value itself. By making a union with the <code>null</code> type (which is simply encoded as zero bytes) you can make a field optional.</li>
+
+<li>Union types are powerful, but you must take care when changing them. If you want to add a type to a union, you first need to update all readers with the new schema, so that they know what to expect. Only once all readers are updated, the writers may start putting this new type in the records they generate.</li>
+
+<li>You can reorder fields in a record however you like. Although the fields are encoded in the order they are declared, the parser matches fields in the reader and writer schema by name, which is why no tag numbers are needed in Avro.</li>
+
+<li>Because fields are matched by name, changing the name of a field is tricky. You need to first update all <em>readers</em> of the data to use the new field name, while keeping the old name as an alias (since the name matching uses aliases from the reader&#8217;s schema). Then you can update the writer&#8217;s schema to use the new field name.</li>
+
+<li>You can add a field to a record, provided that you also give it a default value (e.g. <code>null</code> if the field&#8217;s type is a union with <code>null</code>). The default is necessary so that when a reader using the new schema parses a record written with the old schema (and hence lacking the field), it can fill in the default instead.</li>
+
+<li>Conversely, you can remove a field from a record, provided that it previously had a default value. (This is a good reason to give all your fields default values if possible.) This is so that when a reader using the <em>old</em> schema parses a record written with the <em>new</em> schema, it can fall back to the default.</li>
+</ul>
+
+<p>This leaves us with the problem of knowing the exact schema with which a given record was written. The best solution depends on the context in which your data is being used:</p>
+
+<ul>
+<li>In Hadoop you typically have large files containing millions of records, all encoded with the same schema. <a href='http://avro.apache.org/docs/1.7.2/spec.html#Object+Container+Files'>Object container files</a> handle this case: they just include the schema once at the beginning of the file, and the rest of the file can be decoded with that schema.</li>
+
+<li>In an RPC context, it&#8217;s probably too much overhead to send the schema with every request and response. But if your RPC framework uses long-lived connections, it can negotiate the schema once at the start of the connection, and amortize that overhead over many requests.</li>
+
+<li>If you&#8217;re storing records in a database one-by-one, you may end up with different schema versions written at different times, and so you have to annotate each record with its schema version. If storing the schema itself is too much overhead, you can use a <a href='http://avro.apache.org/docs/1.7.2/spec.html#Schema+Fingerprints'>hash</a> of the schema, or a sequential schema version number. You then need a <a href='https://issues.apache.org/jira/browse/AVRO-1124'>schema registry</a> where you can look up the exact schema definition for a given version number.</li>
+</ul>
+
+<p>One way of looking at it: in Protocol Buffers, every field in a record is tagged, whereas in Avro, the entire record, file or network connection is tagged with a schema version.</p>
+
+<p>At first glance it may seem that Avro&#8217;s approach suffers from greater complexity, because you need to go to the additional effort of distributing schemas. However, I am beginning to think that Avro&#8217;s approach also has some distinct advantages:</p>
+
+<ul>
+<li>Object container files are wonderfully self-describing: the writer schema embedded in the file contains all the field names and types, and even documentation strings (if the author of the schema bothered to write some). This means you can load these files directly into interactive tools like <a href='http://pig.apache.org/'>Pig</a>, and it Just Works™ without any configuration.</li>
+
+<li>As Avro schemas are JSON, you can add your own metadata to them, e.g. describing application-level semantics for a field. And as you distribute schemas, that metadata automatically gets distributed too.</li>
+
+<li>A schema registry is probably a good thing in any case, serving as <a href='https://github.com/ept/avrodoc'>documentation</a> and helping you to find and reuse data. And because you simply can&#8217;t parse Avro data without the schema, the schema registry is guaranteed to be up-to-date. Of course you can set up a protobuf schema registry too, but since it&#8217;s not <em>required</em> for operation, it&#8217;ll end up being on a best-effort basis.</li>
+</ul>
+
+<h2 id='thrift'>Thrift</h2>
+
+<p>Thrift is a much bigger project than Avro or Protocol Buffers, as it&#8217;s not just a data serialization library, but also an entire RPC framework. It also has a somewhat different culture: whereas Avro and Protobuf standardize a single binary encoding, Thrift <a href='http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E'>embraces</a> a whole variety of different serialization formats (which it calls &#8220;protocols&#8221;).</p>
+
+<p>Indeed, Thrift has <a href='https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TJSONProtocol.html'>two</a> <a href='https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TSimpleJSONProtocol.html'>different</a> JSON encodings, and no fewer than three different binary encodings. (However, one of the binary encodings, DenseProtocol, is <a href='http://wiki.apache.org/thrift/LibraryFeatures'>only supported in the C++ implementation</a>; since we&#8217;re interested in cross-language serialization, I will focus on the other two.)</p>
+
+<p>All the encodings share the same schema definition, in Thrift IDL:</p>
+
+<pre><code>struct Person {
+  1: string       userName,
+  2: optional i64 favouriteNumber,
+  3: list&lt;string&gt; interests
+}</code></pre>
+
+<p>The BinaryProtocol encoding is very straightforward, but also fairly wasteful (it takes 59 bytes to encode our example record):</p>
+<a href='http://martin.kleppmann.com/2012/12/binaryprotocol.png'><img height='269' src='http://martin.kleppmann.com/2012/12/binaryprotocol_small.png' width='550' /></a>
+<p>The CompactProtocol encoding is semantically equivalent, but uses variable-length integers and bit packing to reduce the size to 34 bytes:</p>
+<a href='http://martin.kleppmann.com/2012/12/compactprotocol.png'><img height='276' src='http://martin.kleppmann.com/2012/12/compactprotocol_small.png' width='550' /></a>
+<p>As you can see, Thrift&#8217;s approach to schema evolution is the same as Protobuf&#8217;s: each field is manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding, which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than Protobuf&#8217;s repeated field approach, but otherwise the two are very similar.</p>
+
+<p>In terms of philosophy, the libraries are very different though. Thrift favours the &#8220;one-stop shop&#8221; style that gives you an entire integrated RPC framework and many choices (with <a href='http://wiki.apache.org/thrift/LibraryFeatures'>varying cross-language support</a>), whereas Protocol Buffers and Avro appear to follow much more of a <a href='http://www.faqs.org/docs/artu/ch01s06.html'>&#8220;do one thing and do it well&#8221;</a> style.</p>
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>The complexity of user experience</title>
@@ -1260,39 +1421,6 @@ how much value YC brings. So that concern is irrelevant here.</p>
 <a name='intuition-footnote'>
 </a>
 <p>[1] I&#8217;m not sure what each individual pixel represents. In mathematical terms, a picture is a function mapping from 2D space to colour, and a bitmap approximates this function by sampling at regularly spaced values of the input. Along that line of thinking, the mind is probably a function mapping from sensory inputs and memories to explanations and actions (or something along those lines — I&#8217;m not a neuroscientist). This function can be represented as lots of individual data points (&#8220;London &amp; lunchtime &amp; hunger &amp; last had Falafel 10 days ago → go to the King of Falafel&#8221;), which is bitmap-like, or in some systematic manner (&#8220;I like to eat falafel for lunch. For example, in London, the King of Falafel is good.&#8221;), which is vector-like, omitting redundant information (lunchtime and hunger are strongly correlated, so mentioning both is fairly redundant) and emphasising structure or dependencies (the King of Falafel only exists in London). However, as you can see, his only vaguely makes sense. The bitmap/vector analogy is itself an example of a piece of intuition that I&#8217;m trying to communicate to you right now.</p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Good things are hard to articulate</title>
-                <link>http://martin.kleppmann.com/2010/08/31/good-things-are-hard-to-articulate.html</link>
-                <comments>http://martin.kleppmann.com/2010/08/31/good-things-are-hard-to-articulate.html#disqus_thread</comments>
-                <pubDate>Tue, 31 Aug 2010 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=394</guid>
-                
-                <description><![CDATA[ If you have a stone in your shoe, it&#8217;s easy to articulate what is wrong (&#8220;something is hurting my foot!&#8221;). But if you don&#8217;t have a stone in your shoe, you don&#8217;t go around rejoicing with every step. If you have just removed a stone, you may be pleased for... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>If you have a stone in your shoe, it&#8217;s easy to articulate what is wrong (&#8220;something is hurting my foot!&#8221;). But if you don&#8217;t have a stone in your shoe, you don&#8217;t go around rejoicing with every step. If you have just removed a stone, you may be pleased for a few seconds to have removed the irritation, but things very quickly return to normal.</p>
-
-<p>The bad things keep sticking around and irritating us, whereas the good things are quickly taken for granted. The bad things are often easy to describe, whereas the good things are sometimes just the absence of a bad thing &#8212; the absence of some irritation.</p>
-
-<p>This is a fundamental asymmetry, and it has lots of implications, big and small. For example, a big implication is the development of human society and technology. Because we are more prone to noticing bad things, and bad things keep bugging us, we try to fix bad things and make them go away. So humans invented tools (to stop hurting their fingers), agriculture (to stop hunger and laborious hunting/gathering), medicine (to stop their family members from dying), writing (to stop forgetfulness) and the internet (to stop the slowness of paper communication). Over history, humans have continuously taken stuff that is bad, and tried to make it better. Now that we have all these good things (tools, agriculture, medicine, writing, internet), we mostly take them for granted and don&#8217;t think about them any more.</p>
-
-<p>(Some things that humans invented turned out to have bad side-effects besides their intended good effect. Take weapons as an example: intended to stop the hungry neighbours from stealing our food, but the idea got taken a bit too far. But that&#8217;s a different story.)</p>
-
-<p>There are also other, less grandiose consequences of bad things being more noticeable. For example, when I was writing music and song lyrics, I found it comparatively easy to write about themes like conflict, struggle and sadness; writing about good things, however, was much harder. It would often just sound trite, banal and uninteresting.</p>
-
-<p>How do you articulate those things that are good? Part of the point of this very essay is to see if I can write about things being good without just being incredibly boring. And what do I do? Complain about the fact that it&#8217;s hard to express things that are good. I complain. I am irritated that bad things are easier to write about than good things. And so I write about that irritation, thereby locking myself in a self-referential loop.</p>
-
-<p>How annoying. Let&#8217;s talk about the good things again.</p>
-
-<p>An observation. If bad things are much more noticeable than good things, that means that it&#8217;s very easy to lose sight of all the good things. In fact, it probably means that we are surrounded by lots of wonderful things that we&#8217;ve simply forgotten about. It might even be that the vast majority of things around us are good, and we are just failing to notice them!</p>
-
-<p>We need to consciously remind ourselves of the good things from time to time, to avoid getting too bogged down in the bad things. That cannot mean getting complacent; it just means enjoying and appreciating life.</p>
-
-<p>For example, I am writing this essay on a mobile phone (good) connected to the internet (good) while sitting in the sunshine (good) in a park (good) in San Francisco (good). I am wearing comfortable clothes (good) and don&#8217;t have any stones in my shoes (good). I live in a peaceful age (good) in a peaceful society (good). I am educated (good), healthy (good), don&#8217;t need to worry about being able to afford the rent (good) and I have a wonderful family (good). I look forward to sending this essay to Rita (good) to see what she thinks. (Hopefully it&#8217;s not too bad.)</p>
                 ]]></content:encoded>
             </item>
         
