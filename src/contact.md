@@ -5,17 +5,20 @@ title: "About/Contact"
 
 <p><img src="/2007/07/martin_kleppmann.jpg" alt="Photo of Martin Kleppmann"
 width="170" height="237" style="float: right; padding: 0 0 20px 20px;"/>
-My name is Martin Kleppmann. I am probably best described by the snippets of my digital identity
+My name is Martin Kleppmann. I am probably best described by the snippets of digital identity
 that are scattered across the interwebs:</p>
 
 <ul>
 <li><a rel="me" href="http://martin.kleppmann.com/">My Blog</a></li>
 <li><a rel="co-worker" href="http://rapportive.com/">My second startup, Rapportive</a>
-    (with <a rel="co-worker" href="http://www.samstokes.co.uk/">Sam Stokes</a> and
-    <a rel="co-worker" href="http://twitter.com/rahulvohra">Rahul Vohra</a>)</li>
+    (co-founded with <a rel="co-worker" href="http://www.samstokes.co.uk/">Sam Stokes</a> and
+    <a rel="co-worker" href="http://twitter.com/rahulvohra">Rahul Vohra</a>),
+    <a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a> by
+    <a rel="co-worker" href="http://www.linkedin.com/">LinkedIn</a> in 2012</li>
 <li><a rel="co-worker" href="http://go-test.it">My first startup, Go Test It</a>, acquired by
     <a rel="co-worker" href="http://www.red-gate.com">Red Gate Software</a> in November 2009</li>
 <li><a rel="me" href="http://twitter.com/martinkl">@martinkl on Twitter</a></li>
+<li><a rel="me" href="https://alpha.app.net/martinkl">@martinkl on ADN</a></li>
 <li><a rel="me" href="http://github.com/ept">My Open Source projects on Github</a></li>
 <li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
 <li><a rel="me" href="http://www.slideshare.net/martinkleppmann">My presentations on SlideShare</a></li>
@@ -25,22 +28,9 @@ that are scattered across the interwebs:</p>
 <li><a rel="me" href="http://www.facebook.com/martinkl">My Facebook profile</a></li>
 <li><a rel="me" href="https://plus.google.com/106672307997469524646/about">My Google+ profile</a></li>
 <li><a rel="me" href="http://www.last.fm/user/mk428">My music listening profile on Last.fm</a></li>
-<li><a rel="me" href="http://plancast.com/mk">My upcoming events on Plancast</a></li>
-<li><a rel="me" href="http://delicious.com/martinkl">My bookmarks on Delicious</a></li>
 </ul>
 
-<p>If you want to contact me personally, you can write to me at
-<a href="mailto:yes-no-cancel@kleppmann.de">yes-no-cancel@kleppmann.de</a>.</p>
-
-Postcards etc.:
-
-Martin Kleppmann  
-Rapportive, Inc.  
-548 Market St # 92225  
-San Francisco  
-CA 94104  
-United States
-
+<p>Email: firstname at lastname dot com.</p>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
     style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
