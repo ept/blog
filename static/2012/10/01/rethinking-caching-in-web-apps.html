@@ -69,12 +69,12 @@
 <h2 id='an_example'>An example</h2>
 
 <p>To illustrate, consider the clichéd Rails blogging engine example:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
   <span class='n'>attr_accessible</span> <span class='ss'>:title</span><span class='p'>,</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
   <span class='n'>has_many</span> <span class='ss'>:comments</span>
 <span class='k'>end</span>
 
-<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
   <span class='n'>attr_accessible</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
   <span class='n'>belongs_to</span> <span class='ss'>:post</span>
 <span class='k'>end</span>
@@ -90,9 +90,8 @@
 <span class='k'>end</span>
 
 <span class='c1'># posts/show.html.erb:</span>
-</code></pre>
-</div>
-<p><div class='highlight'><pre><code class='rhtml'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
+</code></pre></div>
+<p><div class='highlight'><pre><code class='html+erb'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
 <span class='nt'>&lt;p</span> <span class='na'>class=</span><span class='s'>&quot;author&quot;</span><span class='nt'>&gt;</span>By <span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>author</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/p&gt;</span>
 <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;content&quot;</span><span class='nt'>&gt;</span>
   <span class='cp'>&lt;%=</span> <span class='n'>simple_format</span><span class='p'>(</span><span class='vi'>@post</span><span class='o'>.</span><span class='n'>content</span><span class='p'>)</span> <span class='cp'>%&gt;</span>
@@ -106,8 +105,7 @@
     <span class='nt'>&lt;/li&gt;</span>
   <span class='cp'>&lt;%</span> <span class='k'>end</span> <span class='cp'>%&gt;</span>
 <span class='nt'>&lt;/ul&gt;</span>
-</code></pre>
-</div></p>
+</code></pre></div></p>
 
 <p>Pretty good code by various standards, but it has always irked me a bit that I can&#8217;t see where the network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code> in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code> internally &#8211; unless the same query was already made recently, and ActiveRecord cached the result. And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the original post? Who knows.</p>
 
@@ -258,6 +256,11 @@
 <p><em>Thanks to Nathan Marz, Pete Warden, Conrad Irwin, Rahul Vohra and Sam Stokes for feedback on drafts of this post.</em></p>
 
             
+            <div class="hackernews">
+                Join the discussion about this article
+                <a href="http://news.ycombinator.com/item?id=4599685" target="_blank">on Hacker News</a>.
+            </div>
+            
 
             <div id="disqus_thread"></div>
         </div>
@@ -324,6 +327,8 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -331,8 +336,6 @@
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

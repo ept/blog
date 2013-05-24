@@ -81,8 +81,7 @@
 <span class='go'>True</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
 <span class='go'>True</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>But that&#8217;s not the end yet. I have <a href='http://nltk.sourceforge.net/'>NLTK</a> 0.9.4 installed, and watch how truth is reversed if I simply import the NLTK package:</p>
 <div class='highlight'><pre><code class='pycon'><span class='gp'>&gt;&gt;&gt; </span><span class='kn'>import</span> <span class='nn'>nltk</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span> <span class='o'>&gt;</span> <span class='mf'>2.0</span>
@@ -101,8 +100,7 @@
 <span class='go'>False</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
 <span class='go'>False</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>I&#8217;m filing bugs about this, but I do find this quite entertaining in a &#8216;oh-my-God-I-always-believed-Python-was-a-well-behaved-language&#8217; sort of way.</p>
 
 <p><strong>Edit:</strong> Edward Loper from NLTK gave <a href='https://sourceforge.net/tracker/?func=detail&amp;atid=400896&amp;aid=2089412&amp;group_id=30982'>an explanation</a> why this is the case &#8211; it&#8217;s not because of NLTK, but because of Python&#8217;s internal handling of the comparison operator on floating-point numbers:</p>
@@ -114,8 +112,7 @@ following:</blockquote><div class='highlight'><pre><code class='pycon'><span cla
 <span class='go'>-1</span>
 <span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;.1&#39;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>__cmp__</span><span class='p'>(</span><span class='o'>.</span><span class='mi'>3</span><span class='p'>)</span>
 <span class='go'>NotImplemented</span>
-</code></pre>
-</div><blockquote><p>Since Decimal's
+</code></pre></div><blockquote><p>Since Decimal's
 <code>__cmp__</code> method returns
 <code>NotImplemented</code>, python falls back on using
 <code>.3</code>'s
@@ -196,6 +193,8 @@ the pointer address of the
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -203,8 +202,6 @@ the pointer address of the
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

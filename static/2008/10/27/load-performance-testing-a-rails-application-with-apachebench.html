@@ -143,8 +143,7 @@ sleep 1
 <span class='k'>done</span> <span class='o'>)</span> &amp;
 <span class='nb'>echo</span> <span class='nv'>$!</span> &gt; /tmp/loadavg.pid
 wc -l <span class='nv'>$LOGFILE</span> | awk <span class='s1'>&#39;{print $1}&#39;</span> &gt; /tmp/skip_log_lines
-</code></pre>
-</div>
+</code></pre></div>
 <p>And <strong>after-test.sh</strong> should be run when the test has ended:</p>
 <div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/sh</span>
 <span class='nb'>kill</span> <span class='sb'>`</span>cat /tmp/loadavg.pid<span class='sb'>`</span>
@@ -154,8 +153,7 @@ tail -n +<span class='sb'>`</span>expr <span class='nv'>$skip</span> + 1<span cl
 <span class='s1'>&#39;^Completed in&#39;</span> | <span class='se'>\\</span>
 awk <span class='s1'>&#39;{print $3 &quot;,&quot; $8 &quot;,&quot; $12 &quot;,&quot; $17}&#39;</span> &gt;&gt; /tmp/requests.csv
 rm -f /tmp/loadavg.pid /tmp/skip_log_lines
-</code></pre>
-</div>
+</code></pre></div>
 <p>As you can see, it filters the processing times reported by the server out of the logfile and formats them as CSV for post-processing in your favourite spreadsheet application.</p>
 
 <p>To execute the test (potentially with several processes at the same time), I ran something like the following on an EC2 instance:</p>
@@ -179,8 +177,7 @@ awk -F <span class='err'>&#39;</span><span class='se'>\&#39;</span> <span class=
 <span class='k'>done</span>
 <span class='nb'>echo</span> <span class='s2'>&quot;dtime,ttime,wait,test&quot;</span> &gt; bench.csv
 cat <span class='nv'>$TESTS</span> &gt;&gt; bench.csv
-</code></pre>
-</div>
+</code></pre></div>
 <p>Then copying and aggregating all the logs onto my machine for making pretty graphs:</p>
 <div class='highlight'><pre><code class='bash'><span class='nv'>TEST</span><span class='o'>=</span>test7
 <span class='nv'>CLIENTS</span><span class='o'>=</span><span class='s2'>&quot;ec2-75-101-204-213&quot;</span>
@@ -198,8 +195,7 @@ paste -d <span class='s1'>&#39;,&#39;</span> loadavg-prod1.csv loadavg-prod2.csv
 cat requests-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv &gt; <span class='nv'>$TEST</span>/requests.csv
 cat client*.csv &gt; <span class='nv'>$TEST</span>/clients.csv
 mv loadavg-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv requests-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv client*.csv <span class='nv'>$TEST</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>Obviously these scripts are still pretty rough around the edges, but they did the job of being simple and telling me what I wanted to know.</p>
 
             
@@ -269,6 +265,8 @@ mv loadavg-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv reques
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -276,8 +274,6 @@ mv loadavg-prod<span class='se'>\[</span>12<span class='se'>\]</span>.csv reques
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

@@ -52,6 +52,219 @@
             
     <div class="hentry full p1 post publish">
         <h1 class="entry-title full-title">
+            <a href="/2013/05/24/improving-security-of-ssh-private-keys.html" rel="bookmark">Improving the security of your SSH private key files</a>
+        </h1>
+
+        <div class="entry-content full-content">
+            <p>Ever wondered how those key files in <code>~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
+
+<p>As you probably do too, I use ssh many times every single day &#8212; every <code>git fetch</code> and <code>git push</code>, every deploy, every login to a server. And recently I realised that to me, ssh was just some crypto voodoo that I had become accustomed to using, but I didn&#8217;t really understand. That&#8217;s a shame &#8212; I like to know how stuff works. So I went on a little journey of discovery, and here are some of the things I found.</p>
+
+<p>When you start reading about &#8220;crypto stuff&#8221;, you very quickly get buried in an avalanche of acronyms. I will briefly mention the acronyms as we go along; they don&#8217;t help you understand the concepts, but they are useful in case you want to Google for further details.</p>
+
+<p>Quick recap: If you&#8217;ve ever used public key authentication, you probably have a file <code>~/.ssh/id_rsa</code> or <code>~/.ssh/id_dsa</code> in your home directory. This is your RSA/DSA private key, and <code>~/.ssh/id_rsa.pub</code> or <code>~/.ssh/id_dsa.pub</code> is its public key counterpart. Any machine you want to log in to needs to have your public key in <code>~/.ssh/authorized_keys</code> on that machine. When you try to log in, your SSH client uses a digital signature to prove that you have the private key; the server checks that the signature is valid, and that the public key is authorized for your username; if all is well, you are granted access.</p>
+
+<p>So what is actually inside this private key file?</p>
+
+<h2 id='the_unencrypted_private_key_format'>The unencrypted private key format</h2>
+
+<p>Everyone recommends that you protect your private key with a passphrase (otherwise anybody who steals the file from you can log into everything you have access to). If you leave the passphrase blank, the key is not encrypted. Let&#8217;s look at this unencrypted format first, and consider passphrase protection later.</p>
+
+<p>A ssh private key file typically looks something like this:</p>
+
+<pre><code>-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEArCQG213utzqE5YVjTVF5exGRCkE9OuM7LCp/FOuPdoHrFUXk
+y2MQcwf29J3A4i8zxpES9RdSEU6iIEsow98wIi0x1/Lnfx6jG5Y0/iQsG1NRlNCC
+aydGvGaC+PwwWiwYRc7PtBgV4KOAVXMZdMB5nFRaekQ1ksdH/360KCGgljPtzTNl
+09e97QBwHFIZ3ea5Eih/HireTrRSnvF+ywmwuxX4ubDr0ZeSceuF2S5WLXH2+TV0
+   ... etc ... lots of base64 blah blah ...
+-----END RSA PRIVATE KEY-----</code></pre>
+
+<p>The private key is an <a href='http://en.wikipedia.org/wiki/ASN.1'>ASN.1</a> data structure, serialized to a byte string using <a href='http://en.wikipedia.org/wiki/X.690#DER_encoding'>DER</a>, and then <a href='http://tools.ietf.org/html/rfc4648'>Base64</a>-encoded. ASN.1 is roughly comparable to JSON (it supports various data types such as integers, booleans, strings and lists/sequences that can be nested in a tree structure). It&#8217;s very widely used for cryptographic purposes, but it has somehow fallen out of fashion with the web generation (I don&#8217;t know why, it seems like a pretty decent format).</p>
+
+<p>To look inside, let&#8217;s generate a fake RSA key without passphrase using <a href='http://www.openbsd.org/cgi-bin/man.cgi?query=ssh-keygen&amp;sektion=1'>ssh-keygen</a>, and then decode it using <a href='http://www.openssl.org/docs/apps/asn1parse.html'>asn1parse</a>:</p>
+
+<pre><code>$ ssh-keygen -t rsa -N &#39;&#39; -f test_rsa_key
+$ openssl asn1parse -in test_rsa_key
+    0:d=0  hl=4 l=1189 cons: SEQUENCE
+    4:d=1  hl=2 l=   1 prim: INTEGER           :00
+    7:d=1  hl=4 l= 257 prim: INTEGER           :C36EB2429D429C7768AD9D879F98C...
+  268:d=1  hl=2 l=   3 prim: INTEGER           :010001
+  273:d=1  hl=4 l= 257 prim: INTEGER           :A27759F60AEA1F4D1D56878901E27...
+  534:d=1  hl=3 l= 129 prim: INTEGER           :F9D23EF31A387694F03AD0D050265...
+  666:d=1  hl=3 l= 129 prim: INTEGER           :C84415C26A468934F1037F99B6D14...
+  798:d=1  hl=3 l= 129 prim: INTEGER           :D0ACED4635B5CA5FB896F88BB9177...
+  930:d=1  hl=3 l= 128 prim: INTEGER           :511810DF9AFD590E11126397310A6...
+ 1061:d=1  hl=3 l= 129 prim: INTEGER           :E3A296AE14E7CAF32F7E493FDF474...</code></pre>
+
+<p>Alternatively, you can paste the Base64 string into Lapo Luchini&#8217;s excellent <a href='http://lapo.it/asn1js/'>JavaScript ASN.1 decoder</a>. You can see that ASN.1 structure is quite simple: a sequence of nine integers. Their meaning is defined in <a href='http://tools.ietf.org/html/rfc2313#section-7.2'>RFC2313</a>. The first integer is a version number (0), and the third number is quite small (65537) &#8211; the public exponent <em>e</em>. The two important numbers are the 2048-bit integers that appear second and fourth in the sequence: the RSA modulus <em>n</em>, and the private exponent <em>d</em>. These numbers are used directly in the <a href='http://en.wikipedia.org/wiki/RSA_%28algorithm%29'>RSA algorithm</a>. The remaining five numbers can be derived from <em>n</em> and <em>d</em>, and are only cached in the key file to speed up certain operations.</p>
+
+<p>DSA keys are similar, a <a href='http://blog.ngas.ch/archives/2008/10/23/asn_1_for_dsa_public_and_private_keys/index.html'>sequence of six integers</a>:</p>
+
+<pre><code>$ ssh-keygen -t dsa -N &#39;&#39; -f test_dsa_key
+$ openssl asn1parse -in test_dsa_key
+    0:d=0  hl=4 l= 444 cons: SEQUENCE
+    4:d=1  hl=2 l=   1 prim: INTEGER           :00
+    7:d=1  hl=3 l= 129 prim: INTEGER           :E497DFBFB5610906D18BCFB4C3CCD...
+  139:d=1  hl=2 l=  21 prim: INTEGER           :CF2478A96A941FB440C38A86F22CF...
+  162:d=1  hl=3 l= 129 prim: INTEGER           :83218C0CA49BA8F11BE40EE1A7C72...
+  294:d=1  hl=3 l= 128 prim: INTEGER           :16953EA4012988E914B466B9C37CB...
+  425:d=1  hl=2 l=  21 prim: INTEGER           :89A356E922688EDEB1D388258C825...</code></pre>
+
+<h2 id='passphraseprotected_keys'>Passphrase-protected keys</h2>
+
+<p>Next, in order to make life harder for an attacker who manages to steal your private key file, you protect it with a passphrase. How does this actually work?</p>
+
+<pre><code>$ ssh-keygen -t rsa -N &#39;super secret passphrase&#39; -f test_rsa_key
+$ cat test_rsa_key
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,D54228DB5838E32589695E83A22595C7
+
+3+Mz0A4wqbMuyzrvBIHx1HNc2ZUZU2cPPRagDc3M+rv+XnGJ6PpThbOeMawz4Cbu
+lQX/Ahbx+UadJZOFrTx8aEWyZoI0ltBh9O5+ODov+vc25Hia3jtayE51McVWwSXg
+wYeg2L6U7iZBk78yg+sIKFVijxiWnpA7W2dj2B9QV0X3ILQPxbU/cRAVTd7AVrKT
+    ... etc ...
+-----END RSA PRIVATE KEY-----</code></pre>
+
+<p>We&#8217;ve gained two header lines, and if you try to parse that Base64 text, you&#8217;ll find it&#8217;s no longer valid ASN.1. That&#8217;s because the entire ASN.1 structure we saw above has been encrypted, and the Base64-encoded text is the output of the encryption. The header tells us the encryption algorithm that was used: <a href='http://en.wikipedia.org/wiki/Advanced_Encryption_Standard'>AES-128</a> in <a href='http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29'>CBC mode</a>. The 128-bit hex string in the <code>DEK-Info</code> header is the <a href='http://en.wikipedia.org/wiki/Initialization_vector'>initialization vector</a> (IV) for the cipher. This is pretty standard stuff; all common crypto libraries can handle it.</p>
+
+<p>But how do you get from the passphrase to the AES encryption key? I couldn&#8217;t find it documented anywhere, so I had to dig through the OpenSSL source to find it:</p>
+
+<ol>
+<li>Append the first 8 bytes of the IV to the passphrase, without a separator (serves as a salt).</li>
+
+<li>Take the MD5 hash of the resulting string (once).</li>
+</ol>
+
+<p>That&#8217;s it. To prove it, let&#8217;s decrypt the private key manually (using the IV/salt from the <code>DEK-Info</code> header above):</p>
+
+<pre><code>$ tail -n +4 test_rsa_key | grep -v &#39;END &#39; | base64 -D |    # get just the binary blob
+  openssl aes-128-cbc -d -iv D54228DB5838E32589695E83A22595C7 -K $(
+    ruby -rdigest/md5 -e &#39;puts Digest::MD5.hexdigest([&quot;super secret passphrase&quot;,0xD5,0x42,0x28,0xDB,0x58,0x38,0xE3,0x25].pack(&quot;a*cccccccc&quot;))&#39;
+  ) |
+  openssl asn1parse -inform DER</code></pre>
+
+<p>&#8230;which prints out the sequence of integers from the RSA key in the clear. Of course, if you want to inspect the key, it&#8217;s much easier to do this:</p>
+
+<pre><code>$ openssl rsa -text -in test_rsa_key -passin &#39;pass:super secret passphrase&#39;</code></pre>
+
+<p>but I wanted to demonstrate exactly how the AES key is derived from the password. This is important because the private key protection has two weaknesses:</p>
+
+<ul>
+<li>The digest algorithm is hard-coded to be MD5, which means that without changing the format, it&#8217;s not possible to upgrade to another hash function (e.g. SHA-1). This could be a problem if MD5 turns out not to be good enough.</li>
+
+<li>The hash function is only applied once &#8212; there is no <a href='http://en.wikipedia.org/wiki/Key_stretching'>stretching</a>. This is a problem because MD5 and AES are both fast to compute, and thus a short passphrase is quite easy to break with brute force.</li>
+</ul>
+
+<p>If your private SSH key ever gets into the wrong hands, e.g. because someone steals your laptop or your backup hard drive, the attacker can try a huge number of possible passphrases, even with moderate computing resources. If your passphrase is a dictionary word, it can probably be broken in a matter of seconds.</p>
+
+<p>That was the bad news: the passphrase on your SSH key isn&#8217;t as useful as you thought it was. But there is good news: you can upgrade to a more secure private key format, and everything continues to work!</p>
+
+<h2 id='better_key_protection_with_pkcs8'>Better key protection with PKCS#8</h2>
+
+<p>What we want is to derive a symmetric encryption key from the passphrase, and we want this derivation to be slow to compute, so that an attacker needs to buy more computing time if they want to brute-force the passphrase. If you&#8217;ve seen the <a href='http://codahale.com/how-to-safely-store-a-password/'>use bcrypt</a> meme, this should sound very familiar.</p>
+
+<p>For SSH private keys, there are a few standards with clumsy names (acronym alert!) that can help us out:</p>
+
+<ul>
+<li><a href='http://tools.ietf.org/html/rfc2898#section-5.2'>PKCS #5 (RFC 2898)</a> defines <a href='http://en.wikipedia.org/wiki/PBKDF2'>PBKDF2</a> (Password-Based Key Derivation Function 2), an algorithm for deriving an encryption key from a password by applying a hash function repeatedly. PBES2 (Password-Based Encryption Scheme 2) is also defined here; it simply means using a PBKDF2-generated key with a symmetric cipher.</li>
+
+<li><a href='http://tools.ietf.org/html/rfc5208'>PKCS #8 (RFC 5208)</a> defines a format for storing encrypted private keys that supports PBKDF2. OpenSSL transparently supports private keys in PKCS#8 format, and OpenSSH uses OpenSSL, so if you&#8217;re using OpenSSH that means you can swap your traditional SSH key files for PKCS#8 files and everything continues to work as normal!</li>
+</ul>
+
+<p>I don&#8217;t know why <code>ssh-keygen</code> still generates keys in SSH&#8217;s traditional format, even though a better format has been available for years. Compatibility with servers is not a concern, because the private key never leaves your machine. Fortunately it&#8217;s easy enough to <a href='http://www.openssl.org/docs/apps/pkcs8.html'>convert to PKCS#8</a>:</p>
+
+<pre><code>$ mv test_rsa_key test_rsa_key.old
+$ openssl pkcs8 -topk8 -v2 des3 \
+    -in test_rsa_key.old -passin &#39;pass:super secret passphrase&#39; \
+    -out test_rsa_key -passout &#39;pass:super secret passphrase&#39;</code></pre>
+
+<p>If you try using this new PKCS#8 file with a SSH client, you should find that it works exactly the same as the file generated by <code>ssh-keygen</code>. But what&#8217;s inside it?</p>
+
+<pre><code>$ cat test_rsa_key
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIOu/S2/v547MCAggA
+MBQGCCqGSIb3DQMHBAh4q+o4ELaHnwSCBMjA+ho9K816gN1h9MAof4stq0akPoO0
+CNvXdtqLudIxBq0dNxX0AxvEW6exWxz45bUdLOjQ5miO6Bko0lFoNUrOeOo/Gq4H
+dMyI7Ot1vL9UvZRqLNj51cj/7B/bmfa4msfJXeuFs8jMtDz9J19k6uuCLUGlJscP
+    ... etc ...
+-----END ENCRYPTED PRIVATE KEY-----</code></pre>
+
+<p>Notice that the header/footer lines have changed (<code>BEGIN ENCRYPTED PRIVATE KEY</code> instead of <code>BEGIN RSA PRIVATE KEY</code>), and the plaintext <code>Proc-Type</code> and <code>DEK-Info</code> headers have gone. In fact, the whole key file is once again a ASN.1 structure:</p>
+
+<pre><code>$ openssl asn1parse -in test_rsa_key
+    0:d=0  hl=4 l=1294 cons: SEQUENCE
+    4:d=1  hl=2 l=  64 cons: SEQUENCE
+    6:d=2  hl=2 l=   9 prim: OBJECT            :PBES2
+   17:d=2  hl=2 l=  51 cons: SEQUENCE
+   19:d=3  hl=2 l=  27 cons: SEQUENCE
+   21:d=4  hl=2 l=   9 prim: OBJECT            :PBKDF2
+   32:d=4  hl=2 l=  14 cons: SEQUENCE
+   34:d=5  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:3AEFD2DBFBF9E3B3
+   44:d=5  hl=2 l=   2 prim: INTEGER           :0800
+   48:d=3  hl=2 l=  20 cons: SEQUENCE
+   50:d=4  hl=2 l=   8 prim: OBJECT            :des-ede3-cbc
+   60:d=4  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:78ABEA3810B6879F
+   70:d=1  hl=4 l=1224 prim: OCTET STRING      [HEX DUMP]:C0FA1A3D2BCD7A80DD61F4C0287F8B2D...</code></pre>
+
+<p>Use Lapo Luchini&#8217;s <a href='http://lapo.it/asn1js/'>JavaScript ASN.1 decoder</a> to display a nice ASN.1 tree structure:</p>
+
+<pre><code>Sequence (2 elements)
+|- Sequence (2 elements)
+|  |- Object identifier: 1.2.840.113549.1.5.13            // using PBES2 from PKCS#5
+|  `- Sequence (2 elements)
+|     |- Sequence (2 elements)
+|     |  |- Object identifier: 1.2.840.113549.1.5.12      // using PBKDF2 -- yay! :)
+|     |  `- Sequence (2 elements)
+|     |     |- Byte string (8 bytes): 3AEFD2DBFBF9E3B3    // salt
+|     |     `- Integer: 2048                              // iteration count
+|     `- Sequence (2 elements)
+|          Object identifier: 1.2.840.113549.3.7          // encrypted with Triple DES, CBC
+|          Byte string (8 bytes): 78ABEA3810B6879F        // initialization vector
+`- Byte string (1224 bytes): C0FA1A3D2BCD7A80DD61F4C0287F8B2DAB46A43E...  // encrypted key blob</code></pre>
+
+<p>The format uses <a href='http://en.wikipedia.org/wiki/Object_identifier'>OIDs</a>, numeric codes allocated by a registration authority to unambiguously refer to algorithms. The OIDs in this key file tell us that the encryption scheme is <a href='http://oid-info.com/get/1.2.840.113549.1.5.13'>pkcs5PBES2</a>, that the key derivation function is <a href='http://oid-info.com/get/1.2.840.113549.1.5.12'>PBKDF2</a>, and that the encryption is performed using <a href='http://oid-info.com/get/1.2.840.113549.3.7'>des-ede3-cbc</a>. The hash function can be explicitly specified if needed; here it&#8217;s omitted, which means that it <a href='http://tools.ietf.org/html/rfc3370#section-4.4.1'>defaults</a> to <a href='http://tools.ietf.org/html/rfc2104'>hMAC-SHA1</a>.</p>
+
+<p>The nice thing about having all those identifiers in the file is that if better algorithms are invented in future, we can upgrade the key file without having to change the container file format.</p>
+
+<p>You can also see that the key derivation function uses an iteration count of 2,048. Compared to just one iteration in the traditional SSH key format, that&#8217;s good &#8212; it means that it&#8217;s much slower to brute-force the passphrase. The number 2,048 is currently hard-coded in OpenSSL; I hope that it will be configurable in future, as you could probably increase it without any noticeable slowdown on a modern computer.</p>
+
+<h2 id='conclusion_better_protection_for_your_ssh_private_keys'>Conclusion: better protection for your SSH private keys</h2>
+
+<p>If you already have a strong passphrase on your SSH private key, then converting it from the traditional private key format to PKCS#8 is roughly comparable to adding two extra keystrokes to your passphrase, for free. And if you have a weak passphrase, you can take your private key protection from &#8220;easily breakable&#8221; to &#8220;slightly harder to break&#8221;.</p>
+
+<p>It&#8217;s so easy, you can do it right now:</p>
+
+<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.old
+$ openssl pkcs8 -topk8 -v2 des3 -in ~/.ssh/id_rsa.old -out ~/.ssh/id_rsa
+$ chmod 600 ~/.ssh/id_rsa
+# Check that the converted key works; if yes, delete the old one:
+$ rm ~/.ssh/id_rsa.old</code></pre>
+
+<p>The <code>openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private key, and twice for the passphrase for the new key. It doesn&#8217;t matter whether you use a new passphrase for the converted key or keep it the same as the old key.</p>
+
+<p>Not all software can read the PKCS8 format, but that&#8217;s fine &#8212; only your SSH client needs to be able to read the private key, after all. From the server&#8217;s point of view, storing the private key in a different format changes nothing at all.</p>
+        </div>
+
+        <div class="by-line">
+            <address class="author vcard full-author">
+                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
+            </address>
+            <span class="date full-date">
+                <abbr class="published" title="2013-05-24T00:00:00+01:00">24 May 2013</abbr>
+            </span>
+        </div>
+
+        <p class="comments-link">
+            <a href="/2013/05/24/improving-security-of-ssh-private-keys.html#disqus_thread">Comments</a>
+        </p>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="hentry full p1 post publish">
+        <h1 class="entry-title full-title">
             <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html" rel="bookmark">Schema evolution in Avro, Protocol Buffers and Thrift</a>
         </h1>
 
@@ -74,7 +287,7 @@
 
 <p>In real life, data is always in flux. The moment you think you have finalised a schema, someone will come up with a use case that wasn&#8217;t anticipated, and wants to &#8220;just quickly add a field&#8221;. Fortunately Thrift, Protobuf and Avro all support <strong>schema evolution</strong>: you can change the schema, you can have producers and consumers with different versions of the schema at the same time, and it all continues to work. That is an extremely valuable feature when you&#8217;re dealing with a big production system, because it allows you to update different components of the system independently, at different times, without worrying about compatibility.</p>
 
-<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are intesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
+<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are interesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
 
 <p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
 <div class='highlight'><pre><code class='js'><span class='p'>{</span>
@@ -82,8 +295,7 @@
     <span class='s2'>&quot;favouriteNumber&quot;</span><span class='o'>:</span> <span class='mi'>1337</span><span class='p'>,</span>
     <span class='s2'>&quot;interests&quot;</span><span class='o'>:</span> <span class='p'>[</span><span class='s2'>&quot;daydreaming&quot;</span><span class='p'>,</span> <span class='s2'>&quot;hacking&quot;</span><span class='p'>]</span>
 <span class='p'>}</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
 
 <h2 id='protocol_buffers'>Protocol Buffers</h2>
@@ -126,8 +338,7 @@
         <span class='p'>{</span><span class='s2'>&quot;name&quot;</span><span class='o'>:</span> <span class='s2'>&quot;interests&quot;</span><span class='p'>,</span>       <span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='p'>{</span><span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='s2'>&quot;array&quot;</span><span class='p'>,</span> <span class='s2'>&quot;items&quot;</span><span class='o'>:</span> <span class='s2'>&quot;string&quot;</span><span class='p'>}}</span>
     <span class='p'>]</span>
 <span class='p'>}</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>&#8230;or in an IDL:</p>
 
 <pre><code>record Person {
@@ -203,6 +414,8 @@
 <p>As you can see, Thrift&#8217;s approach to schema evolution is the same as Protobuf&#8217;s: each field is manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding, which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than Protobuf&#8217;s repeated field approach, but otherwise the two are very similar.</p>
 
 <p>In terms of philosophy, the libraries are very different though. Thrift favours the &#8220;one-stop shop&#8221; style that gives you an entire integrated RPC framework and many choices (with <a href='http://wiki.apache.org/thrift/LibraryFeatures'>varying cross-language support</a>), whereas Protocol Buffers and Avro appear to follow much more of a <a href='http://www.faqs.org/docs/artu/ch01s06.html'>&#8220;do one thing and do it well&#8221;</a> style.</p>
+
+<p><em>This post has been translated into <a href='http://www.sjava.net/319'>Korean</a> by Justin Song.</em></p>
         </div>
 
         <div class="by-line">
@@ -210,7 +423,7 @@
                 <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
             </address>
             <span class="date full-date">
-                <abbr class="published" title="2012-12-05T00:00:00-08:00">05 Dec 2012</abbr>
+                <abbr class="published" title="2012-12-05T00:00:00+00:00">05 Dec 2012</abbr>
             </span>
         </div>
 
@@ -295,7 +508,7 @@
                 <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
             </address>
             <span class="date full-date">
-                <abbr class="published" title="2012-10-08T00:00:00-07:00">08 Oct 2012</abbr>
+                <abbr class="published" title="2012-10-08T00:00:00+01:00">08 Oct 2012</abbr>
             </span>
         </div>
 
@@ -321,12 +534,12 @@
 <h2 id='an_example'>An example</h2>
 
 <p>To illustrate, consider the clichéd Rails blogging engine example:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
   <span class='n'>attr_accessible</span> <span class='ss'>:title</span><span class='p'>,</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
   <span class='n'>has_many</span> <span class='ss'>:comments</span>
 <span class='k'>end</span>
 
-<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
   <span class='n'>attr_accessible</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
   <span class='n'>belongs_to</span> <span class='ss'>:post</span>
 <span class='k'>end</span>
@@ -342,9 +555,8 @@
 <span class='k'>end</span>
 
 <span class='c1'># posts/show.html.erb:</span>
-</code></pre>
-</div>
-<p><div class='highlight'><pre><code class='rhtml'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
+</code></pre></div>
+<p><div class='highlight'><pre><code class='html+erb'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
 <span class='nt'>&lt;p</span> <span class='na'>class=</span><span class='s'>&quot;author&quot;</span><span class='nt'>&gt;</span>By <span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>author</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/p&gt;</span>
 <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;content&quot;</span><span class='nt'>&gt;</span>
   <span class='cp'>&lt;%=</span> <span class='n'>simple_format</span><span class='p'>(</span><span class='vi'>@post</span><span class='o'>.</span><span class='n'>content</span><span class='p'>)</span> <span class='cp'>%&gt;</span>
@@ -358,8 +570,7 @@
     <span class='nt'>&lt;/li&gt;</span>
   <span class='cp'>&lt;%</span> <span class='k'>end</span> <span class='cp'>%&gt;</span>
 <span class='nt'>&lt;/ul&gt;</span>
-</code></pre>
-</div></p>
+</code></pre></div></p>
 
 <p>Pretty good code by various standards, but it has always irked me a bit that I can&#8217;t see where the network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code> in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code> internally &#8211; unless the same query was already made recently, and ActiveRecord cached the result. And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the original post? Who knows.</p>
 
@@ -515,7 +726,7 @@
                 <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
             </address>
             <span class="date full-date">
-                <abbr class="published" title="2012-10-01T00:00:00-07:00">01 Oct 2012</abbr>
+                <abbr class="published" title="2012-10-01T00:00:00+01:00">01 Oct 2012</abbr>
             </span>
         </div>
 
@@ -647,173 +858,12 @@ ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
                 <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
             </address>
             <span class="date full-date">
-                <abbr class="published" title="2012-06-18T00:00:00-07:00">18 Jun 2012</abbr>
+                <abbr class="published" title="2012-06-18T00:00:00+01:00">18 Jun 2012</abbr>
             </span>
         </div>
 
         <p class="comments-link">
             <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html#disqus_thread">Comments</a>
-        </p>
-
-        <div class="clear"></div>
-    </div>
-
-    <div class="hentry full p1 post publish">
-        <h1 class="entry-title full-title">
-            <a href="/2011/08/16/founderly-interview.html" rel="bookmark">My FounderLY interview</a>
-        </h1>
-
-        <div class="entry-content full-content">
-            <p>Matthew from <a href='http://www.founderly.com/'>FounderLY</a> wondered what it would have been like to watch raw video footage of Steve Jobs, Bill Gates, and other tech founders during their formative years. So he&#8217;s been going around interviewing young startup founders, for posterity and for other founders&#8217; inspiration. A pretty interesting effort.</p>
-
-<p>A few weeks ago he asked whether he could <a href='http://www.founderly.com/2011/07/martin-kleppmann-rapportive-1-of-2/'>interview me</a> for the site. Although it would be rather presumptious to put myself in the category of potential future Steve Jobses, I agreed.</p>
-
-<p>So here you go &#8211; a tidily scripted set of questions from Matthew, and some chaotically unscripted stream-of-consciousness replies from me. The video comes in two parts, about 22 minutes in total, and a transcript is below.</p>
-<iframe frameborder='0' height='309' src='http://player.vimeo.com/video/25790273?title=0&amp;byline=0&amp;portrait=0' width='549'>
-  <a href='http://vimeo.com/25790273'>View on Vimeo</a>
-</iframe>
-<p><a href='http://vimeo.com/25790273'>Martin Kleppmann interview, part 1</a> from <a href='http://vimeo.com/founderly'>FounderLY</a> on <a href='http://vimeo.com'>Vimeo</a></p>
-<iframe frameborder='0' height='309' src='http://player.vimeo.com/video/25790604?title=0&amp;byline=0&amp;portrait=0' width='549'>
-  <a href='http://vimeo.com/25790604'>View on Vimeo</a>
-</iframe>
-<p><a href='http://vimeo.com/25790604'>Martin Kleppmann interview, part 2</a> from <a href='http://vimeo.com/founderly'>FounderLY</a> on <a href='http://vimeo.com'>Vimeo</a></p>
-
-<p><strong>Transcript</strong></p>
-
-<p><strong>Matthew Wise:</strong> Hi this is Matthew Wise with FounderLY.com. We empower entrepreneurs to have a voice and share their story with the world, enabling others to learn about building products and starting companies.</p>
-
-<p>I&#8217;m really excited today because I&#8217;m here with Martin Kleppmann, founder of Rapportive. Rapportive shows you everything about your contacts inside your email box, enabling you to see who people are and where they are based, so that you can connect and collaborate over shared interests. So, Martin, we&#8217;d love you to give our audience a brief bio.</p>
-
-<p><strong>Martin:</strong> Sure. I&#8217;m originally from Germany, which explains my weird accent, and then I went to the UK for several years to study computer science. That was in Cambridge. After that, I started a startup; it was called Go Test It, we made a tool for automated cross-browser testing of websites. That was pretty cool, and it was acquired a few years ago. After that, I was looking around for something new to do, and together with two friends we started Rapportive.</p>
-
-<p>What we do now is to pull photos, job details from LinkedIn, recent tweets and all of this stuff into Gmail, and show it right there.</p>
-
-<p><strong>Matthew:</strong> What makes Rapportive unique, who is it for and why are you so passionate about it?</p>
-
-<p><strong>Martin:</strong> It&#8217;s really for people who do a lot of email, particularly emailing with people who you don&#8217;t really know well. If you only ever email with ten different people, then you wouldn&#8217;t need it — but most of us, particularly startup founders, are constantly dealing with investors, outside advisors, users emailing us, potential customers, potential partners, people on emailing lists… all of these people, we vaguely know who they are, but not really. And actually, it is really important that you build this personal contact with them, and get to know them personally.</p>
-
-<p>Previously, when people got an email from someone, they would go and search Google, try to find their Twitter account, try to find them on LinkedIn, and this just takes a lot of time. And we&#8217;ve just automated all of that. The idea is that now, you can actually respond to people personally and build up that personal connection. It&#8217;s little things: even just being able to see the photo of someone in your email… firstly, that&#8217;s a deep visceral connection: you connect much more with them than if you&#8217;re just looking at a wall of text; and also, if you meet them in real life, well, you&#8217;re much more likely to be able to recognise them. I think that makes your email a better place; it&#8217;s really excellent.</p>
-
-<p><strong>Matthew:</strong> What are some of the technology and market trends that currently exist, and how do you see things developing in the future in your space?</p>
-
-<p><strong>Martin:</strong> I&#8217;m not sure about the big trends. There are a lot of things, but they are all very subtle things. For example, people caring a lot about user experience, and we take that really seriously. We put ridiculous amounts of effort into making sure that stuff works really nicely.</p>
-
-<p>Other things that are happening: we are having to deal with more and more people, and people expect that you don&#8217;t just get an automated stock reply, but that people actually engage with you personally. That&#8217;s the future, I think. We&#8217;ve already got that in one-to-one communication between individuals, but the big trend is that companies as a whole are starting to be more personal with the outside. They are no longer this corporate brand, this cold, anonymous thing, but you actually expect to be able to see the people behind that brand, and be able to engage with them directly and build a relationship. And those relationships are what matter, because… if you&#8217;re just competing on price, your customers can just go somewhere else, but if you can build up a relationship with your customers, that&#8217;s really really powerful.</p>
-
-<p>We think that&#8217;s what we are enabling, by giving you this social substrate for your communications.</p>
-
-<p><strong>Matthew:</strong> Can you tell us what inspired you to start Rapportive? Was there an &#8220;aha&#8221; moment, or did market research lead you to the opportunity? What’s the story behind it?</p>
-
-<p><strong>Martin:</strong> It really came from something we wanted ourselves. I think everyone says this! In my previous startup (and my cofounders also had a previous startup), we were all trying to do a lot of engaging with people personally, getting out there, learning a lot from people, really understanding where they were coming from. And that was so much effort! I’d keep lists of people in a custom database or in spreadsheets or in CRM systems like Highrise, and I&#8217;d have to keep them up to date by hand. I’d make a lot of notes about people, even just for myself, just so that I could remember when I came back to them six months later: what interactions I’d had with them, what we’d talked about.</p>
-
-<p>But I then found that all of this information would go stale: for example, I had entered someone&#8217;s job details and then they’d change job… and I’m not going to go and re-enter all of this stuff! It’s already out there on the web — really, software should just do this stuff automatically; there’s no reason why I should have to type this in again.</p>
-
-<p>And then, also, why should I have to always change over to another browser tab in order to search for something, and have five tabs open with different searches for stuff? It’s just ridiculous, this stuff should be in the tool which I use all the time anyway, which is email.</p>
-
-<p>And so, those are the two premises we started with. We wanted something which keeps itself up-to-date automatically from all the data which is already out there; you shouldn’t have to re-enter anything. And secondly, it should be in the workflow of the tool you already use, which, for most of us is primarily email. And on that premise we said: what can we build? Oh, well, let’s just stick something on the side of Gmail, see how it works. And people loved it.</p>
-
-<p><strong>Matthew:</strong> Excellent! Who is your cofounder, how did you meet, what qualities were you looking for in a cofounder, and how did you know they’d be a good fit?</p>
-
-<p><strong>Martin:</strong> I have two cofounders, Rahul and Sam; there are three of us. They are both really excellent people. I had known them for a while before starting: we were together in an office space, a kind of co-working space in Cambridge, UK. They were working on their previous startup, and I was working on my previous startup; we worked together a bit, we had lunch together every day, and just ended up talking about a lot of things.</p>
-
-<p>We found that partly we thought the same in a lot of ways, and partly we also had different but nicely complementary ways of thinking. We had a shared culture but often different perspectives, which helped us to together find the best way of doing stuff. And that’s really the basis on which we work. I think we have a very strong sense of a culture and making sure we work together very well, so we are constantly getting better at what we do.</p>
-
-<p><strong>Matthew:</strong> From idea to product launch, how long did it take, and when did you actually launch?</p>
-
-<p><strong>Martin:</strong> It was pretty quick actually: from first UI mockups to launch it was less than two months. We weren’t actually intending to launch: we had just put up this little website. We were applying for Y Combinator at the time and we also had some other people who were interested, so we wanted to show some potential investors what we were doing. Put up a little website; it wasn’t protected, but just at unknown URL.</p>
-
-<p>And then somehow the press got hold of this, and within a day we found ourselves with 10,000 users on our hands, because it just went wild through all of the blogs. That was a totally crazy experience: we had thought, &#8220;well, we’ve built this little thing, let’s give it to 10 people and see how it works&#8221;, and suddenly we have this massive load of people coming in. And we were working, working very hard, firstly trying to keep the servers up, but fortunately they held up quite nicely. Then also responding to all of the tweets, responding to all of the emails that were coming in. There was lots and lots of stuff happening very quickly; at that point we knew that we were on to something pretty exciting.</p>
-
-<p><strong>Matthew:</strong> And then you formally launched when?</p>
-
-<p><strong>Martin:</strong> We considered that our launch after the fact; we then said, &#8220;Well, OK, I guess we’ve launched now. Oh well, we’ve launched.&#8221; And then since then we’ve, at times, launched new features but that original bit of press we regard as our real launch.</p>
-
-<p><strong>Matthew:</strong> Are there any unique metrics or social proof about Rapportive that you’d like to share with our audience?</p>
-
-<p><strong>Martin:</strong> I think the thing I find most exciting: we always have a Twitter search going on — we have a big screen in the office, showing what people are saying about Rapportive on Twitter — and there’s just this constant stream of people loving it. I’m really humbled all of the time I see this. Every hour there’s stuff coming in from people saying things like, &#8220;This product has changed our life.&#8221;</p>
-
-<p>And that’s just amazing: when people will actually go out of their way to say something like that, and we’re not even particularly prompting them. So yeah, we have hundreds of thousands of users at the moment, but the important thing is really how much people care about it.</p>
-
-<p><strong>Matthew:</strong> We know founders face unique challenges when they start a company. What was the hardest part about launching or starting Rapportive, and how did you overcome this obstacle?</p>
-
-<p><strong>Martin:</strong> So we had a bit of a frustrating phase over the last summer. We were working very, very hard and there was lots going on, but our product was making very little visible progress, because we were spending all of our time firefighting, scaling our database because we had so much stuff coming in that we had to do a lot of work to re-architect it. We were doing a lot of groundwork for features which are just coming out now, but in technical groundwork there are months of work which is just invisible. We were moving country because we were all coming from the UK, moving to San Francisco, and we were fighting with US immigration. We were also spending a lot of time on support — which is good, it’s really valuable, because we learn a lot about the problems that people have, but again it’s very time consuming.</p>
-
-<p>So, with all of those things, it’s all useful stuff; there’s nothing really wasteful there. But on the other hand, our product wasn’t making progress, and people were starting to ask, &#8220;Well, you’ve been around for six months now, nine months now, and you’ve not really released any exciting new features. What’s going on?&#8221; And we were just saying, &#8220;Yeah, we’re trying to get to it, we’re doing what we can!&#8221;</p>
-
-<p>And then I was so happy when, towards the end of 2010, we got over this big hump of stuff, and now we’re putting out features again and there is much more visible progress. So that was a fairly hard phase to go through, but I’m really glad we got over it. In the end you just have to work through it. You just have to not give up, just keep on going, keep on going, even if it’s getting tough.</p>
-
-<p><strong>Matthew:</strong> Since you’ve been in operation, what have you learned about your business and your users that you didn’t realize before you launched?</p>
-
-<p><strong>Martin:</strong> When we first launched I was a bit cautious. I was wondering: &#8220;are people going to be really freaked out by seeing how much information is actually publicly available about them on the web?&#8221; You know, when you think about it rationally, it’s obvious: you can just search for someone on Google, and for most people you’ll actually get a pretty good idea of who this person is just by looking at the search results. And we’ve just taken away a step by automating a lot of that search, making it more convenient by putting it in email.</p>
-
-<p>And so I was expecting that there’d be a lot of people who would go, &#8220;Oh my God, no, privacy is dead!&#8221; But we tried to manage that very carefully: whenever anyone was concerned, we listen to them and respond to any concerns very quickly, and explain what we’re doing, why we’re doing it and why we think it’s absolutely fine. We are all very privacy conscious and we make that very clear as well. We don’t mess around with people’s private data; we only show information which people actually want to be public.</p>
-
-<p>And that is something I found surprising: just how quickly we can defuse any situation. If anyone was upset we’d just talk to them quietly, patiently, and explain what’s going on. If there was any problem, fix it quickly — and all the problems suddenly go away. And that’s really encouraging, because it means that we seem to actually be doing the right thing: pushing the envelope a bit. But yes, it works.</p>
-
-<p><strong>Matthew:</strong> What is it that you make look easy? What skill or talent comes easy or intuitively to you, and what has been difficult and how do you manage that?</p>
-
-<p><strong>Martin:</strong> I’d say: what we, as a team, are particularly good at is product design. Making something which is very neat, stays out of your way, but is still powerful; which does exactly the stuff you need, not more, not less; and just behaves the way people expect it to behave, without running into a weird corner where you don’t know what to do.</p>
-
-<p>And that is actually really hard to achieve. The amount of time we spend on optimizing the workflows for different users, depending on which starting state they’re coming from, which screens they have to go through and exactly what button we can show in which place, exactly what copy we use, what words we use to describe things, then taking them through the flow… and then, to the user, all it looks like is: &#8220;oh, I clicked a button, a pop-up appeared, I clicked another button and it worked.&#8221;</p>
-
-<p>That’s something we really enjoy: making that look easy, but a lot of work goes into it. In the end people just appreciate it as a product which is really nicely designed, which just works and which gives them a kind of warm, fuzzy feeling.</p>
-
-<p><strong>Matthew:</strong> What’s the most important lesson you’ve learned since launching Rapportive?</p>
-
-<p><strong>Martin:</strong> The most important lesson? I’ve not really graded them in a particular priority.</p>
-
-<p>I’d say, off the top of my head: caring about user experience and caring about users was something we thought from the start was really important — and that has really been validated. People appreciate us for having a product which just works nicely, and which has the little details thought out.</p>
-
-<p>People appreciate that we get back to them quickly, that we’re always very friendly when responding to them, that we’re trying to be personal where we can.</p>
-
-<p><strong>Matthew:</strong> Martin, what bit of advice do you wish you would have known before starting Rapportive?</p>
-
-<p><strong>Martin:</strong> I think what’s really interesting is that in a startup everything is magnified. If you have any issue early on, that will just continue, continue, get bigger and bigger, so if you have any issue early on then make sure you fix it early on. I think we’ve generally done a pretty good job of that. But it’s worth doing that really consciously.</p>
-
-<p>Certain things are really hard, but you need to get good at them. For example, communicating and sharing intuitions, that’s a topic that I’ve been thinking about a lot. We find that, since we’re three cofounders, we often have similar ideas about things, but and then often find that they differ in subtle ways. Really what we want to do is to combine our three intuitions into one, so that together, we have a really good broad and also deep insight into what people want. That requires that you find ways of explaining to the others not just <em>what</em> you think, but <em>why</em> you think it.</p>
-
-<p>And that’s really hard to learn, and we’ve gradually been getting better at that. As you go about things, just be conscious of the fact that it’s going to take a lot of effort and time, even just to learn to speak the same language. You think you all speak English, but then you find, of course, that you make up your own words to describe the domain you’re working in. A lot of things are just completely non-obvious.</p>
-
-<p>You get a lot of conflicting advice from outside mentors. We have a lot of really good investors, advisors, mentors, and often they say completely contradictory things — and that’s fine. You just need to learn to absorb those things into your own intuition, and within the team work out how you can share those intuitions. Then you can have a coherent vision, all together, for what you’re going to build, why it’s important, how you’re going to go forward.</p>
-
-<p><strong>Matthew:</strong> What bit of advice would you like to share with our audience about launching a startup? If you have to distill it, what are the key elements?</p>
-
-<p><strong>Martin:</strong> One thing, which worked in our favor but is not necessarily particularly replicable: if your product works well for journalists, then journalists will write about it quite a lot. We didn’t realize this initially, but it happened to be the fact that, Rapportive works really well for people who deal with a lot of incoming weird stuff from lots of people they don’t know, and need to assess very quickly whether the sources are reliable. And, well, that’s pretty much what journalists do.</p>
-
-<p>It was also the case that when we started Rapportive, a lot of the data we had about people was not particularly great, but bloggers tend to be the kind of people who are very present on social media, so we had really great data for them! And that worked in our favor. Since then we’ve got a lot better at data for everyone else, and now we’ve got a pretty high coverage rate for everyone. But for that initial launch, just working well for reporters and bloggers was pretty good.</p>
-
-<p>But of course, you can’t choose your startup based on the fact that it’s going to be useful for bloggers, so that’s not very useful advice.</p>
-
-<p>There are lots of different schools of thought for launching and they all kind of make sense. There’s the &#8220;launch small and make sure that you’re continuously learning&#8221; school, and that makes a lot of sense. And then there’s also the school which observes that, if you can get a lot of very quick press that generates a lot of excitement and a lot of buzz, that’s also valuable. In the end, with these things there’s never a right answer; you just have to take in all of the bits of advice you hear and create your personal conglomerate of what makes sense.</p>
-
-<p><strong>Matthew:</strong> Before we close, I would love for you to give our audience your vision of Rapportive and how you hope it will change the world.</p>
-
-<p><strong>Martin:</strong> We’ve got a lot of really exciting things coming. I don’t want to talk about them in too much detail, but to give a rough outline:</p>
-
-<p>I think, firstly, the inbox is a really, really interesting place, because that’s where all of your communications come together. Email is the primary one we use at the moment; I don’t know, maybe it’ll be Facebook mail within two years’ time, but that doesn’t really matter, that’s beside the point.</p>
-
-<p>The point is that people are really, really opinionated about which tool they want to use, and getting people to change tool is really, really hard. So we’re building Rapportive in the philosophy that we don’t people to change behavior; we just want people to continue doing what they’re doing already, and just make it better.</p>
-
-<p>Just add those little magic touches, add little things which either save you time, or which take something which was previously laborious (and required switching to other browser tabs and required re-entering of data), and make all of that go away. Just make it be there, and make common tasks feel natural.</p>
-
-<p>That’s the philosophy with which we’re going about things, and that seems to be working pretty well.</p>
-
-<p><strong>Matthew:</strong> Excellent. Well, Martin, it’s been a pleasure having you as a guest on FounderLY. We’re rooting for your success at Rapportive. For those in our audience who’d like to learn more you can visit their website at www.rapportive.com and register to become a user and join their community. This is Matthew Wise with FounderLY. Thanks so much, Martin.</p>
-
-<p><strong>Martin:</strong> Thank you, Matthew.</p>
-        </div>
-
-        <div class="by-line">
-            <address class="author vcard full-author">
-                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
-            </address>
-            <span class="date full-date">
-                <abbr class="published" title="2011-08-16T00:00:00-07:00">16 Aug 2011</abbr>
-            </span>
-        </div>
-
-        <p class="comments-link">
-            <a href="/2011/08/16/founderly-interview.html#disqus_thread">Comments</a>
         </p>
 
         <div class="clear"></div>
@@ -884,6 +934,8 @@ ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -891,8 +943,6 @@ ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

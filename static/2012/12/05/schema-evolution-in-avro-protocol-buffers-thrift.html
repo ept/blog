@@ -78,7 +78,7 @@
 
 <p>In real life, data is always in flux. The moment you think you have finalised a schema, someone will come up with a use case that wasn&#8217;t anticipated, and wants to &#8220;just quickly add a field&#8221;. Fortunately Thrift, Protobuf and Avro all support <strong>schema evolution</strong>: you can change the schema, you can have producers and consumers with different versions of the schema at the same time, and it all continues to work. That is an extremely valuable feature when you&#8217;re dealing with a big production system, because it allows you to update different components of the system independently, at different times, without worrying about compatibility.</p>
 
-<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are intesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
+<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are interesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
 
 <p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
 <div class='highlight'><pre><code class='js'><span class='p'>{</span>
@@ -86,8 +86,7 @@
     <span class='s2'>&quot;favouriteNumber&quot;</span><span class='o'>:</span> <span class='mi'>1337</span><span class='p'>,</span>
     <span class='s2'>&quot;interests&quot;</span><span class='o'>:</span> <span class='p'>[</span><span class='s2'>&quot;daydreaming&quot;</span><span class='p'>,</span> <span class='s2'>&quot;hacking&quot;</span><span class='p'>]</span>
 <span class='p'>}</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
 
 <h2 id='protocol_buffers'>Protocol Buffers</h2>
@@ -130,8 +129,7 @@
         <span class='p'>{</span><span class='s2'>&quot;name&quot;</span><span class='o'>:</span> <span class='s2'>&quot;interests&quot;</span><span class='p'>,</span>       <span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='p'>{</span><span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='s2'>&quot;array&quot;</span><span class='p'>,</span> <span class='s2'>&quot;items&quot;</span><span class='o'>:</span> <span class='s2'>&quot;string&quot;</span><span class='p'>}}</span>
     <span class='p'>]</span>
 <span class='p'>}</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>&#8230;or in an IDL:</p>
 
 <pre><code>record Person {
@@ -208,6 +206,8 @@
 
 <p>In terms of philosophy, the libraries are very different though. Thrift favours the &#8220;one-stop shop&#8221; style that gives you an entire integrated RPC framework and many choices (with <a href='http://wiki.apache.org/thrift/LibraryFeatures'>varying cross-language support</a>), whereas Protocol Buffers and Avro appear to follow much more of a <a href='http://www.faqs.org/docs/artu/ch01s06.html'>&#8220;do one thing and do it well&#8221;</a> style.</p>
 
+<p><em>This post has been translated into <a href='http://www.sjava.net/319'>Korean</a> by Justin Song.</em></p>
+
             
 
             <div id="disqus_thread"></div>
@@ -275,6 +275,8 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -282,8 +284,6 @@
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

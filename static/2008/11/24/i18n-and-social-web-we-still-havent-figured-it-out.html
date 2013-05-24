@@ -75,8 +75,7 @@
 <p>However, things get harder once you start building sentences based on variables which may change. The Twitter message is a simple example of this: the time is a variable, and because it&#8217;s in the past (not in the future), we need to stick &#8220;ago&#8221; on the end, in English at least. The code which does this will look something like this:</p>
 <div class='highlight'><pre><code class='ruby'><span class='n'>time_in_words</span> <span class='o'>=</span> <span class='n'>distance_of_time_in_words</span><span class='p'>(</span><span class='n'>time_of_last_update</span><span class='p'>,</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
 <span class='n'>time_in_words</span> <span class='o'>=</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>time_in_words</span><span class='si'>}</span><span class='s2'> ago&quot;</span> <span class='k'>if</span> <span class='p'>(</span><span class='n'>time_of_last_update</span> <span class='o'>&lt;</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>To translate this program, make sure that the function <code>distance_of_time_in_words</code> returns words in the right language (e.g. for German, &#8220;weniger als 5 Sekunden&#8221; &#8211; Twitter does this correctly), and replace <code>&quot;#{time_in_words} ago&quot;</code> with the right grammatical construction for the target language (e.g. for German, <code>&quot;vor #{time_in_words}&quot;</code> &#8211; this is the bit Twitter has missed out).</p>
 
 <p>The way we use <code>time_in_words</code> as a variable we can insert words before or after it to make the right grammatical construction. Fairly flexible, but is this enough?</p>
@@ -149,8 +148,7 @@
 <span class='k'>end</span>
 
 <span class='s2'>&quot;On this form </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> can </span><span class='si'>#{</span><span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>join</span><span class='p'>(</span><span class='s1'>&#39;, &#39;</span><span class='p'>)</span><span class='si'>}</span><span class='s2'>.&quot;</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>And you thought English was simple? You can even even see the remains of grammatical cases (<code>you_or_they</code> vs. <code>you_or_them</code>). If this needs to be translated one day, we will need to duplicate the logic and mess about with the way variables are inserted into the snippets of text to make the grammar work. It will be horrible to maintain. But that&#8217;s the best we can do with the state of the art. Shouldn&#8217;t there be a better way?</p>
 
             
@@ -220,6 +218,8 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -227,8 +227,6 @@
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

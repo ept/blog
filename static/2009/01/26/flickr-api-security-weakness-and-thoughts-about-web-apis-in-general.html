@@ -87,8 +87,7 @@
 <span class='k'>for </span>file in <span class='sb'>`</span>find . -type f<span class='sb'>`</span>; <span class='k'>do</span>
 <span class='k'>  </span>strings <span class='nv'>$file</span> | grep -Ei <span class='s1'>&#39;[0-9a-f]{16}&#39;</span>
 <span class='k'>done</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>In the output you can easily spot the application&#8217;s API key (a5c4c07991a15c6b56b88005a76e7774) &#8211; a 128-bit number which also uniquely identifies the application, but isn&#8217;t secret. (Extra points if you can guess correctly how many times the string &#8216;0123456789abcdef&#8217; is found. ;-) ) There&#8217;s no 64-bit number which looks like it might be the secret. However, with a small amount of experimentation I was also able to find the secret in the binaries. I won&#8217;t give it away here, but it should be a simple exercise for anybody who <a href='http://xkcd.com/208/'>knows regular expressions</a>.</p>
 
 <p>The secret could have easily been hidden better (e.g. by XORing with another binary string), but that&#8217;s not the point. You could still find it with a debugger, it might just take a few hours instead of a few minutes. If somebody wants to, they can find the secret. And this applies to any other downloadable application just as much as it does to Uploadr.</p>
@@ -190,6 +189,8 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -197,8 +198,6 @@
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

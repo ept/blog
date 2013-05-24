@@ -10,11 +10,214 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Wed, 05 Dec 2012 10:04:09 PST</lastBuildDate>
+        <lastBuildDate>Fri, 24 May 2013 16:38:32 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
+        
+            <item>
+                <title>Improving the security of your SSH private key files</title>
+                <link>http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html</link>
+                <comments>http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html#disqus_thread</comments>
+                <pubDate>Fri, 24 May 2013 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html</guid>
+                
+                <description><![CDATA[ Ever wondered how those key files in ~/.ssh actually work? How secure are they actually? As you probably do too, I use ssh many times every single day &#8212; every git fetch and git push, every deploy, every login to a server. And recently I realised that to me, ssh... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>Ever wondered how those key files in <code>~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
+
+<p>As you probably do too, I use ssh many times every single day &#8212; every <code>git fetch</code> and <code>git push</code>, every deploy, every login to a server. And recently I realised that to me, ssh was just some crypto voodoo that I had become accustomed to using, but I didn&#8217;t really understand. That&#8217;s a shame &#8212; I like to know how stuff works. So I went on a little journey of discovery, and here are some of the things I found.</p>
+
+<p>When you start reading about &#8220;crypto stuff&#8221;, you very quickly get buried in an avalanche of acronyms. I will briefly mention the acronyms as we go along; they don&#8217;t help you understand the concepts, but they are useful in case you want to Google for further details.</p>
+
+<p>Quick recap: If you&#8217;ve ever used public key authentication, you probably have a file <code>~/.ssh/id_rsa</code> or <code>~/.ssh/id_dsa</code> in your home directory. This is your RSA/DSA private key, and <code>~/.ssh/id_rsa.pub</code> or <code>~/.ssh/id_dsa.pub</code> is its public key counterpart. Any machine you want to log in to needs to have your public key in <code>~/.ssh/authorized_keys</code> on that machine. When you try to log in, your SSH client uses a digital signature to prove that you have the private key; the server checks that the signature is valid, and that the public key is authorized for your username; if all is well, you are granted access.</p>
+
+<p>So what is actually inside this private key file?</p>
+
+<h2 id='the_unencrypted_private_key_format'>The unencrypted private key format</h2>
+
+<p>Everyone recommends that you protect your private key with a passphrase (otherwise anybody who steals the file from you can log into everything you have access to). If you leave the passphrase blank, the key is not encrypted. Let&#8217;s look at this unencrypted format first, and consider passphrase protection later.</p>
+
+<p>A ssh private key file typically looks something like this:</p>
+
+<pre><code>-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEArCQG213utzqE5YVjTVF5exGRCkE9OuM7LCp/FOuPdoHrFUXk
+y2MQcwf29J3A4i8zxpES9RdSEU6iIEsow98wIi0x1/Lnfx6jG5Y0/iQsG1NRlNCC
+aydGvGaC+PwwWiwYRc7PtBgV4KOAVXMZdMB5nFRaekQ1ksdH/360KCGgljPtzTNl
+09e97QBwHFIZ3ea5Eih/HireTrRSnvF+ywmwuxX4ubDr0ZeSceuF2S5WLXH2+TV0
+   ... etc ... lots of base64 blah blah ...
+-----END RSA PRIVATE KEY-----</code></pre>
+
+<p>The private key is an <a href='http://en.wikipedia.org/wiki/ASN.1'>ASN.1</a> data structure, serialized to a byte string using <a href='http://en.wikipedia.org/wiki/X.690#DER_encoding'>DER</a>, and then <a href='http://tools.ietf.org/html/rfc4648'>Base64</a>-encoded. ASN.1 is roughly comparable to JSON (it supports various data types such as integers, booleans, strings and lists/sequences that can be nested in a tree structure). It&#8217;s very widely used for cryptographic purposes, but it has somehow fallen out of fashion with the web generation (I don&#8217;t know why, it seems like a pretty decent format).</p>
+
+<p>To look inside, let&#8217;s generate a fake RSA key without passphrase using <a href='http://www.openbsd.org/cgi-bin/man.cgi?query=ssh-keygen&amp;sektion=1'>ssh-keygen</a>, and then decode it using <a href='http://www.openssl.org/docs/apps/asn1parse.html'>asn1parse</a>:</p>
+
+<pre><code>$ ssh-keygen -t rsa -N &#39;&#39; -f test_rsa_key
+$ openssl asn1parse -in test_rsa_key
+    0:d=0  hl=4 l=1189 cons: SEQUENCE
+    4:d=1  hl=2 l=   1 prim: INTEGER           :00
+    7:d=1  hl=4 l= 257 prim: INTEGER           :C36EB2429D429C7768AD9D879F98C...
+  268:d=1  hl=2 l=   3 prim: INTEGER           :010001
+  273:d=1  hl=4 l= 257 prim: INTEGER           :A27759F60AEA1F4D1D56878901E27...
+  534:d=1  hl=3 l= 129 prim: INTEGER           :F9D23EF31A387694F03AD0D050265...
+  666:d=1  hl=3 l= 129 prim: INTEGER           :C84415C26A468934F1037F99B6D14...
+  798:d=1  hl=3 l= 129 prim: INTEGER           :D0ACED4635B5CA5FB896F88BB9177...
+  930:d=1  hl=3 l= 128 prim: INTEGER           :511810DF9AFD590E11126397310A6...
+ 1061:d=1  hl=3 l= 129 prim: INTEGER           :E3A296AE14E7CAF32F7E493FDF474...</code></pre>
+
+<p>Alternatively, you can paste the Base64 string into Lapo Luchini&#8217;s excellent <a href='http://lapo.it/asn1js/'>JavaScript ASN.1 decoder</a>. You can see that ASN.1 structure is quite simple: a sequence of nine integers. Their meaning is defined in <a href='http://tools.ietf.org/html/rfc2313#section-7.2'>RFC2313</a>. The first integer is a version number (0), and the third number is quite small (65537) &#8211; the public exponent <em>e</em>. The two important numbers are the 2048-bit integers that appear second and fourth in the sequence: the RSA modulus <em>n</em>, and the private exponent <em>d</em>. These numbers are used directly in the <a href='http://en.wikipedia.org/wiki/RSA_%28algorithm%29'>RSA algorithm</a>. The remaining five numbers can be derived from <em>n</em> and <em>d</em>, and are only cached in the key file to speed up certain operations.</p>
+
+<p>DSA keys are similar, a <a href='http://blog.ngas.ch/archives/2008/10/23/asn_1_for_dsa_public_and_private_keys/index.html'>sequence of six integers</a>:</p>
+
+<pre><code>$ ssh-keygen -t dsa -N &#39;&#39; -f test_dsa_key
+$ openssl asn1parse -in test_dsa_key
+    0:d=0  hl=4 l= 444 cons: SEQUENCE
+    4:d=1  hl=2 l=   1 prim: INTEGER           :00
+    7:d=1  hl=3 l= 129 prim: INTEGER           :E497DFBFB5610906D18BCFB4C3CCD...
+  139:d=1  hl=2 l=  21 prim: INTEGER           :CF2478A96A941FB440C38A86F22CF...
+  162:d=1  hl=3 l= 129 prim: INTEGER           :83218C0CA49BA8F11BE40EE1A7C72...
+  294:d=1  hl=3 l= 128 prim: INTEGER           :16953EA4012988E914B466B9C37CB...
+  425:d=1  hl=2 l=  21 prim: INTEGER           :89A356E922688EDEB1D388258C825...</code></pre>
+
+<h2 id='passphraseprotected_keys'>Passphrase-protected keys</h2>
+
+<p>Next, in order to make life harder for an attacker who manages to steal your private key file, you protect it with a passphrase. How does this actually work?</p>
+
+<pre><code>$ ssh-keygen -t rsa -N &#39;super secret passphrase&#39; -f test_rsa_key
+$ cat test_rsa_key
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,D54228DB5838E32589695E83A22595C7
+
+3+Mz0A4wqbMuyzrvBIHx1HNc2ZUZU2cPPRagDc3M+rv+XnGJ6PpThbOeMawz4Cbu
+lQX/Ahbx+UadJZOFrTx8aEWyZoI0ltBh9O5+ODov+vc25Hia3jtayE51McVWwSXg
+wYeg2L6U7iZBk78yg+sIKFVijxiWnpA7W2dj2B9QV0X3ILQPxbU/cRAVTd7AVrKT
+    ... etc ...
+-----END RSA PRIVATE KEY-----</code></pre>
+
+<p>We&#8217;ve gained two header lines, and if you try to parse that Base64 text, you&#8217;ll find it&#8217;s no longer valid ASN.1. That&#8217;s because the entire ASN.1 structure we saw above has been encrypted, and the Base64-encoded text is the output of the encryption. The header tells us the encryption algorithm that was used: <a href='http://en.wikipedia.org/wiki/Advanced_Encryption_Standard'>AES-128</a> in <a href='http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29'>CBC mode</a>. The 128-bit hex string in the <code>DEK-Info</code> header is the <a href='http://en.wikipedia.org/wiki/Initialization_vector'>initialization vector</a> (IV) for the cipher. This is pretty standard stuff; all common crypto libraries can handle it.</p>
+
+<p>But how do you get from the passphrase to the AES encryption key? I couldn&#8217;t find it documented anywhere, so I had to dig through the OpenSSL source to find it:</p>
+
+<ol>
+<li>Append the first 8 bytes of the IV to the passphrase, without a separator (serves as a salt).</li>
+
+<li>Take the MD5 hash of the resulting string (once).</li>
+</ol>
+
+<p>That&#8217;s it. To prove it, let&#8217;s decrypt the private key manually (using the IV/salt from the <code>DEK-Info</code> header above):</p>
+
+<pre><code>$ tail -n +4 test_rsa_key | grep -v &#39;END &#39; | base64 -D |    # get just the binary blob
+  openssl aes-128-cbc -d -iv D54228DB5838E32589695E83A22595C7 -K $(
+    ruby -rdigest/md5 -e &#39;puts Digest::MD5.hexdigest([&quot;super secret passphrase&quot;,0xD5,0x42,0x28,0xDB,0x58,0x38,0xE3,0x25].pack(&quot;a*cccccccc&quot;))&#39;
+  ) |
+  openssl asn1parse -inform DER</code></pre>
+
+<p>&#8230;which prints out the sequence of integers from the RSA key in the clear. Of course, if you want to inspect the key, it&#8217;s much easier to do this:</p>
+
+<pre><code>$ openssl rsa -text -in test_rsa_key -passin &#39;pass:super secret passphrase&#39;</code></pre>
+
+<p>but I wanted to demonstrate exactly how the AES key is derived from the password. This is important because the private key protection has two weaknesses:</p>
+
+<ul>
+<li>The digest algorithm is hard-coded to be MD5, which means that without changing the format, it&#8217;s not possible to upgrade to another hash function (e.g. SHA-1). This could be a problem if MD5 turns out not to be good enough.</li>
+
+<li>The hash function is only applied once &#8212; there is no <a href='http://en.wikipedia.org/wiki/Key_stretching'>stretching</a>. This is a problem because MD5 and AES are both fast to compute, and thus a short passphrase is quite easy to break with brute force.</li>
+</ul>
+
+<p>If your private SSH key ever gets into the wrong hands, e.g. because someone steals your laptop or your backup hard drive, the attacker can try a huge number of possible passphrases, even with moderate computing resources. If your passphrase is a dictionary word, it can probably be broken in a matter of seconds.</p>
+
+<p>That was the bad news: the passphrase on your SSH key isn&#8217;t as useful as you thought it was. But there is good news: you can upgrade to a more secure private key format, and everything continues to work!</p>
+
+<h2 id='better_key_protection_with_pkcs8'>Better key protection with PKCS#8</h2>
+
+<p>What we want is to derive a symmetric encryption key from the passphrase, and we want this derivation to be slow to compute, so that an attacker needs to buy more computing time if they want to brute-force the passphrase. If you&#8217;ve seen the <a href='http://codahale.com/how-to-safely-store-a-password/'>use bcrypt</a> meme, this should sound very familiar.</p>
+
+<p>For SSH private keys, there are a few standards with clumsy names (acronym alert!) that can help us out:</p>
+
+<ul>
+<li><a href='http://tools.ietf.org/html/rfc2898#section-5.2'>PKCS #5 (RFC 2898)</a> defines <a href='http://en.wikipedia.org/wiki/PBKDF2'>PBKDF2</a> (Password-Based Key Derivation Function 2), an algorithm for deriving an encryption key from a password by applying a hash function repeatedly. PBES2 (Password-Based Encryption Scheme 2) is also defined here; it simply means using a PBKDF2-generated key with a symmetric cipher.</li>
+
+<li><a href='http://tools.ietf.org/html/rfc5208'>PKCS #8 (RFC 5208)</a> defines a format for storing encrypted private keys that supports PBKDF2. OpenSSL transparently supports private keys in PKCS#8 format, and OpenSSH uses OpenSSL, so if you&#8217;re using OpenSSH that means you can swap your traditional SSH key files for PKCS#8 files and everything continues to work as normal!</li>
+</ul>
+
+<p>I don&#8217;t know why <code>ssh-keygen</code> still generates keys in SSH&#8217;s traditional format, even though a better format has been available for years. Compatibility with servers is not a concern, because the private key never leaves your machine. Fortunately it&#8217;s easy enough to <a href='http://www.openssl.org/docs/apps/pkcs8.html'>convert to PKCS#8</a>:</p>
+
+<pre><code>$ mv test_rsa_key test_rsa_key.old
+$ openssl pkcs8 -topk8 -v2 des3 \
+    -in test_rsa_key.old -passin &#39;pass:super secret passphrase&#39; \
+    -out test_rsa_key -passout &#39;pass:super secret passphrase&#39;</code></pre>
+
+<p>If you try using this new PKCS#8 file with a SSH client, you should find that it works exactly the same as the file generated by <code>ssh-keygen</code>. But what&#8217;s inside it?</p>
+
+<pre><code>$ cat test_rsa_key
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIOu/S2/v547MCAggA
+MBQGCCqGSIb3DQMHBAh4q+o4ELaHnwSCBMjA+ho9K816gN1h9MAof4stq0akPoO0
+CNvXdtqLudIxBq0dNxX0AxvEW6exWxz45bUdLOjQ5miO6Bko0lFoNUrOeOo/Gq4H
+dMyI7Ot1vL9UvZRqLNj51cj/7B/bmfa4msfJXeuFs8jMtDz9J19k6uuCLUGlJscP
+    ... etc ...
+-----END ENCRYPTED PRIVATE KEY-----</code></pre>
+
+<p>Notice that the header/footer lines have changed (<code>BEGIN ENCRYPTED PRIVATE KEY</code> instead of <code>BEGIN RSA PRIVATE KEY</code>), and the plaintext <code>Proc-Type</code> and <code>DEK-Info</code> headers have gone. In fact, the whole key file is once again a ASN.1 structure:</p>
+
+<pre><code>$ openssl asn1parse -in test_rsa_key
+    0:d=0  hl=4 l=1294 cons: SEQUENCE
+    4:d=1  hl=2 l=  64 cons: SEQUENCE
+    6:d=2  hl=2 l=   9 prim: OBJECT            :PBES2
+   17:d=2  hl=2 l=  51 cons: SEQUENCE
+   19:d=3  hl=2 l=  27 cons: SEQUENCE
+   21:d=4  hl=2 l=   9 prim: OBJECT            :PBKDF2
+   32:d=4  hl=2 l=  14 cons: SEQUENCE
+   34:d=5  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:3AEFD2DBFBF9E3B3
+   44:d=5  hl=2 l=   2 prim: INTEGER           :0800
+   48:d=3  hl=2 l=  20 cons: SEQUENCE
+   50:d=4  hl=2 l=   8 prim: OBJECT            :des-ede3-cbc
+   60:d=4  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:78ABEA3810B6879F
+   70:d=1  hl=4 l=1224 prim: OCTET STRING      [HEX DUMP]:C0FA1A3D2BCD7A80DD61F4C0287F8B2D...</code></pre>
+
+<p>Use Lapo Luchini&#8217;s <a href='http://lapo.it/asn1js/'>JavaScript ASN.1 decoder</a> to display a nice ASN.1 tree structure:</p>
+
+<pre><code>Sequence (2 elements)
+|- Sequence (2 elements)
+|  |- Object identifier: 1.2.840.113549.1.5.13            // using PBES2 from PKCS#5
+|  `- Sequence (2 elements)
+|     |- Sequence (2 elements)
+|     |  |- Object identifier: 1.2.840.113549.1.5.12      // using PBKDF2 -- yay! :)
+|     |  `- Sequence (2 elements)
+|     |     |- Byte string (8 bytes): 3AEFD2DBFBF9E3B3    // salt
+|     |     `- Integer: 2048                              // iteration count
+|     `- Sequence (2 elements)
+|          Object identifier: 1.2.840.113549.3.7          // encrypted with Triple DES, CBC
+|          Byte string (8 bytes): 78ABEA3810B6879F        // initialization vector
+`- Byte string (1224 bytes): C0FA1A3D2BCD7A80DD61F4C0287F8B2DAB46A43E...  // encrypted key blob</code></pre>
+
+<p>The format uses <a href='http://en.wikipedia.org/wiki/Object_identifier'>OIDs</a>, numeric codes allocated by a registration authority to unambiguously refer to algorithms. The OIDs in this key file tell us that the encryption scheme is <a href='http://oid-info.com/get/1.2.840.113549.1.5.13'>pkcs5PBES2</a>, that the key derivation function is <a href='http://oid-info.com/get/1.2.840.113549.1.5.12'>PBKDF2</a>, and that the encryption is performed using <a href='http://oid-info.com/get/1.2.840.113549.3.7'>des-ede3-cbc</a>. The hash function can be explicitly specified if needed; here it&#8217;s omitted, which means that it <a href='http://tools.ietf.org/html/rfc3370#section-4.4.1'>defaults</a> to <a href='http://tools.ietf.org/html/rfc2104'>hMAC-SHA1</a>.</p>
+
+<p>The nice thing about having all those identifiers in the file is that if better algorithms are invented in future, we can upgrade the key file without having to change the container file format.</p>
+
+<p>You can also see that the key derivation function uses an iteration count of 2,048. Compared to just one iteration in the traditional SSH key format, that&#8217;s good &#8212; it means that it&#8217;s much slower to brute-force the passphrase. The number 2,048 is currently hard-coded in OpenSSL; I hope that it will be configurable in future, as you could probably increase it without any noticeable slowdown on a modern computer.</p>
+
+<h2 id='conclusion_better_protection_for_your_ssh_private_keys'>Conclusion: better protection for your SSH private keys</h2>
+
+<p>If you already have a strong passphrase on your SSH private key, then converting it from the traditional private key format to PKCS#8 is roughly comparable to adding two extra keystrokes to your passphrase, for free. And if you have a weak passphrase, you can take your private key protection from &#8220;easily breakable&#8221; to &#8220;slightly harder to break&#8221;.</p>
+
+<p>It&#8217;s so easy, you can do it right now:</p>
+
+<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.old
+$ openssl pkcs8 -topk8 -v2 des3 -in ~/.ssh/id_rsa.old -out ~/.ssh/id_rsa
+$ chmod 600 ~/.ssh/id_rsa
+# Check that the converted key works; if yes, delete the old one:
+$ rm ~/.ssh/id_rsa.old</code></pre>
+
+<p>The <code>openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private key, and twice for the passphrase for the new key. It doesn&#8217;t matter whether you use a new passphrase for the converted key or keep it the same as the old key.</p>
+
+<p>Not all software can read the PKCS8 format, but that&#8217;s fine &#8212; only your SSH client needs to be able to read the private key, after all. From the server&#8217;s point of view, storing the private key in a different format changes nothing at all.</p>
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Schema evolution in Avro, Protocol Buffers and Thrift</title>
@@ -45,7 +248,7 @@
 
 <p>In real life, data is always in flux. The moment you think you have finalised a schema, someone will come up with a use case that wasn&#8217;t anticipated, and wants to &#8220;just quickly add a field&#8221;. Fortunately Thrift, Protobuf and Avro all support <strong>schema evolution</strong>: you can change the schema, you can have producers and consumers with different versions of the schema at the same time, and it all continues to work. That is an extremely valuable feature when you&#8217;re dealing with a big production system, because it allows you to update different components of the system independently, at different times, without worrying about compatibility.</p>
 
-<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are intesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
+<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are interesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
 
 <p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
 <div class='highlight'><pre><code class='js'><span class='p'>{</span>
@@ -53,8 +256,7 @@
     <span class='s2'>&quot;favouriteNumber&quot;</span><span class='o'>:</span> <span class='mi'>1337</span><span class='p'>,</span>
     <span class='s2'>&quot;interests&quot;</span><span class='o'>:</span> <span class='p'>[</span><span class='s2'>&quot;daydreaming&quot;</span><span class='p'>,</span> <span class='s2'>&quot;hacking&quot;</span><span class='p'>]</span>
 <span class='p'>}</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
 
 <h2 id='protocol_buffers'>Protocol Buffers</h2>
@@ -97,8 +299,7 @@
         <span class='p'>{</span><span class='s2'>&quot;name&quot;</span><span class='o'>:</span> <span class='s2'>&quot;interests&quot;</span><span class='p'>,</span>       <span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='p'>{</span><span class='s2'>&quot;type&quot;</span><span class='o'>:</span> <span class='s2'>&quot;array&quot;</span><span class='p'>,</span> <span class='s2'>&quot;items&quot;</span><span class='o'>:</span> <span class='s2'>&quot;string&quot;</span><span class='p'>}}</span>
     <span class='p'>]</span>
 <span class='p'>}</span>
-</code></pre>
-</div>
+</code></pre></div>
 <p>&#8230;or in an IDL:</p>
 
 <pre><code>record Person {
@@ -174,6 +375,8 @@
 <p>As you can see, Thrift&#8217;s approach to schema evolution is the same as Protobuf&#8217;s: each field is manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding, which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than Protobuf&#8217;s repeated field approach, but otherwise the two are very similar.</p>
 
 <p>In terms of philosophy, the libraries are very different though. Thrift favours the &#8220;one-stop shop&#8221; style that gives you an entire integrated RPC framework and many choices (with <a href='http://wiki.apache.org/thrift/LibraryFeatures'>varying cross-language support</a>), whereas Protocol Buffers and Avro appear to follow much more of a <a href='http://www.faqs.org/docs/artu/ch01s06.html'>&#8220;do one thing and do it well&#8221;</a> style.</p>
+
+<p><em>This post has been translated into <a href='http://www.sjava.net/319'>Korean</a> by Justin Song.</em></p>
                 ]]></content:encoded>
             </item>
         
@@ -272,12 +475,12 @@
 <h2 id='an_example'>An example</h2>
 
 <p>To illustrate, consider the clichéd Rails blogging engine example:</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+<div class='highlight'><pre><code class='ruby'><span class='k'>class</span> <span class='nc'>Post</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
   <span class='n'>attr_accessible</span> <span class='ss'>:title</span><span class='p'>,</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
   <span class='n'>has_many</span> <span class='ss'>:comments</span>
 <span class='k'>end</span>
 
-<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='no'>ActiveRecord</span><span class='o'>::</span><span class='no'>Base</span>
+<span class='k'>class</span> <span class='nc'>Comment</span> <span class='o'>&lt;</span> <span class='ss'>ActiveRecord</span><span class='p'>:</span><span class='ss'>:Base</span>
   <span class='n'>attr_accessible</span> <span class='ss'>:content</span><span class='p'>,</span> <span class='ss'>:author</span>
   <span class='n'>belongs_to</span> <span class='ss'>:post</span>
 <span class='k'>end</span>
@@ -293,9 +496,8 @@
 <span class='k'>end</span>
 
 <span class='c1'># posts/show.html.erb:</span>
-</code></pre>
-</div>
-<p><div class='highlight'><pre><code class='rhtml'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
+</code></pre></div>
+<p><div class='highlight'><pre><code class='html+erb'><span class='nt'>&lt;h1&gt;</span><span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>title</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/h1&gt;</span>
 <span class='nt'>&lt;p</span> <span class='na'>class=</span><span class='s'>&quot;author&quot;</span><span class='nt'>&gt;</span>By <span class='cp'>&lt;%=</span> <span class='vi'>@post</span><span class='o'>.</span><span class='n'>author</span> <span class='cp'>%&gt;</span><span class='nt'>&lt;/p&gt;</span>
 <span class='nt'>&lt;div</span> <span class='na'>class=</span><span class='s'>&quot;content&quot;</span><span class='nt'>&gt;</span>
   <span class='cp'>&lt;%=</span> <span class='n'>simple_format</span><span class='p'>(</span><span class='vi'>@post</span><span class='o'>.</span><span class='n'>content</span><span class='p'>)</span> <span class='cp'>%&gt;</span>
@@ -309,8 +511,7 @@
     <span class='nt'>&lt;/li&gt;</span>
   <span class='cp'>&lt;%</span> <span class='k'>end</span> <span class='cp'>%&gt;</span>
 <span class='nt'>&lt;/ul&gt;</span>
-</code></pre>
-</div></p>
+</code></pre></div></p>
 
 <p>Pretty good code by various standards, but it has always irked me a bit that I can&#8217;t see where the network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code> in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code> internally &#8211; unless the same query was already made recently, and ActiveRecord cached the result. And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the original post? Who knows.</p>
 
@@ -1340,87 +1541,6 @@ how much value YC brings. So that concern is irrelevant here.</p>
     <img alt='Poster: We have a strategic plan. It&apos;s called doing things.' height='335' src='http://martin.kleppmann.com/2010/12/strategic_plan.jpg' width='500' />
   </a>
 </p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Intuition has no transfer encoding</title>
-                <link>http://martin.kleppmann.com/2010/10/30/intuition-has-no-transfer-encoding.html</link>
-                <comments>http://martin.kleppmann.com/2010/10/30/intuition-has-no-transfer-encoding.html#disqus_thread</comments>
-                <pubDate>Sat, 30 Oct 2010 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="false">http://www.yes-no-cancel.co.uk/?p=400</guid>
-                
-                <description><![CDATA[ Intuition is really annoying sometimes. Actually, I love intuition, because almost all my thinking is based on it. I don’t think I am very good at analysing and thinking things through logically. Often I just have a feeling about how something should be, and then sometimes I post-rationalise it. Not... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><strong>Intuition is really annoying sometimes.</strong></p>
-
-<p>Actually, I love intuition, because almost all my thinking is based on it. I don’t think I am very good at analysing and thinking things through logically. Often I just have a feeling about how something should be, and then sometimes I post-rationalise it.</p>
-
-<p>Not everybody’s mind works this way; if yours works like this too, you will think this is completely obvious. If not, you probably know people of this type, who can just assert “I think we should do it this way” and turn out to be right in maybe 75% of cases. Intuition is never perfect, but I love it, because it often gives a “good enough” answer very quickly, or at least provides some pointers towards places where it would be worth spending a bit more time analysing.</p>
-
-<p>The thing that I find so annoying about intuition is that it is <strong>very hard to communicate</strong>. Let me explain.</p>
-
-<p>Intuition is built from a large number of experiences: you grow up, you go through life, you meet people, you go to places, you read stuff, you make up stuff. There is no chance you can remember all the things you ever experience in factual detail, because that would be an overwhelmingly huge amount of information. But those things are nevertheless not forgotten: each experience leaves a trace, a tiny shadow of memory, so your thinking afterwards is ever so slightly different from the way it was before.</p>
-
-<p>Over the course of years, those tiny traces are aggregated, and what you get out at the end is an intuitive understanding of how the world works (or rather, how those parts of the world which you have experienced work). Think of it like very light crayon touches, in the hands of an artist, gradually forming to be a beautiful picture — except that the picture is never complete, and always evolving.</p>
-<object height='311' width='508'>
-    <param name='movie' value='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' />
-    <param name='allowFullScreen' value='true' />
-    <param name='allowscriptaccess' value='always' />
-    <embed allowfullscreen='true' allowscriptaccess='always' height='311' src='http://www.youtube.com/v/5OLP4nbAVA4?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' width='508' />
-</object>
-<p>With that intuition, when you encounter a new situation, it doesn’t matter that you haven’t encountered the exact same situation before: your brain does an approximate matching of the new situation with your mental model of the world, and immediately predicts the right answer. It doesn’t even need to search through memories, because the picture of the world in your head is already the fully aggregated sum of your experiences.</p>
-
-<p>(As a second step, you will typically compare your gut reaction to specific memories, to check whether the results agree. But that’s another topic.)</p>
-
-<p><strong>A tale of bitmaps and vector graphics</strong></p>
-
-<p>The way I imagine the brain stores intuition is a bit like a huge bitmap image, with lots and lots of pixels [<a href='#intuition-footnote'>1</a>]. When a new piece of information comes in, the brain’s massively parallel processing structure takes the new information, combines it with the existing image, correlates, interpolates, extrapolates, and produces an answer in an instant.</p>
-
-<p>But what if you want to teach your intuition to someone else? You can’t tell that person all the things you ever experienced in your life, because that would be far too much, and you’ve forgotten and assimilated most of those memories anyway. But that mental bitmap is also a terrible transfer format: our mouths and hands are extremely slow communication channels, making it impossible to get the bitmap out of your brain. Imagine reading out the individual pixel values of a bitmap image over the phone. It would take hours before the other person had even the vaguest, blurriest idea of the outlines of the image. And it would take years to fill in the detail.</p>
-
-<p>So&#8230; if you want to transfer that bitmap out of your brain and into someone else’s, even approximately, you have to turn that bitmap into a vector graphic.</p>
-
-<p>In vector graphics, if you choose your points and curves carefully, you can communicate the general structure of a picture very succinctly. You can enable the other person to very quickly get a rough idea of your thinking. Of course it won’t have all the colourful detail until you add lots more information, but that’s ok. And once you have analysed your picture into a vector form, you have actually gained a better understanding of what it is really about, you can zoom in to see a higher resolution, and you may be able to spot patterns that you weren’t previously aware of.</p>
-
-<p>Of course, the problem: turning bitmaps into vector graphics is hard. Computer Vision researchers are always thinking about better algorithms for doing it.</p>
-
-<p>And to return from our image analogy to the topic of intuition: expressing intuitive knowledge in a structured form is really hard.</p>
-
-<p><strong>Vectorising intuition</strong></p>
-
-<p>As a child, when you learn your first language by imitating sounds and by being continually corrected by your parents, you are building an intuition for the way that language works. You start off with <em>ga ga ga</em>, and it takes years before you can speak a coherent sentence; later, as time goes on and you grow up, you get quite good at it. Because your brain stores a pre-rendered representation of the language, you can speak and understand it easily and quickly.</p>
-
-<p>When an adult learns a foreign language, by contrast, the usual way of learning it is by studying grammar, vocabulary and carefully chosen texts. The rules of grammar and the structure of the syllabus are a kind of vector representation of the language, optimised for giving the learner a rough overview of the language structure and helping them construct useful sentences as quickly as possible.</p>
-
-<p>It is perfectly possible for an adult to go to a foreign country with no prior knowledge of the language, and to learn to speak it without formal grammar or syllabus, in the same way as a child does. However, most adults prefer to learn a language in a systematic manner, presumably because learning in “vectorised” form allows you to be much faster in getting to the stage where you can have an interesting conversation.</p>
-
-<p>No matter which way you learn the basics, it always takes years to reach native proficiency in a language; that is unavoidable, because in the end you can’t get around learning a huge amount of subtle details and building your own intuition. (Even if represented in vector form, complicated curves and shadings require a large number of points.) The difference is in the time it takes to grok the core concepts.</p>
-
-<p><strong>But here comes the important bit.</strong> When it comes to learning languages, most languages have benefitted from decades (if not centuries) of research and systematisation efforts by many intelligent people. For most languages, grammar and learning techniques are very well understood. But what if you want to communicate some intuition that <strong>only you</strong> have? Well, you have to do the vectorising yourself.</p>
-
-<p>When you have built an intuition in a specific area that is not well-known — say, with regard to some arcane or new technology, or with regard to your company’s business strategy — then there is no existing grammar you can refer to. You are like a linguist, <a href='http://en.wikipedia.org/wiki/Daniel_Everett'>going into the Amazonian Jungle</a> to document mysterious languages not yet known to the outside world. You have to observe the systematic parts and the exceptions, and formulate the grammar yourself.</p>
-
-<p>Turning your intuitive bitmap into a vector form that you can communicate&#8230; is hard. Very hard. But you need to figure it out.</p>
-
-<p><strong>Why is this important?</strong></p>
-
-<p>Well, there’s only so far that a single person’s intuition can reach. If you want to build great things and change the world, you need much more than a single person’s brain can hold. You need both depth and breadth: fine-grained intuition in specific technical fields requiring expertise, and also a greater variety of perspectives than a single person can have experienced.</p>
-
-<p>You need to combine the intuitions of several people, i.e. you have to form a team. And in order to combine your intuitions, you need to communicate and explain them. Why? Because otherwise you have no way of resolving differences, and no way of learning from each other and improving.</p>
-
-<p>By default, intuition comes without a reason attached: you ‘simply know’ that the answer is X, but you don’t know why. The problem arises when your colleague ‘simply knows’ that the answer is Y, where X≠Y, and doesn’t know a reason either. (Maybe X and Y are not completely contradictory, but rather partially overlapping ideas or differences in emphasis. Different nevertheless.) At that point either one has to overrule the other (which would defeat the goal of forming a team in the first place), or you have to rationalise the intuition, untangle the pre-aggregated reasoning, and communicate it in terms which the other person can understand.</p>
-
-<p>What if you could understand the structure of both X and Y, and the reasoning behind it, and thus manage to synthesise the two? That is a lot of effort, but I am increasingly thinking that figuring out how to communicate your intuition is one of the most valuable things you can do in a team. For if you can combine your mental image of the world with other people’s, you can build something much greater than each of you. Your thoughts can be superhuman, in some sense. And that, if you can figure it out, is a huge advantage you can have.</p>
-
-<p>A startup is a really interesting environment to try this kind of thing, because you can be as choosy as you want about the people you work with. You can pick like-minded people, and together work towards that shared intuition. You can build a good, well-founded, shared intuition of who your customers are and what they want. And if you can attain that shared intuition, you&#8217;re well underway to success.</p>
-
-<p><strong>Footnote:</strong></p>
-<a name='intuition-footnote'>
-</a>
-<p>[1] I&#8217;m not sure what each individual pixel represents. In mathematical terms, a picture is a function mapping from 2D space to colour, and a bitmap approximates this function by sampling at regularly spaced values of the input. Along that line of thinking, the mind is probably a function mapping from sensory inputs and memories to explanations and actions (or something along those lines — I&#8217;m not a neuroscientist). This function can be represented as lots of individual data points (&#8220;London &amp; lunchtime &amp; hunger &amp; last had Falafel 10 days ago → go to the King of Falafel&#8221;), which is bitmap-like, or in some systematic manner (&#8220;I like to eat falafel for lunch. For example, in London, the King of Falafel is good.&#8221;), which is vector-like, omitting redundant information (lunchtime and hunger are strongly correlated, so mentioning both is fairly redundant) and emphasising structure or dependencies (the King of Falafel only exists in London). However, as you can see, his only vaguely makes sense. The bitmap/vector analogy is itself an example of a piece of intuition that I&#8217;m trying to communicate to you right now.</p>
                 ]]></content:encoded>
             </item>
         

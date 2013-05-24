@@ -84,7 +84,7 @@ aydGvGaC+PwwWiwYRc7PtBgV4KOAVXMZdMB5nFRaekQ1ksdH/360KCGgljPtzTNl
    ... etc ... lots of base64 blah blah ...
 -----END RSA PRIVATE KEY-----</code></pre>
 
-<p>The private key is an <a href='http://en.wikipedia.org/wiki/ASN.1'>ASN.1</a> data structure, serialized to a byte string using <a href='http://en.wikipedia.org/wiki/ASN.1'>DER</a>, and then <a href='http://tools.ietf.org/html/rfc4648'>Base64</a>-encoded. ASN.1 is roughly comparable to JSON (it supports various data types such as integers, booleans, strings and lists/sequences that can be nested in a tree structure). It&#8217;s very widely used for cryptographic purposes, but it has somehow fallen out of fashion with the web generation (I don&#8217;t know why, it seems like a pretty decent format).</p>
+<p>The private key is an <a href='http://en.wikipedia.org/wiki/ASN.1'>ASN.1</a> data structure, serialized to a byte string using <a href='http://en.wikipedia.org/wiki/X.690#DER_encoding'>DER</a>, and then <a href='http://tools.ietf.org/html/rfc4648'>Base64</a>-encoded. ASN.1 is roughly comparable to JSON (it supports various data types such as integers, booleans, strings and lists/sequences that can be nested in a tree structure). It&#8217;s very widely used for cryptographic purposes, but it has somehow fallen out of fashion with the web generation (I don&#8217;t know why, it seems like a pretty decent format).</p>
 
 <p>To look inside, let&#8217;s generate a fake RSA key without passphrase using <a href='http://www.openbsd.org/cgi-bin/man.cgi?query=ssh-keygen&amp;sektion=1'>ssh-keygen</a>, and then decode it using <a href='http://www.openssl.org/docs/apps/asn1parse.html'>asn1parse</a>:</p>
 
@@ -317,6 +317,8 @@ $ rm ~/.ssh/id_rsa.old</code></pre>
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
                     
                       <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
@@ -324,8 +326,6 @@ $ rm ~/.ssh/id_rsa.old</code></pre>
                       <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                       <li>18 Jun 2012: <a href="/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html">Java's hashCode is not safe for distributed systems</a></li>
-                    
-                      <li>16 Aug 2011: <a href="/2011/08/16/founderly-interview.html">My FounderLY interview</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>
@@ -356,7 +356,7 @@ $ rm ~/.ssh/id_rsa.old</code></pre>
 
     <script type="text/javascript">
         var disqus_shortname = 'martinkl';
-        var disqus_url = 'http://martin.kleppmann.com/ssh-keys.html';
+        var disqus_url = 'http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html';
         var disqus_identifier = disqus_url;
 
         (function() {
