@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Improving the security of your SSH private key files
+hackernews: https://news.ycombinator.com/item?id=5763581
 ---
 
 Ever wondered how those key files in `~/.ssh` actually *work*? How secure are they actually?
