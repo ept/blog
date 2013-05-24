@@ -31,9 +31,13 @@ get(/.*[^\/]$/) do
   pass if path[0, public_dir.length] != public_dir
 
   unless File.file?(path)
-    puts "path_info = #{request.path_info.inspect}"
     if request.path_info =~ %r{^/2010/12/21/.*}
       new_url = "http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html"
+    elsif request.path_info =~ %r{^/ssh-keys\.html}
+      new_url = "http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html"
+    end
+
+    if new_url
       halt 301, {"Location" => new_url}, <<-HTML
         <h1>Moved Permanently</h1>
         <p>This document has moved <a href="#{new_url}">here</a>.</p>
