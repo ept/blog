@@ -51,7 +51,7 @@ at different times, without worrying about compatibility.
 
 Which brings us to the topic of today's post. I would like to explore how Protocol Buffers, Avro and
 Thrift actually encode data into bytes --- and this will also help explain how each of them deals
-with schema changes. The design choices made by each of the frameworks are intesting, and by
+with schema changes. The design choices made by each of the frameworks are interesting, and by
 comparing them I think you can become a better engineer (by a little bit).
 
 The example I will use is a little object describing a person. In JSON I would write it like this:
@@ -276,3 +276,5 @@ style that gives you an entire integrated RPC framework and many choices (with
 [varying cross-language support](http://wiki.apache.org/thrift/LibraryFeatures)), whereas Protocol
 Buffers and Avro appear to follow much more of a
 ["do one thing and do it well"](http://www.faqs.org/docs/artu/ch01s06.html) style.
+
+*This post has been translated into [Korean](http://www.sjava.net/319) by Justin Song.*

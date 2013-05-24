@@ -45,7 +45,7 @@ A ssh private key file typically looks something like this:
     -----END RSA PRIVATE KEY-----
 
 The private key is an [ASN.1](http://en.wikipedia.org/wiki/ASN.1) data structure, serialized to a
-byte string using [DER](http://en.wikipedia.org/wiki/ASN.1), and then
+byte string using [DER](http://en.wikipedia.org/wiki/X.690#DER_encoding), and then
 [Base64](http://tools.ietf.org/html/rfc4648)-encoded. ASN.1 is roughly comparable to JSON (it
 supports various data types such as integers, booleans, strings and lists/sequences that can be
 nested in a tree structure). It's very widely used for cryptographic purposes, but it has somehow
