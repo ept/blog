@@ -50,7 +50,7 @@ end
 # posts/show.html.erb:
 {% endhighlight %}
 
-{% highlight rhtml+erb %}
+{% highlight html+erb %}
 <h1><%= @post.title %></h1>
 <p class="author">By <%= @post.author %></p>
 <div class="content">
