@@ -10,11 +10,75 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Fri, 24 May 2013 16:51:34 BST</lastBuildDate>
+        <lastBuildDate>Sun, 11 Aug 2013 17:34:55 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
+        
+            <item>
+                <title>System operations over seven centuries</title>
+                <link>http://martin.kleppmann.com/2013/08/12/system-operations-over-seven-centuries.html</link>
+                <comments>http://martin.kleppmann.com/2013/08/12/system-operations-over-seven-centuries.html#disqus_thread</comments>
+                <pubDate>Mon, 12 Aug 2013 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2013/08/12/system-operations-over-seven-centuries.html</guid>
+                
+                <description><![CDATA[ On a walk in the Alps last week we came across a wonderful piece of engineering, more successful than most software systems could claim to be. It is the system of Waale, an ancient irrigation system in the Vinschgau, South Tyrol. The climate in the Vinschgau is sunny, dry and... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>On a <a href='http://www.planetoutdoor.de/de/touren/detail.htm?tour=20874&amp;region=138'>walk</a> in the Alps last week we came across a wonderful piece of engineering, more successful than most software systems could claim to be. It is the system of <em><a href='http://de.wikipedia.org/wiki/Waal_%28Bew%C3%A4sserung%29'>Waale</a></em>, an ancient irrigation system in the <a href='http://en.wikipedia.org/wiki/Vinschgau'>Vinschgau</a>, South Tyrol.</p>
+
+<p>The climate in the Vinschgau is sunny, dry and windy. Without irrigation, agriculture would barely be possible, but if water from mountain streams is channelled to the fields, <a href='http://www.vip.coop/'>apple trees</a> and meadows can flourish. The area has been inhabited at least since the Bronze Age, and it is likely that artificial irrigation started early. The oldest documents on the Waal system date from the 12th century, and some Waale built in the 14th century are still in use today.</p>
+<p>
+  <a href='http://www.flickr.com/photos/martinkleppmann/9485964300/in/set-72157635017969591' style='display: block; float: left'><img height='375' src='http://martin.kleppmann.com/2013/08/leitenwaal-1.jpg' width='250' /></a>
+  <a href='http://www.flickr.com/photos/martinkleppmann/9482339202/in/set-72157635017969591' style='display: block; float: right'><img height='375' src='http://martin.kleppmann.com/2013/08/leitenwaal-2.jpg' width='250' /></a>
+</p><p style='clear: both' />
+<p>The pictures in this post show the Leitenwaal and the <a href='http://www.youtube.com/watch?v=hO0BAjPh5n4'>Berkwaal</a> near the village of <a href='http://en.wikipedia.org/wiki/Schluderns'>Schluderns</a> in South Tyrol, northern Italy. These two conduits carry water from a mountain stream (the Saldurbach) to the fields and meadows around Schluderns. Along their combined length of about six kilometers, they overcome many obstacles: twisting along the face of steep mountainsides, crossing aqueducts over deep ravines, tunnelling underneath boulders, before they finally arrive at the fields they supply.</p>
+
+<p>Some sections look almost like a natural stream &#8211; except that they flow across the mountainside, not down, because they are designed to cover the greatest possible distance with the smallest possible loss in altitude. Other sections are more obviously artificial, where the furrow has been lined with flat stones or blanks of wood.</p>
+
+<p>This system was originally built almost 700 years ago, using the technology available at the time: spade, axe, hammer and chisel. Of course, nowadays, electric pumps can take water from the river at the valley floor, and sprinkle it on the fields on the slopes above. But for many centuries, the only feasible option was to take water from a stream at high altitude, and let it flow down from there.</p>
+<p><a href='http://www.flickr.com/photos/martinkleppmann/9483183131/in/set-72157635017969591'><img height='366' src='http://martin.kleppmann.com/2013/08/source.jpg' width='550' /></a></p>
+<p>Here a feed of water is taken from a stream, and carried along a wooden gulley: the input to the irrigation system. Along the way, gates regulate the flow of water in the direction of various farms. For centuries, the details of water distribution &#8211; how much water shall be directed towards which farm at which time &#8211; have been governed by detailed agreements, and led to many disputes between farmers.</p>
+<p><a href='http://www.flickr.com/photos/martinkleppmann/9482379264/in/set-72157635017969591'><img height='366' src='http://martin.kleppmann.com/2013/08/distribution.jpg' width='550' /></a></p>
+<p>If the system were to fail for too long, crops would wither, so it was important that the system was always well-maintained and operational. And of course, parts of the system would fail from time to time &#8211; erosion, landslides, decay, accidents or any number of other faults could occur. When a part of the system broke, it was replaced using whatever technology was available at the time.</p>
+
+<p>Thus, the system is now a patchwork of different water-carrying technologies from different ages. The oldest &#8220;pipes&#8221; were made from hollowed-out tree trunks, and some of them are still in use (water flows through tree trunks across a ravine in the left picture below). Later replacements have been made with concrete, steel or plastic pipes &#8211; whatever is believed to be the most reliable solution in the long term.</p>
+<p>
+  <a href='http://www.flickr.com/photos/martinkleppmann/9485976696/in/set-72157635017969591' style='display: block; float: left'><img height='375' src='http://martin.kleppmann.com/2013/08/pipes-1.jpg' width='250' /></a>
+  <a href='http://www.flickr.com/photos/martinkleppmann/9485971172/in/set-72157635017969591' style='display: block; float: right'><img height='375' src='http://martin.kleppmann.com/2013/08/pipes-2.jpg' width='250' /></a>
+</p><p style='clear: both' />
+<p>Perhaps the most impressive aspect of this system are its <em>operability</em> features, i.e. the things that help the operator of the Waal in his job of keeping the system running smoothly. For example, at regular intervals, the water flows through gratings which filter out twigs or other objects before they can cause blockages in pipes. The gratings are cleaned regularly, and tools for clearing out pipes are kept near the Waal. Routine inspections help detect problems early, before they escalate and cause further damage.</p>
+
+<p>After heavy rainfall or melting of snow, the influx of water may exceed the Waal&#8217;s capacity. This is problematic: if the Waal bursts its banks, those banks would be damaged by erosion or washed away, making the problem much worse. Thus, the system includes overflow points at which water is channelled back into the natural stream if the Waal is over capacity (left photo below).</p>
+
+<p>There is even an ingenious monitoring system (right photo below). A waterwheel is placed in the stream, and a cowbell is attached so that it rings on each rotation of the wheel (<a href='http://www.youtube.com/watch?v=LbCG8AUJKSk'>video</a>). Thus, the operator can tell the rate of water flow from a distance, simply by listening for the rhythm of the bell.</p>
+<p>
+  <a href='http://www.flickr.com/photos/martinkleppmann/9483176701/in/set-72157635017969591' style='display: block; float: left'><img height='375' src='http://martin.kleppmann.com/2013/08/operations-1.jpg' width='250' /></a>
+  <a href='http://www.flickr.com/photos/martinkleppmann/9485968436/in/set-72157635017969591' style='display: block; float: right'><img height='375' src='http://martin.kleppmann.com/2013/08/operations-2.jpg' width='250' /></a>
+</p><p style='clear: both' />
+<p>The <em>Waaler</em>, the operator in charge of maintenance of the <em>Waal</em>, is an important and highly-regarded member of the local community. Traditionally, this role is elected every year on the first Sunday of Lent. The operator can be re-elected by the community if they were satisfied with his work in the previous year.</p>
+
+<p>Looking at the lessons from this ancient irrigation system, and adapting them to software systems, my take-aways are:</p>
+
+<ul>
+<li>Good interface design can survive through multiple generations of technology. A stream of water, flowing downhill, is a simple interface that can be implemented in stone-lined furrows, hollowed-out tree trunks, concrete, steel and plastic pipes, and more.</li>
+
+<li>When replacing obsolete technology with new technology, some work is required to join them up &#8211; two pieces of standardised plastic piping may fit snugly, but you can&#8217;t expect the same from a hollow tree trunk interfacing with a plastic pipe.</li>
+
+<li>New technology is not necessarily better than old technology. Hollow tree trunks are still used to feed water into 21st-century sprinkler irrigation systems.</li>
+
+<li>API rate limits are not a new thing. They are, in fact, centuries old.</li>
+
+<li>Continuously monitor the health of your system, and detect problems early.</li>
+
+<li>Operations doesn&#8217;t just happen; it has to be someone&#8217;s job.</li>
+
+<li>If a system solves an important problem, is well-engineered and well-operated, it can stick around for a very, very long time.</li>
+</ul>
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Improving the security of your SSH private key files</title>
@@ -1458,88 +1522,6 @@ how much value YC brings. So that concern is irrelevant here.</p>
     </fieldset>
 </form><p class='disclaimer'>
     I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
-</p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Having a launched product is hard</title>
-                <link>http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html</link>
-                <comments>http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html#disqus_thread</comments>
-                <pubDate>Tue, 21 Dec 2010 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html</guid>
-                
-                <description><![CDATA[ Over the last 6 months, we have been learning what it means to support a launched product. Some background: Rapportive launched in March 2010, and we joined Y Combinator for the Summer 2010 batch from June to August. Even though it was fantastic to have users and solid growth, it... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>Over the last 6 months, <a href='http://rapportive.com'>we</a> have been learning what it means to support a launched product.</p>
-
-<p>Some background: Rapportive <a href='http://blog.rapportive.com/the-accidental-launch'>launched</a> in March 2010, and we joined <a href='http://ycombinator.com/'>Y Combinator</a> for the Summer 2010 batch from June to August. Even though it was fantastic to have users and solid growth, it was actually a very frustrating time for us as a team.</p>
-
-<p>We found the downside of having launched, namely that we ended up spending the entire 3 months of Y Combinator (and probably another month either side) doing the following:</p>
-
-<ul>
-<li>Answering many, many support emails and tweets</li>
-
-<li>Raising <a href='http://techcrunch.com/2010/08/02/rapportive-funding/'>our seed round</a></li>
-
-<li>Stopping our infrastructure from collapsing under our user growth</li>
-
-<li>Responding to press and bloggers</li>
-
-<li>Reading resumés and interviewing job candidates</li>
-
-<li>Fixing gnarly bugs in production</li>
-
-<li>Applying for visas, so that we could work in the US</li>
-
-<li>Attending YC dinners and office hours</li>
-</ul>
-
-<p>By contrast, the ideal world of Y Combinator involves spending 3 months:</p>
-
-<ul>
-<li>Moving your product forward</li>
-
-<li>Attending YC dinners and office hours</li>
-</ul>
-
-<p>Although all the things we were doing were valuable &#8212; even spending so much time on support is valuable, because we learnt a lot about our users, and we turned lots of people from angry strangers into enthusiastic supporters &#8212; it was incredibly frustrating. Our product development was almost stalled for months on end. And all the while, our YC batchmates were demoing new features every week, and getting a massive high from the productive flow of developing their products at a rapid pace.</p>
-
-<p>So I am perhaps a bit envious of those who could move ahead rapidly and build their product without having to worry about supporting users or keeping their database alive. On the other hand, I am of course hugely grateful for our users who use and <a href='http://rapportive.com/buzz'>love our product</a> every day. I wouldn&#8217;t have it any other way.</p>
-<p style='text-align: center'>
-  <a href='http://adam.heroku.com/past/2008/4/23/the_startup_curve/'>
-    <img alt='Photo of whiteboard at YC, showing curve of The Process' height='379' src='http://martin.kleppmann.com/2010/12/yc_whiteboard.jpg' width='500' />
-  </a>
-</p>
-<p>Fortunately, we are not the first to experience this. At the YC office there is a whiteboard, now carrying somewhat iconic status, which reminds every single YC founder of <em>&#8220;The Process&#8221;</em>: once a startup has launched, the novelty will wear off, and the team will find itself in the <em>&#8220;Trough of Sorrow&#8221;</em>. We know what the Trough of Sorrow looks like. I have just described it. It&#8217;s not very much fun.</p>
-
-<p>But here is good news: Rapportive now seems to have journeyed on to the next phase, we have made <a href='http://blog.rapportive.com/grow-your-network-with-rapportive'><em>&#8220;Releases of Improvement&#8221;</em></a>, and things are looking hopeful. Are we in those <em>&#8220;Wiggles of False Hope&#8221;</em>? Who knows. But hey, the money is in the bank, the visas are in our passports, the infrastructure has got a lot more robust, and most importantly, our product development is moving again. We have some really cool stuff coming soon. The hope is real. And we seem to have managed to avoid the <em>&#8220;Crash of Ineptitude&#8221;</em>.</p>
-
-<p>So what have we learnt?</p>
-
-<ul>
-<li>
-<p>Visibly iterating and improving the product is arguably the most important thing a startup should be doing, but sadly, other stuff has an uncanny ability to distract you away from product work. <a href='http://www.paulgraham.com/top.html'>Paul Graham has written</a> about money matters and disputes being particularly bad in this regard. That is true, and I would add server firefighting, recruitment and immigration to the list.</p>
-</li>
-
-<li>
-<p>In order to get back into a flow of product development, we are now deliberately shunning distractions like recruitment and fundraising. We obviously can&#8217;t ignore these things forever, but for now it&#8217;s best for the business if we stay focussed on the thing we do best: making a <a href='http://www.paulgraham.com/good.html'>product that people want</a>. (We&#8217;re keeping one distraction, namely support, because it is so important. But we are rotating support duties so that most of the team can ignore it at any given moment.)</p>
-</li>
-
-<li>
-<p>Be grateful if you carry a US passport.</p>
-</li>
-
-<li>
-<p>Sometimes you just have to wade through a patch of mud, and there&#8217;s no way round it. But as long as you keep your eyes forward and keep moving, you&#8217;ll get through it, and things will brighten up.</p>
-</li>
-</ul>
-<p style='text-align: center'>
-  <a href='http://www.flickr.com/photos/performable/4792109640/sizes/l/in/set-72157623602121734/'>
-    <img alt='Poster: We have a strategic plan. It&apos;s called doing things.' height='335' src='http://martin.kleppmann.com/2010/12/strategic_plan.jpg' width='500' />
-  </a>
 </p>
                 ]]></content:encoded>
             </item>
