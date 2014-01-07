@@ -93,4 +93,4 @@ code (sorry), and then start writing some stuff around it.
 Nevertheless, I hope it will be useful. I release it under a
 [MIT license](http://www.opensource.org/licenses/mit-license.php).
 
-[Download the source code](http://www.maniation.com/maniation.zip)
+[Download the source code](https://github.com/ept/maniation)
