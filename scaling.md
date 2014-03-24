@@ -7,7 +7,7 @@ I realised that there were a number of lessons that we had to learn the hard way
 reasonably large data systems, and there are a few things I really wish we had known beforehand.
 
 None of these lessons are particularly obscure -- they are all well-documented, if you know where to
-look. They are the kind of things that make you think _"I can't believe I didn't know that, I'm so
+look. They are the kind of things that made me think _"I can't believe I didn't know that, I'm so
 stupid #facepalm"_ in retrospect. But perhaps I'm not the only one who started out not knowing these
 things, so I'll write them down for the benefit of anyone else who finds themself having to scale
 a system. 
@@ -32,15 +32,15 @@ although having anywhere near 500 connections is
 [actively discouraged](https://postgres.heroku.com/blog/past/2013/11/22/connection_limit_guidance/).
 
 In a fast-growing app, it doesn't take long before you reach a few hundred connections. Each
-instance of your Rails (or whatever) app uses one, or even several if using a connection pool. Each
-background worker that needs to access the database uses one. Adding more boxes running your
-application is fairly easy if they are stateless, but every box you add means more connections.
+instance of your Rails app (or whatever you're using) uses at least one. Each background worker
+process that needs to access the database uses one. Adding more machines running your application is
+fairly easy if they are stateless, but every machine you add means more connections.
 
 Partitioning (sharding) and read replicas probably won't help you with your connection limit, unless
 you can somehow load-balance requests so that all the requests for a particular partition are
 handled by a particular server instance. A better bet is to use a
 [connection pooler](https://wiki.postgresql.org/wiki/PgBouncer), or to write your own data access
-layer which wraps database access behind an API.
+layer which wraps database access behind an internal API.
 
 That's all doable, but it doesn't seem a particularly valuable use of your time when you're also
 trying to iterate on product features. And every additional service you deploy is another thing that
@@ -60,12 +60,12 @@ What they don't tell you is that setting up and maintaining replicas is signific
 pain. MySQL is particularly bad in this regard: in order to set up a new replica, you have to first
 [lock the leader to stop all writes](http://dev.mysql.com/doc/refman/5.6/en/replication-howto-masterstatus.html)
 and take a consistent snapshot (which may take hours on a large database). How does your app cope if
-it can't write to the database? What do your users think?
+it can't write to the database? What do your users think if they can't post stuff?
 
 With Postgres, you don't need to stop writes to set up a replica, but it's still
 [some hassle](http://www.postgresql.org/docs/current/static/warm-standby.html). One of the things
 I like most about [Heroku Postgres](https://www.heroku.com/postgres) is that it wraps all the
-complexity of replication behind a straightforward command-line tool.
+complexity of replication and WAL archiving behind a straightforward command-line tool.
 
 Even so, you still need to failover manually if your leader fails. You need to monitor and maintain
 the replicas. Your database library may not support read replicas out of the box, so you may need to
@@ -77,15 +77,16 @@ value from users' point of view.
 
 Being able to rapidly respond to change is one of the biggest advantages of a small startup. Agility
 in product and process means you also need the freedom to change your mind about the structure of
-your code and data. There is lot of talk about making code easy to change, eg. with good automated
-tests. But what about changing the structure of your data?
+your code and your data. There is lot of talk about making code easy to change, eg. with good
+automated tests. But what about changing the structure of your data?
 
 Schema changes have a reputation of being very painful, a reputation that is chiefly MySQL's fault:
 simply adding a column to a table requires the
 [entire table to be copied](http://dev.mysql.com/doc/refman/5.6/en/alter-table.html). On a large
 table, that might mean several hours during which you can't write to the table. Various
 [tools](http://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html)
-[exist](https://github.com/soundcloud/lhm) to make that less painful, but it's still ridiculous.
+[exist](https://github.com/soundcloud/lhm) to make that less painful, but I find it unbelievable
+that the world's most popular open source database handles such a common operation so badly.
 
 Postgres can make simple schema changes without copying the table, which means they are almost
 instant. And of course the avoidance of schema changes is a primary selling point of document
@@ -94,13 +95,16 @@ different schemas for different documents). But simple schema changes, such as a
 two, don't tell the entire story.
 
 Not all your data is in databases; some might be in archived log files or some kind of blob storage.
-How do you deal with that? And sometimes you need to make big changes to the data, such as breaking
-a large thing apart or combining several small things; standard tools don't help much here. We've
-written large migration jobs that process chunks of the data gradually over the course of a weekend,
-retry failed chunks, track which things were modified while the migration was happening, and finally
-catch up on the missed updates. A whole lot of complexity just for a one-off data migration.
-Sometimes that's unavoidable, but it's heavy lifting that you'd rather not have to do in the first
-place.
+How do you deal with changing the schema of that data? And sometimes you need to make complex
+changes to the data, such as breaking a large thing apart, or combining several small things, or
+migrating from one datastore to another. Standard tools don't help much here, and document databases
+don't make it any easier.
+
+We've written large migration jobs that break the entire dataset into chunks, process chunks
+gradually over the course of a weekend, retry failed chunks, track which things were modified while
+the migration was happening, and finally catch up on the missed updates. A whole lot of complexity
+just for a one-off data migration. Sometimes that's unavoidable, but it's heavy lifting that you'd
+rather not have to do in the first place.
 
 Hadoop data pipelines can help with this sort of thing, but now you have to set up a Hadoop cluster,
 learn how to use it, figure out how to get your data into it, and figure out how to get the
@@ -119,10 +123,10 @@ EC2 costs quite a bit of money, and eventually there are no bigger machines to t
 
 Besides buying more RAM, an effective solution is to use RAM more efficiently in the first place, so
 that a bigger part of your dataset fits in RAM. In order to decide where to optimise, you need to
-know what all your memory is being used for -- and that's actually surprisingly non-trivial. With
-a bit of digging, you can usually get your database to report how much disk space each of your
-tables and indexes is taking. Figuring out the working set, and how much memory is actually used
-for what, is harder.
+know what all your memory is being used for -- and that's surprisingly non-trivial. With a bit of
+digging, you can usually get your database to report how much disk space each of your tables and
+indexes is taking. Figuring out the working set, and how much memory is actually used for what, is
+harder.
 
 As a rule of thumb, your performance will probably be more predictable if your indexes completely
 fit in RAM -- so that there's a maximum of one disk read per query, which reduces your exposure to
@@ -162,11 +166,11 @@ only once (if your write changes state from D to E, you can't change from D to E
 test, as you're already in state E).
 
 Even harder if you want to test with a dataset that is larger than the one you actually have (so
-that you can find out what happens when you double your userbase). Now you have to work out the
-statistical properties of your dataset (the distribution of friends per user is a power law with
-x parameters, the correlation between one user's number of friends and the number of friends that
-their friends have is y, etc) and generate a synthetic dataset with those parameters. You are now
-in deep, deep yak shaving territory. Step back from that yak.
+that you can find out what happens when you double your userbase, and prepare for that event). Now
+you have to work out the statistical properties of your dataset (the distribution of friends per
+user is a power law with x parameters, the correlation between one user's number of friends and the
+number of friends that their friends have is y, etc) and generate a synthetic dataset with those
+parameters. You are now in deep, deep yak shaving territory. Step back from that yak.
 
 In practice, it hardly ever works that way. We're lucky if, sometimes, we can run the old code and
 the new code side-by-side, and observe how they perform in comparison. Often, not even that is
@@ -182,10 +186,10 @@ should be: _change capture_.
 
 The idea of change capture is simple: let the application consume a feed of all writes to the
 database. You could achieve a similar thing if, every time you write something to the database, you
-also post it to a message queue. However, change capture is better because it contains exactly what
-was committed to the database (avoiding race conditions). A good change capture system also allows
-you to stream through the entire existing dataset, and then switch to consuming real-time updates
-when it has caught up.
+also post it to a message queue. However, change capture is better because it contains exactly the
+same data as what was committed to the database (avoiding race conditions). A good change capture
+system also allows you to stream through the entire existing dataset, and then seamlessly switch to
+consuming real-time updates when it has caught up.
 
 Consumers of this changelog are decoupled from the app that generates the writes, which gives you
 great freedom to experiment without fear of bringing down the main site. You can use the changelog
@@ -202,20 +206,21 @@ The new project I am working on, [Apache Samza](http://samza.incubator.apache.or
 squarely in this space -- it is a framework for processing real-time data feeds, somewhat like
 MapReduce for streams. I am excited about it because I think this pattern of processing change
 capture streams can help many people build apps that scale better, are easier to maintain and more
-reliable than many apps today.
+reliable than many apps today. It's open source, and you should go and
+[try it out](http://samza.incubator.apache.org/).
 
 ## In conclusion
 
-There are no easy answers to these questions. Some new technologies and services can help --
+There are no easy solutions for these problems. Some new technologies and services can help --
 for example, the new generation of distributed datastores tries to solve some of the above problems
 (especially around automating replication and failover), but they have other limitations. There
 certainly is no panacea.
 
 Personally I'm totally fine with using new and experimental tools for derived data, such as caches
 and analytics, where data loss is annoying but not end of your business. I'm more cautious with the
-system of record (also known as _source of truth_). Every system has operational quirks, and you can
-sleep better at night with a the devil you know, than the one you don't, whatever that devil may be
-in your case.
+system of record (also known as _source of truth_). Every system has operational quirks, and the
+devil you know may let you sleep better at night than the one you don't. I don't really mind what
+that devil is in your particular case.
 
 I'm interested to see whether database-as-a-service offerings such as
 [Firebase](https://www.firebase.com/), [Orchestrate](http://orchestrate.io/) or
