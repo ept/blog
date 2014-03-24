@@ -20,60 +20,46 @@ a million users is interesting, because it's quite feasible for a small startup 
 with some luck and good marketing skills. If that sounds like you, here are a few things to keep in
 mind.
 
-## 1. Database connections are a real limitation
+## 1. Realistic load testing is hard
 
-In a database like PostgreSQL or MySQL, each client connection to the database is handled by
-a separate unix process. That puts a fairly low limit on the number of connections you can have to
-the database -- typically a few hundred. Every connection adds overhead, so the entire database
-slows down, even if those connections aren't actively processing queries. For example, Heroku
-Postgres limits you to 60 connections on the smallest plan, and 500 connections on the
-[largest plan](https://devcenter.heroku.com/articles/heroku-postgres-plans#standard-tier),
-although having anywhere near 500 connections is
-[actively discouraged](https://postgres.heroku.com/blog/past/2013/11/22/connection_limit_guidance/).
+Improving the performance of a system is ideally a very scientific process. You have in your head
+a model of what your system is doing, and a theory of where the expensive operations are. You
+propose a change to the system, and predict what the outcome will be. Then you make the change,
+observe the system's behaviour under laboratory conditions, and thus gather evidence which either
+confirms or contradicts your theory. That way you iterate your way to a better theory, and also
+a better-performing implementation.
 
-In a fast-growing app, it doesn't take long before you reach a few hundred connections. Each
-instance of your Rails app (or whatever you're using) uses at least one. Each background worker
-process that needs to access the database uses one. Adding more machines running your application is
-fairly easy if they are stateless, but every machine you add means more connections.
+Sadly, we hardly ever managed to do it that way in practice. If we were optimising a microbenchmark,
+running the same code a million times in a tight loop, it would be easy. But we are dealing with
+large volumes of data, spread out across multiple machines. If you read the same item a million
+times in a loop, it will simply be cached, and the load test tells you nothing. If you want
+meaningful results, the load test needs to simulate a realistically large working set, a realistic
+mixture of reads and writes, realistic distribution of requests over time, and so on. And that is
+difficult.
 
-Partitioning (sharding) and read replicas probably won't help you with your connection limit, unless
-you can somehow load-balance requests so that all the requests for a particular partition are
-handled by a particular server instance. A better bet is to use a
-[connection pooler](https://wiki.postgresql.org/wiki/PgBouncer), or to write your own data access
-layer which wraps database access behind an internal API.
+It's difficult enough to simply _know_ what your access patterns actually are, let alone simulate
+them. As a starting point, you can replay a few hours worth of access logs against a copy of your
+real dataset. However, that only really works for read requests. Simulating writes is harder, as
+you may need to account for business logic rules (e.g. a sequential workflow must first update A,
+then update B, then update C) and deal with changes that can happen only once (if your write changes
+state from D to E, you can't change from D to E again later in the test, as you're already in state
+E). That means you have to synchronise your access logs with your database snapshot, or somehow
+generate suitable synthetic write load.
 
-That's all doable, but it doesn't seem a particularly valuable use of your time when you're also
-trying to iterate on product features. And every additional service you deploy is another thing that
-can go wrong, another thing that needs to be monitored and maintained.
+Even harder if you want to test with a dataset that is larger than the one you actually have (so
+that you can find out what happens when you double your userbase, and prepare for that event). Now
+you have to work out the statistical properties of your dataset (the distribution of friends per
+user is a power law with x parameters, the correlation between one user's number of friends and the
+number of friends that their friends have is y, etc) and generate a synthetic dataset with those
+parameters. You are now in deep, deep yak shaving territory. Step back from that yak.
 
-## 2. Read replicas are an operational pain
+In practice, it hardly ever works that way. We're lucky if, sometimes, we can run the old code and
+the new code side-by-side, and observe how they perform in comparison. Often, not even that is
+possible. Usually we often just cross our fingers, deploy, and roll back if the change seems to have
+made things worse. That is deeply unsatisfying for a scientifically-minded person, but it more or
+less gets the job done.
 
-A common architecture is to designate one database instance as a _leader_ (also known as _master_)
-and to send all database writes to that instance. The writes are then replicated to other database
-instances (called _read replicas_, _followers_ or _slaves_), and many read-only queries can be
-served from the replicas, which takes load off the leader. This architecture is also good for fault
-tolerance, since it gives you a _warm standby_ -- if your leader dies, you can quickly promote one
-of the replicas to be the new leader (you wouldn't want to be offline for hours while you restore
-the database from a backup).
-
-What they don't tell you is that setting up and maintaining replicas is significant operational
-pain. MySQL is particularly bad in this regard: in order to set up a new replica, you have to first
-[lock the leader to stop all writes](http://dev.mysql.com/doc/refman/5.6/en/replication-howto-masterstatus.html)
-and take a consistent snapshot (which may take hours on a large database). How does your app cope if
-it can't write to the database? What do your users think if they can't post stuff?
-
-With Postgres, you don't need to stop writes to set up a replica, but it's still
-[some hassle](http://www.postgresql.org/docs/current/static/warm-standby.html). One of the things
-I like most about [Heroku Postgres](https://www.heroku.com/postgres) is that it wraps all the
-complexity of replication and WAL archiving behind a straightforward command-line tool.
-
-Even so, you still need to failover manually if your leader fails. You need to monitor and maintain
-the replicas. Your database library may not support read replicas out of the box, so you may need to
-add that. Some reads need to be made on the leader, so that a user sees their own writes, even if
-there is replication lag. That's all doable, but it's additional complexity, and doesn't add any
-value from users' point of view.
-
-## 3. Data evolution is difficult
+## 2. Data evolution is difficult
 
 Being able to rapidly respond to change is one of the biggest advantages of a small startup. Agility
 in product and process means you also need the freedom to change your mind about the structure of
@@ -111,7 +97,67 @@ learn how to use it, figure out how to get your data into it, and figure out how
 transformed data out to your live systems again. Big companies like LinkedIn have figured out how to
 do that, but in a small team it can be a massive time-sink.
 
-## 4. Think about memory efficiency
+## 3. Database connections are a real limitation
+
+In a database like PostgreSQL or MySQL, each client connection to the database is handled by
+a separate unix process. That puts a fairly low limit on the number of connections you can have to
+the database -- typically a few hundred. Every connection adds overhead, so the entire database
+slows down, even if those connections aren't actively processing queries. For example, Heroku
+Postgres limits you to 60 connections on the smallest plan, and 500 connections on the
+[largest plan](https://devcenter.heroku.com/articles/heroku-postgres-plans#standard-tier),
+although having anywhere near 500 connections is
+[actively discouraged](https://postgres.heroku.com/blog/past/2013/11/22/connection_limit_guidance/).
+
+In a fast-growing app, it doesn't take long before you reach a few hundred connections. Each
+instance of your Rails app (or whatever you're using) uses at least one. Each background worker
+process that needs to access the database uses one. Adding more machines running your application is
+fairly easy if they are stateless, but every machine you add means more connections.
+
+Partitioning (sharding) and read replicas probably won't help you with your connection limit, unless
+you can somehow load-balance requests so that all the requests for a particular partition are
+handled by a particular server instance. A better bet is to use a
+[connection pooler](https://wiki.postgresql.org/wiki/PgBouncer), or to write your own data access
+layer which wraps database access behind an internal API.
+
+That's all doable, but it doesn't seem a particularly valuable use of your time when you're also
+trying to iterate on product features. And every additional service you deploy is another thing that
+can go wrong, another thing that needs to be monitored and maintained.
+
+(Databases that use a lightweight connection model don't have this problem, but they may have other
+problems instead.)
+
+## 4. Read replicas are an operational pain
+
+A common architecture is to designate one database instance as a _leader_ (also known as _master_)
+and to send all database writes to that instance. The writes are then replicated to other database
+instances (called _read replicas_, _followers_ or _slaves_), and many read-only queries can be
+served from the replicas, which takes load off the leader. This architecture is also good for fault
+tolerance, since it gives you a _warm standby_ -- if your leader dies, you can quickly promote one
+of the replicas to be the new leader (you wouldn't want to be offline for hours while you restore
+the database from a backup).
+
+What they don't tell you is that setting up and maintaining replicas is significant operational
+pain. MySQL is particularly bad in this regard: in order to set up a new replica, you have to first
+[lock the leader to stop all writes](http://dev.mysql.com/doc/refman/5.6/en/replication-howto-masterstatus.html)
+and take a consistent snapshot (which may take hours on a large database). How does your app cope if
+it can't write to the database? What do your users think if they can't post stuff?
+
+With Postgres, you don't need to stop writes to set up a replica, but it's still
+[some hassle](http://www.postgresql.org/docs/current/static/warm-standby.html). One of the things
+I like most about [Heroku Postgres](https://www.heroku.com/postgres) is that it wraps all the
+complexity of replication and WAL archiving behind a straightforward command-line tool.
+
+Even so, you still need to failover manually if your leader fails. You need to monitor and maintain
+the replicas. Your database library may not support read replicas out of the box, so you may need to
+add that. Some reads need to be made on the leader, so that a user sees their own writes, even if
+there is replication lag. That's all doable, but it's additional complexity, and doesn't add any
+value from users' point of view.
+
+Some distributed datastores such as MongoDB and RethinkDB also use this replication model, and they
+automate the replica creation and master failover processes. Just because they do that doesn't mean
+they automatically give you magic scaling sauce, but it is a very valuable feature.
+
+## 5. Think about memory efficiency
 
 At various times, we puzzled about weird latency spikes in our database activity. After many
 [PagerDuty](http://www.pagerduty.com/) alerts and troubleshooting, it usually turned out that we
@@ -139,45 +185,6 @@ than the string itself. (More on that in another post.) That reduced the memory 
 system, and helped keep things ticking along for another few months. That's just one example of how
 it can be helpful to think about using memory efficiently.
 
-## 5. Realistic load testing is hard
-
-Improving the performance of a system is ideally a very scientific process. You have in your head
-a model of what your system is doing, and a theory of where the expensive operations are. You
-propose a change to the system, and predict what the outcome will be. Then you make the change,
-observe the system's behaviour under laboratory conditions, and thus gather evidence which either
-confirms or contradicts your theory. That way you iterate your way to a better theory, and also
-a better-performing implementation.
-
-Sadly, we hardly ever managed to do it that way in practice. If we were optimising a microbenchmark,
-running the same code a million times in a tight loop, it would be easy. But we are dealing with
-large volumes of data, spread out across multiple machines. If you read the same item a million
-times in a loop, it will simply be cached, and the load test tells you nothing. If you want
-meaningful results, the load test needs to simulate a realistically large working set, a realistic
-mixture of reads and writes, realistic distribution of requests over time, and so on. And that is
-difficult.
-
-It's difficult enough to simply _know_ what your access patterns actually are, let alone simulate
-them. You can do some statistical analysis of your access logs (to determine something like _"x% of
-requests are for y% of the items in the database"_). Then you can generate a reasonably
-representative load of artificial requests, and run it against a copy of your real dataset.
-Simulating writes is harder, as you may need to account for business logic rules (e.g. a sequential
-workflow must first update A, then update B, then update C) and deal with changes that can happen
-only once (if your write changes state from D to E, you can't change from D to E again later in the
-test, as you're already in state E).
-
-Even harder if you want to test with a dataset that is larger than the one you actually have (so
-that you can find out what happens when you double your userbase, and prepare for that event). Now
-you have to work out the statistical properties of your dataset (the distribution of friends per
-user is a power law with x parameters, the correlation between one user's number of friends and the
-number of friends that their friends have is y, etc) and generate a synthetic dataset with those
-parameters. You are now in deep, deep yak shaving territory. Step back from that yak.
-
-In practice, it hardly ever works that way. We're lucky if, sometimes, we can run the old code and
-the new code side-by-side, and observe how they perform in comparison. Often, not even that is
-possible. Usually we often just cross our fingers, deploy, and roll back if the change seems to have
-made things worse. That is deeply unsatisfying for a scientifically-minded person, but it more or
-less gets the job done.
-
 ## 6. Change capture is under-appreciated
 
 So far I've only talked about things that suck -- sorry about the negativity. As final point, I'd
@@ -185,11 +192,14 @@ like to mention a technique which is awesome, but not nearly as widely known and
 should be: _change capture_.
 
 The idea of change capture is simple: let the application consume a feed of all writes to the
-database. You could achieve a similar thing if, every time you write something to the database, you
-also post it to a message queue. However, change capture is better because it contains exactly the
-same data as what was committed to the database (avoiding race conditions). A good change capture
-system also allows you to stream through the entire existing dataset, and then seamlessly switch to
-consuming real-time updates when it has caught up.
+database. In other words, you have a background process which gets notified every time something
+changes in the database (insert, update or delete).
+
+You could achieve a similar thing if, every time you write something to the database, you also post
+it to a message queue. However, change capture is better because it contains exactly the same data
+as what was committed to the database (avoiding race conditions). A good change capture system also
+allows you to stream through the entire existing dataset, and then seamlessly switch to consuming
+real-time updates when it has caught up.
 
 Consumers of this changelog are decoupled from the app that generates the writes, which gives you
 great freedom to experiment without fear of bringing down the main site. You can use the changelog
