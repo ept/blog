@@ -60,21 +60,21 @@
                 The Python Paradox is now the Scala Paradox
             </h1>
 
-            <p><a href='http://www.paulgraham.com/'>Paul Graham</a> has written a bunch of good essays on entrepreneurship, laying down much of the philosophy behind <a href='http://ycombinator.com/'>Y Combinator</a>. If you&#8217;ve not read any of them yet, you should go and read them now &#8211; they contain lots of wisdom.</p>
+            <p><a href="http://www.paulgraham.com/">Paul Graham</a> has written a bunch of good essays on entrepreneurship, laying down much of the philosophy behind <a href="http://ycombinator.com/">Y Combinator</a>. If you’ve not read any of them yet, you should go and read them now – they contain lots of wisdom.</p>
 
-<p>In his 2004 short essay <a href='http://www.paulgraham.com/pypar.html'>The Python Paradox</a>, PG argues (perhaps controversially) that a company can hire smarter programmers if it chooses to write its code in a &#8220;comparatively esoteric&#8221; programming language. At the time, Python was probably considered by most people to be esoteric in comparison to Java &#8211; in the sense that not many people would learn it at university or for career purposes. Therefore, the programmers who knew Python were people who learnt it for fun; and learning languages for fun is an activity which typically only the bright and motivated people engage in. Which makes the language a good &#8220;quality filter&#8221; for people.</p>
+<p>In his 2004 short essay <a href="http://www.paulgraham.com/pypar.html">The Python Paradox</a>, PG argues (perhaps controversially) that a company can hire smarter programmers if it chooses to write its code in a “comparatively esoteric” programming language. At the time, Python was probably considered by most people to be esoteric in comparison to Java – in the sense that not many people would learn it at university or for career purposes. Therefore, the programmers who knew Python were people who learnt it for fun; and learning languages for fun is an activity which typically only the bright and motivated people engage in. Which makes the language a good “quality filter” for people.</p>
 
 <p>Of course times have moved on, and Python (and Ruby, for that matter) are definitely entering the mainstream. They are still fine languages, but they no longer carry as much of an early adopter aura about them. The culture of testing and code beauty which is embraced by the Ruby and Python communities is still something special, and that is now the primary reason why I would choose Ruby and Python over Java or C#.</p>
 
-<p>PG&#8217;s observation still holds true. But what are the new technologies to look out for? What can you find in 2009 which has the same role as Python did in 2004?</p>
+<p>PG’s observation still holds true. But what are the new technologies to look out for? What can you find in 2009 which has the same role as Python did in 2004?</p>
 
 <p><strong>Choosing a programming language</strong></p>
 
-<p>A few months ago, when I was designing the system architecture for <a href='http://go-test.it'>Go Test It, our awesome cross-browser testing product</a>, I had a lot of design choices to make. For some parts of the system it was fairly clear what we were going to use: for instance, the frontend web application was almost certainly going to be Rails, because I had some existing tools like <a href='http://ept.github.com/invoicing/'>the invoicing gem</a> which I wanted to reuse, and because it was simply a good fit for the job.</p>
+<p>A few months ago, when I was designing the system architecture for <a href="http://go-test.it">Go Test It, our awesome cross-browser testing product</a>, I had a lot of design choices to make. For some parts of the system it was fairly clear what we were going to use: for instance, the frontend web application was almost certainly going to be Rails, because I had some existing tools like <a href="http://ept.github.com/invoicing/">the invoicing gem</a> which I wanted to reuse, and because it was simply a good fit for the job.</p>
 
 <p>But what about the actual test management infrastructure?</p>
 
-<p>I chose to write it in <a href='http://www.scala-lang.org/'>Scala</a>. There were plenty of reasons why this could have seemed a bad idea:</p>
+<p>I chose to write it in <a href="http://www.scala-lang.org/">Scala</a>. There were plenty of reasons why this could have seemed a bad idea:</p>
 
 <ul>
 <li>I had hardly any experience in using Scala, so I would have to invest a lot of time learning it as I went along;</li>
@@ -85,30 +85,30 @@
 
 <li>although I had access to Java libraries, I knew that I would have to write library wrappers of my own to make use of the Scala language features;</li>
 
-<li>setting up a proper build process was <a href='/2009/05/13/building-go-test-it-fun-with-scala-and-rest-apis.html'>pretty horrible</a>.</li>
+<li>setting up a proper build process was <a href="/2009/05/13/building-go-test-it-fun-with-scala-and-rest-apis.html">pretty horrible</a>.</li>
 </ul>
 
-<p>Scala also had some technical merits; particularly the actor model for multithreaded programming was a good fit for our problem. Still, in a purely technical consideration, it probably wouldn&#8217;t have made much sense. But my heart still said yes. The prospect of working with a language which looked pretty, had static type inference, nice functional programming features, and runs on the JVM (battle-tested and optimised over many years)&#8230; my heart just said yes. It wasn&#8217;t a rational choice, but an instinctive, emotional one.</p>
+<p>Scala also had some technical merits; particularly the actor model for multithreaded programming was a good fit for our problem. Still, in a purely technical consideration, it probably wouldn’t have made much sense. But my heart still said yes. The prospect of working with a language which looked pretty, had static type inference, nice functional programming features, and runs on the JVM (battle-tested and optimised over many years)… my heart just said yes. It wasn’t a rational choice, but an instinctive, emotional one.</p>
 
 <p><strong>Paul Graham was right</strong></p>
 
-<p>Shortly after working this out and drawing my architecture diagram (a pretty insane-looking tangle of boxes and arrows on a sheet of paper), I was talking to <a href='http://samstokes.co.uk/'>Sam Stokes</a>, a freelance developer sitting next to me in our shared office. Sam is bright, motivated and interested in the things going on in the software world. We were talking casually about Go Test It and I showed him my messy diagram.</p>
+<p>Shortly after working this out and drawing my architecture diagram (a pretty insane-looking tangle of boxes and arrows on a sheet of paper), I was talking to <a href="http://samstokes.co.uk/">Sam Stokes</a>, a freelance developer sitting next to me in our shared office. Sam is bright, motivated and interested in the things going on in the software world. We were talking casually about Go Test It and I showed him my messy diagram.</p>
 
-<p>And when I had talked him through the architecture (&#8220;I think I&#8217;ll write these three components in Scala, and they will talk to each other via a <a href='http://www.rabbitmq.com/'>RabbitMQ message queue</a>&#8221;), Sam said, in effect, &#8220;Hey, this is cool, I want to work on this&#8221;.</p>
+<p>And when I had talked him through the architecture (“I think I’ll write these three components in Scala, and they will talk to each other via a <a href="http://www.rabbitmq.com/">RabbitMQ message queue</a>”), Sam said, in effect, “Hey, this is cool, I want to work on this”.</p>
 
-<p>And he did. Over the course of a few weekends, Sam spent several days learning Scala and contributing to the <a href='http://go-test.it'>Go Test It</a> codebase. When you use Go Test It today, you are using the Scala code he wrote. He did this simply because he found it interesting and wanted to learn something new. The code he wrote was good, production-quality stuff. And he didn&#8217;t want a penny for it.</p>
+<p>And he did. Over the course of a few weekends, Sam spent several days learning Scala and contributing to the <a href="http://go-test.it">Go Test It</a> codebase. When you use Go Test It today, you are using the Scala code he wrote. He did this simply because he found it interesting and wanted to learn something new. The code he wrote was good, production-quality stuff. And he didn’t want a penny for it.</p>
 
-<p>It&#8217;s not often that you get high-quality contributions to a closed-source project from a developer who is busy enough with several other projects already, for free.</p>
+<p>It’s not often that you get high-quality contributions to a closed-source project from a developer who is busy enough with several other projects already, for free.</p>
 
-<p>Of course Sam cannot live on technical stimulation and my gratitude alone, and since then, we have actually contracted him to do paid work on Go Test It. But I found his initial reaction, and his approach to the project, a great example to prove Paul Graham&#8217;s point.</p>
+<p>Of course Sam cannot live on technical stimulation and my gratitude alone, and since then, we have actually contracted him to do paid work on Go Test It. But I found his initial reaction, and his approach to the project, a great example to prove Paul Graham’s point.</p>
 
-<p>I would say <strong>Scala in 2009 has the place which Python had in 2004</strong>. There are a few other languages I would also consider for this title: <a href='http://www.haskell.org/'>Haskell</a>, <a href='http://erlang.org/'>Erlang</a> and <a href='http://clojure.org/'>Clojure</a> come to mind (but don&#8217;t take that as a recommendation &#8211; I&#8217;ve not yet used any of them seriously myself). What these languages all have in common is that they&#8217;ve been around for long enough to come out of the purely academic space, are stable enough to be production-worthy, but are also new and exciting enough to attract good developers.</p>
+<p>I would say <strong>Scala in 2009 has the place which Python had in 2004</strong>. There are a few other languages I would also consider for this title: <a href="http://www.haskell.org/">Haskell</a>, <a href="http://erlang.org/">Erlang</a> and <a href="http://clojure.org/">Clojure</a> come to mind (but don’t take that as a recommendation – I’ve not yet used any of them seriously myself). What these languages all have in common is that they’ve been around for long enough to come out of the purely academic space, are stable enough to be production-worthy, but are also new and exciting enough to attract good developers.</p>
 
 <p><strong>Fashion-Driven Development?</strong></p>
 
-<p>In <a href='http://carsonified.com/blog/dev/should-you-go-beyond-relational-databases/'>an article about non-relational databases</a> which <a href='http://twitter.com/ryancarson'>Ryan Carson</a> asked me to write a few months ago, I suggested that fashion can and should play a role in choosing which technologies to use. I got some criticism for this remark, but I still stand by my view. It is effectively a different way of looking at PG&#8217;s statement, provided you look for the fashion in the right circles (i.e. amongst experienced developers working at the cutting edge).</p>
+<p>In <a href="http://carsonified.com/blog/dev/should-you-go-beyond-relational-databases/">an article about non-relational databases</a> which <a href="http://twitter.com/ryancarson">Ryan Carson</a> asked me to write a few months ago, I suggested that fashion can and should play a role in choosing which technologies to use. I got some criticism for this remark, but I still stand by my view. It is effectively a different way of looking at PG’s statement, provided you look for the fashion in the right circles (i.e. amongst experienced developers working at the cutting edge).</p>
 
-<p>I wouldn&#8217;t go with fashion against all technical merit, but provided the technology is suitable and won&#8217;t increase your costs disproportionately, why not do something fashionable and adventurous? In an innovation-based technology business, the quality of your developers is key. Investments into things which make your good developers happy will pay off handsomely.</p>
+<p>I wouldn’t go with fashion against all technical merit, but provided the technology is suitable and won’t increase your costs disproportionately, why not do something fashionable and adventurous? In an innovation-based technology business, the quality of your developers is key. Investments into things which make your good developers happy will pay off handsomely.</p>
 
             
             <div class="hackernews">
@@ -187,15 +187,15 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>26 Mar 2014: <a href="/2014/03/26/six-things-about-scaling.html">Six things I wish we had known about scaling</a></li>
+                    
+                      <li>23 Oct 2013: <a href="/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html">LinkedIn Intro: Doing the Impossible on iOS</a></li>
+                    
                       <li>12 Aug 2013: <a href="/2013/08/12/system-operations-over-seven-centuries.html">System operations over seven centuries</a></li>
                     
                       <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
                     
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
-                    
-                      <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
-                    
-                      <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

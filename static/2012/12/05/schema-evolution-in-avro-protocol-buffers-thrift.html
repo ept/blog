@@ -63,22 +63,22 @@
             <p>So you have some data that you want to store in a file or send over the network. You may find yourself going through several phases of evolution:</p>
 
 <ol>
-<li>Using your programming language&#8217;s built-in serialization, such as <a href='http://docs.oracle.com/javase/6/docs/platform/serialization/spec/serialTOC.html'>Java serialization</a>, Ruby&#8217;s <a href='http://www.ruby-doc.org/core-1.9.3/Marshal.html'>marshal</a>, or Python&#8217;s <a href='http://docs.python.org/3.3/library/pickle.html'>pickle</a>. Or maybe you even invent your own format.</li>
+<li>Using your programming language’s built-in serialization, such as <a href="http://docs.oracle.com/javase/6/docs/platform/serialization/spec/serialTOC.html">Java serialization</a>, Ruby’s <a href="http://www.ruby-doc.org/core-1.9.3/Marshal.html">marshal</a>, or Python’s <a href="http://docs.python.org/3.3/library/pickle.html">pickle</a>. Or maybe you even invent your own format.</li>
 
-<li>Then you realise that being locked into one programming language sucks, so you move to using a widely supported, language-agnostic format like JSON (or XML if you like to party like it&#8217;s 1999).</li>
+<li>Then you realise that being locked into one programming language sucks, so you move to using a widely supported, language-agnostic format like JSON (or XML if you like to party like it’s 1999).</li>
 
-<li>Then you decide that JSON is too verbose and too slow to parse, you&#8217;re annoyed that it doesn&#8217;t differentiate integers from floating point, and think that you&#8217;d quite like binary strings as well as Unicode strings. So you invent some sort of binary format that&#8217;s kinda like JSON, but binary (<a href='http://msgpack.org/'>1</a>, <a href='http://bsonspec.org/'>2</a>, <a href='http://ubjson.org/'>3</a>, <a href='http://bjson.org/'>4</a>, <a href='http://kaijaeger.com/articles/introducing-bison-binary-interchange-standard.html'>5</a>, <a href='https://github.com/voldemort/voldemort/wiki/Binary-JSON-Serialization'>6</a>).</li>
+<li>Then you decide that JSON is too verbose and too slow to parse, you’re annoyed that it doesn’t differentiate integers from floating point, and think that you’d quite like binary strings as well as Unicode strings. So you invent some sort of binary format that’s kinda like JSON, but binary (<a href="http://msgpack.org/">1</a>, <a href="http://bsonspec.org/">2</a>, <a href="http://ubjson.org/">3</a>, <a href="http://bjson.org/">4</a>, <a href="http://kaijaeger.com/articles/introducing-bison-binary-interchange-standard.html">5</a>, <a href="https://github.com/voldemort/voldemort/wiki/Binary-JSON-Serialization">6</a>).</li>
 
-<li>Then you find that people are stuffing all sorts of random fields into their objects, using inconsistent types, and you&#8217;d quite like a <strong>schema</strong> and some <strong>documentation</strong>, thank you very much. Perhaps you&#8217;re also using a statically typed programming language and want to generate model classes from a schema. Also you realize that your binary JSON-lookalike actually isn&#8217;t all that compact, because you&#8217;re still storing field names over and over again; hey, if you had a schema, you could avoid storing objects&#8217; field names, and you could save some more bytes!</li>
+<li>Then you find that people are stuffing all sorts of random fields into their objects, using inconsistent types, and you’d quite like a <strong>schema</strong> and some <strong>documentation</strong>, thank you very much. Perhaps you’re also using a statically typed programming language and want to generate model classes from a schema. Also you realize that your binary JSON-lookalike actually isn’t all that compact, because you’re still storing field names over and over again; hey, if you had a schema, you could avoid storing objects’ field names, and you could save some more bytes!</li>
 </ol>
 
-<p>Once you get to the fourth stage, your options are typically <a href='http://thrift.apache.org/'>Thrift</a>, <a href='http://code.google.com/p/protobuf/'>Protocol Buffers</a> or <a href='http://avro.apache.org/'>Avro</a>. All three provide efficient, cross-language serialization of data using a schema, and code generation for the Java folks.</p>
+<p>Once you get to the fourth stage, your options are typically <a href="http://thrift.apache.org/">Thrift</a>, <a href="http://code.google.com/p/protobuf/">Protocol Buffers</a> or <a href="http://avro.apache.org/">Avro</a>. All three provide efficient, cross-language serialization of data using a schema, and code generation for the Java folks.</p>
 
-<p>Plenty of comparisons have been written about them already (<a href='http://floatingsun.net/articles/thrift-vs-protocol-buffers/'>1</a>, <a href='http://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/'>2</a>, <a href='http://blog.mirthlab.com/2009/06/01/thrift-vs-protocol-bufffers-vs-json/'>3</a>, <a href='http://tech.puredanger.com/2011/05/27/serialization-comparison/'>4</a>). However, many posts overlook a detail that seems mundane at first, but is actually cruicial: <strong>What happens if the schema changes?</strong></p>
+<p>Plenty of comparisons have been written about them already (<a href="http://floatingsun.net/articles/thrift-vs-protocol-buffers/">1</a>, <a href="http://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/">2</a>, <a href="http://blog.mirthlab.com/2009/06/01/thrift-vs-protocol-bufffers-vs-json/">3</a>, <a href="http://tech.puredanger.com/2011/05/27/serialization-comparison/">4</a>). However, many posts overlook a detail that seems mundane at first, but is actually cruicial: <strong>What happens if the schema changes?</strong></p>
 
-<p>In real life, data is always in flux. The moment you think you have finalised a schema, someone will come up with a use case that wasn&#8217;t anticipated, and wants to &#8220;just quickly add a field&#8221;. Fortunately Thrift, Protobuf and Avro all support <strong>schema evolution</strong>: you can change the schema, you can have producers and consumers with different versions of the schema at the same time, and it all continues to work. That is an extremely valuable feature when you&#8217;re dealing with a big production system, because it allows you to update different components of the system independently, at different times, without worrying about compatibility.</p>
+<p>In real life, data is always in flux. The moment you think you have finalised a schema, someone will come up with a use case that wasn’t anticipated, and wants to “just quickly add a field”. Fortunately Thrift, Protobuf and Avro all support <strong>schema evolution</strong>: you can change the schema, you can have producers and consumers with different versions of the schema at the same time, and it all continues to work. That is an extremely valuable feature when you’re dealing with a big production system, because it allows you to update different components of the system independently, at different times, without worrying about compatibility.</p>
 
-<p>Which brings us to the topic of today&#8217;s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes &#8212; and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are interesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
+<p>Which brings us to the topic of today’s post. I would like to explore how Protocol Buffers, Avro and Thrift actually encode data into bytes — and this will also help explain how each of them deals with schema changes. The design choices made by each of the frameworks are interesting, and by comparing them I think you can become a better engineer (by a little bit).</p>
 
 <p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
 <div class='highlight'><pre><code class='js'><span class='p'>{</span>
@@ -89,7 +89,7 @@
 </code></pre></div>
 <p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
 
-<h2 id='protocol_buffers'>Protocol Buffers</h2>
+<h2 id="protocol_buffers">Protocol Buffers</h2>
 
 <p>The Protocol Buffers schema for the person object might look something like this:</p>
 
@@ -99,25 +99,27 @@
     repeated string interests        = 3;
 }</code></pre>
 
-<p>When we <a href='https://developers.google.com/protocol-buffers/docs/encoding'>encode</a> the data above using this schema, it uses 33 bytes, as follows:</p>
-<a href='/2012/12/protobuf.png'><img height='230' src='/2012/12/protobuf_small.png' width='550' /></a>
+<p>When we <a href="https://developers.google.com/protocol-buffers/docs/encoding">encode</a> the data above using this schema, it uses 33 bytes, as follows:</p>
+
+<p><a href='/2012/12/protobuf.png'><img height='230' src='/2012/12/protobuf_small.png' width='550' /></a></p>
+
 <p>Look exactly at how the binary representation is structured, byte by byte. The person record is just the concatentation of its fields. Each field starts with a byte that indicates its tag number (the numbers <code>1</code>, <code>2</code>, <code>3</code> in the schema above), and the type of the field. If the first byte of a field indicates that the field is a string, it is followed by the number of bytes in the string, and then the UTF-8 encoding of the string. If the first byte indicates that the field is an integer, a variable-length encoding of the number follows. There is no array type, but a tag number can appear multiple times to represent a multi-valued field.</p>
 
 <p>This encoding has consequences for schema evolution:</p>
 
 <ul>
-<li>There is no difference in the encoding between <code>optional</code>, <code>required</code> and <code>repeated</code> fields (except for the number of times the tag number can appear). This means that you can change a field from <code>optional</code> to <code>repeated</code> and vice versa (if the parser is expecting an <code>optional</code> field but sees the same tag number multiple times in one record, it discards all but the last value). <code>required</code> has an additional validation check, so if you change it, you risk runtime errors (if the sender of a message thinks that it&#8217;s optional, but the recipient thinks that it&#8217;s required).</li>
+<li>There is no difference in the encoding between <code>optional</code>, <code>required</code> and <code>repeated</code> fields (except for the number of times the tag number can appear). This means that you can change a field from <code>optional</code> to <code>repeated</code> and vice versa (if the parser is expecting an <code>optional</code> field but sees the same tag number multiple times in one record, it discards all but the last value). <code>required</code> has an additional validation check, so if you change it, you risk runtime errors (if the sender of a message thinks that it’s optional, but the recipient thinks that it’s required).</li>
 
-<li>An <code>optional</code> field without a value, or a <code>repeated</code> field with zero values, does not appear in the encoded data at all &#8212; the field with that tag number is simply absent. Thus, it is safe to remove that kind of field from the schema. However, you must never reuse the tag number for another field in future, because you may still have data stored that uses that tag for the field you deleted.</li>
+<li>An <code>optional</code> field without a value, or a <code>repeated</code> field with zero values, does not appear in the encoded data at all — the field with that tag number is simply absent. Thus, it is safe to remove that kind of field from the schema. However, you must never reuse the tag number for another field in future, because you may still have data stored that uses that tag for the field you deleted.</li>
 
-<li>You can add a field to your record, as long as it is given a new tag number. If the Protobuf parser parser sees a tag number that is not defined in its version of the schema, it has no way of knowing what that field is called. But it <em>does</em> roughly know what type it is, because a 3-bit type code is included in the first byte of the field. This means that even though the parser can&#8217;t exactly interpret the field, it can figure out how many bytes it needs to skip in order to find the next field in the record.</li>
+<li>You can add a field to your record, as long as it is given a new tag number. If the Protobuf parser parser sees a tag number that is not defined in its version of the schema, it has no way of knowing what that field is called. But it <em>does</em> roughly know what type it is, because a 3-bit type code is included in the first byte of the field. This means that even though the parser can’t exactly interpret the field, it can figure out how many bytes it needs to skip in order to find the next field in the record.</li>
 
-<li>You can rename fields, because field names don&#8217;t exist in the binary serialization, but you can never change a tag number.</li>
+<li>You can rename fields, because field names don’t exist in the binary serialization, but you can never change a tag number.</li>
 </ul>
 
-<p>This approach of using a tag number to represent each field is simple and effective. But as we&#8217;ll see in a minute, it&#8217;s not the only way of doing things.</p>
+<p>This approach of using a tag number to represent each field is simple and effective. But as we’ll see in a minute, it’s not the only way of doing things.</p>
 
-<h2 id='avro'>Avro</h2>
+<h2 id="avro">Avro</h2>
 
 <p>Avro schemas can be written in two ways, either in a JSON format:</p>
 <div class='highlight'><pre><code class='js'><span class='p'>{</span>
@@ -130,7 +132,7 @@
     <span class='p'>]</span>
 <span class='p'>}</span>
 </code></pre></div>
-<p>&#8230;or in an IDL:</p>
+<p>…or in an IDL:</p>
 
 <pre><code>record Person {
     string               userName;
@@ -140,24 +142,26 @@
 
 <p>Notice that there are no tag numbers in the schema! So how does it work?</p>
 
-<p>Here is the same example data <a href='http://avro.apache.org/docs/current/spec.html'>encoded</a> in just 32 bytes:</p>
-<a href='/2012/12/avro.png'><img height='259' src='/2012/12/avro_small.png' width='550' /></a>
-<p>Strings are just a length prefix followed by UTF-8 bytes, but there&#8217;s nothing in the bytestream that tells you that it is a string. It could just as well be a variable-length integer, or something else entirely. The only way you can parse this binary data is by reading it alongside the schema, and the schema tells you what type to expect next. You need to have the <strong>exact same version</strong> of the schema as the writer of the data used. If you have the wrong schema, the parser will not be able to make head or tail of the binary data.</p>
+<p>Here is the same example data <a href="http://avro.apache.org/docs/current/spec.html">encoded</a> in just 32 bytes:</p>
 
-<p>So how does Avro support schema evolution? Well, although you need to know the exact schema with which the data was written (the writer&#8217;s schema), that doesn&#8217;t have to be the same as the schema the consumer is expecting (the reader&#8217;s schema). You can actually give <em>two different</em> schemas to the Avro parser, and it uses <a href='http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html'>resolution rules</a> to translate data from the writer schema into the reader schema.</p>
+<p><a href='/2012/12/avro.png'><img height='259' src='/2012/12/avro_small.png' width='550' /></a></p>
+
+<p>Strings are just a length prefix followed by UTF-8 bytes, but there’s nothing in the bytestream that tells you that it is a string. It could just as well be a variable-length integer, or something else entirely. The only way you can parse this binary data is by reading it alongside the schema, and the schema tells you what type to expect next. You need to have the <strong>exact same version</strong> of the schema as the writer of the data used. If you have the wrong schema, the parser will not be able to make head or tail of the binary data.</p>
+
+<p>So how does Avro support schema evolution? Well, although you need to know the exact schema with which the data was written (the writer’s schema), that doesn’t have to be the same as the schema the consumer is expecting (the reader’s schema). You can actually give <em>two different</em> schemas to the Avro parser, and it uses <a href="http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html">resolution rules</a> to translate data from the writer schema into the reader schema.</p>
 
 <p>This has some interesting consequences for schema evolution:</p>
 
 <ul>
-<li>The Avro encoding doesn&#8217;t have an indicator to say which field is next; it just encodes one field after another, in the order they appear in the schema. Since there is no way for the parser to know that a field has been skipped, there is no such thing as an optional field in Avro. Instead, if you want to be able to leave out a value, you can use a union type, like <code>union { null, long }</code> above. This is encoded as a byte to tell the parser which of the possible union types to use, followed by the value itself. By making a union with the <code>null</code> type (which is simply encoded as zero bytes) you can make a field optional.</li>
+<li>The Avro encoding doesn’t have an indicator to say which field is next; it just encodes one field after another, in the order they appear in the schema. Since there is no way for the parser to know that a field has been skipped, there is no such thing as an optional field in Avro. Instead, if you want to be able to leave out a value, you can use a union type, like <code>union { null, long }</code> above. This is encoded as a byte to tell the parser which of the possible union types to use, followed by the value itself. By making a union with the <code>null</code> type (which is simply encoded as zero bytes) you can make a field optional.</li>
 
 <li>Union types are powerful, but you must take care when changing them. If you want to add a type to a union, you first need to update all readers with the new schema, so that they know what to expect. Only once all readers are updated, the writers may start putting this new type in the records they generate.</li>
 
 <li>You can reorder fields in a record however you like. Although the fields are encoded in the order they are declared, the parser matches fields in the reader and writer schema by name, which is why no tag numbers are needed in Avro.</li>
 
-<li>Because fields are matched by name, changing the name of a field is tricky. You need to first update all <em>readers</em> of the data to use the new field name, while keeping the old name as an alias (since the name matching uses aliases from the reader&#8217;s schema). Then you can update the writer&#8217;s schema to use the new field name.</li>
+<li>Because fields are matched by name, changing the name of a field is tricky. You need to first update all <em>readers</em> of the data to use the new field name, while keeping the old name as an alias (since the name matching uses aliases from the reader’s schema). Then you can update the writer’s schema to use the new field name.</li>
 
-<li>You can add a field to a record, provided that you also give it a default value (e.g. <code>null</code> if the field&#8217;s type is a union with <code>null</code>). The default is necessary so that when a reader using the new schema parses a record written with the old schema (and hence lacking the field), it can fill in the default instead.</li>
+<li>You can add a field to a record, provided that you also give it a default value (e.g. <code>null</code> if the field’s type is a union with <code>null</code>). The default is necessary so that when a reader using the new schema parses a record written with the old schema (and hence lacking the field), it can fill in the default instead.</li>
 
 <li>Conversely, you can remove a field from a record, provided that it previously had a default value. (This is a good reason to give all your fields default values if possible.) This is so that when a reader using the <em>old</em> schema parses a record written with the <em>new</em> schema, it can fall back to the default.</li>
 </ul>
@@ -165,30 +169,30 @@
 <p>This leaves us with the problem of knowing the exact schema with which a given record was written. The best solution depends on the context in which your data is being used:</p>
 
 <ul>
-<li>In Hadoop you typically have large files containing millions of records, all encoded with the same schema. <a href='http://avro.apache.org/docs/1.7.2/spec.html#Object+Container+Files'>Object container files</a> handle this case: they just include the schema once at the beginning of the file, and the rest of the file can be decoded with that schema.</li>
+<li>In Hadoop you typically have large files containing millions of records, all encoded with the same schema. <a href="http://avro.apache.org/docs/1.7.2/spec.html#Object+Container+Files">Object container files</a> handle this case: they just include the schema once at the beginning of the file, and the rest of the file can be decoded with that schema.</li>
 
-<li>In an RPC context, it&#8217;s probably too much overhead to send the schema with every request and response. But if your RPC framework uses long-lived connections, it can negotiate the schema once at the start of the connection, and amortize that overhead over many requests.</li>
+<li>In an RPC context, it’s probably too much overhead to send the schema with every request and response. But if your RPC framework uses long-lived connections, it can negotiate the schema once at the start of the connection, and amortize that overhead over many requests.</li>
 
-<li>If you&#8217;re storing records in a database one-by-one, you may end up with different schema versions written at different times, and so you have to annotate each record with its schema version. If storing the schema itself is too much overhead, you can use a <a href='http://avro.apache.org/docs/1.7.2/spec.html#Schema+Fingerprints'>hash</a> of the schema, or a sequential schema version number. You then need a <a href='https://issues.apache.org/jira/browse/AVRO-1124'>schema registry</a> where you can look up the exact schema definition for a given version number.</li>
+<li>If you’re storing records in a database one-by-one, you may end up with different schema versions written at different times, and so you have to annotate each record with its schema version. If storing the schema itself is too much overhead, you can use a <a href="http://avro.apache.org/docs/1.7.2/spec.html#Schema+Fingerprints">hash</a> of the schema, or a sequential schema version number. You then need a <a href="https://issues.apache.org/jira/browse/AVRO-1124">schema registry</a> where you can look up the exact schema definition for a given version number.</li>
 </ul>
 
 <p>One way of looking at it: in Protocol Buffers, every field in a record is tagged, whereas in Avro, the entire record, file or network connection is tagged with a schema version.</p>
 
-<p>At first glance it may seem that Avro&#8217;s approach suffers from greater complexity, because you need to go to the additional effort of distributing schemas. However, I am beginning to think that Avro&#8217;s approach also has some distinct advantages:</p>
+<p>At first glance it may seem that Avro’s approach suffers from greater complexity, because you need to go to the additional effort of distributing schemas. However, I am beginning to think that Avro’s approach also has some distinct advantages:</p>
 
 <ul>
-<li>Object container files are wonderfully self-describing: the writer schema embedded in the file contains all the field names and types, and even documentation strings (if the author of the schema bothered to write some). This means you can load these files directly into interactive tools like <a href='http://pig.apache.org/'>Pig</a>, and it Just Works™ without any configuration.</li>
+<li>Object container files are wonderfully self-describing: the writer schema embedded in the file contains all the field names and types, and even documentation strings (if the author of the schema bothered to write some). This means you can load these files directly into interactive tools like <a href="http://pig.apache.org/">Pig</a>, and it Just Works™ without any configuration.</li>
 
 <li>As Avro schemas are JSON, you can add your own metadata to them, e.g. describing application-level semantics for a field. And as you distribute schemas, that metadata automatically gets distributed too.</li>
 
-<li>A schema registry is probably a good thing in any case, serving as <a href='https://github.com/ept/avrodoc'>documentation</a> and helping you to find and reuse data. And because you simply can&#8217;t parse Avro data without the schema, the schema registry is guaranteed to be up-to-date. Of course you can set up a protobuf schema registry too, but since it&#8217;s not <em>required</em> for operation, it&#8217;ll end up being on a best-effort basis.</li>
+<li>A schema registry is probably a good thing in any case, serving as <a href="https://github.com/ept/avrodoc">documentation</a> and helping you to find and reuse data. And because you simply can’t parse Avro data without the schema, the schema registry is guaranteed to be up-to-date. Of course you can set up a protobuf schema registry too, but since it’s not <em>required</em> for operation, it’ll end up being on a best-effort basis.</li>
 </ul>
 
-<h2 id='thrift'>Thrift</h2>
+<h2 id="thrift">Thrift</h2>
 
-<p>Thrift is a much bigger project than Avro or Protocol Buffers, as it&#8217;s not just a data serialization library, but also an entire RPC framework. It also has a somewhat different culture: whereas Avro and Protobuf standardize a single binary encoding, Thrift <a href='http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E'>embraces</a> a whole variety of different serialization formats (which it calls &#8220;protocols&#8221;).</p>
+<p>Thrift is a much bigger project than Avro or Protocol Buffers, as it’s not just a data serialization library, but also an entire RPC framework. It also has a somewhat different culture: whereas Avro and Protobuf standardize a single binary encoding, Thrift <a href="http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E">embraces</a> a whole variety of different serialization formats (which it calls “protocols”).</p>
 
-<p>Indeed, Thrift has <a href='https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TJSONProtocol.html'>two</a> <a href='https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TSimpleJSONProtocol.html'>different</a> JSON encodings, and no fewer than three different binary encodings. (However, one of the binary encodings, DenseProtocol, is <a href='http://wiki.apache.org/thrift/LibraryFeatures'>only supported in the C++ implementation</a>; since we&#8217;re interested in cross-language serialization, I will focus on the other two.)</p>
+<p>Indeed, Thrift has <a href="https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TJSONProtocol.html">two</a> <a href="https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TSimpleJSONProtocol.html">different</a> JSON encodings, and no fewer than three different binary encodings. (However, one of the binary encodings, DenseProtocol, is <a href="http://wiki.apache.org/thrift/LibraryFeatures">only supported in the C++ implementation</a>; since we’re interested in cross-language serialization, I will focus on the other two.)</p>
 
 <p>All the encodings share the same schema definition, in Thrift IDL:</p>
 
@@ -199,14 +203,18 @@
 }</code></pre>
 
 <p>The BinaryProtocol encoding is very straightforward, but also fairly wasteful (it takes 59 bytes to encode our example record):</p>
-<a href='/2012/12/binaryprotocol.png'><img height='269' src='/2012/12/binaryprotocol_small.png' width='550' /></a>
+
+<p><a href='/2012/12/binaryprotocol.png'><img height='269' src='/2012/12/binaryprotocol_small.png' width='550' /></a></p>
+
 <p>The CompactProtocol encoding is semantically equivalent, but uses variable-length integers and bit packing to reduce the size to 34 bytes:</p>
-<a href='/2012/12/compactprotocol.png'><img height='276' src='/2012/12/compactprotocol_small.png' width='550' /></a>
-<p>As you can see, Thrift&#8217;s approach to schema evolution is the same as Protobuf&#8217;s: each field is manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding, which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than Protobuf&#8217;s repeated field approach, but otherwise the two are very similar.</p>
 
-<p>In terms of philosophy, the libraries are very different though. Thrift favours the &#8220;one-stop shop&#8221; style that gives you an entire integrated RPC framework and many choices (with <a href='http://wiki.apache.org/thrift/LibraryFeatures'>varying cross-language support</a>), whereas Protocol Buffers and Avro appear to follow much more of a <a href='http://www.faqs.org/docs/artu/ch01s06.html'>&#8220;do one thing and do it well&#8221;</a> style.</p>
+<p><a href='/2012/12/compactprotocol.png'><img height='276' src='/2012/12/compactprotocol_small.png' width='550' /></a></p>
 
-<p><em>This post has been translated into <a href='http://www.sjava.net/319'>Korean</a> by Justin Song.</em></p>
+<p>As you can see, Thrift’s approach to schema evolution is the same as Protobuf’s: each field is manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding, which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than Protobuf’s repeated field approach, but otherwise the two are very similar.</p>
+
+<p>In terms of philosophy, the libraries are very different though. Thrift favours the “one-stop shop” style that gives you an entire integrated RPC framework and many choices (with <a href="http://wiki.apache.org/thrift/LibraryFeatures">varying cross-language support</a>), whereas Protocol Buffers and Avro appear to follow much more of a <a href="http://www.faqs.org/docs/artu/ch01s06.html">“do one thing and do it well”</a> style.</p>
+
+<p><em>This post has been translated into <a href="http://www.sjava.net/319">Korean</a> by Justin Song.</em></p>
 
             
 
@@ -275,15 +283,15 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>26 Mar 2014: <a href="/2014/03/26/six-things-about-scaling.html">Six things I wish we had known about scaling</a></li>
+                    
+                      <li>23 Oct 2013: <a href="/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html">LinkedIn Intro: Doing the Impossible on iOS</a></li>
+                    
                       <li>12 Aug 2013: <a href="/2013/08/12/system-operations-over-seven-centuries.html">System operations over seven centuries</a></li>
                     
                       <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
                     
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
-                    
-                      <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
-                    
-                      <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

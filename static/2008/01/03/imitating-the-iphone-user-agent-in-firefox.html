@@ -60,20 +60,20 @@
                 Imitating the iPhone User Agent in Firefox
             </h1>
 
-            <p>There are a number of web sites out there which provide specifically optimised versions for the iPhone. I was curious to test them (and to look at their source code to see what they are doing), but don&#8217;t have an iPhone myself. Many sites will only give a visitor the iPhone version of their site if the web browser identifies itself as Safari Mobile. How do you get it?</p>
+            <p>There are a number of web sites out there which provide specifically optimised versions for the iPhone. I was curious to test them (and to look at their source code to see what they are doing), but don’t have an iPhone myself. Many sites will only give a visitor the iPhone version of their site if the web browser identifies itself as Safari Mobile. How do you get it?</p>
 
-<p>The solution is the &#8221;<a href='http://en.wikipedia.org/wiki/User_agent'>user agent</a>&#8221; &#8211; a string sent by the web browser to the server as part of every request. It contains the name and version of the browser software you are using, the operating system, and a few other bits and pieces. It&#8217;s a very useful piece of information to website administrators, who can use it to compile anonymous statistics about the people who visit their site.</p>
+<p>The solution is the ”<a href="http://en.wikipedia.org/wiki/User_agent">user agent</a>” – a string sent by the web browser to the server as part of every request. It contains the name and version of the browser software you are using, the operating system, and a few other bits and pieces. It’s a very useful piece of information to website administrators, who can use it to compile anonymous statistics about the people who visit their site.</p>
 
-<p>Many people consider it to be bad practice to serve different versions of a site depending on the user agent, but it happens often enough anyway. And that&#8217;s exactly what is going on here. Fortunately there are tools which will let you modify the user agent, so you can see what you would get if you were using some other software. This is sometimes called &#8220;masquerading&#8221; as another browser. The technique described here is for <a href='http://www.mozilla.com/en-US/firefox/'>Firefox</a>, but <a href='http://www.ericgiguere.com/articles/masquerading-your-browser.html'>it&#8217;s possible to do the same thing with other browsers too</a>.</p>
+<p>Many people consider it to be bad practice to serve different versions of a site depending on the user agent, but it happens often enough anyway. And that’s exactly what is going on here. Fortunately there are tools which will let you modify the user agent, so you can see what you would get if you were using some other software. This is sometimes called “masquerading” as another browser. The technique described here is for <a href="http://www.mozilla.com/en-US/firefox/">Firefox</a>, but <a href="http://www.ericgiguere.com/articles/masquerading-your-browser.html">it’s possible to do the same thing with other browsers too</a>.</p>
 
-<p>Download the <a href='https://addons.mozilla.org/en-US/firefox/addon/59'>User Agent Switcher add-on for Firefox</a>, and restart Firefox. In the menu, go to Tools -&#62; User Agent Switcher -&#62; Options -&#62; Options. Add a new user agent, with description &#8220;iPhone&#8221;, and the following entry in the user agent field:</p>
+<p>Download the <a href="https://addons.mozilla.org/en-US/firefox/addon/59">User Agent Switcher add-on for Firefox</a>, and restart Firefox. In the menu, go to Tools -&gt; User Agent Switcher -&gt; Options -&gt; Options. Add a new user agent, with description “iPhone”, and the following entry in the user agent field:</p>
 <blockquote>Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420.1 (KHTML, like
 Gecko) Version/3.0 Mobile/3B48b Safari/419.3</blockquote>
-<p>The remaining fields (app version etc.) can stay empty. Now you can click Tools -&#62; User Agent Switcher -&#62; iPhone, and your browser instantly &#8220;becomes&#8221; an iPhone. If the site uses features which are not available in Firefox, it will not render correctly, but at least the site should serve you the same content as it would do to an iPhone. (The user agent above is taken from a real iPhone; there are probably many others which work too, but that one has worked for me.)</p>
+<p>The remaining fields (app version etc.) can stay empty. Now you can click Tools -&gt; User Agent Switcher -&gt; iPhone, and your browser instantly “becomes” an iPhone. If the site uses features which are not available in Firefox, it will not render correctly, but at least the site should serve you the same content as it would do to an iPhone. (The user agent above is taken from a real iPhone; there are probably many others which work too, but that one has worked for me.)</p>
 
-<p>One big caveat: you shouldn&#8217;t really be doing this! Use it only briefly for testing a site, then reset the user agent to the Firefox default. Otherwise you&#8217;ll end up sending the iPhone user agent to all other web sites you visit too, and that isn&#8217;t good for anybody. You may up being locked out of certain web sites or getting the wrong version, and administrators of web sites will hate you because you mess up their statistics.</p>
+<p>One big caveat: you shouldn’t really be doing this! Use it only briefly for testing a site, then reset the user agent to the Firefox default. Otherwise you’ll end up sending the iPhone user agent to all other web sites you visit too, and that isn’t good for anybody. You may up being locked out of certain web sites or getting the wrong version, and administrators of web sites will hate you because you mess up their statistics.</p>
 
-<p>So please, please reset the user agent to the default when you&#8217;ve finished testing.</p>
+<p>So please, please reset the user agent to the default when you’ve finished testing.</p>
 
             
 
@@ -142,15 +142,15 @@ Gecko) Version/3.0 Mobile/3B48b Safari/419.3</blockquote>
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>26 Mar 2014: <a href="/2014/03/26/six-things-about-scaling.html">Six things I wish we had known about scaling</a></li>
+                    
+                      <li>23 Oct 2013: <a href="/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html">LinkedIn Intro: Doing the Impossible on iOS</a></li>
+                    
                       <li>12 Aug 2013: <a href="/2013/08/12/system-operations-over-seven-centuries.html">System operations over seven centuries</a></li>
                     
                       <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
                     
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
-                    
-                      <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
-                    
-                      <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

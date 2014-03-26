@@ -60,11 +60,11 @@
                 Why the mobile web is so slow
             </h1>
 
-            <p>On the &#8220;desktop/laptop web&#8221; (in contrast to the mobile web), we&#8217;ve become used to a page loading in about a second. On mobile phones, we are still far from seeing anything near that responsiveness &#8211; for most people, the mobile web experience is still agonisingly slow. Personally, I start to get irritated after about five seconds, and after as little as ten seconds there is a strong chance that I will go away and do something else. And currently it&#8217;s still a challenge to get a page to load within that timeframe on a mobile.</p>
+            <p>On the “desktop/laptop web” (in contrast to the mobile web), we’ve become used to a page loading in about a second. On mobile phones, we are still far from seeing anything near that responsiveness – for most people, the mobile web experience is still agonisingly slow. Personally, I start to get irritated after about five seconds, and after as little as ten seconds there is a strong chance that I will go away and do something else. And currently it’s still a challenge to get a page to load within that timeframe on a mobile.</p>
 
-<p>Ever wondered why it is so slow? Yesterday I was reading a few articles, and I repeatedly came across people who made a very simplistic assumption: namely that the available network bandwidth is fully used. For example, they will say: on a standard 3G/UMTS connection, each subscriber can transfer 384 kbit/s, therefore a 24 kB web page (text and a few small pictures) will load in 0.5 seconds. Honestly, if you&#8217;ve <em>ever</em> tried to access even a simple web page from a phone you know that this figure is just laughably wrong. It is <em>never</em> that fast.</p>
+<p>Ever wondered why it is so slow? Yesterday I was reading a few articles, and I repeatedly came across people who made a very simplistic assumption: namely that the available network bandwidth is fully used. For example, they will say: on a standard 3G/UMTS connection, each subscriber can transfer 384 kbit/s, therefore a 24 kB web page (text and a few small pictures) will load in 0.5 seconds. Honestly, if you’ve <em>ever</em> tried to access even a simple web page from a phone you know that this figure is just laughably wrong. It is <em>never</em> that fast.</p>
 
-<p>Finally, after lots of searching, I found <a href='http://research.microsoft.com/~pablo/papers/www04.pdf'>this paper</a> by <a href='http://blog.rodriguezrodriguez.com/'>Pablo Rodriguez</a>, <a href='http://www1.bell-labs.com/user/sarit/'>Sarit Mukherjee</a> and Sampath Rangarajan. And they give some good reasons why this is the case:</p>
+<p>Finally, after lots of searching, I found <a href="http://research.microsoft.com/~pablo/papers/www04.pdf">this paper</a> by <a href="http://blog.rodriguezrodriguez.com/">Pablo Rodriguez</a>, <a href="http://www1.bell-labs.com/user/sarit/">Sarit Mukherjee</a> and Sampath Rangarajan. And they give some good reasons why this is the case:</p>
 
 <ul>
 <li>The round-trip time for packets is between 400 and 1000 ms in a typical 3G cell.</li>
@@ -72,23 +72,23 @@
 <li>Packets loss is inevitable in wireless transmissions because of radio interference. There are two approaches to packet loss: either let TCP deal with retransmission (in which case it thinks the network is congested, and reduces the transfer rate), or to retransmit lost packets in a low-level protocol (in which case the round-trip times observed by TCP can vary wildly, which confuses TCP and also reduces the transfer rate).</li>
 </ul>
 
-<p>In a nutshell, TCP is really not up to the job, but it&#8217;s so widely used that there is basically no chance that it is going to be replaced anytime so on. (WAP included a layer called the <a href='http://www.protocols.com/pbook/wap.htm'>Wireless Transaction Protocol</a>, which attempted to be a better replacement for TCP. But we know what happened to WAP &#8211; nobody wants to use it.) In their paper, Rodriguez et al. go on to describe a method for partially getting round the problem by rewriting DNS and HTTP responses &#8211; it&#8217;s not ideal, but at least it removes some of the worst problems.</p>
+<p>In a nutshell, TCP is really not up to the job, but it’s so widely used that there is basically no chance that it is going to be replaced anytime so on. (WAP included a layer called the <a href="http://www.protocols.com/pbook/wap.htm">Wireless Transaction Protocol</a>, which attempted to be a better replacement for TCP. But we know what happened to WAP – nobody wants to use it.) In their paper, Rodriguez et al. go on to describe a method for partially getting round the problem by rewriting DNS and HTTP responses – it’s not ideal, but at least it removes some of the worst problems.</p>
 
-<p>The real problem here is that round-trip time though. On a normal broadband connection I&#8217;d expect a round-trip time between 25 ms (within the UK) and 125 ms (across the Atlantic). On 3G, even though the bandwidth is not that much lower than broadband, we&#8217;ve got a round-trip time 8 to 15 times higher. And this time really becomes noticeable every time you click on a link:</p>
+<p>The real problem here is that round-trip time though. On a normal broadband connection I’d expect a round-trip time between 25 ms (within the UK) and 125 ms (across the Atlantic). On 3G, even though the bandwidth is not that much lower than broadband, we’ve got a round-trip time 8 to 15 times higher. And this time really becomes noticeable every time you click on a link:</p>
 
 <ul>
-<li>Send a DNS request for the hostname we want to contact, and wait for the response. (Unless we&#8217;ve cached the DNS record on the handset.)</li>
+<li>Send a DNS request for the hostname we want to contact, and wait for the response. (Unless we’ve cached the DNS record on the handset.)</li>
 
 <li>Send a TCP SYN packet to the server we want to contact, and wait for the response.</li>
 
 <li>Send the HTTP query over the established TCP connection.</li>
 </ul>
 
-<p>This means that every time we click a link, we have to wait 2 or 3 round trip times &#8211; i.e. between 0.8 and 3.0 seconds &#8211; until we get the very first few bytes of the page we requested. That&#8217;s assuming that none of those first few packets got lost (because if one of them was lost, there would be no way of telling &#8211; all you can do is wait for a timeout and try again). And then we still have to transfer the whole page, and have all the TCP issues to deal with.</p>
+<p>This means that every time we click a link, we have to wait 2 or 3 round trip times – i.e. between 0.8 and 3.0 seconds – until we get the very first few bytes of the page we requested. That’s assuming that none of those first few packets got lost (because if one of them was lost, there would be no way of telling – all you can do is wait for a timeout and try again). And then we still have to transfer the whole page, and have all the TCP issues to deal with.</p>
 
-<p>I just hope that mobile phones nowadays use <a href='http://en.wikipedia.org/wiki/HTTP_persistent_connection'>persistent HTTP connections</a> or <a href='http://en.wikipedia.org/wiki/HTTP_pipelining'>pipelining</a> which would remove some of the overheads. Does anybody know if they do? I&#8217;d like to hear from you.</p>
+<p>I just hope that mobile phones nowadays use <a href="http://en.wikipedia.org/wiki/HTTP_persistent_connection">persistent HTTP connections</a> or <a href="http://en.wikipedia.org/wiki/HTTP_pipelining">pipelining</a> which would remove some of the overheads. Does anybody know if they do? I’d like to hear from you.</p>
 
-<p>PS. I thought I had accidentally deleted this post &#8211; fortunately I managed to find it again, hidden away in a binary mess, in the MySQL log file! :-)</p>
+<p>PS. I thought I had accidentally deleted this post – fortunately I managed to find it again, hidden away in a binary mess, in the MySQL log file! :-)</p>
 
             
 
@@ -157,15 +157,15 @@
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>26 Mar 2014: <a href="/2014/03/26/six-things-about-scaling.html">Six things I wish we had known about scaling</a></li>
+                    
+                      <li>23 Oct 2013: <a href="/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html">LinkedIn Intro: Doing the Impossible on iOS</a></li>
+                    
                       <li>12 Aug 2013: <a href="/2013/08/12/system-operations-over-seven-centuries.html">System operations over seven centuries</a></li>
                     
                       <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
                     
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
-                    
-                      <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
-                    
-                      <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

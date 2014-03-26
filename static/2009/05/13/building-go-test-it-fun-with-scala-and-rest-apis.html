@@ -60,20 +60,21 @@
                 Building Go Test It: Fun with Scala and REST APIs
             </h1>
 
-            <img alt='Go Test It' class='size-full wp-image-279' height='177' src='/2009/05/go-test-it.png' width='285' />
-<p><a href='http://go-test.it/'>Go Test It</a>, the awesome new web testing product I am currently working on, was <a href='http://twitter.com/martinkl/status/1763467765'>announced</a> on Monday. I had <a href='/2008/12/30/looking-back-at-2008-plans-for-2009.html'>hinted at it</a> back in December, but now that it is taking shape it was time for me to start spreading the word.</p>
+            <p><img alt='Go Test It' class='size-full wp-image-279' height='177' src='/2009/05/go-test-it.png' width='285' /></p>
 
-<p>Please see the <a href='http://go-test.it/'>Go Test It website</a> for details about the product; in summary, it allows web developers and QA teams to very quickly and easily record functional tests on their web application, and plays them back in our own cloud-hosted cross-browser infrastructure. It is going to be the fastest way ever to get started with cross-browser testing, and also provide great tools for running your existing test suites. With <a href='http://go-test.it/'>Go Test It</a>, there will be no more excuses for not having great coverage of automated functional tests.</p>
+<p><a href="http://go-test.it/">Go Test It</a>, the awesome new web testing product I am currently working on, was <a href="http://twitter.com/martinkl/status/1763467765">announced</a> on Monday. I had <a href="/2008/12/30/looking-back-at-2008-plans-for-2009.html">hinted at it</a> back in December, but now that it is taking shape it was time for me to start spreading the word.</p>
+
+<p>Please see the <a href="http://go-test.it/">Go Test It website</a> for details about the product; in summary, it allows web developers and QA teams to very quickly and easily record functional tests on their web application, and plays them back in our own cloud-hosted cross-browser infrastructure. It is going to be the fastest way ever to get started with cross-browser testing, and also provide great tools for running your existing test suites. With <a href="http://go-test.it/">Go Test It</a>, there will be no more excuses for not having great coverage of automated functional tests.</p>
 
 <p>On this blog I would like to share from time to time some of the technical challenges we have overcome in the process of building this product.</p>
 
 <p><strong>Today: Simple REST APIs in Scala</strong></p>
 
-<p>The Go Test It system consists of a number of different components using different programming languages, different frameworks, different infrastructures. The main user front-end is a <a href='http://rubyonrails.org/'>Rails</a> app, but not all tasks are so well suited to Ruby. In particular, the multi-threaded parts of the system which do a lot of the internal coordination are being written in <a href='http://www.scala-lang.org/'>Scala</a>, a very elegant JVM-based language which lends itself well to this sort of thing.</p>
+<p>The Go Test It system consists of a number of different components using different programming languages, different frameworks, different infrastructures. The main user front-end is a <a href="http://rubyonrails.org/">Rails</a> app, but not all tasks are so well suited to Ruby. In particular, the multi-threaded parts of the system which do a lot of the internal coordination are being written in <a href="http://www.scala-lang.org/">Scala</a>, a very elegant JVM-based language which lends itself well to this sort of thing.</p>
 
-<p>The various components of the system need to communicate, and depending on the type of interaction needed, we&#8217;re using a combination of a <a href='http://www.rabbitmq.com/'>message queue</a> and <a href='http://en.wikipedia.org/wiki/Representational_State_Transfer'>REST APIs</a>. There is good Java library support for both, and since Scala can seamlessly use Java libraries, it all fits together very nicely.</p>
+<p>The various components of the system need to communicate, and depending on the type of interaction needed, we’re using a combination of a <a href="http://www.rabbitmq.com/">message queue</a> and <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST APIs</a>. There is good Java library support for both, and since Scala can seamlessly use Java libraries, it all fits together very nicely.</p>
 
-<p><a href='https://jersey.dev.java.net/'>Jersey</a> is a really neat Java (and, by extension, Scala) library for writing REST APIs. (It falls into a similar category as <a href='http://www.sinatrarb.com/'>Sinatra</a> in the Ruby world.) For example, a resource which returns a HTML document can be written in just a few lines of Scala code:</p>
+<p><a href="https://jersey.dev.java.net/">Jersey</a> is a really neat Java (and, by extension, Scala) library for writing REST APIs. (It falls into a similar category as <a href="http://www.sinatrarb.com/">Sinatra</a> in the Ruby world.) For example, a resource which returns a HTML document can be written in just a few lines of Scala code:</p>
 <div class='highlight'><pre><code class='scala'><span class='k'>package</span> <span class='nn'>com.example.restapi</span>
 <span class='k'>import</span> <span class='nn'>javax.ws.rs._</span>
 
@@ -85,11 +86,11 @@
 </code></pre></div>
 <p>A resource is defined by a class, annotated with the path(s) under which it can be accessed, and has one or more methods to handle different HTTP verbs (GET, POST, PUT, DELETE), and if you want, also different methods for different content types.</p>
 
-<p>Coda Hale has written up <a href='http://codahale.com/what-makes-jersey-interesting-parameter-classes/'>some really nice examples of using Jersey</a> and doing nice clean error handling of input. His examples are in Java, but translating them into Scala is a very simple exercise &#8211; more or less a matter of removing the type declarations and the semicolons.</p>
+<p>Coda Hale has written up <a href="http://codahale.com/what-makes-jersey-interesting-parameter-classes/">some really nice examples of using Jersey</a> and doing nice clean error handling of input. His examples are in Java, but translating them into Scala is a very simple exercise – more or less a matter of removing the type declarations and the semicolons.</p>
 
-<p>But here comes the tricky bit. Given the beautiful code snippet above, how do you actually build and run the thing? That is something I wrestled with for a while, and here I would like to reveal my solution. You can build it with <a href='http://maven.apache.org/'>Maven</a> (for the Ruby guys, it is basically <a href='http://rubyforge.org/projects/rubygems/'>RubyGems</a> and <a href='http://rake.rubyforge.org/'>Rake</a> rolled into one, intended for building Java projects with automatic dependency management). The process is a bit scary, but once it works, it is magic &#8211; it automatically downloads all the right packages, sets the right classpaths and packages up the results of your build into a war file (web archive).</p>
+<p>But here comes the tricky bit. Given the beautiful code snippet above, how do you actually build and run the thing? That is something I wrestled with for a while, and here I would like to reveal my solution. You can build it with <a href="http://maven.apache.org/">Maven</a> (for the Ruby guys, it is basically <a href="http://rubyforge.org/projects/rubygems/">RubyGems</a> and <a href="http://rake.rubyforge.org/">Rake</a> rolled into one, intended for building Java projects with automatic dependency management). The process is a bit scary, but once it works, it is magic – it automatically downloads all the right packages, sets the right classpaths and packages up the results of your build into a war file (web archive).</p>
 
-<p>But the scary bit first. You need to declare your dependencies and build properties to Maven, and the prescribed way of doing that is using the most ugly XML configuration file on the planet. I&#8217;m really sorry for the ugliness, but I think it&#8217;s worth it. However, the good news is that you only need to set it up once and never touch it again; once your build is working, you can create resources and handle them in Scala to your heart&#8217;s content. And for a bonus, see below for a Capistrano recipe which allows you to easily deploy the resulting war file to a Tomcat server, again and again.</p>
+<p>But the scary bit first. You need to declare your dependencies and build properties to Maven, and the prescribed way of doing that is using the most ugly XML configuration file on the planet. I’m really sorry for the ugliness, but I think it’s worth it. However, the good news is that you only need to set it up once and never touch it again; once your build is working, you can create resources and handle them in Scala to your heart’s content. And for a bonus, see below for a Capistrano recipe which allows you to easily deploy the resulting war file to a Tomcat server, again and again.</p>
 
 <p>First, put the following in a file called <code>pom.xml</code> in the base directory of your project:</p>
 <div class='highlight'><pre><code class='xml'><span class='cp'>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
@@ -266,15 +267,15 @@
     <span class='nt'>&lt;/session-config&gt;</span>
 <span class='nt'>&lt;/web-app&gt;</span>
 </code></pre></div>
-<p>And that&#8217;s all the boilerplate you need. You can now write the actual code, with Scala source files in <code>src/main/scala</code> and Java source files in <code>src/main/java</code> (if you want to use Java alongside Scala). For example, place the source for the Hello resource above in <code>src/main/scala/com/example/restapi/Hello.scala</code>. Tests go in <code>src/test/scala</code> and <code>src/test/java</code> respectively.</p>
+<p>And that’s all the boilerplate you need. You can now write the actual code, with Scala source files in <code>src/main/scala</code> and Java source files in <code>src/main/java</code> (if you want to use Java alongside Scala). For example, place the source for the Hello resource above in <code>src/main/scala/com/example/restapi/Hello.scala</code>. Tests go in <code>src/test/scala</code> and <code>src/test/java</code> respectively.</p>
 
-<p>Now go and build it! (You need to have Maven 2.0.9 or newer installed.) The two most useful commands are <code>mvn package</code>, which compiles and packages your project, and places the result in <code>target/restapi-1.0-SNAPSHOT.war</code>, and <code>mvn glassfish:run</code>, which launches an embedded <a href='https://glassfish.dev.java.net/'>Glassfish</a> application server and serves your new REST API on <code>http://localhost:8080/</code> for local testing. The example resource which we defined above would then be accessible at <code>http://localhost:8080/hello</code> in your web browser.</p>
+<p>Now go and build it! (You need to have Maven 2.0.9 or newer installed.) The two most useful commands are <code>mvn package</code>, which compiles and packages your project, and places the result in <code>target/restapi-1.0-SNAPSHOT.war</code>, and <code>mvn glassfish:run</code>, which launches an embedded <a href="https://glassfish.dev.java.net/">Glassfish</a> application server and serves your new REST API on <code>http://localhost:8080/</code> for local testing. The example resource which we defined above would then be accessible at <code>http://localhost:8080/hello</code> in your web browser.</p>
 
-<p>If you don&#8217;t have the dependencies yet, Maven will go away and download them. This will take a while, but they won&#8217;t be re-downloaded once you have them. It&#8217;s a bit frightening at first to watch Maven doing its magic, but in my limited experience so far it has always done a good job.</p>
+<p>If you don’t have the dependencies yet, Maven will go away and download them. This will take a while, but they won’t be re-downloaded once you have them. It’s a bit frightening at first to watch Maven doing its magic, but in my limited experience so far it has always done a good job.</p>
 
-<p>Now for the bonus points. Just building your app locally is not enough; you also need to deploy it to a server and make it accessible to the world. In our case this is <a href='http://tomcat.apache.org/'>Tomcat</a>, but any standard Java web container should do. I wanted to use <a href='http://www.capify.org/'>Capistrano</a> for deployment, because it gets a lot of things right and also fits well into the rest of our system which does have a lot of Ruby in it. There is an existing <a href='http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat'>Capistrano recipe for deploying war files to Tomcat</a>, but it needed a bit of improvement, so my own version is included below.</p>
+<p>Now for the bonus points. Just building your app locally is not enough; you also need to deploy it to a server and make it accessible to the world. In our case this is <a href="http://tomcat.apache.org/">Tomcat</a>, but any standard Java web container should do. I wanted to use <a href="http://www.capify.org/">Capistrano</a> for deployment, because it gets a lot of things right and also fits well into the rest of our system which does have a lot of Ruby in it. There is an existing <a href="http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat">Capistrano recipe for deploying war files to Tomcat</a>, but it needed a bit of improvement, so my own version is included below.</p>
 
-<p>These deployment instructions assume you&#8217;re running a <a href='http://www.debian.org/releases/stable/'>Debian Lenny</a> system, with a <code>restapi</code> user account; for other systems, you&#8217;ll need to customise it to suit.</p>
+<p>These deployment instructions assume you’re running a <a href="http://www.debian.org/releases/stable/">Debian Lenny</a> system, with a <code>restapi</code> user account; for other systems, you’ll need to customise it to suit.</p>
 
 <p>Create the following shell script in <code>/etc/tomcat5.5/symlink-webapp</code> and make it executable:</p>
 <div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/sh</span>
@@ -288,7 +289,7 @@ ln -f -s <span class='s2'>&quot;$2&quot;</span> /var/lib/tomcat5.5/webapps/<span
 <p>Next, add the following line to <code>/etc/sudoers</code>:</p>
 <div class='highlight'><pre><code class='text'>restapi ALL = NOPASSWD: /etc/init.d/tomcat5.5, /etc/tomcat5.5/symlink-webapp
 </code></pre></div>
-<p>With that set up, here&#8217;s the <code>Capfile</code> for you to put in the base directory of your project:</p>
+<p>With that set up, here’s the <code>Capfile</code> for you to put in the base directory of your project:</p>
 <div class='highlight'><pre><code class='ruby'><span class='c1'># This recipe is based on:</span>
 <span class='c1'># http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat</span>
 
@@ -469,15 +470,15 @@ ln -f -s <span class='s2'>&quot;$2&quot;</span> /var/lib/tomcat5.5/webapps/<span
                 <h2 class="title">Recent posts</h2>
                 <ul>
                     
+                      <li>26 Mar 2014: <a href="/2014/03/26/six-things-about-scaling.html">Six things I wish we had known about scaling</a></li>
+                    
+                      <li>23 Oct 2013: <a href="/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html">LinkedIn Intro: Doing the Impossible on iOS</a></li>
+                    
                       <li>12 Aug 2013: <a href="/2013/08/12/system-operations-over-seven-centuries.html">System operations over seven centuries</a></li>
                     
                       <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
                     
                       <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
-                    
-                      <li>08 Oct 2012: <a href="/2012/10/08/complexity-of-user-experience.html">The complexity of user experience</a></li>
-                    
-                      <li>01 Oct 2012: <a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a></li>
                     
                     <li><a href="/archive.html">Full archive</a></li>
                 </ul>

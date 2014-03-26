@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>LinkedIn Intro: Doing the Impossible on iOS &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?3" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://downloads.mailchimp.com/js/jquery.form-n-validate.js" type="text/javascript"></script>
+<script src="/form.js" type="text/javascript"></script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+        <p id="blog-description">Entrepreneurship, web technology and the user experience</p>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+<div class="wrapper">
+
+        <div id="content">
+            <h1>
+                <div style="float: right; padding: 0 0 10px 20px;">
+                    <script type="text/javascript">
+                    tweetmeme_source = 'martinkl';
+                    </script>
+                    <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+                </div>
+
+                LinkedIn Intro: Doing the Impossible on iOS
+            </h1>
+
+            <p><em>This is a copy of a post I originally wrote on the <a href="http://engineering.linkedin.com/mobile/linkedin-intro-doing-impossible-ios">LinkedIn engineering blog</a>.</em></p>
+
+<p>We recently launched <a href="https://intro.linkedin.com/">LinkedIn Intro</a> — a new product that shows you LinkedIn profiles, <em>right inside the native iPhone mail client</em>. That’s right: we have extended Apple’s built-in iOS Mail app, a feat that many people consider to be impossible. This post is a short summary of how Intro works, and some of the ways we bent technology to our will.</p>
+
+<p>With Intro, you can see at a glance the picture of the person who’s emailing you, learn more about their background, and connect with them on LinkedIn. This is what it looks like:</p>
+<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
+<img alt='The iPhone mail app, before and after Intro' src='/2013/10/intro_before_after.png' width='550' />
+<br />The iPhone mail app, before and after Intro</p>
+<h2 id="how_intro_came_to_be">How Intro Came to Be</h2>
+
+<p>The origins of Intro go back to before the acquisition of <a href="http://rapportive.com/">Rapportive</a> by LinkedIn. At Rapportive, we had built a browser extension that modified Gmail to show the profile of an email’s sender within the Gmail page. The product was popular, but people kept asking: “I love Rapportive in Gmail, when can I have it on mobile too?”</p>
+
+<p>The magic of Rapportive is that you don’t have to remember to use it. Once you have it installed, it is right there inside your email, showing you everything you need to know about your contacts. You don’t need to fire up a new app or do a search in another browser tab, because the information is right there when you need it. It just feels natural.</p>
+
+<p>At LinkedIn, we want to <a href="http://www.youtube.com/watch?v=t6SdSqI0JR0">work wherever our members work</a>. And we know that professionals spend a lot of time on their phone, checking and replying to emails — so we had to figure out how to enhance mobile email, giving professionals the information they need to be brilliant with people.</p>
+
+<p>But how do we do that? Ask any iOS engineer: there is no API for extending the built-in mail app on the iPhone. If you wanted to build something like Rapportive, most people would tell you that it is impossible. Yet we figured it out.</p>
+
+<h2 id="impossible_1_extending_the_ios_mail_client">Impossible #1: Extending the iOS Mail Client</h2>
+
+<p>Our key insight was this: we cannot extend the mail client, but we can add information to the messages themselves. One way to do this would be to modify the messages on the server — but then the modification would appear on all your clients, both desktop and mobile. That would not be what users want.</p>
+
+<p>Instead, we can add information to messages by using a proxy server.</p>
+<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
+<img alt='Rewriting messages using an IMAP proxy' src='/2013/10/intro_imap_proxy.png' width='550' />
+<br />Rewriting messages using an IMAP proxy</p>
+<p>Normally your device connects directly to the servers of your email provider (Gmail, Yahoo, AOL, etc.), but we can configure the device to connect to the Intro proxy server instead.</p>
+
+<p>The Intro proxy server speaks the <a href="http://tools.ietf.org/html/rfc3501">IMAP</a> protocol just like an email provider, but it doesn’t store messages itself. Instead, it forwards requests from the device to your email provider, and forwards responses from the email provider back to the device. En route, it inserts Intro information at the beginning of each message body — we call this the top bar.</p>
+
+<p>The great thing about this approach: the proxy server can tailor the top bar to the device, since it knows which device is downloading the message. It can adapt the layout to be appropriate to the screen size, and it can take advantage of the client’s latest features, because it doesn’t need to worry about compatibility with other devices.</p>
+
+<p>Our proxy server is written in Ruby using EventMachine, which allows it to efficiently handle many concurrent IMAP connections. We have developed some libraries to make the evented programming model nicer to work with, including <a href="https://github.com/samstokes/deferrable_gratification">Deferrable Gratification</a> and <a href="https://github.com/ConradIrwin/lspace">LSpace</a>.</p>
+
+<h2 id="impossible_2_interactive_ui_in_email">Impossible #2: Interactive UI in Email</h2>
+
+<p>Ok, we have a way of adding information about the sender to a message — but so far it’s just a static piece of HTML. The top bar is deliberately minimal, because we don’t want it to get in the way. But wouldn’t it be <em>awesome</em> if you could tap the top bar and see the full LinkedIn profile… without leaving the mail app?</p>
+
+<p>“But that’s impossible,” they cry, “you can’t run JavaScript in the mail client!” And that’s true — any JavaScript in an email is simply ignored. But iOS Mail does have powerful CSS capabilities, since it uses the same rendering engine as Safari.</p>
+
+<p>Recall that CSS has a <code>:hover</code> state that is triggered when you hover the mouse over an element. This is used for popup menus in the navigation of many websites, or for tooltips. But what do you do on a touchscreen device, where there is no hovering or clicking, only tapping?</p>
+
+<p>A little-known fact about CSS on Mobile Safari: in certain circumstances, tapping a link once simulates a <code>:hover</code> state on that link, and tapping it twice has the effect of a click. Thanks to this feature, popup menus and tooltips still work on iOS.</p>
+
+<p>With some creativity, we figured out how to use this effect to create an interactive user interface <em>within</em> a message! Just tap the top bar to see the full LinkedIn profile:</p>
+<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
+<img alt='With CSS tricks we can embed an entire LinkedIn profile in a message' src='/2013/10/intro_drawer.png' width='550' />
+<br />With CSS tricks we can embed an entire LinkedIn profile in a message</p>
+<h2 id="impossible_3_dynamic_content_in_email">Impossible #3: Dynamic Content in Email</h2>
+
+<p>This <code>:hover</code> trick allows us to have some interactivity within a message, but for more complex interactions we have to take you to the browser (where we can run a normal web app, without the mail app’s limitations). For example, if you want to connect with your contact on LinkedIn, we take you to Safari.</p>
+
+<p>That’s fine, but it leaves us with a problem: the top bar needs to show if you’re already connected with someone. Say you send an invitation, and the other person accepts — now you’re connected, but if you open the same email again, it still says that you’re not connected!</p>
+
+<p>This is because once a message has been downloaded, an IMAP client may assume that the message will never change. It is cached on the device, and unlike a web page, it never gets refreshed. Now that you’re connected, the top bar content needs to change. How do we update it?</p>
+
+<p>Our solution: the connect button is in a tiny <code>&amp;lt;iframe&amp;gt;</code> which is refreshed every time you open the message. And if you open the message while your device is offline? No problem: the <code>iframe</code> is positioned on top of an identical-looking button in the static top bar HTML. If the <code>iframe</code> fails to load, it simply falls back to the connection status at the time when the message was downloaded.</p>
+
+<p>This allows the top bar to contain dynamic content, even though it’s impossible for the server to modify a message once it has been downloaded by the device.</p>
+<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
+<img alt='Using an embedded iframe to keep the connection status up-to-date, within an otherwise static top bar' src='/2013/10/intro_connection_status.png' width='550' />
+<br />Using an embedded iframe to keep the connection status up-to-date, within an otherwise static top bar</p>
+<h2 id="impossible_4_easy_installation">Impossible #4: Easy Installation</h2>
+
+<p>Once we got the IMAP proxy working, we were faced with another problem: how do we configure a device to use the proxy? We cannot expect users to manually enter IMAP and SMTP hostnames, choose the correct TLS settings, etc — it’s too tedious and error-prone.</p>
+
+<p>Fortunately, Apple provides a friendly way of setting up email accounts by using <a href="https://developer.apple.com/library/ios/featuredarticles/iPhoneConfigurationProfileRef/">configuration profiles</a> — a facility that is often used in enterprise deployments of iOS devices. Using this technique, we can simply ask the user for their email address and password, autodiscover the email provider settings, and send a configuration profile to the device. The user just needs to tap “ok” a few times, and then they have a new mail account.</p>
+
+<p>Moreover, for Gmail and Google Apps accounts, we can use OAuth, and never need to ask for the user’s password. Even better!</p>
+<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
+<img alt='iOS configuration profiles make setup of new email accounts a breeze' src='/2013/10/intro_installer_0.png' width='550' />
+<br />iOS configuration profiles make setup of new email accounts a breeze</p>
+<h2 id="security_and_privacy">Security and Privacy</h2>
+
+<p>We understand that operating an email proxy server carries great responsibility. We respect the fact that your email may contain very personal or sensitive information, and we will do everything we can to make sure that it is safe. Our principles and key security measures are detailed in our <a href="https://intro.linkedin.com/micro/privacy">pledge of privacy</a>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>When we first built Rapportive for Gmail, people thought that we were crazy — writing a browser extension that modified the Gmail page on the fly, effectively writing an application inside someone else’s application! But it turned out to be a great success, and many others have since followed our footsteps and written browser extensions for Gmail.</p>
+
+<p>Similarly, Intro’s approach of proxying IMAP is a novel way of delivering software to users. It operates at the limit of what is technically possible, but it has a big advantage: we can enhance the apps you already use. Of course the idea isn’t limited to the iPhone, so watch out for new platforms coming your way soon :)</p>
+
+<p>This post has only scratched the surface of the interesting challenges we have overcome while building Intro. In follow-up posts we will talk about some of our CSS techniques, testing and monitoring tools, things we do to achieve high performance and high reliability, and more. In the meantime, check out <a href="https://intro.linkedin.com/">Intro</a> and let us know what you think!</p>
+
+            
+
+            <div id="disqus_thread"></div>
+        </div>
+            <div id="sidebar">
+        <div id="carrington-subscribe" class="widget">
+            <h2 class="widget-title">Subscribe</h2>
+            <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+                Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+            </a>
+
+            <div id="mc_embed_signup">
+                <p>
+                    Enjoyed this? To get notified when I write something new,
+                    <a href="http://twitter.com/martinkl">follow me</a> on Twitter,
+                    <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+                    or type in your email address:
+                </p>
+
+                <form action="http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    <fieldset>
+                        <div class="mc-field-group">
+                            <label for="mce-EMAIL">Email:</label>
+                            <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+                        </div>
+                        <div id="mce-responses">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+
+        <div id="carrington-about" class="widget">
+            <div class="about">
+                <h2 class="title">About</h2>
+
+                <p>Hello! I'm Martin Kleppmann, entrepreneur and software craftsman.
+                I co-founded <a href="http://rapportive.com/">Rapportive</a>
+                (<a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a>
+                by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and Go Test It (acquired by 
+                <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+
+                <p>I care about making stuff that people want, great people and culture, the web and
+                its future, marvellous user experiences, maintainable code and scalable architectures.</p>
+
+                <p>I'd love to hear from you, so please leave comments, or feel free to
+                <a rel="author" href="/contact.html">contact me directly</a>.</p>
+            </div>
+        </div>
+
+
+        <div id="primary-sidebar">
+        </div>
+
+        <div id="secondary-sidebar">
+            <div id="carrington-archives" class="widget">
+                <h2 class="title">Recent posts</h2>
+                <ul>
+                    
+                      <li>26 Mar 2014: <a href="/2014/03/26/six-things-about-scaling.html">Six things I wish we had known about scaling</a></li>
+                    
+                      <li>23 Oct 2013: <a href="/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html">LinkedIn Intro: Doing the Impossible on iOS</a></li>
+                    
+                      <li>12 Aug 2013: <a href="/2013/08/12/system-operations-over-seven-centuries.html">System operations over seven centuries</a></li>
+                    
+                      <li>24 May 2013: <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">Improving the security of your SSH private key files</a></li>
+                    
+                      <li>05 Dec 2012: <a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and Thrift</a></li>
+                    
+                    <li><a href="/archive.html">Full archive</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- div.wrapper, started in 'before.html' -->
+
+<hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+        var disqus_shortname = 'martinkl';
+        var disqus_url = 'http://martin.kleppmann.com/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html';
+        var disqus_identifier = disqus_url;
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>
