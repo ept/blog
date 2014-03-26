@@ -1,5 +1,7 @@
-Six things I wish we had known about scaling
-============================================
+---
+layout: ync-post
+title: Six things I wish we had known about scaling
+---
 
 Looking back at the last few years of building [Rapportive](https://rapportive.com/) and
 [LinkedIn Intro](http://engineering.linkedin.com/mobile/linkedin-intro-doing-impossible-ios),
@@ -109,9 +111,9 @@ although having anywhere near 500 connections is
 [actively discouraged](https://postgres.heroku.com/blog/past/2013/11/22/connection_limit_guidance/).
 
 In a fast-growing app, it doesn't take long before you reach a few hundred connections. Each
-instance of your Rails app (or whatever you're using) uses at least one. Each background worker
-process that needs to access the database uses one. Adding more machines running your application is
-fairly easy if they are stateless, but every machine you add means more connections.
+instance of your application server uses at least one. Each background worker process that needs to
+access the database uses one. Adding more machines running your application is fairly easy if they
+are stateless, but every machine you add means more connections.
 
 Partitioning (sharding) and read replicas probably won't help you with your connection limit, unless
 you can somehow load-balance requests so that all the requests for a particular partition are
@@ -153,9 +155,10 @@ add that. Some reads need to be made on the leader, so that a user sees their ow
 there is replication lag. That's all doable, but it's additional complexity, and doesn't add any
 value from users' point of view.
 
-Some distributed datastores such as MongoDB and RethinkDB also use this replication model, and they
-automate the replica creation and master failover processes. Just because they do that doesn't mean
-they automatically give you magic scaling sauce, but it is a very valuable feature.
+Some distributed datastores such as MongoDB, RethinkDB and Couchbase also use this replication
+model, and they automate the replica creation and master failover processes. Just because they do
+that doesn't mean they automatically give you magic scaling sauce, but it is a very valuable
+feature.
 
 ## 5. Think about memory efficiency
 
@@ -221,6 +224,12 @@ reliable than many apps today. It's open source, and you should go and
 
 ## In conclusion
 
+The problems discussed in this post are primarily data systems problems. That's no coincidence:
+if you write your applications in a stateless way, they are pretty easy to scale, since you can
+just run more copies of them. Thus, whether you use Rails or Express.js or whatever framework
+_du jour_ really doesn't matter much. The hard part is scaling the stateful parts of your system:
+your databases.
+
 There are no easy solutions for these problems. Some new technologies and services can help --
 for example, the new generation of distributed datastores tries to solve some of the above problems
 (especially around automating replication and failover), but they have other limitations. There
@@ -234,8 +243,8 @@ that devil is in your particular case.
 
 I'm interested to see whether database-as-a-service offerings such as
 [Firebase](https://www.firebase.com/), [Orchestrate](http://orchestrate.io/) or
-[Fauna](https://fauna.org/) can help (I've not used any of them seriously, so I can't vouch them at
-this point). I see big potential advantages for small teams in outsourcing operations, but also
+[Fauna](https://fauna.org/) can help (I've not used any of them seriously, so I can't vouch for them
+at this point). I see big potential advantages for small teams in outsourcing operations, but also
 a big potential risk in locking yourself to a system that you couldn't choose to host yourself if
 necessary.
 
@@ -244,6 +253,5 @@ A lot of hacking together tools that really ought to exist already, but all the 
 solutions out there are too bad (and yours ends up bad too, but at least it solves your particular
 problem).
 
-On the other hand, if you have these sort of problems, consider yourself lucky. If you've got
-scaling problems, you must be doing something right -- you must be making something that people
-want.
+On the other hand, consider yourself lucky. If you've got scaling problems, you must be doing
+something right -- you must be making something that people want.
