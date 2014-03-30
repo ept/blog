@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Six things I wish we had known about scaling
+hackernews: https://news.ycombinator.com/item?id=7476717
 ---
 
 Looking back at the last few years of building [Rapportive](https://rapportive.com/) and
@@ -101,12 +102,12 @@ do that, but in a small team it can be a massive time-sink.
 
 ## 3. Database connections are a real limitation
 
-In a database like PostgreSQL or MySQL, each client connection to the database is handled by
-a separate unix process. That puts a fairly low limit on the number of connections you can have to
-the database -- typically a few hundred. Every connection adds overhead, so the entire database
-slows down, even if those connections aren't actively processing queries. For example, Heroku
-Postgres limits you to 60 connections on the smallest plan, and 500 connections on the
-[largest plan](https://devcenter.heroku.com/articles/heroku-postgres-plans#standard-tier),
+In PostgreSQL, each client connection to the database is handled by a separate unix process; in
+MySQL, each connection uses a separate thread. Both of these models impose a fairly low limit on the
+number of connections you can have to the database -- typically a few hundred. Every connection adds
+overhead, so the entire database slows down, even if those connections aren't actively processing
+queries. For example, Heroku Postgres limits you to 60 connections on the smallest plan, and 500
+connections on the [largest plan](https://devcenter.heroku.com/articles/heroku-postgres-plans#standard-tier),
 although having anywhere near 500 connections is
 [actively discouraged](https://postgres.heroku.com/blog/past/2013/11/22/connection_limit_guidance/).
 
