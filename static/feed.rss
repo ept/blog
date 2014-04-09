@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Sun, 30 Mar 2014 12:43:43 BST</lastBuildDate>
+        <lastBuildDate>Tue, 08 Apr 2014 22:41:58 PDT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -484,6 +484,17 @@ $ rm ~/.ssh/id_rsa.old</code></pre>
 <p>The <code>openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private key, and twice for the passphrase for the new key. It doesn’t matter whether you use a new passphrase for the converted key or keep it the same as the old key.</p>
 
 <p>Not all software can read the PKCS8 format, but that’s fine — only your SSH client needs to be able to read the private key, after all. From the server’s point of view, storing the private key in a different format changes nothing at all.</p>
+
+<h2 id="update_to_undo_this_change">Update: to undo this change</h2>
+
+<p>On Mac OS X 10.9 (Mavericks), the default installation of OpenSSH no longer supports PKCS#8 private keys for some reason. If you followed the instructions above, you may no longer be able to log into your servers. Fortunately, it’s easy to convert your private key from PKCS#8 format back into the traditional key format:</p>
+
+<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.pkcs8
+$ openssl pkcs8 -in ~/.ssh/id_rsa.pkcs8 -out ~/.ssh/id_rsa
+$ chmod 600 ~/.ssh/id_rsa
+$ ssh-keygen -f ~/.ssh/id_rsa -p</code></pre>
+
+<p>The <code>openssl</code> command decrypts the key, and the <code>ssh-keygen</code> command re-encrypts it using the traditional SSH key format.</p>
                 ]]></content:encoded>
             </item>
         
