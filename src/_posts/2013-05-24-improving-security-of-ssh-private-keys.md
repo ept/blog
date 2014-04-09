@@ -281,3 +281,20 @@ passphrase for the converted key or keep it the same as the old key.
 Not all software can read the PKCS8 format, but that's fine --- only your SSH client needs to be
 able to read the private key, after all. From the server's point of view, storing the private key in
 a different format changes nothing at all.
+
+
+Update: to undo this change
+---------------------------
+
+On Mac OS X 10.9 (Mavericks), the default installation of OpenSSH no longer supports PKCS#8 private
+keys for some reason. If you followed the instructions above, you may no longer be able to log into
+your servers. Fortunately, it's easy to convert your private key from PKCS#8 format back into the
+traditional key format:
+
+    $ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.pkcs8
+    $ openssl pkcs8 -in ~/.ssh/id_rsa.pkcs8 -out ~/.ssh/id_rsa
+    $ chmod 600 ~/.ssh/id_rsa
+    $ ssh-keygen -f ~/.ssh/id_rsa -p
+
+The `openssl` command decrypts the key, and the `ssh-keygen` command re-encrypts it using the
+traditional SSH key format.
