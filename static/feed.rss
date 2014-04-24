@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Tue, 08 Apr 2014 22:41:58 PDT</lastBuildDate>
+        <lastBuildDate>Thu, 24 Apr 2014 12:01:23 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -484,6 +484,8 @@ $ rm ~/.ssh/id_rsa.old</code></pre>
 <p>The <code>openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private key, and twice for the passphrase for the new key. It doesn’t matter whether you use a new passphrase for the converted key or keep it the same as the old key.</p>
 
 <p>Not all software can read the PKCS8 format, but that’s fine — only your SSH client needs to be able to read the private key, after all. From the server’s point of view, storing the private key in a different format changes nothing at all.</p>
+
+<p>Update: <a href="https://twitter.com/brendanliamt">Brendan Thompson</a> has wrapped this conversion in a handy shell script called <a href="https://github.com/BrendanThompson/keycrypt">keycrypt</a>.</p>
 
 <h2 id="update_to_undo_this_change">Update: to undo this change</h2>
 

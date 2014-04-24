@@ -250,6 +250,8 @@ $ rm ~/.ssh/id_rsa.old</code></pre>
 
 <p>Not all software can read the PKCS8 format, but that’s fine — only your SSH client needs to be able to read the private key, after all. From the server’s point of view, storing the private key in a different format changes nothing at all.</p>
 
+<p>Update: <a href="https://twitter.com/brendanliamt">Brendan Thompson</a> has wrapped this conversion in a handy shell script called <a href="https://github.com/BrendanThompson/keycrypt">keycrypt</a>.</p>
+
 <h2 id="update_to_undo_this_change">Update: to undo this change</h2>
 
 <p>On Mac OS X 10.9 (Mavericks), the default installation of OpenSSH no longer supports PKCS#8 private keys for some reason. If you followed the instructions above, you may no longer be able to log into your servers. Fortunately, it’s easy to convert your private key from PKCS#8 format back into the traditional key format:</p>

@@ -282,6 +282,9 @@ Not all software can read the PKCS8 format, but that's fine --- only your SSH cl
 able to read the private key, after all. From the server's point of view, storing the private key in
 a different format changes nothing at all.
 
+Update: [Brendan Thompson](https://twitter.com/brendanliamt) has wrapped this conversion in a handy
+shell script called [keycrypt](https://github.com/BrendanThompson/keycrypt).
+
 
 Update: to undo this change
 ---------------------------
