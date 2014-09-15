@@ -10,11 +10,79 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Thu, 28 Aug 2014 21:04:37 CEST</lastBuildDate>
+        <lastBuildDate>Mon, 15 Sep 2014 12:15:44 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
+        
+            <item>
+                <title>Hey, I'm writing a book!</title>
+                <link>http://martin.kleppmann.com/2014/09/15/writing-a-book.html</link>
+                <comments>http://martin.kleppmann.com/2014/09/15/writing-a-book.html#disqus_thread</comments>
+                <pubDate>Mon, 15 Sep 2014 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2014/09/15/writing-a-book.html</guid>
+                
+                <description><![CDATA[ About two years ago I wrote a blog post called “Rethinking caching in web apps”. At almost 4,000 words, it was a lot longer than the received wisdom says a blog post should be. Nevertheless I had the feeling that I was only scratching the surface of what needed to... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>About two years ago I wrote a blog post called <a href="/2012/10/01/rethinking-caching-in-web-apps.html">“Rethinking caching in web apps”</a>. At almost 4,000 words, it was a lot longer than the <a href="http://blog.bufferapp.com/the-ideal-length-of-everything-online-according-to-science">received wisdom</a> says a blog post should be. Nevertheless I had the feeling that I was only scratching the surface of what needed to be said.</p>
+
+<p>That got me thinking whether I should try writing something longer, like a book perhaps. I love writing because it forces me to research something in depth, think it through, and then try to explain it in a logical way. That helps me understand it much better than if I just casually read about it. Or, put more eloquently:</p>
+
+<blockquote>
+<p>“Writing is nature’s way of letting you know how sloppy your thinking is.” – Dick Guindon</p>
+</blockquote>
+
+<h2 id="existing_books">Existing books</h2>
+
+<p>I am writing because the book I wanted to read didn’t exist. I wanted a book that would explain data systems to me – the whole area of databases, distributed systems, batch and stream processing, consistency, caching and indexing – at the right level. But I found that almost all the existing books, blog posts etc. fell into one of the following categories:</p>
+
+<ol>
+<li>Most computing books are hands-on guides to one particular technology. They assume that you’ve been told to use database X or programming language Y, and so they teach you how to use it. Those books are fine, but they are of little use if you’re trying to decide whether X or Y is the right tool for you in the first place. These books tend to focus on the strong points of that particular technology, and fail to mention its shortcomings.</li>
+
+<li>It’s common to see blog posts with side-by-side comparisons of several similar technologies, but I find they tend to just focus on superficial aspects (performance benchmarks, API, software license) while completely missing the fundamental workings of the technology. They are like Top Trumps for databases, and don’t actually help you understand anything any better.</li>
+
+<li>By contrast, academic textbooks cover the fundamental principles and trade-offs that are common to many different technologies, but in doing so, they often lose all contact with reality. These books are generally written by academics with deep research experience in their field, but little awareness of the practicalities of real production systems. They often end up saying things which are technically correct, but useless or misleading if you want to actually build a real system.</li>
+</ol>
+
+<p>I wanted something in between all of these. A book which would tell a story of the big ideas in data systems, the fundamental principles which don’t change from one software version to another. But the book would also stay grounded in reality, explaining what works in practice and what doesn’t, and <em>why</em>. The book would examine the tools and systems that we already use in production, compare their fundamental approaches, and help you figure out which technology is appropriate to which use case.</p>
+
+<p>I wanted to understand not just how to <em>use</em> a particular system, but also how it <em>works under the hood</em>. That is partly out of intellectual curiosity, but equally importantly, because it allows me to imagine what the system is doing. If some kind of unexpected behaviour occurs, or if I want to push the limits of what a technology can do, it is tremendously useful to have at least a rough idea of what is happening internally.</p>
+
+<p>As I spoke to various people about these ideas, including some folks at O’Reilly, it became clear that I wasn’t the only one who wanted a book like this. And so, <a href="http://dataintensive.net/">Designing Data-Intensive Applications</a> was born. And you’ll know it when you see it, because it has an awesome Indian Wild Boar on the cover.</p>
+<p style='text-align: center'><a href='http://dataintensive.net' title='Designing Data-Intensive Applications (the wild boar book)'><img alt='Designing Data-Intensive Applications (the wild boar book)' height='328' src='http://martin.kleppmann.com/2014/09/book-cover.png' width='250' /></a>
+</p>
+<p><em>Designing Data-Intensive Applications</em> (sorry about the verbose title – you can just call it “the wild boar book”) has been in the works for some time, and today we’re announcing the <a href="http://shop.oreilly.com/product/0636920032175.do">early release</a>. The first four chapters are now available – ten or eleven are planned in total, so there’s still long way to go. But I left my job to work on this book full-time, so it’s definitely happening.</p>
+
+<h2 id="who_should_read_this">Who should read this?</h2>
+
+<p>If you’re a software engineer working on server-side applications (a web application backend, for instance), then this book is for you. It assumes that you already know how to build an application and use a database, and that you want to “level up” in your craft. Perhaps you want to work on highly scalable systems with millions of users, perhaps you want to deal with particularly complex or ever-changing data, or perhaps you want to make an old legacy environment more agile.</p>
+
+<p>This book starts at the foundations, and gradually builds up a picture of modern data systems layer by layer, one chapter at a time. I’m not trying to sell you any particular architecture or approach, because I firmly believe that different use cases require different solutions. Therefore, each chapter contains a broad overview and comparison of the different approaches that have been successful in different circumstances.</p>
+
+<p>It doesn’t matter what your preferred programming language or framework is – this book is agnostic. It’s about architecture and algorithms, about fundamental principles and practical constraints, about the reasoning behind every design decision.</p>
+
+<p>None of the ideas in this book are really new, and indeed many ideas are decades old. Everything has already been said somewhere, in conference presentations, research papers, blog posts, code, bug trackers, and engineering folklore. However, to my knowledge the ideas haven’t previoulsy been collected, compared and evaluated like this.</p>
+
+<p>I hope that by understanding what our options are, and the pros and cons of each approach, we’ll all become better engineers. By making conscious trade-offs and choosing our tools wisely, we will build systems that are more reliable and much easier to maintain in the long run. It’s a quest to help us engineers be better at our jobs, and build better software.</p>
+
+<h2 id="lets_make_software_development_better">Let’s make software development better</h2>
+
+<p>Please join me on this quest by reading the draft of the book, and sending us your feedback:</p>
+
+<ul>
+<li>The book’s website is <a href="http://dataintensive.net/">dataintensive.net</a>.</li>
+
+<li>You can buy the early release ebook from <a href="http://shop.oreilly.com/product/0636920032175.do">O’Reilly</a>, or if you’re a Safari Books subscriber, you can <a href="http://my.safaribooksonline.com/9781491903063">read it online</a>.</li>
+
+<li>If you can think of any way the book could be improved, please email your thoughts to <a href="mailto:feedback@dataintensive.net">feedback@dataintensive.net</a> or tweet us <a href="https://twitter.com/intensivedata">@intensivedata</a>. Now is the time to be involved.</li>
+
+<li>…and if you like the sound of this, don’t forget to tell your friends and colleagues about it!</li>
+</ul>
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Upcoming conference talks about Samza</title>
@@ -1120,157 +1188,6 @@ ruby 1.9.3p125 (2012-02-16 revision 34643) [x86_64-darwin11.3.0]
 <p>If your serialization doesn’t always produce the same sequence of bytes for a given value, then you can still define a hash function on the objects themselves. Just please don’t use <code>hashCode()</code>. It’s ok for in-process hash tables, but distributed systems are a different matter.</p>
 
 <p>(Oh, and in case you were wondering: it looks like the web servers affected by Java’s hashCode collisions fixed the problem not by changing to a different hash function, but simply by limiting the number of parameters: <a href="http://svn.apache.org/viewvc/tomcat/tc7.0.x/trunk/java/org/apache/tomcat/util/http/Parameters.java?r1=1195977&r2=1195976&pathrev=1195977">Tomcat</a>, <a href="https://github.com/eclipse/jetty.project/commit/085c79d7d6cfbccc02821ffdb64968593df3e0bf">Jetty</a>.)</p>
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>My FounderLY interview</title>
-                <link>http://martin.kleppmann.com/2011/08/16/founderly-interview.html</link>
-                <comments>http://martin.kleppmann.com/2011/08/16/founderly-interview.html#disqus_thread</comments>
-                <pubDate>Tue, 16 Aug 2011 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2011/08/16/founderly-interview.html</guid>
-                
-                <description><![CDATA[ Matthew from FounderLY wondered what it would have been like to watch raw video footage of Steve Jobs, Bill Gates, and other tech founders during their formative years. So he’s been going around interviewing young startup founders, for posterity and for other founders’ inspiration. A pretty interesting effort. A few... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>Matthew from <a href="http://www.founderly.com/">FounderLY</a> wondered what it would have been like to watch raw video footage of Steve Jobs, Bill Gates, and other tech founders during their formative years. So he’s been going around interviewing young startup founders, for posterity and for other founders’ inspiration. A pretty interesting effort.</p>
-
-<p>A few weeks ago he asked whether he could <a href="http://www.founderly.com/2011/07/martin-kleppmann-rapportive-1-of-2/">interview me</a> for the site. Although it would be rather presumptious to put myself in the category of potential future Steve Jobses, I agreed.</p>
-
-<p>So here you go – a tidily scripted set of questions from Matthew, and some chaotically unscripted stream-of-consciousness replies from me. The video comes in two parts, about 22 minutes in total, and a transcript is below.</p>
-<iframe frameborder='0' height='309' src='http://player.vimeo.com/video/25790273?title=0&amp;byline=0&amp;portrait=0' width='549'>
-  <a href='http://vimeo.com/25790273'>View on Vimeo</a>
-</iframe>
-<p><a href="http://vimeo.com/25790273">Martin Kleppmann interview, part 1</a> from <a href="http://vimeo.com/founderly">FounderLY</a> on <a href="http://vimeo.com">Vimeo</a></p>
-<iframe frameborder='0' height='309' src='http://player.vimeo.com/video/25790604?title=0&amp;byline=0&amp;portrait=0' width='549'>
-  <a href='http://vimeo.com/25790604'>View on Vimeo</a>
-</iframe>
-<p><a href="http://vimeo.com/25790604">Martin Kleppmann interview, part 2</a> from <a href="http://vimeo.com/founderly">FounderLY</a> on <a href="http://vimeo.com">Vimeo</a></p>
-
-<p><strong>Transcript</strong></p>
-
-<p><strong>Matthew Wise:</strong> Hi this is Matthew Wise with FounderLY.com. We empower entrepreneurs to have a voice and share their story with the world, enabling others to learn about building products and starting companies.</p>
-
-<p>I’m really excited today because I’m here with Martin Kleppmann, founder of Rapportive. Rapportive shows you everything about your contacts inside your email box, enabling you to see who people are and where they are based, so that you can connect and collaborate over shared interests. So, Martin, we’d love you to give our audience a brief bio.</p>
-
-<p><strong>Martin:</strong> Sure. I’m originally from Germany, which explains my weird accent, and then I went to the UK for several years to study computer science. That was in Cambridge. After that, I started a startup; it was called Go Test It, we made a tool for automated cross-browser testing of websites. That was pretty cool, and it was acquired a few years ago. After that, I was looking around for something new to do, and together with two friends we started Rapportive.</p>
-
-<p>What we do now is to pull photos, job details from LinkedIn, recent tweets and all of this stuff into Gmail, and show it right there.</p>
-
-<p><strong>Matthew:</strong> What makes Rapportive unique, who is it for and why are you so passionate about it?</p>
-
-<p><strong>Martin:</strong> It’s really for people who do a lot of email, particularly emailing with people who you don’t really know well. If you only ever email with ten different people, then you wouldn’t need it — but most of us, particularly startup founders, are constantly dealing with investors, outside advisors, users emailing us, potential customers, potential partners, people on emailing lists… all of these people, we vaguely know who they are, but not really. And actually, it is really important that you build this personal contact with them, and get to know them personally.</p>
-
-<p>Previously, when people got an email from someone, they would go and search Google, try to find their Twitter account, try to find them on LinkedIn, and this just takes a lot of time. And we’ve just automated all of that. The idea is that now, you can actually respond to people personally and build up that personal connection. It’s little things: even just being able to see the photo of someone in your email… firstly, that’s a deep visceral connection: you connect much more with them than if you’re just looking at a wall of text; and also, if you meet them in real life, well, you’re much more likely to be able to recognise them. I think that makes your email a better place; it’s really excellent.</p>
-
-<p><strong>Matthew:</strong> What are some of the technology and market trends that currently exist, and how do you see things developing in the future in your space?</p>
-
-<p><strong>Martin:</strong> I’m not sure about the big trends. There are a lot of things, but they are all very subtle things. For example, people caring a lot about user experience, and we take that really seriously. We put ridiculous amounts of effort into making sure that stuff works really nicely.</p>
-
-<p>Other things that are happening: we are having to deal with more and more people, and people expect that you don’t just get an automated stock reply, but that people actually engage with you personally. That’s the future, I think. We’ve already got that in one-to-one communication between individuals, but the big trend is that companies as a whole are starting to be more personal with the outside. They are no longer this corporate brand, this cold, anonymous thing, but you actually expect to be able to see the people behind that brand, and be able to engage with them directly and build a relationship. And those relationships are what matter, because… if you’re just competing on price, your customers can just go somewhere else, but if you can build up a relationship with your customers, that’s really really powerful.</p>
-
-<p>We think that’s what we are enabling, by giving you this social substrate for your communications.</p>
-
-<p><strong>Matthew:</strong> Can you tell us what inspired you to start Rapportive? Was there an “aha” moment, or did market research lead you to the opportunity? What’s the story behind it?</p>
-
-<p><strong>Martin:</strong> It really came from something we wanted ourselves. I think everyone says this! In my previous startup (and my cofounders also had a previous startup), we were all trying to do a lot of engaging with people personally, getting out there, learning a lot from people, really understanding where they were coming from. And that was so much effort! I’d keep lists of people in a custom database or in spreadsheets or in CRM systems like Highrise, and I’d have to keep them up to date by hand. I’d make a lot of notes about people, even just for myself, just so that I could remember when I came back to them six months later: what interactions I’d had with them, what we’d talked about.</p>
-
-<p>But I then found that all of this information would go stale: for example, I had entered someone’s job details and then they’d change job… and I’m not going to go and re-enter all of this stuff! It’s already out there on the web — really, software should just do this stuff automatically; there’s no reason why I should have to type this in again.</p>
-
-<p>And then, also, why should I have to always change over to another browser tab in order to search for something, and have five tabs open with different searches for stuff? It’s just ridiculous, this stuff should be in the tool which I use all the time anyway, which is email.</p>
-
-<p>And so, those are the two premises we started with. We wanted something which keeps itself up-to-date automatically from all the data which is already out there; you shouldn’t have to re-enter anything. And secondly, it should be in the workflow of the tool you already use, which, for most of us is primarily email. And on that premise we said: what can we build? Oh, well, let’s just stick something on the side of Gmail, see how it works. And people loved it.</p>
-
-<p><strong>Matthew:</strong> Excellent! Who is your cofounder, how did you meet, what qualities were you looking for in a cofounder, and how did you know they’d be a good fit?</p>
-
-<p><strong>Martin:</strong> I have two cofounders, Rahul and Sam; there are three of us. They are both really excellent people. I had known them for a while before starting: we were together in an office space, a kind of co-working space in Cambridge, UK. They were working on their previous startup, and I was working on my previous startup; we worked together a bit, we had lunch together every day, and just ended up talking about a lot of things.</p>
-
-<p>We found that partly we thought the same in a lot of ways, and partly we also had different but nicely complementary ways of thinking. We had a shared culture but often different perspectives, which helped us to together find the best way of doing stuff. And that’s really the basis on which we work. I think we have a very strong sense of a culture and making sure we work together very well, so we are constantly getting better at what we do.</p>
-
-<p><strong>Matthew:</strong> From idea to product launch, how long did it take, and when did you actually launch?</p>
-
-<p><strong>Martin:</strong> It was pretty quick actually: from first UI mockups to launch it was less than two months. We weren’t actually intending to launch: we had just put up this little website. We were applying for Y Combinator at the time and we also had some other people who were interested, so we wanted to show some potential investors what we were doing. Put up a little website; it wasn’t protected, but just at unknown URL.</p>
-
-<p>And then somehow the press got hold of this, and within a day we found ourselves with 10,000 users on our hands, because it just went wild through all of the blogs. That was a totally crazy experience: we had thought, “well, we’ve built this little thing, let’s give it to 10 people and see how it works”, and suddenly we have this massive load of people coming in. And we were working, working very hard, firstly trying to keep the servers up, but fortunately they held up quite nicely. Then also responding to all of the tweets, responding to all of the emails that were coming in. There was lots and lots of stuff happening very quickly; at that point we knew that we were on to something pretty exciting.</p>
-
-<p><strong>Matthew:</strong> And then you formally launched when?</p>
-
-<p><strong>Martin:</strong> We considered that our launch after the fact; we then said, “Well, OK, I guess we’ve launched now. Oh well, we’ve launched.” And then since then we’ve, at times, launched new features but that original bit of press we regard as our real launch.</p>
-
-<p><strong>Matthew:</strong> Are there any unique metrics or social proof about Rapportive that you’d like to share with our audience?</p>
-
-<p><strong>Martin:</strong> I think the thing I find most exciting: we always have a Twitter search going on — we have a big screen in the office, showing what people are saying about Rapportive on Twitter — and there’s just this constant stream of people loving it. I’m really humbled all of the time I see this. Every hour there’s stuff coming in from people saying things like, “This product has changed our life.”</p>
-
-<p>And that’s just amazing: when people will actually go out of their way to say something like that, and we’re not even particularly prompting them. So yeah, we have hundreds of thousands of users at the moment, but the important thing is really how much people care about it.</p>
-
-<p><strong>Matthew:</strong> We know founders face unique challenges when they start a company. What was the hardest part about launching or starting Rapportive, and how did you overcome this obstacle?</p>
-
-<p><strong>Martin:</strong> So we had a bit of a frustrating phase over the last summer. We were working very, very hard and there was lots going on, but our product was making very little visible progress, because we were spending all of our time firefighting, scaling our database because we had so much stuff coming in that we had to do a lot of work to re-architect it. We were doing a lot of groundwork for features which are just coming out now, but in technical groundwork there are months of work which is just invisible. We were moving country because we were all coming from the UK, moving to San Francisco, and we were fighting with US immigration. We were also spending a lot of time on support — which is good, it’s really valuable, because we learn a lot about the problems that people have, but again it’s very time consuming.</p>
-
-<p>So, with all of those things, it’s all useful stuff; there’s nothing really wasteful there. But on the other hand, our product wasn’t making progress, and people were starting to ask, “Well, you’ve been around for six months now, nine months now, and you’ve not really released any exciting new features. What’s going on?” And we were just saying, “Yeah, we’re trying to get to it, we’re doing what we can!”</p>
-
-<p>And then I was so happy when, towards the end of 2010, we got over this big hump of stuff, and now we’re putting out features again and there is much more visible progress. So that was a fairly hard phase to go through, but I’m really glad we got over it. In the end you just have to work through it. You just have to not give up, just keep on going, keep on going, even if it’s getting tough.</p>
-
-<p><strong>Matthew:</strong> Since you’ve been in operation, what have you learned about your business and your users that you didn’t realize before you launched?</p>
-
-<p><strong>Martin:</strong> When we first launched I was a bit cautious. I was wondering: “are people going to be really freaked out by seeing how much information is actually publicly available about them on the web?” You know, when you think about it rationally, it’s obvious: you can just search for someone on Google, and for most people you’ll actually get a pretty good idea of who this person is just by looking at the search results. And we’ve just taken away a step by automating a lot of that search, making it more convenient by putting it in email.</p>
-
-<p>And so I was expecting that there’d be a lot of people who would go, “Oh my God, no, privacy is dead!” But we tried to manage that very carefully: whenever anyone was concerned, we listen to them and respond to any concerns very quickly, and explain what we’re doing, why we’re doing it and why we think it’s absolutely fine. We are all very privacy conscious and we make that very clear as well. We don’t mess around with people’s private data; we only show information which people actually want to be public.</p>
-
-<p>And that is something I found surprising: just how quickly we can defuse any situation. If anyone was upset we’d just talk to them quietly, patiently, and explain what’s going on. If there was any problem, fix it quickly — and all the problems suddenly go away. And that’s really encouraging, because it means that we seem to actually be doing the right thing: pushing the envelope a bit. But yes, it works.</p>
-
-<p><strong>Matthew:</strong> What is it that you make look easy? What skill or talent comes easy or intuitively to you, and what has been difficult and how do you manage that?</p>
-
-<p><strong>Martin:</strong> I’d say: what we, as a team, are particularly good at is product design. Making something which is very neat, stays out of your way, but is still powerful; which does exactly the stuff you need, not more, not less; and just behaves the way people expect it to behave, without running into a weird corner where you don’t know what to do.</p>
-
-<p>And that is actually really hard to achieve. The amount of time we spend on optimizing the workflows for different users, depending on which starting state they’re coming from, which screens they have to go through and exactly what button we can show in which place, exactly what copy we use, what words we use to describe things, then taking them through the flow… and then, to the user, all it looks like is: “oh, I clicked a button, a pop-up appeared, I clicked another button and it worked.”</p>
-
-<p>That’s something we really enjoy: making that look easy, but a lot of work goes into it. In the end people just appreciate it as a product which is really nicely designed, which just works and which gives them a kind of warm, fuzzy feeling.</p>
-
-<p><strong>Matthew:</strong> What’s the most important lesson you’ve learned since launching Rapportive?</p>
-
-<p><strong>Martin:</strong> The most important lesson? I’ve not really graded them in a particular priority.</p>
-
-<p>I’d say, off the top of my head: caring about user experience and caring about users was something we thought from the start was really important — and that has really been validated. People appreciate us for having a product which just works nicely, and which has the little details thought out.</p>
-
-<p>People appreciate that we get back to them quickly, that we’re always very friendly when responding to them, that we’re trying to be personal where we can.</p>
-
-<p><strong>Matthew:</strong> Martin, what bit of advice do you wish you would have known before starting Rapportive?</p>
-
-<p><strong>Martin:</strong> I think what’s really interesting is that in a startup everything is magnified. If you have any issue early on, that will just continue, continue, get bigger and bigger, so if you have any issue early on then make sure you fix it early on. I think we’ve generally done a pretty good job of that. But it’s worth doing that really consciously.</p>
-
-<p>Certain things are really hard, but you need to get good at them. For example, communicating and sharing intuitions, that’s a topic that I’ve been thinking about a lot. We find that, since we’re three cofounders, we often have similar ideas about things, but and then often find that they differ in subtle ways. Really what we want to do is to combine our three intuitions into one, so that together, we have a really good broad and also deep insight into what people want. That requires that you find ways of explaining to the others not just <em>what</em> you think, but <em>why</em> you think it.</p>
-
-<p>And that’s really hard to learn, and we’ve gradually been getting better at that. As you go about things, just be conscious of the fact that it’s going to take a lot of effort and time, even just to learn to speak the same language. You think you all speak English, but then you find, of course, that you make up your own words to describe the domain you’re working in. A lot of things are just completely non-obvious.</p>
-
-<p>You get a lot of conflicting advice from outside mentors. We have a lot of really good investors, advisors, mentors, and often they say completely contradictory things — and that’s fine. You just need to learn to absorb those things into your own intuition, and within the team work out how you can share those intuitions. Then you can have a coherent vision, all together, for what you’re going to build, why it’s important, how you’re going to go forward.</p>
-
-<p><strong>Matthew:</strong> What bit of advice would you like to share with our audience about launching a startup? If you have to distill it, what are the key elements?</p>
-
-<p><strong>Martin:</strong> One thing, which worked in our favor but is not necessarily particularly replicable: if your product works well for journalists, then journalists will write about it quite a lot. We didn’t realize this initially, but it happened to be the fact that, Rapportive works really well for people who deal with a lot of incoming weird stuff from lots of people they don’t know, and need to assess very quickly whether the sources are reliable. And, well, that’s pretty much what journalists do.</p>
-
-<p>It was also the case that when we started Rapportive, a lot of the data we had about people was not particularly great, but bloggers tend to be the kind of people who are very present on social media, so we had really great data for them! And that worked in our favor. Since then we’ve got a lot better at data for everyone else, and now we’ve got a pretty high coverage rate for everyone. But for that initial launch, just working well for reporters and bloggers was pretty good.</p>
-
-<p>But of course, you can’t choose your startup based on the fact that it’s going to be useful for bloggers, so that’s not very useful advice.</p>
-
-<p>There are lots of different schools of thought for launching and they all kind of make sense. There’s the “launch small and make sure that you’re continuously learning” school, and that makes a lot of sense. And then there’s also the school which observes that, if you can get a lot of very quick press that generates a lot of excitement and a lot of buzz, that’s also valuable. In the end, with these things there’s never a right answer; you just have to take in all of the bits of advice you hear and create your personal conglomerate of what makes sense.</p>
-
-<p><strong>Matthew:</strong> Before we close, I would love for you to give our audience your vision of Rapportive and how you hope it will change the world.</p>
-
-<p><strong>Martin:</strong> We’ve got a lot of really exciting things coming. I don’t want to talk about them in too much detail, but to give a rough outline:</p>
-
-<p>I think, firstly, the inbox is a really, really interesting place, because that’s where all of your communications come together. Email is the primary one we use at the moment; I don’t know, maybe it’ll be Facebook mail within two years’ time, but that doesn’t really matter, that’s beside the point.</p>
-
-<p>The point is that people are really, really opinionated about which tool they want to use, and getting people to change tool is really, really hard. So we’re building Rapportive in the philosophy that we don’t people to change behavior; we just want people to continue doing what they’re doing already, and just make it better.</p>
-
-<p>Just add those little magic touches, add little things which either save you time, or which take something which was previously laborious (and required switching to other browser tabs and required re-entering of data), and make all of that go away. Just make it be there, and make common tasks feel natural.</p>
-
-<p>That’s the philosophy with which we’re going about things, and that seems to be working pretty well.</p>
-
-<p><strong>Matthew:</strong> Excellent. Well, Martin, it’s been a pleasure having you as a guest on FounderLY. We’re rooting for your success at Rapportive. For those in our audience who’d like to learn more you can visit their website at www.rapportive.com and register to become a user and join their community. This is Matthew Wise with FounderLY. Thanks so much, Martin.</p>
-
-<p><strong>Martin:</strong> Thank you, Matthew.</p>
                 ]]></content:encoded>
             </item>
         
