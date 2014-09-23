@@ -99,7 +99,7 @@ constraints, about the reasoning behind every design decision.
 None of the ideas in this book are really new, and indeed many ideas are decades old.
 Everything has already been said somewhere, in conference presentations, research papers,
 blog posts, code, bug trackers, and engineering folklore. However, to my knowledge the ideas
-haven't previoulsy been collected, compared and evaluated like this.
+haven't previously been collected, compared and evaluated like this.
 
 I hope that by understanding what our options are, and the pros and cons of each approach,
 we'll all become better engineers. By making conscious trade-offs and choosing our tools
