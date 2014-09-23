@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Mon, 15 Sep 2014 12:15:44 BST</lastBuildDate>
+        <lastBuildDate>Tue, 23 Sep 2014 14:45:36 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -64,7 +64,7 @@
 
 <p>It doesn’t matter what your preferred programming language or framework is – this book is agnostic. It’s about architecture and algorithms, about fundamental principles and practical constraints, about the reasoning behind every design decision.</p>
 
-<p>None of the ideas in this book are really new, and indeed many ideas are decades old. Everything has already been said somewhere, in conference presentations, research papers, blog posts, code, bug trackers, and engineering folklore. However, to my knowledge the ideas haven’t previoulsy been collected, compared and evaluated like this.</p>
+<p>None of the ideas in this book are really new, and indeed many ideas are decades old. Everything has already been said somewhere, in conference presentations, research papers, blog posts, code, bug trackers, and engineering folklore. However, to my knowledge the ideas haven’t previously been collected, compared and evaluated like this.</p>
 
 <p>I hope that by understanding what our options are, and the pros and cons of each approach, we’ll all become better engineers. By making conscious trade-offs and choosing our tools wisely, we will build systems that are more reliable and much easier to maintain in the long run. It’s a quest to help us engineers be better at our jobs, and build better software.</p>
 
