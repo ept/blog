@@ -1,0 +1,198 @@
+/* =====Reset===== */
+html,body,div,span,a,img,h1,h2,h3,h4,h5,h6,p,blockquote,q,cite,abbr,acronym,caption,address,strong,strike,del,big,small,font,dfn,ins,kbd,s,samp,tt,var,pre,code,dfn,var,iframe,applet,object,fieldset,form,label,legend,dl,dt,dd,ul,ol,li,table,caption,tbody,tfoot,thead,tr,th,td{
+	border: 0;
+	font-family: inherit;
+	font-size:100%;
+	font-style:inherit; 
+	font-weight:inherit;
+	margin:0;
+	outline: 0;
+	padding:0;
+	vertical-align: baseline;
+}
+caption,th,td {text-align:left}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+blockquote:before,blockquote:after,q:before,q:after {content:''}
+
+/* =====Typography=====*/
+body {
+	background: #fff;
+	color: #51555c;
+	font: 75%/1.5 helvetica, arial, sans-serif; /* Set in percentages so IE6 can still resize. The percentage notation also fixes a strange quirk where IE dramaticly scales text. */
+}
+html>body {
+	font-size: 14px; /* a more exact setting in pixels for browsers that can resize them. */
+}
+pre,code {
+	font-family: "Lucida Console", Monaco, monospace;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+	font-weight: bold;
+}
+em,
+*[lang] {
+	font-style: italic;
+}
+strike,
+del {
+	text-decoration: line-through;
+}
+acronym,
+.caps {
+	text-transform: uppercase;
+}
+.small-caps {
+	font-variant: small-caps;
+}
+acronym,
+.num,
+.caps,
+.small-caps {
+	letter-spacing: 0.1em;
+}
+/* Links */
+a,
+a:visited {
+	color: #a00004;
+	text-decoration: none;
+}
+/* specify all three for accessibility */
+a:focus,
+a:hover,
+a:active {
+	text-decoration: underline;
+}
+h1 a,
+h1 a:visited,
+h2 a,
+h2 a:visited,
+h3 a,
+h3 a:visited,
+h4 a,
+h4 a:visited,
+h5 a,
+h5 a:visited,
+h6 a,
+h6 a:visited {
+	color: #51555c;
+}
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover {
+	color: #a00004;
+	text-decoration: none;
+}
+/* elements with title attribute */
+abbr[title],
+acronym[title],
+dfn[title],
+span[title],
+del[title] {
+	cursor: help;
+}
+/* typogrify: inset initial double quotes. */
+.dquo {
+	margin-left: -.45em;
+}
+ /* fancy ampersands */
+.amp {
+	font-family: Baskerville, "Goudy Old Style", "Palatino", "Book Antiqua", serif;
+	font-size: 110%;
+	font-style: italic;
+}
+/* Font sizes and vertical measure */
+h1 {
+	font-size: 2em; /* 24 */
+	line-height: 1;
+	margin: 1.125em 0 .25em;
+}
+h2,
+big {
+	font-size: 1.5em; /* 18 */
+	line-height: 1;
+}
+h2 {
+	margin: 0 0 .5em 0;
+}
+h3 {
+	font-size: 1.16666667em; /* 14 */
+	line-height: 1.28571429;
+	margin: 0 0 .58333334em 0;
+}
+h4,
+h5,
+h6 {
+	margin: 0 0 .75em 0;
+}
+p {
+	margin: 0 0 1.5em 0;
+}
+blockquote {
+	border-left:.16666667em solid #e9eaea;
+	margin: 0 .75em .75em .75em;
+	padding-left:1em;
+}
+small,
+acronym,
+.caps {
+	font-size: .833333333333em;
+	line-height: 1.8em;
+}
+pre {
+	font-size: 1em;
+	line-height: 1.5;
+	margin-bottom: 1.5em;
+	overflow: auto;
+}
+textarea {
+	font-family: helvetica, arial, sans-serif;
+	font-size: 1em;
+	line-height: 1.5;
+	padding: 3px;
+}
+ul,
+ol,
+dl {
+	margin: 0 0 1.5em 2em;
+}
+li ul,
+li ol {
+	margin-bottom: 0;
+}
+ul {
+	list-style-image: url(../images/arrow-bullet.gif);
+}
+
+#content li, #content dd {
+	margin-bottom: .5em;
+}
+/* Tables */
+table {
+	border-left: .083333333em solid #eee;
+	border-top: .083333333em solid #eee;
+}
+td,th {
+	line-height: 1.33333333em;
+	padding: 0 .5em;
+}
+th {
+	background-color: #eee;
+	border-bottom: .083333333em solid #ddd;
+	border-right: .083333333em solid #ddd;
+}
+td {
+	border-bottom: .083333333em solid #eee;
+	border-right: .083333333em solid #eee;
+}

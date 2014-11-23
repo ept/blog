@@ -51,96 +51,179 @@
         <div id="content">
             <h1>i18n and social web: We still haven't figured it out</h1>
 
-            <p>Internationalisation (i18n for short, where 18 represents the 18 letters in the middle of this long word) is still an unsolved problem.</p>
+            <p>Internationalisation (i18n for short, where 18 represents the 18 letters in the middle of this long
+word) is still an unsolved problem.</p>
 
-<p>A lot of things fall under i18n, such as correct handling of character sets (not everybody uses the Latin alphabet), time zones (not everybody uses PST or GMT), numbers (not everybody uses the dot as decimal separator), currencies (there is a world outside the US dollar), writing direction (not everybody writes from left to right) and of course translation into different languages. Traditionally, i18n has been an issue which software engineers have loved to ignore, because (a) it’s difficult, (b) it’s not cool, and (c) if you’re in North America, you can find enough customers in North America for the first few years, so there isn’t a strong business requirement to work internationally.</p>
+<p>A lot of things fall under i18n, such as correct handling of
+character sets (not everybody uses the Latin alphabet), time zones (not everybody uses PST or GMT),
+numbers (not everybody uses the dot as decimal separator), currencies (there is a world outside the
+US dollar), writing direction (not everybody writes from left to right) and of course translation
+into different languages. Traditionally, i18n has been an issue which software engineers have loved
+to ignore, because (a) it’s difficult, (b) it’s not cool, and (c) if you’re in North America, you
+can find enough customers in North America for the first few years, so there isn’t a strong business
+requirement to work internationally.</p>
 
-<p>Now that we have the web, and people from many different languages and cultures interacting on the web, getting internationalisation right is absolutely essential. And it’s getting better – I think most developers now appreciate that you’ve got to use Unicode, that you’ve got to store dates and times with timezones, that you need to make text translatable. Ok, at least that’s something. But I think that soon we will get to a point where the traditional approach to translating applications breaks down.</p>
+<p>Now that we have the web, and people from many different
+languages and cultures interacting on the web, getting internationalisation right is absolutely
+essential. And it’s getting better – I think most developers now appreciate that you’ve got to use
+Unicode, that you’ve got to store dates and times with timezones, that you need to make text
+translatable. Ok, at least that’s something. But I think that soon we will get to a point where the
+traditional approach to translating applications breaks down.</p>
 
 <p>Let me explain.</p>
 
-<p>The way software engineers usually make their applications work in multiple languages is to mark every human-readable bit of text in the program in some particular way, to extract those bits of text, give them to a translation bureau, and get back an equivalent set of texts to substitute in-place. The result should hopefully be that the application appears entirely in a new language.</p>
+<p>The way software
+engineers usually make their applications work in multiple languages is to mark every human-readable
+bit of text in the program in some particular way, to extract those bits of text, give them to a
+translation bureau, and get back an equivalent set of texts to substitute in-place. The result
+should hopefully be that the application appears entirely in a new language.</p>
 
-<p>Even this simple form of translation isn’t working everywhere. For example, if you update your Twitter status in a German web browser, it says that you updated ”weniger als 5 Sekunden ago”. Here “ago” is an English word, but the rest is German; to a German-speaker, this reads like “vor less than 5 seconds” reads to an English-speaker. This is simply a case of some of those bits of text getting forgotten; not a big problem, and I’m sure they will fix it soon, but enough to make German-speakers uncomfortable using the application because it’s constantly offending against their sense of language.</p>
+<p>Even this simple form
+of translation isn’t working everywhere. For example, if you update your Twitter status in a German
+web browser, it says that you updated ”weniger als 5 Sekunden ago”. Here “ago” is an English word,
+but the rest is German; to a German-speaker, this reads like “vor less than 5 seconds” reads to an
+English-speaker. This is simply a case of some of those bits of text getting forgotten; not a big
+problem, and I’m sure they will fix it soon, but enough to make German-speakers uncomfortable using
+the application because it’s constantly offending against their sense of language.</p>
 
-<p>However, things get harder once you start building sentences based on variables which may change. The Twitter message is a simple example of this: the time is a variable, and because it’s in the past (not in the future), we need to stick “ago” on the end, in English at least. The code which does this will look something like this:</p>
-<div class='highlight'><pre><code class='ruby'><span class='n'>time_in_words</span> <span class='o'>=</span> <span class='n'>distance_of_time_in_words</span><span class='p'>(</span><span class='n'>time_of_last_update</span><span class='p'>,</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
-<span class='n'>time_in_words</span> <span class='o'>=</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>time_in_words</span><span class='si'>}</span><span class='s2'> ago&quot;</span> <span class='k'>if</span> <span class='p'>(</span><span class='n'>time_of_last_update</span> <span class='o'>&lt;</span> <span class='no'>Time</span><span class='o'>.</span><span class='n'>now</span><span class='p'>)</span>
-</code></pre></div>
-<p>To translate this program, make sure that the function <code>distance_of_time_in_words</code> returns words in the right language (e.g. for German, “weniger als 5 Sekunden” – Twitter does this correctly), and replace <code>&quot;#{time_in_words} ago&quot;</code> with the right grammatical construction for the target language (e.g. for German, <code>&quot;vor #{time_in_words}&quot;</code> – this is the bit Twitter has missed out).</p>
+<p>However, things
+get harder once you start building sentences based on variables which may change. The Twitter
+message is a simple example of this: the time is a variable, and because it’s in the past (not in
+the future), we need to stick “ago” on the end, in English at least. The code which does this will
+look something like this:</p>
 
-<p>The way we use <code>time_in_words</code> as a variable we can insert words before or after it to make the right grammatical construction. Fairly flexible, but is this enough?</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">time_in_words</span> <span class="o">=</span> <span class="n">distance_of_time_in_words</span><span class="p">(</span><span class="n">time_of_last_update</span><span class="p">,</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+<span class="n">time_in_words</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">time_in_words</span><span class="si">}</span><span class="s2"> ago&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">time_of_last_update</span> <span class="o">&lt;</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="p">)</span></code></pre></div>
 
-<p>Over the past few days I have been developing a Facebook application. It’s not even internationalised, it’s just plain English, but nevertheless I have come across a problem of grammatical constructions. Take for example a message in the news feed, which might look different depending on who looks at it:</p>
+<p>To translate this program, make sure that the function
+<code>distance_of_time_in_words</code> returns words in the right language (e.g. for German, “weniger
+als 5 Sekunden” – Twitter does this correctly), and replace
+<code>"#{time_in_words} ago"</code> with the right grammatical construction for the target language
+(e.g. for German, <code>"vor #{time_in_words}"</code> – this is the bit Twitter has missed out).</p>
+
+<p>The way we use <code>time_in_words</code> as a variable we can insert words before or after it to make the right
+grammatical construction. Fairly flexible, but is this enough?</p>
+
+<p>Over the past few days I have been developing a Facebook application. It’s not even internationalised,
+it’s just plain English, but nevertheless I have come across a problem of grammatical constructions.
+Take for example a message in the news feed, which might look different depending on who looks at it:</p>
 
 <ul>
-<li>Mike has given John a pat on the shoulder because he has done well. (seen by a bystander)</li>
-
-<li>Mike has given you a pat on the shoulder because you have done well. (seen by John)</li>
-
-<li>You have given John a pat on the shoulder because he has done well. (seen by Mike)</li>
+  <li>Mike has given John a pat on the shoulder because he has done well. (seen by a bystander)</li>
+  <li>Mike has given you a pat on the shoulder because you have done well. (seen by John)</li>
+  <li>You have given John a pat on the shoulder because he has done well. (seen by Mike)</li>
 </ul>
 
-<p>First of all, note that the subject (Mike) and object (John) can be either a name, or ‘you’. Facebook offers the facility to do this using the <a href="http://wiki.developers.facebook.com/index.php/Fb:name"><code>&lt;fb:name&gt;</code> tag</a>; as developers, we are even given the opportunity to say whether we want the “you” to start with a capital letter (depending on whether it occurs at the beginning or in the middle of the sentence). Next, we use a pronoun – “because <strong>he</strong> has done well”. This depends on the gender of John, but we know from his profile that he is male, so it has to be “he” not “she”. Facebook does this using the <a href="http://wiki.developers.facebook.com/index.php/Fb:pronoun"><code>&lt;fb:pronoun&gt;</code> tag</a>.</p>
+<p>First of all, note that the subject (Mike) and object (John) can be either a name,
+or ‘you’. Facebook offers the facility to do this using the
+<a href="http://wiki.developers.facebook.com/index.php/Fb:name"><code>&lt;fb:name&gt;</code> tag</a>; as developers, we are
+even given the opportunity to say whether we want the “you” to start with a capital letter
+(depending on whether it occurs at the beginning or in the middle of the sentence). Next, we use a
+pronoun – “because <strong>he</strong> has done well”. This depends on the gender of John, but we know from his
+profile that he is male, so it has to be “he” not “she”. Facebook does this using the
+<a href="http://wiki.developers.facebook.com/index.php/Fb:pronoun"><code>&lt;fb:pronoun&gt;</code> tag</a>.</p>
 
-<p>So far, so good. Now note that the verb form changes between second and third person (have/has). There is no way in Facebook to do this (it was <a href="http://wiki.developers.facebook.com/index.php/Requested_FBML_Tags#.3Cfb:verb.3E">requested more than a year ago</a> but <a href="http://bugs.developers.facebook.com/show_bug.cgi?id=514">still hasn’t happened</a>). In case you ever wondered why the Facebook news feed is always in the simple past but never in present perfect – that’s because in English, the verb forms for second and third person are the same in simple past, which is not the case in other tenses! (In “You threw a banana at Bob” and “Alice threw a banana at you”, the verb is “threw” in both cases; in “You have thrown a banana at Bob” and “Alice has thrown a banana at you”, the verb forms “have thrown” and “has thrown” are not the same.)</p>
+<p>So far, so good. Now note that the verb form changes between second and third person (have/has).
+There is no way in Facebook to do this (it was
+<a href="http://wiki.developers.facebook.com/index.php/Requested_FBML_Tags#.3Cfb:verb.3E">requested more than a year ago</a> but
+<a href="http://bugs.developers.facebook.com/show_bug.cgi?id=514">still hasn’t happened</a>). In case you ever
+wondered why the Facebook news feed is always in the simple past but never in present perfect –
+that’s because in English, the verb forms for second and third person are the same in simple past,
+which is not the case in other tenses! (In “You threw a banana at Bob” and “Alice threw a banana at
+you”, the verb is “threw” in both cases; in “You have thrown a banana at Bob” and “Alice has thrown
+a banana at you”, the verb forms “have thrown” and “has thrown” are not the same.)</p>
 
-<p>The part “a pat on the shoulder” stays the same in all sentences, but that’s just because English happens to work that way – in other languages or cultures, it may have to be modified depending on e.g. the gender or even the age of the people involved. Or the verb (have/has given) may have to change depending on some parameter of the direct object (‘a pat on the shoulder’). There may be languages in which the name of a person changes if it is used as an indirect object. And so on.</p>
+<p>The part “a pat
+on the shoulder” stays the same in all sentences, but that’s just because English happens to work
+that way – in other languages or cultures, it may have to be modified depending on e.g. the gender
+or even the age of the people involved. Or the verb (have/has given) may have to change depending on
+some parameter of the direct object (‘a pat on the shoulder’). There may be languages in which the
+name of a person changes if it is used as an indirect object. And so on.</p>
 
-<p>You can get up to a certain point by duplicating text, e.g. providing a separate snippet of text for each possible combination of values which may occur; then translators can deal with each individually, and ensure that it is correct. But very quickly you get into a situation where the number of combinations is so large that this approach just doesn’t scale.</p>
+<p>You can get up to a
+certain point by duplicating text, e.g. providing a separate snippet of text for each possible
+combination of values which may occur; then translators can deal with each individually, and ensure
+that it is correct. But very quickly you get into a situation where the number of combinations is so
+large that this approach just doesn’t scale.</p>
 
-<p>The bottom line is that in general you can’t build a grammatically correct sentence by just sticking words together, even if you make the word order variable. In languages with declension and other grammatical changes to words, or languages where the word order changes depending on some variable, or languages with separable verbs… well, I don’t know what happens then. It’s an unsolved problem.</p>
+<p>The bottom line is that in general you can’t build a
+grammatically correct sentence by just sticking words together, even if you make the word order
+variable. In languages with declension and other grammatical changes to words, or languages where
+the word order changes depending on some variable, or languages with separable verbs… well, I
+don’t know what happens then. It’s an unsolved problem.</p>
 
-<p>(There is another subtle point here, which is that cultural differences may mean that even if you translate something in a grammatically correct way, it may have the wrong connotations in the reader’s culture; for instance, consider a culture in which patting on the shoulder is considered offensive. But in such cases, it could be replaced with another gesture which has the desired meaning. I will just concentrate on the grammatical level for now.)</p>
+<p>(There is another subtle point here, which
+is that cultural differences may mean that even if you translate something in a grammatically
+correct way, it may have the wrong connotations in the reader’s culture; for instance, consider a
+culture in which patting on the shoulder is considered offensive. But in such cases, it could be
+replaced with another gesture which has the desired meaning. I will just concentrate on the
+grammatical level for now.)</p>
 
-<p>The only step I’ve seen so far towards making internationalisable grammar is the <a href="http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflections.html#M001044">‘pluralize’</a> function which you find in some frameworks such as Rails. It takes a number (such as 0, 1, 2, 29 or 518514) and a singular noun (such as ‘camel’) and returns the text in the appropriate singular or plural form (e.g. “29 camels”) – and it works in a wide selection of languages (e.g. in German, <code>pluralize(29, 'Kamel') == '29 Kamele'</code>).</p>
+<p>The only step I’ve seen so far towards making internationalisable grammar is the
+<a href="http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflections.html#M001044">‘pluralize’</a>
+function which you find in some frameworks such as Rails. It takes a number (such as 0, 1, 2, 29 or
+518514) and a singular noun (such as ‘camel’) and returns the text in the appropriate singular or
+plural form (e.g. “29 camels”) – and it works in a wide selection of languages (e.g. in German,
+<code>pluralize(29, 'Kamel') == '29 Kamele'</code>).</p>
 
-<p>To illustrate the problem, here is one of the source files from <a href="http://www.bidforwine.co.uk/">Bid for Wine</a>. It is a very minor feature – it just creates a short paragraph of text explaining the purpose of a particular form which a buyer needs to fill in. However, there can be a lot of different things in that form, depending on the type of auction. This generated text gets sent out by email (to both the seller and the buyer) and is also displayed on the website, and few people will ever notice how much effort has gone into building that paragraph of text.</p>
-<div class='highlight'><pre><code class='ruby'><span class='k'>case</span> <span class='n'>grammatical_person</span>
-<span class='k'>when</span> <span class='mi'>2</span>
-  <span class='n'>you_or_they</span> <span class='o'>=</span> <span class='s1'>&#39;you&#39;</span>
-  <span class='n'>your_or_their</span> <span class='o'>=</span> <span class='s1'>&#39;your&#39;</span>
-  <span class='n'>you_or_them</span> <span class='o'>=</span> <span class='s1'>&#39;you&#39;</span>
-  <span class='n'>yourself_or_themselves</span> <span class='o'>=</span> <span class='s1'>&#39;yourself&#39;</span>
-<span class='k'>when</span> <span class='mi'>3</span>
-  <span class='n'>you_or_they</span> <span class='o'>=</span> <span class='s1'>&#39;they&#39;</span>
-  <span class='n'>your_or_their</span> <span class='o'>=</span> <span class='s1'>&#39;their&#39;</span>
-  <span class='n'>you_or_them</span> <span class='o'>=</span> <span class='s1'>&#39;them&#39;</span>
-  <span class='n'>yourself_or_themselves</span> <span class='o'>=</span> <span class='s1'>&#39;themselves&#39;</span>
-<span class='k'>end</span>
+<p>To illustrate the problem, here is one of the source files from
+<a href="http://www.bidforwine.co.uk/">Bid for Wine</a>. It is a very minor feature – it just creates a short
+paragraph of text explaining the purpose of a particular form which a buyer needs to fill in.
+However, there can be a lot of different things in that form, depending on the type of auction. This
+generated text gets sent out by email (to both the seller and the buyer) and is also displayed on
+the website, and few people will ever notice how much effort has gone into building that paragraph
+of text.</p>
 
-<span class='n'>things_to_do</span> <span class='o'>=</span> <span class='o'>[]</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">case</span> <span class="n">grammatical_person</span>
+<span class="k">when</span> <span class="mi">2</span>
+  <span class="n">you_or_they</span> <span class="o">=</span> <span class="s1">&#39;you&#39;</span>
+  <span class="n">your_or_their</span> <span class="o">=</span> <span class="s1">&#39;your&#39;</span>
+  <span class="n">you_or_them</span> <span class="o">=</span> <span class="s1">&#39;you&#39;</span>
+  <span class="n">yourself_or_themselves</span> <span class="o">=</span> <span class="s1">&#39;yourself&#39;</span>
+<span class="k">when</span> <span class="mi">3</span>
+  <span class="n">you_or_they</span> <span class="o">=</span> <span class="s1">&#39;they&#39;</span>
+  <span class="n">your_or_their</span> <span class="o">=</span> <span class="s1">&#39;their&#39;</span>
+  <span class="n">you_or_them</span> <span class="o">=</span> <span class="s1">&#39;them&#39;</span>
+  <span class="n">yourself_or_themselves</span> <span class="o">=</span> <span class="s1">&#39;themselves&#39;</span>
+<span class="k">end</span>
 
-<span class='k'>if</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>in_bond</span>
-  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;specify whether </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like to keep </span><span class='si'>#{</span><span class='n'>your_or_their</span><span class='si'>}</span><span class='s2'> wine in bond&quot;</span>
-<span class='k'>end</span>
+<span class="n">things_to_do</span> <span class="o">=</span> <span class="o">[]</span>
 
-<span class='k'>if</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>is_consignment_auction?</span>
-  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;choose if </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like to have the wine shipped to &quot;</span> <span class='o'>+</span>
-                  <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>you_or_them</span><span class='si'>}</span><span class='s2'> or rather pick it up from the warehouse&quot;</span>
+<span class="k">if</span> <span class="n">auction</span><span class="o">.</span><span class="n">lot</span><span class="o">.</span><span class="n">in_bond</span>
+  <span class="n">things_to_do</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;specify whether </span><span class="si">#{</span><span class="n">you_or_they</span><span class="si">}</span><span class="s2"> would like to keep </span><span class="si">#{</span><span class="n">your_or_their</span><span class="si">}</span><span class="s2"> wine in bond&quot;</span>
+<span class="k">end</span>
 
-<span class='k'>elsif</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>can_be_collected</span> <span class='o'>&amp;&amp;</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>can_be_shipped</span>
-  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;choose if </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like to have the wine shipped to &quot;</span> <span class='o'>+</span>
-                  <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>you_or_them</span><span class='si'>}</span><span class='s2'> or rather collect it </span><span class='si'>#{</span><span class='n'>yourself_or_themselves</span><span class='si'>}</span><span class='s2'>&quot;</span>
+<span class="k">if</span> <span class="n">auction</span><span class="o">.</span><span class="n">is_consignment_auction?</span>
+  <span class="n">things_to_do</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;choose if </span><span class="si">#{</span><span class="n">you_or_they</span><span class="si">}</span><span class="s2"> would like to have the wine shipped to &quot;</span> <span class="o">+</span>
+                  <span class="s2">&quot;</span><span class="si">#{</span><span class="n">you_or_them</span><span class="si">}</span><span class="s2"> or rather pick it up from the warehouse&quot;</span>
 
-<span class='k'>elsif</span> <span class='n'>auction</span><span class='o'>.</span><span class='n'>lot</span><span class='o'>.</span><span class='n'>can_be_collected</span>
-  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;confirm collection of the wine&quot;</span>
+<span class="k">elsif</span> <span class="n">auction</span><span class="o">.</span><span class="n">lot</span><span class="o">.</span><span class="n">can_be_collected</span> <span class="o">&amp;&amp;</span> <span class="n">auction</span><span class="o">.</span><span class="n">lot</span><span class="o">.</span><span class="n">can_be_shipped</span>
+  <span class="n">things_to_do</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;choose if </span><span class="si">#{</span><span class="n">you_or_they</span><span class="si">}</span><span class="s2"> would like to have the wine shipped to &quot;</span> <span class="o">+</span>
+                  <span class="s2">&quot;</span><span class="si">#{</span><span class="n">you_or_them</span><span class="si">}</span><span class="s2"> or rather collect it </span><span class="si">#{</span><span class="n">yourself_or_themselves</span><span class="si">}</span><span class="s2">&quot;</span>
 
-<span class='k'>else</span>
-  <span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;specify where </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> would like the wine to be delivered&quot;</span>
-<span class='k'>end</span>
+<span class="k">elsif</span> <span class="n">auction</span><span class="o">.</span><span class="n">lot</span><span class="o">.</span><span class="n">can_be_collected</span>
+  <span class="n">things_to_do</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;confirm collection of the wine&quot;</span>
 
-<span class='n'>things_to_do</span> <span class='o'>&lt;&lt;</span> <span class='s2'>&quot;provide a billing address&quot;</span>
+<span class="k">else</span>
+  <span class="n">things_to_do</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;specify where </span><span class="si">#{</span><span class="n">you_or_they</span><span class="si">}</span><span class="s2"> would like the wine to be delivered&quot;</span>
+<span class="k">end</span>
 
-<span class='k'>if</span> <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>length</span> <span class='o'>&gt;=</span> <span class='mi'>2</span>
-  <span class='n'>last_thing</span> <span class='o'>=</span> <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>pop</span>
-  <span class='n'>last_but_one</span> <span class='o'>=</span> <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>pop</span>
-  <span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>push</span> <span class='s2'>&quot;</span><span class='si'>#{</span><span class='n'>last_but_one</span><span class='si'>}</span><span class='s2'>, and </span><span class='si'>#{</span><span class='n'>last_thing</span><span class='si'>}</span><span class='s2'>&quot;</span> <span class='c1'># Oxford comma</span>
-<span class='k'>end</span>
+<span class="n">things_to_do</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;provide a billing address&quot;</span>
 
-<span class='s2'>&quot;On this form </span><span class='si'>#{</span><span class='n'>you_or_they</span><span class='si'>}</span><span class='s2'> can </span><span class='si'>#{</span><span class='n'>things_to_do</span><span class='o'>.</span><span class='n'>join</span><span class='p'>(</span><span class='s1'>&#39;, &#39;</span><span class='p'>)</span><span class='si'>}</span><span class='s2'>.&quot;</span>
-</code></pre></div>
-<p>And you thought English was simple? You can even even see the remains of grammatical cases (<code>you_or_they</code> vs. <code>you_or_them</code>). If this needs to be translated one day, we will need to duplicate the logic and mess about with the way variables are inserted into the snippets of text to make the grammar work. It will be horrible to maintain. But that’s the best we can do with the state of the art. Shouldn’t there be a better way?</p>
+<span class="k">if</span> <span class="n">things_to_do</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+  <span class="n">last_thing</span> <span class="o">=</span> <span class="n">things_to_do</span><span class="o">.</span><span class="n">pop</span>
+  <span class="n">last_but_one</span> <span class="o">=</span> <span class="n">things_to_do</span><span class="o">.</span><span class="n">pop</span>
+  <span class="n">things_to_do</span><span class="o">.</span><span class="n">push</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">last_but_one</span><span class="si">}</span><span class="s2">, and </span><span class="si">#{</span><span class="n">last_thing</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># Oxford comma</span>
+<span class="k">end</span>
+
+<span class="s2">&quot;On this form </span><span class="si">#{</span><span class="n">you_or_they</span><span class="si">}</span><span class="s2"> can </span><span class="si">#{</span><span class="n">things_to_do</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span></code></pre></div>
+
+<p>And you thought English was simple?
+You can even even see the remains of grammatical cases (<code>you_or_they</code> vs. <code>you_or_them</code>). If this needs
+to be translated one day, we will need to duplicate the logic and mess about with the way variables
+are inserted into the snippets of text to make the grammar work. It will be horrible to maintain.
+But that’s the best we can do with the state of the art. Shouldn’t there be a better way?</p>
+
 
             
 

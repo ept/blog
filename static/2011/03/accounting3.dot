@@ -1,0 +1,19 @@
+#!/usr/bin/env dot -O -Tpng
+
+digraph G {
+    graph [rankdir=LR, fontname=Arial];
+    node [fontname=Arial];
+    edge [fontname=Arial];
+
+    capital -> bank [label="$5,000"];
+    bank -> furniture [label="$500"];
+    bank -> creditcard [label="$5"];
+    creditcard -> food [label="$5"];
+    creditcard -> food [label="$8"];
+
+    capital      [label="Founders"];
+    bank         [label="Bank account"];
+    furniture    [label="Furniture"];
+    creditcard   [label="Credit card"];
+    food         [label="Food"];
+}

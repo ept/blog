@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:Invoice
+    xmlns:p="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+    xmlns:p2="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+    xmlns:p4="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 ../os-UBL-2.0/xsd/maindoc/UBL-Invoice-2.0.xsd">
+
+    <p2:ID>147815</p2:ID>
+    <p2:IssueDate>2008-11-09</p2:IssueDate>
+
+    <p4:AccountingSupplierParty>
+        <p4:Party>
+            <p4:PartyName><p2:Name>The Unseen University</p2:Name></p4:PartyName>
+            <p4:PostalAddress>
+                <p2:BuildingName>The Tower of Art</p2:BuildingName>
+                <p2:CityName>Ankh-Morpork</p2:CityName>
+                <p4:Country><p2:Name>Discworld</p2:Name></p4:Country>
+            </p4:PostalAddress>
+        </p4:Party>
+    </p4:AccountingSupplierParty>
+
+    <p4:AccountingCustomerParty>
+        <p4:Party>
+            <p4:PartyName>
+                <p2:Name>The Big Bank</p2:Name>
+            </p4:PartyName>
+            <p4:PostalAddress>
+                <p2:StreetName>Paved With Gold Street</p2:StreetName>
+                <p2:CityName>London</p2:CityName>
+                <p2:PostalZone>E14 5HQ</p2:PostalZone>
+                <p4:Country><p2:IdentificationCode>GB</p2:IdentificationCode></p4:Country>
+            </p4:PostalAddress>
+        </p4:Party>
+    </p4:AccountingCustomerParty>
+
+    <p4:TaxTotal>
+        <p2:TaxAmount currencyID="GBP">16.00</p2:TaxAmount>
+    </p4:TaxTotal>
+    
+    <p4:LegalMonetaryTotal>
+        <p2:TaxExclusiveAmount currencyID="GBP">159.95</p2:TaxExclusiveAmount>
+        <p2:PayableAmount currencyID="GBP">175.95</p2:PayableAmount>
+    </p4:LegalMonetaryTotal>
+    
+    <p4:InvoiceLine>
+        <p2:ID>Anteater_8</p2:ID>
+        <p2:LineExtensionAmount currencyID="GBP">175.95</p2:LineExtensionAmount>
+        <p4:Item><p2:Description>One Magic Anteater</p2:Description></p4:Item>
+    </p4:InvoiceLine>
+</p:Invoice>

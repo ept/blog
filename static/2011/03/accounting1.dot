@@ -1,0 +1,18 @@
+#!/usr/bin/env dot -O -Tpng
+
+digraph G {
+    graph [rankdir=LR, fontname=Arial];
+    node [fontname=Arial];
+    edge [fontname=Arial];
+
+    bank -> furniture [label="$500"];
+    creditcard -> food [label="$5"];
+
+    // Not really an edge, just to make them render side side-by-side
+    furniture -> creditcard [color="white"];
+
+    bank         [label="Bank account"];
+    furniture    [label="Random startup"];
+    creditcard   [label="Credit card"];
+    food         [label="Bagel shop"];
+}

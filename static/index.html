@@ -56,60 +56,123 @@
         </h1>
 
         <div class="entry-content full-content">
-            <p>About two years ago I wrote a blog post called <a href="/2012/10/01/rethinking-caching-in-web-apps.html">“Rethinking caching in web apps”</a>. At almost 4,000 words, it was a lot longer than the <a href="http://blog.bufferapp.com/the-ideal-length-of-everything-online-according-to-science">received wisdom</a> says a blog post should be. Nevertheless I had the feeling that I was only scratching the surface of what needed to be said.</p>
+            <p>About two years ago I wrote a blog post called
+<a href="/2012/10/01/rethinking-caching-in-web-apps.html">“Rethinking caching in web apps”</a>.
+At almost 4,000 words, it was a lot longer than the
+<a href="http://blog.bufferapp.com/the-ideal-length-of-everything-online-according-to-science">received wisdom</a>
+says a blog post should be. Nevertheless I had the feeling that I was only scratching
+the surface of what needed to be said.</p>
 
-<p>That got me thinking whether I should try writing something longer, like a book perhaps. I love writing because it forces me to research something in depth, think it through, and then try to explain it in a logical way. That helps me understand it much better than if I just casually read about it. Or, put more eloquently:</p>
+<p>That got me thinking whether I should try writing something longer, like a book perhaps.
+I love writing because it forces me to research something in depth, think it through,
+and then try to explain it in a logical way. That helps me understand it much better
+than if I just casually read about it. Or, put more eloquently:</p>
 
 <blockquote>
-<p>“Writing is nature’s way of letting you know how sloppy your thinking is.” – Dick Guindon</p>
+  <p>“Writing is nature’s way of letting you know how sloppy your thinking is.”
+– Dick Guindon</p>
 </blockquote>
 
-<h2 id="existing_books">Existing books</h2>
+<h2 id="existing-books">Existing books</h2>
 
-<p>I am writing because the book I wanted to read didn’t exist. I wanted a book that would explain data systems to me – the whole area of databases, distributed systems, batch and stream processing, consistency, caching and indexing – at the right level. But I found that almost all the existing books, blog posts etc. fell into one of the following categories:</p>
+<p>I am writing because the book I wanted to read didn’t exist. I wanted a book that
+would explain data systems to me – the whole area of databases, distributed systems,
+batch and stream processing, consistency, caching and indexing – at the right level.
+But I found that almost all the existing books, blog posts etc. fell into one of the
+following categories:</p>
 
 <ol>
-<li>Most computing books are hands-on guides to one particular technology. They assume that you’ve been told to use database X or programming language Y, and so they teach you how to use it. Those books are fine, but they are of little use if you’re trying to decide whether X or Y is the right tool for you in the first place. These books tend to focus on the strong points of that particular technology, and fail to mention its shortcomings.</li>
-
-<li>It’s common to see blog posts with side-by-side comparisons of several similar technologies, but I find they tend to just focus on superficial aspects (performance benchmarks, API, software license) while completely missing the fundamental workings of the technology. They are like Top Trumps for databases, and don’t actually help you understand anything any better.</li>
-
-<li>By contrast, academic textbooks cover the fundamental principles and trade-offs that are common to many different technologies, but in doing so, they often lose all contact with reality. These books are generally written by academics with deep research experience in their field, but little awareness of the practicalities of real production systems. They often end up saying things which are technically correct, but useless or misleading if you want to actually build a real system.</li>
+  <li>Most computing books are hands-on guides to one particular technology. They assume that
+you’ve been told to use database X or programming language Y, and so they teach you
+how to use it. Those books are fine, but they are of little use if you’re trying to
+decide whether X or Y is the right tool for you in the first place. These books tend to
+focus on the strong points of that particular technology, and fail to mention its
+shortcomings.</li>
+  <li>It’s common to see blog posts with side-by-side comparisons of several similar
+technologies, but I find they tend to just focus on superficial aspects (performance
+benchmarks, API, software license) while completely missing the fundamental workings
+of the technology. They are like Top Trumps for databases, and don’t actually help you
+understand anything any better.</li>
+  <li>By contrast, academic textbooks cover the fundamental principles and trade-offs that
+are common to many different technologies, but in doing so, they often lose all
+contact with reality. These books are generally written by academics with deep research
+experience in their field, but little awareness of the practicalities of real
+production systems. They often end up saying things which are technically correct,
+but useless or misleading if you want to actually build a real system.</li>
 </ol>
 
-<p>I wanted something in between all of these. A book which would tell a story of the big ideas in data systems, the fundamental principles which don’t change from one software version to another. But the book would also stay grounded in reality, explaining what works in practice and what doesn’t, and <em>why</em>. The book would examine the tools and systems that we already use in production, compare their fundamental approaches, and help you figure out which technology is appropriate to which use case.</p>
+<p>I wanted something in between all of these. A book which would tell a story of the big ideas in
+data systems, the fundamental principles which don’t change from one software version to
+another. But the book would also stay grounded in reality, explaining what works in practice
+and what doesn’t, and <em>why</em>. The book would examine the tools and systems that we already
+use in production, compare their fundamental approaches, and help you figure out which
+technology is appropriate to which use case.</p>
 
-<p>I wanted to understand not just how to <em>use</em> a particular system, but also how it <em>works under the hood</em>. That is partly out of intellectual curiosity, but equally importantly, because it allows me to imagine what the system is doing. If some kind of unexpected behaviour occurs, or if I want to push the limits of what a technology can do, it is tremendously useful to have at least a rough idea of what is happening internally.</p>
+<p>I wanted to understand not just how to <em>use</em> a particular system, but also how it <em>works under
+the hood</em>. That is partly out of intellectual curiosity, but equally importantly, because it
+allows me to imagine what the system is doing. If some kind of unexpected behaviour occurs, or
+if I want to push the limits of what a technology can do, it is tremendously useful to have
+at least a rough idea of what is happening internally.</p>
 
-<p>As I spoke to various people about these ideas, including some folks at O’Reilly, it became clear that I wasn’t the only one who wanted a book like this. And so, <a href="http://dataintensive.net/">Designing Data-Intensive Applications</a> was born. And you’ll know it when you see it, because it has an awesome Indian Wild Boar on the cover.</p>
-<p style='text-align: center'><a href='http://dataintensive.net' title='Designing Data-Intensive Applications (the wild boar book)'><img alt='Designing Data-Intensive Applications (the wild boar book)' height='328' src='/2014/09/book-cover.png' width='250' /></a>
+<p>As I spoke to various people about these ideas, including some folks at O’Reilly, it became
+clear that I wasn’t the only one who wanted a book like this. And so,
+<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a> was born.
+And you’ll know it when you see it, because it has an awesome Indian Wild Boar on the cover.</p>
+
+<p style="text-align: center"><a href="http://dataintensive.net" title="Designing Data-Intensive Applications (the wild boar book)"><img src="/2014/09/book-cover.png" alt="Designing Data-Intensive Applications (the wild boar book)" width="250" height="328" /></a>
 </p>
-<p><em>Designing Data-Intensive Applications</em> (sorry about the verbose title – you can just call it “the wild boar book”) has been in the works for some time, and today we’re announcing the <a href="http://shop.oreilly.com/product/0636920032175.do">early release</a>. The first four chapters are now available – ten or eleven are planned in total, so there’s still long way to go. But I left my job to work on this book full-time, so it’s definitely happening.</p>
 
-<h2 id="who_should_read_this">Who should read this?</h2>
+<p><em>Designing Data-Intensive Applications</em> (sorry about the verbose title – you can just call it
+“the wild boar book”) has been in the works for some time, and today we’re announcing the
+<a href="http://shop.oreilly.com/product/0636920032175.do">early release</a>. The first four chapters
+are now available – ten or eleven are planned in total, so there’s still long way to go.
+But I left my job to work on this book full-time, so it’s definitely happening.</p>
 
-<p>If you’re a software engineer working on server-side applications (a web application backend, for instance), then this book is for you. It assumes that you already know how to build an application and use a database, and that you want to “level up” in your craft. Perhaps you want to work on highly scalable systems with millions of users, perhaps you want to deal with particularly complex or ever-changing data, or perhaps you want to make an old legacy environment more agile.</p>
+<h2 id="who-should-read-this">Who should read this?</h2>
 
-<p>This book starts at the foundations, and gradually builds up a picture of modern data systems layer by layer, one chapter at a time. I’m not trying to sell you any particular architecture or approach, because I firmly believe that different use cases require different solutions. Therefore, each chapter contains a broad overview and comparison of the different approaches that have been successful in different circumstances.</p>
+<p>If you’re a software engineer working on server-side applications (a web application backend,
+for instance), then this book is for you. It assumes that you already know how to build an
+application and use a database, and that you want to “level up” in your craft. Perhaps you
+want to work on highly scalable systems with millions of users, perhaps you want to deal with
+particularly complex or ever-changing data, or perhaps you want to make an old legacy
+environment more agile.</p>
 
-<p>It doesn’t matter what your preferred programming language or framework is – this book is agnostic. It’s about architecture and algorithms, about fundamental principles and practical constraints, about the reasoning behind every design decision.</p>
+<p>This book starts at the foundations, and gradually builds up a picture of modern data systems
+layer by layer, one chapter at a time. I’m not trying to sell you any particular architecture
+or approach, because I firmly believe that different use cases require different solutions.
+Therefore, each chapter contains a broad overview and comparison of the different approaches
+that have been successful in different circumstances.</p>
 
-<p>None of the ideas in this book are really new, and indeed many ideas are decades old. Everything has already been said somewhere, in conference presentations, research papers, blog posts, code, bug trackers, and engineering folklore. However, to my knowledge the ideas haven’t previously been collected, compared and evaluated like this.</p>
+<p>It doesn’t matter what your preferred programming language or framework is – this book is
+agnostic. It’s about architecture and algorithms, about fundamental principles and practical
+constraints, about the reasoning behind every design decision.</p>
 
-<p>I hope that by understanding what our options are, and the pros and cons of each approach, we’ll all become better engineers. By making conscious trade-offs and choosing our tools wisely, we will build systems that are more reliable and much easier to maintain in the long run. It’s a quest to help us engineers be better at our jobs, and build better software.</p>
+<p>None of the ideas in this book are really new, and indeed many ideas are decades old.
+Everything has already been said somewhere, in conference presentations, research papers,
+blog posts, code, bug trackers, and engineering folklore. However, to my knowledge the ideas
+haven’t previously been collected, compared and evaluated like this.</p>
 
-<h2 id="lets_make_software_development_better">Let’s make software development better</h2>
+<p>I hope that by understanding what our options are, and the pros and cons of each approach,
+we’ll all become better engineers. By making conscious trade-offs and choosing our tools
+wisely, we will build systems that are more reliable and much easier to maintain in the long
+run. It’s a quest to help us engineers be better at our jobs, and build better software.</p>
+
+<h2 id="lets-make-software-development-better">Let’s make software development better</h2>
 
 <p>Please join me on this quest by reading the draft of the book, and sending us your feedback:</p>
 
 <ul>
-<li>The book’s website is <a href="http://dataintensive.net/">dataintensive.net</a>.</li>
-
-<li>You can buy the early release ebook from <a href="http://shop.oreilly.com/product/0636920032175.do">O’Reilly</a>, or if you’re a Safari Books subscriber, you can <a href="http://my.safaribooksonline.com/9781491903063">read it online</a>.</li>
-
-<li>If you can think of any way the book could be improved, please email your thoughts to <a href="mailto:feedback@dataintensive.net">feedback@dataintensive.net</a> or tweet us <a href="https://twitter.com/intensivedata">@intensivedata</a>. Now is the time to be involved.</li>
-
-<li>…and if you like the sound of this, don’t forget to tell your friends and colleagues about it!</li>
+  <li>The book’s website is <a href="http://dataintensive.net/">dataintensive.net</a>.</li>
+  <li>You can buy the early release ebook from
+<a href="http://shop.oreilly.com/product/0636920032175.do">O’Reilly</a>, or if you’re a Safari Books
+subscriber, you can <a href="http://my.safaribooksonline.com/9781491903063">read it online</a>.</li>
+  <li>If you can think of any way the book could be improved, please email your thoughts to
+<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#102;&#101;&#101;&#100;&#098;&#097;&#099;&#107;&#064;&#100;&#097;&#116;&#097;&#105;&#110;&#116;&#101;&#110;&#115;&#105;&#118;&#101;&#046;&#110;&#101;&#116;">&#102;&#101;&#101;&#100;&#098;&#097;&#099;&#107;&#064;&#100;&#097;&#116;&#097;&#105;&#110;&#116;&#101;&#110;&#115;&#105;&#118;&#101;&#046;&#110;&#101;&#116;</a> or tweet us
+<a href="https://twitter.com/intensivedata">@intensivedata</a>. Now is the time to be involved.</li>
+  <li>…and if you like the sound of this, don’t forget to tell your friends and colleagues
+about it!</li>
 </ul>
+
         </div>
 
         <div class="by-line">
@@ -134,43 +197,81 @@
         </h1>
 
         <div class="entry-content full-content">
-            <p>After my <a href="https://www.youtube.com/watch?v=d63kSjxVsGA&index=11&list=PLq-odUc2x7i-Q5gQtkmba4ov37XRPjp6n">talk about Samza fault tolerance</a> at <a href="http://berlinbuzzwords.de/">Berlin Buzzwords</a> was well received a few months ago, I submitted several more talk proposals to a variety of conferences. To my surprise, all the proposals were accepted, so I’m now going to have a fairly busy time in the next few months!</p>
+            <p>After my <a href="https://www.youtube.com/watch?v=d63kSjxVsGA&amp;index=11&amp;list=PLq-odUc2x7i-Q5gQtkmba4ov37XRPjp6n">talk about Samza fault tolerance</a>
+at <a href="http://berlinbuzzwords.de/">Berlin Buzzwords</a> was well received a few months ago,
+I submitted several more talk proposals to a variety of conferences. To my surprise,
+all the proposals were accepted, so I’m now going to have a fairly busy time in the
+next few months!</p>
 
-<p>Here are the four conferences at which I’ll be speaking between September and November. All the talks are about <a href="http://samza.incubator.apache.org/">Apache Samza</a>, the stream processing project I’ve been working on. However, all the talks are different, each focussing on a different aspect and perspective.</p>
+<p>Here are the four conferences at which I’ll be speaking between September and November.
+All the talks are about <a href="http://samza.incubator.apache.org/">Apache Samza</a>, the stream
+processing project I’ve been working on. However, all the talks are different, each
+focussing on a different aspect and perspective.</p>
 
-<p>If you don’t yet have a ticket for these conferences, there are a few discount codes below. Hope to see you there :-)</p>
+<p>If you don’t yet have a ticket for these conferences, there are a few discount codes
+below. Hope to see you there :-)</p>
 
-<p><a href="https://thestrangeloop.com/sessions/turning-the-database-inside-out-with-apache-samza"><strong>Turning the database inside out with Apache Samza</strong></a><br /><a href="https://thestrangeloop.com/">Strange Loop</a>, September 18–19 in St. Louis, Missouri. (<a href="http://lanyrd.com/2014/strangeloop/">Lanyrd</a>, <a href="https://twitter.com/strangeloop_stl">Twitter</a>)</p>
+<p><a href="https://thestrangeloop.com/sessions/turning-the-database-inside-out-with-apache-samza"><strong>Turning the database inside out with Apache Samza</strong></a><br />
+<a href="https://thestrangeloop.com/">Strange Loop</a>, September 18–19 in St. Louis, Missouri.
+(<a href="http://lanyrd.com/2014/strangeloop/">Lanyrd</a>, <a href="https://twitter.com/strangeloop_stl">Twitter</a>)</p>
 
-<p>The Strange Loop conference explores the future of software development from a wonderfully eclectic range of viewpoints, ranging from functional programming to distributed systems. In this talk I’ll discuss the potential of stream processing as a fundamental programming model, which has big advantages compared to the way we usually build applications today.</p>
+<p>The Strange Loop conference explores the future of software development from a wonderfully
+eclectic range of viewpoints, ranging from functional programming to distributed systems.
+In this talk I’ll discuss the potential of stream processing as a fundamental programming
+model, which has big advantages compared to the way we usually build applications today.</p>
 
-<p><a href="http://strataconf.com/stratany2014/public/schedule/detail/36045"><strong>Building real-time data products at LinkedIn with Apache Samza</strong></a><br /><a href="http://strataconf.com/stratany2014">Strata + Hadoop World</a>, October 15–17 in New York. (<a href="http://lanyrd.com/2014/strata-new-york/">Lanyrd</a>, <a href="https://twitter.com/strataconf">Twitter</a>)<br />Use discount code SPEAKER20 to get 20% off.</p>
+<p><a href="http://strataconf.com/stratany2014/public/schedule/detail/36045"><strong>Building real-time data products at LinkedIn with Apache Samza</strong></a><br />
+<a href="http://strataconf.com/stratany2014">Strata + Hadoop World</a>, October 15–17 in New York.
+(<a href="http://lanyrd.com/2014/strata-new-york/">Lanyrd</a>, <a href="https://twitter.com/strataconf">Twitter</a>)<br />
+Use discount code SPEAKER20 to get 20% off.</p>
 
-<p>MapReduce and its cousins are powerful tools for building data products such as recommendation engines, detecting anomalies and improving relevance. However, with batch processing there may be several hours delay before new data is reflected in the output. With stream processing, you can potentially respond in seconds rather than hours, but you have to learn a whole new way of thinking in order to write your jobs. In this talk I’ll discuss some real-life examples of stream processing at LinkedIn, and show how to use Samza to solve real-time data problems.</p>
+<p>MapReduce and its cousins are powerful tools for building data products such as recommendation
+engines, detecting anomalies and improving relevance. However, with batch processing there may
+be several hours delay before new data is reflected in the output. With stream processing, you
+can potentially respond in seconds rather than hours, but you have to learn a whole new way of
+thinking in order to write your jobs. In this talk I’ll discuss some real-life examples of
+stream processing at LinkedIn, and show how to use Samza to solve real-time data problems.</p>
 
-<p><a href="http://london-2014.spanconf.io/martin-kleppmann/"><strong>Staying agile in the face of the data deluge</strong></a><br /><a href="http://spanconf.io">Span conference</a>, October 28 in London, UK. (<a href="http://lanyrd.com/2014/spanconf/">Lanyrd</a>, <a href="https://twitter.com/spanconf">Twitter</a>)<br />Use <a href='https://ti.to/span/london-2014?discount_code=kleppmann'>this link</a> to get a 20% discount.</p>
+<p><a href="http://london-2014.spanconf.io/martin-kleppmann/"><strong>Staying agile in the face of the data deluge</strong></a><br />
+<a href="http://spanconf.io">Span conference</a>, October 28 in London, UK.
+(<a href="http://lanyrd.com/2014/spanconf/">Lanyrd</a>, <a href="https://twitter.com/spanconf">Twitter</a>)<br />
+Use <a href="https://ti.to/span/london-2014?discount_code=kleppmann">this link</a> to get a 20% discount.</p>
 
-<p>An often-overlooked but important aspect of tools is their <em>plasticity</em>: if your application’s requirements change, how easily do the tools let you adapt your existing code and data to the new requirements? Samza is designed with plasticity in mind. In this talk I’ll discuss how re-processing of data streams can keep your application development agile.</p>
+<p>An often-overlooked but important aspect of tools is their <em>plasticity</em>: if your
+application’s requirements change, how easily do the tools let you adapt your existing
+code and data to the new requirements? Samza is designed with plasticity in mind. In
+this talk I’ll discuss how re-processing of data streams can keep your application
+development agile.</p>
 
-<p><a href="http://apacheconeu2014.sched.org/event/3633e195715f88c3357749d57b7b3b8c"><strong>Scalable stream processing with Apache Samza and Apache Kafka</strong></a><br /><a href="http://events.linuxfoundation.org/events/apachecon-europe">ApacheCon Europe</a>, November 17–21 in Budapest, Hungary. (<a href="http://lanyrd.com/2014/apachecon-europe/">Lanyrd</a>, <a href="https://twitter.com/apachecon">Twitter</a>)</p>
+<p><a href="http://apacheconeu2014.sched.org/event/3633e195715f88c3357749d57b7b3b8c"><strong>Scalable stream processing with Apache Samza and Apache Kafka</strong></a><br />
+<a href="http://events.linuxfoundation.org/events/apachecon-europe">ApacheCon Europe</a>, November 17–21 in Budapest, Hungary.
+(<a href="http://lanyrd.com/2014/apachecon-europe/">Lanyrd</a>, <a href="https://twitter.com/apachecon">Twitter</a>)</p>
 
-<p>Many of the most important open source data infrastructure tools are projects of the Apache Software Foundatation: Hadoop, Zookeeper, Storm and Spark, to name just a few. In this talk I’ll focus on how Samza and Kafka (also Apache projects) fit into this lively open source ecosystem.</p>
+<p>Many of the most important open source data infrastructure tools are projects of the
+Apache Software Foundatation: Hadoop, Zookeeper, Storm and Spark, to name just a few.
+In this talk I’ll focus on how Samza and Kafka (also Apache projects) fit into this
+lively open source ecosystem.</p>
 
 <p><strong>Background reading</strong></p>
 
-<p>If you don’t yet know about Samza, don’t worry: I’ll start each talk with a quick introduction to Samza, and not assume any prior knowledge.</p>
+<p>If you don’t yet know about Samza, don’t worry: I’ll start each talk with a quick
+introduction to Samza, and not assume any prior knowledge.</p>
 
-<p>But if you want to ask smart-ass questions and embarrass me in front of the audience, you can begin by reading the Samza <a href="http://samza.incubator.apache.org/learn/documentation/latest/">documentation</a> (thoroughly updated over the last few months by yours truly), and start thinking of particularly tricky questions to ask.</p>
+<p>But if you want to ask smart-ass questions and embarrass me in front of the audience, you
+can begin by reading the Samza
+<a href="http://samza.incubator.apache.org/learn/documentation/latest/">documentation</a>
+(thoroughly updated over the last few months by yours truly), and start thinking of
+particularly tricky questions to ask.</p>
 
-<p>You may also be interested in this excellent series of articles by <a href="https://twitter.com/jaykreps">Jay Kreps</a>, which are relevant to the upcoming talks:</p>
+<p>You may also be interested in this excellent series of articles by
+<a href="https://twitter.com/jaykreps">Jay Kreps</a>, which are relevant to the upcoming talks:</p>
 
 <ul>
-<li><a href="http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">The Log: What every software engineer should know about real-time data’s unifying abstraction</a></li>
-
-<li><a href="http://radar.oreilly.com/2014/07/questioning-the-lambda-architecture.html">Questioning the Lambda Architecture</a></li>
-
-<li><a href="http://radar.oreilly.com/2014/07/why-local-state-is-a-fundamental-primitive-in-stream-processing.html">Why local state is a fundamental primitive in stream processing</a> – What do you get if you cross a distributed database with a stream processing system?</li>
+  <li><a href="http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">The Log: What every software engineer should know about real-time data’s unifying abstraction</a></li>
+  <li><a href="http://radar.oreilly.com/2014/07/questioning-the-lambda-architecture.html">Questioning the Lambda Architecture</a></li>
+  <li><a href="http://radar.oreilly.com/2014/07/why-local-state-is-a-fundamental-primitive-in-stream-processing.html">Why local state is a fundamental primitive in stream processing</a> – What do you get if you cross a distributed database with a stream processing system?</li>
 </ul>
+
         </div>
 
         <div class="by-line">
@@ -195,99 +296,259 @@
         </h1>
 
         <div class="entry-content full-content">
-            <p>Looking back at the last few years of building <a href="https://rapportive.com/">Rapportive</a> and <a href="http://engineering.linkedin.com/mobile/linkedin-intro-doing-impossible-ios">LinkedIn Intro</a>, I realised that there were a number of lessons that we had to learn the hard way. We built some reasonably large data systems, and there are a few things I really wish we had known beforehand.</p>
+            <p>Looking back at the last few years of building <a href="https://rapportive.com/">Rapportive</a> and
+<a href="http://engineering.linkedin.com/mobile/linkedin-intro-doing-impossible-ios">LinkedIn Intro</a>,
+I realised that there were a number of lessons that we had to learn the hard way. We built some
+reasonably large data systems, and there are a few things I really wish we had known beforehand.</p>
 
-<p>None of these lessons are particularly obscure – they are all well-documented, if you know where to look. They are the kind of things that made me think <em>“I can’t believe I didn’t know that, I’m so stupid #facepalm”</em> in retrospect. But perhaps I’m not the only one who started out not knowing these things, so I’ll write them down for the benefit of anyone else who finds themself having to scale a system.</p>
+<p>None of these lessons are particularly obscure – they are all well-documented, if you know where to
+look. They are the kind of things that made me think <em>“I can’t believe I didn’t know that, I’m so
+stupid #facepalm”</em> in retrospect. But perhaps I’m not the only one who started out not knowing these
+things, so I’ll write them down for the benefit of anyone else who finds themself having to scale
+a system. </p>
 
-<p>The kind of system I’m talking about is the data backend of a consumer web/mobile app with a million users (order of magnitude). At the scale of Google, LinkedIn, Facebook or Twitter (hundreds of millions of users), you’ll have an entirely different set of problems, but you’ll also have a bigger team of experienced developers and operations people around you. The mid-range scale of about a million users is interesting, because it’s quite feasible for a small startup team to get there with some luck and good marketing skills. If that sounds like you, here are a few things to keep in mind.</p>
+<p>The kind of system I’m talking about is the data backend of a consumer web/mobile app with a million
+users (order of magnitude). At the scale of Google, LinkedIn, Facebook or Twitter (hundreds of
+millions of users), you’ll have an entirely different set of problems, but you’ll also have a bigger
+team of experienced developers and operations people around you. The mid-range scale of about
+a million users is interesting, because it’s quite feasible for a small startup team to get there
+with some luck and good marketing skills. If that sounds like you, here are a few things to keep in
+mind.</p>
 
-<h2 id="1_realistic_load_testing_is_hard">1. Realistic load testing is hard</h2>
+<h2 id="realistic-load-testing-is-hard">1. Realistic load testing is hard</h2>
 
-<p>Improving the performance of a system is ideally a very scientific process. You have in your head a model of what your system is doing, and a theory of where the expensive operations are. You propose a change to the system, and predict what the outcome will be. Then you make the change, observe the system’s behaviour under laboratory conditions, and thus gather evidence which either confirms or contradicts your theory. That way you iterate your way to a better theory, and also a better-performing implementation.</p>
+<p>Improving the performance of a system is ideally a very scientific process. You have in your head
+a model of what your system is doing, and a theory of where the expensive operations are. You
+propose a change to the system, and predict what the outcome will be. Then you make the change,
+observe the system’s behaviour under laboratory conditions, and thus gather evidence which either
+confirms or contradicts your theory. That way you iterate your way to a better theory, and also
+a better-performing implementation.</p>
 
-<p>Sadly, we hardly ever managed to do it that way in practice. If we were optimising a microbenchmark, running the same code a million times in a tight loop, it would be easy. But we are dealing with large volumes of data, spread out across multiple machines. If you read the same item a million times in a loop, it will simply be cached, and the load test tells you nothing. If you want meaningful results, the load test needs to simulate a realistically large working set, a realistic mixture of reads and writes, realistic distribution of requests over time, and so on. And that is difficult.</p>
+<p>Sadly, we hardly ever managed to do it that way in practice. If we were optimising a microbenchmark,
+running the same code a million times in a tight loop, it would be easy. But we are dealing with
+large volumes of data, spread out across multiple machines. If you read the same item a million
+times in a loop, it will simply be cached, and the load test tells you nothing. If you want
+meaningful results, the load test needs to simulate a realistically large working set, a realistic
+mixture of reads and writes, realistic distribution of requests over time, and so on. And that is
+difficult.</p>
 
-<p>It’s difficult enough to simply <em>know</em> what your access patterns actually are, let alone simulate them. As a starting point, you can replay a few hours worth of access logs against a copy of your real dataset. However, that only really works for read requests. Simulating writes is harder, as you may need to account for business logic rules (e.g. a sequential workflow must first update A, then update B, then update C) and deal with changes that can happen only once (if your write changes state from D to E, you can’t change from D to E again later in the test, as you’re already in state E). That means you have to synchronise your access logs with your database snapshot, or somehow generate suitable synthetic write load.</p>
+<p>It’s difficult enough to simply <em>know</em> what your access patterns actually are, let alone simulate
+them. As a starting point, you can replay a few hours worth of access logs against a copy of your
+real dataset. However, that only really works for read requests. Simulating writes is harder, as
+you may need to account for business logic rules (e.g. a sequential workflow must first update A,
+then update B, then update C) and deal with changes that can happen only once (if your write changes
+state from D to E, you can’t change from D to E again later in the test, as you’re already in state
+E). That means you have to synchronise your access logs with your database snapshot, or somehow
+generate suitable synthetic write load.</p>
 
-<p>Even harder if you want to test with a dataset that is larger than the one you actually have (so that you can find out what happens when you double your userbase, and prepare for that event). Now you have to work out the statistical properties of your dataset (the distribution of friends per user is a power law with x parameters, the correlation between one user’s number of friends and the number of friends that their friends have is y, etc) and generate a synthetic dataset with those parameters. You are now in deep, deep yak shaving territory. Step back from that yak.</p>
+<p>Even harder if you want to test with a dataset that is larger than the one you actually have (so
+that you can find out what happens when you double your userbase, and prepare for that event). Now
+you have to work out the statistical properties of your dataset (the distribution of friends per
+user is a power law with x parameters, the correlation between one user’s number of friends and the
+number of friends that their friends have is y, etc) and generate a synthetic dataset with those
+parameters. You are now in deep, deep yak shaving territory. Step back from that yak.</p>
 
-<p>In practice, it hardly ever works that way. We’re lucky if, sometimes, we can run the old code and the new code side-by-side, and observe how they perform in comparison. Often, not even that is possible. Usually we often just cross our fingers, deploy, and roll back if the change seems to have made things worse. That is deeply unsatisfying for a scientifically-minded person, but it more or less gets the job done.</p>
+<p>In practice, it hardly ever works that way. We’re lucky if, sometimes, we can run the old code and
+the new code side-by-side, and observe how they perform in comparison. Often, not even that is
+possible. Usually we often just cross our fingers, deploy, and roll back if the change seems to have
+made things worse. That is deeply unsatisfying for a scientifically-minded person, but it more or
+less gets the job done.</p>
 
-<h2 id="2_data_evolution_is_difficult">2. Data evolution is difficult</h2>
+<h2 id="data-evolution-is-difficult">2. Data evolution is difficult</h2>
 
-<p>Being able to rapidly respond to change is one of the biggest advantages of a small startup. Agility in product and process means you also need the freedom to change your mind about the structure of your code and your data. There is lot of talk about making code easy to change, eg. with good automated tests. But what about changing the structure of your data?</p>
+<p>Being able to rapidly respond to change is one of the biggest advantages of a small startup. Agility
+in product and process means you also need the freedom to change your mind about the structure of
+your code and your data. There is lot of talk about making code easy to change, eg. with good
+automated tests. But what about changing the structure of your data?</p>
 
-<p>Schema changes have a reputation of being very painful, a reputation that is chiefly MySQL’s fault: simply adding a column to a table requires the <a href="http://dev.mysql.com/doc/refman/5.6/en/alter-table.html">entire table to be copied</a>. On a large table, that might mean several hours during which you can’t write to the table. Various <a href="http://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html">tools</a> <a href="https://github.com/soundcloud/lhm">exist</a> to make that less painful, but I find it unbelievable that the world’s most popular open source database handles such a common operation so badly.</p>
+<p>Schema changes have a reputation of being very painful, a reputation that is chiefly MySQL’s fault:
+simply adding a column to a table requires the
+<a href="http://dev.mysql.com/doc/refman/5.6/en/alter-table.html">entire table to be copied</a>. On a large
+table, that might mean several hours during which you can’t write to the table. Various
+<a href="http://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html">tools</a>
+<a href="https://github.com/soundcloud/lhm">exist</a> to make that less painful, but I find it unbelievable
+that the world’s most popular open source database handles such a common operation so badly.</p>
 
-<p>Postgres can make simple schema changes without copying the table, which means they are almost instant. And of course the avoidance of schema changes is a primary selling point of document databases such as MongoDB (so it’s up to application code to deal with a database that uses different schemas for different documents). But simple schema changes, such as adding a new field or two, don’t tell the entire story.</p>
+<p>Postgres can make simple schema changes without copying the table, which means they are almost
+instant. And of course the avoidance of schema changes is a primary selling point of document
+databases such as MongoDB (so it’s up to application code to deal with a database that uses
+different schemas for different documents). But simple schema changes, such as adding a new field or
+two, don’t tell the entire story.</p>
 
-<p>Not all your data is in databases; some might be in archived log files or some kind of blob storage. How do you deal with changing the schema of that data? And sometimes you need to make complex changes to the data, such as breaking a large thing apart, or combining several small things, or migrating from one datastore to another. Standard tools don’t help much here, and document databases don’t make it any easier.</p>
+<p>Not all your data is in databases; some might be in archived log files or some kind of blob storage.
+How do you deal with changing the schema of that data? And sometimes you need to make complex
+changes to the data, such as breaking a large thing apart, or combining several small things, or
+migrating from one datastore to another. Standard tools don’t help much here, and document databases
+don’t make it any easier.</p>
 
-<p>We’ve written large migration jobs that break the entire dataset into chunks, process chunks gradually over the course of a weekend, retry failed chunks, track which things were modified while the migration was happening, and finally catch up on the missed updates. A whole lot of complexity just for a one-off data migration. Sometimes that’s unavoidable, but it’s heavy lifting that you’d rather not have to do in the first place.</p>
+<p>We’ve written large migration jobs that break the entire dataset into chunks, process chunks
+gradually over the course of a weekend, retry failed chunks, track which things were modified while
+the migration was happening, and finally catch up on the missed updates. A whole lot of complexity
+just for a one-off data migration. Sometimes that’s unavoidable, but it’s heavy lifting that you’d
+rather not have to do in the first place.</p>
 
-<p>Hadoop data pipelines can help with this sort of thing, but now you have to set up a Hadoop cluster, learn how to use it, figure out how to get your data into it, and figure out how to get the transformed data out to your live systems again. Big companies like LinkedIn have figured out how to do that, but in a small team it can be a massive time-sink.</p>
+<p>Hadoop data pipelines can help with this sort of thing, but now you have to set up a Hadoop cluster,
+learn how to use it, figure out how to get your data into it, and figure out how to get the
+transformed data out to your live systems again. Big companies like LinkedIn have figured out how to
+do that, but in a small team it can be a massive time-sink.</p>
 
-<h2 id="3_database_connections_are_a_real_limitation">3. Database connections are a real limitation</h2>
+<h2 id="database-connections-are-a-real-limitation">3. Database connections are a real limitation</h2>
 
-<p>In PostgreSQL, each client connection to the database is handled by a separate unix process; in MySQL, each connection uses a separate thread. Both of these models impose a fairly low limit on the number of connections you can have to the database – typically a few hundred. Every connection adds overhead, so the entire database slows down, even if those connections aren’t actively processing queries. For example, Heroku Postgres limits you to 60 connections on the smallest plan, and 500 connections on the <a href="https://devcenter.heroku.com/articles/heroku-postgres-plans#standard-tier">largest plan</a>, although having anywhere near 500 connections is <a href="https://postgres.heroku.com/blog/past/2013/11/22/connection_limit_guidance/">actively discouraged</a>.</p>
+<p>In PostgreSQL, each client connection to the database is handled by a separate unix process; in
+MySQL, each connection uses a separate thread. Both of these models impose a fairly low limit on the
+number of connections you can have to the database – typically a few hundred. Every connection adds
+overhead, so the entire database slows down, even if those connections aren’t actively processing
+queries. For example, Heroku Postgres limits you to 60 connections on the smallest plan, and 500
+connections on the <a href="https://devcenter.heroku.com/articles/heroku-postgres-plans#standard-tier">largest plan</a>,
+although having anywhere near 500 connections is
+<a href="https://postgres.heroku.com/blog/past/2013/11/22/connection_limit_guidance/">actively discouraged</a>.</p>
 
-<p>In a fast-growing app, it doesn’t take long before you reach a few hundred connections. Each instance of your application server uses at least one. Each background worker process that needs to access the database uses one. Adding more machines running your application is fairly easy if they are stateless, but every machine you add means more connections.</p>
+<p>In a fast-growing app, it doesn’t take long before you reach a few hundred connections. Each
+instance of your application server uses at least one. Each background worker process that needs to
+access the database uses one. Adding more machines running your application is fairly easy if they
+are stateless, but every machine you add means more connections.</p>
 
-<p>Partitioning (sharding) and read replicas probably won’t help you with your connection limit, unless you can somehow load-balance requests so that all the requests for a particular partition are handled by a particular server instance. A better bet is to use a <a href="https://wiki.postgresql.org/wiki/PgBouncer">connection pooler</a>, or to write your own data access layer which wraps database access behind an internal API.</p>
+<p>Partitioning (sharding) and read replicas probably won’t help you with your connection limit, unless
+you can somehow load-balance requests so that all the requests for a particular partition are
+handled by a particular server instance. A better bet is to use a
+<a href="https://wiki.postgresql.org/wiki/PgBouncer">connection pooler</a>, or to write your own data access
+layer which wraps database access behind an internal API.</p>
 
-<p>That’s all doable, but it doesn’t seem a particularly valuable use of your time when you’re also trying to iterate on product features. And every additional service you deploy is another thing that can go wrong, another thing that needs to be monitored and maintained.</p>
+<p>That’s all doable, but it doesn’t seem a particularly valuable use of your time when you’re also
+trying to iterate on product features. And every additional service you deploy is another thing that
+can go wrong, another thing that needs to be monitored and maintained.</p>
 
-<p>(Databases that use a lightweight connection model don’t have this problem, but they may have other problems instead.)</p>
+<p>(Databases that use a lightweight connection model don’t have this problem, but they may have other
+problems instead.)</p>
 
-<h2 id="4_read_replicas_are_an_operational_pain">4. Read replicas are an operational pain</h2>
+<h2 id="read-replicas-are-an-operational-pain">4. Read replicas are an operational pain</h2>
 
-<p>A common architecture is to designate one database instance as a <em>leader</em> (also known as <em>master</em>) and to send all database writes to that instance. The writes are then replicated to other database instances (called <em>read replicas</em>, <em>followers</em> or <em>slaves</em>), and many read-only queries can be served from the replicas, which takes load off the leader. This architecture is also good for fault tolerance, since it gives you a <em>warm standby</em> – if your leader dies, you can quickly promote one of the replicas to be the new leader (you wouldn’t want to be offline for hours while you restore the database from a backup).</p>
+<p>A common architecture is to designate one database instance as a <em>leader</em> (also known as <em>master</em>)
+and to send all database writes to that instance. The writes are then replicated to other database
+instances (called <em>read replicas</em>, <em>followers</em> or <em>slaves</em>), and many read-only queries can be
+served from the replicas, which takes load off the leader. This architecture is also good for fault
+tolerance, since it gives you a <em>warm standby</em> – if your leader dies, you can quickly promote one
+of the replicas to be the new leader (you wouldn’t want to be offline for hours while you restore
+the database from a backup).</p>
 
-<p>What they don’t tell you is that setting up and maintaining replicas is significant operational pain. MySQL is particularly bad in this regard: in order to set up a new replica, you have to first <a href="http://dev.mysql.com/doc/refman/5.6/en/replication-howto-masterstatus.html">lock the leader to stop all writes</a> and take a consistent snapshot (which may take hours on a large database). How does your app cope if it can’t write to the database? What do your users think if they can’t post stuff?</p>
+<p>What they don’t tell you is that setting up and maintaining replicas is significant operational
+pain. MySQL is particularly bad in this regard: in order to set up a new replica, you have to first
+<a href="http://dev.mysql.com/doc/refman/5.6/en/replication-howto-masterstatus.html">lock the leader to stop all writes</a>
+and take a consistent snapshot (which may take hours on a large database). How does your app cope if
+it can’t write to the database? What do your users think if they can’t post stuff?</p>
 
-<p>With Postgres, you don’t need to stop writes to set up a replica, but it’s still <a href="http://www.postgresql.org/docs/current/static/warm-standby.html">some hassle</a>. One of the things I like most about <a href="https://www.heroku.com/postgres">Heroku Postgres</a> is that it wraps all the complexity of replication and WAL archiving behind a straightforward command-line tool.</p>
+<p>With Postgres, you don’t need to stop writes to set up a replica, but it’s still
+<a href="http://www.postgresql.org/docs/current/static/warm-standby.html">some hassle</a>. One of the things
+I like most about <a href="https://www.heroku.com/postgres">Heroku Postgres</a> is that it wraps all the
+complexity of replication and WAL archiving behind a straightforward command-line tool.</p>
 
-<p>Even so, you still need to failover manually if your leader fails. You need to monitor and maintain the replicas. Your database library may not support read replicas out of the box, so you may need to add that. Some reads need to be made on the leader, so that a user sees their own writes, even if there is replication lag. That’s all doable, but it’s additional complexity, and doesn’t add any value from users’ point of view.</p>
+<p>Even so, you still need to failover manually if your leader fails. You need to monitor and maintain
+the replicas. Your database library may not support read replicas out of the box, so you may need to
+add that. Some reads need to be made on the leader, so that a user sees their own writes, even if
+there is replication lag. That’s all doable, but it’s additional complexity, and doesn’t add any
+value from users’ point of view.</p>
 
-<p>Some distributed datastores such as MongoDB, RethinkDB and Couchbase also use this replication model, and they automate the replica creation and master failover processes. Just because they do that doesn’t mean they automatically give you magic scaling sauce, but it is a very valuable feature.</p>
+<p>Some distributed datastores such as MongoDB, RethinkDB and Couchbase also use this replication
+model, and they automate the replica creation and master failover processes. Just because they do
+that doesn’t mean they automatically give you magic scaling sauce, but it is a very valuable
+feature.</p>
 
-<h2 id="5_think_about_memory_efficiency">5. Think about memory efficiency</h2>
+<h2 id="think-about-memory-efficiency">5. Think about memory efficiency</h2>
 
-<p>At various times, we puzzled about weird latency spikes in our database activity. After many <a href="http://www.pagerduty.com/">PagerDuty</a> alerts and troubleshooting, it usually turned out that we could fix the issue by throwing more RAM at the problem, either in the form of a bigger database instance, or separate caches in front of it. It’s sad, but true: many performance problems can be solved by simply buying more RAM. And if you’re in a hurry because your hair is on fire, it’s often the best thing to do. There are limitations to that approach, of course – a m2.4xlarge instance on EC2 costs quite a bit of money, and eventually there are no bigger machines to turn to.</p>
+<p>At various times, we puzzled about weird latency spikes in our database activity. After many
+<a href="http://www.pagerduty.com/">PagerDuty</a> alerts and troubleshooting, it usually turned out that we
+could fix the issue by throwing more RAM at the problem, either in the form of a bigger database
+instance, or separate caches in front of it. It’s sad, but true: many performance problems can be
+solved by simply buying more RAM. And if you’re in a hurry because your hair is on fire, it’s often
+the best thing to do. There are limitations to that approach, of course – a m2.4xlarge instance on
+EC2 costs quite a bit of money, and eventually there are no bigger machines to turn to. </p>
 
-<p>Besides buying more RAM, an effective solution is to use RAM more efficiently in the first place, so that a bigger part of your dataset fits in RAM. In order to decide where to optimise, you need to know what all your memory is being used for – and that’s surprisingly non-trivial. With a bit of digging, you can usually get your database to report how much disk space each of your tables and indexes is taking. Figuring out the working set, and how much memory is actually used for what, is harder.</p>
+<p>Besides buying more RAM, an effective solution is to use RAM more efficiently in the first place, so
+that a bigger part of your dataset fits in RAM. In order to decide where to optimise, you need to
+know what all your memory is being used for – and that’s surprisingly non-trivial. With a bit of
+digging, you can usually get your database to report how much disk space each of your tables and
+indexes is taking. Figuring out the working set, and how much memory is actually used for what, is
+harder.</p>
 
-<p>As a rule of thumb, your performance will probably be more predictable if your indexes completely fit in RAM – so that there’s a maximum of one disk read per query, which reduces your exposure to fluctuations in I/O latency. But indexes can get rather large if you have a lot of data, so this can be an expensive proposition.</p>
+<p>As a rule of thumb, your performance will probably be more predictable if your indexes completely
+fit in RAM – so that there’s a maximum of one disk read per query, which reduces your exposure to
+fluctuations in I/O latency. But indexes can get rather large if you have a lot of data, so this can
+be an expensive proposition.</p>
 
-<p>At one point we found ourselves reading up about the internal structure of an index in Postgres, and realised that we could save a few bytes per row by indexing on the hash of a string column rather than the string itself. (More on that in another post.) That reduced the memory pressure on the system, and helped keep things ticking along for another few months. That’s just one example of how it can be helpful to think about using memory efficiently.</p>
+<p>At one point we found ourselves reading up about the internal structure of an index in Postgres, and
+realised that we could save a few bytes per row by indexing on the hash of a string column rather
+than the string itself. (More on that in another post.) That reduced the memory pressure on the
+system, and helped keep things ticking along for another few months. That’s just one example of how
+it can be helpful to think about using memory efficiently.</p>
 
-<h2 id="6_change_capture_is_underappreciated">6. Change capture is under-appreciated</h2>
+<h2 id="change-capture-is-under-appreciated">6. Change capture is under-appreciated</h2>
 
-<p>So far I’ve only talked about things that suck – sorry about the negativity. As final point, I’d like to mention a technique which is awesome, but not nearly as widely known and appreciated as it should be: <em>change capture</em>.</p>
+<p>So far I’ve only talked about things that suck – sorry about the negativity. As final point, I’d
+like to mention a technique which is awesome, but not nearly as widely known and appreciated as it
+should be: <em>change capture</em>.</p>
 
-<p>The idea of change capture is simple: let the application consume a feed of all writes to the database. In other words, you have a background process which gets notified every time something changes in the database (insert, update or delete).</p>
+<p>The idea of change capture is simple: let the application consume a feed of all writes to the
+database. In other words, you have a background process which gets notified every time something
+changes in the database (insert, update or delete).</p>
 
-<p>You could achieve a similar thing if, every time you write something to the database, you also post it to a message queue. However, change capture is better because it contains exactly the same data as what was committed to the database (avoiding race conditions). A good change capture system also allows you to stream through the entire existing dataset, and then seamlessly switch to consuming real-time updates when it has caught up.</p>
+<p>You could achieve a similar thing if, every time you write something to the database, you also post
+it to a message queue. However, change capture is better because it contains exactly the same data
+as what was committed to the database (avoiding race conditions). A good change capture system also
+allows you to stream through the entire existing dataset, and then seamlessly switch to consuming
+real-time updates when it has caught up.</p>
 
-<p>Consumers of this changelog are decoupled from the app that generates the writes, which gives you great freedom to experiment without fear of bringing down the main site. You can use the changelog for updating and invalidating caches, for maintaining full-text indexes, for calculating analytics, for sending out emails and push notifications, for importing the data into Hadoop, and <a href="http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">much more</a>.</p>
+<p>Consumers of this changelog are decoupled from the app that generates the writes, which gives you
+great freedom to experiment without fear of bringing down the main site. You can use the changelog
+for updating and invalidating caches, for maintaining full-text indexes, for calculating analytics,
+for sending out emails and push notifications, for importing the data into Hadoop, and
+<a href="http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">much more</a>.</p>
 
-<p>LinkedIn built a technology called <a href="http://www.socc2012.org/s18-das.pdf?attredirects=0">Databus</a> to do this. The <a href="https://github.com/linkedin/databus">open source release of Databus</a> is for Oracle DB, and there is a proof-of-concept <a href="https://github.com/linkedin/databus/wiki/Databus-for-MySQL">MySQL version</a> (which is different from the version of Databus for MySQL that LinkedIn uses in production).</p>
+<p>LinkedIn built a technology called <a href="http://www.socc2012.org/s18-das.pdf?attredirects=0">Databus</a> to
+do this. The <a href="https://github.com/linkedin/databus">open source release of Databus</a> is for Oracle DB,
+and there is a proof-of-concept <a href="https://github.com/linkedin/databus/wiki/Databus-for-MySQL">MySQL version</a>
+(which is different from the version of Databus for MySQL that LinkedIn uses in production).</p>
 
-<p>The new project I am working on, <a href="http://samza.incubator.apache.org/">Apache Samza</a>, also sits squarely in this space – it is a framework for processing real-time data feeds, somewhat like MapReduce for streams. I am excited about it because I think this pattern of processing change capture streams can help many people build apps that scale better, are easier to maintain and more reliable than many apps today. It’s open source, and you should go and <a href="http://samza.incubator.apache.org/">try it out</a>.</p>
+<p>The new project I am working on, <a href="http://samza.incubator.apache.org/">Apache Samza</a>, also sits
+squarely in this space – it is a framework for processing real-time data feeds, somewhat like
+MapReduce for streams. I am excited about it because I think this pattern of processing change
+capture streams can help many people build apps that scale better, are easier to maintain and more
+reliable than many apps today. It’s open source, and you should go and
+<a href="http://samza.incubator.apache.org/">try it out</a>.</p>
 
-<h2 id="in_conclusion">In conclusion</h2>
+<h2 id="in-conclusion">In conclusion</h2>
 
-<p>The problems discussed in this post are primarily data systems problems. That’s no coincidence: if you write your applications in a stateless way, they are pretty easy to scale, since you can just run more copies of them. Thus, whether you use Rails or Express.js or whatever framework <em>du jour</em> really doesn’t matter much. The hard part is scaling the stateful parts of your system: your databases.</p>
+<p>The problems discussed in this post are primarily data systems problems. That’s no coincidence:
+if you write your applications in a stateless way, they are pretty easy to scale, since you can
+just run more copies of them. Thus, whether you use Rails or Express.js or whatever framework
+<em>du jour</em> really doesn’t matter much. The hard part is scaling the stateful parts of your system:
+your databases.</p>
 
-<p>There are no easy solutions for these problems. Some new technologies and services can help – for example, the new generation of distributed datastores tries to solve some of the above problems (especially around automating replication and failover), but they have other limitations. There certainly is no panacea.</p>
+<p>There are no easy solutions for these problems. Some new technologies and services can help –
+for example, the new generation of distributed datastores tries to solve some of the above problems
+(especially around automating replication and failover), but they have other limitations. There
+certainly is no panacea.</p>
 
-<p>Personally I’m totally fine with using new and experimental tools for derived data, such as caches and analytics, where data loss is annoying but not end of your business. I’m more cautious with the system of record (also known as <em>source of truth</em>). Every system has operational quirks, and the devil you know may let you sleep better at night than the one you don’t. I don’t really mind what that devil is in your particular case.</p>
+<p>Personally I’m totally fine with using new and experimental tools for derived data, such as caches
+and analytics, where data loss is annoying but not end of your business. I’m more cautious with the
+system of record (also known as <em>source of truth</em>). Every system has operational quirks, and the
+devil you know may let you sleep better at night than the one you don’t. I don’t really mind what
+that devil is in your particular case.</p>
 
-<p>I’m interested to see whether database-as-a-service offerings such as <a href="https://www.firebase.com/">Firebase</a>, <a href="http://orchestrate.io/">Orchestrate</a> or <a href="https://fauna.org/">Fauna</a> can help (I’ve not used any of them seriously, so I can’t vouch for them at this point). I see big potential advantages for small teams in outsourcing operations, but also a big potential risk in locking yourself to a system that you couldn’t choose to host yourself if necessary.</p>
+<p>I’m interested to see whether database-as-a-service offerings such as
+<a href="https://www.firebase.com/">Firebase</a>, <a href="http://orchestrate.io/">Orchestrate</a> or
+<a href="https://fauna.org/">Fauna</a> can help (I’ve not used any of them seriously, so I can’t vouch for them
+at this point). I see big potential advantages for small teams in outsourcing operations, but also
+a big potential risk in locking yourself to a system that you couldn’t choose to host yourself if
+necessary.</p>
 
-<p>Building scalable systems is not all sexy roflscale fun. It’s a lot of plumbing and yak shaving. A lot of hacking together tools that really ought to exist already, but all the open source solutions out there are too bad (and yours ends up bad too, but at least it solves your particular problem).</p>
+<p>Building scalable systems is not all sexy roflscale fun. It’s a lot of plumbing and yak shaving.
+A lot of hacking together tools that really ought to exist already, but all the open source
+solutions out there are too bad (and yours ends up bad too, but at least it solves your particular
+problem).</p>
 
-<p>On the other hand, consider yourself lucky. If you’ve got scaling problems, you must be doing something right – you must be making something that people want.</p>
+<p>On the other hand, consider yourself lucky. If you’ve got scaling problems, you must be doing
+something right – you must be making something that people want.</p>
+
         </div>
 
         <div class="by-line">
@@ -312,89 +573,170 @@
         </h1>
 
         <div class="entry-content full-content">
-            <p><em>This is a copy of a post I originally wrote on the <a href="http://engineering.linkedin.com/mobile/linkedin-intro-doing-impossible-ios">LinkedIn engineering blog</a>.</em></p>
+            <p><em>This is a copy of a post I originally wrote on the
+<a href="http://engineering.linkedin.com/mobile/linkedin-intro-doing-impossible-ios">LinkedIn engineering blog</a>.</em></p>
 
-<p>We recently launched <a href="https://intro.linkedin.com/">LinkedIn Intro</a> — a new product that shows you LinkedIn profiles, <em>right inside the native iPhone mail client</em>. That’s right: we have extended Apple’s built-in iOS Mail app, a feat that many people consider to be impossible. This post is a short summary of how Intro works, and some of the ways we bent technology to our will.</p>
+<p>We recently launched <a href="https://intro.linkedin.com/">LinkedIn Intro</a> — a new product that shows you
+LinkedIn profiles, <em>right inside the native iPhone mail client</em>. That’s right: we have extended
+Apple’s built-in iOS Mail app, a feat that many people consider to be impossible. This post is
+a short summary of how Intro works, and some of the ways we bent technology to our will.</p>
 
-<p>With Intro, you can see at a glance the picture of the person who’s emailing you, learn more about their background, and connect with them on LinkedIn. This is what it looks like:</p>
-<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
-<img alt='The iPhone mail app, before and after Intro' src='/2013/10/intro_before_after.png' width='550' />
+<p>With Intro, you can see at a glance the picture of the person who’s emailing you, learn more about
+their background, and connect with them on LinkedIn. This is what it looks like:</p>
+
+<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
+<img src="/2013/10/intro_before_after.png" width="550" alt="The iPhone mail app, before and after Intro" />
 <br />The iPhone mail app, before and after Intro</p>
-<h2 id="how_intro_came_to_be">How Intro Came to Be</h2>
 
-<p>The origins of Intro go back to before the acquisition of <a href="http://rapportive.com/">Rapportive</a> by LinkedIn. At Rapportive, we had built a browser extension that modified Gmail to show the profile of an email’s sender within the Gmail page. The product was popular, but people kept asking: “I love Rapportive in Gmail, when can I have it on mobile too?”</p>
+<h2 id="how-intro-came-to-be">How Intro Came to Be</h2>
 
-<p>The magic of Rapportive is that you don’t have to remember to use it. Once you have it installed, it is right there inside your email, showing you everything you need to know about your contacts. You don’t need to fire up a new app or do a search in another browser tab, because the information is right there when you need it. It just feels natural.</p>
+<p>The origins of Intro go back to before the acquisition of <a href="http://rapportive.com/">Rapportive</a> by
+LinkedIn. At Rapportive, we had built a browser extension that modified Gmail to show the profile of
+an email’s sender within the Gmail page. The product was popular, but people kept asking: “I love
+Rapportive in Gmail, when can I have it on mobile too?”</p>
 
-<p>At LinkedIn, we want to <a href="http://www.youtube.com/watch?v=t6SdSqI0JR0">work wherever our members work</a>. And we know that professionals spend a lot of time on their phone, checking and replying to emails — so we had to figure out how to enhance mobile email, giving professionals the information they need to be brilliant with people.</p>
+<p>The magic of Rapportive is that you don’t have to remember to use it. Once you have it installed, it
+is right there inside your email, showing you everything you need to know about your contacts. You
+don’t need to fire up a new app or do a search in another browser tab, because the information is
+right there when you need it. It just feels natural.</p>
 
-<p>But how do we do that? Ask any iOS engineer: there is no API for extending the built-in mail app on the iPhone. If you wanted to build something like Rapportive, most people would tell you that it is impossible. Yet we figured it out.</p>
+<p>At LinkedIn, we want to <a href="http://www.youtube.com/watch?v=t6SdSqI0JR0">work wherever our members work</a>.
+And we know that professionals spend a lot of time on their phone, checking and replying to emails
+— so we had to figure out how to enhance mobile email, giving professionals the information they
+need to be brilliant with people.</p>
 
-<h2 id="impossible_1_extending_the_ios_mail_client">Impossible #1: Extending the iOS Mail Client</h2>
+<p>But how do we do that? Ask any iOS engineer: there is no API for extending the built-in mail app on
+the iPhone. If you wanted to build something like Rapportive, most people would tell you that it is
+impossible. Yet we figured it out.</p>
 
-<p>Our key insight was this: we cannot extend the mail client, but we can add information to the messages themselves. One way to do this would be to modify the messages on the server — but then the modification would appear on all your clients, both desktop and mobile. That would not be what users want.</p>
+<h2 id="impossible-1-extending-the-ios-mail-client">Impossible #1: Extending the iOS Mail Client</h2>
+
+<p>Our key insight was this: we cannot extend the mail client, but we can add information to the
+messages themselves. One way to do this would be to modify the messages on the server — but then the
+modification would appear on all your clients, both desktop and mobile. That would not be what users
+want.</p>
 
 <p>Instead, we can add information to messages by using a proxy server.</p>
-<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
-<img alt='Rewriting messages using an IMAP proxy' src='/2013/10/intro_imap_proxy.png' width='550' />
+
+<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
+<img src="/2013/10/intro_imap_proxy.png" width="550" alt="Rewriting messages using an IMAP proxy" />
 <br />Rewriting messages using an IMAP proxy</p>
-<p>Normally your device connects directly to the servers of your email provider (Gmail, Yahoo, AOL, etc.), but we can configure the device to connect to the Intro proxy server instead.</p>
 
-<p>The Intro proxy server speaks the <a href="http://tools.ietf.org/html/rfc3501">IMAP</a> protocol just like an email provider, but it doesn’t store messages itself. Instead, it forwards requests from the device to your email provider, and forwards responses from the email provider back to the device. En route, it inserts Intro information at the beginning of each message body — we call this the top bar.</p>
+<p>Normally your device connects directly to the servers of your email provider (Gmail, Yahoo, AOL,
+etc.), but we can configure the device to connect to the Intro proxy server instead.</p>
 
-<p>The great thing about this approach: the proxy server can tailor the top bar to the device, since it knows which device is downloading the message. It can adapt the layout to be appropriate to the screen size, and it can take advantage of the client’s latest features, because it doesn’t need to worry about compatibility with other devices.</p>
+<p>The Intro proxy server speaks the <a href="http://tools.ietf.org/html/rfc3501">IMAP</a> protocol just like an
+email provider, but it doesn’t store messages itself. Instead, it forwards requests from the device
+to your email provider, and forwards responses from the email provider back to the device. En route,
+it inserts Intro information at the beginning of each message body — we call this the top bar.</p>
 
-<p>Our proxy server is written in Ruby using EventMachine, which allows it to efficiently handle many concurrent IMAP connections. We have developed some libraries to make the evented programming model nicer to work with, including <a href="https://github.com/samstokes/deferrable_gratification">Deferrable Gratification</a> and <a href="https://github.com/ConradIrwin/lspace">LSpace</a>.</p>
+<p>The great thing about this approach: the proxy server can tailor the top bar to the device, since it
+knows which device is downloading the message. It can adapt the layout to be appropriate to the
+screen size, and it can take advantage of the client’s latest features, because it doesn’t need to
+worry about compatibility with other devices.</p>
 
-<h2 id="impossible_2_interactive_ui_in_email">Impossible #2: Interactive UI in Email</h2>
+<p>Our proxy server is written in Ruby using EventMachine, which allows it to efficiently handle many
+concurrent IMAP connections. We have developed some libraries to make the evented programming model
+nicer to work with, including
+<a href="https://github.com/samstokes/deferrable_gratification">Deferrable Gratification</a> and
+<a href="https://github.com/ConradIrwin/lspace">LSpace</a>.</p>
 
-<p>Ok, we have a way of adding information about the sender to a message — but so far it’s just a static piece of HTML. The top bar is deliberately minimal, because we don’t want it to get in the way. But wouldn’t it be <em>awesome</em> if you could tap the top bar and see the full LinkedIn profile… without leaving the mail app?</p>
+<h2 id="impossible-2-interactive-ui-in-email">Impossible #2: Interactive UI in Email</h2>
 
-<p>“But that’s impossible,” they cry, “you can’t run JavaScript in the mail client!” And that’s true — any JavaScript in an email is simply ignored. But iOS Mail does have powerful CSS capabilities, since it uses the same rendering engine as Safari.</p>
+<p>Ok, we have a way of adding information about the sender to a message — but so far it’s just
+a static piece of HTML. The top bar is deliberately minimal, because we don’t want it to get in the
+way. But wouldn’t it be <em>awesome</em> if you could tap the top bar and see the full LinkedIn profile…
+without leaving the mail app?</p>
 
-<p>Recall that CSS has a <code>:hover</code> state that is triggered when you hover the mouse over an element. This is used for popup menus in the navigation of many websites, or for tooltips. But what do you do on a touchscreen device, where there is no hovering or clicking, only tapping?</p>
+<p>“But that’s impossible,” they cry, “you can’t run JavaScript in the mail client!” And that’s true
+— any JavaScript in an email is simply ignored. But iOS Mail does have powerful CSS capabilities,
+since it uses the same rendering engine as Safari.</p>
 
-<p>A little-known fact about CSS on Mobile Safari: in certain circumstances, tapping a link once simulates a <code>:hover</code> state on that link, and tapping it twice has the effect of a click. Thanks to this feature, popup menus and tooltips still work on iOS.</p>
+<p>Recall that CSS has a <code>:hover</code> state that is triggered when you hover the mouse over an element.
+This is used for popup menus in the navigation of many websites, or for tooltips. But what do you do
+on a touchscreen device, where there is no hovering or clicking, only tapping?</p>
 
-<p>With some creativity, we figured out how to use this effect to create an interactive user interface <em>within</em> a message! Just tap the top bar to see the full LinkedIn profile:</p>
-<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
-<img alt='With CSS tricks we can embed an entire LinkedIn profile in a message' src='/2013/10/intro_drawer.png' width='550' />
+<p>A little-known fact about CSS on Mobile Safari: in certain circumstances, tapping a link once
+simulates a <code>:hover</code> state on that link, and tapping it twice has the effect of a click. Thanks to
+this feature, popup menus and tooltips still work on iOS.</p>
+
+<p>With some creativity, we figured out how to use this effect to create an interactive user interface
+<em>within</em> a message! Just tap the top bar to see the full LinkedIn profile:</p>
+
+<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
+<img src="/2013/10/intro_drawer.png" width="550" alt="With CSS tricks we can embed an entire LinkedIn profile in a message" />
 <br />With CSS tricks we can embed an entire LinkedIn profile in a message</p>
-<h2 id="impossible_3_dynamic_content_in_email">Impossible #3: Dynamic Content in Email</h2>
 
-<p>This <code>:hover</code> trick allows us to have some interactivity within a message, but for more complex interactions we have to take you to the browser (where we can run a normal web app, without the mail app’s limitations). For example, if you want to connect with your contact on LinkedIn, we take you to Safari.</p>
+<h2 id="impossible-3-dynamic-content-in-email">Impossible #3: Dynamic Content in Email</h2>
 
-<p>That’s fine, but it leaves us with a problem: the top bar needs to show if you’re already connected with someone. Say you send an invitation, and the other person accepts — now you’re connected, but if you open the same email again, it still says that you’re not connected!</p>
+<p>This <code>:hover</code> trick allows us to have some interactivity within a message, but for more complex
+interactions we have to take you to the browser (where we can run a normal web app, without the mail
+app’s limitations). For example, if you want to connect with your contact on LinkedIn, we take you
+to Safari.</p>
 
-<p>This is because once a message has been downloaded, an IMAP client may assume that the message will never change. It is cached on the device, and unlike a web page, it never gets refreshed. Now that you’re connected, the top bar content needs to change. How do we update it?</p>
+<p>That’s fine, but it leaves us with a problem: the top bar needs to show if you’re already connected
+with someone. Say you send an invitation, and the other person accepts — now you’re connected, but
+if you open the same email again, it still says that you’re not connected!</p>
 
-<p>Our solution: the connect button is in a tiny <code>&amp;lt;iframe&amp;gt;</code> which is refreshed every time you open the message. And if you open the message while your device is offline? No problem: the <code>iframe</code> is positioned on top of an identical-looking button in the static top bar HTML. If the <code>iframe</code> fails to load, it simply falls back to the connection status at the time when the message was downloaded.</p>
+<p>This is because once a message has been downloaded, an IMAP client may assume that the message will
+never change. It is cached on the device, and unlike a web page, it never gets refreshed. Now that
+you’re connected, the top bar content needs to change. How do we update it?</p>
+
+<p>Our solution: the connect button is in a tiny <code>&amp;lt;iframe&amp;gt;</code> which is refreshed every time you
+open the message. And if you open the message while your device is offline? No problem: the <code>iframe</code>
+is positioned on top of an identical-looking button in the static top bar HTML. If the <code>iframe</code>
+fails to load, it simply falls back to the connection status at the time when the message was
+downloaded.</p>
 
 <p>This allows the top bar to contain dynamic content, even though it’s impossible for the server to modify a message once it has been downloaded by the device.</p>
-<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
-<img alt='Using an embedded iframe to keep the connection status up-to-date, within an otherwise static top bar' src='/2013/10/intro_connection_status.png' width='550' />
+
+<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
+<img src="/2013/10/intro_connection_status.png" width="550" alt="Using an embedded iframe to keep the connection status up-to-date, within an otherwise static top bar" />
 <br />Using an embedded iframe to keep the connection status up-to-date, within an otherwise static top bar</p>
-<h2 id="impossible_4_easy_installation">Impossible #4: Easy Installation</h2>
 
-<p>Once we got the IMAP proxy working, we were faced with another problem: how do we configure a device to use the proxy? We cannot expect users to manually enter IMAP and SMTP hostnames, choose the correct TLS settings, etc — it’s too tedious and error-prone.</p>
+<h2 id="impossible-4-easy-installation">Impossible #4: Easy Installation</h2>
 
-<p>Fortunately, Apple provides a friendly way of setting up email accounts by using <a href="https://developer.apple.com/library/ios/featuredarticles/iPhoneConfigurationProfileRef/">configuration profiles</a> — a facility that is often used in enterprise deployments of iOS devices. Using this technique, we can simply ask the user for their email address and password, autodiscover the email provider settings, and send a configuration profile to the device. The user just needs to tap “ok” a few times, and then they have a new mail account.</p>
+<p>Once we got the IMAP proxy working, we were faced with another problem: how do we configure a device
+to use the proxy? We cannot expect users to manually enter IMAP and SMTP hostnames, choose the
+correct TLS settings, etc — it’s too tedious and error-prone.</p>
+
+<p>Fortunately, Apple provides a friendly way of setting up email accounts by using
+<a href="https://developer.apple.com/library/ios/featuredarticles/iPhoneConfigurationProfileRef/">configuration profiles</a>
+— a facility that is often used in enterprise deployments of iOS devices. Using this technique, we
+can simply ask the user for their email address and password, autodiscover the email provider
+settings, and send a configuration profile to the device. The user just needs to tap “ok” a few
+times, and then they have a new mail account.</p>
 
 <p>Moreover, for Gmail and Google Apps accounts, we can use OAuth, and never need to ask for the user’s password. Even better!</p>
-<p style='text-align: center; font-style: italic; color: #666; font-size: 85%;'>
-<img alt='iOS configuration profiles make setup of new email accounts a breeze' src='/2013/10/intro_installer_0.png' width='550' />
-<br />iOS configuration profiles make setup of new email accounts a breeze</p>
-<h2 id="security_and_privacy">Security and Privacy</h2>
 
-<p>We understand that operating an email proxy server carries great responsibility. We respect the fact that your email may contain very personal or sensitive information, and we will do everything we can to make sure that it is safe. Our principles and key security measures are detailed in our <a href="https://intro.linkedin.com/micro/privacy">pledge of privacy</a>.</p>
+<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
+<img src="/2013/10/intro_installer_0.png" width="550" alt="iOS configuration profiles make setup of new email accounts a breeze" />
+<br />iOS configuration profiles make setup of new email accounts a breeze</p>
+
+<h2 id="security-and-privacy">Security and Privacy</h2>
+
+<p>We understand that operating an email proxy server carries great responsibility. We respect the fact
+that your email may contain very personal or sensitive information, and we will do everything we can
+to make sure that it is safe. Our principles and key security measures are detailed in our
+<a href="https://intro.linkedin.com/micro/privacy">pledge of privacy</a>.</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>When we first built Rapportive for Gmail, people thought that we were crazy — writing a browser extension that modified the Gmail page on the fly, effectively writing an application inside someone else’s application! But it turned out to be a great success, and many others have since followed our footsteps and written browser extensions for Gmail.</p>
+<p>When we first built Rapportive for Gmail, people thought that we were crazy — writing a browser
+extension that modified the Gmail page on the fly, effectively writing an application inside someone
+else’s application! But it turned out to be a great success, and many others have since followed our
+footsteps and written browser extensions for Gmail.</p>
 
-<p>Similarly, Intro’s approach of proxying IMAP is a novel way of delivering software to users. It operates at the limit of what is technically possible, but it has a big advantage: we can enhance the apps you already use. Of course the idea isn’t limited to the iPhone, so watch out for new platforms coming your way soon :)</p>
+<p>Similarly, Intro’s approach of proxying IMAP is a novel way of delivering software to users. It
+operates at the limit of what is technically possible, but it has a big advantage: we can enhance
+the apps you already use. Of course the idea isn’t limited to the iPhone, so watch out for new
+platforms coming your way soon :)</p>
 
-<p>This post has only scratched the surface of the interesting challenges we have overcome while building Intro. In follow-up posts we will talk about some of our CSS techniques, testing and monitoring tools, things we do to achieve high performance and high reliability, and more. In the meantime, check out <a href="https://intro.linkedin.com/">Intro</a> and let us know what you think!</p>
+<p>This post has only scratched the surface of the interesting challenges we have overcome while
+building Intro. In follow-up posts we will talk about some of our CSS techniques, testing and
+monitoring tools, things we do to achieve high performance and high reliability, and more. In the
+meantime, check out <a href="https://intro.linkedin.com/">Intro</a> and let us know what you think!</p>
+
         </div>
 
         <div class="by-line">
@@ -419,56 +761,118 @@
         </h1>
 
         <div class="entry-content full-content">
-            <p>On a <a href="http://www.planetoutdoor.de/de/touren/detail.htm?tour=20874&region=138">walk</a> in the Alps last week we came across a wonderful piece of engineering, more successful than most software systems could claim to be. It is the system of <em><a href="http://de.wikipedia.org/wiki/Waal_%28Bew%C3%A4sserung%29">Waale</a></em>, an ancient irrigation system in the <a href="http://en.wikipedia.org/wiki/Vinschgau">Vinschgau</a>, South Tyrol.</p>
+            <p>On a <a href="http://www.planetoutdoor.de/de/touren/detail.htm?tour=20874&amp;region=138">walk</a> in the Alps last
+week we came across a wonderful piece of engineering, more successful than most software systems
+could claim to be. It is the system of <em><a href="http://de.wikipedia.org/wiki/Waal_%28Bew%C3%A4sserung%29">Waale</a></em>,
+an ancient irrigation system in the <a href="http://en.wikipedia.org/wiki/Vinschgau">Vinschgau</a>, South
+Tyrol.</p>
 
-<p>The climate in the Vinschgau is sunny, dry and windy. Without irrigation, agriculture would barely be possible, but if water from mountain streams is channelled to the fields, <a href="http://www.vip.coop/">apple trees</a> and meadows can flourish. The area has been inhabited at least since the Bronze Age, and it is likely that artificial irrigation started early. The oldest documents on the Waal system date from the 12th century, and some Waale built in the 14th century are still in use today.</p>
+<p>The climate in the Vinschgau is sunny, dry and windy. Without irrigation, agriculture would barely
+be possible, but if water from mountain streams is channelled to the fields,
+<a href="http://www.vip.coop/">apple trees</a> and meadows can flourish. The area has been inhabited at least
+since the Bronze Age, and it is likely that artificial irrigation started early. The oldest
+documents on the Waal system date from the 12th century, and some Waale built in the 14th century
+are still in use today.</p>
+
 <p>
-  <a href='http://www.flickr.com/photos/martinkleppmann/9485964300/in/set-72157635017969591' style='display: block; float: left'><img height='375' src='/2013/08/leitenwaal-1.jpg' width='250' /></a>
-  <a href='http://www.flickr.com/photos/martinkleppmann/9482339202/in/set-72157635017969591' style='display: block; float: right'><img height='375' src='/2013/08/leitenwaal-2.jpg' width='250' /></a>
-</p><p style='clear: both' />
-<p>The pictures in this post show the Leitenwaal and the <a href="http://www.youtube.com/watch?v=hO0BAjPh5n4">Berkwaal</a> near the village of <a href="http://en.wikipedia.org/wiki/Schluderns">Schluderns</a> in South Tyrol, northern Italy. These two conduits carry water from a mountain stream (the Saldurbach) to the fields and meadows around Schluderns. Along their combined length of about six kilometers, they overcome many obstacles: twisting along the face of steep mountainsides, crossing aqueducts over deep ravines, tunnelling underneath boulders, before they finally arrive at the fields they supply.</p>
+  <a style="display: block; float: left" href="http://www.flickr.com/photos/martinkleppmann/9485964300/in/set-72157635017969591"><img src="/2013/08/leitenwaal-1.jpg" width="250" height="375" /></a>
+  <a style="display: block; float: right" href="http://www.flickr.com/photos/martinkleppmann/9482339202/in/set-72157635017969591"><img src="/2013/08/leitenwaal-2.jpg" width="250" height="375" /></a>
+</p>
+<p style="clear: both"></p>
 
-<p>Some sections look almost like a natural stream – except that they flow across the mountainside, not down, because they are designed to cover the greatest possible distance with the smallest possible loss in altitude. Other sections are more obviously artificial, where the furrow has been lined with flat stones or blanks of wood.</p>
+<p>The pictures in this post show the Leitenwaal and the
+<a href="http://www.youtube.com/watch?v=hO0BAjPh5n4">Berkwaal</a> near the village of
+<a href="http://en.wikipedia.org/wiki/Schluderns">Schluderns</a> in South Tyrol, northern Italy. These two
+conduits carry water from a mountain stream (the Saldurbach) to the fields and meadows around
+Schluderns. Along their combined length of about six kilometers, they overcome many obstacles:
+twisting along the face of steep mountainsides, crossing aqueducts over deep ravines, tunnelling
+underneath boulders, before they finally arrive at the fields they supply.</p>
 
-<p>This system was originally built almost 700 years ago, using the technology available at the time: spade, axe, hammer and chisel. Of course, nowadays, electric pumps can take water from the river at the valley floor, and sprinkle it on the fields on the slopes above. But for many centuries, the only feasible option was to take water from a stream at high altitude, and let it flow down from there.</p>
-<p><a href='http://www.flickr.com/photos/martinkleppmann/9483183131/in/set-72157635017969591'><img height='366' src='/2013/08/source.jpg' width='550' /></a></p>
-<p>Here a feed of water is taken from a stream, and carried along a wooden gulley: the input to the irrigation system. Along the way, gates regulate the flow of water in the direction of various farms. For centuries, the details of water distribution – how much water shall be directed towards which farm at which time – have been governed by detailed agreements, and led to many disputes between farmers.</p>
-<p><a href='http://www.flickr.com/photos/martinkleppmann/9482379264/in/set-72157635017969591'><img height='366' src='/2013/08/distribution.jpg' width='550' /></a></p>
-<p>If the system were to fail for too long, crops would wither, so it was important that the system was always well-maintained and operational. And of course, parts of the system would fail from time to time – erosion, landslides, decay, accidents or any number of other faults could occur. When a part of the system broke, it was replaced using whatever technology was available at the time.</p>
+<p>Some sections look almost like a natural stream – except that they flow across the mountainside,
+not down, because they are designed to cover the greatest possible distance with the smallest
+possible loss in altitude. Other sections are more obviously artificial, where the furrow has been
+lined with flat stones or blanks of wood.</p>
 
-<p>Thus, the system is now a patchwork of different water-carrying technologies from different ages. The oldest “pipes” were made from hollowed-out tree trunks, and some of them are still in use (water flows through tree trunks across a ravine in the left picture below). Later replacements have been made with concrete, steel or plastic pipes – whatever is believed to be the most reliable solution in the long term.</p>
+<p>This system was originally built almost 700 years ago, using the technology available at the time:
+spade, axe, hammer and chisel. Of course, nowadays, electric pumps can take water from the river
+at the valley floor, and sprinkle it on the fields on the slopes above. But for many centuries, the
+only feasible option was to take water from a stream at high altitude, and let it flow down from
+there.</p>
+
+<p><a href="http://www.flickr.com/photos/martinkleppmann/9483183131/in/set-72157635017969591"><img src="/2013/08/source.jpg" width="550" height="366" /></a></p>
+
+<p>Here a feed of water is taken from a stream, and carried along a wooden gulley: the input to the
+irrigation system. Along the way, gates regulate the flow of water in the direction of various
+farms. For centuries, the details of water distribution – how much water shall be directed towards
+which farm at which time – have been governed by detailed agreements, and led to many disputes
+between farmers.</p>
+
+<p><a href="http://www.flickr.com/photos/martinkleppmann/9482379264/in/set-72157635017969591"><img src="/2013/08/distribution.jpg" width="550" height="366" /></a></p>
+
+<p>If the system were to fail for too long, crops would wither, so it was important that the system was
+always well-maintained and operational. And of course, parts of the system would fail from time to
+time – erosion, landslides, decay, accidents or any number of other faults could occur. When a part
+of the system broke, it was replaced using whatever technology was available at the time.</p>
+
+<p>Thus, the system is now a patchwork of different water-carrying technologies from different ages.
+The oldest “pipes” were made from hollowed-out tree trunks, and some of them are still in use (water
+flows through tree trunks across a ravine in the left picture below). Later replacements have been
+made with concrete, steel or plastic pipes – whatever is believed to be the most reliable solution
+in the long term.</p>
+
 <p>
-  <a href='http://www.flickr.com/photos/martinkleppmann/9485976696/in/set-72157635017969591' style='display: block; float: left'><img height='375' src='/2013/08/pipes-1.jpg' width='250' /></a>
-  <a href='http://www.flickr.com/photos/martinkleppmann/9485971172/in/set-72157635017969591' style='display: block; float: right'><img height='375' src='/2013/08/pipes-2.jpg' width='250' /></a>
-</p><p style='clear: both' />
-<p>Perhaps the most impressive aspect of this system are its <em>operability</em> features, i.e. the things that help the operator of the Waal in his job of keeping the system running smoothly. For example, at regular intervals, the water flows through gratings which filter out twigs or other objects before they can cause blockages in pipes. The gratings are cleaned regularly, and tools for clearing out pipes are kept near the Waal. Routine inspections help detect problems early, before they escalate and cause further damage.</p>
+  <a style="display: block; float: left" href="http://www.flickr.com/photos/martinkleppmann/9485976696/in/set-72157635017969591"><img src="/2013/08/pipes-1.jpg" width="250" height="375" /></a>
+  <a style="display: block; float: right" href="http://www.flickr.com/photos/martinkleppmann/9485971172/in/set-72157635017969591"><img src="/2013/08/pipes-2.jpg" width="250" height="375" /></a>
+</p>
+<p style="clear: both"></p>
 
-<p>After heavy rainfall or melting of snow, the influx of water may exceed the Waal’s capacity. This is problematic: if the Waal bursts its banks, those banks would be damaged by erosion or washed away, making the problem much worse. Thus, the system includes overflow points at which water is channelled back into the natural stream if the Waal is over capacity (left photo below).</p>
+<p>Perhaps the most impressive aspect of this system are its <em>operability</em> features, i.e. the things
+that help the operator of the Waal in his job of keeping the system running smoothly. For example,
+at regular intervals, the water flows through gratings which filter out twigs or other objects
+before they can cause blockages in pipes. The gratings are cleaned regularly, and tools for clearing
+out pipes are kept near the Waal. Routine inspections help detect problems early, before they
+escalate and cause further damage.</p>
 
-<p>There is even an ingenious monitoring system (right photo below). A waterwheel is placed in the stream, and a cowbell is attached so that it rings on each rotation of the wheel (<a href="http://www.youtube.com/watch?v=LbCG8AUJKSk">video</a>). Thus, the operator can tell the rate of water flow from a distance, simply by listening for the rhythm of the bell.</p>
+<p>After heavy rainfall or melting of snow, the influx of water may exceed the Waal’s capacity. This is
+problematic: if the Waal bursts its banks, those banks would be damaged by erosion or washed away,
+making the problem much worse. Thus, the system includes overflow points at which water is
+channelled back into the natural stream if the Waal is over capacity (left photo below).</p>
+
+<p>There is even an ingenious monitoring system (right photo below). A waterwheel is placed in the
+stream, and a cowbell is attached so that it rings on each rotation of the wheel
+(<a href="http://www.youtube.com/watch?v=LbCG8AUJKSk">video</a>). Thus, the operator can tell the rate of water
+flow from a distance, simply by listening for the rhythm of the bell.</p>
+
 <p>
-  <a href='http://www.flickr.com/photos/martinkleppmann/9483176701/in/set-72157635017969591' style='display: block; float: left'><img height='375' src='/2013/08/operations-1.jpg' width='250' /></a>
-  <a href='http://www.flickr.com/photos/martinkleppmann/9485968436/in/set-72157635017969591' style='display: block; float: right'><img height='375' src='/2013/08/operations-2.jpg' width='250' /></a>
-</p><p style='clear: both' />
-<p>The <em>Waaler</em>, the operator in charge of maintenance of the <em>Waal</em>, is an important and highly-regarded member of the local community. Traditionally, this role is elected every year on the first Sunday of Lent. The operator can be re-elected by the community if they were satisfied with his work in the previous year.</p>
+  <a style="display: block; float: left" href="http://www.flickr.com/photos/martinkleppmann/9483176701/in/set-72157635017969591"><img src="/2013/08/operations-1.jpg" width="250" height="375" /></a>
+  <a style="display: block; float: right" href="http://www.flickr.com/photos/martinkleppmann/9485968436/in/set-72157635017969591"><img src="/2013/08/operations-2.jpg" width="250" height="375" /></a>
+</p>
+<p style="clear: both"></p>
 
-<p>Looking at the lessons from this ancient irrigation system, and adapting them to software systems, my take-aways are:</p>
+<p>The <em>Waaler</em>, the operator in charge of maintenance of the <em>Waal</em>, is an important and
+highly-regarded member of the local community. Traditionally, this role is elected every year on the
+first Sunday of Lent. The operator can be re-elected by the community if they were satisfied with
+his work in the previous year.</p>
+
+<p>Looking at the lessons from this ancient irrigation system, and adapting them to software systems,
+my take-aways are:</p>
 
 <ul>
-<li>Good interface design can survive through multiple generations of technology. A stream of water, flowing downhill, is a simple interface that can be implemented in stone-lined furrows, hollowed-out tree trunks, concrete, steel and plastic pipes, and more.</li>
-
-<li>When replacing obsolete technology with new technology, some work is required to join them up – two pieces of standardised plastic piping may fit snugly, but you can’t expect the same from a hollow tree trunk interfacing with a plastic pipe.</li>
-
-<li>New technology is not necessarily better than old technology. Hollow tree trunks are still used to feed water into 21st-century sprinkler irrigation systems.</li>
-
-<li>API rate limits are not a new thing.</li>
-
-<li>Continuously monitor the health of your system, and detect problems early.</li>
-
-<li>Operations doesn’t just happen; it has to be someone’s job.</li>
-
-<li>If a system solves an important problem, is well-engineered and well-operated, it can stick around for a very, very long time.</li>
+  <li>Good interface design can survive through multiple generations of technology. A stream of water,
+flowing downhill, is a simple interface that can be implemented in stone-lined furrows,
+hollowed-out tree trunks, concrete, steel and plastic pipes, and more.</li>
+  <li>When replacing obsolete technology with new technology, some work is required to join them up –
+two pieces of standardised plastic piping may fit snugly, but you can’t expect the same from a
+hollow tree trunk interfacing with a plastic pipe.</li>
+  <li>New technology is not necessarily better than old technology. Hollow tree trunks are still used
+to feed water into 21st-century sprinkler irrigation systems.</li>
+  <li>API rate limits are not a new thing.</li>
+  <li>Continuously monitor the health of your system, and detect problems early.</li>
+  <li>Operations doesn’t just happen; it has to be someone’s job.</li>
+  <li>If a system solves an important problem, is well-engineered and well-operated, it can stick around
+for a very, very long time.</li>
 </ul>
+
         </div>
 
         <div class="by-line">

@@ -1,0 +1,70 @@
+==================================================================
+https://keybase.io/martinkl
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://martin.kleppmann.com
+  * I am martinkl (https://keybase.io/martinkl) on keybase.
+  * I have a public key with fingerprint 4DF9 7732 6AF8 33A8 21AF  E443 ED78 F8F5 352D 8EDF
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "4df977326af833a821afe443ed78f8f5352d8edf",
+            "host": "keybase.io",
+            "key_id": "ED78F8F5352D8EDF",
+            "uid": "849efa38a3369cb2ceb1517c43cdbc00",
+            "username": "martinkl"
+        },
+        "service": {
+            "hostname": "martin.kleppmann.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1397349147,
+    "expire_in": 157680000,
+    "prev": "aa5844587c9a1908f53a719b4bc4a17f69558eb7e4b28058c703c06ead236490",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owGbwMvMwMT4tuLHV1PdvvuMpw/8TGII9rwtXa2UlJ9SqWRVrZSdCqbSMvPSU4sK
+ijLzSpSslExS0izNzY2NzBLTLIyNEy2MDBPTUk1MjFNTzC3SLNJMjU2NUixSU9KU
+dJQy8otBOoDGJCUWp+pl5gPFgJz4zBSgqKuLuYWbhRtIvYuFq4sbUK4ULGFhYpma
+lmhskWhsbGaZnGSUnJpkaGponmxinJySlGxgAFJYnFqUl5ibClSdm1hUkpmXnaNU
+q6MEFC3LTE4FuRlkNYoKveyc1IKC3MS8PL3k/FygGQVF+SX5yfk5QBUZJSUFViAD
+SioLQDrKU5PioWbFJ2XmpQD9D9RQllpUnJmfp2RlCFSZXJIJMtzQ2NLc2MTS0MRc
+Rym1oiCzKDU+E6TC1NzMwgAIQNaklgGNTEw0tTAxMbUwT7ZMNLQ0AIVTormhZZJJ
+UrJJoqF5mpmlqalFapJ5qkmSkYWBqUWyuYFxsoFZamKKkbGZiSXI08WphXn5SlYm
+QGcmpgONLM5Mz0ssKS1KVartZJJhYWBkYmBjZQLFIAMXpwAsXhvT+f8KfZxk5FOz
+b1bcXO3vr84lTdGzq8jgvr1qkYr6YaY5XEKukzT2nigNyH0vLKa3R/jPEfakXAuT
+Q15lG/9d+2d+apZYi1VR1YHKZW5yS0xOX2dnVY5KkXomxs7nptYeKsL/Yur9PKZT
+9/bzRc5L/yFd8Tc12my6hcmtzJPadycyrL47yXVL4dUIWbX5b2+InNVJPb96414e
+i+1TPitcS7B2rnuVYOxv0hkvMct1anAc67PXEoFJjE/CLzOuaJnKb2e96FDYrVTp
+e6V3nn6fyi+1w1nyh16HxMubDw5svLpIwV0z9FFAxQfPO9qRdR6crVG62/3EWC3W
+XU9/JNH9k8vxUniT3A12mcYXrR/MeTNFWtguMC2fd+O360bZD9NYPNefvNlv57jf
+Ilb1weT2IxZFj7pm8LxKfXxoiXreBf6noU1tKb9Pp2vG6ik9dvtzLV7Uo3+/rqnp
+0/ag3T9j57Cx3nB/OsXRiNVuY/LKTOcjm2T0/JdPb3vsoJjk0V7RYa8/WaNy6clL
+un8j19vdttFbwT3PkaMsWNK9NXjLrgerQo0VVULumfjmVj2RENnsHsKckDuNxXuF
+tcSstKnqkyyPHXmha6S+QNfw6fbSqIPa4VG5yRfWPay1ZP+fa7awV1246fxD777W
+mrezD76/tiBxwsnzXJ7aH9TDHd1WvJJgmcRcFliZaJIz/7zilN0GuW0y7ieDIi7b
+cj0CAA==
+=fX/i
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/martinkl
+
+==================================================================

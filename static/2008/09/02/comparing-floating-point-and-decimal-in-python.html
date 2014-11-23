@@ -51,59 +51,74 @@
         <div id="content">
             <h1>Comparing floating-point and decimal in Python</h1>
 
-            <p>Bizarre happenings in the world of Python. It seems that you are really not supposed to compare floating-point and decimal numbers, as this example shows:</p>
-<div class='highlight'><pre><code class='pycon'><span class='go'>Python 2.5.1 (r251:54863, Jan 17 2008, 19:35:17)</span>
-<span class='go'>[GCC 4.0.1 (Apple Inc. build 5465)] on darwin</span>
-<span class='go'>Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='kn'>from</span> <span class='nn'>decimal</span> <span class='kn'>import</span> <span class='n'>Decimal</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span> <span class='o'>&gt;</span> <span class='mf'>2.0</span>
-<span class='go'>False</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span> <span class='o'>&gt;</span> <span class='mf'>2.0</span>
-<span class='go'>False</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span> <span class='o'>&lt;</span> <span class='mf'>2.0</span>
-<span class='go'>True</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span> <span class='o'>&lt;</span> <span class='mf'>2.0</span>
-<span class='go'>True</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&lt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span>
-<span class='go'>False</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&lt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
-<span class='go'>False</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span>
-<span class='go'>True</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
-<span class='go'>True</span>
-</code></pre></div>
-<p>But that’s not the end yet. I have <a href="http://nltk.sourceforge.net/">NLTK</a> 0.9.4 installed, and watch how truth is reversed if I simply import the NLTK package:</p>
-<div class='highlight'><pre><code class='pycon'><span class='gp'>&gt;&gt;&gt; </span><span class='kn'>import</span> <span class='nn'>nltk</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span> <span class='o'>&gt;</span> <span class='mf'>2.0</span>
-<span class='go'>True</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span> <span class='o'>&gt;</span> <span class='mf'>2.0</span>
-<span class='go'>True</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span> <span class='o'>&lt;</span> <span class='mf'>2.0</span>
-<span class='go'>False</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span> <span class='o'>&lt;</span> <span class='mf'>2.0</span>
-<span class='go'>False</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&lt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span>
-<span class='go'>True</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&lt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
-<span class='go'>True</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;1.0&#39;</span><span class='p'>)</span>
-<span class='go'>False</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='mf'>2.0</span> <span class='o'>&gt;</span> <span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;3.0&#39;</span><span class='p'>)</span>
-<span class='go'>False</span>
-</code></pre></div>
-<p>I’m filing bugs about this, but I do find this quite entertaining in a ‘oh-my-God-I-always-believed-Python-was-a-well-behaved-language’ sort of way.</p>
+            <p>Bizarre happenings in the world of Python. It seems that you are really not supposed to compare
+floating-point and decimal numbers, as this example
+shows:</p>
 
-<p><strong>Edit:</strong> Edward Loper from NLTK gave <a href="https://sourceforge.net/tracker/?func=detail&atid=400896&aid=2089412&group_id=30982">an explanation</a> why this is the case – it’s not because of NLTK, but because of Python’s internal handling of the comparison operator on floating-point numbers:</p>
+<div class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span class="go">Python 2.5.1 (r251:54863, Jan 17 2008, 19:35:17)</span>
+<span class="go">[GCC 4.0.1 (Apple Inc. build 5465)] on darwin</span>
+<span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="go">True</span></code></pre></div>
+
+<p>But that’s not the end yet. I have
+<a href="http://nltk.sourceforge.net/">NLTK</a> 0.9.4 installed, and watch how truth is reversed if I simply
+import the NLTK package:</p>
+
+<div class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="go">False</span></code></pre></div>
+
+<p>I’m filing bugs about this, but I do find this quite entertaining in a
+‘oh-my-God-I-always-believed-Python-was-a-well-behaved-language’ sort of way.</p>
+
+<p><strong>Edit:</strong> Edward Loper from NLTK gave
+<a href="https://sourceforge.net/tracker/?func=detail&amp;atid=400896&amp;aid=2089412&amp;group_id=30982">an explanation</a>
+why this is the case – it’s not because of NLTK, but because of Python’s internal handling of the
+comparison operator on floating-point
+numbers:</p>
+
 <blockquote>Apparently, you're only allowed to use comparison operators to compare
 <code>Decimal</code> objects to (i) other
 <code>Decimal</code> objects; (ii) integers; (iii) longs. Here, you're comparing it to a
 <code>float</code>, which isn't allowed, as evidenced by the
-following:</blockquote><div class='highlight'><pre><code class='pycon'><span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;.1&#39;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>__cmp__</span><span class='p'>(</span><span class='mi'>1</span><span class='p'>)</span>
-<span class='go'>-1</span>
-<span class='gp'>&gt;&gt;&gt; </span><span class='n'>Decimal</span><span class='p'>(</span><span class='s'>&#39;.1&#39;</span><span class='p'>)</span><span class='o'>.</span><span class='n'>__cmp__</span><span class='p'>(</span><span class='o'>.</span><span class='mi'>3</span><span class='p'>)</span>
-<span class='go'>NotImplemented</span>
-</code></pre></div><blockquote><p>Since Decimal's
+following:</blockquote>
+
+<div class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;.1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">__cmp__</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">-1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;.1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">__cmp__</span><span class="p">(</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">NotImplemented</span></code></pre></div>
+
+<blockquote><p>Since Decimal's
 <code>__cmp__</code> method returns
 <code>NotImplemented</code>, python falls back on using
 <code>.3</code>'s
@@ -115,7 +130,9 @@ guaranteed to be consistent. [...]</p>
 tweaking the system to change that arbitrary result -- my guess would be that the result depends on
 the pointer address of the
 <code>Decimal</code> class, or of some other object like that).</p></blockquote>
+
 <p>Crazy stuff.</p>
+
 
             
 

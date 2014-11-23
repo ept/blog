@@ -1,0 +1,42 @@
+.hackernews {
+    height: 30px;
+    background: url(/images/hackernews.png) top left no-repeat;
+    padding: 10px 0 0 55px;
+    margin-bottom: 18px;
+}
+
+#disqus_thread ul {
+    list-style-image: none;
+}
+
+#mc_embed_signup {
+    clear: both;
+    padding-top: 1.5em;
+}
+
+#mc_embed_signup p {
+    margin-bottom: 0.5em;
+}
+
+#mc_embed_signup label {
+    font-weight: bold;
+}
+
+#mc_embed_signup .disclaimer {
+    font-size: 80%;
+    margin-top: 0.8em;
+}
+
+#mce-responses {
+    margin: 0.5em 0;
+}
+
+#mce-error-response, .mce_inline_error {
+    color: red;
+    font-weight: bold;
+}
+
+#mce-success-response {
+    color: #080;
+    font-weight: bold;
+}
