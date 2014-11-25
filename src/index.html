@@ -1,29 +1,48 @@
 ---
 layout: front-page
 ---
-{% for post in site.posts limit:5 %}
-    <div class="hentry full p1 post publish">
-        <h1 class="entry-title full-title">
-            <a href="{{ post.url }}" rel="bookmark">{{ post.title }}</a>
-        </h1>
 
-        <div class="entry-content full-content">
-            {{ post.content }}
-        </div>
+<h1>Hello!</h1>
 
-        <div class="by-line">
-            <address class="author vcard full-author">
-                <span class="by">By</span> <a class="url fn" href="http://martin.kleppmann.com/">Martin Kleppmann</a>
-            </address>
-            <span class="date full-date">
-                <abbr class="published" title="{{ post.date | date_to_xmlschema }}">{{ post.date | date_to_string }}</abbr>
-            </span>
-        </div>
+<p>I'm Martin Kleppmann, entrepreneur and software craftsman.
+I co-founded <a href="http://rapportive.com/">Rapportive</a>
+(<a href="http://blog.rapportive.com/rapportive-acquired-by-linkedin">acquired</a>
+by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and Go Test It (acquired by 
+<a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
 
-        <p class="comments-link">
-            <a href="{{ post.url }}#disqus_thread">Comments</a>
-        </p>
+<p>I care about making stuff that people want, great people and culture, the web and
+its future, marvellous user experiences, maintainable code and scalable architectures.</p>
 
-        <div class="clear"></div>
-    </div>
-{% endfor %}
+<p>I'd love to hear from you, so please leave comments, or feel free to
+<a rel="author" href="/contact.html">contact me directly</a>.</p>
+
+{% assign articles = site.posts | where:'layout','ync-post' %}
+{% assign talks    = site.posts | where:'layout','talk'     %}
+
+<h2 class="title">Recent posts</h2>
+<p>Things I have written recently.</p>
+<ul>
+  {% for article in articles limit:5 %}
+    {% include article_summary.html article=article %}
+  {% endfor %}
+  <li><a href="/archive.html">Full archive</a></li>
+</ul>
+
+<h2>Highlights</h2>
+<p>Older articles that have remained popular.</p>
+<ul>
+  {% for article in articles offset:5 %}
+    {% if article.highlight %}
+      {% include article_summary.html article=article %}
+    {% endif %}
+  {% endfor %}
+</ul>
+
+<h2 class="title">Conference talks</h2>
+<p>Events where I will be speaking or have spoken.</p>
+<ul>
+  {% for talk in talks limit:5 %}
+    {% include talk_summary.html talk=talk %}
+  {% endfor %}
+  <li><a href="/talks.html">Full archive</a></li>
+</ul>

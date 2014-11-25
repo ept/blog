@@ -1,0 +1,13 @@
+---
+layout: front-page
+---
+
+<h1>Martin on tour</h1>
+<h2>Archive of conference talks</h2>
+
+{% assign talks = site.posts | where:'layout','talk' %}
+<ul>
+  {% for talk in talks %}
+    {% include talk_summary.html talk=talk %}
+  {% endfor %}
+</ul>
