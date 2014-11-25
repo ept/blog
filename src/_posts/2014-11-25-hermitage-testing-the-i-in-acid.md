@@ -92,7 +92,7 @@ A rigorous system for comparing isolation levels
 
 Fortunately, some academic researchers have been on the case, creating formal models of isolation
 levels and proving some of their properties. For example, [Peter Bailis](http://www.bailis.org/) et
-al. at [Berkely](http://db.cs.berkeley.edu/) have been doing some
+al. at [Berkeley](http://db.cs.berkeley.edu/) have been doing some
 [good work](http://www.bailis.org/blog/understanding-weak-isolation-is-a-serious-problem/) in this
 area. It's not yet easy to understand, but at least it's logically sound. 
 
