@@ -2,6 +2,7 @@
 layout: ync-post
 title: "Valuation caps on convertible notes, explained with graphs"
 guid: http://www.yes-no-cancel.co.uk/?p=378
+highlight: true
 ---
 
 When you're an entrepreneur out to raise funding, you're faced with a whole lot of legal and

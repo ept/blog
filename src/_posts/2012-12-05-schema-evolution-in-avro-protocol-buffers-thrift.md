@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Schema evolution in Avro, Protocol Buffers and Thrift
+highlight: true
 ---
 
 So you have some data that you want to store in a file or send over the network. You may find

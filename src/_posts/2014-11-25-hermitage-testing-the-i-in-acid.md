@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: 'Hermitage: Testing the "I" in ACID'
+highlight: true
 ---
 
 *tl;dr:* I have created a [test suite](https://github.com/ept/hermitage) for comparing the
