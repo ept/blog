@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Tue, 25 Nov 2014 12:50:36 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 25 Nov 2014 18:25:35 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -108,7 +108,7 @@ concurrency, either. How do you know your code is correct?</p>
 
 <p>Fortunately, some academic researchers have been on the case, creating formal models of isolation
 levels and proving some of their properties. For example, <a href="http://www.bailis.org/">Peter Bailis</a> et
-al. at <a href="http://db.cs.berkeley.edu/">Berkely</a> have been doing some
+al. at <a href="http://db.cs.berkeley.edu/">Berkeley</a> have been doing some
 <a href="http://www.bailis.org/blog/understanding-weak-isolation-is-a-serious-problem/">good work</a> in this
 area. It’s not yet easy to understand, but at least it’s logically sound. </p>
 
