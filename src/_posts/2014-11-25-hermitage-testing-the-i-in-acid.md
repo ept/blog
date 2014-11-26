@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: 'Hermitage: Testing the "I" in ACID'
+hackernews: https://news.ycombinator.com/item?id=8658584
 highlight: true
 ---
 
