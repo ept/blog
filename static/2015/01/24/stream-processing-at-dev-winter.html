@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Browser-level Testing &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Making sense of stream processing &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -48,36 +48,36 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Browser-level Testing</h1>
+                <h1>Making sense of stream processing</h1>
 
                 <p>
                   A talk at
                   
-                    <a href="http://rubymanor.org/harder/">Ruby Manor 2: Manor Harder</a>,
+                    <a href="http://devcycles.net/2015/winter/">/dev/winter</a>,
                   
-                  London, UK, 12 Dec 2009
+                  Cambridge, UK, 24 Jan 2015
                 </p>
 
                 <ul>
                   
-                    <li><a href="http://www.slideshare.net/martinkleppmann/browserlevel-testing">Slides</a></li>
                   
                   
-                    <li><a href="http://video.rubymanor.org/harder/browser_testing/martin_kleppmann_browser_testing.mp4">Video</a></li>
-                  
-                  
-                    <li><a href="http://lanyrd.com/2009/ruby-manor-2-manor-harder/">Lanyrd</a></li>
+                    <li><a href="http://lanyrd.com/2015/devwinter/">Lanyrd</a></li>
                   
                 </ul>
 
-                <iframe src="//www.slideshare.net/slideshow/embed_code/2706449" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""></iframe>
+                <h2 id="abstract">Abstract</h2>
 
-<ul>
-  <li>“I have unit tests. Why should I care about testing in browsers?”</li>
-  <li>Quick overview of Selenium, Watir &amp; Culerity</li>
-  <li>Parallelising browser tests &amp; stuff to keep in mind while doing so</li>
-  <li>What’s happening for Selenium 2.0 (big commit activity right now!)</li>
-</ul>
+<p>Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it
+Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors,
+invented by consultants to sell you stuff. But sometimes, they contain a kernel of wisdom which can
+really help us design better systems.</p>
+
+<p>In this talk, we will go in search of the wisdom behind the buzzwords. We will discuss how event
+streams can help make your application more scalable, more reliable and more maintainable. Founded
+in the experience of building large-scale data systems at LinkedIn, and implemented in open source
+projects like <a href="http://samza.incubator.apache.org/">Apache Samza</a>, stream processing is finally
+coming of age.</p>
 
             </div>
 
