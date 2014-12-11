@@ -10,12 +10,237 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Wed, 03 Dec 2014 15:13:06 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 11 Dec 2014 22:30:57 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Wouldn’t it be fun to build your own Google?</title>
+                <link>http://martin.kleppmann.com/2014/12/10/build-your-own-google.html</link>
+                <comments>http://martin.kleppmann.com/2014/12/10/build-your-own-google.html#disqus_thread</comments>
+                <pubDate>Wed, 10 Dec 2014 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2014/12/10/build-your-own-google.html</guid>
+                
+                <description><![CDATA[ Exploring open web crawl data. What if you had your own copy of the entire web, and you could do with it whatever you want? This article was originally published on O’Reilly Radar. For the last few millennia, libraries have been the custodians of human knowledge. By collecting books, and... ]]></description>
+                <content:encoded><![CDATA[
+                    <p><strong>Exploring open web crawl data. What if you had your own copy of the entire web, and you could do
+with it whatever you want?</strong></p>
+
+<p><em>This article was originally published on
+<a href="http://radar.oreilly.com/2014/12/wouldnt-it-be-fun-to-build-your-own-google.html">O’Reilly Radar</a>.</em></p>
+
+<p>For the last few <a href="http://en.wikipedia.org/wiki/Library_of_Alexandria">millennia</a>, libraries have
+been the custodians of human knowledge. By collecting books, and making them findable and
+accessible, they have done an incredible service to humanity. Our modern society, culture, science,
+and technology are all founded upon ideas that were transmitted through books and libraries.</p>
+
+<p>Then the web came along, and allowed us to also publish all the stuff that wasn’t good enough to put
+in books, and do it all much faster and cheaper. Although the average quality of material you find
+on the web is quite poor, there are some pockets of excellence, and in aggregate, the sum of all web
+content is probably even more amazing than all libraries put together.</p>
+
+<p>Google (and a few brave contenders like Bing, Baidu, DuckDuckGo and Blekko) have kindly indexed it
+all for us, acting as the web’s librarians. Without search engines, it would be terribly difficult
+to actually find anything, so hats off to them. However, what comes next, after search engines? It
+seems unlikely that search engines are the last thing we’re going to do with the web.</p>
+
+<h2 id="what-if-you-had-your-own-web-crawl">What if you had your own web crawl?</h2>
+
+<p>A small number of organizations, including Google, have crawled the web, processed, and indexed it,
+and generated a huge amount of value from it. However, there’s a problem: those indexes, the result
+of crawling the web, are hidden away inside Google’s data centers. We’re allowed to make individual
+search queries, but we don’t have bulk access to the data.</p>
+
+<p>Imagine you had your own copy of the entire web, and you could do with it whatever you want. (Yes,
+it would be very expensive, but we’ll get to that later.) You could do automated analyses and
+surface the results to users. For example, you could collate the “best” articles (by some
+definition) written on many different subjects, no matter where on the web they are published. You
+could then create a tool which, whenever a user is reading something about one of those subjects,
+suggests further reading: perhaps deeper background information, or a contrasting viewpoint, or an
+argument on why the thing you’re reading is full of shit.</p>
+
+<p>(I’ll gloss over the problem of actually implementing those analyses. The signal-to-noise ratio on
+the web is terrible, so it’s difficult to determine algorithmically whether a particular piece of
+content is any good. Nevertheless, search engines are able to give us useful search results because
+they spend a huge amount of effort on spam filtering and other measures to improve the quality of
+results. Any product that uses web crawl data will have to decide what is noise, and get rid of it.
+However, you can’t even start solving the signal-to-noise problem until you have the raw data.
+Having crawled the web is step one.)</p>
+
+<p>Unfortunately, at the moment, only Google and a small number of other companies that have crawled
+the web have the resources to perform such analyses and build such products. Much as I believe
+Google try their best to be neutral, a pluralistic society requires a diversity of voices, not
+a filter bubble controlled by one organization. Surely there are people outside of Google who want
+to work on this kind of thing. Many a start-up could be founded on the basis of doing useful things
+with data extracted from a web crawl.</p>
+
+<h2 id="the-web-link-graph">The web link graph</h2>
+
+<p>The idea of collating several related, useful pieces of content on one subject was recently
+<a href="https://medium.com/@justpw/its-time-to-rethink-the-link-66d32ff0e2e2">suggested</a> by
+<a href="http://fugit.co/">Justin Wohlstadter</a> (indeed it was a discussion with Justin that inspired me to
+write this article). His start-up, <a href="http://wayfinder.is/">Wayfinder</a>, aims to create such
+cross-references between URLs, by way of human curation. However, it relies on users actively
+submitting links to Wayfinder’s service.</p>
+
+<p>I argued to Justin that I shouldn’t need to submit anything to a centralized database. By writing
+a blog post (such as this one) that references some things on the web, I am implicitly creating
+a connection between the URLs that appear in this blog post. By linking to those URLs, I am
+implicitly suggesting that they might be worth reading. (Of course, this is an
+<a href="http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf">old idea</a>.) The web is already, in a sense,
+a huge distributed database.</p>
+
+<p>By analogy, citations are very important in scientific publishing. Every scientific paper uses
+references to acknowledge its sources, to cite prior work, and to make the reader aware of related
+work. In the opposite direction, the number of times a paper is cited by other authors is a metric
+of how important the work is, and citation counts have even become a
+<a href="http://en.wikipedia.org/wiki/H-index">metric</a> for researchers’ careers.</p>
+
+<p><a href="http://scholar.google.com/">Google Scholar</a> and
+<a href="http://citeseer.ist.psu.edu/">bibliography databases</a> maintain an index of citations, so you can
+find later work that builds upon (or invalidates!) a particular paper. As a researcher, following
+those forward and backward citations is an important way of learning about the state of the art.</p>
+
+<p>Similarly, if you want to analyze the web, you need to need to be able to traverse the link graph
+and see which pages link to each other. For a given URL, you need to be able to see which pages it
+links to (outgoing links) and which pages link to it (incoming links).</p>
+
+<p>You can easily write a program that fetches the HTML for a given URL, and parses out all the links
+– in other words, you can easily find all the outgoing links for an URL. Unfortunately, finding all
+the incoming links is very difficult. You need to download every page on the entire web, extract all
+of their links, and then collate all the web pages that reference the same URL. You need a copy of
+the entire web.</p>
+
+<p><img src="/2014/12/incoming-outgoing-links.png" width="550" height="430" /></p>
+
+<p><em>Incoming and outgoing links for a URL. Finding the outgoing ones is easy (just parse the page);
+finding the incoming ones is hard.</em></p>
+
+<h2 id="publicly-available-crawl-data">Publicly available crawl data</h2>
+
+<p>An interesting move in this direction is <a href="http://commoncrawl.org/">CommonCrawl</a>, a nonprofit. Every
+couple of months they send a crawler out into the web, download a whole bunch of web pages (about
+2.8 billion pages, at latest count), and store the result as a publicly available data set in S3.
+The data is in <a href="http://en.wikipedia.org/wiki/Web_ARChive">WARC format</a>, and you can do whatever you
+want with it. (If you want to play with the data, I wrote an
+<a href="https://github.com/ept/warc-hadoop">implementation of WARC</a> for use in Hadoop.)</p>
+
+<p>As an experiment, I wrote a simple MapReduce job that processed the entire CommonCrawl data set. It
+cost me about $100 in EC2 instance time to process all 2.8 billion pages (a bit of optimization
+would probably bring that down). Crunching through such quantities of data isn’t free, but it’s
+surprisingly affordable.</p>
+
+<p>The CommonCrawl data set is about 35 TB in size (unparsed, compressed HTML). That’s a lot, but
+Google says they crawl 60 trillion distinct pages, and the index is
+<a href="http://www.google.com/insidesearch/howsearchworks/thestory/">reported</a> as being over 100 PB, so
+it’s safe to assume that the CommonCrawl data set represents only a small fraction of the web.</p>
+
+<p><img src="/2014/12/dataset-size.png" width="550" height="311" /></p>
+
+<p><em>Relative sizes of CommonCrawl, Internet Archive, and Google (sources:
+<a href="http://blog.commoncrawl.org/2014/09/august-2014-crawl-data-available/">1</a>,
+<a href="https://blog.archive.org/2013/01/09/updated-wayback/">2</a>,
+<a href="http://www.google.com/insidesearch/howsearchworks/thestory/">3</a>).</em></p>
+
+<p>CommonCrawl is a good start. But what would it take to create a publicly available crawl of the
+entire web? Is it just a matter of getting some generous donations to finance CommonCrawl? But if
+all the data is on S3, you have to either use EC2 to process it or pay Amazon for the bandwidth to
+download it. A long-term solution would have to be less AWS-centric.</p>
+
+<p>I don’t know for sure, but my gut instinct is that a full web crawl would best be undertaken as
+a decentralized effort, with many organizations donating some bandwidth, storage, and computing
+resources toward a shared goal. (Perhaps this is what <a href="http://www.faroo.com/hp/p2p/p2p.html">Faroo</a>
+and <a href="http://yacy.net/en/Technology.html">YaCy</a> are doing, but I’m not familiar with the details of
+their systems.)</p>
+
+<h2 id="an-architectural-sketch">An architectural sketch</h2>
+
+<p>Here are some rough ideas on how a decentralized web crawl project could look.</p>
+
+<p>The participants in the crawl can communicate peer-to-peer, using something like BitTorrent.
+A distributed hash table can be used to assign a portion of the URL space to a participant. That
+means each URL is assigned to one or more participants, and that participant is in charge of
+fetching the URL, storing the response, and parsing any links that appear in the page. Every URL
+that is found in a link is sent to the crawl participant to whom the URL is assigned. The recipient
+can ignore that message if it has already fetched that URL recently.</p>
+
+<p>The system will need to ensure it is well-behaved as a whole (obey robots.txt, stay within rate
+limits, de-duplicate URLs that return the same content, etc.). This will require some coordination
+between crawl participants. However, even if the crawl was done by a single organization, it would
+have to be distributed across multiple nodes, probably using asynchronous message passing for loose
+coordination. The same principles apply if the crawl nodes are distributed across several
+participants – it just means the message-passing is across the Internet rather than within one
+organization’s data center.</p>
+
+<p><img src="/2014/12/distributed-crawl.png" width="550" height="413" /></p>
+
+<p><em>A hypothetical architecture for distributed web crawling. Each participant crawls and stores
+a portion of the web.</em></p>
+
+<p>There remain many questions. What if your crawler downloads some content that is illegal in your
+country? How do you keep crawlers honest (ensuring they don’t manipulate the crawl results to their
+own advantage)? How is the load balanced across participants with different amounts of resources to
+offer? Is it necessary to enforce some kind of reciprocity (you can only use crawl data if you also
+contribute data), or have a payment model (bitcoin?) to create an incentive for people to run
+crawlers? How can index creation be distributed across participants?</p>
+
+<p>(As an aside, I think <a href="http://samza.incubator.apache.org/">Samza</a>’s model of stream computation
+would be a good starting point for implementing a scalable distributed crawler. I’d love to see
+someone implement a proof of concept.)</p>
+
+<h2 id="motivations-for-contributing">Motivations for contributing</h2>
+
+<p>Why would different organizations – many of them probably competitors – potentially collaborate on
+creating a public domain crawl data set? Well, there is precedence for this, namely in open source
+software.</p>
+
+<p>Simplifying for the sake of brevity, there are a few reasons why this model works well:</p>
+
+<ul>
+  <li><strong>Cost:</strong> Creating and maintaining a large software project (eg. Hadoop, Linux kernel, database
+system) is very expensive, and only a small number of very large companies can afford to run
+a project of that size by themselves. As a mid-size company, you have to either buy an
+off-the-shelf product from a vendor or collaborate with other organizations in creating an open
+solution.</li>
+  <li><strong>Competitive advantage:</strong> With infrastructure software (databases, operating systems) there is
+little competitive advantage in keeping a project proprietary because competitive differentiation
+happens at the higher levels (closer to the user interface). On the other hand, by making it open,
+everybody benefits from better software infrastructure. This makes open source a very attractive
+option for infrastructure-level software.</li>
+  <li><strong>Public relations:</strong> Companies want to be seen as doing good, and contributing to open source is
+seen as such. Many engineers also want to work on open source, perhaps for idealistic reasons, or
+because it makes their skills and accomplishments publicly visible and recognized, including to
+prospective future employers.</li>
+</ul>
+
+<p>I would argue that all the same arguments apply to the creation of an open data set, not only to the
+creation of open source software. If we believe that there is enough value in having publicly
+accessible crawl data, it looks like it could be done.</p>
+
+<h2 id="perhaps-we-can-make-it-happen">Perhaps we can make it happen</h2>
+
+<p>What I’ve described is a pie in the sky right now (although CommonCrawl is totally real).</p>
+
+<p>Collaboratively created data sets such as Wikipedia and OpenStreetMap are an amazing resource and
+accomplishment. At first, people thought the creators of these projects were crazy, but they turned
+out to work very well. We can safely say they have made a positive impact on the world, by
+summarizing a certain subset of human knowledge and making it freely accessible to all.</p>
+
+<p>I don’t know if freely available web crawl data would be similarly valuable because it’s hard to
+imagine all the possible applications, which only arise when you actually have the data and start
+exploring it. However, there must be interesting things you can do if you have access to the
+collective outpourings of humanity. How about <a href="http://web.stanford.edu/dept/SUL/library/extra4/sloan/MouseSite/1968Demo.html">augmenting human
+intellect</a>, which
+we’ve talked about for so long? Can we use this data to create fairer societies, better mutual
+understanding, better education, and such good things?</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Hermitage: Testing the "I" in ACID</title>
@@ -1789,405 +2014,6 @@ here.</p>
 
 <p>I’d love to hear your thoughts in the comments below. If you liked this post, you can
 <a href="http://eepurl.com/csJmf">subscribe to email notifications</a> when I write something new :)</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Rethinking caching in web apps</title>
-                <link>http://martin.kleppmann.com/2012/10/01/rethinking-caching-in-web-apps.html</link>
-                <comments>http://martin.kleppmann.com/2012/10/01/rethinking-caching-in-web-apps.html#disqus_thread</comments>
-                <pubDate>Mon, 01 Oct 2012 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2012/10/01/rethinking-caching-in-web-apps.html</guid>
-                
-                <description><![CDATA[ Having spent a lot of the last few years worrying about the scalability of data-heavy applications like Rapportive, I have started to get the feeling that maybe we have all been “doing it wrong”. Maybe what we consider to be “state of the art” application architecture is actually holding us... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>Having spent a lot of the last few years worrying about the scalability of data-heavy applications
-like <a href="http://rapportive.com/">Rapportive</a>, I have started to get the feeling that maybe we have all
-been “doing it wrong”. Maybe what we consider to be “state of the art” application architecture is
-actually holding us back.</p>
-
-<p>I don’t have a definitive answer for how we should be architecting things differently, but in this
-post I’d like to outline a few ideas that I have been fascinated by recently. My hope is that we
-can develop ways of better managing scale (in terms of complexity, volume of data and volume of
-traffic) while keeping our applications nimble, easy and safe to modify, test and iterate.</p>
-
-<p>My biggest problem with web application architecture is how <strong>network communication concerns</strong> are
-often intermingled with <strong>business logic concerns</strong>. This makes it hard to rearrange the logic into
-new architectures, such as the precomputed cache architecture described below. In this post I
-explore why it important to be able to try new architectures for things like caching, and what it
-would take to achieve that flexibility.</p>
-
-<h2 id="an-example">An example</h2>
-
-<p>To illustrate, consider the clichéd Rails blogging engine example:</p>
-
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-  <span class="n">attr_accessible</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:author</span>
-  <span class="n">has_many</span> <span class="ss">:comments</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="nc">Comment</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-  <span class="n">attr_accessible</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:author</span>
-  <span class="n">belongs_to</span> <span class="ss">:post</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-  <span class="k">def</span> <span class="nf">show</span>
-    <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-    <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
-      <span class="nb">format</span><span class="o">.</span><span class="n">html</span>  <span class="c1"># show.html.erb</span>
-      <span class="nb">format</span><span class="o">.</span><span class="n">json</span>  <span class="p">{</span> <span class="n">render</span> <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="vi">@post</span> <span class="p">}</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="c1"># posts/show.html.erb:</span></code></pre></div>
-
-<div class="highlight"><pre><code class="language-html-erb" data-lang="html+erb"><span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">title</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;author&quot;</span><span class="nt">&gt;</span>By <span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
-  <span class="cp">&lt;%=</span> <span class="n">simple_format</span><span class="p">(</span><span class="vi">@post</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="cp">%&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;h2&gt;</span>Comments<span class="nt">&lt;/h2&gt;</span>
-<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;comments&quot;</span><span class="nt">&gt;</span>
-  <span class="cp">&lt;%</span> <span class="vi">@post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">comment</span><span class="o">|</span> <span class="cp">%&gt;</span>
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;blockquote&gt;</span><span class="cp">&lt;%=</span> <span class="n">simple_format</span><span class="p">(</span><span class="n">comment</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/blockquote&gt;</span>
-      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;author&quot;</span><span class="nt">&gt;</span><span class="cp">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
-<span class="nt">&lt;/ul&gt;</span></code></pre></div>
-
-<p>Pretty good code by various standards, but it has always irked me a bit that I can’t see where the
-network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code>
-in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code>
-internally – unless the same query was already made recently, and ActiveRecord cached the result.
-And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a
-result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously
-loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the
-original post? Who knows.</p>
-
-<p>The execution flow for a MVC framework request like <code>PostsController#show</code> probably looks something
-like this:</p>
-
-<p><a href="/2012/10/architecture-high-01.png"><img src="/2012/10/architecture-01.png" alt="Typical MVC request flow" width="550" height="119" /></a></p>
-
-<p>Of course it is deliberately designed that way. Your template and your controller shouldn’t have to
-worry about database queries — those are encapsulated by the model for many good reasons. I am
-violating abstraction by even thinking about the database whilst I’m in the template code! I should
-just think of my models as pure, beautiful pieces of application state. How that state gets loaded
-from a database is a matter that only the models need to worry about.</p>
-
-<h2 id="adding-complexity">Adding complexity</h2>
-
-<p>In the example above, the amount of logic in the model is minimal, but it typically doesn’t stay
-that way for long. As the application becomes popular (say, the blogging engine morphs to become
-Twitter, Tumblr, Reddit or Pinterest), all sorts of stuff gets added: memcache to stop the database
-from falling over, spam filtering, analytics features, email sending, notifications, A/B testing,
-more memcache, premium features, ads, upsells for viral loops, more analytics, even more memcache.
-As the application inevitably grows in complexity, the big monolithic beast is split into several
-smaller services, and different services end up being maintained by different teams.</p>
-
-<p>As all of this is happening, the programming model typically stays the same: each service in the
-architecture (which may be a user-facing web server, or an internal service e.g. for user
-authentication) communicates over the network with a bunch of other nodes (memcached instances,
-database servers, other application services), processes and combines the data in some way, and then
-serves it out to a client.</p>
-
-<p>That processing and combining of data we can abstractly call “business logic”. It might be trivially
-simple, or it might involve half a million lines of parsing, rendering or machine learning code. It
-might behave differently depending on which A/B test bucket the user is in. It might deal with
-hundreds of hairy edge cases. Whatever.</p>
-
-<p>At the root of the matter, business logic should be a
-<a href="http://en.wikipedia.org/wiki/Pure_function">pure function</a>. It takes a bunch of inputs
-(request parameters from the client, data stored in various databases and caches, responses from
-various other services) and produces a bunch of outputs (data to return to the client, data to write
-back to various databases and caches).  It is usually deterministic: given the same inputs, the
-business logic should produce exactly the same output again. It is also stateless: any data that is
-required to produce the output or to make a decision has to be provided as an input.</p>
-
-<p>By contrast, the network communication logic is all about ‘wiring’. It may end up having a lot of
-complexity in its own right: sending requests to the right node of a sharded database, retrying
-failed requests with exponential back-off, making requests to different services in parallel,
-cross-datacenter failover, service authentication, etc. But the network communication logic ought to
-be general-purpose and completely independent of your application’s business logic.</p>
-
-<p>Both business logic and network communication logic are needed to build a service. But how do you
-combine the two into a single process? Most commonly, we build abstractions for each type of logic,
-hiding the gory implementation details. Much like in the blog example above, you end up calling a
-method somewhere inside the business logic, not really knowing or caring whether it will immediately
-return a value that the object has already computed, or whether it will talk to another process on
-the same machine, or load the value from some remote cache, or make a query on a database cluster
-somewhere.</p>
-
-<p>It’s good that the business logic doesn’t need to worry about how and when the communication
-happens. And it’s good that the communication logic is general-purpose and not polluted with
-application-specific concerns. But I think it’s problematic that network communication may happen
-somewhere deeply inside a business logic call stack. Let me try to explain why.</p>
-
-<h2 id="precomputed-caches">Precomputed caches</h2>
-
-<p>As your volume of data and your number of users grow, database access often becomes a bottleneck
-(there are more queries competing for I/O, and each query takes longer when there’s more data). The
-standard answer to the problem is of course caching. You can cache at many different levels: an
-individual database row, or a model object generated by combining several sources, or even an entire
-HTML page ready to serve to a client. I will focus on the mid-to-high-level caches, where the raw
-data has gone through some sort of business logic before it ends up in the cache.</p>
-
-<p>Most commonly, caches are set up in read-through style: on every query, you first check the cache,
-and return the value from the cache if it’s a hit; otherwise it’s a miss, so you do whatever is
-required to generate the value (query databases, apply business logic, perform voodoo), and return
-it to the client whilst also storing it in the cache for next time. As long as you can generate the
-value on the fly in a reasonable time, this works pretty well.</p>
-
-<p>I will gloss over cache invalidation and expiry for now, and return to it below.</p>
-
-<p>The most apparent problem with a read-through cache is that the first time a value is requested,
-it’s always slow. (And if your cache is too small to hold the entire dataset, rarely accessed values
-will get evicted and thus be slow every time.) That may or may not be a problem for you. One reason
-why it may be a problem is that on many sites, the first client to request a given page is typically
-the Googlebot, and Google <a href="http://www.mattcutts.com/blog/site-speed/">penalises</a> slow sites in
-rankings. So if you have the kind of site where Google juice is lifeblood, then your SEO guys may
-tell you that a read-through cache is not good enough.</p>
-
-<p>So, can you make sure that the data is in the cache even before it is requested for the first time?
-Well, if your dataset isn’t too huge, you can actually <strong>precompute every possible cache entry</strong>,
-put them in a big distributed key-value store and serve them with minimal latency. That has a great
-advantage: cache misses no longer exist. If you’ve precomputed every possible cache entry, and a key
-isn’t in the cache, you can be sure that there’s no data for that key.</p>
-
-<p>If that sounds crazy to you, consider these points:</p>
-
-<ul>
-  <li>A database index is a special case of a precomputed cache. For every value you might want to
-search for, the index tells you where to find occurrences of that value. If it’s not in the index,
-it’s not in the database. The initial index creation is a one-off batch job, and thereafter the
-database automatically keeps it in sync with the raw data. Yes, databases have been doing this for
-a long time.</li>
-  <li>With Hadoop you can process terabytes of data without breaking a sweat. That is truly awesome
-power.</li>
-  <li>There are several datastores that allow you to precompute their files in Hadoop, which makes them
-very well suited for serving the cache that you precomputed. We are currently using
-<a href="http://www.project-voldemort.com/voldemort/">Voldemort</a> in read-only mode
-(<a href="http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf">research paper</a>), but
-<a href="http://hbase.apache.org/book/arch.bulk.load.html">HBase</a> and
-<a href="https://github.com/nathanmarz/elephantdb">ElephantDB</a> can do this too.</li>
-  <li>If you’re currently storing data in denormalized form (to avoid joins on read queries), you can
-stop doing that. You can keep your primary database in a very clean, normalized schema, and any
-caches you derive from it can denormalize the data to your heart’s content. This gives you the
-best of both worlds.</li>
-</ul>
-
-<h2 id="separating-communication-from-business-logic">Separating communication from business logic</h2>
-
-<p>Ok, say you’ve decided that you want to precompute a cache in Hadoop. As we’ve not yet addressed
-cache invalidation (see below), let’s just say you’re going to rebuild the entire cache once a day.
-That means the data you serve out of the cache will be stale, out of date by up to a day, but that’s
-still acceptable for some applications.</p>
-
-<p>The first step is to get your raw data into HDFS. That’s not hard, assuming you have daily database
-backups: you can take your existing backup, transform it into a more MapReduce-friendly format such
-as <a href="http://avro.apache.org/">Avro</a>, and write it straight to HDFS. Do that with all your production
-databases and you’ve got a fantastic resource to work with in Hadoop.</p>
-
-<p>Now, to build your precomputed cache, you need to apply the same business logic to the same data as
-you would in an uncached service that does it on the fly. As described above, your business logic
-takes as input the request parameters from the user and any data that is loaded from databases or
-services in order to serve that request. If you have all that data in HDFS, and you can work out
-all possible request parameters, then in theory, you should be able to take your existing business
-logic implementation and run it in Hadoop.</p>
-
-<p>Business logic can be very complex, so you should probably aim to reuse the existing implementation
-rather than rewriting it. But doing so requires untangling the real business logic from all the
-network communication logic.</p>
-
-<p>When your business logic is running as a service processing individual requests, you’re used to
-making several small requests to databases, caches or other services as part of generating a
-response (see the blog example above). Those small requests constitute gathering all the inputs
-needed by the business logic in order to produce its output (e.g. a rendered HTML page).</p>
-
-<p>But when you’re running in Hadoop, this is all turned on its head. You don’t want to be making
-individual random-access requests to data, because that would be an order of magnitude too slow.
-Instead you need to use MapReduce to gather all the inputs for one particular evaluation of the
-business logic into one place, and then run the business logic given those inputs without any
-network communication. Rather than the business logic <em>pulling</em> together all the bits of data it
-needs in order to produce a response, the MapReduce job has already gathered all the data it knows
-the business logic is going to need, and <em>pushes</em> it into the business logic function.</p>
-
-<p>Let’s use the blog example to make this more concrete. The data dependency is fairly simple: when
-the blog post <code>params[:id]</code> is requested, we require the row in the <code>posts</code> table whose <code>id</code> column
-matches the requested post, and we require all the rows in the <code>comments</code> table whose <code>post_id</code>
-column matches the requested post. If the <code>posts</code> and <code>comments</code> tables are in HDFS, it’s a very
-simple MapReduce job to group together the post with <code>id = x</code> and all the comments with
-<code>post_id = x</code>.</p>
-
-<p>We can then use a stub database implementation to feed those database rows into the existing <code>Post</code>
-and <code>Comment</code> model objects. That way we can make the models think that they loaded the data from a
-database, even though actually we had already gathered all the data we knew it was going to need.
-The model objects can keep doing their job as normally, and the output they produce can be written
-straight to the cache.</p>
-
-<p>By this point, two problems should be painfully clear:</p>
-
-<ul>
-  <li>How does the MapReduce job know what inputs the business logic is going to need in order to work?</li>
-  <li>OMG, implementing stub database drivers, isn’t that a bit too much pain for limited gain? (Note
-that in testing frameworks it’s not unusual to stub out your database, so that you can run your
-unit tests without a real database. Still, it’s non-trivial and annoying.)</li>
-</ul>
-
-<p>Both problems have the same cause, namely that the network communication logic is triggered from
-deep inside the business logic.</p>
-
-<h2 id="data-dependencies">Data dependencies</h2>
-
-<p>When you look at the business logic in the light of precomputing a cache, it seems like the
-following pattern would make more sense:</p>
-
-<ol>
-  <li>Declare your data dependencies: “if you want me to render the blog post with ID <code>x</code>, I’m going to
-need the row in the <code>posts</code> table with <code>id = x</code>, and also all the rows in the <code>comments</code> table
-with <code>post_id = x</code>”.</li>
-  <li>Let the communication logic deal with resolving those dependencies. If you’re running as a normal
-web app, that means making database (or memcache) queries to one or more databases, and maybe
-talking to other services. If you’re running in Hadoop, it means configuring the MapReduce job to
-group together all the pieces of data on which the business logic depends.</li>
-  <li>Once all the dependencies have been loaded, the business logic is now a pure function,
-deterministic and side-effect-free, that produces our desired output. It can perform whatever
-complicated computation it needs to, but it’s not allowed access to the network or data stores
-that weren’t declared as dependencies up front.</li>
-</ol>
-
-<p>This separation would make application architecture very different from the way it is commonly done
-today. I think this new style would have several big advantages:</p>
-
-<ul>
-  <li>By removing the assumption that the business logic is handling one request at a time, it becomes
-much easier to run the business logic in completely different contexts, such as in a batch job to
-precompute a cache. (No more stubbing out database drivers.)</li>
-  <li>Testing becomes much easier. All the tricky business logic for which you want to write unit tests
-is now just a function with a bunch of inputs and a bunch of outputs. You can easily vary what you
-put in, and easily check that the right thing comes out. Again, no more stubbing out the database.</li>
-  <li>The network communication logic can become a lot more helpful. For example, it can make several
-queries in parallel without burdening the business logic with a lot of complicated concurrency
-stuff, and it can deduplicate similar requests.</li>
-  <li>Because the data dependencies are very clearly and explicitly modelled, the system becomes easier
-to understand, and it becomes easier to move modules around, split a big monolithic beast into
-smaller services, or combine smaller services into bigger, logical units.</li>
-</ul>
-
-<p>I hope you agree that this is a very exciting prospect. But is it practical?</p>
-
-<p>In most cases, I think it would not be very hard to make business logic pure (i.e. stop making
-database queries from deep within) — it’s mostly a matter of refactoring. I have done it to
-substantial chunks of the Rapportive code base, and it was a bit tedious but perfectly doable.
-And the network communication logic wouldn’t have to change much at all.</p>
-
-<p>The problem of making this architecture practical hinges on having a good mechanism for declaring
-data dependencies. The idea is not new — for instance, LinkedIn have an internal framework for
-resolving data dependencies that queries several services in parallel — but I’ve not yet seen a
-language or framework that really gets to the heart of the problem.</p>
-
-<p>Adapting the blog example above, this is what I imagine such an architecture would look like:</p>
-
-<p><a href="/2012/10/architecture-high-02.png"><img src="/2012/10/architecture-02.png" alt="Concept for using a dependency resolver" width="550" height="119" /></a></p>
-
-<p>We still have models, and they are still used as encapsulations of state, but they are no longer
-wrappers around a database connection. Instead, the dependency resolver can take care of the messy
-business of talking to the database; the models are pure and can focus on the business logic. The
-models don’t care whether they are instantiated in a web app or in a Hadoop cluster, and they don’t
-care whether the data was loaded from a SQL database or from HDFS. That’s the way it should be.</p>
-
-<p>In my spare time I have started working on a language called <strong>Flowquery</strong> (don’t bother searching,
-there’s nothing online yet) to solve the problem of declaring data dependencies. If I can figure it
-out, it should make precomputed caches and all the good things above very easy. But it’s not there
-yet, so I don’t want to oversell it.</p>
-
-<p>But wait, there is one more thing…</p>
-
-<h2 id="cache-invalidation">Cache invalidation</h2>
-
-<blockquote>
-  <p>There are only two hard things in Computer Science: cache invalidation and naming things.
-— <a href="http://martinfowler.com/bliki/TwoHardThings.html">Phil Karlton</a></p>
-</blockquote>
-
-<p>How important is it that the data in your cache is up-to-date and consistent with your “source of
-truth” database? The answer depends on the application and the circumstances. For example, if the
-user edits their own data, you almost certainly want to show them an up-to-date version of their own
-data post-editing, otherwise they will assume that your app is broken. But you might be able to get
-away with showing stale data to other users for a while. For data that is not directly edited by
-users, stale data may always be ok.</p>
-
-<p>If staleness is acceptable, caching is fairly simple: on a read-through cache you set an expiry time
-on a cache key, and when that time is reached, the entry falls out of the cache. On a precomputed
-cache you do nothing, and just wait until the next time you recompute the entire thing.</p>
-
-<p>In cases where greater consistency is required, you have to explicitly invalidate cache entries
-when the original data changes. If just one cache key is affected by a change, you can write-through
-to that cache key when the “source of truth” database is updated. If many keys may be affected, you
-can use <a href="http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works">generational caching</a>
-and <a href="https://groups.google.com/forum/#!msg/memcached/OiScvRbGaU8/C1vny7DiGakJ">clever generalisations thereof</a>.
-Whatever technique you use, it usually ends up being a lot of manually written, fiddly and
-error-prone code. Not a great joy to work with, hence the terribly clichéd quote above.</p>
-
-<p>But… observe the following: in our efforts to separate pure business logic from network
-communication logic, we decided that we needed to explicitly model the data dependencies, and only
-data sources declared there are permitted as inputs to the business logic. In other words, the data
-dependency framework knows exactly which pieces of data are required in order to generate a
-particular piece of output — and conversely, when a piece of (input) data changes, it can know
-exactly which outputs (cache entries) may be affected by the change!</p>
-
-<p>This means that if we have a real-time feed of changes to the underlying databases, we can feed it
-into a stream processing framework like <a href="http://storm-project.net/">Storm</a>, run the data dependency
-analysis in reverse on every change, recompute the business logic for each output affected by the
-change in input, and write the results to another datastore. This store sits alongside the
-precomputed cache we generated in a batch process in Hadoop. When you want to query the cache, check
-both the output of the batch process and the output of the stream process. If the stream process has
-generated more recent data, use that, otherwise use the batch process output.</p>
-
-<p>If you’ve been following recent news in Big Data, you may recognise this as an application of
-Nathan Marz’ <a href="http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html">lambda architecture</a>
-(described in detail in his <a href="http://www.manning.com/marz/">upcoming book</a>). I cannot thank Nathan
-enough for his amazing work in this area.</p>
-
-<p>In this architecture, you get the benefits of a precomputed cache (every request is fast, including
-the first one), it keeps itself up-to-date with the underlying data, and because you have already
-declared your data dependencies, you don’t need to manually write cache invalidation code! The same
-dependency declaration can be used in three different ways:</p>
-
-<ol>
-  <li>In ‘online’ mode in a service or web app, for driving the network communication logic in order to
-make all the required queries and requests in order to serve an incoming request, and to help
-with read-through caching.</li>
-  <li>In ‘offline’ mode in Hadoop, to configure a MapReduce pipeline that brings together all the
-required data in order to run it through the business logic and generate a precomputed cache of
-all possible queries.</li>
-  <li>In ‘nearline’ mode in Storm, to configure a stream processing topology that tracks changes to the
-underlying data, determines which cache keys need to be invalidated, and recomputes the cache
-values for those keys using the business logic.</li>
-</ol>
-
-<p>I am designing Flowquery so that it can be used in all three modes — you should be able to write
-your data dependencies just once, and let the framework take care of bringing all the necessary data
-together so that the business logic can act on it.</p>
-
-<p>My hope is to make caching and cache invalidation as simple as database indexes. You declare an
-index once, the database runs a one-off batch job to build the index, and thereafter automatically
-keeps it up-to-date as the table contents change. It’s so simple to use that we don’t even think
-about it, and that’s what we should be aiming for in the realm of caching.</p>
-
-<p>The project is still at a very early stage, but hopefully I’ll be posting more about it as it
-progresses. If you’d like to hear more, please <a href="http://eepurl.com/csJmf">leave your email address</a>
-and I’ll send you a brief note when I post more. Or you can follow me on
-<a href="https://twitter.com/martinkl">Twitter</a> or <a href="https://alpha.app.net/martinkl">App.net</a>.</p>
-
-<p><em>Thanks to Nathan Marz, Pete Warden, Conrad Irwin, Rahul Vohra and Sam Stokes for feedback on drafts
-of this post.</em></p>
 
                 ]]></content:encoded>
             </item>

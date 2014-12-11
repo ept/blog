@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Wouldn’t it be fun to build your own Google? &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?3" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://downloads.mailchimp.com/js/jquery.form-n-validate.js" type="text/javascript"></script>
+<script src="/form.js" type="text/javascript"></script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <h1>Wouldn’t it be fun to build your own Google?</h1>
+
+                <p><strong>Exploring open web crawl data. What if you had your own copy of the entire web, and you could do
+with it whatever you want?</strong></p>
+
+<p><em>This article was originally published on
+<a href="http://radar.oreilly.com/2014/12/wouldnt-it-be-fun-to-build-your-own-google.html">O’Reilly Radar</a>.</em></p>
+
+<p>For the last few <a href="http://en.wikipedia.org/wiki/Library_of_Alexandria">millennia</a>, libraries have
+been the custodians of human knowledge. By collecting books, and making them findable and
+accessible, they have done an incredible service to humanity. Our modern society, culture, science,
+and technology are all founded upon ideas that were transmitted through books and libraries.</p>
+
+<p>Then the web came along, and allowed us to also publish all the stuff that wasn’t good enough to put
+in books, and do it all much faster and cheaper. Although the average quality of material you find
+on the web is quite poor, there are some pockets of excellence, and in aggregate, the sum of all web
+content is probably even more amazing than all libraries put together.</p>
+
+<p>Google (and a few brave contenders like Bing, Baidu, DuckDuckGo and Blekko) have kindly indexed it
+all for us, acting as the web’s librarians. Without search engines, it would be terribly difficult
+to actually find anything, so hats off to them. However, what comes next, after search engines? It
+seems unlikely that search engines are the last thing we’re going to do with the web.</p>
+
+<h2 id="what-if-you-had-your-own-web-crawl">What if you had your own web crawl?</h2>
+
+<p>A small number of organizations, including Google, have crawled the web, processed, and indexed it,
+and generated a huge amount of value from it. However, there’s a problem: those indexes, the result
+of crawling the web, are hidden away inside Google’s data centers. We’re allowed to make individual
+search queries, but we don’t have bulk access to the data.</p>
+
+<p>Imagine you had your own copy of the entire web, and you could do with it whatever you want. (Yes,
+it would be very expensive, but we’ll get to that later.) You could do automated analyses and
+surface the results to users. For example, you could collate the “best” articles (by some
+definition) written on many different subjects, no matter where on the web they are published. You
+could then create a tool which, whenever a user is reading something about one of those subjects,
+suggests further reading: perhaps deeper background information, or a contrasting viewpoint, or an
+argument on why the thing you’re reading is full of shit.</p>
+
+<p>(I’ll gloss over the problem of actually implementing those analyses. The signal-to-noise ratio on
+the web is terrible, so it’s difficult to determine algorithmically whether a particular piece of
+content is any good. Nevertheless, search engines are able to give us useful search results because
+they spend a huge amount of effort on spam filtering and other measures to improve the quality of
+results. Any product that uses web crawl data will have to decide what is noise, and get rid of it.
+However, you can’t even start solving the signal-to-noise problem until you have the raw data.
+Having crawled the web is step one.)</p>
+
+<p>Unfortunately, at the moment, only Google and a small number of other companies that have crawled
+the web have the resources to perform such analyses and build such products. Much as I believe
+Google try their best to be neutral, a pluralistic society requires a diversity of voices, not
+a filter bubble controlled by one organization. Surely there are people outside of Google who want
+to work on this kind of thing. Many a start-up could be founded on the basis of doing useful things
+with data extracted from a web crawl.</p>
+
+<h2 id="the-web-link-graph">The web link graph</h2>
+
+<p>The idea of collating several related, useful pieces of content on one subject was recently
+<a href="https://medium.com/@justpw/its-time-to-rethink-the-link-66d32ff0e2e2">suggested</a> by
+<a href="http://fugit.co/">Justin Wohlstadter</a> (indeed it was a discussion with Justin that inspired me to
+write this article). His start-up, <a href="http://wayfinder.is/">Wayfinder</a>, aims to create such
+cross-references between URLs, by way of human curation. However, it relies on users actively
+submitting links to Wayfinder’s service.</p>
+
+<p>I argued to Justin that I shouldn’t need to submit anything to a centralized database. By writing
+a blog post (such as this one) that references some things on the web, I am implicitly creating
+a connection between the URLs that appear in this blog post. By linking to those URLs, I am
+implicitly suggesting that they might be worth reading. (Of course, this is an
+<a href="http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf">old idea</a>.) The web is already, in a sense,
+a huge distributed database.</p>
+
+<p>By analogy, citations are very important in scientific publishing. Every scientific paper uses
+references to acknowledge its sources, to cite prior work, and to make the reader aware of related
+work. In the opposite direction, the number of times a paper is cited by other authors is a metric
+of how important the work is, and citation counts have even become a
+<a href="http://en.wikipedia.org/wiki/H-index">metric</a> for researchers’ careers.</p>
+
+<p><a href="http://scholar.google.com/">Google Scholar</a> and
+<a href="http://citeseer.ist.psu.edu/">bibliography databases</a> maintain an index of citations, so you can
+find later work that builds upon (or invalidates!) a particular paper. As a researcher, following
+those forward and backward citations is an important way of learning about the state of the art.</p>
+
+<p>Similarly, if you want to analyze the web, you need to need to be able to traverse the link graph
+and see which pages link to each other. For a given URL, you need to be able to see which pages it
+links to (outgoing links) and which pages link to it (incoming links).</p>
+
+<p>You can easily write a program that fetches the HTML for a given URL, and parses out all the links
+– in other words, you can easily find all the outgoing links for an URL. Unfortunately, finding all
+the incoming links is very difficult. You need to download every page on the entire web, extract all
+of their links, and then collate all the web pages that reference the same URL. You need a copy of
+the entire web.</p>
+
+<p><img src="/2014/12/incoming-outgoing-links.png" width="550" height="430" /></p>
+
+<p><em>Incoming and outgoing links for a URL. Finding the outgoing ones is easy (just parse the page);
+finding the incoming ones is hard.</em></p>
+
+<h2 id="publicly-available-crawl-data">Publicly available crawl data</h2>
+
+<p>An interesting move in this direction is <a href="http://commoncrawl.org/">CommonCrawl</a>, a nonprofit. Every
+couple of months they send a crawler out into the web, download a whole bunch of web pages (about
+2.8 billion pages, at latest count), and store the result as a publicly available data set in S3.
+The data is in <a href="http://en.wikipedia.org/wiki/Web_ARChive">WARC format</a>, and you can do whatever you
+want with it. (If you want to play with the data, I wrote an
+<a href="https://github.com/ept/warc-hadoop">implementation of WARC</a> for use in Hadoop.)</p>
+
+<p>As an experiment, I wrote a simple MapReduce job that processed the entire CommonCrawl data set. It
+cost me about $100 in EC2 instance time to process all 2.8 billion pages (a bit of optimization
+would probably bring that down). Crunching through such quantities of data isn’t free, but it’s
+surprisingly affordable.</p>
+
+<p>The CommonCrawl data set is about 35 TB in size (unparsed, compressed HTML). That’s a lot, but
+Google says they crawl 60 trillion distinct pages, and the index is
+<a href="http://www.google.com/insidesearch/howsearchworks/thestory/">reported</a> as being over 100 PB, so
+it’s safe to assume that the CommonCrawl data set represents only a small fraction of the web.</p>
+
+<p><img src="/2014/12/dataset-size.png" width="550" height="311" /></p>
+
+<p><em>Relative sizes of CommonCrawl, Internet Archive, and Google (sources:
+<a href="http://blog.commoncrawl.org/2014/09/august-2014-crawl-data-available/">1</a>,
+<a href="https://blog.archive.org/2013/01/09/updated-wayback/">2</a>,
+<a href="http://www.google.com/insidesearch/howsearchworks/thestory/">3</a>).</em></p>
+
+<p>CommonCrawl is a good start. But what would it take to create a publicly available crawl of the
+entire web? Is it just a matter of getting some generous donations to finance CommonCrawl? But if
+all the data is on S3, you have to either use EC2 to process it or pay Amazon for the bandwidth to
+download it. A long-term solution would have to be less AWS-centric.</p>
+
+<p>I don’t know for sure, but my gut instinct is that a full web crawl would best be undertaken as
+a decentralized effort, with many organizations donating some bandwidth, storage, and computing
+resources toward a shared goal. (Perhaps this is what <a href="http://www.faroo.com/hp/p2p/p2p.html">Faroo</a>
+and <a href="http://yacy.net/en/Technology.html">YaCy</a> are doing, but I’m not familiar with the details of
+their systems.)</p>
+
+<h2 id="an-architectural-sketch">An architectural sketch</h2>
+
+<p>Here are some rough ideas on how a decentralized web crawl project could look.</p>
+
+<p>The participants in the crawl can communicate peer-to-peer, using something like BitTorrent.
+A distributed hash table can be used to assign a portion of the URL space to a participant. That
+means each URL is assigned to one or more participants, and that participant is in charge of
+fetching the URL, storing the response, and parsing any links that appear in the page. Every URL
+that is found in a link is sent to the crawl participant to whom the URL is assigned. The recipient
+can ignore that message if it has already fetched that URL recently.</p>
+
+<p>The system will need to ensure it is well-behaved as a whole (obey robots.txt, stay within rate
+limits, de-duplicate URLs that return the same content, etc.). This will require some coordination
+between crawl participants. However, even if the crawl was done by a single organization, it would
+have to be distributed across multiple nodes, probably using asynchronous message passing for loose
+coordination. The same principles apply if the crawl nodes are distributed across several
+participants – it just means the message-passing is across the Internet rather than within one
+organization’s data center.</p>
+
+<p><img src="/2014/12/distributed-crawl.png" width="550" height="413" /></p>
+
+<p><em>A hypothetical architecture for distributed web crawling. Each participant crawls and stores
+a portion of the web.</em></p>
+
+<p>There remain many questions. What if your crawler downloads some content that is illegal in your
+country? How do you keep crawlers honest (ensuring they don’t manipulate the crawl results to their
+own advantage)? How is the load balanced across participants with different amounts of resources to
+offer? Is it necessary to enforce some kind of reciprocity (you can only use crawl data if you also
+contribute data), or have a payment model (bitcoin?) to create an incentive for people to run
+crawlers? How can index creation be distributed across participants?</p>
+
+<p>(As an aside, I think <a href="http://samza.incubator.apache.org/">Samza</a>’s model of stream computation
+would be a good starting point for implementing a scalable distributed crawler. I’d love to see
+someone implement a proof of concept.)</p>
+
+<h2 id="motivations-for-contributing">Motivations for contributing</h2>
+
+<p>Why would different organizations – many of them probably competitors – potentially collaborate on
+creating a public domain crawl data set? Well, there is precedence for this, namely in open source
+software.</p>
+
+<p>Simplifying for the sake of brevity, there are a few reasons why this model works well:</p>
+
+<ul>
+  <li><strong>Cost:</strong> Creating and maintaining a large software project (eg. Hadoop, Linux kernel, database
+system) is very expensive, and only a small number of very large companies can afford to run
+a project of that size by themselves. As a mid-size company, you have to either buy an
+off-the-shelf product from a vendor or collaborate with other organizations in creating an open
+solution.</li>
+  <li><strong>Competitive advantage:</strong> With infrastructure software (databases, operating systems) there is
+little competitive advantage in keeping a project proprietary because competitive differentiation
+happens at the higher levels (closer to the user interface). On the other hand, by making it open,
+everybody benefits from better software infrastructure. This makes open source a very attractive
+option for infrastructure-level software.</li>
+  <li><strong>Public relations:</strong> Companies want to be seen as doing good, and contributing to open source is
+seen as such. Many engineers also want to work on open source, perhaps for idealistic reasons, or
+because it makes their skills and accomplishments publicly visible and recognized, including to
+prospective future employers.</li>
+</ul>
+
+<p>I would argue that all the same arguments apply to the creation of an open data set, not only to the
+creation of open source software. If we believe that there is enough value in having publicly
+accessible crawl data, it looks like it could be done.</p>
+
+<h2 id="perhaps-we-can-make-it-happen">Perhaps we can make it happen</h2>
+
+<p>What I’ve described is a pie in the sky right now (although CommonCrawl is totally real).</p>
+
+<p>Collaboratively created data sets such as Wikipedia and OpenStreetMap are an amazing resource and
+accomplishment. At first, people thought the creators of these projects were crazy, but they turned
+out to work very well. We can safely say they have made a positive impact on the world, by
+summarizing a certain subset of human knowledge and making it freely accessible to all.</p>
+
+<p>I don’t know if freely available web crawl data would be similarly valuable because it’s hard to
+imagine all the possible applications, which only arise when you actually have the data and start
+exploring it. However, there must be interesting things you can do if you have access to the
+collective outpourings of humanity. How about <a href="http://web.stanford.edu/dept/SUL/library/extra4/sloan/MouseSite/1968Demo.html">augmenting human
+intellect</a>, which
+we’ve talked about for so long? Can we use this data to create fairer societies, better mutual
+understanding, better education, and such good things?</p>
+
+
+                
+                <div class="hackernews">
+                    Join the discussion about this article
+                    <a href="https://news.ycombinator.com/item?id=8729220" target="_blank">on Hacker News</a>.
+                </div>
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            Enjoyed this? To get notified when I write something new,
+            <a href="http://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or type in your email address:
+        </p>
+
+        <form action="http://rapportive.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email:</label>
+                    <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
+                </div>
+                <div id="mce-responses">
+                    <div class="response" id="mce-error-response" style="display:none"></div>
+                    <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="http://akamaicovers.oreilly.com/images/0636920032175/cat.gif" border="0" alt="Designing Data-Intensive Applications"/></a></p>
+        <p>I'm writing a book for O'Reilly, called
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>.</p>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>10 Dec 2014: <a href="/2014/12/10/build-your-own-google.html">Wouldn’t it be fun to build your own Google?</a></li>
+            
+              <li>25 Nov 2014: <a href="/2014/11/25/hermitage-testing-the-i-in-acid.html">Hermitage: Testing the "I" in ACID</a></li>
+            
+              <li>15 Sep 2014: <a href="/2014/09/15/writing-a-book.html">Hey, I'm writing a book!</a></li>
+            
+              <li>28 Aug 2014: <a href="/2014/08/28/upcoming-conference-talks-about-samza.html">Upcoming conference talks about Samza</a></li>
+            
+              <li>26 Mar 2014: <a href="/2014/03/26/six-things-about-scaling.html">Six things I wish we had known about scaling</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2015/02/03/samza-at-jfokus.html">03 Feb 2015 at Jfokus</a></li>
+            
+              <li><a href="/2015/01/24/stream-processing-at-dev-winter.html">24 Jan 2015 at /dev/winter</a></li>
+            
+              <li><a href="/2014/12/02/samza-at-unified-log-london.html">02 Dec 2014 at Unified Log London</a></li>
+            
+              <li><a href="/2014/11/18/scalable-stream-processing-at-apachecon.html">18 Nov 2014 at ApacheCon Europe</a></li>
+            
+              <li><a href="/2014/11/18/linkedin-infrastructure-at-budapest-big-data.html">18 Nov 2014 at Budapest Big Data meetup</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+<img src="http://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2014/12/10/build-your-own-google.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+</body>
+</html>
