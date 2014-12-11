@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Thu, 11 Dec 2014 22:30:57 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 11 Dec 2014 22:33:12 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -243,7 +243,7 @@ understanding, better education, and such good things?</p>
             </item>
         
             <item>
-                <title>Hermitage: Testing the "I" in ACID</title>
+                <title>Hermitage: Testing the “I” in ACID</title>
                 <link>http://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html</link>
                 <comments>http://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html#disqus_thread</comments>
                 <pubDate>Tue, 25 Nov 2014 00:00:00 +0000</pubDate>
