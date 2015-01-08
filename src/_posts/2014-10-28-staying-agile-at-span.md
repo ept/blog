@@ -5,8 +5,11 @@ venue: "Span conference"
 place: London, UK
 venue_url: http://london-2014.spanconf.io/martin-kleppmann/
 lanyrd_url: http://lanyrd.com/2014/spanconf/
+video_url: https://www.youtube.com/watch?v=b_H4FFE3wP0
 slides_url: https://speakerdeck.com/ept/staying-agile-in-the-face-of-the-data-deluge
 ---
+
+<iframe width="550" height="315" src="//www.youtube.com/embed/b_H4FFE3wP0" frameborder="0" allowfullscreen></iframe>
 
 <script async class="speakerdeck-embed" data-id="c3b3b35040e3013242cb36dddb3f194a" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
