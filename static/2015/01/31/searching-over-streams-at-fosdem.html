@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Challenges of interface design for mobile devices &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Searching over Streams with Luwak and Apache Samza &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -48,22 +48,48 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Challenges of interface design for mobile devices</h1>
+                <h1>Searching over Streams with Luwak and Apache Samza</h1>
 
-                <p>The
-<a href="http://yuiblog.com/blog/2007/10/02/challenges-of-interface-design-for-mobile-devices/">Yahoo user interface blog recently featured a good
-post</a>
-introducing some of the limitations of designing for mobile devices. It points to the limitations of
-both output (small screen) and input (keypad, touchscreen, joystick and many other variations), and
-emphasises the most important basis for the design of mobile sites and services: keeping in mind the
-context – who the user is, where and when and how they are going to use the service. Outdoors in
-difficult lighting conditions? On a train which goes through tunnels and therefore keeps losing its
-network connection?</p>
+                <p>
+                  A talk at
+                  
+                    <a href="https://fosdem.org/2015/">FOSDEM (Open Source Search Room)</a>,
+                  
+                  Brussels, Belgium, 31 Jan 2015
+                </p>
 
+                <ul>
+                  
+                  
+                  
+                    <li><a href="http://lanyrd.com/2015/fosdem/">Lanyrd</a></li>
+                  
+                </ul>
 
-                
+                <p>Co-presented with <a href="https://twitter.com/romseygeek">Alan Woodward</a>.</p>
 
-                <div id="disqus_thread"></div>
+<p>Traditional searches take the form of individual queries over large mostly-stable corpuses of
+documents.  In this talk, we’ll show how we invert this paradigm to allow for searching over streams
+of documents by combining Samza, a distributed stream-processing framework, with Luwak, a library
+for efficiently running large numbers of queries over individual documents.</p>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Real-time searching over streams is useful in a number of contexts.  For example, companies may want
+to detect whenever they are mentioned in a news feed; or a Twitter user might want to see
+a continuous stream of tweets for a particular hashtag.</p>
+
+<p><a href="https://github.com/flaxsearch/luwak">Luwak</a> provides a mechanism for running many thousands of
+queries over a single document in a highly efficient manner, by filtering out queries that it can
+detect will not match.  Luwak is designed to run on a single node, holding all registered queries in
+RAM.  Scaling to higher document throughput, or to more queries, requires parallelization across
+multiple machines.</p>
+
+<p><a href="http://samza.incubator.apache.org/">Samza</a> provides a framework for such parallelization, by
+partitioning and recombining both the document streams and the query set (which can be treated as
+just another stream), and also provides fault-tolerance mechanisms that allows swift recovery from
+machine failure, without losing documents or queries.</p>
+
             </div>
 
             <div id="sidebar">
@@ -176,18 +202,6 @@ network connection?</p>
 <img src="http://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2007/11/19/challenges-of-interface-design-for-mobile-devices.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <script type="text/javascript">
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
