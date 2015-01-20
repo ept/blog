@@ -5,6 +5,11 @@
     margin-bottom: 18px;
 }
 
+.twitter-share-button {
+    float: right;
+    margin: 32px 0 10px 10px;
+}
+
 #disqus_thread ul {
     list-style-image: none;
 }
