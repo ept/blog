@@ -1,3 +1,8 @@
+# Lo Tek URL shortener
+SHORTLINKS = {
+  winter: '/2015/01/24/stream-processing-at-dev-winter.html'
+}
+
 require 'rubygems'
 require 'sinatra'
 
@@ -31,7 +36,10 @@ get(/.*[^\/]$/) do
   pass if path[0, public_dir.length] != public_dir
 
   unless File.file?(path)
-    if request.path_info =~ %r{^/2010/12/21/.*}
+    _, longlink = SHORTLINKS.detect{|short, long| request.path_info =~ %r{^/#{short}} }
+    if longlink
+      new_url = "http://martin.kleppmann.com#{longlink}"
+    elsif request.path_info =~ %r{^/2010/12/21/.*}
       new_url = "http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html"
     elsif request.path_info =~ %r{^/ssh-keys\.html}
       new_url = "http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html"
