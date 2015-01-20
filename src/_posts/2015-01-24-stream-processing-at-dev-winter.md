@@ -3,7 +3,7 @@ layout: talk
 title: Making sense of stream processing
 venue: "/dev/winter"
 place: Cambridge, UK
-venue_url: http://devcycles.net/2015/winter/
+venue_url: http://devcycles.net/2015/winter/sessions/index.php?session=8
 lanyrd_url: http://lanyrd.com/2015/devwinter/
 ---
 

@@ -3,7 +3,7 @@ layout: talk
 title: "Searching over Streams with Luwak and Apache Samza"
 venue: "FOSDEM (Open Source Search Room)"
 place: "Brussels, Belgium"
-venue_url: https://fosdem.org/2015/
+venue_url: https://fosdem.org/2015/schedule/event/searching_over_streams_with_luwak_and_apache_samza/
 lanyrd_url: http://lanyrd.com/2015/fosdem/
 ---
 
