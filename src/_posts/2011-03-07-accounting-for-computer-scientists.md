@@ -372,6 +372,4 @@ unless you know what you are doing.
 That's the end of our whirlwind tour through the world of accounting. If you're a real accountant
 reading this, please forgive my simplifications; if you spot any mistakes, please let me know.
 For everyone else, I hope this has been useful. To find out when I write something new, please
-[follow me on Twitter](http://twitter.com/martinkl) or put your email address in this box:
-
-{% include mailchimp.html %}
+[follow me on Twitter](http://twitter.com/martinkl).
