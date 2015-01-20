@@ -34,7 +34,7 @@ that are scattered across the interwebs:</p>
 
 <p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
     style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
-    src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+    src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
 Unless otherwise specified, all content on this site is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
     Attribution 3.0 Unported License</a>.
