@@ -23,3 +23,9 @@ streams can help make your application more scalable, more reliable and more mai
 in the experience of building large-scale data systems at LinkedIn, and implemented in open source
 projects like [Apache Samza](http://samza.incubator.apache.org/), stream processing is finally
 coming of age.
+
+Transcript
+----------
+
+A transcript of this talk is published as a
+[guest post on the Confluent blog](http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/).
