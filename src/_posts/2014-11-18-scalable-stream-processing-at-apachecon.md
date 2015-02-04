@@ -8,7 +8,7 @@ lanyrd_url: http://lanyrd.com/2014/apachecon-europe/
 slides_url: https://speakerdeck.com/ept/scalable-stream-processing-with-apache-kafka-and-apache-samza
 ---
 
-<script async class="speakerdeck-embed" data-id="861136005156013261a506fa84ad753a" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<script async class="speakerdeck-embed" data-id="861136005156013261a506fa84ad753a" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
