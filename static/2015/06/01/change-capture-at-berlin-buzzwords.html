@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Ubuntu upgrade woes &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Change Data Capture: The Magic Wand We Forgot &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,72 +44,48 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Ubuntu upgrade woes"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Change Data Capture: The Magic Wand We Forgot"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Ubuntu upgrade woes</h1>
+                <h1>Change Data Capture: The Magic Wand We Forgot</h1>
 
-                <p>This page has been offline for the last 24 hours because I messed up the server on which it was
-running (now I’ve moved it to another one). I officially <strong>hate</strong> system maintenance…</p>
+                <p>
+                  A talk at
+                  
+                    <a href="http://berlinbuzzwords.de/session/change-data-capture-magic-wand-we-forgot">Berlin Buzzwords</a>,
+                  
+                  Berlin, Germany, 01 Jun 2015
+                </p>
 
-<p>The server
-was running Ubuntu Feisty (7.04) which is now getting a bit old and gradually coming towards the end
-of its support lifetime. An upgrade would be necessary before too long anyway, so I decided to try
-updating it using the
-<a href="http://www.howtoforge.com/upgrade-ubuntu-7.04-server-to-7.10">do-release-upgrade</a> tool. My setup is
-pretty sane, using only standard packages, so I thought the tool would be able to handle the upgrade
-smoothly.</p>
+                <ul>
+                  
+                  
+                  
+                    <li><a href="http://lanyrd.com/2015/berlinbuzzwords/">Lanyrd</a></li>
+                  
+                </ul>
 
-<p>Unfortunately, no. At some point during the configuration of the new packages, dpkg
-started dying by segmentation fault, and from there on everything just went downhill. In the end I
-had a system with dozens of broken packages (and no way of fixing them with dpkg segfaulting), and
-quite a few daemons dying similarly. Probably some important shared library got replaced with an
-incompatible version – rubbish! Apache, MySQL and OpenVPN were dead, and I set them up on a new
-server; fortunately, Bind, Postfix and Dovecot somehow survived, so at least our emails are still
-getting through, and I could point the domain names to the new server’s IP address. Still, bloody
-annoying.</p>
+                <h2 id="abstract">Abstract</h2>
 
-<p>Why is server configuration and maintenance such a crap activity? What I really want is a
-sort of version control system for installed packages and configuration file changes. My wish
-list:</p>
+<p>A simple application may start out with one database, but as you scale and add features, it usually
+turns into a tangled mess of datastores, replicas, caches, search indexes, analytics systems and
+message queues. When new data is written, how do you make sure it ends up in all the right places?
+If something goes wrong, how do you recover?</p>
 
-<ul>
-  <li>The version control should save only modifications to config files (differences from
-the package maintainers’ versions) so that the same modifications can be merged into the
-configuration files for a new version of the packages. This also makes the setup more maintainable,
-because it is easier for one admin to see the configuration changes made by another admin.
-Elementary software engineering stuff
-really.</li>
-  <li>I want to be able to generate a functionally identical system by taking a barebones
-install, applying the package installations and config file changes from version control, and
-copying in the contents of /home and /var/lib. Then I would never ever do an upgrade to a new
-release of the distribution; instead I would do a fresh install of the new release, configure it
-like the old one, test it thoroughly to make sure that it works, synchronise the contents, and
-switch them over in an instant. MUCH less stressful and error-prone.</li>
-  <li>It should still be possible to edit the server’s config files like on any
-other, since all sorts of changes need to be made in day-to-day operation; such changes should be
-checked into the version control so that they are recorded and documented.</li>
-</ul>
+<p>Change Data Capture (CDC) is an old idea: let the application subscribe to a stream of everything
+that is written to a database – a feed of data changes. You can use that feed to update search
+indexes, invalidate caches, create snapshots, generate recommendations, copy data into another
+database, and so on. For example, LinkedIn’s <a href="http://www.socc2012.org/s18-das.pdf">Databus</a> and
+Facebook’s <a href="https://code.facebook.com/posts/188966771280871/wormhole-pub-sub-system-moving-data-through-space-and-time/">Wormhole</a>
+do this. But the idea is not as widely known as it should be.</p>
 
-<p>I have already
-built myself a tool for generating
-<a href="http://aws.amazon.com/ec2">Amazon EC2</a> images – effectively a few Python and Shell scripts which
-take a barebones install and configure it completely for a particular application; I keep these
-scripts in version control so the build process is completely transparent and reproducible. However,
-if I make any modification to the image by hand, I need to remember to enter the same changes into
-the scripts, so that they still correctly reflect the build process. Really what I want is that
-manual step to go away.</p>
+<p>In this talk, I will explain why change data capture is so useful, and how it prevents race
+conditions and other ugly problems. Then I’ll go into the practical details of implementing CDC with
+<a href="http://www.postgresql.org/">PostgreSQL</a> and <a href="http://kafka.apache.org/">Apache Kafka</a>, and discuss
+the approaches you can use to do the same with various other databases.</p>
 
-<p>I’m thinking that it oughtn’t be too hard to build such a system
-configuration management framework by putting /etc in a standard version control system, recording
-changes elsewhere in the filesystem, and making clever wrappers for a few standard maintenance tools
-such as apt-get (which just remembers somewhere which packages have been installed). Has nobody
-built something like that yet?</p>
+<p>A new era of sanity in data systems awaits!</p>
 
-
-                
-
-                <div id="disqus_thread"></div>
             </div>
 
             <div id="sidebar">
@@ -223,18 +199,6 @@ built something like that yet?</p>
 <img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2008/07/26/ubuntu-upgrade-woes.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Google Analytics -->
 <script type="text/javascript">
