@@ -1,7 +1,8 @@
 # Lo Tek URL shortener
 SHORTLINKS = {
   winter: '/2015/01/24/stream-processing-at-dev-winter.html',
-  jfokus: '/2015/02/04/samza-at-jfokus.html'
+  jfokus: '/2015/02/04/samza-at-jfokus.html',
+  craft:  '/2015/04/23/logs-for-data-infrastructure-at-craft.html'
 }
 
 require 'rubygems'
