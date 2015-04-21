@@ -10,12 +10,1902 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Thu, 16 Apr 2015 18:02:34 BST</lastBuildDate>
+        <lastBuildDate>Tue, 21 Apr 2015 16:42:09 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Real-time full-text search with Luwak and Samza</title>
+                <link>http://martin.kleppmann.com/2015/04/13/real-time-full-text-search-luwak-samza.html</link>
+                <comments>http://martin.kleppmann.com/2015/04/13/real-time-full-text-search-luwak-samza.html#disqus_thread</comments>
+                <pubDate>Mon, 13 Apr 2015 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/04/13/real-time-full-text-search-luwak-samza.html</guid>
+                
+                <description><![CDATA[ This is an edited transcript of a talk given by Alan Woodward and Martin Kleppmann at FOSDEM 2015. It was originally published on the Confluent blog. Traditionally, search works like this: you have a large corpus of documents, and users write ad-hoc queries to find documents within that corpus. Documents... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>This is an edited transcript of a
+<a href="https://fosdem.org/2015/schedule/event/searching_over_streams_with_luwak_and_apache_samza/">talk</a>
+given by <a href="https://twitter.com/romseygeek">Alan Woodward</a> and
+<a href="https://martin.kleppmann.com/">Martin Kleppmann</a> at <a href="https://fosdem.org/2015/">FOSDEM 2015</a>.
+It was originally published
+<a href="http://blog.confluent.io/2015/04/13/real-time-full-text-search-with-luwak-and-samza/">on the Confluent blog</a>.</p>
+
+<p><em>Traditionally, search works like this: you have a large corpus of documents, and users write ad-hoc
+queries to find documents within that corpus. Documents may change from time to time, but on the
+whole, the corpus is fairly stable.</em></p>
+
+<p><em>However, with fast-changing data, it can be useful to turn this model on its head, and search over
+a stream of documents as they appear. For example, companies may want to detect whenever they are
+mentioned in a feed of news articles, or a Twitter user may want to see a continuous stream of
+tweets for a particular hashtag.</em></p>
+
+<p><em>In this talk, we describe open source tools that enable search on streams:
+<a href="https://github.com/flaxsearch/luwak">Luwak</a> is a <a href="http://lucene.apache.org/">Lucene</a>-based library
+for running many thousands of queries over a single document, with optimizations that make this
+process efficient. <a href="http://samza.apache.org/">Samza</a> is a stream processing framework based on
+<a href="http://kafka.apache.org/">Kafka</a>, allowing real-time computations to be distributed across
+a cluster of machines. We show how Luwak and Samza can be combined into an efficient and scalable
+streaming search engine.</em></p>
+
+<p><img src="/2015/04/streamsearch-01.png" alt="Searching over streams with Luwak &amp; Samza" width="550" height="412" /></p>
+
+<p>In this talk we’re going to discuss some work that we’ve been doing in the area of full-text search
+on streams. Perhaps you already know about normal search engines like Elasticsearch and Solr, but as
+we’ll see, searching on streams is quite a different problem, with some interesting challenges.</p>
+
+<p>Searching on streams becomes important when you’re dealing with real-time data that is rapidly
+changing. We’ll see some examples later of when you might need it.</p>
+
+<p><img src="/2015/04/streamsearch-02.png" alt="What is a stream?" width="550" height="197" /></p>
+
+<p>But first of all, we should define what we mean with a stream. For our purposes, we’ll say that
+a stream is an append-only, totally ordered sequence of records (also called events or messages).
+For example, a log file is a stream: each record is a line of text with some structure, perhaps some
+metadata like a timestamp or severity, perhaps an exception stack trace. Every log record is
+appended to the end of the file.</p>
+
+<p><img src="/2015/04/streamsearch-03.png" alt="Appending to a log, and tailing it" width="550" height="243" /></p>
+
+<p>There are a few ways you can read the content of a stream. For example, you can start at the
+beginning of the file and read the entire file sequentially. Or you can use <code>tail -f</code> to watch the
+file for any new records that are appended, and be notified when new data appears.</p>
+
+<p>We call a process that writes to a stream a <em>“producer”</em>, and a process that reads from the stream
+a <em>“consumer”</em>.</p>
+
+<p><img src="/2015/04/streamsearch-04.png" alt="How do you search a stream?" width="550" height="239" /></p>
+
+<p>Now say you’ve got some data in a stream, such as a log file, and you want to do full-text search on
+it. How do you go about doing that?</p>
+
+<p><img src="/2015/04/streamsearch-05.png" alt="Put the contents of a log file in an index" width="550" height="412" /></p>
+
+<p>The traditional approach is to load everything into a big search index, perhaps something like
+Elasticsearch or Solr. <a href="http://www.elasticsearch.org/overview/elkdownloads/">ELK</a> (Elasticsearch,
+Logstash and Kibana) is a currently trendy way of setting this up. That way you have the entire
+history of the stream searchable, and people can write any queries they want to search the index.</p>
+
+<p><img src="/2015/04/streamsearch-06.png" alt="Partitioned indexes for different time periods" width="550" height="412" /></p>
+
+<p>But what happens as new records are appended to the stream? You need to add them to an index in
+order to make them searchable. For example, you could imagine creating different indexes for
+different time periods: one for historical data, one for yesterday, one for the last hour, one for
+the last minute…</p>
+
+<p>And this is basically what people mean when they talk about “near-real-time” search: create an index
+for documents that appeared very recently, and send any queries to that index as well as the older
+historical indexes.</p>
+
+<p>Let’s talk about some examples of this kind of search in practice.</p>
+
+<p><img src="/2015/04/streamsearch-07.png" alt="Example: Twitter search" width="550" height="431" /></p>
+
+<p>Take Twitter, for example. If you type something in the search box, you’ll see a list of tweets that
+match your search query, ranked by recency. The index includes
+<a href="https://blog.twitter.com/2014/building-a-complete-tweet-index">all public tweets ever written</a>,
+broken down my time period, similar to the diagram above.</p>
+
+<p>But if you stay on that page for a while, notice that something happens: a bar appears at the top of
+the page, saying that there are new results for your query. What happened here? When you typed your
+search query, it seems that Twitter didn’t forget about the query the moment they returned the
+results to you. Rather, they must have <em>remembered</em> the query, and <em>continued to search the stream</em>
+of tweets for any new matches for your query. When new matches appear in the stream, they send
+a notification to your browser.</p>
+
+<p>In this case, the stream we’re searching is Twitter’s so-called <em>firehose</em> of Tweets. I don’t know
+how they’ve implemented that. Perhaps they group tweets into batches — say, create an index for 10
+seconds worth of tweets, and then run the queries from all open search sessions against that index.
+But somehow they are doing full-text search on a stream.</p>
+
+<p><img src="/2015/04/streamsearch-08.png" alt="Example: Google alerts" width="550" height="277" /></p>
+
+<p>Another example is Google Alerts. This is a feature of Google where you can register some search
+queries with their system, and they send you an email notification when new web pages matching your
+query are published. For example, you might set up an alert for your name or company name, so that
+you find out when people write stuff about you.</p>
+
+<p>Google internally has a stream of new web pages being discovered by its crawler, and Google Alerts
+allows you to register a query against that stream. Google remembers the query, and runs the query
+against every new document that is discovered and added to its index.</p>
+
+<p><img src="/2015/04/streamsearch-09.png" alt="Comparing after-the-fact search and streaming search" width="550" height="412" /></p>
+
+<p>So it seems that we can divide search into two categories:</p>
+
+<ul>
+  <li>In one case, you put all the documents in a big index, and people can search that index by writing
+ad-hoc queries. We could call that <em>“after-the-fact search”</em>, because it’s searching a repository
+of historical documents that we received at some point in the past.</li>
+  <li>In the other case, you register the queries in advance, and then the system checks each document
+that appears on a stream, to see whether it matches any of the registered queries. This is
+<em>streaming search</em>.</li>
+</ul>
+
+<p>It often makes sense to combine these two: for example, in the Twitter case, both types of search
+are happening. You first get after-the-fact search results from the last 7 days, but while you have
+the search page open, your query is also registered for a stream search, so that you can follow the
+stream of tweets that match your query.</p>
+
+<p>You might have seen this pattern in
+<a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html">Elasticsearch Percolator</a>,
+for example. The streaming search approach we’re describing here is similar to Percolator, but we
+think that it will scale better.</p>
+
+<p><img src="/2015/04/streamsearch-10.png" alt="One document, many queries" width="550" height="412" /></p>
+
+<p>So, how do you actually implement streaming search? Well, we saw earlier that for near-real-time
+search, you construct a small index for recently added documents. We can take that approach to the
+extreme: for each new document that appears on a stream, we create a new index, containing just that
+one document. Then we can run through all of the registered queries, test each query against the
+one-document index, and output a list of all the queries that match the new document. A downstream
+system can then take those matches and notify the owners of the queries.</p>
+
+<p><img src="/2015/04/streamsearch-11.png" alt="Does it scale?" width="550" height="412" /></p>
+
+<p>However, the question is: how efficient is this going to be when you have lots of queries, or very
+complex queries? If you only have a few hundred registered queries, you can pretty quickly run
+through all of those queries for every new document on the stream — but if you have hundreds of
+thousands of queries, it can get quite slow.</p>
+
+<p>Also, if you have very complex queries, even just executing a single query can take a long time.
+I (Alan) work with some clients who provide
+<a href="http://en.wikipedia.org/wiki/Media_monitoring">media monitoring</a> services (also known as <em>clipping
+companies</em>). They collect feeds of newspaper articles and other news from around the world, and
+their clients are companies who want to know whenever they are mentioned in the news. The media
+monitoring companies construct one big query for each client, and those queries can become really
+huge — a query might be hundreds of kilobytes long! They contain a large number of terms, have lots
+of nested boolean operators, and lots of exclusions (negated search terms).</p>
+
+<p>To give just one example, in the UK there’s a magazine called “<a href="http://www.which.co.uk/">Which?</a>”.
+If you simply search for the term “which”, you match a huge number of documents, since that’s such
+a common word in English. They have to construct really complex queries to filter out most of the
+noise.</p>
+
+<p>So, if you have a large number of queries, or very complex queries, the streaming search becomes
+slow. We need to find ways of optimizing that. Observe this: the fastest query is a query that you
+never execute. So, if we can figure out which queries are definitely <em>not</em> going to match a given
+document, we can skip those queries entirely, and potentially save ourselves a lot of work.</p>
+
+<p><img src="/2015/04/streamsearch-12.png" alt="Flax Luwak" width="550" height="281" /></p>
+
+<p>Which brings us to <a href="https://github.com/flaxsearch/luwak">Luwak</a>, a library that
+<a href="http://www.flax.co.uk/">we (Flax)</a> wrote in order to do efficient streaming search. Luwak is open
+source and builds upon Apache Lucene. It works the other way round from a normal search index: with
+a normal index, you first add documents to the index, and then you query it. Luwak turns this on its
+head: you first register queries with Luwak, and then match documents against them. Luwak tells you
+which of the registered queries match the document.</p>
+
+<p>Let’s go a bit into the detail of how Luwak optimizes this matching process.</p>
+
+<p><img src="/2015/04/streamsearch-13.png" alt="Index of queries" width="550" height="412" /></p>
+
+<p>As I said, we want some way of figuring out which queries are definitely <em>not</em> going to match
+a document, so that we don’t need to bother executing those queries. In order to do this, we can do
+something unusual: we can index the <em>queries</em>! In search engines you normally index documents, but
+in this case we’re going to index the queries.</p>
+
+<p>Let’s say we have three registered queries: Q1 is <code>“WHEELS” NEAR “BUS”</code>, Q2 is <code>“WHEELS” NEAR
+“CAR”</code>, and Q3 is <code>“WHEELS” OR “BUMPERS”</code>. First observe this: in a conjunction query (that is,
+a query like A AND B AND C), <em>all</em> the search terms must appear in the document for the query to
+match. (An operator like NEAR is a specialized form of AND that has an additional proximity
+restriction.) For example, a document must contain both “wheels” and “bus” in order to match Q1; if
+a document doesn’t contain the word “bus”, there’s no chance it can match Q1.</p>
+
+<p>That means, we can arbitrarily pick one term from a conjunction and check whether the document
+contains that term. If the document doesn’t contain the term, we can be sure that the document won’t
+match the conjunction either.</p>
+
+<p>On the other hand, a disjunction query (with an OR operator, like Q3 for example) matches if <em>any</em>
+of the search terms appear in the document. For example, if a document doesn’t contain “wheels”, it
+may nevertheless match Q3 if it contains “bumpers”. In this case, we must extract <em>all</em> of the terms
+from the disjunction; if any one of those terms appears in the document, we have to test the full
+query.</p>
+
+<p>We can now take those terms that we extracted from queries (for example “bus” from Q1, “car” from
+Q2, and “bumpers” and “wheels” from Q3), and build an index of those terms. As I said, this is an
+index of <em>queries</em>, not of documents. The index is a dictionary from terms to queries: it maps terms
+to queries containing that term.</p>
+
+<p><img src="/2015/04/streamsearch-14.png" alt="Document disjunction" width="550" height="412" /></p>
+
+<p>Now that we’ve taken all our registered queries and indexed them, we can move on to the next step:
+processing the stream of documents. For each document, we want to find all the queries that match.
+How do we go about doing this?</p>
+
+<p>The trick is to take each document, and turn it into a <em>query</em>. (Previously we created an index of
+queries. Now we’re turning a document into a query. How upside-down!) Namely, we take all the words
+(terms) that appear in the document, and construct a disjunction (OR) query from all of those words.
+Intuitively, this is saying: “find me all the queries that match any of the words in this document”.
+ Creating an inverted index from a single document automatically gives us this list of terms.</p>
+
+<p><img src="/2015/04/streamsearch-15.png" alt="Selecting candidate queries" width="550" height="412" /></p>
+
+<p>Now that we have created an index of queries, and turned a document into a query, we can figure out
+which queries match the document. First, we run the document disjunction query against the index of
+queries. This will tell us which queries <em>may</em> match the document.</p>
+
+<p>In our example, we created the query index by extracting the term “bus” from Q1, the term “car” from
+Q2, and the terms “bumpers” and “wheels” from Q3. Also, we turned the document “The wheels on the
+bus go round and round” into the disjunction query:</p>
+
+<pre><code>“and” OR “bus” OR “go” OR “on” OR “round” OR “the” OR “wheels”
+</code></pre>
+
+<p>Running that disjunction query against the query index, we get a hit on the terms “bus” (Q1) and
+“wheels” (Q3), but the terms “bumpers” (Q3) and “car” (Q2) don’t appear in the document. Therefore
+we can conclude that Q1 and Q3 <em>might</em> match the document, but Q2 definitely <em>doesn’t</em> match the
+document.</p>
+
+<p>The next step is then to run queries Q1 and Q3 against the document index, to see whether they
+really do match. But we don’t need to run Q2, because we’ve already established that it definitely
+doesn’t match.</p>
+
+<p>This whole process of indexing queries may seem a bit complicated, but it is a really powerful
+optimization if you have a large number of queries. It can cut out 99% of the queries you would
+otherwise have to execute, and thus massively speed up searching on streams. As I said, the fastest
+query is one that you never even execute.</p>
+
+<p><img src="/2015/04/streamsearch-16.png" alt="Query decomposition" width="550" height="412" /></p>
+
+<p>Besides indexing queries, there are other optimizations we can make. One particular optimization
+that we’ve found useful: if you have a big query that contains an OR operator at the top level, you
+can break that big query into smaller ones. That is especially useful if one of the subqueries is
+simple (fast to execute), and another one is complex (slow to execute).</p>
+
+<p>Say we have a document that will match on the simple subquery, but not on the complex one.  In the
+normal case, the whole query is run against the document, so we still pay the price for executing
+the complex subquery, even though it doesn’t match. If we decompose it into its constituent parts,
+however, then only the simple subquery will be selected, and we can avoid the performance hit of
+running the complex one.</p>
+
+<p><img src="/2015/04/streamsearch-17.png" alt="Term frequency analysis and phrase query analysis" width="550" height="260" /></p>
+
+<p>We said earlier that when you’re indexing the queries, you can make some arbitrary choices about
+which terms to extract. For example, for the query <em>“car” AND “bumpers”</em>, you could choose either
+“car” or “bumpers” as the term to use in the query index. Which one should you choose?</p>
+
+<p>It’s helpful to know how often each term occurs in your documents. For example, perhaps “car” is
+quite a common term, but “bumpers” is much more rare. In that case, it would be better to use
+“bumpers” in the query index, because it’s less likely to appear in documents. Only the small number
+of documents containing the term “bumpers” would then need to be matched against the query <em>“car”
+AND “bumpers”</em>, and you save yourself the effort of executing the query for the large number of
+documents that contain “car” but not “bumpers”.</p>
+
+<p><img src="/2015/04/streamsearch-18.png" alt="Query term extraction" width="550" height="412" /></p>
+
+<p>Another, more advanced optimization technique considers several different possibilities of
+extracting terms from queries. Take the query tree above, containing five terms and four boolean
+operators. Remember the rule for extracting terms that we established earlier: extract any one of
+the children of a conjunction (AND), but extract all of the children of a disjunction (OR). This
+means there are three different combinations of terms that you could extract from the above query
+tree:</p>
+
+<p><img src="/2015/04/streamsearch-19.png" alt="Three ways of extracting terms from a query" width="550" height="107" /></p>
+
+<p>Say you have a document “term1 term2 term3”: this document does not match the query (because neither
+of the required term4 or term5 appears). However, in the first two combinations above (term1 and
+term2 extracted, or term1 and term3 extracted), the document would nevertheless be selected to be
+matched against the query. In the third combination above (term4 and term5 extracted), the document
+wouldn’t be selected, because we can tell from the query index that it is definitely not going to
+match the query.</p>
+
+<p>Can we make the query pre-selection more precise? Yes, we can! Rather than just extracting one
+(arbitrary) set of terms from the query, we can extract <em>several</em> sets of terms from the same query,
+like the three above, and index them into separate fields (let’s call them _a, _b and _c). You then
+run your document disjunction against <em>all</em> those fields, and the set of queries you need to run is
+the intersection of those results — a conjunction of disjunctions, if you like.</p>
+
+<p>The document “term1 term2 term3”, which we previously turned into a simple disjunction of terms, now
+turns into something like this:</p>
+
+<pre><code>_a:(term1 OR term2 OR term3) AND
+_b:(term1 OR term2 OR term3) AND
+_c:(term1 OR term2 OR term3)
+</code></pre>
+
+<p>The first two terms of the conjunction match, but the third doesn’t, and so we don’t select this
+query. It’s still an approximation — you still need to execute the full query to be sure whether it
+matches or not — but with these optimizations you can further reduce the number of queries you need
+to execute.</p>
+
+<p>Fortunately, Luwak has implemented all of these optimizations already, and they’re available for you
+to use today.</p>
+
+<p>However, as described so far, Luwak runs on a single machine. At some point, you may have so many
+queries or such high throughput of documents that a single machine is not enough, even after you
+have applied all of these optimizations. Which brings us to the second half of this talk: scaling
+stream search across a cluster of machines.</p>
+
+<p><em>(At this point, <a href="http://martin.kleppmann.com/">Martin</a> took over from
+<a href="https://twitter.com/romseygeek">Alan</a>)</em></p>
+
+<p><img src="/2015/04/streamsearch-20.png" alt="Kafka and Samza" width="550" height="412" /></p>
+
+<p>Rather than inventing our own distributed computing framework — which would be likely to go wrong,
+because distributed systems are hard — we’re going to build on a robust foundation. We’re going to
+use <a href="http://kafka.apache.org/">Apache Kafka</a> and <a href="http://samza.apache.org/">Apache Samza</a>, two open
+source projects that originated at LinkedIn.</p>
+
+<p>I’ll start by giving a bit of background about Kafka, and then talk about how we embedded Luwak
+inside Samza in order to scale out search on streams.</p>
+
+<p><img src="/2015/04/streamsearch-21.png" alt="A partitioned stream in Kafka" width="550" height="412" /></p>
+
+<p>Kafka is a kind of <em>message broker</em> or <em>message queue</em> — that is, it takes messages that originate
+in one process (a <em>producer</em>), and delivers them to another process (a <em>consumer</em>). It does so in
+a scalable, fault-tolerant manner.</p>
+
+<p>The way it works is simple but remarkably effective. You can imagine Kafka as one big, append-only
+file. Whenever a producer wants to send a new message to a stream, it simply appends it to the end
+of the file. That’s the only way how you can write to Kafka: by appending to the end of a file.</p>
+
+<p>A consumer is like a <code>tail -f</code> on that file, just like what we described at the beginning of this
+talk. Each consumer reads the messages in the file sequentially, and each consumer has a current
+<em>position</em> or <em>offset</em> in this file. Thus, it knows that all messages before that position have
+already been read, and all messages after that position have not yet been read. This makes Kafka
+very efficient: the brokers don’t have to keep track of which consumer has seen which messages,
+because the consumers themselves just need to store their current position.</p>
+
+<p>In order to scale across multiple machines, a Kafka stream is also <em>partitioned</em>. That means,
+there’s not just one append-only file, but several. Each partition is completely independent from
+the others, so different partitions can live on different machines.</p>
+
+<p><img src="/2015/04/streamsearch-22.png" alt="Replication over Kafka broker nodes" width="550" height="412" /></p>
+
+<p>In addition, Kafka provides replication, i.e. maintaining a copy of the same data on multiple
+machines. This is important for fault tolerance — so that if one machine dies, you don’t lose any
+data, and everything keeps running.</p>
+
+<p>Kafka does this using a leader/follower model. Each partition of a stream has a leader on one broker
+node, and a configurable number of followers on other broker nodes. All the new messages for
+a partition go to its leader, and Kafka replicates them from the leader to the followers. If
+a broker node goes down, and it was the leader for some partition, then one of the followers for
+that partition becomes the new leader.</p>
+
+<p>Every message in Kafka has a <em>key</em> and a <em>value</em> (which can be arbitrary byte strings). The key is
+used for two different things: firstly, it determines which partition the message should go to (we
+make sure that all the messages with the same key go to the same partition, by choosing the
+partition based on a hash of the key). Secondly, it is used for <em>compaction</em>.</p>
+
+<p><img src="/2015/04/streamsearch-23.png" alt="Kafka changelog compaction" width="550" height="412" /></p>
+
+<p>Compaction is an exception to Kafka’s otherwise strict append-only model. You don’t have to use
+compaction, but if you do turn it on, then Kafka keeps track of the keys in the stream. And if there
+are several messages with the same key, then Kafka is allowed to throw away older messages with that
+key — only the newest message for a given key is guaranteed to be retained.</p>
+
+<p>In the picture above, there are originally three messages with key A, and compaction discards two of
+them. In effect, this means that later messages can “overwrite” earlier messages with the same key.
+This overwriting doesn’t happen immediately, but at some later time: compaction is done in
+a background thread, a bit like garbage collection.</p>
+
+<p>A Kafka stream with compaction is thus similar to a database with a key-value data model. If a key
+is never overwritten, it is never discarded, so it stays in the stream forever. With compaction, we
+can thus keep a complete history of key-value pairs:</p>
+
+<p><img src="/2015/04/streamsearch-24.png" alt="Keeping complete history of events in Kafka" width="550" height="412" /></p>
+
+<p>Without compaction, the stream would keep growing forever (the size of the stream is proportional to
+the number of messages ever sent). But with compaction, the size of the stream is proportional to
+the number of distinct keys — just like a database. If you can imagine storing all the keys and
+values in a database, you can equally well store all the keys and values in a Kafka stream.</p>
+
+<p>Why is this useful? Well, if we want to use Luwak in a reliable manner, there is a problem we need
+to solve: when you register a query with Luwak, it is only kept in memory. Thus, whenever the Luwak
+process is restarted, it needs to reload its list of queries from stable storage into memory.</p>
+
+<p>You could use a database for this, but using a Kafka stream has a big advantage: Luwak can consume
+the stream of queries, so it gets notified whenever someone registers a new query, modifies
+a registered query, or unregisters (deletes) a query. We simply use the query ID as the message key,
+and the query string as the message value (or a null value when a query is unregistered). And stream
+compaction ensures that the query stream doesn’t get too big.</p>
+
+<p><img src="/2015/04/streamsearch-25.png" alt="Re-processing historical events from stream" width="550" height="412" /></p>
+
+<p>Now, whenever Luwak starts up, it can jump to the very beginning of the queries stream, and consume
+it from beginning to end. All queries in that stream are loaded into memory, so that Luwak knows
+what queries it should apply to documents. Only once it has finished consuming the stream, Luwaks
+starts processing documents and matching them against queries. We call the query stream a
+<a href="http://samza.apache.org/learn/documentation/0.8/container/streams.html#bootstrapping">bootstrap stream</a>,
+because it’s used to bootstrap (initialize) the in-memory state of the stream consumer.</p>
+
+<p>This brings us to <a href="http://samza.apache.org/">Samza</a>, a framework for writing stream processing jobs
+on top of Kafka. A basic Samza job is very simple: you write a bit of code (implementing a Java
+interface called <a href="http://samza.apache.org/learn/documentation/0.8/api/overview.html">StreamTask</a>)
+and tell it which stream you want to consume, and Samza calls the process() method on your code for
+every message that is consumed from the input stream. The code can do whatever it wants, including
+sending messages to an output stream.</p>
+
+<p><img src="/2015/04/streamsearch-26.png" alt="Samza takes a Kafka stream an input, produces another as output" width="550" height="412" /></p>
+
+<p>As the input stream from Kafka is split into partitions, Samza creates a separate StreamTask for
+each partition, and each StreamTask processes the messages in its corresponding partition
+sequentially. Although a StreamTask only processes input from one partition, it can send output to
+any partition of its output streams.</p>
+
+<p>This partitioning model allows a Samza job to have two or more input streams, and “join” them
+together:</p>
+
+<p><img src="/2015/04/streamsearch-27.png" alt="Joining streams in Samza" width="550" height="412" /></p>
+
+<p>By default, if a job has two input streams (say A and B), Samza sends partition 1 of stream A and
+partition 1 of stream B to the same StreamTask 1; it sends partition 2 of A and partition 2 of B to
+the same StreamTask 2; and so on. This is illustrated in the picture above. Note this only really
+works if both input streams have the same number of partitions.</p>
+
+<p>This allows the stream join to scale, by partitioning both input streams in the same way. For
+example, if both streams are partitioned by user ID (i.e. using the user ID as the Kafka message
+key), then you can be sure that all the messages for a particular user ID on both input streams are
+routed to the same StreamTask. That StreamTask can then keep whatever state it needs in order to
+join the streams together.</p>
+
+<p>How do we bring full-text search on streams into this processing model?</p>
+
+<p><img src="/2015/04/streamsearch-28.png" alt="Integration of Luwak with Samza" width="550" height="412" /></p>
+
+<p>Alan and I hacked together a proof-of-concept called
+<a href="https://github.com/romseygeek/samza-luwak">Samza-Luwak</a> to test using Luwak inside a Samza job. It
+works as follows:</p>
+
+<p>There are two input streams (Kafka topics): one for queries, and one for documents. The query stream
+is a bootstrap stream with compaction, as described above. Whenever a user wants to register, modify
+or unregister a query, they send a message to the queries stream. The Samza job consumes this
+stream, and whenever a message appears, it updates Luwak’s in-memory roster of queries.</p>
+
+<p>The documents stream contains the things that should be matched by the queries (the tweets if you’re
+building Twitter search, the web pages from the crawler if you’re building Google Alerts, etc). The
+Samza job also consumes the documents stream, and whenever a document appears, it is matched against
+the index of registered queries, as described previously. It then sends a message to an output
+stream, indicating which queries matched.</p>
+
+<p>How do we distribute this matching process across multiple machines? The problem is that Samza’s
+default partitioning model actually doesn’t do what we need. As I said previously, Samza by default
+sends partition 1 of all the input streams to task 1, partition 2 of all the input streams to task
+2, and so on:</p>
+
+<p><img src="/2015/04/streamsearch-29.png" alt="Joining by co-partitioning two streams" width="550" height="412" /></p>
+
+<p>This is a good partitioning model if you’re doing an
+<a href="https://en.wikipedia.org/wiki/Join_(SQL)#Equi-join">equi-join</a>, because you can set up the
+partitioning of the input streams such that each tasks only needs to know about its own input
+partitions, and can ignore all the other partitions. This allows you to increase parallel processing
+and scale the computation simply by creating more partitions.</p>
+
+<p>However, full-text search is different. We’re not doing an equi-join on a particular field, we’re
+trying to find matches involving arbitrarily complicated boolean expressions. In general, we don’t
+know in advance which documents are going to match which queries. (The query index tells us
+<em>approximately</em> which queries might match, but it’s not precise enough to use for partitioning.)</p>
+
+<p>We still want to partition the query and document streams, because that will allow the system to
+scale. But we also want to be able to match every document against every possible query. In other
+words, we need to make sure that every query partition is joined with every document partition:</p>
+
+<p><img src="/2015/04/streamsearch-31.png" alt="Cartesian product join" width="550" height="412" /></p>
+
+<p>If you think about it, what we need is a
+<a href="https://en.wikipedia.org/wiki/Cartesian_product">cartesian product</a> of query partitions and
+document partitions. We want to create a separate StreamTask for every possible combination of
+a query partition and a document partition. For example, in the picture above, StreamTask 8 is
+responsible for handling query partition 4 and document partition 2.</p>
+
+<p>This gives us exactly the semantics we need: every query is sent to multiple tasks (one task per
+document partition), and conversely, every document is sent to multiple tasks (one task per query
+partition). Each task can independently do its work on its own partitions, and afterwards you just
+need to combine all the matches for each document. The dataflow is similar to the scatter-gather
+approach you get in distributed search engines.</p>
+
+<p>Unfortunately, this mode of streaming joins is not yet supported in Samza, but it’s being worked on
+(you can track it under <a href="https://issues.apache.org/jira/browse/SAMZA-353">SAMZA-353</a> if you’re
+interested). Once this feature is in place, you’ll be able to perform full-text search on streams at
+arbitrary scale, simply by adding new partitions and adding more machines to the cluster. Combining
+the clever indexing of Luwak with the scalability of Kafka and Samza — isn’t that cool?</p>
+
+<p><em>If you want to play with Samza, there’s a quickstart project
+“<a href="http://samza.apache.org/startup/hello-samza/0.8/">hello-samza</a>”, and you can find our
+proof-of-concept integration of Samza and Luwak
+<a href="https://github.com/romseygeek/samza-luwak">on Github</a>.</em></p>
+
+<p><em><a href="https://twitter.com/romseygeek">Alan Woodward</a> is a director of <a href="http://www.flax.co.uk/">Flax</a>,
+a consultancy specializing in open source search engines. He is a committer on
+<a href="http://lucene.apache.org/">Lucene/Solr</a>, and developer of
+<a href="https://github.com/flaxsearch/luwak">Luwak</a>. He previously worked on the enterprise search product
+Fast ESP.</em></p>
+
+<p><em><a href="https://martin.kleppmann.com/">Martin Kleppmann</a> is a committer on
+<a href="http://samza.apache.org/">Apache Samza</a> and author of the upcoming O’Reilly book
+<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>. He previously co-founded
+<a href="https://rapportive.com/">Rapportive</a>, which was acquired by <a href="https://www.linkedin.com/">LinkedIn</a>.</em></p>
+
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Turning the database inside-out with Apache Samza</title>
+                <link>http://martin.kleppmann.com/2015/03/04/turning-the-database-inside-out.html</link>
+                <comments>http://martin.kleppmann.com/2015/03/04/turning-the-database-inside-out.html#disqus_thread</comments>
+                <pubDate>Wed, 04 Mar 2015 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/03/04/turning-the-database-inside-out.html</guid>
+                
+                <description><![CDATA[ This is an edited and expanded transcript of a talk I gave at Strange Loop 2014. This transcript was originally published on the Confluent blog. The video recording (embedded below) has been watched over 8,000 times. For those of you who prefer reading, I thought it would be worth writing... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>This is an edited and expanded transcript of a
+<a href="/2014/09/18/turning-database-inside-out-at-strange-loop.html">talk</a>
+I gave at <a href="https://thestrangeloop.com/archive/2014">Strange Loop 2014</a>.
+This transcript was originally published on the
+<a href="http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/">Confluent blog</a>. The
+<a href="https://www.youtube.com/watch?v=fU9hR3kiOK0&amp;list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx">video recording</a>
+(embedded below) has been watched over 8,000 times. For those of you who prefer reading, I thought
+it would be worth writing down the talk.</p>
+
+<iframe width="550" height="309" src="https://www.youtube.com/embed/fU9hR3kiOK0?rel=0" frameborder="0" allowfullscreen=""></iframe>
+
+<p><em>Databases are global, shared, mutable state. That’s the way it has been since the 1960s, and no
+amount of NoSQL has changed that. However, most self-respecting developers have got rid of mutable
+global variables in their code long ago. So why do we tolerate databases as they are?</em></p>
+
+<p><em>A more promising model, used in some systems, is to think of a database as an always-growing
+collection of immutable facts. You can query it at some point in time — but that’s still old,
+imperative style thinking. A more fruitful approach is to take the streams of facts as they come in,
+and functionally process them in real-time.</em></p>
+
+<p><em>This talk introduces Apache Samza, a distributed stream processing framework developed at LinkedIn.
+At first it looks like yet another tool for computing real-time analytics, but it’s more than that.
+Really it’s a surreptitious attempt to take the database architecture we know, and turn it inside
+out.</em></p>
+
+<p><em>At its core is a distributed, durable commit log, implemented by Apache Kafka. Layered on top are
+simple but powerful tools for joining streams and managing large amounts of data reliably.</em></p>
+
+<p><em>What do we have to gain from turning the database inside out? Simpler code, better scalability,
+better robustness, lower latency, and more flexibility for doing interesting things with data. After
+this talk, you’ll see the architecture of your own applications in a new light.</em></p>
+
+<p><img src="/2015/03/insideout-01.png" alt="Turning the database inside-out with Apache Samza" width="550" height="363" /></p>
+
+<p>This talk is about database architecture and application architecture. It’s somewhat related to an
+open source project I’ve been working on, called <a href="http://samza.apache.org/">Apache Samza</a>. I’m
+<a href="http://martin.kleppmann.com/">Martin Kleppmann</a>, and I was until recently at LinkedIn working on
+Samza. At the moment I’m taking a sabbatical to write a book for O’Reilly, called
+<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>.</p>
+
+<p>Let’s talk about databases. What I mean is not any particular brand of database — I don’t mind
+whether you’re using relational, or NoSQL, or whatever. I’m really talking about the general concept
+of a database, as we use it when building applications.</p>
+
+<p>Take, for example, the stereotypical web application architecture:</p>
+
+<p><img src="/2015/03/insideout-02.png" alt="Three-tier architecture: client, backend, database" width="550" height="412" /></p>
+
+<p>You have a client, which may be a web browser or a mobile app, and that client talks to some kind of
+server-side system (which you may call a “backend” or whatever you like). The backend typically
+implements some kind of business logic, performs access control, accepts input, produces output.
+When the backend needs to remember something for the future, it stores that data in a database, and
+when it needs to look something up, it queries a database. That’s all very familiar stuff.</p>
+
+<p>The way we typically build these sorts of applications is that we make the backend layer
+<em>stateless</em>. That has a lot of advantages: you can scale out the backend by just running more
+processes in parallel, and you can route any request to any backend instance (they are all equally
+well qualified to handle the request), so it’s easy to spread the load across multiple machines. Any
+state that is required to handle a request will be looked up from the database on each request. That
+also works nicely with HTTP, since HTTP is a stateless protocol.</p>
+
+<p>However, the big problem with this approach is: the state has to go <em>somewhere</em>, and so we have to
+put it in the database. We are now using the database as a kind of gigantic, global, shared, mutable
+state. It’s like a global variable that’s shared between all your application servers. It’s exactly
+the kind of horrendous thing that, in shared-memory concurrency, we’ve been trying to get rid of for
+ages. <a href="https://en.wikipedia.org/wiki/Actor_model">Actors</a>,
+<a href="http://clojure.com/blog/2013/06/28/clojure-core-async-channels.html">channels</a>,
+<a href="https://gobyexample.com/goroutines">goroutines</a>, etc. are all attempts to get away from
+shared-memory concurrency, avoiding the problems of locking, deadlock, concurrent modifications,
+race conditions, and so on.</p>
+
+<p>We’re trying to get away from shared-memory concurrency, but with databases we’re still stuck with
+this big, shared, mutable state. So it’s worth thinking about this: if we’re trying to get rid of
+shared memory in our single-process application architecture, what would happen if we tried to get
+rid of this shared mutable state on a whole-system level?</p>
+
+<p><img src="/2015/03/insideout-03.png" alt="It's always been that way" width="550" height="202" /></p>
+
+<p>At the moment, it seems to me that the main reason why systems are still being built with mutable
+databases is just inertia: that’s the way we’ve building applications for decades, and we don’t
+really have good tools to do it differently. So, let’s think about what other possibilities we have
+for building stateful systems.</p>
+
+<p>In order to try to figure out what routes we could take, I’d like to look at four different examples
+of things that databases currently do, and things that we do with databases. And these four examples
+might give us an indicator of the directions in which we could take these systems forward in future.</p>
+
+<p><img src="/2015/03/insideout-04.png" alt="Title: 1. Replication" width="550" height="172" /></p>
+
+<p>The first example I’d like to look at is <em>replication</em>. You probably know about the basics of
+replication: the idea is that you have a copy of the same data on multiple machines (nodes), so that
+you can serve reads in parallel, and so that the system keeps running if you lose a machine.</p>
+
+<p>It’s the database’s job to keep those replicas in sync. A common architecture for replication is
+that you send your writes to one designated node (which you may call the <em>leader</em>, <em>master</em> or
+<em>primary</em>), and it’s the leader’s responsibility to ensure that the writes are copied to the other
+nodes (which you may call <em>followers</em>, <em>slaves</em> or <em>standbys</em>). There are also other ways of doing
+it, but leader-based replication is familiar — many systems are built that way.</p>
+
+<p>Let’s look at an example of replication to see what’s actually happening under the hood. Take
+a shopping cart, for instance.</p>
+
+<p><img src="/2015/03/insideout-05.png" alt="Shopping cart example" width="550" height="412" /></p>
+
+<p>This is using a relational data model, but the same principles apply with other data models too. Say
+you have a table with three columns: customers, products, and quantity. Each row indicates that
+a particular customer has a particular quantity of a particular product in their shopping cart.</p>
+
+<p>Now say customer 123 changes their mind, and instead of wanting quantity 1 of product 999, they
+actually want quantity 3 of that product. So they issue an <em>update</em> query to the database, which
+matches the row for customer 123 and product 999, and it changes the value of the quantity column
+from 1 to 3.</p>
+
+<p><img src="/2015/03/insideout-06.png" alt="Updating quantity of item in the shopping cart" width="550" height="412" /></p>
+
+<p>The result is that the database overwrites the quantity value with the new value, i.e. it applies
+the update in the appropriate place.</p>
+
+<p>Now, I was talking about replication. What does this update do in the context of replication? Well,
+first of all, you send this update query to your leader, and it executes the query, figures out
+which rows match the condition, and applies the write locally:</p>
+
+<p><img src="/2015/03/insideout-07.png" alt="Replicating a write from a leader to a follower" width="550" height="412" /></p>
+
+<p>Now, how does this write get applied to the other replicas? There are several different ways how you
+can implement replication. One option is to send the same update query to the follower, and it
+executes the same statement on its own copy of the database. Another option is to ship the
+write-ahead log from the leader to the follower.</p>
+
+<p>A third option for replication, which I’ll focus on here, is called a <em>logical log</em>. In this case,
+the leader writes out the effect that the query had — i.e. which rows were inserted, updated or
+deleted — like a kind of diff. For an update, like in this example, the logical log identifies the
+row that was changed (using a primary key or some kind of internal tuple identifier), gives the new
+value of that row, and perhaps also the old value.</p>
+
+<p>This might seem like nothing special, but notice that something interesting has happened here:</p>
+
+<p><img src="/2015/03/insideout-08.png" alt="Update statement is imperative, replication event is immutable" width="550" height="412" /></p>
+
+<p>At the top we have the update statement, an imperative statement describing the state mutation. It
+is an instruction to the database, telling it to modify certain rows in the database that match
+certain conditions.</p>
+
+<p>On the other hand, when the write is replicated from the leader to the follower as part of the
+logical log, it takes a different form: it becomes an event, stating that at a particular point in
+time, a particular customer changed the quantity of a particular product in their cart from 1 to 3.
+And this is a <em>fact</em> — even if the customer later removes the item from their cart, or changes the
+quantity again, or goes away and never comes back, that doesn’t change the fact that this state
+change occurred. The fact always remains true.</p>
+
+<p>This distinction between an imperative modification and an immutable fact is something you may have
+seen in the context of
+<a href="http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/">event sourcing</a>. That’s
+a method of database design that says you should structure all of your data as immutable facts, and
+it’s an interesting idea.</p>
+
+<p>However, what I’m saying here is: even if you use your database in the traditional way, overwriting
+old state with new state, the database’s internal replication mechanism may still be translating
+those imperative statements into a stream of immutable events.</p>
+
+<p>Hold that thought for now: I’m going to talk about some completely different things, and return to
+this idea later.</p>
+
+<p><img src="/2015/03/insideout-09.png" alt="Title: 2. Secondary indexes" width="550" height="302" /></p>
+
+<p>The second one of the four things I want to talk about is <em>secondary indexing</em>. You’re probably
+familiar with secondary indexes — they are the bread and butter of relational databases. Using the
+shopping cart example again:</p>
+
+<p><img src="/2015/03/insideout-10.png" alt="Two indexes on one table" width="550" height="412" /></p>
+
+<p>You have a table with different columns, and you may have several different indexes on that table in
+order to be able to efficiently find rows that match a particular query. For example, you may run
+some SQL to create two indexes: one on the customer_id column, and a separate index on the
+product_id column.</p>
+
+<p>Using the index on customer_id you can then efficiently find all the items that a particular
+customer has in their cart. Using the index on product_id you can efficiently find all the carts
+that contain a particular product.</p>
+
+<p>What does the database do when you run one of these CREATE INDEX queries?</p>
+
+<p><img src="/2015/03/insideout-11.png" alt="An index is a data structure derived from table data" width="550" height="412" /></p>
+
+<p>The database scans over the entire table, and it creates an auxiliary data structure for each index.
+An index is a data structure that represents the information in the base table in some different
+way. In this case, the index is a key-value-like structure: the keys are the contents of the column
+that you’re indexing, and the values are the rows that contain this particular key.</p>
+
+<p><img src="/2015/03/insideout-12.png" alt="Values in table cells become keys in the index" width="550" height="412" /></p>
+
+<p>Put another way: to build the index for the customer_id column, the database takes all the values
+that appear in that column, and uses them as keys in a dictionary. A value points at all of the
+occurrences of that value — for example, the index entry 123 points at all of the rows which have
+a customer_id of 123. Similarly for the other index.</p>
+
+<p>The important point here is that the process of going from the base table to the indexes is
+completely mechanical. You simply tell the database that you want a particular index to exist, and
+it goes away and builds that index for you.</p>
+
+<p><img src="/2015/03/insideout-13.png" alt="Index is generated from table through a derivation function" width="550" height="412" /></p>
+
+<p>The index doesn’t add any new information to the database — it just represents the existing data in
+a different structure. (Put another way, if you drop the index, that doesn’t delete any data from
+your database.) It’s a redundant data structure that only exists to make certain queries faster. And
+that data structure can be entirely <em>derived</em> from the original table.</p>
+
+<p>Creating an index is essentially a transformation which takes a database table as input, and
+produces an index as output. The transformation consists of going through all the rows in the table,
+picking out the field that you want to index, and restructuring the data so that you can look up by
+that field. That transformation is built into the database, so you don’t need to implement it
+yourself. You just tell the database that you want an index on a particular field to exist, and it
+does all the work of building it.</p>
+
+<p>Another great thing about indexes: whenever the data in the underlying table changes, the database
+automatically updates the indexes to be consistent with the new data in the table. In other words,
+this transformation function which derives the index from the original table is not just applied
+once when you create the index, but applied continuously.</p>
+
+<p>With many databases, these index updates are even done in a transactionally consistent way. This
+means that any later transactions will see the data in the index in the same state as it is in the
+underlying table. If a transaction aborts and rolls back, the index modifications are also rolled
+back. That’s a really great feature which we often don’t appreciate!</p>
+
+<p><img src="/2015/03/insideout-14.png" alt="Create index concurrently" width="550" height="362" /></p>
+
+<p>What’s even better is that some databases let you build an index at the same time as continuing to
+process write queries. In PostgreSQL, for example, you can say
+<a href="http://www.postgresql.org/docs/9.4/static/sql-createindex.html#SQL-CREATEINDEX-CONCURRENTLY">CREATE INDEX CONCURRENTLY</a>.
+On a large table, creating an index could take several hours, and on a production database you
+wouldn’t want to have to stop writing to the table while the index is being built. The index builder
+really needs to be a background process which can run while your application is simultaneously
+reading and writing to the database as usual.</p>
+
+<p>The fact that databases can do this is quite impressive. After all, to build an index, the database
+has to scan the entire table contents, but those contents are changing at the same time as the scan
+is happening. The index builder is tracking a moving target. At the end, the database ends up with
+a transactionally consistent index, despite the fact that the data was changing concurrently.</p>
+
+<p>In order to do this, the database needs to build the index from a consistent snapshot at one point
+in time, and also keep track of all the changes that occurred since that snapshot while the index
+build was in progress. That’s a really cool feature.</p>
+
+<p>So far we’ve discussed two aspects of databases: replication and secondary indexing. Let’s move on
+to number 3: caching.</p>
+
+<p><img src="/2015/03/insideout-15.png" alt="Title: 3. Caching" width="550" height="194" /></p>
+
+<p>What I’m talking about here is caching that is explicitly done by the application. (You also get
+caching happening automatically at various levels, such as the operating system’s page cache and the
+CPU caches, but that’s not what I’m talking about here.)</p>
+
+<p>Say you have a website that becomes popular, and it becomes too expensive or too slow to hit the
+database for every web request, so you introduce a caching layer — often using
+<a href="http://memcached.org/">memcached</a> or <a href="http://redis.io/">Redis</a> or something of that sort. And often
+this cache is managed in application code, which typically looks something like this:</p>
+
+<p><img src="/2015/03/insideout-16.png" alt="Reading from a cache; filling cache from DB on miss" width="550" height="412" /></p>
+
+<p>When a request arrives at the application, you first look in a cache to see whether the data you
+want is already there. The cache lookup is typically by some key that describes the data you want.
+If the data is in the cache, you can return it straight to the client.</p>
+
+<p>If the data you want isn’t in the cache, that’s a cache miss. You then go to the underlying
+database, and query the data that you want. On the way out, the application also writes that data to
+the cache, so that it’s there for the next request that needs it. The thing it writes to the cache
+is whatever the application would have wanted to see there in the first place. Then the application
+returns the data to the client.</p>
+
+<p>This is a very common pattern, but there are several big problems with it.</p>
+
+<p><img src="/2015/03/insideout-17.png" alt="Problems with read-through caching" width="550" height="412" /></p>
+
+<p>The first problem is that clichéd quote about there being only
+<a href="http://martinfowler.com/bliki/TwoHardThings.html">two hard problems in computer science</a> (which
+I can’t stand any more). But seriously, if you’re managing a cache like this, then cache
+invalidation really is tricky. When data in the underlying database changes, how do you know what
+entries in the cache to expire or update?  One option is to have an expiry algorithm which figures
+out which database change affects which cache entries, but those algorithms are brittle and
+error-prone. Alternatively, you can just have a time-to-live (expiry time) and accept that you
+sometimes read stale data from the cache, but such staleness is often unacceptable.</p>
+
+<p>Another problem is that this architecture is very prone to race conditions. For example, say you
+have two processes concurrently writing to the database and also updating the cache. They might
+update the database in one order, and the cache in the other order, and now the two are
+inconsistent. Or if you fill the cache on read, you may read and write concurrently, and so the
+cache is updated with a stale value while the concurrent write is occurring. I suspect that most of
+us building these systems just pretend that the race conditions don’t exist, because they are just
+too much to think about.</p>
+
+<p>A third problem is cold start. If you reboot your memcached servers and they lose all their cached
+contents, suddenly every request is a cache miss, the database is overloaded because of the sudden
+surge in requests, and you’re in a world of pain. If you want to create a new cache, you need some
+way of bootstrapping its contents without overloading other parts of the system.</p>
+
+<p><img src="/2015/03/insideout-18.png" alt="Creating an index is simple, maintaining a cache is a mess" width="550" height="361" /></p>
+
+<p>So, here we have a contrast: on the one hand, creating a secondary index in a database is
+beautifully simple, one line of SQL — the database handles it automatically, keeping everything
+up-to-date, and even making the index transactionally consistent. On the other hand,
+application-level cache maintenance is a complete mess of complicated invalidation logic, race
+conditions and operational problems.</p>
+
+<p>Why should it be that way? Secondary indexes and caches are not fundamentally different. We said
+earlier that a secondary index is just a redundant data structure on the side, which structures the
+same data in a different way, in order to speed up read queries. A cache is just the same.</p>
+
+<p><img src="/2015/03/insideout-19.png" alt="But a cache is also generated from a database through a derivation function" width="550" height="323" /></p>
+
+<p>If you think about it, a cache is also the result of taking your data in one form (the form in which
+it’s stored in the database) and transforming it into a different form for faster reads. In other
+words, the contents of the cache are derived from the contents of the database.</p>
+
+<p>We said that a secondary index is built by picking out one field from every record, and using that
+as the key in a dictionary. In the case of a cache, we may apply an arbitrary function to the data:
+the data from the database may have gone through some kind of business logic or rendering before
+it’s put in the cache, and it may be the result of joining several records from different tables.
+But the end result is similar: if you lose your cache, you can rebuild it from the underlying
+database; thus, the contents of the cache are derived from the database.</p>
+
+<p>In a read-through cache, this transformation happens on the fly, when there is a cache miss. But we
+could perhaps imagine making the process of building and updating a cache more systematic, and more
+similar to secondary indexes. Let’s return to that idea later.</p>
+
+<p>I said I was going to talk about four different aspects of database. Let’s move on to the fourth:
+<em>materialized views</em>.</p>
+
+<p><img src="/2015/03/insideout-20.png" alt="Title 4. Materialized views" width="550" height="313" /></p>
+
+<p>You may already know what materialized views are, but let me explain them briefly in case you’ve not
+previously come across them. You may be more familiar with “normal” views — non-materialized views,
+or virtual views, or whatever you want to call them. They work like this:</p>
+
+<p><img src="/2015/03/insideout-21.png" alt="How a normal (non-materialized) view works" width="550" height="412" /></p>
+
+<p>In a relational database, where views are common, you would create a view by saying “CREATE VIEW
+viewname…” followed by a SELECT query. When you now look at this view in the database, it looks
+somewhat like a table — you can use it in read queries like any other table. And when you do this,
+say you SELECT * from that view, the database’s query planner actually rewrites the query into the
+underlying query that you used in the definition of the view.</p>
+
+<p>So you can think of a view as a kind of convenient alias, a wrapper that allows you to create an
+abstraction, hiding a complicated query behind a simpler interface.</p>
+
+<p>Contrast that with a <em>materialized</em> view, which is defined using almost identical syntax:</p>
+
+<p><img src="/2015/03/insideout-22.png" alt="Creating a materialized views: copy of data" width="550" height="412" /></p>
+
+<p>You also define a materialized view in terms of a SELECT query; the only syntactic difference is
+that you say CREATE MATERIALIZED VIEW instead of CREATE VIEW. However, the implementation is totally
+different.</p>
+
+<p>When you create a materialized view, the database starts with the underlying tables — that is, the
+tables you’re querying in the SELECT statement of the view (“bar” in the example). The database
+scans over the entire contents of those tables, executes that SELECT query on all of the data, and
+copies the results of that query into something like a temporary table.</p>
+
+<p>The results of this query are actually written to disk, in a form that’s very similar to a a normal
+table. And that’s really what “materialized” means in this context: it just means that the view’s
+query has been executed and the results written to disk.</p>
+
+<p>Remember that with the non-materialized view, the database would expand the view into the underlying
+query at query time. On the other hand, when you query a materialized view, the database can read
+its contents directly from disk, just like a table. The view’s underlying query has already been
+executed ahead of time, so the database now just needs to read the result. This is especially useful
+if the view’s underlying query is expensive.</p>
+
+<p><img src="/2015/03/insideout-23.png" alt="Derivation function for materialized view" width="550" height="316" /></p>
+
+<p>If you’re thinking “this seems like a cache of query results”, you would be right — that’s exactly
+what it is. However, the big difference between a materialized view and application-managed caches
+is the responsibility for keeping it up-to-date.</p>
+
+<p>With a materialized view, you declare once how you want the materialized view to be defined, and the
+database takes care of building that view from a consistent snapshot of the underlying tables (much
+like building a secondary index). Moreover, when the data in the underlying tables changes, the
+database takes responsibility for maintaining the materialized view, keeping it up-to-date. Some
+databases do this materialized view maintenance on an ongoing basis, and some require you to
+periodically refresh the view so that changes take effect. But you certainly don’t have to do cache
+invalidation in your application code.</p>
+
+<p>Another feature of application-managed caches is that you can apply arbitrary business logic to the
+data before storing it in the cache, so that you can do less work at query time, or reduce the
+amount of data you need to cache. Could a materialized view do something similar?</p>
+
+<p><img src="/2015/03/insideout-24.png" alt="Use JavaScript stored procedure in derivation function" width="550" height="412" /></p>
+
+<p>In a relational database, materialized views are defined using SQL, so the transformations they can
+apply to the data are limited to the operations that are built into SQL (which are very restricted
+compared to a general-purpose programming language). However, many databases can also be extended
+using stored procedures — code that runs inside the database and can be called from SQL. For
+example, you can <a href="http://pgxn.org/dist/plv8/">use JavaScript</a> to write PostgreSQL stored procedures.
+This would let you implement something like an application-level cache, including arbitrary business
+logic, running as a materialized view inside a database.</p>
+
+<p>I am not convinced that this is necessarily a good idea: with code running inside your database,
+it’s much harder to reason about monitoring, versioning, deployments, performance impact,
+multi-tenant resource isolation, and so on. I don’t think I would advocate stored procedures as an
+application development platform. However, the idea of materialized views is nevertheless
+interesting.</p>
+
+<p><img src="/2015/03/insideout-25.png" alt="Comparison of replication, secondary indexing, caching and materialized views" width="550" height="412" /></p>
+
+<p>Let’s recap the four aspects of databases that we discussed: replication, secondary indexing,
+caching, and materialized views. What they all have in common is that they are dealing with <em>derived
+data</em> in some way: some secondary data structure is derived from an underlying, primary dataset, via
+a transformation process.</p>
+
+<ul>
+  <li>We first discussed replication, i.e. keeping a copy of the same data on multiple machines. It
+generally works very well, so we’ll give it a green smiley. There are some operational quirks with
+some databases, and some of the tooling is a bit weird, but on the whole it’s mature
+well-understood, and well-supported.</li>
+  <li>Similarly, secondary indexing works very well. You can build a secondary index concurrently with
+processing write queries, and the database somehow manages to do this in a transactionally
+consistent way.</li>
+  <li>On the other hand, application-level caching is a complete mess. Red frowny face.</li>
+  <li>And materialized views are so-so: the idea is good, but the way they’re implemented is not what
+you’d want from a modern application development platform. Maintaining the materialized view puts
+additional load on the database, while actually the whole point of a cache is to <em>reduce</em> load on
+the database!</li>
+</ul>
+
+<p><img src="/2015/03/insideout-26.png" alt="Magically self-updating cache..." width="550" height="412" /></p>
+
+<p>However, there’s something really compelling about this idea of materialized views. I see
+a materialized view almost as a kind of cache that magically keeps itself up-to-date. Instead of
+putting all of the complexity of cache invalidation in the application (risking race conditions and
+all the discussed problems), materialized views say that cache maintenance should be the
+responsibility of the data infrastructure.</p>
+
+<p><img src="/2015/03/insideout-27.png" alt="Let's rethink materialized views!" width="550" height="412" /></p>
+
+<p>So let’s think about this: can we reinvent materialized views, implement them in a modern and
+scalable way, and use them as a general mechanism for cache maintenance?</p>
+
+<p>If we started with a clean slate, without the historical baggage of existing databases, what would
+the ideal architecture for applications look like?</p>
+
+<p><img src="/2015/03/insideout-28.png" alt="Traditionally, the replication stream is an implementation detail" width="550" height="412" /></p>
+
+<p>Think back to leader-based replication which we discussed earlier. You make your writes to a leader,
+which first applies the writes locally, and then sends those writes over the network to follower
+nodes. In other words, the leader sends a stream of data changes to the followers. We discussed
+a logical log as one way of implementing this.</p>
+
+<p>In a traditional database architecture, application developers are not supposed to think about that
+replication stream. It’s an implementation detail that is hidden by the database abstraction. SQL
+queries and responses are the database’s public interface — and the replication stream is not part
+of the public interface. You’re not supposed to go and parse that stream, and use it for your own
+purposes. (Yes, there are <a href="http://tungsten-replicator.org/">tools that do this</a>, but in traditional
+databases they are on the periphery of what is supported, whereas the SQL interface is the dominant
+access method.)</p>
+
+<p>And in some ways this is reasonable — the relational model is a pretty good abstraction, which is
+why it has been so popular for several decades. But SQL is not the last word in databases.</p>
+
+<p>What if we took that replication stream, and made it a first-class citizen in our data architecture?
+What if we changed our infrastructure so that the replication stream was not an implementation
+detail, but a key part of the public interface of the database? What if we <em>turn the database
+inside-out</em>, take the implementation detail that was previously hidden, and make it a top-level
+concern?  What would that look like?</p>
+
+<p><img src="/2015/03/insideout-29.png" alt="Unbundle the database: make the transaction log a first-class component" width="550" height="412" /></p>
+
+<p>Well, you could call that replication stream a <em>“transaction log”</em> or an <em>“event stream”</em>. You can
+format all your writes as immutable events (facts), like we saw earlier in the context of a logical
+log. Now each write is just an immutable event that you can append to the end of the transaction
+log. The transaction log is a really simple, append-only data structure.</p>
+
+<p>There are various ways of implementing this, but one good choice for the transaction log is to use
+<a href="http://kafka.apache.org/">Apache Kafka</a>. It provides an append-only log data structure, but it does
+so in a reliable and scalable manner — it durably writes everything to disk, it replicates data
+across multiple machines (so that you don’t lose any data if you lose a machine), and it partitions
+the stream across multiple machines for horizontal scalability. It easily handles
+<a href="https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines">millions of writes</a>
+per second on very modest hardware.</p>
+
+<p>When you do this, you don’t need to necessarily make your writes through a leader database — you
+could also imagine directly appending your writes to the log. (Going through a leader would still be
+useful if you want to validate that writes meet certain constraints before writing them to the log.)</p>
+
+<p>Writing to this system is now super fast and scalable, because the only thing you’re doing is
+appending an event to a log. But what about reads? Reading data that has been written to the log is
+now really inconvenient, because you have to scan the entire log to find the thing that you want.</p>
+
+<p>The solution is to build materialized views from the writes in the transaction log. The materialized
+views are just like the secondary indexes we talked about earlier: data structures that are derived
+from the data in the log, and optimized for fast reading. A materialized view is just a
+<a href="http://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf">cached subset of the log</a>, and you could
+rebuild it from the log at any time. There could be many different materialized views onto the same
+data: a key-value store, a full-text search index, a graph index, an analytics system, and so on.</p>
+
+<p>You can think of this as <em>“unbundling”</em> the database. All the stuff that was previously packed into
+a single monolithic software package is being broken out into modular components that can be
+composed in flexible ways.</p>
+
+<p><img src="/2015/03/insideout-30.png" alt="Derive materialized views from the transaction log using Samza" width="550" height="412" /></p>
+
+<p>If you use Kafka to implement the log, how do you implement these materialized views? That’s where
+<a href="http://samza.apache.org/">Apache Samza</a> comes in. It’s a stream processing framework that is
+designed to go well with Kafka. With Samza, you write jobs that consume the events in a log, and
+build cached views of the data in the log. When a job first starts up, it can build up its state by
+consuming all the events in the log. And on an ongoing basis, whenever a new event appears in the
+stream, it can update the view accordingly. The view can be any existing database or index — Samza
+just provides the framework for processing the stream.</p>
+
+<p>Anyone who wants to read data can now query those materialized views that are maintained by the
+Samza jobs. Those views are just databases, indexes or caches, and you can send read-only requests
+to them in the usual way. The difference to traditional database architecture is that if you want to
+write to the system, you don’t write directly to the same databases that you read from. Instead, you
+write to the log, and there is an explicit transformation process which takes the data on the log
+and applies it to the materialized views.</p>
+
+<p><img src="/2015/03/insideout-31.png" alt="Make writes an append-only stream of immutable facts" width="550" height="412" /></p>
+
+<p>This separation of reads and writes is really the key idea here. By putting writes only in the log,
+we can make them much simpler: we don’t need to update state in place, so we move away from the
+problems of concurrent mutation of global shared state. Instead, we just keep an append-only log of
+immutable events. This gives excellent performance (appending to a file is sequential I/O, which is
+much faster than random-access I/O), is easily scalable (independent events can be put in separate
+partitions), and is much easier to make reliable.</p>
+
+<p>If it’s too expensive for you to keep the entire history of every change that ever happened to your
+data, Kafka supports compaction, which is a kind of garbage collection process that runs in the
+background. It’s very similar to the log compaction that databases do internally. But that doesn’t
+change the basic principle of working with streams of immutable events.</p>
+
+<p>These ideas are nothing new. To mention just a few examples,
+<a href="http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/">Event Sourcing</a> is a data
+modelling technique based on the same principle; query languages like
+<a href="http://www.researchgate.net/profile/Letizia_Tanca/publication/3296132_What_you_always_wanted_to_know_about_Datalog_(and_never_dared_toask)/links/0fcfd50ca2d20473ca000000.pdf">Datalog</a>
+have been based on immutable facts for decades; databases like <a href="http://www.datomic.com/">Datomic</a>
+are built on immutability, enabling neat features like point-in-time historical queries; and the
+<a href="http://manning.com/marz/">Lambda Architecture</a> is one possible approach for dealing with immutable
+datasets at scale. At many levels of the stack, immutability is being
+<a href="http://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf">applied successfully</a>.</p>
+
+<p><img src="/2015/03/insideout-32.png" alt="Make reads from materialized views" width="550" height="344" /></p>
+
+<p>On the read side, we need to start thinking less about querying databases, and more about consuming
+and joining streams, and maintaining materialized views of the data in the form in which we want to
+read it.</p>
+
+<p>To be clear, I think querying databases will continue to be important: for example, when an analyst
+is running exploratory ad-hoc queries against a data warehouse of historical data, it doesn’t make
+much sense to use materialized views — for those kinds of queries it’s better to just keep all the
+raw events, and to build databases which can scan over them very quickly. Modern column stores have
+become very good at that.</p>
+
+<p>But in situations where you might use application-managed caches (namely, an OLTP context where the
+queries are known in advance and predictable), materialized views are very helpful.</p>
+
+<p><img src="/2015/03/insideout-33.png" alt="Precompute and maintain materialized views from the log" width="550" height="412" /></p>
+
+<p>There are a few differences between a read-through cache (which gets invalidated or updated within
+the application code) and a materialized view (which is maintained by consuming a log):</p>
+
+<ul>
+  <li>With the materialized view, there is a principled <em>translation process</em> from the write-optimized
+data in the log into the read-optimized data in the view. That translation runs in a separate
+process which you can monitor, debug, scale and maintain independently from the rest of your
+application. By contrast, in the typical read-through caching approach, the cache management logic
+is deeply intertwined with the rest of the application, it’s easy to introduce bugs, and it’s
+difficult to understand what is happening.</li>
+  <li>A cache is filled on demand when there is a cache miss (so the first request for a given object is
+always slow). By contrast, a materialized view is <em>precomputed</em>, i.e. its entire contents are
+computed before anyone asks for it — just like a secondary index. This means there is no such
+thing as a cache miss: if an item doesn’t exist in the materialized view, it doesn’t exist in the
+database. There is no need to fall back to some kind of underlying database.</li>
+  <li>Once you have this process for translating logs into views, you have great flexibility to create
+new views: if you want to present your existing data in some new way, you can simply create a new
+stream processing job, consume the input log from the beginning, and thus build a completely new
+view onto all the existing data. (If you think about it, this is pretty much what a database does
+internally when you create a new secondary index on an existing table.) You can then maintain both
+views in parallel, gradually move applications to the new view, and eventually discard the old
+view.  No more scary stop-the-world schema migrations.</li>
+</ul>
+
+<p><img src="/2015/03/insideout-34.png" alt="Mechanics that need to be solved for practical adoption" width="550" height="412" /></p>
+
+<p>Of course, such a big change in application architecture and database architecture means that many
+practical details need to be figured out: how do you deploy and monitor these stream processing
+jobs, how do you make the system robust to various kinds of fault, how do you integrate with
+existing systems, and so on? But the good news is that all of these issues are being worked on. It’s
+a fast-moving area with lots of activity, so if you find it interesting, we’d love your
+contributions to the open source projects.</p>
+
+<p><img src="/2015/03/insideout-35.png" alt="Happiness" width="550" height="412" /></p>
+
+<p>We are still figuring out how to build large-scale applications well — what techniques we can use to
+make our systems scalable, reliable and maintainable. Put more bluntly, we need to figure out ways
+to stop our applications turning into <a href="http://www.laputan.org/pub/foote/mud.pdf">big balls of mud</a>.</p>
+
+<p>However, to me, this approach of immutable events and materialized views seems like a very promising
+route forwards. I am optimistic that this kind of application architecture will help us build better
+(more powerful and more reliable) software faster.</p>
+
+<p><img src="/2015/03/insideout-36.png" alt="Why?" width="550" height="412" /></p>
+
+<p>The changes I’ve proposed are quite radical, and it’s going to be a lot of work to put them into
+practice. If we are going to completely change the way we use databases, we had better have some
+very good reasons. So let me give three reasons why I think it’s worth moving towards a log of
+immutable events.</p>
+
+<p><img src="/2015/03/insideout-37.png" alt="Reason 1: Better data" width="550" height="345" /></p>
+
+<p>Firstly, I think that writing data as a log produces better-quality data than if you update
+a database directly. For example, if someone adds an item to their shopping cart and then removes it
+again, those actions have information value. If you delete that information from the database when
+a customer removes an item from the cart, you’ve just thrown away information that would have been
+valuable for analytics and recommendation systems.</p>
+
+<p>The entire long-standing debate about normalization in databases is predicated on the assumption
+that data is going to be written and read in the same schema. A normalized database (with no
+redundancy) is optimized for writing, whereas a denormalized database is optimized for reading. If
+you separate the writing side (the log) from the reading side (materialized views), you can
+denormalize the reading side to your heart’s content, but still retain the ability to process writes
+efficiently.</p>
+
+<p>Another very nice feature of an append-only log is that it allows much easier recovery from errors.
+If you deploy some bad code that writes incorrect data to the database, or if a human enters some
+incorrect data, you can look at the log to see the exact history of what happened, and
+<a href="http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html">undo it</a>. That kind of recovery is
+much harder if you’ve overwritten old data with new data, or even deleted data incorrectly. Also,
+any kind of audit is much easier if you only ever append to a log — that’s why
+<a href="http://blogs.msdn.com/b/pathelland/archive/2007/06/14/accountants-don-t-use-erasers.aspx">accountants don’t use erasers</a>.</p>
+
+<p><img src="/2015/03/insideout-38.png" alt="Reason 2: Fully precomputed caches" width="550" height="347" /></p>
+
+<p>Secondly, we can fix all the problems of read-through caches that we discussed earlier. The cold
+start problem goes away, because we can simply precompute the entire contents of the cache (which
+also means there’s no such thing as a cache miss).</p>
+
+<p>If materialized views are only ever updated via the log, then a whole class of race conditions goes
+away: the log defines the order in which writes are applied, so all the views that are based on the
+same log apply the changes in the same order, so they end up being consistent with each other. The log
+<a href="http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">squeezes the non-determinism</a>
+of concurrency out of the stream of writes.</p>
+
+<p>What I particularly like is that this architecture helps enable agile, incremental software
+development. If you want to experiment with a new product feature, for which you need to present
+existing data in a new way, you can just build a new view onto your data without affecting any of
+the existing views. You can then show that view to a subset of users, and test whether it’s better
+than the old thing. If yes, you can gradually move users to the new view; if not, you can just drop
+the view as if nothing had happened. This is much more flexible than schema migrations, which are
+generally an all-or-nothing affair. Being able to experiment freely with new features, without
+onerous migration processes, is a tremendous enabler.</p>
+
+<p><img src="/2015/03/insideout-39.png" alt="Reason 3: Streams everywhere" width="550" height="300" /></p>
+
+<p>My third reason for wanting to change database architecture is that it allows us to put streams
+everywhere. This point needs a bit more explanation.</p>
+
+<p>Imagine what happens when a user of your application views some data. In a traditional database
+architecture, the data is loaded from a database, perhaps transformed with some business logic, and
+perhaps written to a cache. Data in the cache is rendered into a user interface in some way — for
+example, by rendering it to HTML on the server, or by transferring it to the client as JSON and
+rendering it on the client.</p>
+
+<p>The result of template rendering is some kind of structure describing the user interface layout: in
+a web browser, this would be the HTML DOM, and in a native application this would be using the
+operating system’s UI components. Either way, a rendering engine eventually turns this description
+of UI components into pixels in video memory, and this is what the user actually sees.</p>
+
+<p><img src="/2015/03/insideout-40.png" alt="Transformation pipeline of materialized views" width="550" height="412" /></p>
+
+<p>When you look at it like this, it looks very much like a data transformation pipeline. In fact, you
+can think of each lower layer as a materialized view of the upper layer: the cache is a materialized
+view of the database (the cache contents are derived from the database contents); the HTML DOM is
+a materialized view of the cache (the HTML is derived from the JSON stored in the cache); and the
+pixels in video memory are a materialized view of the HTML DOM (the rendering engine derives the
+pixels from the UI layout).</p>
+
+<p>Now, how well does each of these transformation steps work? I would argue that web browser rendering
+engines are brilliant feats of engineering. You can use JavaScript to change some CSS class, or have
+some CSS rules conditional on mouse-over, and the rendering engine automatically figures out which
+rectangle of the page needs to be re-rendered as a result of the changes. It does
+hardware-accelerated animations and even 3D transformations. The pixels in video memory are
+automatically kept up-to-date with the underlying DOM state, and this very complex transformation
+process works remarkably well.</p>
+
+<p>What about the transformation from data objects to user interface components? I’ve given it a yellow
+“so-so” smiley for now, as the techniques for updating user interface based on data changes are
+still quite new. However, they are rapidly maturing: on the web, frameworks like
+<a href="http://facebook.github.io/react/">Facebook’s React</a>, <a href="https://angularjs.org/">Angular</a> and
+<a href="http://emberjs.com/">Ember</a> are enabling user interfaces that can be updated from a stream, and
+Functional Reactive Programming (FRP) languages like <a href="http://elm-lang.org/">Elm</a> are in the same
+area. There is a lot of activity in this field, and it is rapidly maturing towards a green smiley.</p>
+
+<p>However, the transformation from database writes to cache/materialized view updates is still mostly
+stuck in the dark ages. That’s what this entire talk is about: database-driven backend services are
+currently the weakest link in this entire data transformation pipeline. Even if the user interface
+can dynamically update when the underlying data changes, that’s not much use if the application
+can’t detect when data changes!</p>
+
+<p><img src="/2015/03/insideout-41.png" alt="Clients subscribe to materialized view changes" width="550" height="412" /></p>
+
+<p>If we move to an architecture where materialized views are updated from a stream of changes, that
+opens up an exciting new prospect: when a client reads from one of these views, it can keep the
+connection open. If that view is later updated, due to some change that appeared in the stream, the
+server can use this connection to notify the client about the change (for example, using
+a <a href="https://developer.mozilla.org/en/docs/WebSockets">WebSocket</a> or
+<a href="https://developer.mozilla.org/en-US/docs/Server-sent_events">Server-Sent Events</a>). The client can
+then update its user interface accordingly.</p>
+
+<p>This means that the client is not just reading the view at one point in time, but actually
+subscribing to the stream of changes that may subsequently happen. Provided that the client’s
+internet connection remains active, the server can push any changes to the client. After all, why
+would you ever want outdated information on your screen if more recent information is available? The
+notion of static web pages, which are requested once and then never change, is looking increasingly
+anachronistic.</p>
+
+<p><img src="/2015/03/insideout-42.png" alt="Move from request/response to subscribe/notify" width="550" height="339" /></p>
+
+<p>However, allowing clients to subscribe to changes in data requires a big rethink of the way we write
+applications. The request-response model is very deeply engrained in our thinking, in our network
+protocols and in our programming languages: whether it’s a request to a RESTful service, or a method
+call on an object, the assumption is generally that you’re going to make one request, and get one
+response. There’s generally no provision for an ongoing stream of responses. Basically, I’m saying
+that in the future, REST is not going to cut the mustard, because it’s based on a request-response
+model.</p>
+
+<p>Instead of thinking of requests and responses, we need to start thinking of subscribing to streams
+and notifying subscribers of new events. And this needs to happen through all the layers of the
+stack — the databases, the client libraries, the application servers, the business logic, the
+frontends, and so on. If you want the user interface to dynamically update in response to data
+changes, that will only be possible if we systematically apply stream thinking everywhere, so that
+data changes can propagate through all the layers. I think we’re going to see a lot more people
+using stream-friendly programming models based on actors and channels, or <em>reactive</em> frameworks such
+as <a href="http://reactivex.io/">RxJava</a>.</p>
+
+<p>I’m glad to see that some people are already working on this. A few weeks ago RethinkDB
+<a href="http://rethinkdb.com/blog/realtime-web/">announced</a> that they are going to support clients
+subscribing to query results, and being notified if the query results change.
+<a href="https://www.meteor.com/">Meteor</a> and <a href="https://www.firebase.com/">Firebase</a> are also worth
+mentioning, as frameworks which integrate the database backend and user interface layers so as to be
+able to push changes into the user interface. These are excellent efforts. We need many more like
+them.</p>
+
+<p><img src="/2015/03/insideout-43.png" alt="Streams everywhere!" width="550" height="346" /></p>
+
+<p>This brings us to the end of this talk. We started by observing that traditional databases and
+caches are like global variables, a kind of shared mutable state that becomes messy at scale. We
+explored four aspects of databases — replication, secondary indexing, caching and materialized views
+— which naturally led us to the idea of streams of immutable events. We then looked at how things
+would get better if we oriented our database architecture around streams and materialized views, and
+found some compelling directions for the future.</p>
+
+<p>Fortunately, this is not science fiction — it’s happening now. People are working on various parts
+of the problem and finding good solutions. The tools at our disposal are rapidly becoming better.
+It’s an exciting time to be building software.</p>
+
+<p><em>If this excessively long article was not enough, and you want to read even more on the topic, I would recommend:</em></p>
+
+<ul>
+  <li><em>My upcoming book, <a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>,
+systematically explores the architecture of data systems. If you enjoyed this article, you’ll enjoy
+the book too.</em></li>
+  <li><em>I previously wrote about similar ideas in 2012, from a different perspective, in a blog post
+called “<a href="/2012/10/01/rethinking-caching-in-web-apps.html">Rethinking caching in web apps</a>.”</em></li>
+  <li><em>Jay Kreps has written several highly relevant articles, in particular about
+<a href="http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">logs as a fundamental data abstraction</a>,
+about the <a href="http://radar.oreilly.com/2014/07/questioning-the-lambda-architecture.html">lambda architecture</a>,
+and about <a href="http://radar.oreilly.com/2014/07/why-local-state-is-a-fundamental-primitive-in-stream-processing.html">stateful stream processing</a>.</em></li>
+  <li><em>The most common question people ask is: “but what about transactions?” — This is a somewhat open
+research problem, but I think a promising way forward would be to layer a transaction protocol on
+top of the asynchronous log. <a href="http://research.microsoft.com/pubs/199947/Tango.pdf">Tango</a> (from
+Microsoft Research) describes one way of doing that, and <a href="http://www.bailis.org/">Peter Bailis</a> et
+al.’s work on <a href="http://www.bailis.org/papers/ramp-sigmod2014.pdf">highly available transactions</a> is
+also relevant.</em></li>
+  <li><em>Pat Helland has been preaching this gospel for ages. His latest CIDR paper
+<a href="http://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf">Immutability Changes Everything</a> is
+a good summary.</em></li>
+  <li><em>Jay Kreps has also written an applied guide to
+<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-1/">putting stream data to work in a company</a>.</em></li>
+</ul>
+
+                ]]></content:encoded>
+            </item>
+        
+            <item>
+                <title>Stream processing, Event sourcing, Reactive, CEP… and making sense of it all</title>
+                <link>http://martin.kleppmann.com/2015/01/29/stream-processing-event-sourcing-reactive-cep.html</link>
+                <comments>http://martin.kleppmann.com/2015/01/29/stream-processing-event-sourcing-reactive-cep.html#disqus_thread</comments>
+                <pubDate>Thu, 29 Jan 2015 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/01/29/stream-processing-event-sourcing-reactive-cep.html</guid>
+                
+                <description><![CDATA[ This is an edited transcript of a talk I gave at /dev/winter 2015. It was originally published on the Confluent blog. Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors,... ]]></description>
+                <content:encoded><![CDATA[
+                    <p><em>This is an edited transcript of a
+<a href="https://martin.kleppmann.com/2015/01/24/stream-processing-at-dev-winter.html">talk</a> I gave at
+<a href="http://devcycles.net/2015/winter/">/dev/winter 2015</a>. It was originally published
+<a href="http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/">on the Confluent blog</a>.</em></p>
+
+<p><em>Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it
+Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors,
+invented by companies who want to sell you stuff. But sometimes, they contain a kernel of wisdom
+which can really help us design better systems.</em></p>
+
+<p><em>In this talk, we will go in search of the wisdom behind the buzzwords. We will discuss how event
+streams can help make your application more scalable, more reliable and more maintainable. Founded
+in the experience of building large-scale data systems at LinkedIn, and implemented in open source
+projects like Apache Kafka and Apache Samza, stream processing is finally coming of age.</em></p>
+
+<p><img src="/2015/01/stream-01.png" alt="Title: making sense of stream processing" width="550" height="412" /></p>
+
+<p>In this presentation, I’m going to discuss some of the ideas that people have about processing event
+streams. The idea of structuring data as a stream of events is nothing new, but I’ve recently
+noticed this idea reappearing in many different places, often with different terminology and
+different use cases, but with the same underlying principles.</p>
+
+<p>The problem when a technique becomes fashionable is that people start generating a lot of hype and
+buzzwords around it, often reinventing ideas that are already commonplace in a different field, but
+using different words to describe the same thing. In this talk I’m going to try to cut through some
+of the hype and jargon in the general area of stream processing, and try to get down to the
+underlying fundamental ideas.</p>
+
+<p>Although the jargon can be off-putting when you first encounter it, there’s no need to be scared.
+A lot of the ideas are quite simple when you get down to the core. Also, there are a lot of good
+ideas which are worth learning about, because they can help us build applications better.</p>
+
+<p><img src="/2015/01/stream-02.png" alt="Overview of event-based technologies" width="550" height="412" /></p>
+
+<p>The notion of processing events appears in many different areas, which is really confusing at first.
+People in different fields use different vocabulary to refer to the same thing. I think this is
+mainly because the techniques originated in different communities of people, and people seem to
+often stick within their own community and not look at what their neighbours are doing.</p>
+
+<p>The current tools for distributed stream processing have come out of internet companies like
+LinkedIn, with philosophical roots in database research of the early 2000s. On the other hand,
+complex event processing (CEP) originated in
+<a href="http://complexevents.com/stanford/rapide/">event simulation research</a> in the 1990s and is now used
+for operational purposes in enterprises. Event sourcing has its roots in the domain-driven design
+community, which deals with enterprise software development — people who have to work with very
+complex data models, but often smaller datasets than the internet companies.</p>
+
+<p>My background is in internet companies, but I’m doing my best to understand the jargon of the other
+communities, and figure out the commonalities and differences. If I’ve misunderstood something,
+please correct me.</p>
+
+<p><img src="/2015/01/stream-03.png" alt="Stream processing (analytics)" width="550" height="202" /></p>
+
+<p>To make this concrete, I’m going to start by giving an example from the field of stream processing,
+specifically analytics. I’ll then draw parallels with other areas.</p>
+
+<p><img src="/2015/01/stream-04.png" alt="Google Analytics screenshot" width="550" height="447" /></p>
+
+<p>To start with, take something like Google Analytics. As you probably know, Google Analytics is a bit
+of Javascript that you can put on your website, and that keeps track of which pages have been viewed
+by which visitors. An administrator can then explore this data, breaking it down by time period, or
+by URL, and so on.</p>
+
+<p>How would you implement something like Google Analytics?</p>
+
+<p>First take the input to the system. Every time a user views a page, we need to log an event to
+record that fact. A page view event may look something like this (using a kind of pseudo-JSON):</p>
+
+<p><img src="/2015/01/stream-05.png" alt="PageViewEvent example" width="550" height="323" /></p>
+
+<p>A page view has an event type (PageViewEvent), a Unix timestamp that indicates when the event
+happened, the IP address of the client, the session ID (this may be a unique identifier from
+a cookie, which allows you to figure out what series of page views is from the same person), the URL
+of the page that was viewed, how the user got to that page (for example, from a search engine, or
+clicking a link from another site), the user’s browser and language settings, and so on.</p>
+
+<p>Note that each page view event is a simple, immutable fact. It simply records that something
+happened.</p>
+
+<p>Now, how do you go from these page view events to the nice graphical dashboard on which you can
+explore how people are using your website?</p>
+
+<p><img src="/2015/01/stream-06.png" alt="Use cases for events vs. materialized aggregates" width="550" height="412" /></p>
+
+<p>Broadly speaking, you have two options.</p>
+
+<p><strong>Option (a):</strong> you can simply store every single event as it comes in, dump them all in a big
+database, a data warehouse or a Hadoop cluster. Now, whenever you want to analyze this data in some
+way, you run a big SELECT query against this dataset. For example, you might group by URL and by
+time period, you might filter by some condition, and then COUNT(*) to get the number of page views
+for each URL over time. This will scan over essentially all the events, or at least some large
+subset, and do the aggregation on the fly.</p>
+
+<p><strong>Option (b):</strong> if storing every single event is too much for you, you can instead store an
+aggregated summary of the events. For example, if you’re counting things, you increment a few
+counters every time an event comes in, and then you throw away the actual event. You might keep
+several counters in something that’s called an <a href="http://arxiv.org/pdf/cs/0701155.pdf">OLAP cube</a>:
+imagine a multi-dimensional cube, where one dimension is the URL, another dimension is the time of
+the event, another dimension is the browser, and so on. For each event, you just need to increment
+the counters for that particular URL, that particular time, etc.</p>
+
+<p>With an OLAP cube, when you want to find the number of page views for a particular URL on
+a particular day, you just need to read the counter for that combination of URL and date. You don’t
+have to scan over a long list of events; it’s just a matter of reading a single value.</p>
+
+<p><img src="/2015/01/stream-07.png" alt="Raw event data vs. materialized aggregates" width="550" height="412" /></p>
+
+<p>Now option (a) may sound a bit crazy, but it actually works surprisingly well. I believe Google
+Analytics actually does store the raw events, or at least a large sample of events, and performs
+a big scan over those events when you look at the data. Modern analytic databases have become really
+good at scanning quickly over large amounts of data.</p>
+
+<p>The big advantage of storing raw event data is that you have maximum flexibility for analysis. For
+example, you can trace the sequence of pages that one person visited over the course of their
+session. You can’t do that if you’ve squashed all the events into counters. That sort of analysis is
+really important for some offline processing tasks, such as training a recommender system (“people
+who bought X also bought Y”, that sort of thing). For such use cases, it’s best to simply keep all
+the raw events, so that you can later feed them all into your shiny new machine learning system.</p>
+
+<p>However, option (b) also has its uses, especially when you need to make decisions or react to things
+in real time. For example, if you want to prevent people from scraping your website, you can
+introduce a rate limit, so that you only allow 100 requests per hour from any particular IP address;
+if a client goes over the limit, you block it. Implementing that with raw event storage would be
+incredibly inefficient, because you’d be continually re-scanning your history of events to determine
+whether someone has gone over the limit. It’s much more efficient to just keep a counter of number
+of page views per IP address per time window, and then you can check on every request whether that
+number has crossed your threshold.</p>
+
+<p>Similarly, for alerting purposes, you need to respond quickly to what the events are telling you.
+For stock market trading, you also need to be quick.</p>
+
+<p>The bottom line here is that raw event storage and aggregated summaries of events are both very
+useful. They just have different use cases.</p>
+
+<p><img src="/2015/01/stream-08.png" alt="Streaming aggregation by directly incrementing a counter from the app" width="550" height="277" /></p>
+
+<p>Let’s focus on those aggregated summaries for now. How do you implement those?</p>
+
+<p>Well, in the simplest case, you simply have the web server update the aggregates directly. Say you
+want to count page views per IP address per hour, for rate limiting purposes. You can keep those
+counters in something like memcached or Redis, which have an atomic increment operation. Every time
+a web server processes a request, it directly sends an increment command to the store, with a key
+that is constructed from the client IP address and the current time (truncated to the nearest hour).</p>
+
+<p><img src="/2015/01/stream-09.png" alt="Streaming aggregation via event stream" width="550" height="412" /></p>
+
+<p>If you want to get a bit more sophisticated, you can introduce an event stream, or a message queue,
+or an event log, or whatever you want to call it. The messages on that stream are the PageViewEvent
+records that we saw earlier: one message contains the properties of one particular page view.</p>
+
+<p>The nice thing about this architecture is that you can now have multiple consumers for the same
+event data. You can have one consumer which simply archives the raw events to some big storage; even
+if you don’t yet have the capability to process the raw events, you might as well store them, since
+storage is cheap and you can use them in future. Then you can have another consumer which does some
+aggregation (for example, incrementing counters), and another consumer which does something else.
+Those can all feed off the same event stream.</p>
+
+<p><img src="/2015/01/stream-10.png" alt="Title: event sourcing" width="550" height="272" /></p>
+
+<p>Let’s now change topic for a moment, and look at similar ideas from a different field. Event
+sourcing is an idea that has come out of the domain-driven design community — it seems to be fairly
+well known amongst enterprise software developers, but it’s totally unknown in internet companies.
+It comes with a large amount of jargon that I find very confusing, but there seem to be some very
+good ideas in event sourcing.</p>
+
+<p>So I’m going to try to extract those good ideas without going into all the jargon, and we’ll see
+that there are some surprising parallels with my last example from the field of stream processing
+analytics.</p>
+
+<p><img src="/2015/01/stream-11.png" alt="Shopping cart example" width="550" height="412" /></p>
+
+<p>Event sourcing is concerned with how we structure data in databases. As example database I’m going
+to use a shopping cart from an e-commerce website. Each customer may have some number of different
+products in their cart at one time, and for each item in the cart there is a quantity. Nothing very
+complicated here.</p>
+
+<p><img src="/2015/01/stream-12.png" alt="Shopping cart example: updating quantity" width="550" height="412" /></p>
+
+<p>Now say that customer 123 updates their cart: instead of quantity 1 of product 999, they now want
+quantity 3 of that product. You can imagine this being recorded in the database using an UPDATE
+query, which matches the row for customer 123 and product 999, and modifies that row, changing the
+quantity from 1 to 3.</p>
+
+<p>This example uses a relational data model, but that doesn’t really matter. With most non-relational
+databases you’d do more or less the same thing: overwrite the old value with the new value when it
+changes.</p>
+
+<p>However, event sourcing says that this isn’t a good way to design databases. Instead, we should
+individually record every change that happens to the database.</p>
+
+<p><img src="/2015/01/stream-13.png" alt="Shopping cart example: change event log" width="550" height="412" /></p>
+
+<p>For example, we first record an AddToCart event when customer 123 first adds product 888 to their
+cart, with quantity 1. We then record a separate UpdateCartQuantity event when they change the
+quantity to 3. Later, the customer changes their mind again, and reduces the quantity to 2, and
+finally they go to the checkout. Each of these actions is recorded as a separate event, and appended
+to the database. You can imagine having a timestamp on every event too.</p>
+
+<p><img src="/2015/01/stream-14.png" alt="No to state mutation, yes to immutable commands" width="550" height="412" /></p>
+
+<p>When you structure the data like this, every change to the shopping cart is an immutable event —
+a fact. Even if the customer did change the quantity to 2, it is still true that at a previous point
+in time, the selected quantity was 3. If you overwrite data in your database, you lose this historic
+information. Keeping the list of all changes as a log of immutable events thus gives you strictly
+richer information than if you overwrite things in the database.</p>
+
+<p>And this is really the essence of event sourcing: rather than performing destructive state mutation
+on a database when writing to it, we should record every write as a “command”, as an immutable
+event.</p>
+
+<p><img src="/2015/01/stream-15.png" alt="History of what happened vs. current state" width="550" height="412" /></p>
+
+<p>And that brings us back to our stream processing example (Google Analytics). Remember we discussed
+two options for storing data: (a) raw events, or (b) aggregated summaries.</p>
+
+<p>What we have here with event sourcing is looking very similar. You can think of those event-sourced
+commands (AddToCart, UpdateCartQuantity) as raw events: they comprise the history of what happened
+over time. But when you’re looking at the contents of your shopping cart, you see the its current
+state — the end result, which is what you get when you have applied the entire history of events and
+squashed them together into one thing.</p>
+
+<p>So the current state of the cart may say quantity 2. The history of raw events will tell you that at
+some previous point in time the quantity was 3, but that the customer later changed their mind and
+updated it to 2. The aggregated end result only tells you that the current quantity is 2.</p>
+
+<p><img src="/2015/01/stream-16.png" alt="Events = writes, aggregates = reads" width="550" height="412" /></p>
+
+<p>Thinking about it further, you can observe that the raw events are the form in which it’s ideal to
+write the data: all the information in the database write is contained in a single blob. You don’t
+need to go and update five different tables if you’re storing raw events — you only need to append
+the event to the end of a log. That’s the simplest and fastest possible way of writing to
+a database.</p>
+
+<p>On the other hand, the aggregated data is the form in which it’s ideal to read data from the
+database. If a customer is looking at the contents of their shopping cart, they are not interested
+in the entire history of modifications that led to the current state — they only want to know what’s
+in the cart right now. So when you’re reading, you can get the best performance if the history of
+changes has already been squashed together into a single object representing the current state.</p>
+
+<p><img src="/2015/01/stream-17.png" alt="Events = buttons, aggregates = screens" width="550" height="412" /></p>
+
+<p>Going even further, think about the user interfaces that lead to database writes and database reads.
+A database write typically happened because the user clicked some button: for example, they edited
+some data, and now they click the save button. So, buttons in the user interface correspond to raw
+events in the event sourcing history.</p>
+
+<p>On the other hand, a database read typically happens because the user views some screen: they click
+on some link or open some document, and now they need to read the contents. These reads typically
+want to know the current state of the database. So screens in the user interface correspond to
+aggregated state.</p>
+
+<p>This is quite an abstract idea, so let me go through a few examples.</p>
+
+<p><img src="/2015/01/stream-18.png" alt="Twitter example: input = tweet, output = timeline" width="550" height="412" /></p>
+
+<p>Take Twitter, for example. The most common way of writing to Twitter’s database — i.e. to provide
+input into the Twitter system — is to tweet something. A tweet is very simple: it consists of some
+text, a timestamp, and the ID of the user who tweeted. (Perhaps optionally a location, or a photo,
+or something.) The user then clicks that “Tweet” button, which causes a database write to happen,
+i.e. an event is generated.</p>
+
+<p>On the output side, the way how you read from Twitter’s database is by viewing your timeline. It
+shows all the stuff that was written by people you follow. It’s a vastly more complicated structure:</p>
+
+<p><img src="/2015/01/stream-19.png" alt="Twitter example: input and output data" width="550" height="412" /></p>
+
+<p>For each tweet, you now have not just the text, timestamp and user ID, but also the name of the
+user, their profile photo, and other information that has been joined with the tweet. Also, the list
+of tweets has been selected based on the people you follow, which may itself change.</p>
+
+<p>How would you go from the simple input to the more complex output? Well, you could try expressing it
+in SQL, something like this:</p>
+
+<p><img src="/2015/01/stream-20.png" alt="Twitter example: query to generate timeline" width="550" height="412" /></p>
+
+<p>That is, find all of the users who $user is following, find all the tweets that they have written,
+order them by time and pick the 100 most recent. Turns out this query really doesn’t scale very
+well. Do you remember in the early days of Twitter, when they kept having the fail whale all the
+time? <a href="http://www.infoq.com/presentations/Twitter-Timeline-Scalability">Apparently</a> that was
+essentially because they were using something like the query above.</p>
+
+<p>When a user views their timeline, it’s too expensive to iterate over all the people they are
+following to get those users’ tweets. Instead, Twitter must compute a user’s timeline ahead of time,
+and cache it, so that it’s fast when a user looks at it. To do that, they need a process that
+translates from the write-optimized event (a single tweet) to the read-optimized aggregate (a
+timeline). Twitter has such a process, and calls it the
+<a href="http://www.infoq.com/presentations/Twitter-Timeline-Scalability">fanout service</a>.</p>
+
+<p><img src="/2015/01/stream-21.png" alt="Facebook example: input = like button, output = post" width="550" height="412" /></p>
+
+<p>Another example: take Facebook. It has many buttons that enable you to write something to Facebook’s
+database, but a classic one is the “Like” button. When you click it, that generates an event, a fact
+with a very simple structure: <em>you</em> (identified by your user ID) <em>like</em> (an action verb) <em>some item</em>
+(identified by its ID).</p>
+
+<p>However, if you look at the output side, reading something on Facebook, it’s incredibly complicated.
+In this example we have a Facebook post which is not just some text, but also the name of the author
+and his profile photo; and it’s telling me that 160,216 people like this update, of which three have
+been especially highlighted (presumably because Facebook thinks that amongst the likers of this
+update, these are the ones I am most likely to know); it’s telling me that there are 6,027 shares
+and 12,851 comments, of which the top 4 comments are shown (clearly some kind of comment ranking is
+happening here); and so on.</p>
+
+<p><img src="/2015/01/stream-22.png" alt="Facebook example: input and output data" width="550" height="412" /></p>
+
+<p>There must be some translation process happening here, which takes the very simple events as input,
+and produces the massively complex and personalized output structure. You can’t even conceive what
+the database query would look like to fetch all the information in that Facebook update. There is no
+way they could efficiently query all of that on the fly, not with over 100,000 likes. Clever caching
+is absolutely essential if you want to build something like this.</p>
+
+<p><img src="/2015/01/stream-23.png" alt="Events = source of truth, derived data can be denormalized" width="550" height="412" /></p>
+
+<p>From the Twitter and Facebook examples we can see a certain pattern: the input events, corresponding
+to the buttons in the user interface, are quite simple. They are immutable facts, we can simply
+store them all, and we can treat them as the <em>source of truth</em>.</p>
+
+<p>Everything that you can see on a website, i.e. everything that you read from the database, can be
+derived from those raw events. There is a process which derives those aggregates from the raw
+events, and which updates the caches when new events come in, and that process is entirely
+deterministic. You could, if necessary, re-run it from scratch: if you feed in the entire history of
+everything that ever happened on the site, you can reconstruct every cache entry to be exactly as it
+was before. The database you read from is just a
+<a href="http://blogs.msdn.com/b/pathelland/archive/2007/06/14/accountants-don-t-use-erasers.aspx">cached view of the event log</a>.</p>
+
+<p>The beautiful thing about this separation between source of truth and caches is that in your caches,
+you can denormalize data to your heart’s content. In regular databases, it is often considered best
+practice to normalize data, because if something changes, you then only have to change it one place.
+Normalization makes writes fast and simple, but means you have to do more work (joins) at read time.</p>
+
+<p>In order to speed up reads, you can denormalize data, i.e. duplicate information in various places
+so that it can be read faster. The problem is now that if the original data changes, all the places
+where you copied it to also need to change. In a typical database, that’s a nightmare, because you
+may not know all the places where something has been copied. But if your caches are built from your
+raw events using a repeatable process, you have much more freedom to denormalize, because you know
+what data is flowing where.</p>
+
+<p><img src="/2015/01/stream-24.png" alt="Wikipedia example: input = wiki markup, output = wiki page" width="550" height="412" /></p>
+
+<p>Another example: Wikipedia. This is almost a counter-example to Twitter and Facebook, because on
+Wikipedia the input and the output are almost the same.</p>
+
+<p><img src="/2015/01/stream-25.png" alt="Wikipedia example: input and output are almost the same" width="550" height="412" /></p>
+
+<p>When you edit a page on Wikipedia, you get a big text field containing the entire page content
+(using wiki markup), and when you click the save button, it sends that entire page content back to
+the server. The server replaces the entire page with whatever you posted to it. When someone views
+the page, it returns that same content back to the user (formatted into HTML).</p>
+
+<p>So, in this case, the input and the output are the same. What would event sourcing mean in this
+case? Would it perhaps make sense to represent a write event as a diff, like a patch file, rather
+than a copy of the entire page? It’s an interesting case to think about. (Google Docs works by
+continually applying diffs at a character granularity — effectively an event per keystroke.)</p>
+
+<p><img src="/2015/01/stream-26.png" alt="LinkedIn example: input = profile edit, output = search index" width="550" height="412" /></p>
+
+<p>Final example: LinkedIn. Say you update your LinkedIn profile, and add your current job, which
+consists of a job title, a company, and some text. Again, the edit event for writing to the database
+is very simple.</p>
+
+<p>There are various ways how you can read this data, and in this example, let’s look at the search
+feature. On the output side, one way you can read LinkedIn’s database is by typing some keywords and
+maybe a company name into a search box, and find all the people matching those criteria.</p>
+
+<p><img src="/2015/01/stream-27.png" alt="LinkedIn example: profile edit vs. search index" width="550" height="412" /></p>
+
+<p>How is that implemented? Well, in order to search, you need a full-text index, which is essentially
+a big dictionary — for every keyword, it tells you the IDs of all the profiles that contain the
+keyword. This search index is another aggregate structure, and whenever some data is written to the
+database, this structure needs to be updated with the new data.</p>
+
+<p>So for example, if I add my job “Author at O’Reilly” to my profile, the search index must now be
+updated to include my profile ID under the entries for “author” and “o’reilly”. The search index is
+just another kind of cache. It also needs to be built from the source of truth (all the profile
+edits that have ever occurred) and it needs to be updated whenever a new event occurs (someone edits
+their profile).</p>
+
+<p><img src="/2015/01/stream-09.png" alt="Streaming aggregation via event stream" width="550" height="412" /></p>
+
+<p>Now, returning to stream processing. I first described how you might build something like Google
+Analytics, and compared storing raw page view events versus aggregated counters, and discussed how
+you can maintain those aggregates by consuming a stream of events.</p>
+
+<p><img src="/2015/01/stream-29.png" alt="Stream processing as data integration" width="550" height="412" /></p>
+
+<p>I then explained event sourcing, which applies a similar approach to databases: treat all the
+database writes as a stream of events, and build aggregates (views, caches, search indexes) from
+that stream. Once you have that event stream, you can do many great things with it:</p>
+
+<ul>
+  <li>You can take all the raw events, perhaps transform them a bit, and load them into a big data
+warehouse where analysts can query the data to their heart’s content.</li>
+  <li>You can update full-text search indexes, so that when a user hits the search box, they are
+searching an up-to-date version of the data.</li>
+  <li>You can invalidate or refill any caches, so that reads can be served from fast caches while also
+making sure that the data in the cache remains fresh.</li>
+  <li>And finally, you can even take one event stream, and process it in some way (perhaps joining a few
+streams together) to create a new output stream. This way, you can plug the output of one system
+into the input of another system. This is a very powerful way of building complex applications
+cleanly.</li>
+</ul>
+
+<p><img src="/2015/01/stream-30.png" alt="Advantages of event sourcing" width="550" height="412" /></p>
+
+<p>Moving to an event-sourcing-like approach for databases is a big change from the way that databases
+have traditionally been used (where you can update and delete data at will). Why would you want to
+go to all that effort of changing the way you do things? What’s the benefit of using append-only
+streams of immutable events?</p>
+
+<p>Several reasons:</p>
+
+<ul>
+  <li><strong>Loose coupling.</strong> If you write data to the database in the same schema as you use for reading,
+you have tight coupling between the part of the application doing the writing (the “button”) and
+the part doing the reading (the “screen”). We know that loose coupling is a good design principle
+for software. By separating the form in which you write and read data, and by explicitly
+translating from one to the other, you get much looser coupling between different parts of your
+application.</li>
+  <li><strong>Read and write performance.</strong> The decades-old debate over normalization (faster writes) vs.
+denormalization (faster reads) exists only because of the assumption that writes and reads use the
+same schema. If you separate the two, you can have fast writes <em>and</em> fast reads.</li>
+  <li>Event streams are great for <strong>scalability</strong>, because they are a simple abstraction (comparatively
+easy to parallelize and scale across multiple machines), and because they allow you to decompose
+your application into producers and consumers of streams (which can operate independently, and can
+take advantage of more parallelism in hardware).</li>
+  <li><strong>Flexibility and agility.</strong> Raw events are so simple and obvious that a “schema migration”
+doesn’t really make sense (you may just add a new field from time to time, but you don’t usually
+need to rewrite historic data into a new format). On the other hand, the ways in which you want to
+present data to users are much more complex, and may be continually changing. If you have an
+explicit translation process between the source of truth and the caches that you read from, you
+can experiment with new user interfaces by just building new caches using new logic, running the
+new system in parallel with the old one, gradually moving people over from the old system, and
+then discarding the old system (or reverting to the old system if the new one didn’t work). Such
+flexibility is incredibly liberating.</li>
+  <li>Finally, <strong>error scenarios</strong> are much easier to reason about if data is immutable. If something
+goes wrong in your system, you can always replay events in the same order, and
+<a href="http://martinfowler.com/articles/lmax.html">reconstruct exactly what happened</a> (especially
+important in finance, where auditability is crucial). If you deploy buggy code that writes bad
+data to a database, you can just re-run it after you fixed the bug, and thus correct the outputs.
+Those things are not possible if your database writes are destructive.</li>
+</ul>
+
+<p><img src="/2015/01/stream-31.png" alt="Title: tools" width="550" height="193" /></p>
+
+<p>Finally, let’s talk about how you might put these ideas into practice.</p>
+
+<p>I should point out that in reality, database writes often already do have a certain event-like
+<a href="http://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf">immutable quality</a>. The write-ahead log
+that exists in most databases is essentially an event stream of writes, although it’s very specific
+to a particular database. The MVCC mechanism in databases like PostgreSQL, MySQL’s InnoDB and
+Oracle, and the append-only B-trees of CouchDB, Datomic and LMDB are examples of the same thinking:
+it’s better to structure writes as an append-only log than to perform destructive overwrites.</p>
+
+<p>However, here we’re not talking about the internals of storage engines, but about using event
+streams at the application level.</p>
+
+<p><img src="/2015/01/stream-32.png" alt="Kafka and Samza" width="550" height="412" /></p>
+
+<p>Some databases such as <a href="http://geteventstore.com/">Event Store</a> have oriented themselves
+specifically at the event sourcing model, and some people have implemented event sourcing on top of
+relational databases. Those may be viable solutions if you’re operating at fairly small scale.</p>
+
+<p>The systems I have worked with most are <a href="http://kafka.apache.org/">Apache Kafka</a> and
+<a href="http://samza.apache.org/">Apache Samza</a>. They are open source projects that originated at LinkedIn,
+and now have a big community around them. Kafka is a message broker, like a publish-subscribe
+message queue, which supports event streams with many millions of messages per second, durably
+stored on disk and replicated across multiple machines.</p>
+
+<p>Samza is the processing counterpart to Kafka: a framework which lets you write code to consume input
+streams and produce output streams, and it handles stuff like deploying your code to a cluster and
+recovering from failures.</p>
+
+<p><img src="/2015/01/stream-33.png" alt="Distributed stream processing frameworks overview" width="550" height="412" /></p>
+
+<p>I would definitely recommend Kafka as a system for high-throughput reliable event streams. On the
+processing side, there are a few choices: <a href="http://samza.apache.org/">Samza</a>,
+<a href="http://storm.apache.org/">Storm</a> and <a href="https://spark.apache.org/streaming/">Spark Streaming</a> are the
+most popular stream processing frameworks. They all allow you to run your stream processing code
+distributed across multiple machines.</p>
+
+<p>There are interesting design differences (pros and cons) between these three frameworks, which
+I don’t have time to go into here. You can read up a detailed comparison between them in the
+<a href="http://samza.apache.org/learn/documentation/0.8/comparisons/introduction.html">Samza documentation</a>.
+And yes, I also think it’s funny that they all start with the letter S.</p>
+
+<p>Today’s distributed stream processing systems have come out of internet companies (Samza from
+LinkedIn, Storm from Backtype/Twitter). Arguably, they have their roots in stream processing
+research from the early 2000s (<a href="http://db.csail.mit.edu/madden/html/TCQcidr03.pdf">TelegraphCQ</a>,
+<a href="http://cs.brown.edu/research/borealis/public/">Borealis</a>, etc), which originated from a relational
+database background. Just as NoSQL datastores stripped databases down to a minimal feature set,
+modern stream processing systems look quite stripped-down compared to the earlier research.</p>
+
+<p><img src="/2015/01/stream-34.png" alt="Stream query engines" width="550" height="412" /></p>
+
+<p>The modern stream processing frameworks (Samza, Storm, Spark Streaming) are mostly concerned with
+low-level matters: how to scale processing across multiple machines, how to deploy a job to
+a cluster, how to handle faults (crashes, machine failures, network outages), and how to achieve
+reliable performance in a
+<a href="https://twitter.com/jaykreps/status/528235702480142336">multi-tenant environment</a>. The APIs they
+provide are quite low-level (e.g. a callback that is invoked for every message). They look much more
+like MapReduce and less like a database. They are more interested in reliable operation than in
+fancy features.</p>
+
+<p>By contrast, there is also some work on high-level query languages for stream processing,
+and Complex Event Processing is especially worth mentioning. It originated in 1990s research on
+<a href="http://www.complexevents.com/2006/08/01/what%E2%80%99s-the-difference-between-esp-and-cep/">event-driven simulation</a>,
+and most CEP products are commercial, expensive enterprise software (only
+<a href="http://esper.codehaus.org/">Esper</a> is free/open source, and it’s limited to running on a single
+machine).</p>
+
+<p>With CEP, you write queries or rules that match certain patterns in the events. They are comparable
+to SQL queries (which describe what results you want to return from a database), except that the CEP
+engine continually searches the stream for sets of events that match the query and notifies you
+(generates a “complex event”) whenever a match is found. This is useful for fraud detection or
+monitoring business processes, for example.</p>
+
+<p>For use cases that can be easily described in terms of a CEP query language, such a high-level
+language is much more convenient than a low-level event processing API. On the other hand,
+a low-level API gives you more freedom, allowing you to do a wider range of things than a query
+language would let you do. Also, by focussing their efforts on scalability and fault tolerance,
+stream processing frameworks provide a solid foundation upon which query languages can be built.</p>
+
+<p>A related idea is doing full-text search on streams, where you register a search query in advance,
+and then get notified whenever an event matches your query. We’ve done some
+<a href="https://github.com/romseygeek/samza-luwak">experimental work</a> with
+<a href="https://github.com/flaxsearch/luwak">Luwak</a> in this area, but it’s still very new.</p>
+
+<p><img src="/2015/01/stream-35.png" alt="Event-based technologies" width="550" height="412" /></p>
+
+<p>Finally, there are a lot of other things that are somehow related to stream processing. Going into
+laundry-list mode, here is a brief summary:</p>
+
+<ul>
+  <li><strong>Actor frameworks</strong> such as Akka, Orleans and Erlang OTP are also based on streams of immutable
+events. However, they are primarily a mechanism for concurrency, less a mechanism for data
+management. Some actor frameworks do have a distributed component, so you could build
+a distributed stream processing framework on top of actors. However, it’s worth looking carefully
+at the fault-tolerance guarantees and failure modes of these systems: many don’t provide
+durability, for example.</li>
+  <li>There’s a lot of buzz around “<strong>reactive</strong>”, which seems to encompass a quite loosely-defined
+<a href="http://www.reactivemanifesto.org/">set of ideas</a>. My impression is that there is some good work
+happening in dataflow languages and functional reactive programming (FRP), which I see as mostly
+about bringing event streams to the user interface, i.e. updating the user interface when some
+underlying data changes. This is a natural counterpart to event streams in the data backend.</li>
+  <li>Finally, <strong>change data capture</strong> (CDC) means using an existing database in the familiar way, but
+extracting any inserts, updates and deletes into a stream of data change events which other
+applications can consume. This is a great migration path towards a stream-oriented architecture,
+and I’ll be talking and writing more about CDC in future.</li>
+</ul>
+
+<p>I hope this talk helped you make some sense of the many facets of stream processing!</p>
+
+<p><em><a href="https://martin.kleppmann.com/">Martin Kleppmann</a> is a software engineer and entrepreneur. He is
+a committer on <a href="http://samza.apache.org/">Apache Samza</a> and author of the upcoming O’Reilly book
+<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>. He’s
+<a href="https://twitter.com/martinkl">@martinkl</a> on Twitter.</em></p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Wouldn’t it be fun to build your own Google?</title>
@@ -1214,806 +3104,6 @@ to feed water into 21st-century sprinkler irrigation systems.</li>
   <li>If a system solves an important problem, is well-engineered and well-operated, it can stick around
 for a very, very long time.</li>
 </ul>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Improving the security of your SSH private key files</title>
-                <link>http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html</link>
-                <comments>http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html#disqus_thread</comments>
-                <pubDate>Fri, 24 May 2013 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html</guid>
-                
-                <description><![CDATA[ Ever wondered how those key files in ~/.ssh actually work? How secure are they actually? As you probably do too, I use ssh many times every single day — every git fetch and git push, every deploy, every login to a server. And recently I realised that to me, ssh... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>Ever wondered how those key files in <code>~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
-
-<p>As you probably do too, I use ssh many times every single day — every <code>git fetch</code> and <code>git push</code>,
-every deploy, every login to a server. And recently I realised that to me, ssh was just some crypto
-voodoo that I had become accustomed to using, but I didn’t really understand. That’s a shame — I
-like to know how stuff works. So I went on a little journey of discovery, and here are some of the
-things I found.</p>
-
-<p>When you start reading about “crypto stuff”, you very quickly get buried in an avalanche of
-acronyms. I will briefly mention the acronyms as we go along; they don’t help you understand the
-concepts, but they are useful in case you want to Google for further details.</p>
-
-<p>Quick recap: If you’ve ever used public key authentication, you probably have a file <code>~/.ssh/id_rsa</code>
-or <code>~/.ssh/id_dsa</code> in your home directory. This is your RSA/DSA private key, and <code>~/.ssh/id_rsa.pub</code>
-or <code>~/.ssh/id_dsa.pub</code> is its public key counterpart. Any machine you want to log in to needs to
-have your public key in <code>~/.ssh/authorized_keys</code> on that machine. When you try to log in, your SSH
-client uses a digital signature to prove that you have the private key; the server checks that the
-signature is valid, and that the public key is authorized for your username; if all is well, you are
-granted access.</p>
-
-<p>So what is actually inside this private key file?</p>
-
-<h2 id="the-unencrypted-private-key-format">The unencrypted private key format</h2>
-
-<p>Everyone recommends that you protect your private key with a passphrase (otherwise anybody who
-steals the file from you can log into everything you have access to). If you leave the passphrase
-blank, the key is not encrypted. Let’s look at this unencrypted format first, and consider
-passphrase protection later.</p>
-
-<p>A ssh private key file typically looks something like this:</p>
-
-<pre><code>-----BEGIN RSA PRIVATE KEY-----
-MIIEogIBAAKCAQEArCQG213utzqE5YVjTVF5exGRCkE9OuM7LCp/FOuPdoHrFUXk
-y2MQcwf29J3A4i8zxpES9RdSEU6iIEsow98wIi0x1/Lnfx6jG5Y0/iQsG1NRlNCC
-aydGvGaC+PwwWiwYRc7PtBgV4KOAVXMZdMB5nFRaekQ1ksdH/360KCGgljPtzTNl
-09e97QBwHFIZ3ea5Eih/HireTrRSnvF+ywmwuxX4ubDr0ZeSceuF2S5WLXH2+TV0
-   ... etc ... lots of base64 blah blah ...
------END RSA PRIVATE KEY-----
-</code></pre>
-
-<p>The private key is an <a href="http://en.wikipedia.org/wiki/ASN.1">ASN.1</a> data structure, serialized to a
-byte string using <a href="http://en.wikipedia.org/wiki/X.690#DER_encoding">DER</a>, and then
-<a href="http://tools.ietf.org/html/rfc4648">Base64</a>-encoded. ASN.1 is roughly comparable to JSON (it
-supports various data types such as integers, booleans, strings and lists/sequences that can be
-nested in a tree structure). It’s very widely used for cryptographic purposes, but it has somehow
-fallen out of fashion with the web generation (I don’t know why, it seems like a pretty decent
-format).</p>
-
-<p>To look inside, let’s generate a fake RSA key without passphrase using
-<a href="http://www.openbsd.org/cgi-bin/man.cgi?query=ssh-keygen&amp;sektion=1">ssh-keygen</a>, and then decode it
-using <a href="http://www.openssl.org/docs/apps/asn1parse.html">asn1parse</a>:</p>
-
-<pre><code>$ ssh-keygen -t rsa -N '' -f test_rsa_key
-$ openssl asn1parse -in test_rsa_key
-    0:d=0  hl=4 l=1189 cons: SEQUENCE
-    4:d=1  hl=2 l=   1 prim: INTEGER           :00
-    7:d=1  hl=4 l= 257 prim: INTEGER           :C36EB2429D429C7768AD9D879F98C...
-  268:d=1  hl=2 l=   3 prim: INTEGER           :010001
-  273:d=1  hl=4 l= 257 prim: INTEGER           :A27759F60AEA1F4D1D56878901E27...
-  534:d=1  hl=3 l= 129 prim: INTEGER           :F9D23EF31A387694F03AD0D050265...
-  666:d=1  hl=3 l= 129 prim: INTEGER           :C84415C26A468934F1037F99B6D14...
-  798:d=1  hl=3 l= 129 prim: INTEGER           :D0ACED4635B5CA5FB896F88BB9177...
-  930:d=1  hl=3 l= 128 prim: INTEGER           :511810DF9AFD590E11126397310A6...
- 1061:d=1  hl=3 l= 129 prim: INTEGER           :E3A296AE14E7CAF32F7E493FDF474...
-</code></pre>
-
-<p>Alternatively, you can paste the Base64 string into Lapo Luchini’s excellent
-<a href="http://lapo.it/asn1js/">JavaScript ASN.1 decoder</a>. You can see that ASN.1 structure is quite
-simple: a sequence of nine integers. Their meaning is defined in
-<a href="http://tools.ietf.org/html/rfc2313#section-7.2">RFC2313</a>. The first integer is a version number
-(0), and the third number is quite small (65537) – the public exponent <em>e</em>. The two important
-numbers are the 2048-bit integers that appear second and fourth in the sequence: the RSA modulus
-<em>n</em>, and the private exponent <em>d</em>. These numbers are used directly in the
-<a href="http://en.wikipedia.org/wiki/RSA_%28algorithm%29">RSA algorithm</a>. The remaining five numbers can
-be derived from <em>n</em> and <em>d</em>, and are only cached in the key file to speed up certain operations.</p>
-
-<p>DSA keys are similar, a
-<a href="http://blog.ngas.ch/archives/2008/10/23/asn_1_for_dsa_public_and_private_keys/index.html">sequence of six integers</a>:</p>
-
-<pre><code>$ ssh-keygen -t dsa -N '' -f test_dsa_key
-$ openssl asn1parse -in test_dsa_key
-    0:d=0  hl=4 l= 444 cons: SEQUENCE
-    4:d=1  hl=2 l=   1 prim: INTEGER           :00
-    7:d=1  hl=3 l= 129 prim: INTEGER           :E497DFBFB5610906D18BCFB4C3CCD...
-  139:d=1  hl=2 l=  21 prim: INTEGER           :CF2478A96A941FB440C38A86F22CF...
-  162:d=1  hl=3 l= 129 prim: INTEGER           :83218C0CA49BA8F11BE40EE1A7C72...
-  294:d=1  hl=3 l= 128 prim: INTEGER           :16953EA4012988E914B466B9C37CB...
-  425:d=1  hl=2 l=  21 prim: INTEGER           :89A356E922688EDEB1D388258C825...
-</code></pre>
-
-<h2 id="passphrase-protected-keys">Passphrase-protected keys</h2>
-
-<p>Next, in order to make life harder for an attacker who manages to steal your private key file, you
-protect it with a passphrase. How does this actually work?</p>
-
-<pre><code>$ ssh-keygen -t rsa -N 'super secret passphrase' -f test_rsa_key
-$ cat test_rsa_key
------BEGIN RSA PRIVATE KEY-----
-Proc-Type: 4,ENCRYPTED
-DEK-Info: AES-128-CBC,D54228DB5838E32589695E83A22595C7
-
-3+Mz0A4wqbMuyzrvBIHx1HNc2ZUZU2cPPRagDc3M+rv+XnGJ6PpThbOeMawz4Cbu
-lQX/Ahbx+UadJZOFrTx8aEWyZoI0ltBh9O5+ODov+vc25Hia3jtayE51McVWwSXg
-wYeg2L6U7iZBk78yg+sIKFVijxiWnpA7W2dj2B9QV0X3ILQPxbU/cRAVTd7AVrKT
-    ... etc ...
------END RSA PRIVATE KEY-----
-</code></pre>
-
-<p>We’ve gained two header lines, and if you try to parse that Base64 text, you’ll find it’s no longer
-valid ASN.1. That’s because the entire ASN.1 structure we saw above has been encrypted, and the
-Base64-encoded text is the output of the encryption. The header tells us the encryption algorithm
-that was used: <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-128</a> in
-<a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">CBC mode</a>.
-The 128-bit hex string in the <code>DEK-Info</code> header is the
-<a href="http://en.wikipedia.org/wiki/Initialization_vector">initialization vector</a> (IV) for the cipher.
-This is pretty standard stuff; all common crypto libraries can handle it.</p>
-
-<p>But how do you get from the passphrase to the AES encryption key? I couldn’t find it documented
-anywhere, so I had to dig through the OpenSSL source to find it:</p>
-
-<ol>
-  <li>Append the first 8 bytes of the IV to the passphrase, without a separator (serves as a salt).</li>
-  <li>Take the MD5 hash of the resulting string (once).</li>
-</ol>
-
-<p>That’s it.  To prove it, let’s decrypt the private key manually (using the IV/salt from the
-<code>DEK-Info</code> header above):</p>
-
-<pre><code>$ tail -n +4 test_rsa_key | grep -v 'END ' | base64 -D |    # get just the binary blob
-  openssl aes-128-cbc -d -iv D54228DB5838E32589695E83A22595C7 -K $(
-    ruby -rdigest/md5 -e 'puts Digest::MD5.hexdigest(["super secret passphrase",0xD5,0x42,0x28,0xDB,0x58,0x38,0xE3,0x25].pack("a*cccccccc"))'
-  ) |
-  openssl asn1parse -inform DER
-</code></pre>
-
-<p>…which prints out the sequence of integers from the RSA key in the clear. Of course, if you want
-to inspect the key, it’s much easier to do this:</p>
-
-<pre><code>$ openssl rsa -text -in test_rsa_key -passin 'pass:super secret passphrase'
-</code></pre>
-
-<p>but I wanted to demonstrate exactly how the AES key is derived from the password. This is important
-because the private key protection has two weaknesses:</p>
-
-<ul>
-  <li>The digest algorithm is hard-coded to be MD5, which means that without changing the format, it’s
-not possible to upgrade to another hash function (e.g. SHA-1). This could be a problem if MD5
-turns out not to be good enough.</li>
-  <li>The hash function is only applied once — there is no
-<a href="http://en.wikipedia.org/wiki/Key_stretching">stretching</a>. This is a problem because MD5 and AES
-are both fast to compute, and thus a short passphrase is quite easy to break with brute force.</li>
-</ul>
-
-<p>If your private SSH key ever gets into the wrong hands, e.g. because someone steals your laptop or
-your backup hard drive, the attacker can try a huge number of possible passphrases, even with
-moderate computing resources. If your passphrase is a dictionary word, it can probably be broken in
-a matter of seconds.</p>
-
-<p>That was the bad news: the passphrase on your SSH key isn’t as useful as you thought it was.
-But there is good news: you can upgrade to a more secure private key format, and everything
-continues to work!</p>
-
-<h2 id="better-key-protection-with-pkcs8">Better key protection with PKCS#8</h2>
-
-<p>What we want is to derive a symmetric encryption key from the passphrase, and we want this
-derivation to be slow to compute, so that an attacker needs to buy more computing time if they want
-to brute-force the passphrase. If you’ve seen the <a href="http://codahale.com/how-to-safely-store-a-password/">use bcrypt</a>
-meme, this should sound very familiar.</p>
-
-<p>For SSH private keys, there are a few standards with clumsy names (acronym alert!) that can help us out:</p>
-
-<ul>
-  <li><a href="http://tools.ietf.org/html/rfc2898#section-5.2">PKCS #5 (RFC 2898)</a> defines
-<a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> (Password-Based Key Derivation Function 2), an
-algorithm for deriving an encryption key from a password by applying a hash function repeatedly.
-PBES2 (Password-Based Encryption Scheme 2) is also defined here; it simply means using a
-PBKDF2-generated key with a symmetric cipher.</li>
-  <li><a href="http://tools.ietf.org/html/rfc5208">PKCS #8 (RFC 5208)</a> defines a format for storing encrypted
-private keys that supports PBKDF2. OpenSSL transparently supports private keys in PKCS#8 format,
-and OpenSSH uses OpenSSL, so if you’re using OpenSSH that means you can swap your traditional SSH
-key files for PKCS#8 files and everything continues to work as normal!</li>
-</ul>
-
-<p>I don’t know why <code>ssh-keygen</code> still generates keys in SSH’s traditional format, even though a better
-format has been available for years. Compatibility with servers is not a concern, because the
-private key never leaves your machine. Fortunately it’s easy enough to
-<a href="http://www.openssl.org/docs/apps/pkcs8.html">convert to PKCS#8</a>:</p>
-
-<pre><code>$ mv test_rsa_key test_rsa_key.old
-$ openssl pkcs8 -topk8 -v2 des3 \
-    -in test_rsa_key.old -passin 'pass:super secret passphrase' \
-    -out test_rsa_key -passout 'pass:super secret passphrase'
-</code></pre>
-
-<p>If you try using this new PKCS#8 file with a SSH client, you should find that it works exactly the
-same as the file generated by <code>ssh-keygen</code>. But what’s inside it?</p>
-
-<pre><code>$ cat test_rsa_key
------BEGIN ENCRYPTED PRIVATE KEY-----
-MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIOu/S2/v547MCAggA
-MBQGCCqGSIb3DQMHBAh4q+o4ELaHnwSCBMjA+ho9K816gN1h9MAof4stq0akPoO0
-CNvXdtqLudIxBq0dNxX0AxvEW6exWxz45bUdLOjQ5miO6Bko0lFoNUrOeOo/Gq4H
-dMyI7Ot1vL9UvZRqLNj51cj/7B/bmfa4msfJXeuFs8jMtDz9J19k6uuCLUGlJscP
-    ... etc ...
------END ENCRYPTED PRIVATE KEY-----
-</code></pre>
-
-<p>Notice that the header/footer lines have changed (<code>BEGIN ENCRYPTED PRIVATE KEY</code> instead of
-<code>BEGIN RSA PRIVATE KEY</code>), and the plaintext <code>Proc-Type</code> and <code>DEK-Info</code> headers have gone. In fact,
-the whole key file is once again a ASN.1 structure:</p>
-
-<pre><code>$ openssl asn1parse -in test_rsa_key
-    0:d=0  hl=4 l=1294 cons: SEQUENCE
-    4:d=1  hl=2 l=  64 cons: SEQUENCE
-    6:d=2  hl=2 l=   9 prim: OBJECT            :PBES2
-   17:d=2  hl=2 l=  51 cons: SEQUENCE
-   19:d=3  hl=2 l=  27 cons: SEQUENCE
-   21:d=4  hl=2 l=   9 prim: OBJECT            :PBKDF2
-   32:d=4  hl=2 l=  14 cons: SEQUENCE
-   34:d=5  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:3AEFD2DBFBF9E3B3
-   44:d=5  hl=2 l=   2 prim: INTEGER           :0800
-   48:d=3  hl=2 l=  20 cons: SEQUENCE
-   50:d=4  hl=2 l=   8 prim: OBJECT            :des-ede3-cbc
-   60:d=4  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:78ABEA3810B6879F
-   70:d=1  hl=4 l=1224 prim: OCTET STRING      [HEX DUMP]:C0FA1A3D2BCD7A80DD61F4C0287F8B2D...
-</code></pre>
-
-<p>Use Lapo Luchini’s <a href="http://lapo.it/asn1js/">JavaScript ASN.1 decoder</a> to display a nice ASN.1 tree
-structure:</p>
-
-<pre><code>Sequence (2 elements)
-|- Sequence (2 elements)
-|  |- Object identifier: 1.2.840.113549.1.5.13            // using PBES2 from PKCS#5
-|  `- Sequence (2 elements)
-|     |- Sequence (2 elements)
-|     |  |- Object identifier: 1.2.840.113549.1.5.12      // using PBKDF2 -- yay! :)
-|     |  `- Sequence (2 elements)
-|     |     |- Byte string (8 bytes): 3AEFD2DBFBF9E3B3    // salt
-|     |     `- Integer: 2048                              // iteration count
-|     `- Sequence (2 elements)
-|          Object identifier: 1.2.840.113549.3.7          // encrypted with Triple DES, CBC
-|          Byte string (8 bytes): 78ABEA3810B6879F        // initialization vector
-`- Byte string (1224 bytes): C0FA1A3D2BCD7A80DD61F4C0287F8B2DAB46A43E...  // encrypted key blob
-</code></pre>
-
-<p>The format uses <a href="http://en.wikipedia.org/wiki/Object_identifier">OIDs</a>, numeric codes allocated by a
-registration authority to unambiguously refer to algorithms. The OIDs in this key file tell us that
-the encryption scheme is <a href="http://oid-info.com/get/1.2.840.113549.1.5.13">pkcs5PBES2</a>, that the key
-derivation function is <a href="http://oid-info.com/get/1.2.840.113549.1.5.12">PBKDF2</a>, and that the
-encryption is performed using <a href="http://oid-info.com/get/1.2.840.113549.3.7">des-ede3-cbc</a>. The hash
-function can be explicitly specified if needed; here it’s omitted, which means that it
-<a href="http://tools.ietf.org/html/rfc3370#section-4.4.1">defaults</a> to
-<a href="http://tools.ietf.org/html/rfc2104">hMAC-SHA1</a>.</p>
-
-<p>The nice thing about having all those identifiers in the file is that if better algorithms are
-invented in future, we can upgrade the key file without having to change the container file format.</p>
-
-<p>You can also see that the key derivation function uses an iteration count of 2,048. Compared to just
-one iteration in the traditional SSH key format, that’s good — it means that it’s much slower to
-brute-force the passphrase. The number 2,048 is currently hard-coded in OpenSSL; I hope that it will
-be configurable in future, as you could probably increase it without any noticeable slowdown on a
-modern computer.</p>
-
-<h2 id="conclusion-better-protection-for-your-ssh-private-keys">Conclusion: better protection for your SSH private keys</h2>
-
-<p>If you already have a strong passphrase on your SSH private key, then converting it from the
-traditional private key format to PKCS#8 is roughly comparable to adding two extra keystrokes to
-your passphrase, for free. And if you have a weak passphrase, you can take your private key
-protection from “easily breakable” to “slightly harder to break”.</p>
-
-<p>It’s so easy, you can do it right now:</p>
-
-<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.old
-$ openssl pkcs8 -topk8 -v2 des3 -in ~/.ssh/id_rsa.old -out ~/.ssh/id_rsa
-$ chmod 600 ~/.ssh/id_rsa
-# Check that the converted key works; if yes, delete the old one:
-$ rm ~/.ssh/id_rsa.old
-</code></pre>
-
-<p>The <code>openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private
-key, and twice for the passphrase for the new key. It doesn’t matter whether you use a new
-passphrase for the converted key or keep it the same as the old key.</p>
-
-<p>Not all software can read the PKCS8 format, but that’s fine — only your SSH client needs to be
-able to read the private key, after all. From the server’s point of view, storing the private key in
-a different format changes nothing at all.</p>
-
-<p>Update: <a href="https://twitter.com/brendanliamt">Brendan Thompson</a> has wrapped this conversion in a handy
-shell script called <a href="https://github.com/BrendanThompson/keycrypt">keycrypt</a>.</p>
-
-<h2 id="update-to-undo-this-change">Update: to undo this change</h2>
-
-<p>On Mac OS X 10.9 (Mavericks), the default installation of OpenSSH no longer supports PKCS#8 private
-keys for some reason. If you followed the instructions above, you may no longer be able to log into
-your servers. Fortunately, it’s easy to convert your private key from PKCS#8 format back into the
-traditional key format:</p>
-
-<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.pkcs8
-$ openssl pkcs8 -in ~/.ssh/id_rsa.pkcs8 -out ~/.ssh/id_rsa
-$ chmod 600 ~/.ssh/id_rsa
-$ ssh-keygen -f ~/.ssh/id_rsa -p
-</code></pre>
-
-<p>The <code>openssl</code> command decrypts the key, and the <code>ssh-keygen</code> command re-encrypts it using the
-traditional SSH key format.</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Schema evolution in Avro, Protocol Buffers and Thrift</title>
-                <link>http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html</link>
-                <comments>http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html#disqus_thread</comments>
-                <pubDate>Wed, 05 Dec 2012 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html</guid>
-                
-                <description><![CDATA[ So you have some data that you want to store in a file or send over the network. You may find yourself going through several phases of evolution: Using your programming language’s built-in serialization, such as Java serialization, Ruby’s marshal, or Python’s pickle. Or maybe you even invent your own... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>So you have some data that you want to store in a file or send over the network. You may find
-yourself going through several phases of evolution:</p>
-
-<ol>
-  <li>Using your programming language’s built-in serialization, such as
-<a href="http://docs.oracle.com/javase/6/docs/platform/serialization/spec/serialTOC.html">Java serialization</a>,
-Ruby’s <a href="http://www.ruby-doc.org/core-1.9.3/Marshal.html">marshal</a>, or Python’s
-<a href="http://docs.python.org/3.3/library/pickle.html">pickle</a>. Or maybe you even invent your own
-format.</li>
-  <li>Then you realise that being locked into one programming language sucks, so you move to using a
-widely supported, language-agnostic format like JSON (or XML if you like to party like it’s
-1999).</li>
-  <li>Then you decide that JSON is too verbose and too slow to parse, you’re annoyed that it doesn’t
-differentiate integers from floating point, and think that you’d quite like binary strings as
-well as Unicode strings. So you invent some sort of binary format that’s kinda like JSON, but
-binary (<a href="http://msgpack.org/">1</a>, <a href="http://bsonspec.org/">2</a>, <a href="http://ubjson.org/">3</a>,
-<a href="http://bjson.org/">4</a>,
-<a href="http://kaijaeger.com/articles/introducing-bison-binary-interchange-standard.html">5</a>,
-<a href="https://github.com/voldemort/voldemort/wiki/Binary-JSON-Serialization">6</a>).</li>
-  <li>Then you find that people are stuffing all sorts of random fields into their objects, using
-inconsistent types, and you’d quite like a <strong>schema</strong> and some <strong>documentation</strong>, thank you very
-much. Perhaps you’re also using a statically typed programming language and want to generate
-model classes from a schema. Also you realize that your binary JSON-lookalike actually isn’t all
-that compact, because you’re still storing field names over and over again; hey, if you had a
-schema, you could avoid storing objects’ field names, and you could save some more bytes!</li>
-</ol>
-
-<p>Once you get to the fourth stage, your options are typically <a href="http://thrift.apache.org/">Thrift</a>,
-<a href="http://code.google.com/p/protobuf/">Protocol Buffers</a> or <a href="http://avro.apache.org/">Avro</a>. All three
-provide efficient, cross-language serialization of data using a schema, and code generation for the
-Java folks.</p>
-
-<p>Plenty of comparisons have been written about them already
-(<a href="http://floatingsun.net/articles/thrift-vs-protocol-buffers/">1</a>,
-<a href="http://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/">2</a>,
-<a href="http://blog.mirthlab.com/2009/06/01/thrift-vs-protocol-bufffers-vs-json/">3</a>,
-<a href="http://tech.puredanger.com/2011/05/27/serialization-comparison/">4</a>).
-However, many posts overlook a detail that seems mundane at first, but is actually cruicial: <strong>What
-happens if the schema changes?</strong></p>
-
-<p>In real life, data is always in flux. The moment you think you have finalised a schema, someone will
-come up with a use case that wasn’t anticipated, and wants to “just quickly add a field”.
-Fortunately Thrift, Protobuf and Avro all support <strong>schema evolution</strong>: you can change the schema,
-you can have producers and consumers with different versions of the schema at the same time, and it
-all continues to work. That is an extremely valuable feature when you’re dealing with a big
-production system, because it allows you to update different components of the system independently,
-at different times, without worrying about compatibility.</p>
-
-<p>Which brings us to the topic of today’s post. I would like to explore how Protocol Buffers, Avro and
-Thrift actually encode data into bytes — and this will also help explain how each of them deals
-with schema changes. The design choices made by each of the frameworks are interesting, and by
-comparing them I think you can become a better engineer (by a little bit).</p>
-
-<p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
-
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
-    <span class="s2">&quot;userName&quot;</span><span class="o">:</span> <span class="s2">&quot;Martin&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;favouriteNumber&quot;</span><span class="o">:</span> <span class="mi">1337</span><span class="p">,</span>
-    <span class="s2">&quot;interests&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;daydreaming&quot;</span><span class="p">,</span> <span class="s2">&quot;hacking&quot;</span><span class="p">]</span>
-<span class="p">}</span></code></pre></div>
-
-<p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
-
-<h2 id="protocol-buffers">Protocol Buffers</h2>
-
-<p>The Protocol Buffers schema for the person object might look something like this:</p>
-
-<pre><code>message Person {
-    required string user_name        = 1;
-    optional int64  favourite_number = 2;
-    repeated string interests        = 3;
-}
-</code></pre>
-
-<p>When we <a href="https://developers.google.com/protocol-buffers/docs/encoding">encode</a> the data above using
-this schema, it uses 33 bytes, as follows:</p>
-
-<p><a href="/2012/12/protobuf.png"><img src="/2012/12/protobuf_small.png" width="550" height="230" /></a></p>
-
-<p>Look exactly at how the binary representation is structured, byte by byte. The person record is just
-the concatentation of its fields. Each field starts with a byte that indicates its tag number (the
-numbers <code>1</code>, <code>2</code>, <code>3</code> in the schema above), and the type of the field. If the first byte of a field
-indicates that the field is a string, it is followed by the number of bytes in the string, and then
-the UTF-8 encoding of the string. If the first byte indicates that the field is an integer, a
-variable-length encoding of the number follows. There is no array type, but a tag number can appear
-multiple times to represent a multi-valued field.</p>
-
-<p>This encoding has consequences for schema evolution:</p>
-
-<ul>
-  <li>There is no difference in the encoding between <code>optional</code>, <code>required</code> and <code>repeated</code> fields
-(except for the number of times the tag number can appear). This means that you can change a field
-from <code>optional</code> to <code>repeated</code> and vice versa (if the parser is expecting an <code>optional</code> field but
-sees the same tag number multiple times in one record, it discards all but the last value).
-<code>required</code> has an additional validation check, so if you change it, you risk runtime errors (if
-the sender of a message thinks that it’s optional, but the recipient thinks that it’s required).</li>
-  <li>An <code>optional</code> field without a value, or a <code>repeated</code> field with zero values, does not appear in
-the encoded data at all — the field with that tag number is simply absent. Thus, it is safe to
-remove that kind of field from the schema. However, you must never reuse the tag number for
-another field in future, because you may still have data stored that uses that tag for the field
-you deleted.</li>
-  <li>You can add a field to your record, as long as it is given a new tag number. If the Protobuf
-parser parser sees a tag number that is not defined in its version of the schema, it has no way of
-knowing what that field is called. But it <em>does</em> roughly know what type it is, because a 3-bit
-type code is included in the first byte of the field. This means that even though the parser can’t
-exactly interpret the field, it can figure out how many bytes it needs to skip in order to find
-the next field in the record.</li>
-  <li>You can rename fields, because field names don’t exist in the binary serialization, but you can
-never change a tag number.</li>
-</ul>
-
-<p>This approach of using a tag number to represent each field is simple and effective. But as we’ll
-see in a minute, it’s not the only way of doing things.</p>
-
-<h2 id="avro">Avro</h2>
-
-<p>Avro schemas can be written in two ways, either in a JSON format:</p>
-
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;record&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Person&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fields&quot;</span><span class="o">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;userName&quot;</span><span class="p">,</span>        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;favouriteNumber&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;long&quot;</span><span class="p">]},</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;interests&quot;</span><span class="p">,</span>       <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}}</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></div>
-
-<p>…or in an IDL:</p>
-
-<pre><code>record Person {
-    string               userName;
-    union { null, long } favouriteNumber;
-    array&lt;string&gt;        interests;
-}
-</code></pre>
-
-<p>Notice that there are no tag numbers in the schema! So how does it work?</p>
-
-<p>Here is the same example data <a href="http://avro.apache.org/docs/current/spec.html">encoded</a> in just 32
-bytes:</p>
-
-<p><a href="/2012/12/avro.png"><img src="/2012/12/avro_small.png" width="550" height="259" /></a></p>
-
-<p>Strings are just a length prefix followed by UTF-8 bytes, but there’s nothing in the bytestream that
-tells you that it is a string. It could just as well be a variable-length integer, or something else
-entirely. The only way you can parse this binary data is by reading it alongside the schema, and the
-schema tells you what type to expect next. You need to have the <strong>exact same version</strong> of the schema
-as the writer of the data used. If you have the wrong schema, the parser will not be able to make
-head or tail of the binary data.</p>
-
-<p>So how does Avro support schema evolution? Well, although you need to know the exact schema with
-which the data was written (the writer’s schema), that doesn’t have to be the same as the schema the
-consumer is expecting (the reader’s schema). You can actually give <em>two different</em> schemas to the
-Avro parser, and it uses
-<a href="http://avro.apache.org/docs/1.7.2/api/java/org/apache/avro/io/parsing/doc-files/parsing.html">resolution rules</a>
-to translate data from the writer schema into the reader schema.</p>
-
-<p>This has some interesting consequences for schema evolution:</p>
-
-<ul>
-  <li>The Avro encoding doesn’t have an indicator to say which field is next; it just encodes one field
-after another, in the order they appear in the schema. Since there is no way for the parser to
-know that a field has been skipped, there is no such thing as an optional field in Avro. Instead,
-if you want to be able to leave out a value, you can use a union type, like <code>union { null, long }</code>
-above. This is encoded as a byte to tell the parser which of the possible union types to use,
-followed by the value itself. By making a union with the <code>null</code> type (which is simply encoded as
-zero bytes) you can make a field optional.</li>
-  <li>Union types are powerful, but you must take care when changing them. If you want to add a type to
-a union, you first need to update all readers with the new schema, so that they know what to
-expect. Only once all readers are updated, the writers
-may start putting this new type in the records they generate.</li>
-  <li>You can reorder fields in a record however you like. Although the fields are encoded in the order
-they are declared, the parser matches fields in the reader and writer schema by name, which is why
-no tag numbers are needed in Avro.</li>
-  <li>Because fields are matched by name, changing the name of a field is tricky. You need to first
-update all <em>readers</em> of the data to use the new field name, while keeping the old name as an alias
-(since the name matching uses aliases from the reader’s schema). Then you can update the writer’s
-schema to use the new field name.</li>
-  <li>You can add a field to a record, provided that you also give it a default value (e.g. <code>null</code> if
-the field’s type is a union with <code>null</code>). The default is necessary so that when a reader using the
-new schema parses a record written with the old schema (and hence lacking the field), it can fill
-in the default instead.</li>
-  <li>Conversely, you can remove a field from a record, provided that it previously had a default value.
-(This is a good reason to give all your fields default values if possible.) This is so that when a
-reader using the <em>old</em> schema parses a record written with the <em>new</em> schema, it can fall back to
-the default.</li>
-</ul>
-
-<p>This leaves us with the problem of knowing the exact schema with which a given record was written.
-The best solution depends on the context in which your data is being used:</p>
-
-<ul>
-  <li>In Hadoop you typically have large files containing millions of records, all encoded with the same
-schema. <a href="http://avro.apache.org/docs/1.7.2/spec.html#Object+Container+Files">Object container files</a>
-handle this case: they just include the schema once at the beginning of the file, and the rest of
-the file can be decoded with that schema.</li>
-  <li>In an RPC context, it’s probably too much overhead to send the schema with every request and
-response. But if your RPC framework uses long-lived connections, it can negotiate the schema
-once at the start of the connection, and amortize that overhead over many requests.</li>
-  <li>If you’re storing records in a database one-by-one, you may end up with different schema versions
-written at different times, and so you have to annotate each record with its schema version. If
-storing the schema itself is too much overhead, you can use a
-<a href="http://avro.apache.org/docs/1.7.2/spec.html#Schema+Fingerprints">hash</a> of the schema, or a
-sequential schema version number. You then need a
-<a href="https://issues.apache.org/jira/browse/AVRO-1124">schema registry</a> where you can look up the exact
-schema definition for a given version number.</li>
-</ul>
-
-<p>One way of looking at it: in Protocol Buffers, every field in a record is tagged, whereas in Avro,
-the entire record, file or network connection is tagged with a schema version.</p>
-
-<p>At first glance it may seem that Avro’s approach suffers from greater complexity, because you need
-to go to the additional effort of distributing schemas. However, I am beginning to think that Avro’s
-approach also has some distinct advantages:</p>
-
-<ul>
-  <li>Object container files are wonderfully self-describing: the writer schema embedded in the file
-contains all the field names and types, and even documentation strings (if the author of the
-schema bothered to write some). This means you can load these files directly into interactive
-tools like <a href="http://pig.apache.org/">Pig</a>, and it Just Works™ without any configuration.</li>
-  <li>As Avro schemas are JSON, you can add your own metadata to them, e.g. describing application-level
-semantics for a field. And as you distribute schemas, that metadata automatically gets distributed
-too.</li>
-  <li>A schema registry is probably a good thing in any case, serving as
-<a href="https://github.com/ept/avrodoc">documentation</a> and helping you to find and reuse data. And
-because you simply can’t parse Avro data without the schema, the schema registry is guaranteed to
-be up-to-date. Of course you can set up a protobuf schema registry too, but since it’s not
-<em>required</em> for operation, it’ll end up being on a best-effort basis.</li>
-</ul>
-
-<h2 id="thrift">Thrift</h2>
-
-<p>Thrift is a much bigger project than Avro or Protocol Buffers, as it’s not just a data
-serialization library, but also an entire RPC framework. It also has a somewhat different culture:
-whereas Avro and Protobuf standardize a single binary encoding, Thrift
-<a href="http://mail-archives.apache.org/mod_mbox/hadoop-general/200904.mbox/%3CC5FEF47F.90BAC%25cwalter%40microsoft.com%3E">embraces</a>
-a whole variety of different serialization formats (which it calls “protocols”).</p>
-
-<p>Indeed, Thrift has
-<a href="https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TJSONProtocol.html">two</a>
-<a href="https://builds.apache.org//job/Thrift/javadoc/org/apache/thrift/protocol/TSimpleJSONProtocol.html">different</a>
-JSON encodings, and no fewer than three different binary encodings. (However, one of the binary
-encodings, DenseProtocol, is
-<a href="http://wiki.apache.org/thrift/LibraryFeatures">only supported in the C++ implementation</a>; since
-we’re interested in cross-language serialization, I will focus on the other two.)</p>
-
-<p>All the encodings share the same schema definition, in Thrift IDL:</p>
-
-<pre><code>struct Person {
-  1: string       userName,
-  2: optional i64 favouriteNumber,
-  3: list&lt;string&gt; interests
-}
-</code></pre>
-
-<p>The BinaryProtocol encoding is very straightforward, but also fairly wasteful (it takes 59 bytes to
-encode our example record):</p>
-
-<p><a href="/2012/12/binaryprotocol.png"><img src="/2012/12/binaryprotocol_small.png" width="550" height="269" /></a></p>
-
-<p>The CompactProtocol encoding is semantically equivalent, but uses variable-length integers and bit
-packing to reduce the size to 34 bytes:</p>
-
-<p><a href="/2012/12/compactprotocol.png"><img src="/2012/12/compactprotocol_small.png" width="550" height="276" /></a></p>
-
-<p>As you can see, Thrift’s approach to schema evolution is the same as Protobuf’s: each field is
-manually assigned a tag in the IDL, and the tags and field types are stored in the binary encoding,
-which enables the parser to skip unknown fields. Thrift defines an explicit list type rather than
-Protobuf’s repeated field approach, but otherwise the two are very similar.</p>
-
-<p>In terms of philosophy, the libraries are very different though. Thrift favours the “one-stop shop”
-style that gives you an entire integrated RPC framework and many choices (with
-<a href="http://wiki.apache.org/thrift/LibraryFeatures">varying cross-language support</a>), whereas Protocol
-Buffers and Avro appear to follow much more of a
-<a href="http://www.faqs.org/docs/artu/ch01s06.html">“do one thing and do it well”</a> style.</p>
-
-<p><em>This post has been translated into <a href="http://www.sjava.net/319">Korean</a> by Justin Song.</em></p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>The complexity of user experience</title>
-                <link>http://martin.kleppmann.com/2012/10/08/complexity-of-user-experience.html</link>
-                <comments>http://martin.kleppmann.com/2012/10/08/complexity-of-user-experience.html#disqus_thread</comments>
-                <pubDate>Mon, 08 Oct 2012 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2012/10/08/complexity-of-user-experience.html</guid>
-                
-                <description><![CDATA[ The problem of overly complex software is nothing new; it is almost as old as software itself. Over and over again, software systems become so complex that they become very difficult to maintain and very time-consuming and expensive to modify. Most developers hate working on such systems, yet nevertheless we... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>The problem of overly complex software is nothing new; it is almost as old as software itself. Over
-and over again, software systems become so complex that they become very difficult to maintain and
-very time-consuming and expensive to modify. Most developers hate working on such systems, yet
-nevertheless we keep creating new, overly complex systems all the time.</p>
-
-<p>Much has been written about this, including classic papers by Fred Brooks
-(<a href="http://people.eecs.ku.edu/~saiedian/Teaching/Sp08/816/Papers/Background-Papers/no-silver-bullet.pdf">No Silver Bullet</a>),
-and Ben Moseley and Peter Marks (<a href="http://shaffner.us/cs/papers/tarpit.pdf">Out of the Tar Pit</a>).
-They are much more worth reading than this post, and it is presumptuous of me to think I could add
-anything significant to this debate. But I will try nevertheless.</p>
-
-<p>Pretty much everyone agrees that if you have a choice between a simpler software design and a more
-complex design, all else being equal, that simpler is better. It is also widely thought to be
-worthwhile to deliberately invest in simplicity — for example, to spend effort refactoring
-existing code into a cleaner design — because the one-off cost of refactoring today is easily
-offset by the benefits of easier maintenance tomorrow. Also, much thought by many smart people has
-gone into finding ways of breaking down complex systems into manageable parts with manageable
-dependencies. I don’t wish to dispute any of that.</p>
-
-<p>But there is a subtlety that I have been missing in discussions about software complexity, that I
-feel somewhat ambivalent about, and that I think is worth discussing. It concerns the points where
-external humans (people outside of the team maintaining the system) touch the system — as
-developers using an API exposed by the system, or as end users interacting with a user interface. I
-will concentrate mostly on user interfaces, but much of this discussion applies to APIs too.</p>
-
-<h2 id="examples">Examples</h2>
-
-<p>Let me first give a few examples, and then try to extract a pattern from them. They are examples of
-situations where, if you want, you can go to substantial engineering effort in order to make a user
-interface a little bit nicer. (Each example based on a true story!)</p>
-
-<ul>
-  <li>You have an e-commerce site, and need to send out order confirmation emails that explain next
-steps to the customer. Those next steps differ depending on availability, the tax status of the
-product, the location of the customer, the type of account they have, and a myriad other
-parameters. You want the emails to only include the information that is applicable to this
-particular customer’s situation, and not burden them with edge cases that don’t apply to them. You
-also want the emails to read as coherent prose, not as a bunch of fragmented bullet points
-generated by <code>if</code> statements based on the order parameters. So you go and build a natural language
-grammar model for constructing emails based on sentence snippets (providing pluralisation,
-agreement, declension in languages that have it, etc), in such a way that for any one out of 100
-million possible parameter combinations, the resulting email is grammatically correct and easy to
-understand.</li>
-  <li>You have a multi-step user flow that is used in various different contexts, but ultimatively
-achieves the same thing in each context. (For example, <a href="http://rapportive.com/">Rapportive</a> has
-several OAuth flows for connecting your account with various social networks, and there are
-several different buttons in different places that all lead into the same user flow.) The simple
-solution is to make the flow generic, and not care how the user got there. But if you want to make
-the user feel good, you need to imagine what state their mind was in when they entered the flow,
-and customise the images, text and structure of the flow in order to match their goal. This means
-you have to keep track of where the user came from, what they were trying to do, and thread that
-context through every step of the flow. This is not fundamentally hard, but it is fiddly,
-time-consuming and error-prone.</li>
-  <li>You have an application that requires some arcane configuration. You could take the stance that
-you will give the user a help page and they will have to figure it out from there. Or you could
-write a sophisticated auto-configuration tool that inspects the user’s environment, analyses
-thousands of possible software combinations and configurations (and updates this database as new
-versions of other products in the environment are released), and automatically chooses the correct
-settings — hopefully without having to ask the user for help. With auto-configuration, the users
-never even know that they were spared a confusing configuration dialog. But somehow, word gets
-around that the product “just works”.</li>
-</ul>
-
-<h2 id="whats-a-user-requirement">What’s a user requirement?</h2>
-
-<p>We said above that simplicity is good. However, taking simplicity to an exaggerated extreme, you end
-up with software that does nothing. This implies that there are aspects of software complexity that
-are <strong>essential</strong> to the user’s problem that is being solved. (Note that I don’t mean complexity of
-the user interface, but complexity of the actual code that implements the solution to the user’s
-problem.)</p>
-
-<p>Unfortunately, there is a lot of additional complexity introduced by stuff that is not directly
-visible or useful to users: stuff that is only required to “grease the wheels”, for example to make
-legacy components work or to improve performance. Moseley and Marks call this latter type
-<strong>accidental</strong> complexity, and argue that it should be removed or abstracted away as much as
-possible. (Other authors define essential and accidental complexity slightly differently, but the
-exact definition is not important for the purpose of this post.)</p>
-
-<p>This suggests that it is important to understand what <strong>user problem</strong> is being solved, and that’s
-where things start getting tricky. When you say that something is essential because it fulfils a
-<strong>user requirement</strong> (as opposed to an implementation constraint or a performance optimisation),
-that presupposes a very utilitarian view of software. It assumes that the user is trying to get a
-job done, and that they are a rational actor. But what if, say, you are taking an emotional approach
-and optimising for <strong>user delight</strong>?</p>
-
-<p>What if the user didn’t know they had a problem, but you solve it anyway? If you introduce
-complexity in the system for the sake of making things a little nicer for the user (but without
-providing new core functionality), is that complexity really essential? What if you add a little
-detail that is surprising but delightful?</p>
-
-<p>You can try to reduce an emotional decision down to a rational one — for example, you can say that
-when a user plays a game, it is solving the user’s problem of boredom by providing distraction. Thus
-any feature which substantially contributes towards alleviating boredom may be considered essential.
-Such reductionism can sometimes provide useful angles of insight, but I think a lot would be lost by
-ignoring the emotional angle.</p>
-
-<p>You can state categorically that “great user experience is an essential feature”. But what does that
-mean? By itself, that statement is so general that could be used to argue for anything or nothing.
-User experience is subjective. What’s preferable for one user may be an annoyance for another user,
-even if both users are in the application’s target segment. Sometimes it just comes down to taste or
-fashion. User experience tends to have an emotional angle that makes it hard to fit into a rational
-reasoning framework.</p>
-
-<p>What I am trying to get at: there are things in software that introduce a lot of complexity (and
-that we should consequently be wary of), and that can’t be directly mapped to a bullet point on a
-list of user requirements, but that are nevertheless important and valuable. These things do not
-necessarily provide important functionality, but they contribute to how the user <strong>feels</strong> about the
-application. Their effect may be invisible or subconscious, but that doesn’t make them any less
-essential.</p>
-
-<h2 id="data-driven-vs-emotional-design">Data-driven vs. emotional design</h2>
-
-<p>Returning to the examples above: as an application developer, you can choose whether to take on
-substantial additional complexity in the software in order to simplify or improve the experience for
-the user. The increased software complexity actually <strong>reduces</strong> the complexity from the user’s
-point of view. These examples also illustrate how user experience concerns are not just a matter of
-graphic design, but can also have a big impact on how things are engineered.</p>
-
-<p>The features described above arguably do not contribute to the utility of the software — in the
-e-commerce example, orders will be fulfilled whether or not the confirmation emails are grammatical.
-In that sense, the complexity is unnecessary. But I would argue that these kind of user experience
-improvements are just as important as the utility of the product, because they determine how users
-<strong>feel</strong> about it. And how they feel ultimately determines whether they come back, and thus the
-success or failure of the product.</p>
-
-<p>One could even argue that the utility of a product is a subset of its user experience: if the
-software doesn’t do the job that it’s supposed to, then that’s one way of creating a pretty bad
-experience; however, there are also many other ways of creating a bad experience, while remaining
-fully functional from a utilitarian point of view.</p>
-
-<p>The emotional side of user experience can be a difficult thing for organisations to grapple with,
-because it doesn’t easily map to metrics. You can measure things like how long a user stayed on your
-site, how many things they clicked on, conversion rates, funnels, repeat purchase rates, lifetime
-values… but those numbers tell you very little about how happy you made a user. So you can take a
-“data-driven” approach to design decisions and say that a feature is worthwhile if and only if it
-makes the metrics go up — but I fear that an important side of the story is missed if you go
-solely by the numbers.</p>
-
-<h2 id="questions">Questions</h2>
-
-<p>This is as far as my thinking has got: believing that a great user experience is essential for many
-products; and recognising that building a great UX is hard, can require substantial additional
-complexity in engineering, and can be hard to justify in terms of logical arguments and metrics.
-Which leaves me with some unanswered questions:</p>
-
-<ul>
-  <li>Every budget is finite, so you have to prioritise things, and not everything will get done. When
-you consider building something that improves user experience without strictly adding utility, it
-has to be traded off against features that do add utility (is it better to shave a day off the
-delivery time than to have a nice confirmation email?), and the cost of the increased complexity
-(will that clever email generator be a nightmare to localise when we translate the site into other
-languages?). How do you decide about that kind of trade-offs?</li>
-  <li>User experience choices are often emotional and
-<a href="http://martin.kleppmann.com/2010/10/30/intuition-has-no-transfer-encoding.html">intuitive</a>
-(no number of focus groups and usability tests can replace good taste). That doesn’t make them any
-more or less important than rational arguments, but combining emotional and rational arguments can
-be tricky. Emotionally-driven people tend to let emotional choices overrule rational arguments,
-and rationally-driven people vice versa. How do you find the healthy middle ground?</li>
-  <li>If you’re aiming for a minimum viable product in order to test out a market (as opposed to
-improving a mature product), does that change how you prioritise core utility relative to “icing
-on the cake”?</li>
-</ul>
-
-<p>I suspect that the answers to the questions above are <em>“it depends”</em>. More precisely, <em>“how one
-thing is valued relative to another is an aspect of your particular organisation’s culture, and
-there’s no one right answer”</em>. That would imply that each of us should think about it; you should
-have your own personal answers for how you decide these things in your own projects, and be able to
-articulate them. But it’s difficult — I don’t think hard-and-fast rules have a chance of working
-here.</p>
-
-<p>I’d love to hear your thoughts in the comments below. If you liked this post, you can
-<a href="http://eepurl.com/csJmf">subscribe to email notifications</a> when I write something new :)</p>
 
                 ]]></content:encoded>
             </item>

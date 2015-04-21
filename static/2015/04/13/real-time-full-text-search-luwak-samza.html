@@ -1,0 +1,722 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Real-time full-text search with Luwak and Samza &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Real-time full-text search with Luwak and Samza"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Real-time full-text search with Luwak and Samza</h1>
+
+                <p>This is an edited transcript of a
+<a href="https://fosdem.org/2015/schedule/event/searching_over_streams_with_luwak_and_apache_samza/">talk</a>
+given by <a href="https://twitter.com/romseygeek">Alan Woodward</a> and
+<a href="https://martin.kleppmann.com/">Martin Kleppmann</a> at <a href="https://fosdem.org/2015/">FOSDEM 2015</a>.
+It was originally published
+<a href="http://blog.confluent.io/2015/04/13/real-time-full-text-search-with-luwak-and-samza/">on the Confluent blog</a>.</p>
+
+<p><em>Traditionally, search works like this: you have a large corpus of documents, and users write ad-hoc
+queries to find documents within that corpus. Documents may change from time to time, but on the
+whole, the corpus is fairly stable.</em></p>
+
+<p><em>However, with fast-changing data, it can be useful to turn this model on its head, and search over
+a stream of documents as they appear. For example, companies may want to detect whenever they are
+mentioned in a feed of news articles, or a Twitter user may want to see a continuous stream of
+tweets for a particular hashtag.</em></p>
+
+<p><em>In this talk, we describe open source tools that enable search on streams:
+<a href="https://github.com/flaxsearch/luwak">Luwak</a> is a <a href="http://lucene.apache.org/">Lucene</a>-based library
+for running many thousands of queries over a single document, with optimizations that make this
+process efficient. <a href="http://samza.apache.org/">Samza</a> is a stream processing framework based on
+<a href="http://kafka.apache.org/">Kafka</a>, allowing real-time computations to be distributed across
+a cluster of machines. We show how Luwak and Samza can be combined into an efficient and scalable
+streaming search engine.</em></p>
+
+<p><img src="/2015/04/streamsearch-01.png" alt="Searching over streams with Luwak &amp; Samza" width="550" height="412" /></p>
+
+<p>In this talk we’re going to discuss some work that we’ve been doing in the area of full-text search
+on streams. Perhaps you already know about normal search engines like Elasticsearch and Solr, but as
+we’ll see, searching on streams is quite a different problem, with some interesting challenges.</p>
+
+<p>Searching on streams becomes important when you’re dealing with real-time data that is rapidly
+changing. We’ll see some examples later of when you might need it.</p>
+
+<p><img src="/2015/04/streamsearch-02.png" alt="What is a stream?" width="550" height="197" /></p>
+
+<p>But first of all, we should define what we mean with a stream. For our purposes, we’ll say that
+a stream is an append-only, totally ordered sequence of records (also called events or messages).
+For example, a log file is a stream: each record is a line of text with some structure, perhaps some
+metadata like a timestamp or severity, perhaps an exception stack trace. Every log record is
+appended to the end of the file.</p>
+
+<p><img src="/2015/04/streamsearch-03.png" alt="Appending to a log, and tailing it" width="550" height="243" /></p>
+
+<p>There are a few ways you can read the content of a stream. For example, you can start at the
+beginning of the file and read the entire file sequentially. Or you can use <code>tail -f</code> to watch the
+file for any new records that are appended, and be notified when new data appears.</p>
+
+<p>We call a process that writes to a stream a <em>“producer”</em>, and a process that reads from the stream
+a <em>“consumer”</em>.</p>
+
+<p><img src="/2015/04/streamsearch-04.png" alt="How do you search a stream?" width="550" height="239" /></p>
+
+<p>Now say you’ve got some data in a stream, such as a log file, and you want to do full-text search on
+it. How do you go about doing that?</p>
+
+<p><img src="/2015/04/streamsearch-05.png" alt="Put the contents of a log file in an index" width="550" height="412" /></p>
+
+<p>The traditional approach is to load everything into a big search index, perhaps something like
+Elasticsearch or Solr. <a href="http://www.elasticsearch.org/overview/elkdownloads/">ELK</a> (Elasticsearch,
+Logstash and Kibana) is a currently trendy way of setting this up. That way you have the entire
+history of the stream searchable, and people can write any queries they want to search the index.</p>
+
+<p><img src="/2015/04/streamsearch-06.png" alt="Partitioned indexes for different time periods" width="550" height="412" /></p>
+
+<p>But what happens as new records are appended to the stream? You need to add them to an index in
+order to make them searchable. For example, you could imagine creating different indexes for
+different time periods: one for historical data, one for yesterday, one for the last hour, one for
+the last minute…</p>
+
+<p>And this is basically what people mean when they talk about “near-real-time” search: create an index
+for documents that appeared very recently, and send any queries to that index as well as the older
+historical indexes.</p>
+
+<p>Let’s talk about some examples of this kind of search in practice.</p>
+
+<p><img src="/2015/04/streamsearch-07.png" alt="Example: Twitter search" width="550" height="431" /></p>
+
+<p>Take Twitter, for example. If you type something in the search box, you’ll see a list of tweets that
+match your search query, ranked by recency. The index includes
+<a href="https://blog.twitter.com/2014/building-a-complete-tweet-index">all public tweets ever written</a>,
+broken down my time period, similar to the diagram above.</p>
+
+<p>But if you stay on that page for a while, notice that something happens: a bar appears at the top of
+the page, saying that there are new results for your query. What happened here? When you typed your
+search query, it seems that Twitter didn’t forget about the query the moment they returned the
+results to you. Rather, they must have <em>remembered</em> the query, and <em>continued to search the stream</em>
+of tweets for any new matches for your query. When new matches appear in the stream, they send
+a notification to your browser.</p>
+
+<p>In this case, the stream we’re searching is Twitter’s so-called <em>firehose</em> of Tweets. I don’t know
+how they’ve implemented that. Perhaps they group tweets into batches — say, create an index for 10
+seconds worth of tweets, and then run the queries from all open search sessions against that index.
+But somehow they are doing full-text search on a stream.</p>
+
+<p><img src="/2015/04/streamsearch-08.png" alt="Example: Google alerts" width="550" height="277" /></p>
+
+<p>Another example is Google Alerts. This is a feature of Google where you can register some search
+queries with their system, and they send you an email notification when new web pages matching your
+query are published. For example, you might set up an alert for your name or company name, so that
+you find out when people write stuff about you.</p>
+
+<p>Google internally has a stream of new web pages being discovered by its crawler, and Google Alerts
+allows you to register a query against that stream. Google remembers the query, and runs the query
+against every new document that is discovered and added to its index.</p>
+
+<p><img src="/2015/04/streamsearch-09.png" alt="Comparing after-the-fact search and streaming search" width="550" height="412" /></p>
+
+<p>So it seems that we can divide search into two categories:</p>
+
+<ul>
+  <li>In one case, you put all the documents in a big index, and people can search that index by writing
+ad-hoc queries. We could call that <em>“after-the-fact search”</em>, because it’s searching a repository
+of historical documents that we received at some point in the past.</li>
+  <li>In the other case, you register the queries in advance, and then the system checks each document
+that appears on a stream, to see whether it matches any of the registered queries. This is
+<em>streaming search</em>.</li>
+</ul>
+
+<p>It often makes sense to combine these two: for example, in the Twitter case, both types of search
+are happening. You first get after-the-fact search results from the last 7 days, but while you have
+the search page open, your query is also registered for a stream search, so that you can follow the
+stream of tweets that match your query.</p>
+
+<p>You might have seen this pattern in
+<a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html">Elasticsearch Percolator</a>,
+for example. The streaming search approach we’re describing here is similar to Percolator, but we
+think that it will scale better.</p>
+
+<p><img src="/2015/04/streamsearch-10.png" alt="One document, many queries" width="550" height="412" /></p>
+
+<p>So, how do you actually implement streaming search? Well, we saw earlier that for near-real-time
+search, you construct a small index for recently added documents. We can take that approach to the
+extreme: for each new document that appears on a stream, we create a new index, containing just that
+one document. Then we can run through all of the registered queries, test each query against the
+one-document index, and output a list of all the queries that match the new document. A downstream
+system can then take those matches and notify the owners of the queries.</p>
+
+<p><img src="/2015/04/streamsearch-11.png" alt="Does it scale?" width="550" height="412" /></p>
+
+<p>However, the question is: how efficient is this going to be when you have lots of queries, or very
+complex queries? If you only have a few hundred registered queries, you can pretty quickly run
+through all of those queries for every new document on the stream — but if you have hundreds of
+thousands of queries, it can get quite slow.</p>
+
+<p>Also, if you have very complex queries, even just executing a single query can take a long time.
+I (Alan) work with some clients who provide
+<a href="http://en.wikipedia.org/wiki/Media_monitoring">media monitoring</a> services (also known as <em>clipping
+companies</em>). They collect feeds of newspaper articles and other news from around the world, and
+their clients are companies who want to know whenever they are mentioned in the news. The media
+monitoring companies construct one big query for each client, and those queries can become really
+huge — a query might be hundreds of kilobytes long! They contain a large number of terms, have lots
+of nested boolean operators, and lots of exclusions (negated search terms).</p>
+
+<p>To give just one example, in the UK there’s a magazine called “<a href="http://www.which.co.uk/">Which?</a>”.
+If you simply search for the term “which”, you match a huge number of documents, since that’s such
+a common word in English. They have to construct really complex queries to filter out most of the
+noise.</p>
+
+<p>So, if you have a large number of queries, or very complex queries, the streaming search becomes
+slow. We need to find ways of optimizing that. Observe this: the fastest query is a query that you
+never execute. So, if we can figure out which queries are definitely <em>not</em> going to match a given
+document, we can skip those queries entirely, and potentially save ourselves a lot of work.</p>
+
+<p><img src="/2015/04/streamsearch-12.png" alt="Flax Luwak" width="550" height="281" /></p>
+
+<p>Which brings us to <a href="https://github.com/flaxsearch/luwak">Luwak</a>, a library that
+<a href="http://www.flax.co.uk/">we (Flax)</a> wrote in order to do efficient streaming search. Luwak is open
+source and builds upon Apache Lucene. It works the other way round from a normal search index: with
+a normal index, you first add documents to the index, and then you query it. Luwak turns this on its
+head: you first register queries with Luwak, and then match documents against them. Luwak tells you
+which of the registered queries match the document.</p>
+
+<p>Let’s go a bit into the detail of how Luwak optimizes this matching process.</p>
+
+<p><img src="/2015/04/streamsearch-13.png" alt="Index of queries" width="550" height="412" /></p>
+
+<p>As I said, we want some way of figuring out which queries are definitely <em>not</em> going to match
+a document, so that we don’t need to bother executing those queries. In order to do this, we can do
+something unusual: we can index the <em>queries</em>! In search engines you normally index documents, but
+in this case we’re going to index the queries.</p>
+
+<p>Let’s say we have three registered queries: Q1 is <code>“WHEELS” NEAR “BUS”</code>, Q2 is <code>“WHEELS” NEAR
+“CAR”</code>, and Q3 is <code>“WHEELS” OR “BUMPERS”</code>. First observe this: in a conjunction query (that is,
+a query like A AND B AND C), <em>all</em> the search terms must appear in the document for the query to
+match. (An operator like NEAR is a specialized form of AND that has an additional proximity
+restriction.) For example, a document must contain both “wheels” and “bus” in order to match Q1; if
+a document doesn’t contain the word “bus”, there’s no chance it can match Q1.</p>
+
+<p>That means, we can arbitrarily pick one term from a conjunction and check whether the document
+contains that term. If the document doesn’t contain the term, we can be sure that the document won’t
+match the conjunction either.</p>
+
+<p>On the other hand, a disjunction query (with an OR operator, like Q3 for example) matches if <em>any</em>
+of the search terms appear in the document. For example, if a document doesn’t contain “wheels”, it
+may nevertheless match Q3 if it contains “bumpers”. In this case, we must extract <em>all</em> of the terms
+from the disjunction; if any one of those terms appears in the document, we have to test the full
+query.</p>
+
+<p>We can now take those terms that we extracted from queries (for example “bus” from Q1, “car” from
+Q2, and “bumpers” and “wheels” from Q3), and build an index of those terms. As I said, this is an
+index of <em>queries</em>, not of documents. The index is a dictionary from terms to queries: it maps terms
+to queries containing that term.</p>
+
+<p><img src="/2015/04/streamsearch-14.png" alt="Document disjunction" width="550" height="412" /></p>
+
+<p>Now that we’ve taken all our registered queries and indexed them, we can move on to the next step:
+processing the stream of documents. For each document, we want to find all the queries that match.
+How do we go about doing this?</p>
+
+<p>The trick is to take each document, and turn it into a <em>query</em>. (Previously we created an index of
+queries. Now we’re turning a document into a query. How upside-down!) Namely, we take all the words
+(terms) that appear in the document, and construct a disjunction (OR) query from all of those words.
+Intuitively, this is saying: “find me all the queries that match any of the words in this document”.
+ Creating an inverted index from a single document automatically gives us this list of terms.</p>
+
+<p><img src="/2015/04/streamsearch-15.png" alt="Selecting candidate queries" width="550" height="412" /></p>
+
+<p>Now that we have created an index of queries, and turned a document into a query, we can figure out
+which queries match the document. First, we run the document disjunction query against the index of
+queries. This will tell us which queries <em>may</em> match the document.</p>
+
+<p>In our example, we created the query index by extracting the term “bus” from Q1, the term “car” from
+Q2, and the terms “bumpers” and “wheels” from Q3. Also, we turned the document “The wheels on the
+bus go round and round” into the disjunction query:</p>
+
+<pre><code>“and” OR “bus” OR “go” OR “on” OR “round” OR “the” OR “wheels”
+</code></pre>
+
+<p>Running that disjunction query against the query index, we get a hit on the terms “bus” (Q1) and
+“wheels” (Q3), but the terms “bumpers” (Q3) and “car” (Q2) don’t appear in the document. Therefore
+we can conclude that Q1 and Q3 <em>might</em> match the document, but Q2 definitely <em>doesn’t</em> match the
+document.</p>
+
+<p>The next step is then to run queries Q1 and Q3 against the document index, to see whether they
+really do match. But we don’t need to run Q2, because we’ve already established that it definitely
+doesn’t match.</p>
+
+<p>This whole process of indexing queries may seem a bit complicated, but it is a really powerful
+optimization if you have a large number of queries. It can cut out 99% of the queries you would
+otherwise have to execute, and thus massively speed up searching on streams. As I said, the fastest
+query is one that you never even execute.</p>
+
+<p><img src="/2015/04/streamsearch-16.png" alt="Query decomposition" width="550" height="412" /></p>
+
+<p>Besides indexing queries, there are other optimizations we can make. One particular optimization
+that we’ve found useful: if you have a big query that contains an OR operator at the top level, you
+can break that big query into smaller ones. That is especially useful if one of the subqueries is
+simple (fast to execute), and another one is complex (slow to execute).</p>
+
+<p>Say we have a document that will match on the simple subquery, but not on the complex one.  In the
+normal case, the whole query is run against the document, so we still pay the price for executing
+the complex subquery, even though it doesn’t match. If we decompose it into its constituent parts,
+however, then only the simple subquery will be selected, and we can avoid the performance hit of
+running the complex one.</p>
+
+<p><img src="/2015/04/streamsearch-17.png" alt="Term frequency analysis and phrase query analysis" width="550" height="260" /></p>
+
+<p>We said earlier that when you’re indexing the queries, you can make some arbitrary choices about
+which terms to extract. For example, for the query <em>“car” AND “bumpers”</em>, you could choose either
+“car” or “bumpers” as the term to use in the query index. Which one should you choose?</p>
+
+<p>It’s helpful to know how often each term occurs in your documents. For example, perhaps “car” is
+quite a common term, but “bumpers” is much more rare. In that case, it would be better to use
+“bumpers” in the query index, because it’s less likely to appear in documents. Only the small number
+of documents containing the term “bumpers” would then need to be matched against the query <em>“car”
+AND “bumpers”</em>, and you save yourself the effort of executing the query for the large number of
+documents that contain “car” but not “bumpers”.</p>
+
+<p><img src="/2015/04/streamsearch-18.png" alt="Query term extraction" width="550" height="412" /></p>
+
+<p>Another, more advanced optimization technique considers several different possibilities of
+extracting terms from queries. Take the query tree above, containing five terms and four boolean
+operators. Remember the rule for extracting terms that we established earlier: extract any one of
+the children of a conjunction (AND), but extract all of the children of a disjunction (OR). This
+means there are three different combinations of terms that you could extract from the above query
+tree:</p>
+
+<p><img src="/2015/04/streamsearch-19.png" alt="Three ways of extracting terms from a query" width="550" height="107" /></p>
+
+<p>Say you have a document “term1 term2 term3”: this document does not match the query (because neither
+of the required term4 or term5 appears). However, in the first two combinations above (term1 and
+term2 extracted, or term1 and term3 extracted), the document would nevertheless be selected to be
+matched against the query. In the third combination above (term4 and term5 extracted), the document
+wouldn’t be selected, because we can tell from the query index that it is definitely not going to
+match the query.</p>
+
+<p>Can we make the query pre-selection more precise? Yes, we can! Rather than just extracting one
+(arbitrary) set of terms from the query, we can extract <em>several</em> sets of terms from the same query,
+like the three above, and index them into separate fields (let’s call them _a, _b and _c). You then
+run your document disjunction against <em>all</em> those fields, and the set of queries you need to run is
+the intersection of those results — a conjunction of disjunctions, if you like.</p>
+
+<p>The document “term1 term2 term3”, which we previously turned into a simple disjunction of terms, now
+turns into something like this:</p>
+
+<pre><code>_a:(term1 OR term2 OR term3) AND
+_b:(term1 OR term2 OR term3) AND
+_c:(term1 OR term2 OR term3)
+</code></pre>
+
+<p>The first two terms of the conjunction match, but the third doesn’t, and so we don’t select this
+query. It’s still an approximation — you still need to execute the full query to be sure whether it
+matches or not — but with these optimizations you can further reduce the number of queries you need
+to execute.</p>
+
+<p>Fortunately, Luwak has implemented all of these optimizations already, and they’re available for you
+to use today.</p>
+
+<p>However, as described so far, Luwak runs on a single machine. At some point, you may have so many
+queries or such high throughput of documents that a single machine is not enough, even after you
+have applied all of these optimizations. Which brings us to the second half of this talk: scaling
+stream search across a cluster of machines.</p>
+
+<p><em>(At this point, <a href="http://martin.kleppmann.com/">Martin</a> took over from
+<a href="https://twitter.com/romseygeek">Alan</a>)</em></p>
+
+<p><img src="/2015/04/streamsearch-20.png" alt="Kafka and Samza" width="550" height="412" /></p>
+
+<p>Rather than inventing our own distributed computing framework — which would be likely to go wrong,
+because distributed systems are hard — we’re going to build on a robust foundation. We’re going to
+use <a href="http://kafka.apache.org/">Apache Kafka</a> and <a href="http://samza.apache.org/">Apache Samza</a>, two open
+source projects that originated at LinkedIn.</p>
+
+<p>I’ll start by giving a bit of background about Kafka, and then talk about how we embedded Luwak
+inside Samza in order to scale out search on streams.</p>
+
+<p><img src="/2015/04/streamsearch-21.png" alt="A partitioned stream in Kafka" width="550" height="412" /></p>
+
+<p>Kafka is a kind of <em>message broker</em> or <em>message queue</em> — that is, it takes messages that originate
+in one process (a <em>producer</em>), and delivers them to another process (a <em>consumer</em>). It does so in
+a scalable, fault-tolerant manner.</p>
+
+<p>The way it works is simple but remarkably effective. You can imagine Kafka as one big, append-only
+file. Whenever a producer wants to send a new message to a stream, it simply appends it to the end
+of the file. That’s the only way how you can write to Kafka: by appending to the end of a file.</p>
+
+<p>A consumer is like a <code>tail -f</code> on that file, just like what we described at the beginning of this
+talk. Each consumer reads the messages in the file sequentially, and each consumer has a current
+<em>position</em> or <em>offset</em> in this file. Thus, it knows that all messages before that position have
+already been read, and all messages after that position have not yet been read. This makes Kafka
+very efficient: the brokers don’t have to keep track of which consumer has seen which messages,
+because the consumers themselves just need to store their current position.</p>
+
+<p>In order to scale across multiple machines, a Kafka stream is also <em>partitioned</em>. That means,
+there’s not just one append-only file, but several. Each partition is completely independent from
+the others, so different partitions can live on different machines.</p>
+
+<p><img src="/2015/04/streamsearch-22.png" alt="Replication over Kafka broker nodes" width="550" height="412" /></p>
+
+<p>In addition, Kafka provides replication, i.e. maintaining a copy of the same data on multiple
+machines. This is important for fault tolerance — so that if one machine dies, you don’t lose any
+data, and everything keeps running.</p>
+
+<p>Kafka does this using a leader/follower model. Each partition of a stream has a leader on one broker
+node, and a configurable number of followers on other broker nodes. All the new messages for
+a partition go to its leader, and Kafka replicates them from the leader to the followers. If
+a broker node goes down, and it was the leader for some partition, then one of the followers for
+that partition becomes the new leader.</p>
+
+<p>Every message in Kafka has a <em>key</em> and a <em>value</em> (which can be arbitrary byte strings). The key is
+used for two different things: firstly, it determines which partition the message should go to (we
+make sure that all the messages with the same key go to the same partition, by choosing the
+partition based on a hash of the key). Secondly, it is used for <em>compaction</em>.</p>
+
+<p><img src="/2015/04/streamsearch-23.png" alt="Kafka changelog compaction" width="550" height="412" /></p>
+
+<p>Compaction is an exception to Kafka’s otherwise strict append-only model. You don’t have to use
+compaction, but if you do turn it on, then Kafka keeps track of the keys in the stream. And if there
+are several messages with the same key, then Kafka is allowed to throw away older messages with that
+key — only the newest message for a given key is guaranteed to be retained.</p>
+
+<p>In the picture above, there are originally three messages with key A, and compaction discards two of
+them. In effect, this means that later messages can “overwrite” earlier messages with the same key.
+This overwriting doesn’t happen immediately, but at some later time: compaction is done in
+a background thread, a bit like garbage collection.</p>
+
+<p>A Kafka stream with compaction is thus similar to a database with a key-value data model. If a key
+is never overwritten, it is never discarded, so it stays in the stream forever. With compaction, we
+can thus keep a complete history of key-value pairs:</p>
+
+<p><img src="/2015/04/streamsearch-24.png" alt="Keeping complete history of events in Kafka" width="550" height="412" /></p>
+
+<p>Without compaction, the stream would keep growing forever (the size of the stream is proportional to
+the number of messages ever sent). But with compaction, the size of the stream is proportional to
+the number of distinct keys — just like a database. If you can imagine storing all the keys and
+values in a database, you can equally well store all the keys and values in a Kafka stream.</p>
+
+<p>Why is this useful? Well, if we want to use Luwak in a reliable manner, there is a problem we need
+to solve: when you register a query with Luwak, it is only kept in memory. Thus, whenever the Luwak
+process is restarted, it needs to reload its list of queries from stable storage into memory.</p>
+
+<p>You could use a database for this, but using a Kafka stream has a big advantage: Luwak can consume
+the stream of queries, so it gets notified whenever someone registers a new query, modifies
+a registered query, or unregisters (deletes) a query. We simply use the query ID as the message key,
+and the query string as the message value (or a null value when a query is unregistered). And stream
+compaction ensures that the query stream doesn’t get too big.</p>
+
+<p><img src="/2015/04/streamsearch-25.png" alt="Re-processing historical events from stream" width="550" height="412" /></p>
+
+<p>Now, whenever Luwak starts up, it can jump to the very beginning of the queries stream, and consume
+it from beginning to end. All queries in that stream are loaded into memory, so that Luwak knows
+what queries it should apply to documents. Only once it has finished consuming the stream, Luwaks
+starts processing documents and matching them against queries. We call the query stream a
+<a href="http://samza.apache.org/learn/documentation/0.8/container/streams.html#bootstrapping">bootstrap stream</a>,
+because it’s used to bootstrap (initialize) the in-memory state of the stream consumer.</p>
+
+<p>This brings us to <a href="http://samza.apache.org/">Samza</a>, a framework for writing stream processing jobs
+on top of Kafka. A basic Samza job is very simple: you write a bit of code (implementing a Java
+interface called <a href="http://samza.apache.org/learn/documentation/0.8/api/overview.html">StreamTask</a>)
+and tell it which stream you want to consume, and Samza calls the process() method on your code for
+every message that is consumed from the input stream. The code can do whatever it wants, including
+sending messages to an output stream.</p>
+
+<p><img src="/2015/04/streamsearch-26.png" alt="Samza takes a Kafka stream an input, produces another as output" width="550" height="412" /></p>
+
+<p>As the input stream from Kafka is split into partitions, Samza creates a separate StreamTask for
+each partition, and each StreamTask processes the messages in its corresponding partition
+sequentially. Although a StreamTask only processes input from one partition, it can send output to
+any partition of its output streams.</p>
+
+<p>This partitioning model allows a Samza job to have two or more input streams, and “join” them
+together:</p>
+
+<p><img src="/2015/04/streamsearch-27.png" alt="Joining streams in Samza" width="550" height="412" /></p>
+
+<p>By default, if a job has two input streams (say A and B), Samza sends partition 1 of stream A and
+partition 1 of stream B to the same StreamTask 1; it sends partition 2 of A and partition 2 of B to
+the same StreamTask 2; and so on. This is illustrated in the picture above. Note this only really
+works if both input streams have the same number of partitions.</p>
+
+<p>This allows the stream join to scale, by partitioning both input streams in the same way. For
+example, if both streams are partitioned by user ID (i.e. using the user ID as the Kafka message
+key), then you can be sure that all the messages for a particular user ID on both input streams are
+routed to the same StreamTask. That StreamTask can then keep whatever state it needs in order to
+join the streams together.</p>
+
+<p>How do we bring full-text search on streams into this processing model?</p>
+
+<p><img src="/2015/04/streamsearch-28.png" alt="Integration of Luwak with Samza" width="550" height="412" /></p>
+
+<p>Alan and I hacked together a proof-of-concept called
+<a href="https://github.com/romseygeek/samza-luwak">Samza-Luwak</a> to test using Luwak inside a Samza job. It
+works as follows:</p>
+
+<p>There are two input streams (Kafka topics): one for queries, and one for documents. The query stream
+is a bootstrap stream with compaction, as described above. Whenever a user wants to register, modify
+or unregister a query, they send a message to the queries stream. The Samza job consumes this
+stream, and whenever a message appears, it updates Luwak’s in-memory roster of queries.</p>
+
+<p>The documents stream contains the things that should be matched by the queries (the tweets if you’re
+building Twitter search, the web pages from the crawler if you’re building Google Alerts, etc). The
+Samza job also consumes the documents stream, and whenever a document appears, it is matched against
+the index of registered queries, as described previously. It then sends a message to an output
+stream, indicating which queries matched.</p>
+
+<p>How do we distribute this matching process across multiple machines? The problem is that Samza’s
+default partitioning model actually doesn’t do what we need. As I said previously, Samza by default
+sends partition 1 of all the input streams to task 1, partition 2 of all the input streams to task
+2, and so on:</p>
+
+<p><img src="/2015/04/streamsearch-29.png" alt="Joining by co-partitioning two streams" width="550" height="412" /></p>
+
+<p>This is a good partitioning model if you’re doing an
+<a href="https://en.wikipedia.org/wiki/Join_(SQL)#Equi-join">equi-join</a>, because you can set up the
+partitioning of the input streams such that each tasks only needs to know about its own input
+partitions, and can ignore all the other partitions. This allows you to increase parallel processing
+and scale the computation simply by creating more partitions.</p>
+
+<p>However, full-text search is different. We’re not doing an equi-join on a particular field, we’re
+trying to find matches involving arbitrarily complicated boolean expressions. In general, we don’t
+know in advance which documents are going to match which queries. (The query index tells us
+<em>approximately</em> which queries might match, but it’s not precise enough to use for partitioning.)</p>
+
+<p>We still want to partition the query and document streams, because that will allow the system to
+scale. But we also want to be able to match every document against every possible query. In other
+words, we need to make sure that every query partition is joined with every document partition:</p>
+
+<p><img src="/2015/04/streamsearch-31.png" alt="Cartesian product join" width="550" height="412" /></p>
+
+<p>If you think about it, what we need is a
+<a href="https://en.wikipedia.org/wiki/Cartesian_product">cartesian product</a> of query partitions and
+document partitions. We want to create a separate StreamTask for every possible combination of
+a query partition and a document partition. For example, in the picture above, StreamTask 8 is
+responsible for handling query partition 4 and document partition 2.</p>
+
+<p>This gives us exactly the semantics we need: every query is sent to multiple tasks (one task per
+document partition), and conversely, every document is sent to multiple tasks (one task per query
+partition). Each task can independently do its work on its own partitions, and afterwards you just
+need to combine all the matches for each document. The dataflow is similar to the scatter-gather
+approach you get in distributed search engines.</p>
+
+<p>Unfortunately, this mode of streaming joins is not yet supported in Samza, but it’s being worked on
+(you can track it under <a href="https://issues.apache.org/jira/browse/SAMZA-353">SAMZA-353</a> if you’re
+interested). Once this feature is in place, you’ll be able to perform full-text search on streams at
+arbitrary scale, simply by adding new partitions and adding more machines to the cluster. Combining
+the clever indexing of Luwak with the scalability of Kafka and Samza — isn’t that cool?</p>
+
+<p><em>If you want to play with Samza, there’s a quickstart project
+“<a href="http://samza.apache.org/startup/hello-samza/0.8/">hello-samza</a>”, and you can find our
+proof-of-concept integration of Samza and Luwak
+<a href="https://github.com/romseygeek/samza-luwak">on Github</a>.</em></p>
+
+<p><em><a href="https://twitter.com/romseygeek">Alan Woodward</a> is a director of <a href="http://www.flax.co.uk/">Flax</a>,
+a consultancy specializing in open source search engines. He is a committer on
+<a href="http://lucene.apache.org/">Lucene/Solr</a>, and developer of
+<a href="https://github.com/flaxsearch/luwak">Luwak</a>. He previously worked on the enterprise search product
+Fast ESP.</em></p>
+
+<p><em><a href="https://martin.kleppmann.com/">Martin Kleppmann</a> is a committer on
+<a href="http://samza.apache.org/">Apache Samza</a> and author of the upcoming O’Reilly book
+<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>. He previously co-founded
+<a href="https://rapportive.com/">Rapportive</a>, which was acquired by <a href="https://www.linkedin.com/">LinkedIn</a>.</em></p>
+
+
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="https://akamaicovers.oreilly.com/images/0636920032175/cat.gif" border="0" alt="Designing Data-Intensive Applications"/></a></p>
+        <p>I'm writing a book for O'Reilly, called
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>13 Apr 2015: <a href="/2015/04/13/real-time-full-text-search-luwak-samza.html">Real-time full-text search with Luwak and Samza</a></li>
+            
+              <li>04 Mar 2015: <a href="/2015/03/04/turning-the-database-inside-out.html">Turning the database inside-out with Apache Samza</a></li>
+            
+              <li>29 Jan 2015: <a href="/2015/01/29/stream-processing-event-sourcing-reactive-cep.html">Stream processing, Event sourcing, Reactive, CEP… and making sense of it all</a></li>
+            
+              <li>10 Dec 2014: <a href="/2014/12/10/build-your-own-google.html">Wouldn’t it be fun to build your own Google?</a></li>
+            
+              <li>25 Nov 2014: <a href="/2014/11/25/hermitage-testing-the-i-in-acid.html">Hermitage: Testing the “I” in ACID</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2015/06/02/change-capture-at-berlin-buzzwords.html">02 Jun 2015 at Berlin Buzzwords</a></li>
+            
+              <li><a href="/2015/05/06/data-agility-at-strata.html">06 May 2015 at Strata + Hadoop World</a></li>
+            
+              <li><a href="/2015/04/24/logs-for-data-infrastructure-at-craft.html">24 Apr 2015 at Craft Conf</a></li>
+            
+              <li><a href="/2015/03/05/kafka-at-imperial.html">05 Mar 2015 at Imperial College London</a></li>
+            
+              <li><a href="/2015/02/11/database-inside-out-at-salesforce.html">11 Feb 2015 at Salesforce.com</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+<img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2015/04/13/real-time-full-text-search-luwak-samza.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Google Analytics -->
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+<!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
