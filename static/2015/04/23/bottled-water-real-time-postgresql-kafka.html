@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Bottled Water: Real-time integration of PostgreSQL and Kafka &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Bottled Water: Real-time integration of PostgreSQL and Kafka"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Bottled Water: Real-time integration of PostgreSQL and Kafka</h1>
+
+                <p><em>This post was originally published
+<a href="http://blog.confluent.io/2015/04/23/bottled-water-real-time-integration-of-postgresql-and-kafka/">on the Confluent blog</a>.</em></p>
+
+<p>Writing to a database is easy, but getting the data out again is surprisingly hard.</p>
+
+<p>Of course, if you just want to query the database and get some results, that’s fine. But what if you
+want a copy of your database contents in some other system — for example, to make it searchable in
+Elasticsearch, or to pre-fill caches so that they’re nice and fast, or to load it into a data
+warehouse for analytics, or if you want to migrate to a different database technology?</p>
+
+<p>If your data never changed, it would be easy. You could just take a snapshot of the database (a full
+dump, e.g. a backup), copy it over, and load it into the other system. The problem is that the data
+in the database is constantly changing, and so the snapshot is already out-of-date by the time
+you’ve loaded it. Even if you take a snapshot once a day, you still have one-day-old data in the
+downstream system, and on a large database those snapshots and bulk loads can become very expensive.
+Not really great.</p>
+
+<p>So what do you do if you want a copy of your data in several different systems?</p>
+
+<p>One option is for your application to do so-called “dual writes”. That is, every time your
+application code writes to the database, it also updates/invalidates the appropriate cache entries,
+reindexes the data in your search engine, sends it to your analytics system, and so on:</p>
+
+<p><img src="/2015/04/bottledwater-01.png" alt="Application-managed dual writes" width="550" height="412" /></p>
+
+<p>However, as I explain in <a href="http://martin.kleppmann.com/2014/10/28/staying-agile-at-span.html">one of my talks</a>,
+the dual-writes approach is really problematic. It suffers from race conditions and reliability
+problems. If slightly different data gets written to two different datastores (perhaps due to a bug
+or a race condition), the contents of the datastores will gradually drift apart — they will become
+more and more inconsistent over time. Recovering from such gradual data corruption is difficult.</p>
+
+<p>If you rebuild a cache or index from a snapshot of a database, that has the advantage that any
+inconsistencies get <a href="http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html">blown away</a> when
+you rebuild from a new database dump. However, on a large database, it’s slow and inefficient to
+process the entire database dump once a day (or more frequently). How could we make it fast?</p>
+
+<p>Typically, only a small part of the database changes between one snapshot and the next. What if you
+could process only a “diff” of what changed in the database since the last snapshot? That would also
+be a smaller amount of data, so you could take such diffs more frequently. What if you could take
+such a “diff” every minute? Every second? 100 times a second?</p>
+
+<p>When you take it to the extreme, the changes to a database become a stream. Every time someone
+writes to the database, that is a message in the stream. If you apply those messages to a database
+in exactly the same order as the original database committed them, you end up with an exact copy of
+the database. And if you think about it, this is exactly
+<a href="http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/">how database replication works</a>.</p>
+
+<p>The replication approach to data synchronization works much better than dual writes. First, you
+write all your data to one database (which is probably what you’re already doing anyway). Next, you
+extract two things from that database:</p>
+
+<ul>
+  <li>a <strong>consistent snapshot</strong> at one point in time, and</li>
+  <li>a <strong>real-time stream of changes</strong> from that point onwards.</li>
+</ul>
+
+<p>You can load the snapshot into the other systems (for example your search indexes or caches), and
+then apply the real-time changes on an ongoing basis. If this pipeline is well tuned, you can
+probably get a latency of less than a second, so your downstream systems remain very almost
+up-to-date. And since the stream of changes provides ordering of writes, race conditions are
+<a href="https://martin.kleppmann.com/2015/04/24/logs-for-data-infrastructure-at-craft.html">much less of a problem</a>.</p>
+
+<p>This approach to building systems is sometimes called
+<a href="http://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a> (CDC), though the tools for
+doing it are currently not very good. However, at some companies, CDC has become a key building
+block for applications — for example, LinkedIn built <a href="http://www.socc2012.org/s18-das.pdf">Databus</a>
+and Facebook built
+<a href="https://code.facebook.com/posts/188966771280871/wormhole-pub-sub-system-moving-data-through-space-and-time/">Wormhole</a>
+for this purpose.</p>
+
+<p>I am excited about change capture because it allows you to unlock the value in the data you already
+have. You can feed the data into a
+<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-1/">central hub of data streams</a>, where it
+can readily be combined with event streams and data from other databases in real-time. This approach
+makes it much easier to experiment with new kinds of analysis or data format, it allows gradual
+migration from one system to another with minimal risk, and it is much more robust to data
+corruption: if something goes wrong, you can always rebuild a datastore from the snapshot and the
+stream.</p>
+
+<p><img src="/2015/04/bottledwater-02.png" alt="Using change capture to drive derived data stores" width="550" height="412" /></p>
+
+<h2 id="getting-the-real-time-stream-of-changes">Getting the real-time stream of changes</h2>
+
+<p>Getting a consistent snapshot of a database is a common feature, because you need it in order to
+take backups. But getting a real-time stream of changes has traditionally been an overlooked feature
+of databases. Oracle
+<a href="http://www.oracle.com/us/products/middleware/data-integration/goldengate/overview/index.html">GoldenGate</a>, the
+<a href="https://dev.mysql.com/doc/refman/5.7/en/binary-log.html">MySQL binlog</a>, the
+<a href="http://www.manuel-schoebel.com/blog/meteorjs-and-mongodb-replica-set-for-oplog-tailing">MongoDB oplog</a> or the
+<a href="http://guide.couchdb.org/draft/notifications.html">CouchDB changes feed</a> do something like
+this, but they’re not exactly easy to use correctly. More recently, a few databases such as
+<a href="http://rethinkdb.com/blog/realtime-web/">RethinkDB</a> or
+<a href="https://www.firebase.com/docs/web/guide/retrieving-data.html">Firebase</a> have oriented themselves
+towards real-time change streams.</p>
+
+<p>However, today we will talk about <strong>PostgreSQL</strong>. It’s an old-school database, but it’s good. It is
+very stable, has good performance, and is <a href="https://vimeo.com/61044807">surprisingly full-featured</a>.</p>
+
+<p>Until recently, if you wanted to get a stream of changes from Postgres, you had to use triggers.
+This is possible (see below), but it is fiddly, requires schema changes and doesn’t perform very
+well. However, Postgres 9.4 (released in December 2014) introduced a new feature that changes
+everything: <a href="http://www.postgresql.org/docs/9.4/static/logicaldecoding.html">logical decoding</a>
+(which I explain in more detail below).</p>
+
+<p>With logical decoding, change data capture for Postgres suddenly becomes much more appealing. So,
+when this feature was released, I set out to build a change data capture tool for Postgres that
+would take advantage of the new facilities. <a href="http://confluent.io/">Confluent</a> sponsored me to work
+on it (thank you Confluent!), and today we are releasing an alpha version of this tool as open
+source. It is called <a href="https://github.com/confluentinc/bottledwater-pg">Bottled Water</a>.</p>
+
+<p><img src="/2015/04/bottledwater-03.png" alt="Bottled Water: Data streams freshly bottled at source" width="550" height="412" /></p>
+
+<h2 id="introducing-bottled-water">Introducing Bottled Water</h2>
+
+<p>Logical decoding takes the database’s write-ahead log (WAL), and gives us access to row-level change
+events: every time a row in a table is inserted, updated or deleted, that’s an event. Those events
+are grouped by transaction, and appear in the order in which they were committed to the database.
+Aborted/rolled-back transactions do not appear in the stream. Thus, if you apply the change events
+in the same order, you end up with an exact, transactionally consistent copy of the database.</p>
+
+<p>The Postgres logical decoding is well designed: it even creates a consistent snapshot that is
+coordinated with the change stream. You can use this snapshot to make a point-in-time copy of the
+entire database (without locking — you can continue writing to the database while the copy is being
+made), and then use the change stream to get all writes that happened since the snapshot.</p>
+
+<p>Bottled Water uses these features to copy all the data in a database, and encodes it in the
+efficient binary <a href="http://avro.apache.org/">Avro format</a>. The encoded data is sent to
+<a href="http://kafka.apache.org/">Kafka</a> — each table in the database becomes a Kafka topic, and each row
+in the database becomes a message in Kafka.</p>
+
+<p>Once the data is in Kafka, you can easily write a Kafka consumer that does whatever you need: send
+it to Elasticsearch, or populate a cache, or process it in a <a href="http://samza.apache.org/">Samza</a> job,
+or load it into HDFS with <a href="http://confluent.io/docs/current/camus/docs/intro.html">Camus</a>… the
+possibilities are endless.</p>
+
+<h2 id="why-kafka">Why Kafka?</h2>
+
+<p>Kafka is a messaging system, best known for transporting high-volume activity events, such as web
+server logs and user click events. In Kafka, such events are typically retained for a certain time
+period and then discarded. Is Kafka really a good fit for database change events? We don’t want
+database data to be discarded!</p>
+
+<p>In fact, Kafka is a perfect fit — the key is Kafka’s
+<a href="http://kafka.apache.org/documentation.html#compaction">log compaction feature</a>, which was designed
+precisely for this purpose. If you enable log compaction, there is no time-based expiry of data.
+Instead, every message has a key, and Kafka retains the latest message for a given key indefinitely.
+Earlier messages for a given key are eventually garbage-collected. This is quite similar to new
+values overwriting old values in a key-value store.</p>
+
+<p>Bottled Water identifies the primary key (or
+<a href="http://michael.otacoo.com/postgresql-2/postgres-9-4-feature-highlight-replica-identity-logical-replication/">replica identity</a>)
+of each table in Postgres, and uses that as the key of the messages sent to Kafka. The value of the
+message depends on the kind of event:</p>
+
+<ul>
+  <li>For inserts and updates, the message value contains all of the row’s fields, encoded as Avro.</li>
+  <li>For deletes, the message value is set to null. This causes Kafka to remove the message during log
+compaction, so its disk space is freed up.</li>
+</ul>
+
+<p>With log compaction, you don’t need one system to store the snapshot of the entire database and
+another system for the real-time messages — they can live perfectly well within the same system.
+Bottled Water writes the initial snapshot to Kafka by turning every single row in the database into
+a message, keyed by primary key, and sending them all to the Kafka brokers. When the snapshot is
+done, every row that is inserted, updated or deleted similarly turns into a message.</p>
+
+<p>If a row frequently gets updated, there will be many messages with the same key (because each update
+turns into a message). Fortunately, Kafka’s log compaction will sort this out, and garbage-collect
+the old values, so that we don’t waste disk space. On the other hand, if a row never gets updated or
+deleted, it just stays unchanged in Kafka forever — it never gets garbage-collected.</p>
+
+<p>Having the full database dump and the real-time stream in the same system is tremendously powerful.
+If you want to rebuild a downstream database from scratch, you can start with an empty database,
+start consuming the Kafka topic from the beginning, and scan through the whole topic, writing each
+message to your database. When you reach the end, you have an up-to-date copy of the entire
+database. What’s more, you can continue keeping it up-to-date by simply continuing to consume the
+stream. Building alternative views onto your data was never easier!</p>
+
+<p>The idea maintaining a copy of your database in Kafka surprises people who are more familiar with
+traditional enterprise messaging and its limitations. Actually, this use case is exactly why Kafka
+is built around a
+<a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">replicated log abstraction</a>:
+it makes this kind of large-scale data retention and distribution possible. Downstream systems can
+reload and re-process data at will, without impacting the performance of the upstream database that
+is serving low-latency queries.</p>
+
+<h2 id="why-avro">Why Avro?</h2>
+
+<p>The data extracted from Postgres could be encoded as JSON, or Protobuf, or Thrift, or any number of
+formats. However, I believe Avro is the best choice. Gwen Shapira has written about the
+<a href="http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html">advantages of Avro</a> for
+schema management, and I’ve got a
+<a href="http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">blog post</a>
+comparing it to Protobuf and Thrift. The
+<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-2/">Confluent stream data platform guide</a>
+gives some more reasons why Avro is good for data integration.</p>
+
+<p>Bottled Water inspects the schema of your database tables, and automatically generates an Avro
+schema for each table. The schemas are automatically registered with
+<a href="http://confluent.io/docs/current/schema-registry/docs/index.html">Confluent’s schema registry</a>,
+and the schema version is embedded in the messages sent to Kafka. This means it “just works” with
+the stream data platform’s
+<a href="http://confluent.io/docs/current/schema-registry/docs/serializer-formatter.html">serializers</a>: you
+can work with the data from Postgres as meaningful application objects and rich datatypes, without
+writing a lot of tedious parsing code.</p>
+
+<p>The translation of Postgres datatypes into Avro is already fairly comprehensive, covering all the
+common datatypes, and providing a lossless and sensibly typed conversion. I intend to extend it to
+support all of Postgres’ built-in datatypes (of which there are many!) — it’s some effort, but it’s
+worth it, because good schemas for your data are tremendously important.</p>
+
+<p><img src="/2015/04/bottledwater-04.png" alt="Inside the bottle factory" width="550" height="316" /></p>
+
+<h2 id="the-logical-decoding-output-plugin">The logical decoding output plugin</h2>
+
+<p>An interesting property of Postgres’ logical decoding feature is that it does not define a wire
+format in which change data is sent over the network to a consumer. Instead, it defines an
+<a href="http://www.postgresql.org/docs/9.4/static/logicaldecoding-output-plugin.html">output plugin API</a>,
+which receives a function call for every insert, update or delete. Bottled Water uses this API to
+read data in the database’s internal format, and serializes it to Avro.</p>
+
+<p>The output plugin must be written in C using the Postgres extension mechanism, and loaded into the
+database server as a shared library. This requires superuser privileges and filesystem access on the
+database server, so it’s not something to be undertaken lightly. I understand that many a database
+administrator will be scared by the prospect of running custom code inside the database server.
+Unfortunately, this is the only way logical decoding can currently be used.</p>
+
+<p>Fortunately, you don’t have to install the plugin on your leader database — you can just use
+a follower (replica, hot standby) for that purpose. That way you can be sure that the plugin cannot
+corrupt your data, crash the main database instance or affect its performance.</p>
+
+<p><img src="/2015/04/bottledwater-05.png" alt="Bottled Water architecture" width="550" height="412" /></p>
+
+<h2 id="the-client-daemon">The client daemon</h2>
+
+<p>Besides the plugin (which runs inside the database server), Bottled Water consists of a client
+program which you can run anywhere. It connects to the Postgres server and to the Kafka brokers,
+receives the Avro-encoded data from the database, and forwards it to Kafka.</p>
+
+<p>The client is also written in C, because it’s easiest to use the Postgres client libraries that way,
+and because some code is shared between the plugin and the client. It’s fairly lightweight and
+doesn’t need to write to disk.</p>
+
+<p>What happens if the client crashes, or gets disconnected from either Postgres or Kafka? No problem.
+It keeps track of which messages have been published and acknowledged by the Kafka brokers. When the
+client restarts after an error, it replays all messages that haven’t been acknowledged. Thus, some
+messages could appear twice in Kafka, but no data should be lost.</p>
+
+<h2 id="related-work">Related work</h2>
+
+<p>Various other people are working on similar problems:</p>
+
+<ul>
+  <li><a href="https://github.com/xstevens/decoderbufs">Decoderbufs</a> is an experimental Postgres plugin by
+<a href="https://twitter.com/xstevens">Xavier Stevens</a> that decodes the change stream into a Protocol
+Buffers format. It only provides the logical decoding plugin part of the story — it doesn’t have
+the consistent snapshot or client parts (Xavier mentions he has written a client which reads from
+Postgres and writes to Kafka, but it’s not open source).</li>
+  <li><a href="https://github.com/xstevens/pg_kafka">pg_kafka</a> (also from Xavier) is a Kafka producer client in
+a Postgres function, so you could potentially produce to Kafka from a trigger.</li>
+  <li><a href="https://wiki.postgresql.org/wiki/PGQ_Tutorial">PGQ</a> is a Postgres-based queue implementation, and
+<a href="https://wiki.postgresql.org/wiki/SkyTools">Skytools Londiste</a> (developed at Skype) uses it to
+provide trigger-based replication. <a href="https://bucardo.org/wiki/Bucardo">Bucardo</a> is another
+trigger-based replicator. I get the impression that trigger-based replication is somewhat of
+a hack, requiring schema changes and fiddly configuration, and incurring significant overhead.
+Also, none of these projects seems to be endorsed by the PostgreSQL core team, whereas logical
+decoding is fully supported.</li>
+  <li><a href="http://sqoop.apache.org/">Sqoop</a> recently added support for
+<a href="https://issues.apache.org/jira/browse/SQOOP-1852">writing to Kafka</a>. To my knowledge, Sqoop can
+only take full snapshots of a database, and not capture an ongoing stream of changes. Also, I’m
+unsure about the transactional consistency of its snapshots.</li>
+  <li>For those using MySQL, <a href="https://twitter.com/lorax_james">James Cheng</a> has put together a list of
+<a href="https://github.com/wushujames/mysql-cdc-projects/wiki">change capture projects</a> that get data
+from MySQL into Kafka. AFAIK, they all focus on the binlog parsing piece and don’t do the
+consistent snapshot piece.</li>
+</ul>
+
+<h2 id="status-of-bottled-water">Status of Bottled Water</h2>
+
+<p>At present, Bottled Water is alpha-quality software. It’s more than a proof of concept — quite a bit
+of care has gone into its design and implementation — but it hasn’t yet been tested in any
+real-world scenarios. It’s definitely not ready for production use right now, but with some testing
+and tweaking it will hopefully become production-ready in future.</p>
+
+<p>We’re releasing it as open source now in the hope of getting feedback from the community. Also,
+a few people who heard I was working on this have been bugging me to release it :-)</p>
+
+<p>The <a href="https://github.com/confluentinc/bottledwater-pg/blob/master/README.md">README</a> has more
+information on how to get started. Please let us know how you get on! Also, I’ll be talking more
+about Bottled Water at
+<a href="http://berlinbuzzwords.de/session/change-data-capture-magic-wand-we-forgot">Berlin Buzzwords</a> in
+June — hope to see you there.</p>
+
+
+                
+                <div class="hackernews">
+                    Join the discussion about this article
+                    <a href="https://news.ycombinator.com/item?id=9427441" target="_blank">on Hacker News</a>.
+                </div>
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="https://akamaicovers.oreilly.com/images/0636920032175/cat.gif" border="0" alt="Designing Data-Intensive Applications"/></a></p>
+        <p>I'm writing a book for O'Reilly, called
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>23 Apr 2015: <a href="/2015/04/23/bottled-water-real-time-postgresql-kafka.html">Bottled Water: Real-time integration of PostgreSQL and Kafka</a></li>
+            
+              <li>13 Apr 2015: <a href="/2015/04/13/real-time-full-text-search-luwak-samza.html">Real-time full-text search with Luwak and Samza</a></li>
+            
+              <li>04 Mar 2015: <a href="/2015/03/04/turning-the-database-inside-out.html">Turning the database inside-out with Apache Samza</a></li>
+            
+              <li>29 Jan 2015: <a href="/2015/01/29/stream-processing-event-sourcing-reactive-cep.html">Stream processing, Event sourcing, Reactive, CEP… and making sense of it all</a></li>
+            
+              <li>10 Dec 2014: <a href="/2014/12/10/build-your-own-google.html">Wouldn’t it be fun to build your own Google?</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2015/06/02/change-capture-at-berlin-buzzwords.html">02 Jun 2015 at Berlin Buzzwords</a></li>
+            
+              <li><a href="/2015/05/06/data-agility-at-strata.html">06 May 2015 at Strata + Hadoop World</a></li>
+            
+              <li><a href="/2015/04/24/logs-for-data-infrastructure-at-craft.html">24 Apr 2015 at Craft Conf</a></li>
+            
+              <li><a href="/2015/03/05/kafka-at-imperial.html">05 Mar 2015 at Imperial College London</a></li>
+            
+              <li><a href="/2015/02/11/database-inside-out-at-salesforce.html">11 Feb 2015 at Salesforce.com</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+<img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2015/04/23/bottled-water-real-time-postgresql-kafka.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Google Analytics -->
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+<!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
