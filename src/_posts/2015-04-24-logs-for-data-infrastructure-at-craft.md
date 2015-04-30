@@ -6,7 +6,10 @@ place: "Budapest, Hungary"
 venue_url: http://craft-conf.com/2015#speakers/MartinKleppmann
 lanyrd_url: http://lanyrd.com/2015/craftconf/
 slides_url: https://speakerdeck.com/ept/using-logs-to-create-a-solid-data-infrastructure
+video_url: http://www.ustream.tv/recorded/61479591/theater
 ---
+
+<iframe width="550" height="346" src="http://www.ustream.tv/embed/recorded/61479591?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;"></iframe>
 
 <script async class="speakerdeck-embed" data-id="49907c482df7478492d788c8da976160" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
