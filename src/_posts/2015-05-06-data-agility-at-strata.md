@@ -5,7 +5,10 @@ venue: "Strata + Hadoop World"
 place: "London, UK"
 venue_url: http://strataconf.com/big-data-conference-uk-2015/public/schedule/detail/39689
 lanyrd_url: http://lanyrd.com/2015/strata-hadoop-world-london/
+slides_url: https://speakerdeck.com/ept/systems-that-enable-data-agility
 ---
+
+<script async class="speakerdeck-embed" data-id="63dbc03de7f94d378641241ca2cd644e" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 Data is only useful if you can process it, analyse it, and create valuable products from it. If you
 have an idea for a new data-driven product, how long does it take you to get it into production? In
