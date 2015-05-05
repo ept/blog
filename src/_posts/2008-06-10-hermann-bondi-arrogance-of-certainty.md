@@ -24,10 +24,9 @@ point.
 
 Recently I was looking for the article again and searched for it on Google. To my
 great surprise, I couldn't find any trace of it, let alone the whole text. Therefore I want to
-re-publish it here so that others may find it online in future. Unfortunately I have no idea where
-and when it was originally published -- all I have is a crumpled photocopy of a photocopy of a
-newspaper cutting. If you have any further information, please let me
-know.
+re-publish it here so that others may find it online in future. I believe it was originally
+published on 20 May 1991 in The Times (London, England), and later republished several times.
+(Thank you to John E Harris for tracking down the reference.)
 
 I neither fully agree or disagree with this article, but I think it is well worth
 reading. Without any further comment, here it is.
