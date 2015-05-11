@@ -10,12 +10,388 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Tue, 05 May 2015 18:37:17 BST</lastBuildDate>
+        <lastBuildDate>Mon, 11 May 2015 14:42:07 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Please stop calling databases CP or AP</title>
+                <link>http://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html</link>
+                <comments>http://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html#disqus_thread</comments>
+                <pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html</guid>
+                
+                <description><![CDATA[ In his excellent blog post Notes on Distributed Systems for Young Bloods, Jeff Hodges recommends that you use the CAP theorem to critique systems. A lot of people have taken that advice to heart, describing their systems as “CP” (consistent but not available under network partitions), “AP” (available but not... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>In his excellent blog post <a href="http://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/">Notes on Distributed Systems for Young Bloods</a>, Jeff Hodges
+recommends that you use the <a href="http://henryr.github.io/cap-faq/">CAP theorem</a> to critique systems. A lot of people have taken
+that advice to heart, describing their systems as “CP” (consistent but not available under network
+partitions), “AP” (available but not consistent under network partitions), or sometimes “CA”
+(meaning “I still haven’t read <a href="http://codahale.com/you-cant-sacrifice-partition-tolerance/">Coda’s post from almost 5 years ago</a>”).</p>
+
+<p>I agree with all of Jeff’s other points, but with regard to the CAP theorem, I must disagree. The
+CAP theorem is too simplistic and too widely misunderstood to be of much use for characterizing
+systems. Therefore I ask that we retire all references to the CAP theorem, stop talking about the
+CAP theorem, and put the poor thing to rest. Instead, we should use more precise terminology to
+reason about our trade-offs.</p>
+
+<p>(Yes, I realize the irony of writing a blog post about the very topic that I am asking people to
+stop writing about. But at least it gives me a URL that I can give to people when they ask why
+I don’t like them talking about the CAP theorem. Also, apologies if this is a bit of a rant, but
+at least it’s a rant with lots of literature references.)</p>
+
+<h2 id="cap-uses-very-narrow-definitions">CAP uses very narrow definitions</h2>
+
+<p>If you want to refer to CAP as a <em>theorem</em> (as opposed to a vague hand-wavy concept in your
+database’s marketing materials), you have to be precise. Mathematics requires precision. The proof
+only holds if you use the words with the same meaning as they are used in <a href="http://webpages.cs.luc.edu/~pld/353/gilbert_lynch_brewer_proof.pdf">the proof</a>.
+And the proof uses very particular definitions:</p>
+
+<ul>
+  <li>
+    <p><em>Consistency</em> in CAP actually means <a href="http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf">linearizability</a>, which is a very specific (and very
+strong) notion of consistency. In particular it has got nothing to do with the C in ACID, even
+though that C also stands for “consistency”. I explain the meaning of linearizability below.</p>
+  </li>
+  <li>
+    <p><em>Availability</em> in CAP is defined as “every request received by a non-failing [database] node in
+the system must result in a [non-error] response”. It’s not sufficient for <em>some</em> node to be able
+to handle the request: <em>any</em> non-failing node needs to be able to handle it. Many so-called
+“highly available” (i.e. low downtime) systems actually do not meet this definition of
+availability.</p>
+  </li>
+  <li>
+    <p><em>Partition Tolerance</em> (terribly mis-named) basically means that you’re communicating over an
+<a href="http://henryr.github.io/cap-faq/">asynchronous network</a> that may delay or drop messages. The internet and all our
+datacenters <a href="https://aphyr.com/posts/288-the-network-is-reliable">have this property</a>, so you don’t really have any choice in this
+matter.</p>
+  </li>
+</ul>
+
+<p>Also note that the CAP theorem doesn’t just describe any old system, but a very specific model of
+a system:</p>
+
+<ul>
+  <li>
+    <p>The CAP system model is a single, read-write register – that’s all. For example, the CAP theorem
+says nothing about transactions that touch multiple objects: they are simply out of scope of the
+theorem, unless you can somehow reduce them down to a single register.</p>
+  </li>
+  <li>
+    <p>The only fault considered by the CAP theorem is a network partition (i.e. nodes remain up, but
+the network between some of them is not working). That kind of fault absolutely
+<a href="https://aphyr.com/posts/288-the-network-is-reliable">does happen</a>, but it’s not the only kind of thing that can go wrong: nodes can
+crash or be rebooted, you can run out of disk space, you can hit a bug in the software, etc. In
+building distributed systems, you need to consider a much wider range of trade-offs, and focussing
+too much on the CAP theorem leads to ignoring other important issues.</p>
+  </li>
+  <li>
+    <p>Also, the CAP theorem says nothing about latency, which people <a href="http://dbmsmusings.blogspot.co.uk/2010/04/problems-with-cap-and-yahoos-little.html">tend to care about more</a>
+than availability. In fact, CAP-available systems are allowed to be arbitrarily slow to respond,
+and can still be called “available”. Going out on a limb, I’d guess that your users wouldn’t call
+your system “available” if it takes 2 minutes to load a page. </p>
+  </li>
+</ul>
+
+<p>If your use of words matches the precise definitions of the proof, then the CAP theorem applies to
+you. But if you’re using some other notion of consistency or availability, you can’t expect the CAP
+theorem to still apply. Of course, that doesn’t mean you can suddenly do impossible things, just by
+redefining some words! It just means that you can’t turn to the CAP theorem for guidance, and you
+cannot use the CAP theorem to justify your point of view.</p>
+
+<p>If the CAP theorem doesn’t apply, that means you have to think through the trade-offs yourself. You
+can reason about consistency and availability using your own definitions of those words, and you’re
+welcome to prove your own theorem. But please don’t call it CAP theorem, because that name is
+already taken.</p>
+
+<h2 id="linearizability">Linearizability</h2>
+
+<p>In case you’re not familiar with linearizability (i.e. “consistency” in the CAP sense), let me
+explain it briefly. The <a href="http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf">formal definition</a> is not entirely straightforward, but
+the key idea, stated informally, is this:</p>
+
+<blockquote>
+  <p>If operation B started after operation A successfully completed, then operation B must see the
+the system in the same state as it was on completion of operation A, or a newer state.</p>
+</blockquote>
+
+<p>To make this more tangible, consider an example of a system that is <em>not</em> linearizable. See the
+following diagram (sneak preview from an unreleased chapter of <a href="http://dataintensive.net/">my book</a>):</p>
+
+<p><img src="/2015/05/linearizability.png" width="550" height="391" alt="Illustration of a non-linearizable sequence of events" /></p>
+
+<p>This diagram shows Alice and Bob, who are in the same room, both checking their phones to see the
+outcome of the <a href="http://www.bbc.co.uk/sport/0/football/28181689">2014 football world cup final</a>. Just after the final score is announced,
+Alice refreshes the page, sees the winner announced, and excitedly tells Bob about it. Bob
+incredulously hits <em>reload</em> on his own phone, but his request goes to a database replica that is
+lagging, and so his phone shows that the game is still ongoing.</p>
+
+<p>If Alice and Bob had hit reload at the same time, it wouldn’t have been surprising if they had got
+two different query results, because they don’t know at exactly what time their respective requests
+were processed by the server. However, Bob knows that he hit the reload button (initiated his query)
+<em>after</em> he heard Alice exclaim the final score, and therefore he expects his query result to be at
+least as recent as Alice’s. The fact that he got a stale query result is a violation of
+linearizability.</p>
+
+<p>Knowing that Bob’s request happened strictly after Alice’s request (i.e. that they were not
+concurrent) depends on the fact that Bob heard about Alice’s query result through a separate
+communication channel (in this case, IRL audio). If Bob hadn’t heard from Alice that the game was
+over, he wouldn’t have known that the result of his query was stale.</p>
+
+<p>If you’re building a database, you don’t know what kinds of backchannel your clients may have. Thus,
+if you want to provide linearizable semantics (CAP-consistency) in your database, you need to make
+it appear as though there is only a single copy of the data, even though there may be copies
+(replicas, caches) of the data in multiple places.</p>
+
+<p>This is a fairly expensive guarantee to provide, because it requires a lot of coordination. Even the
+CPU in your computer <a href="http://www.cl.cam.ac.uk/~pes20/weakmemory/x86tso-paper.tphols.pdf">doesn’t provide linearizable access to your local RAM</a>! On modern
+CPUs, you need to use an explicit <a href="http://mechanical-sympathy.blogspot.co.uk/2011/07/memory-barriersfences.html">memory barrier instruction</a> in order to get
+linearizability. And even testing whether a system provides linearizability is <a href="https://github.com/aphyr/knossos">tricky</a>.</p>
+
+<h2 id="cap-availability">CAP-Availability</h2>
+
+<p>Let’s talk briefly about the need to give up either linearizability or availability in the case of
+a network partition.</p>
+
+<p>Let’s say you have replicas of your database in two different datacenters. The exact method of
+replication doesn’t matter for now – it may be single-leader (master/slave), multi-leader
+(master/master) or quorum-based replication (<a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo-style</a>). The requirement of replication
+is that whenever data is written to data in one datacenter, it also has to be written to the replica
+in the other datacenter. Assuming that clients only connect to one datacenter, there must be
+a network link between the two datacenters over which the replication happens.</p>
+
+<p>Now assume that network link is interrupted – that’s what we mean with a <em>network partition</em>. What
+happens?</p>
+
+<p><img src="/2015/05/cap-availability.png" width="550" height="251" alt="A network partition between two datacenters" /></p>
+
+<p>Clearly you can choose one of two things:</p>
+
+<ol>
+  <li>
+    <p>The application continues to be allowed to write to the database, so it remains fully available
+in both datacenters. However, as long as the replication link is interrupted, any changes that
+are written in one datacenter will not appear in the other datacenter. This violates
+linearizability (in terms of the previous example, Alice could be connected to DC 1 and Bob
+could be connected to DC 2).</p>
+  </li>
+  <li>
+    <p>If you don’t want to lose linearizability, you have to make sure you do all your reads and
+writes in one datacenter, which you may call the <em>leader</em>. In the other datacenter (which cannot
+be up-to-date, due to the failed replication link), the database must stop accepting reads and
+writes until the network partition is healed and the database is in sync again. Thus, although
+the non-leader database has not failed, it cannot process requests, so it is not CAP-available.</p>
+  </li>
+</ol>
+
+<p>(And this, by the way, is essentially the proof of the CAP theorem. That’s all there is to it. This
+example uses two datacenters, but it applies equally to network problems within a single datacenter.
+I just find it easier to think about when I imagine it as two datacenters.)</p>
+
+<p>Note that in our notionally “unavailable” situation in option 2, we’re still happily processing
+requests in one of the datacenters. So if a system chooses linearizability (i.e. it is not
+CAP-available), that doesn’t necessarily mean that a network partition automatically leads to an
+outage of the application. If you can shift all clients to using the leader datacenter, the clients
+will in fact see no downtime at all.</p>
+
+<p>Availability in practice <a href="http://blog.thislongrun.com/2015/04/cap-availability-high-availability-and_16.html">does not quite correspond</a> to CAP-availability. Your
+application’s availability is probably measured with some SLA (e.g. 99.9% of well-formed requests
+must return a successful response within 1 second), but such an SLA can be met both with
+CAP-available and CAP-unavailable systems.</p>
+
+<p>In practice, multi-datacenter systems <em>are</em> often designed with asynchronous replication, and thus
+non-linearizable. However, the reason for that choice is often the latency of wide-area networks,
+not just wanting to tolerate datacenter and network failures.</p>
+
+<h2 id="many-systems-are-neither-linearizable-nor-cap-available">Many systems are neither linearizable nor CAP-available</h2>
+
+<p>Under the CAP theorem’s strict definitions of consistency (linearizability) and availability, how
+do systems fare?</p>
+
+<p>For example, take any replicated database with a single leader, which is the standard way of setting
+up replication in most relational databases. In this configuration, if a client is partitioned from
+the leader, it cannot write to the database. Even though it may be able to read from a follower (a
+read-only replica), the fact that it cannot write means any single-leader setup is not
+CAP-available. Never mind that such configurations are often marketed as “high availability”.</p>
+
+<p>If single-leader replication is not CAP-available, does that make it “CP”? Wait, not so fast. If you
+allow the application to make reads from a follower, and the replication is asynchronous (the
+default in most databases), then a follower may be a little behind the leader when you read from it.
+In this case, your reads will not be linearizable, i.e. not CAP-consistent.</p>
+
+<p>Moreover, databases with <a href="http://research.microsoft.com/pubs/69541/tr-95-51.pdf">snapshot isolation</a>/MVCC are intentionally non-linearizable,
+because enforcing linearizability would reduce the level of concurrency that the database can offer.
+For example, <a href="http://drkp.net/papers/ssi-vldb12.pdf">PostgreSQL’s SSI</a> provides <em>serializability</em> but not
+<em>linearizability</em>, and <a href="http://www.researchgate.net/publication/220225203_Making_snapshot_isolation_serializable/file/e0b49520567eace81f.pdf">Oracle provides neither</a>. Just because a database is branded “ACID”
+doesn’t mean it meets the CAP theorem’s definition of consistency.</p>
+
+<p>So these systems are neither CAP-consistent nor CAP-available. They are neither “CP” nor “AP”, they
+are just “P”, whatever that means. (Yes, the “two out of three” formulation <em>does</em> allow you to pick
+only one out of three, or even none out of three!)</p>
+
+<p>What about “NoSQL”? Take MongoDB, for example: it has a single leader per shard (or at least it’s
+supposed to, if it’s not in split-brain mode), so it’s not CAP-available by the argument above. And
+Kyle <a href="https://aphyr.com/posts/322-call-me-maybe-mongodb-stale-reads">recently showed</a> that it allows non-linearizable reads even at the highest
+consistency setting, so it’s not CAP-consistent either.</p>
+
+<p>And the <a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo</a> derivatives like Riak, Cassandra and Voldemort, which are often called “AP” since
+they optimize for high availability? It depends on your settings. If you accept a single replica for
+reads and writes (R=W=1), they are indeed CAP-available. However, if you require quorum reads and
+writes (R+W&gt;N), and you have a network partition, clients on the minority side of the partition
+cannot reach a quorum, so quorum operations are not CAP-available (at least temporarily, until the
+database sets up additional replicas on the minority side).</p>
+
+<p>You sometimes see people people claiming that quorum reads and writes guarantee linearizability, but
+I think it would be unwise to rely on it – subtle combinations of features such as sloppy quorums
+and read repair can lead to <a href="http://basho.com/riaks-config-behaviors-part-3/">tricky edge cases</a> in which deleted data is resurrected,
+or the number of replicas of a value falls below the original W (violating the quorum condition), or
+the number of replica nodes increases above the original N (again violating the quorum condition).
+All of these lead to non-linearizable outcomes.</p>
+
+<p>These are not bad systems: people successfully use them in production all the time. However, so far
+we haven’t been able to rigorously classify them as “AP” or “CP”, either because it depends on the
+particular operation or configuration, or because the system meets neither of the CAP theorem’s
+strict definitions of consistency or availability.</p>
+
+<h2 id="case-study-zookeeper">Case study: ZooKeeper</h2>
+
+<p>What about ZooKeeper? It uses a <a href="http://web.stanford.edu/class/cs347/reading/zab.pdf">consensus algorithm</a>, so people generally regard it as a
+<a href="http://www.knewton.com/tech/blog/2014/12/eureka-shouldnt-use-zookeeper-service-discovery/">clear-cut case of choosing consistency over availability</a> (i.e. a “CP system”).</p>
+
+<p>However, if you look at the <a href="http://zookeeper.apache.org/doc/r3.4.6/zookeeperProgrammers.html#ch_zkGuarantees">ZooKeeper docs</a>, they make quite clear that ZooKeeper
+by default <em>does not</em> provide linearizable reads. Each client is connected to one of the server
+nodes, and when you make a read, you see only the data on that node, even if there are more
+up-to-date writes on another node. This makes reads much faster than if you had to assemble a quorum
+or contact the leader for every read, but it also means that ZooKeeper by default <em>does not</em> meet
+the CAP theorem’s definition of consistency.</p>
+
+<p>It is possible to make linearizable reads in ZooKeeper by <a href="http://mail-archives.apache.org/mod_mbox/zookeeper-user/201303.mbox/%3CCAJwFCa0Hoekc14Zy6i0LyLj=eraF8JimqMZadohoKQJNTMtYSg@mail.gmail.com%3E">preceding a read with a <code>sync</code>
+command</a>. That isn’t the default though, because it comes with a performance penalty.
+People do use <code>sync</code>, but usually not all the time.</p>
+
+<p>What about ZooKeeper availability? Well, ZK requires a <a href="http://www.tcs.hut.fi/Studies/T-79.5001/reports/2012-deSouzaMedeiros.pdf">majority quorum</a> in
+order to reach consensus, i.e. in order to process writes. If you have a partition with a majority
+of the nodes on one side and a minority on the other, then the majority side continues to function,
+but the nodes on the minority side can’t process writes, even though the nodes are up. Thus, writes
+in ZK are not CAP-available under a partition (even though the majority side can continue to process
+writes).</p>
+
+<p>To add to the fun, ZooKeeper 3.4.0 added a <a href="http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#Experimental+Options%2FFeatures">read-only mode</a>, in which nodes on the
+minority side of a partition can continue serving read requests – no quorum needed! This read-only
+mode <em>is</em> CAP-available. Thus, ZooKeeper by default is neither CAP-consistent (CP) nor CAP-available
+(AP) – it’s really just “P”. However, you can optionally make it CP by calling <code>sync</code> if you want,
+and for reads (but not for writes) it’s actually AP, if you turn on the right option.</p>
+
+<p>But this is irritating. Calling ZooKeeper “not consistent”, just because it’s not linearizable by
+default, really badly misrepresents its features. It actually provides an excellent level of
+consistency! It provides <a href="http://web.stanford.edu/class/cs347/reading/zab.pdf">atomic broadcast</a> (which is <a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf">reducible to consensus</a>)
+combined with the session guarantee of <a href="http://www-i2.informatik.rwth-aachen.de/i2/fileadmin/user_upload/documents/Seminar_MCMM11/Causal_memory_1996.pdf">causal consistency</a> – which is <a href="http://arxiv.org/pdf/1302.0309.pdf">stronger</a>
+than <a href="http://www.researchgate.net/profile/Douglas_Terry3/publication/3561300_Session_guarantees_for_weakly_consistent_replicated_data/links/02e7e52cdbe60a6cb4000000.pdf">read your writes, monotonic reads</a> and <a href="http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf">consistent prefix reads</a> combined.
+The documentation says that it provides <a href="http://research-srv.microsoft.com/en-us/um/people/lamport/pubs/multi.pdf">sequential consistency</a>, but it’s under-selling
+itself, because ZooKeeper’s guarantees are in fact much stronger than sequential consistency.</p>
+
+<p>As ZooKeeper demonstrates, it is quite reasonable to have a system that is neither CAP-consistent
+nor CAP-available in the presence of partitions, and by default isn’t even linearizable in the
+<em>absence</em> of partitions. (I guess that would be PC/EL in <a href="http://dbmsmusings.blogspot.co.uk/2010/04/problems-with-cap-and-yahoos-little.html">Abadi’s PACELC framework</a>, but
+I don’t find that any more enlightening than CAP.)</p>
+
+<h2 id="cpap-a-false-dichotomy">CP/AP: a false dichotomy</h2>
+
+<p>The fact that we haven’t been able to classify even one datastore as unambiguously “AP” or “CP”
+should be telling us something: those are simply not the right labels to describe systems.</p>
+
+<p>I believe that we should stop putting datastores into the “AP” or “CP” buckets, because:</p>
+
+<ul>
+  <li>
+    <p>Within one piece of software, you may well have various operations with <a href="http://groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf">different consistency
+characteristics</a>.</p>
+  </li>
+  <li>
+    <p>Many systems are neither consistent nor available under the CAP theorem’s definitions. However,
+I’ve never heard anyone call their system just “P”, presumably because it looks bad. But it’s not
+bad – it may be a perfectly reasonable design, it just doesn’t fit one of the two CP/AP buckets.</p>
+  </li>
+  <li>
+    <p>Even though most software doesn’t neatly fit one of those two buckets, people try to shoehorn
+software into one of the two buckets anyway, thereby inevitably changing the meaning of
+“consistency” or “availability” to whatever definition suits them. Unfortunately, if the meaning
+of the words is changed, the CAP theorem no longer applies, and thus the CP/AP distinction is
+rendered completely meaningless.</p>
+  </li>
+  <li>
+    <p>A huge amount of subtlety is lost by putting a system in one of two buckets. There are many
+considerations of fault-tolerance, latency, simplicity of programming model, operability, etc.
+that feed into the design of a distributed systems. It is simply not possible to encode this
+subtlety in one bit of information. For example, even though ZooKeeper has an “AP” read-only mode,
+this mode still provides a total ordering of historical writes, which is a vastly stronger
+guarantee than the “AP” in a system like Riak or Cassandra – so it’s ridiculous to throw them
+into the same bucket.</p>
+  </li>
+  <li>
+    <p>Even Eric Brewer <a href="http://cs609.cs.ua.edu/CAP12.pdf">admits</a> that CAP is misleading and oversimplified. In 2000, it was meant
+to start a discussion about trade-offs in distributed data systems, and it did that very well. It
+wasn’t intended to be a breakthrough formal result, nor was it meant to be a rigorous
+classification scheme for data systems. 15 years later, we now have a much greater range of tools
+with different consistency and fault-tolerance models to choose from. CAP has served its purpose,
+and now it’s time to move on.</p>
+  </li>
+</ul>
+
+<h2 id="learning-to-think-for-yourself">Learning to think for yourself</h2>
+
+<p>If CP and AP are unsuitable to describe and critique systems, what should you use instead? I don’t
+think there is one right answer. Many people have thought hard about these problems, and proposed
+terminology and models to help us understand problems. To learn about those ideas, you’ll have to go
+deeper into the literature.</p>
+
+<ul>
+  <li>
+    <p>A good starting point is Doug Terry’s paper in which he <a href="http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf">explains various different levels of
+eventual consistency using Baseball examples</a>. It’s very readable and clear, even if
+(like me) you’re not American and have no clue about Baseball.</p>
+  </li>
+  <li>
+    <p>If you’re interested in transaction isolation models (which is not the same as consistency of
+distributed replicas, but somewhat related), my little project <a href="http://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html">Hermitage</a> may be relevant.</p>
+  </li>
+  <li>
+    <p><a href="http://arxiv.org/pdf/1302.0309.pdf"><img src="/2014/11/isolation-levels.png" width="250" height="101" style="float: right; margin: 0 0 1em 1em;" /></a>The connections between
+replica consistency, transaction isolation and availability are explored by <a href="http://arxiv.org/pdf/1302.0309.pdf">Peter Bailis et
+al.</a> (That paper also explains the meaning of that hierarchy of consistency levels which
+Kyle Kingsbury <a href="https://aphyr.com/posts/322-call-me-maybe-mongodb-stale-reads">likes to show</a>.)</p>
+  </li>
+  <li>
+    <p>When you’ve read those, you should be ready to dive deeper into the literature. I’ve scattered
+a ton of links to papers throughout this post. Do take a look at them: a number of experts have
+already figured out a lot of stuff for you.</p>
+  </li>
+  <li>
+    <p>As a last resort, if you can’t face reading the original papers, I suggest you take a look at
+<a href="http://dataintensive.net/">my book</a>, which summarizes the most important ideas in an approachable manner. (See,
+I tried <em>very hard</em> not to make this post a sales pitch.)</p>
+  </li>
+  <li>
+    <p>If you want to know more specifically about using ZooKeeper correctly, 
+<a href="http://shop.oreilly.com/product/0636920028901.do">Flavio Junqueira and Benjamin Reed’s book</a> is good.</p>
+  </li>
+</ul>
+
+<p>Whatever way you choose to learn, I encourage you to be curious and patient – this stuff doesn’t
+come easy. But it’s rewarding, because you learn to reason about trade-offs, and thus figure out
+what kind of architecture works best for your particular application. But whatever you do, please
+stop talking about CP and AP, because they just don’t make any sense.</p>
+
+<p><em>Thank you to <a href="https://aphyr.com/">Kyle Kingsbury</a> and <a href="https://twitter.com/skamille">Camille Fournier</a>
+for comments on a draft of this post. Any errors or unpalatable opinions are mine, of course.</em></p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Bottled Water: Real-time integration of PostgreSQL and Kafka</title>
@@ -3107,184 +3483,6 @@ problem).</p>
 
 <p>On the other hand, consider yourself lucky. If you’ve got scaling problems, you must be doing
 something right – you must be making something that people want.</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>LinkedIn Intro: Doing the Impossible on iOS</title>
-                <link>http://martin.kleppmann.com/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html</link>
-                <comments>http://martin.kleppmann.com/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html#disqus_thread</comments>
-                <pubDate>Wed, 23 Oct 2013 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2013/10/23/linkedin-intro-doing-the-impossible-on-ios.html</guid>
-                
-                <description><![CDATA[ This is a copy of a post I originally wrote on the LinkedIn engineering blog. We recently launched LinkedIn Intro — a new product that shows you LinkedIn profiles, right inside the native iPhone mail client. That’s right: we have extended Apple’s built-in iOS Mail app, a feat that many... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>This is a copy of a post I originally wrote on the
-<a href="http://engineering.linkedin.com/mobile/linkedin-intro-doing-impossible-ios">LinkedIn engineering blog</a>.</em></p>
-
-<p>We recently launched <a href="https://intro.linkedin.com/">LinkedIn Intro</a> — a new product that shows you
-LinkedIn profiles, <em>right inside the native iPhone mail client</em>. That’s right: we have extended
-Apple’s built-in iOS Mail app, a feat that many people consider to be impossible. This post is
-a short summary of how Intro works, and some of the ways we bent technology to our will.</p>
-
-<p>With Intro, you can see at a glance the picture of the person who’s emailing you, learn more about
-their background, and connect with them on LinkedIn. This is what it looks like:</p>
-
-<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
-<img src="/2013/10/intro_before_after.png" width="550" alt="The iPhone mail app, before and after Intro" />
-<br />The iPhone mail app, before and after Intro</p>
-
-<h2 id="how-intro-came-to-be">How Intro Came to Be</h2>
-
-<p>The origins of Intro go back to before the acquisition of <a href="http://rapportive.com/">Rapportive</a> by
-LinkedIn. At Rapportive, we had built a browser extension that modified Gmail to show the profile of
-an email’s sender within the Gmail page. The product was popular, but people kept asking: “I love
-Rapportive in Gmail, when can I have it on mobile too?”</p>
-
-<p>The magic of Rapportive is that you don’t have to remember to use it. Once you have it installed, it
-is right there inside your email, showing you everything you need to know about your contacts. You
-don’t need to fire up a new app or do a search in another browser tab, because the information is
-right there when you need it. It just feels natural.</p>
-
-<p>At LinkedIn, we want to <a href="http://www.youtube.com/watch?v=t6SdSqI0JR0">work wherever our members work</a>.
-And we know that professionals spend a lot of time on their phone, checking and replying to emails
-— so we had to figure out how to enhance mobile email, giving professionals the information they
-need to be brilliant with people.</p>
-
-<p>But how do we do that? Ask any iOS engineer: there is no API for extending the built-in mail app on
-the iPhone. If you wanted to build something like Rapportive, most people would tell you that it is
-impossible. Yet we figured it out.</p>
-
-<h2 id="impossible-1-extending-the-ios-mail-client">Impossible #1: Extending the iOS Mail Client</h2>
-
-<p>Our key insight was this: we cannot extend the mail client, but we can add information to the
-messages themselves. One way to do this would be to modify the messages on the server — but then the
-modification would appear on all your clients, both desktop and mobile. That would not be what users
-want.</p>
-
-<p>Instead, we can add information to messages by using a proxy server.</p>
-
-<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
-<img src="/2013/10/intro_imap_proxy.png" width="550" alt="Rewriting messages using an IMAP proxy" />
-<br />Rewriting messages using an IMAP proxy</p>
-
-<p>Normally your device connects directly to the servers of your email provider (Gmail, Yahoo, AOL,
-etc.), but we can configure the device to connect to the Intro proxy server instead.</p>
-
-<p>The Intro proxy server speaks the <a href="http://tools.ietf.org/html/rfc3501">IMAP</a> protocol just like an
-email provider, but it doesn’t store messages itself. Instead, it forwards requests from the device
-to your email provider, and forwards responses from the email provider back to the device. En route,
-it inserts Intro information at the beginning of each message body — we call this the top bar.</p>
-
-<p>The great thing about this approach: the proxy server can tailor the top bar to the device, since it
-knows which device is downloading the message. It can adapt the layout to be appropriate to the
-screen size, and it can take advantage of the client’s latest features, because it doesn’t need to
-worry about compatibility with other devices.</p>
-
-<p>Our proxy server is written in Ruby using EventMachine, which allows it to efficiently handle many
-concurrent IMAP connections. We have developed some libraries to make the evented programming model
-nicer to work with, including
-<a href="https://github.com/samstokes/deferrable_gratification">Deferrable Gratification</a> and
-<a href="https://github.com/ConradIrwin/lspace">LSpace</a>.</p>
-
-<h2 id="impossible-2-interactive-ui-in-email">Impossible #2: Interactive UI in Email</h2>
-
-<p>Ok, we have a way of adding information about the sender to a message — but so far it’s just
-a static piece of HTML. The top bar is deliberately minimal, because we don’t want it to get in the
-way. But wouldn’t it be <em>awesome</em> if you could tap the top bar and see the full LinkedIn profile…
-without leaving the mail app?</p>
-
-<p>“But that’s impossible,” they cry, “you can’t run JavaScript in the mail client!” And that’s true
-— any JavaScript in an email is simply ignored. But iOS Mail does have powerful CSS capabilities,
-since it uses the same rendering engine as Safari.</p>
-
-<p>Recall that CSS has a <code>:hover</code> state that is triggered when you hover the mouse over an element.
-This is used for popup menus in the navigation of many websites, or for tooltips. But what do you do
-on a touchscreen device, where there is no hovering or clicking, only tapping?</p>
-
-<p>A little-known fact about CSS on Mobile Safari: in certain circumstances, tapping a link once
-simulates a <code>:hover</code> state on that link, and tapping it twice has the effect of a click. Thanks to
-this feature, popup menus and tooltips still work on iOS.</p>
-
-<p>With some creativity, we figured out how to use this effect to create an interactive user interface
-<em>within</em> a message! Just tap the top bar to see the full LinkedIn profile:</p>
-
-<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
-<img src="/2013/10/intro_drawer.png" width="550" alt="With CSS tricks we can embed an entire LinkedIn profile in a message" />
-<br />With CSS tricks we can embed an entire LinkedIn profile in a message</p>
-
-<h2 id="impossible-3-dynamic-content-in-email">Impossible #3: Dynamic Content in Email</h2>
-
-<p>This <code>:hover</code> trick allows us to have some interactivity within a message, but for more complex
-interactions we have to take you to the browser (where we can run a normal web app, without the mail
-app’s limitations). For example, if you want to connect with your contact on LinkedIn, we take you
-to Safari.</p>
-
-<p>That’s fine, but it leaves us with a problem: the top bar needs to show if you’re already connected
-with someone. Say you send an invitation, and the other person accepts — now you’re connected, but
-if you open the same email again, it still says that you’re not connected!</p>
-
-<p>This is because once a message has been downloaded, an IMAP client may assume that the message will
-never change. It is cached on the device, and unlike a web page, it never gets refreshed. Now that
-you’re connected, the top bar content needs to change. How do we update it?</p>
-
-<p>Our solution: the connect button is in a tiny <code>&amp;lt;iframe&amp;gt;</code> which is refreshed every time you
-open the message. And if you open the message while your device is offline? No problem: the <code>iframe</code>
-is positioned on top of an identical-looking button in the static top bar HTML. If the <code>iframe</code>
-fails to load, it simply falls back to the connection status at the time when the message was
-downloaded.</p>
-
-<p>This allows the top bar to contain dynamic content, even though it’s impossible for the server to modify a message once it has been downloaded by the device.</p>
-
-<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
-<img src="/2013/10/intro_connection_status.png" width="550" alt="Using an embedded iframe to keep the connection status up-to-date, within an otherwise static top bar" />
-<br />Using an embedded iframe to keep the connection status up-to-date, within an otherwise static top bar</p>
-
-<h2 id="impossible-4-easy-installation">Impossible #4: Easy Installation</h2>
-
-<p>Once we got the IMAP proxy working, we were faced with another problem: how do we configure a device
-to use the proxy? We cannot expect users to manually enter IMAP and SMTP hostnames, choose the
-correct TLS settings, etc — it’s too tedious and error-prone.</p>
-
-<p>Fortunately, Apple provides a friendly way of setting up email accounts by using
-<a href="https://developer.apple.com/library/ios/featuredarticles/iPhoneConfigurationProfileRef/">configuration profiles</a>
-— a facility that is often used in enterprise deployments of iOS devices. Using this technique, we
-can simply ask the user for their email address and password, autodiscover the email provider
-settings, and send a configuration profile to the device. The user just needs to tap “ok” a few
-times, and then they have a new mail account.</p>
-
-<p>Moreover, for Gmail and Google Apps accounts, we can use OAuth, and never need to ask for the user’s password. Even better!</p>
-
-<p style="text-align: center; font-style: italic; color: #666; font-size: 85%;">
-<img src="/2013/10/intro_installer_0.png" width="550" alt="iOS configuration profiles make setup of new email accounts a breeze" />
-<br />iOS configuration profiles make setup of new email accounts a breeze</p>
-
-<h2 id="security-and-privacy">Security and Privacy</h2>
-
-<p>We understand that operating an email proxy server carries great responsibility. We respect the fact
-that your email may contain very personal or sensitive information, and we will do everything we can
-to make sure that it is safe. Our principles and key security measures are detailed in our
-<a href="https://intro.linkedin.com/micro/privacy">pledge of privacy</a>.</p>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>When we first built Rapportive for Gmail, people thought that we were crazy — writing a browser
-extension that modified the Gmail page on the fly, effectively writing an application inside someone
-else’s application! But it turned out to be a great success, and many others have since followed our
-footsteps and written browser extensions for Gmail.</p>
-
-<p>Similarly, Intro’s approach of proxying IMAP is a novel way of delivering software to users. It
-operates at the limit of what is technically possible, but it has a big advantage: we can enhance
-the apps you already use. Of course the idea isn’t limited to the iPhone, so watch out for new
-platforms coming your way soon :)</p>
-
-<p>This post has only scratched the surface of the interesting challenges we have overcome while
-building Intro. In follow-up posts we will talk about some of our CSS techniques, testing and
-monitoring tools, things we do to achieve high performance and high reliability, and more. In the
-meantime, check out <a href="https://intro.linkedin.com/">Intro</a> and let us know what you think!</p>
 
                 ]]></content:encoded>
             </item>
