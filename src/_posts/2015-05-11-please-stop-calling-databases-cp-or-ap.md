@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Please stop calling databases CP or AP
+hackernews: https://news.ycombinator.com/item?id=9525266
 ---
 
 In his excellent blog post [Notes on Distributed Systems for Young Bloods][youngbloods], Jeff Hodges
