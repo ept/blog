@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Imitating the iPhone User Agent in Firefox &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Data liberation and data integration with Kafka &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,61 +44,58 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Imitating the iPhone User Agent in Firefox"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Data liberation and data integration with Kafka"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Imitating the iPhone User Agent in Firefox</h1>
+                <h1>Data liberation and data integration with Kafka</h1>
 
-                <p>There are a number of web sites out there which provide specifically optimised versions for the
-iPhone. I was curious to test them (and to look at their source code to see what they are doing),
-but don’t have an iPhone myself. Many sites will only give a visitor the iPhone version of their
-site if the web browser identifies itself as Safari Mobile. How do you get it?</p>
+                <p>
+                  A talk at
+                  
+                    <a href="http://strataconf.com/big-data-conference-ny-2015/public/schedule/detail/42723">Strata + Hadoop World</a>,
+                  
+                  New York, NY, US, 01 Oct 2015
+                </p>
 
-<p>The solution is the
-“<a href="http://en.wikipedia.org/wiki/User_agent">user agent</a>” – a string sent by the web browser to the
-server as part of every request. It contains the name and version of the browser software you are
-using, the operating system, and a few other bits and pieces. It’s a very useful piece of
-information to website administrators, who can use it to compile anonymous statistics about the
-people who visit their site.</p>
+                <ul>
+                  
+                  
+                  
+                </ul>
 
-<p>Many people consider it to be bad practice to serve different versions
-of a site depending on the user agent, but it happens often enough anyway. And that’s exactly what
-is going on here. Fortunately there are tools which will let you modify the user agent, so you can
-see what you would get if you were using some other software. This is sometimes called
-“masquerading” as another browser. The technique described here is for
-<a href="http://www.mozilla.com/en-US/firefox/">Firefox</a>, but
-<a href="http://www.ericgiguere.com/articles/masquerading-your-browser.html">it’s possible to do the same thing with other browsers
-too</a>.</p>
+                <p>Even the best data scientist can’t do anything if they cannot easily get access to the necessary
+data. Simply making the data available is step 1 towards becoming a data-driven organization. In
+this talk, we’ll explore how Apache Kafka can replace slow, fragile ETL processes with real-time
+data pipelines, and discuss best practices for data formats and integration with existing systems.</p>
 
-<p>Download the
-<a href="https://addons.mozilla.org/en-US/firefox/addon/59">User Agent Switcher add-on for Firefox</a>, and
-restart Firefox. In the menu, go to Tools -&gt; User Agent Switcher -&gt; Options -&gt; Options. Add
-a new user agent, with description “iPhone”, and the following entry in the user agent
-field:</p>
+<h2 id="abstract">Abstract</h2>
 
-<blockquote>Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420.1 (KHTML, like
-Gecko) Version/3.0 Mobile/3B48b Safari/419.3</blockquote>
+<p><a href="http://kafka.apache.org/">Apache Kafka</a> is a popular open source message broker for high-throughput
+real-time event data, such as user activity logs or IoT sensor data. It originated at LinkedIn,
+where it reliably handles around a trillion messages per day.</p>
 
-<p>The remaining fields (app version etc.)
-can stay empty. Now you can click Tools -&gt; User Agent Switcher -&gt; iPhone, and your browser
-instantly “becomes” an iPhone. If the site uses features which are not available in Firefox, it will
-not render correctly, but at least the site should serve you the same content as it would do to an
-iPhone. (The user agent above is taken from a real iPhone; there are probably many others which work
-too, but that one has worked for me.)</p>
+<p>What is less widely known: Kafka is also well suited for extracting data from existing databases,
+and making it available for analysis or for building data products. Unlike slow batch-oriented ETL,
+Kafka can make database data available to consumers in real-time, while also allowing efficient
+archiving to HDFS, for use in Spark, Hadoop or data warehouses.</p>
 
-<p>One big caveat: you shouldn’t really be doing this! Use it
-only briefly for testing a site, then reset the user agent to the Firefox default. Otherwise you’ll
-end up sending the iPhone user agent to all other web sites you visit too, and that isn’t good for
-anybody. You may up being locked out of certain web sites or getting the wrong version, and
-administrators of web sites will hate you because you mess up their statistics.</p>
+<p>When data science and product teams can process operational data in real-time, and combine it with
+user activity logs or sensor data, that turns out to be a potent mixture. Having all the data
+centrally available in a
+<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-1/">stream data platform</a> is an exciting
+enabler for data-driven innovation.</p>
 
-<p>So please, please
-reset the user agent to the default when you’ve finished testing.</p>
+<p>In this talk, we will discuss what a Kafka-based stream data platform looks like, and how it is
+useful:</p>
 
+<ul>
+  <li>Examples of the kinds of problems you can solve with Kafka</li>
+  <li>Extracting real-time data feeds from databases, and sending them to Kafka</li>
+  <li>Using <a href="http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html">Avro</a> for schema
+management and future-proofing your data</li>
+  <li>Designing your data pipelines to be resilient, but also flexible and amenable to change</li>
+</ul>
 
-                
-
-                <div id="disqus_thread"></div>
             </div>
 
             <div id="sidebar">
@@ -212,18 +209,6 @@ reset the user agent to the default when you’ve finished testing.</p>
 <img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2008/01/03/imitating-the-iphone-user-agent-in-firefox.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Google Analytics -->
 <script type="text/javascript">
