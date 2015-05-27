@@ -5,7 +5,10 @@ venue: Berlin Buzzwords
 place: Berlin, Germany
 venue_url: http://berlinbuzzwords.de/session/change-data-capture-magic-wand-we-forgot
 lanyrd_url: http://lanyrd.com/2015/berlinbuzzwords/
+slides_url: https://speakerdeck.com/ept/change-data-capture-the-magic-wand-we-forgot
 ---
+
+<script async class="speakerdeck-embed" data-id="60f12a1eb231470a898a66d58f13536c" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------

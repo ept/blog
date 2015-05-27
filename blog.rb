@@ -3,7 +3,8 @@ SHORTLINKS = {
   winter: '/2015/01/24/stream-processing-at-dev-winter.html',
   jfokus: '/2015/02/04/samza-at-jfokus.html',
   craft:  '/2015/04/24/logs-for-data-infrastructure-at-craft.html',
-  strata: '/2015/05/06/data-agility-at-strata.html'
+  strata: '/2015/05/06/data-agility-at-strata.html',
+  bbuzz:  '/2015/06/02/change-capture-at-berlin-buzzwords.html'
 }
 
 require 'rubygems'
