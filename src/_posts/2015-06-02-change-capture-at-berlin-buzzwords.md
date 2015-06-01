@@ -10,6 +10,12 @@ slides_url: https://speakerdeck.com/ept/change-data-capture-the-magic-wand-we-fo
 
 <script async class="speakerdeck-embed" data-id="60f12a1eb231470a898a66d58f13536c" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
+Links
+-----
+
+* [Blog post introducing Bottled Water](/2015/04/23/bottled-water-real-time-postgresql-kafka.html)
+* [Bottled Water code on Github](https://github.com/confluentinc/bottledwater-pg)
+
 Abstract
 --------
 
@@ -26,8 +32,9 @@ Facebook's [Wormhole](https://code.facebook.com/posts/188966771280871/wormhole-p
 do this. But the idea is not as widely known as it should be.
 
 In this talk, I will explain why change data capture is so useful, and how it prevents race
-conditions and other ugly problems. Then I'll go into the practical details of implementing CDC with
-[PostgreSQL](http://www.postgresql.org/) and [Apache Kafka](http://kafka.apache.org/), and discuss
-the approaches you can use to do the same with various other databases.
+conditions and other ugly problems. Then I'll go into the practical details of [implementing CDC
+with PostgreSQL](/2015/04/23/bottled-water-real-time-postgresql-kafka.html) and
+[Apache Kafka](http://kafka.apache.org/), and discuss the approaches you can use to do the same with
+various other databases.
 
 A new era of sanity in data systems awaits!
