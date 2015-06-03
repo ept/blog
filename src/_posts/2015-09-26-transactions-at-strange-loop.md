@@ -3,7 +3,7 @@ layout: talk
 title: "Transactions: myths, surprises and opportunities"
 venue: Strange Loop
 place: "St. Louis, Missouri, US"
-venue_url: https://thestrangeloop.com/
+venue_url: http://www.thestrangeloop.com/2015/transactions-myths-surprises-and-opportunities.html
 ---
 
 Abstract
