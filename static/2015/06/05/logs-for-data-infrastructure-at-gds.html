@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Streams as the team interface &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Using logs to build a solid data infrastructure &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,43 +44,57 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Streams as the team interface"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Using logs to build a solid data infrastructure"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Streams as the team interface</h1>
+                <h1>Using logs to build a solid data infrastructure</h1>
 
                 <p>
                   A talk at
                   
-                    <a href="http://oredev.org/">Øredev</a>,
+                    <a href="https://gds.blog.gov.uk/about/">UK Government Digital Service</a>,
                   
-                  Malmö, Sweden, 05 Nov 2015
+                  London, UK, 05 Jun 2015
                 </p>
 
                 <ul>
                   
+                    <li><a href="/2015/05/27/logs-for-data-infrastructure.html">Transcript</a></li>
+                  
+                  
+                    <li><a href="https://speakerdeck.com/ept/using-logs-to-create-a-solid-data-infrastructure">Slides</a></li>
+                  
+                  
+                    <li><a href="http://www.ustream.tv/recorded/61479591/theater">Video</a></li>
                   
                   
                 </ul>
 
-                <h2 id="abstract">Abstract</h2>
+                <p>A repeat of my <a href="/2015/04/24/logs-for-data-infrastructure-at-craft.html">Craft Conference talk</a>.</p>
 
-<p>How do you remain agile when working on a large application? How do you keep feedback cycles short
-and ship features quickly? How do you adapt rapidly to changing requirements?</p>
+<iframe width="550" height="346" src="http://www.ustream.tv/embed/recorded/61479591?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;"></iframe>
 
-<p>Somehow, you need to break the big application into smaller, more manageable chunks. Microservices
-are a growing trend for splitting up monolithic applications into independently deployable services.
-Although there are many good things about microservices, it’s not all roses: keeping them reliable
-and consistently performant can take serious effort.</p>
+<script async="" class="speakerdeck-embed" data-id="49907c482df7478492d788c8da976160" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
-<p>In this talk, we’ll discuss a different approach to breaking down a big application into smaller
-chunks: stream processing. Many applications can be designed as a cascade of jobs that consume and
-produce real-time data streams. When you build applications this way, streams are not just an
-implementation detail — they become the interface from one team to another.</p>
+<h2 id="abstract">Abstract</h2>
 
-<p>Building on the experience of building large-scale stream processing systems with Apache Kafka, this
-talk will explore how streams can help make our software development more agile, and our systems
-faster and more robust at the same time.</p>
+<p>How does your database store data on disk reliably? It uses a log.<br />
+How does one database replica synchronise with another replica? It uses a log.<br />
+How does a distributed algorithm like <a href="https://ramcloud.stanford.edu/raft.pdf">Raft</a> achieve consensus?
+It uses a log. <br />
+How does activity data get recorded in a system like <a href="http://kafka.apache.org/">Apache Kafka</a>? It uses a log.<br />
+How will the data infrastructure of your application remain robust at scale? Guess what…</p>
+
+<p>Logs are everywhere. I’m not talking about plain-text log files (such as syslog or log4j) – I mean
+an append-only, totally ordered sequence of records. It’s a very simple structure, but it’s also
+a bit strange at first if you’re used to normal databases. However, once you learn to think in terms
+of logs, many problems of making large-scale data systems reliable, scalable and maintainable
+suddenly become much more tractable.</p>
+
+<p>Drawing from the experience of building scalable systems at LinkedIn and other startups, this talk
+will explore why logs are such a fine idea: making it easier to maintain search indexes and caches,
+making your applications more scalable and more robust in the face of failures, and opening up your
+data for richer analysis, while avoiding race conditions, inconsistencies and other ugly problems.</p>
 
             </div>
 
@@ -156,15 +170,15 @@ faster and more robust at the same time.</p>
         <h2 class="title">Conference talks</h2>
         <ul>
             
-              <li><a href="/2015/11/05/streams-as-team-interface-at-oredev.html">05 Nov 2015 at Øredev</a></li>
+              <li><a href="/2015/11/06/streams-as-team-interface-at-oredev.html">06 Nov 2015 at Øredev</a></li>
             
               <li><a href="/2015/11/03/streams-crdts-databases-at-code-mesh.html">03 Nov 2015 at Code Mesh</a></li>
             
+              <li><a href="/2015/10/29/stream-processing-patterns-at-crunch.html">29 Oct 2015 at Crunch Conference</a></li>
+            
               <li><a href="/2015/10/01/data-liberation-with-kafka-at-strata.html">01 Oct 2015 at Strata + Hadoop World</a></li>
             
-              <li><a href="/2015/09/26/transactions-at-strange-loop.html">26 Sep 2015 at Strange Loop</a></li>
-            
-              <li><a href="/2015/06/02/change-capture-at-berlin-buzzwords.html">02 Jun 2015 at Berlin Buzzwords</a></li>
+              <li><a href="/2015/09/28/recurse-center-residence.html">28 Sep 2015 at Recurse Center</a></li>
             
             <li><a href="/talks.html">Full archive</a></li>
         </ul>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Cross-browser testing in the real world &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Streams as the team interface &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,56 +44,44 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Cross-browser testing in the real world"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Streams as the team interface"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Cross-browser testing in the real world</h1>
+                <h1>Streams as the team interface</h1>
 
                 <p>
                   A talk at
                   
-                    RailsWayCon,
+                    <a href="http://oredev.org/2015/sessions/streams-as-the-team-interface">Øredev</a>,
                   
-                  Berlin, Germany, 31 May 2010
+                  Malmö, Sweden, 06 Nov 2015
                 </p>
 
                 <ul>
                   
                   
-                    <li><a href="http://www.slideshare.net/martinkleppmann/crossbrowser-testing-in-the-real-world">Slides</a></li>
                   
-                  
-                  
-                    <li><a href="http://lanyrd.com/2010/railswaycon/">Lanyrd</a></li>
                   
                 </ul>
 
-                <iframe src="//www.slideshare.net/slideshow/embed_code/4373652" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+                <h2 id="abstract">Abstract</h2>
 
-<h2 id="abstract">Abstract</h2>
+<p>How do you remain agile when working on a large application? How do you keep feedback cycles short
+and ship features quickly? How do you adapt rapidly to changing requirements?</p>
 
-<p>Most Rails applications must work correctly on many different browser versions. But how do you best
-automate your browser-level tests? In this talk, Martin compares Selenium, WebDriver and Watir,
-shares his experience of automated browser tests on hundreds of different sites, and talks about
-latest developments in open source functional testing tools.</p>
+<p>Somehow, you need to break the big application into smaller, more manageable chunks. Microservices
+are a growing trend for splitting up monolithic applications into independently deployable services.
+Although there are many good things about microservices, it’s not all roses: keeping them reliable
+and consistently performant can take serious effort.</p>
 
-<p>Selenium, WebDriver and Watir are the most popular open source tools today for automated testing in
-the browser. They can be used by themselves or in conjunction with Cucumber, Celerity and various
-other tools. I will explain the differences between the tools, their relative advantages, and share
-latest news from these projects. Recently the Selenium and WebDriver projects decided to merge, and
-are working towards Selenium 2.0, a hybrid release, by the end of 2010. This merge will combine the
-best of both tools and makes them suitable for a wider range of applications.</p>
+<p>In this talk, we’ll discuss a different approach to breaking down a big application into smaller
+chunks: stream processing. Many applications can be designed as a cascade of jobs that consume and
+produce real-time data streams. When you build applications this way, streams are not just an
+implementation detail — they become the interface from one team to another.</p>
 
-<p>I would like to briefly introduce these open source tools for those attendees who have not worked
-with them before, and show how to use them with Ruby. I will then move on to best practices I have
-learnt from working with Selenium on many different sites. In particular, I will cover:</p>
-
-<ul>
-  <li>how to avoid wasting time when tests break due to UI changes;</li>
-  <li>how to scale your test suite by running it in parallel, and reduce testing time;</li>
-  <li>managing virtual machines for the test environment;</li>
-  <li>common pitfalls and issues in working with browser-level tests.</li>
-</ul>
+<p>Building on the experience of building large-scale stream processing systems with Apache Kafka, this
+talk will explore how streams can help make our software development more agile, and our systems
+faster and more robust at the same time.</p>
 
             </div>
 
