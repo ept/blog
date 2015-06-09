@@ -6,7 +6,10 @@ place: Berlin, Germany
 venue_url: http://berlinbuzzwords.de/session/change-data-capture-magic-wand-we-forgot
 lanyrd_url: http://lanyrd.com/2015/berlinbuzzwords/
 slides_url: https://speakerdeck.com/ept/change-data-capture-the-magic-wand-we-forgot
+video_url: https://www.youtube.com/watch?v=ZAZJqEKUl3U&list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx&index=5
 ---
+
+<iframe width="550" height="315" src="https://www.youtube.com/embed/ZAZJqEKUl3U?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx" frameborder="0" allowfullscreen></iframe>
 
 <script async class="speakerdeck-embed" data-id="60f12a1eb231470a898a66d58f13536c" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
