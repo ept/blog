@@ -3,7 +3,7 @@ layout: talk
 title: Streams as the team interface
 venue: Øredev
 place: Malmö, Sweden
-venue_url: http://oredev.org/
+venue_url: http://oredev.org/2015/sessions/streams-as-the-team-interface
 ---
 
 
