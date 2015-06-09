@@ -5,6 +5,7 @@ venue: "Craft Conf"
 place: "Budapest, Hungary"
 venue_url: http://craft-conf.com/2015#speakers/MartinKleppmann
 lanyrd_url: http://lanyrd.com/2015/craftconf/
+transcript_url: /2015/05/27/logs-for-data-infrastructure.html
 slides_url: https://speakerdeck.com/ept/using-logs-to-create-a-solid-data-infrastructure
 video_url: http://www.ustream.tv/recorded/61479591/theater
 ---

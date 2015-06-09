@@ -4,6 +4,7 @@ title: Making sense of stream processing
 venue: "/dev/winter"
 place: Cambridge, UK
 venue_url: http://devcycles.net/2015/winter/sessions/index.php?session=8
+transcript_url: /2015/01/29/stream-processing-event-sourcing-reactive-cep.html
 slides_url: https://speakerdeck.com/ept/making-sense-of-stream-processing
 lanyrd_url: http://lanyrd.com/2015/devwinter/
 ---

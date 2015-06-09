@@ -5,6 +5,7 @@ venue: Strange Loop
 place: "St. Louis, Missouri, US"
 venue_url: https://thestrangeloop.com/sessions/turning-the-database-inside-out-with-apache-samza
 lanyrd_url: http://lanyrd.com/2014/strangeloop/
+transcript_url: /2015/03/04/turning-the-database-inside-out.html
 video_url: https://www.youtube.com/watch?v=fU9hR3kiOK0&list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx
 slides_url: https://speakerdeck.com/ept/turning-the-database-inside-out-with-apache-samza
 ---

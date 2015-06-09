@@ -28,6 +28,9 @@
                 </p>
 
                 <ul>
+                  {% if page.transcript_url %}
+                    <li><a href="{{ page.transcript_url }}">Transcript</a></li>
+                  {% endif %}
                   {% if page.slides_url %}
                     <li><a href="{{ page.slides_url }}">Slides</a></li>
                   {% endif %}

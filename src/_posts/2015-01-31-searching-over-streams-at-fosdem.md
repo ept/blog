@@ -3,9 +3,13 @@ layout: talk
 title: "Searching over Streams with Luwak and Apache Samza"
 venue: "FOSDEM (Open Source Search Room)"
 place: "Brussels, Belgium"
+transcript_url: /2015/04/13/real-time-full-text-search-luwak-samza.html
 venue_url: https://fosdem.org/2015/schedule/event/searching_over_streams_with_luwak_and_apache_samza/
+slides_url: https://speakerdeck.com/ept/searching-over-streams-with-luwak-and-samza
 lanyrd_url: http://lanyrd.com/2015/fosdem/
 ---
+
+<script async class="speakerdeck-embed" data-id="1d93ecca5c324f3ba48c3b159628debe" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 Co-presented with [Alan Woodward](https://twitter.com/romseygeek).
 

@@ -4,6 +4,7 @@ title: "Turning the database inside out with Apache Samza"
 venue: "Salesforce.com"
 place: "San Francisco, CA, US"
 venue_url: http://www.salesforce.com/
+transcript_url: /2015/03/04/turning-the-database-inside-out.html
 video_url: https://www.youtube.com/watch?v=fU9hR3kiOK0&list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx
 slides_url: https://speakerdeck.com/ept/turning-the-database-inside-out-with-apache-samza
 ---
