@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Tue, 09 Jun 2015 15:29:14 BST</lastBuildDate>
+        <lastBuildDate>Fri, 19 Jun 2015 12:36:08 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -246,7 +246,7 @@ change, you also need to update the counter accordingly.</p>
 
 <p>Let’s keep this one simple: one client, one database. Think about what happens over time:
 first the client inserts the new message into the recipient’s inbox. Then the client
-makes a requiest to increment the unread counter.</p>
+makes a request to increment the unread counter.</p>
 
 <p><img src="/2015/05/logs-13.png" alt="Update of denormalized data fails" width="550" height="369" /></p>
 
