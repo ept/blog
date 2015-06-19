@@ -222,7 +222,7 @@ change, you also need to update the counter accordingly.
 
 Let's keep this one simple: one client, one database. Think about what happens over time:
 first the client inserts the new message into the recipient's inbox. Then the client
-makes a requiest to increment the unread counter.
+makes a request to increment the unread counter.
 
 <img src="/2015/05/logs-13.png" alt="Update of denormalized data fails" width="550" height="369">
 
