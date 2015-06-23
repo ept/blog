@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Systems that enable data agility: Lessons from LinkedIn &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Samza and the Unix philosophy of distributed systems &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,72 +44,35 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Systems that enable data agility: Lessons from LinkedIn"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Samza and the Unix philosophy of distributed systems"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Systems that enable data agility: Lessons from LinkedIn</h1>
+                <h1>Samza and the Unix philosophy of distributed systems</h1>
 
                 <p>
                   A talk at
                   
-                    <a href="http://strataconf.com/big-data-conference-uk-2015/public/schedule/detail/39689">Strata + Hadoop World</a>,
+                    <a href="http://www.meetup.com/hadoop-users-group-uk/events/223444014/">UK Hadoop Users Group</a>,
                   
-                  London, UK, 06 May 2015
+                  London, UK, 09 Jul 2015
                 </p>
 
                 <ul>
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/systems-that-enable-data-agility">Slides</a></li>
                   
-                  
-                    <li><a href="https://www.youtube.com/watch?v=bEbeZPVo98c">Video</a></li>
-                  
-                  
-                    <li><a href="http://lanyrd.com/2015/strata-hadoop-world-london/">Lanyrd</a></li>
                   
                 </ul>
 
-                <script async="" class="speakerdeck-embed" data-id="63dbc03de7f94d378641241ca2cd644e" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+                <p>One of the big ideas in Unix was to allow small, simple command-line tools to be chained together
+with pipes. Each of those tools would do one thing and do it well. Even now, 50 years later, Unix
+tools are one of the most powerful ways of getting things done: a one-liner of
+<code>grep | awk | sort | uniq</code> is still one of the fastest ways of processing data and analysing logs.</p>
 
-<iframe width="550" height="413" src="https://www.youtube-nocookie.com/embed/bEbeZPVo98c?rel=0" frameborder="0" allowfullscreen=""></iframe>
-
-<p>Data is only useful if you can process it, analyse it, and create valuable products from it. If you
-have an idea for a new data-driven product, how long does it take you to get it into production? In
-this talk, we’ll discuss Apache Kafka and Samza, open source tools created at LinkedIn with the goal
-of helping teams implement data products and ship them to production rapidly.</p>
-
-<h2 id="abstract">Abstract</h2>
-
-<p>Congratulations, you’ve got a lot of data! Now what? How do you enable your organisation to create
-value from that data? What tools do your data scientists need in order to create data-driven
-products? How do you empower your teams to experiment, to innovate, and to be agile in response to
-customer needs?</p>
-
-<p>In this session we will discuss LinkedIn’s approach to solving these problems, and the open source
-tools that were created at LinkedIn to support data agility in a large organisation. The approach
-boils down to a few simple ideas:</p>
-
-<ol>
-  <li>Make all data available centrally, in real time. If it’s too difficult to access data across
-silos, you can’t derive value from it. For this purpose, LinkedIn created Apache Kafka, which can
-be the data exchange backbone of your organisation.</li>
-  <li>Make it easy to analyse and process that data. You’ve hired smart people, now empower them to
-easily try out new ideas for data-driven products, and rapidly get them into production if they
-are good. To support this, LinkedIn created Apache Samza, a stream processing framework that
-provides powerful, reliable tools for working with data in Kafka.</li>
-</ol>
-
-<p>Since Kafka and Samza are open source, you can apply these lessons and start implementing your own agile data pipeline today. In this talk you’ll learn about:</p>
-
-<ul>
-  <li>How Kafka and Samza reliably scale to millions of messages per second</li>
-  <li>What kinds of real-time data problems you can solve with Samza</li>
-  <li>How Samza compares to other stream processing frameworks</li>
-  <li>How data streams support collaboration between different data science, product and engineering
-teams within an organisation</li>
-  <li>Lessons learnt on how to move fast without breaking things</li>
-</ul>
+<p>Many modern data systems are monolithic, the very opposite of the Unix philosophy. But Apache Samza
+is different: it is, in some sense, an attempt to bring the Unix philosophy into 21st-century
+distributed systems. In this talk, we will explore the design decisions behind Samza, and see how
+the Unix philosophy can help us build modern systems that are robust, scalable and maintainable.</p>
 
             </div>
 
