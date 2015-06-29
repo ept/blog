@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>On the importance of ambition &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Getting data out of databases: a surprisingly tricky problem &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,92 +44,44 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="On the importance of ambition"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Getting data out of databases: a surprisingly tricky problem"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>On the importance of ambition</h1>
+                <h1>Getting data out of databases: a surprisingly tricky problem</h1>
 
-                <p>The <a href="http://www.sagradafamilia.cat/sf-eng/">Sagrada Familia cathedral</a> in Barcelona is an
-astonishing experience. And that has not so much to do with its size, its architecture, its
-intricate artwork or any such outward aspects, although they aren’t bad either. The astonishing
-thing is that the construction of the building started about 130 years ago, and they’ve still not
-even started building the main central towers. It isn’t scheduled to be completed for at least
-another 20 years, and to me as outsider it looks more like it’s going to be another 100 years. That
-is not because the builders are lazy – people were right there, working on the masonry as I was
-visiting – but because it is such a massively ambitious project.</p>
+                <p>
+                  A talk at
+                  
+                    <a href="http://allyourbaseconf.com/2015/speakers#martin-kleppmann">All Your Base</a>,
+                  
+                  London, UK, 13 Nov 2015
+                </p>
 
-<p>Now in history it has not been
-unusual for the construction of cathedrals to
-<a href="http://en.wikipedia.org/wiki/Manchester_Cathedral">take 600 years</a>
-<a href="http://en.wikipedia.org/wiki/Cologne_Cathedral">or longer</a>, but most of those buildings are now
-completed (except for eternally ongoing maintenance work). When we are told that it took so many
-years to build a cathedral, that information usually just washes past us without us ever really
-contemplating what that means. It means that for about 30 generations, all people saw was a huge
-unfinished work in their town, a monument from their distant ancestors lost in history, and a
-heirloom to their distant descendants in a future time which would be very different from their
-own.</p>
+                <ul>
+                  
+                  
+                  
+                  
+                </ul>
 
-<p>In each of those generations, many stonemasons, woodworkers, architects and others would spend
-their whole life assembling tiny pieces of a huge work. They would grow up, live, eat, drink, love,
-grow old and die, and during that time they would still only see a small incremental bit of progress
-towards achieving the vision of their ancestors. It is impossible to even imagine the amount of
-human soul which so many people have poured into the endeavour over such a long period of time.</p>
+                <h2 id="abstract">Abstract</h2>
 
-<p>It
-seems to me that we don’t think about many things on that sort of scale today. In fact, I think that
-if somebody was to propose to start such a massive undertaking today, like Antoni Gaudí and his
-colleagues did towards the end of the 19th century, they would only get laughed at. Hell, we can’t
-even sort out things like climate change and fossil fuels running out, and these are things which
-happen on a much shorter timescale than the construction of a cathedral like this. Is it possible
-that the 20th and 21st century, with their ever increasing pace of life, have caused us to lose
-sight of this big picture – this understanding of the world which includes not just ourselves, but
-our distant ancestors and our distant descendants also?</p>
+<p>Writing to a database is easy, but getting the data out again is surprisingly hard.</p>
 
-<p>Gaudí is given a lot of credit for the
-Sagrada Familia. That is not because he did a record amount of stone-lifting, but because he had a
-vision, a vision of a massively ambitious project which would span far beyond his own lifetime, a
-vision which would inspire the ambition of many other people wanting to be part of the project. I
-wouldn’t say that Gaudí <em>created</em> the Sagrada Familia – of course it is being created by the large
-number of workers in the past, present and future. But these workers all have a common <em>ambition</em>, a
-desire to be part of something much greater than their own lives, and this ambition draws from
-Gaudí’s initial vision.</p>
+<p>Of course, if you just want to query the database and get some results, that’s fine. But what if you
+want a copy of your database contents in some other system — for example, to make it searchable in
+Elasticsearch, or to pre-fill caches so that they’re nice and fast, or to load it into a data
+warehouse for analytics, or if you want to migrate to a different database technology?</p>
 
-<p>The important thing to realise here is that although Gaudí is famously
-associated with the project, it is not <em>“his”</em> project in any useful sense. The ambition of the many
-generations working towards its completion are not doing it because of Gaudí, so therefore he
-arguably has fairly little importance today. The workers are not doing it for their own sake either
-– if they wanted to show off, they would be better off choosing to work on something which they
-might see completed within their lifetime. They are not doing it because of competition, or because
-of any sort of necessity, and they are certainly not doing it because somebody is forcing them to.
-They might be doing it for the glory of God, I don’t know.</p>
+<p>As the data is constantly changing, a one-off snapshot of the database is not enough: you need to
+tap into the ongoing stream of writes to the database. This technique is called Change Data Capture
+(CDC). At companies like LinkedIn and Facebook, this is how caches and indexes are kept up-to-date.</p>
 
-<p>My understanding is that they are
-working on this cathedral because it is something they think is worthwhile, something bigger than
-any single human being. This ambition is going to be successful because it is the collective goal of
-so many people. Ambition, viewed in this way, is a very selfless thing.</p>
+<p>This talk explains why change data capture is so useful, and how it prevents race conditions and
+other ugly problems. Martin will explore the practical details of implementing CDC with PostgreSQL
+and Apache Kafka, and discuss the approaches you can use to do the same with various other
+databases.</p>
 
-<p>The word <em>ambition</em> has
-picked up negative connotations. It has become associated with ruthlessness, with striving for
-success at the expense of others, with egocentricity and self-importance. I found the Sagrada
-Familia a refreshing reminder that such a self-centered understanding of ambition is short-sighted,
-because it limits whatever you want to do to a single person’s lifetime, which isn’t very much in
-the grand scheme of things.</p>
-
-<p>Instead, I see the Sagrada Familia as an example for a general pattern
-for doing amazing things. If you want to do something amazing, you first need somebody with a vision
-to inspire other people. Once that is done, the best thing that person can do is to step back, to
-surrender a lot of the ownership and control over the project to the people who will actually get it
-done, and of course let them take their reward.</p>
-
-<p>The way Gaudí did this is by setting the scope of
-the project so large that it was way beyond his lifetime, and hence also way beyond his control. He
-is said to have commented on the expected duration of the construction: “My client is not in a
-hurry.”</p>
-
-
-                
-
-                <div id="disqus_thread"></div>
             </div>
 
             <div id="sidebar">
@@ -243,18 +195,6 @@ hurry.”</p>
 <img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2008/03/30/on-the-importance-of-ambition.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Google Analytics -->
 <script type="text/javascript">
