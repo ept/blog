@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Attiya and Welch: Sequential Consistency versus Linearizability &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Attiya and Welch: Sequential Consistency versus Linearizability"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Attiya and Welch: Sequential Consistency versus Linearizability</h1>
+
+                <p>
+                  A talk at
+                  
+                    <a href="http://www.meetup.com/Papers-We-Love-London/events/223602194/">Papers We Love</a>,
+                  
+                  London, UK, 08 Jul 2015
+                </p>
+
+                <ul>
+                  
+                  
+                  
+                  
+                </ul>
+
+                <p><a href="http://paperswelove.org/">Papers We Love</a> is a meetup for discussing academic computer science papers.
+At this meeting I’m presenting the following paper:</p>
+
+<p><a href="http://www.cs.technion.ac.il/~hagit/">Hagit Attiya</a> and <a href="https://parasol.tamu.edu/~welch/">Jennifer L Welch</a>:
+“<a href="http://courses.csail.mit.edu/6.852/01/papers/p91-attiya.pdf">Sequential Consistency versus Linearizability</a>,”
+ACM Transactions on Computer Systems (TOCS), volume 12, number 2, pages 91–122, May 1994.
+<a href="http://dx.doi.org/10.1145/176575.176576">doi:10.1145/176575.176576</a></p>
+
+<h2 id="abstract-of-my-talk">Abstract of my talk</h2>
+
+<p>An often-cited constraint on distributed database design is the CAP theorem, an impossibility result
+in distributed systems. It states that in a linearizable database, if the network is interrupted,
+some nodes cannot respond to requests. Although being able to tolerate network faults is important,
+the performance and response times of a database are often even more important, and CAP says nothing
+about those. It’s also a pretty boring theorem.</p>
+
+<p>Attiya and Welch’s paper, which we’ll discuss in this session, is vastly more interesting. It also
+proves an impossibility result, but it’s about response times: on a network where the uncertainty of
+packet delay is u, there is no algorithm that implements linearizability with read requests faster
+than u/4 and write requests faster than u/2. On a network where packet delay is highly variable
+(like many computer networks), a linearizable database is therefore inevitably going to be slow.</p>
+
+<p>The paper then goes on to compare linearizability to sequential consistency (a weaker consistency
+guarantee), and shows that sequential consistency can be significantly faster.</p>
+
+<p>This is a theoretical paper, but its applications to practical systems are very real. Its proofs are
+elegant and not too difficult to follow. It was almost a decade ahead of the CAP theorem. And
+moreover, it has no male co-authors. What’s not to love about it?</p>
+
+<h2 id="abstract-of-the-paper">Abstract of the paper</h2>
+
+<p>The power of two well-known consistency conditions for shared-memory multiprocessors, <em>sequential
+consistency</em> and <em>linearizability</em>, is compared. The cost measure studied is the worst-case response
+time in distributed implementations of virtual shared memory supporting one of the two conditions.
+Three types of shared-memory objects are considered: read/write objects, FIFO queues, and stacks. If
+clocks are only approximately synchronized (or do not exist), then for all three object types it is
+shown that linearizability is more expensive than sequential consistency: We present upper bounds
+for sequential consistency and larger lower bounds for linearizability. We show that, for all three
+data types, the worst-case response time is very sensitive to the assumptions that are made about
+the timing information available to the system. Under the strong assumption that processes have
+perfectly synchronized clocks, it is shown that sequential consistency and linearizability are
+equally costly: We present upper bounds for linearizability and matching lower bounds for sequential
+consistency. The upper bounds are shown by presenting algorithms that use atomic broadcast in
+a modular fashion. The lower-bound proofs for the approximate case use the technique of “shifting,”
+first introduced for studying the clock synchronization problem.</p>
+
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>I'm writing a book for O'Reilly, called
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>27 May 2015: <a href="/2015/05/27/logs-for-data-infrastructure.html">Using logs to build a solid data infrastructure (or: why dual writes are a bad idea)</a></li>
+            
+              <li>11 May 2015: <a href="/2015/05/11/please-stop-calling-databases-cp-or-ap.html">Please stop calling databases CP or AP</a></li>
+            
+              <li>23 Apr 2015: <a href="/2015/04/23/bottled-water-real-time-postgresql-kafka.html">Bottled Water: Real-time integration of PostgreSQL and Kafka</a></li>
+            
+              <li>13 Apr 2015: <a href="/2015/04/13/real-time-full-text-search-luwak-samza.html">Real-time full-text search with Luwak and Samza</a></li>
+            
+              <li>04 Mar 2015: <a href="/2015/03/04/turning-the-database-inside-out.html">Turning the database inside-out with Apache Samza</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2015/11/13/change-data-capture-at-all-your-base.html">13 Nov 2015 at All Your Base</a></li>
+            
+              <li><a href="/2015/11/06/streams-as-team-interface-at-oredev.html">06 Nov 2015 at Øredev</a></li>
+            
+              <li><a href="/2015/11/03/streams-crdts-databases-at-code-mesh.html">03 Nov 2015 at Code Mesh</a></li>
+            
+              <li><a href="/2015/10/29/stream-processing-patterns-at-crunch.html">29 Oct 2015 at Crunch Conference</a></li>
+            
+              <li><a href="/2015/09/30/data-liberation-with-kafka-at-strata.html">30 Sep 2015 at Strata + Hadoop World</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+<img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
+
+    </div>
+
+    <!-- Google Analytics -->
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+<!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
