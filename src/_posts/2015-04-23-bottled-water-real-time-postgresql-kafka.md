@@ -237,9 +237,10 @@ database server, so it's not something to be undertaken lightly. I understand th
 administrator will be scared by the prospect of running custom code inside the database server.
 Unfortunately, this is the only way logical decoding can currently be used.
 
-Fortunately, you don't have to install the plugin on your leader database — you can just use
-a follower (replica, hot standby) for that purpose. That way you can be sure that the plugin cannot
-corrupt your data, crash the main database instance or affect its performance.
+At the moment, the logical decoding plugin must be installed on the leader database. In principle,
+it would be possible to have it run on a separate follower, so that it cannot impact other clients,
+but the current implementation in Postgres does not allow this. This limitation will hopefully be
+lifted in future versions of Postgres.
 
 <img src="/2015/04/bottledwater-05.png" alt="Bottled Water architecture" width="550" height="412" />
 
