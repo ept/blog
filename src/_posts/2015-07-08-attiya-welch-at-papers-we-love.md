@@ -4,6 +4,7 @@ title: "Attiya and Welch: Sequential Consistency versus Linearizability"
 venue: Papers We Love
 place: London, UK
 venue_url: http://www.meetup.com/Papers-We-Love-London/events/223602194/
+slides_url: https://speakerdeck.com/ept/sequential-consistency-versus-linearizability-attiya-and-welch
 ---
 
 [Papers We Love][pwl] is a meetup for discussing academic computer science papers.
@@ -19,6 +20,9 @@ ACM Transactions on Computer Systems (TOCS), volume 12, number 2, pages 91–122
 [welch]: https://parasol.tamu.edu/~welch/
 [paper]: http://courses.csail.mit.edu/6.852/01/papers/p91-attiya.pdf
 [doi]: http://dx.doi.org/10.1145/176575.176576
+
+
+<script async class="speakerdeck-embed" data-id="b0a01598878f498d883ab560333bd1fe" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 
 Abstract of my talk
