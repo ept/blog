@@ -5,6 +5,7 @@ venue: Papers We Love
 place: London, UK
 venue_url: http://www.meetup.com/Papers-We-Love-London/events/223602194/
 slides_url: https://speakerdeck.com/ept/sequential-consistency-versus-linearizability-attiya-and-welch
+video_url: https://www.youtube.com/watch?v=D5iCl12MuRw
 ---
 
 [Papers We Love][pwl] is a meetup for discussing academic computer science papers.
@@ -23,6 +24,8 @@ ACM Transactions on Computer Systems (TOCS), volume 12, number 2, pages 91–122
 
 
 <script async class="speakerdeck-embed" data-id="b0a01598878f498d883ab560333bd1fe" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="550" height="309" src="https://www.youtube.com/embed/D5iCl12MuRw" frameborder="0" allowfullscreen></iframe>
 
 
 Abstract of my talk
