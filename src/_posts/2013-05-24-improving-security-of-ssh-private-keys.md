@@ -4,6 +4,10 @@ title: Improving the security of your SSH private key files
 hackernews: https://news.ycombinator.com/item?id=5763581
 ---
 
+**Update (July 2015): This post is now rather outdated, and the procedure for modifying your
+private key files is no longer recommended. A better solution is to use
+[`ssh-keygen -o`](http://www.tedunangst.com/flak/post/new-openssh-key-format-and-bcrypt-pbkdf).**
+
 Ever wondered how those key files in `~/.ssh` actually *work*? How secure are they actually?
 
 As you probably do too, I use ssh many times every single day --- every `git fetch` and `git push`,
