@@ -49,7 +49,11 @@
 
                 <h1>Improving the security of your SSH private key files</h1>
 
-                <p>Ever wondered how those key files in <code>~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
+                <p><strong>Update (July 2015): This post is now rather outdated, and the procedure for modifying your
+private key files is no longer recommended. A better solution is to use
+<a href="http://www.tedunangst.com/flak/post/new-openssh-key-format-and-bcrypt-pbkdf"><code>ssh-keygen -o</code></a>.</strong></p>
+
+<p>Ever wondered how those key files in <code>~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
 
 <p>As you probably do too, I use ssh many times every single day — every <code>git fetch</code> and <code>git push</code>,
 every deploy, every login to a server. And recently I realised that to me, ssh was just some crypto
