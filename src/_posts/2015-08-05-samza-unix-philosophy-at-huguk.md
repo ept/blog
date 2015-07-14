@@ -3,7 +3,7 @@ layout: talk
 title: Samza and the Unix philosophy of distributed systems
 venue: UK Hadoop Users Group
 place: London, UK
-venue_url: http://www.meetup.com/hadoop-users-group-uk/events/223444014/
+venue_url: http://www.meetup.com/hadoop-users-group-uk/events/223836730/
 ---
 
 One of the big ideas in Unix was to allow small, simple command-line tools to be chained together
