@@ -17,8 +17,8 @@ data systems learnt a thing or two from Unix.
 
 <img src="/2015/08/unixphil-01.png" width="550" height="412">
 
-To make the ideas concrete, let me start with an example of how you might use Unix tools. If tools
-like `awk` and `uniq` are already second nature to you, feel free to skip this section.
+You've probably seen the power of Unix tools before -- but to get started, let me give you
+a concrete example that we can talk about.
 
 Say you have a web server that writes an entry to a log file every time it serves a request. For
 example, using the nginx default access log format, one line of the log might look like this:
@@ -27,34 +27,25 @@ example, using the nginx default access log format, one line of the log might lo
     200 3377 "http://martin.kleppmann.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X
     10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36"
 
-(That is actually one line, it's only broken onto multiple lines here for readability.) There's a
-lot of information in that one line. In order to interpret it, you need to look at the definition of
-the log format, which is [as follows](http://nginx.org/en/docs/http/ngx_http_log_module.html):
-
-    $remote_addr - $remote_user [$time_local] "$request"
-    $status $body_bytes_sent "$http_referer" "$http_user_agent"
-
-This line of the log indicates that on 27 February 2015 at 17:55:11 UTC, the server received a
-request for the file `/css/typography.css` from the client IP address 216.58.210.78. The user was
-not authenticated, so `$remote_user` is set to a dash (`-`). The response status was 200, i.e. the
-request was successful, and the response was 3377 bytes in size. The file was embedded in the page
-at URL `http://martin.kleppmann.com/` and the web browser was Chrome 40.
-
-<img src="/2015/08/unixphil-02.png" width="550" height="412">
+(That is actually one line, it's only broken onto multiple lines here for readability.) This line of
+the log indicates that on 27 February 2015 at 17:55:11 UTC, the server received a request for the
+file `/css/typography.css` from the client IP address 216.58.210.78. It then goes on to note various
+other details, including the browser's user-agent string.
 
 Various tools can take these log files and produce pretty reports about your website traffic, but
-for the sake of exercise, let's build our own, using basic Unix tools. To start with, let's use
-`awk` to extract the path of the URL that was requested.
+for the sake of exercise, let's build our own, using basic Unix tools. Let's determine the 5 most
+popular URLs on our website. To start with, we need to extract the path of the URL that was
+requested, for which we can use `awk`.
 
-`awk` doesn't know about the nginx format string -- it just treats the log file as text. By default,
-`awk` takes one line of input at a time, splits it by whitespace, and makes the whitespace-separated
-components available as variables `$1`, `$2`, etc. In the nginx log example, the requested URL path
-is the seventh whitespace-separated component:
+`awk` doesn't know about the format of nginx logs -- it just treats the log file as text. By
+default, `awk` takes one line of input at a time, splits it by whitespace, and makes the
+whitespace-separated components available as variables `$1`, `$2`, etc. In the nginx log example,
+the requested URL path is the seventh whitespace-separated component:
 
 <img src="/2015/08/unixphil-03.png" width="550" height="412">
 
-Now that you've extracted the path, you can determine the 5 most popular pages on your website, for
-example. You can do this in a Unix shell as follows:
+Now that you've extracted the path, you can determine the 5 most popular pages on your website as
+follows:
 
 {% highlight bash %}
 awk '{print $7}' access.log | # Split by whitespace, 7th field is request path
@@ -76,9 +67,8 @@ The output of that series of commands looks something like this:
 
 Although the above command line looks a bit obscure if you're unfamiliar with Unix tools, it is
 incredibly powerful. It will process gigabytes of log files in a matter of seconds, and you can
-easily modify the analysis to suit your needs. For example, if you want to omit CSS files from the
-report, change the `awk` argument to `'$7 !~ /\.css$/ {print $7}'`. If you want to count top client
-IP addresses instead of top pages, change the `awk` argument to `'{print $1}'`. And so on.
+easily modify the analysis to suit your needs. For example, if you want to count top client IP
+addresses instead of top pages, change the `awk` argument to `'{print $1}'`.
 
 Many data analyses can be done in a few minutes using some combination of `awk`, `sed`, `grep`,
 `sort`, `uniq` and `xargs`, and they perform
@@ -112,22 +102,16 @@ of the Agile and DevOps movements that appeared decades later: scripting and aut
 prototyping, incremental iteration, being friendly to experimentation, and breaking down large
 projects into manageable chunks. Plus ça change.
 
-<img src="/2015/08/unixphil-07.png" width="550" height="412">
-
-The key thing that made composition work was the *shell* (originally just called `sh`, but modern
-implementations like `bash` and `zsh` are better known today). Even back then, the shell was an
-interpreter for a kind of high-level programming language (*shell scripts*).
-
-Invocations of programs are wired together by the shell, as specified on the command line or a shell
-script. Note that the wiring is not done by the programs themselves, but by an outsider. This allows
-them to be [loosely coupled](http://en.wikipedia.org/wiki/Loose_coupling), and not worry about where
-their input is coming from, or where their output is going.
-
 <img src="/2015/08/unixphil-08.png" width="550" height="322">
 
-However, the shell is just a user interface, and from the operating system's point of view it's
-a program like any other. The operating system just needs to provide a mechanism for taking the
-output of one process and making it the input of another process. This mechanism is called a *pipe*.
+When you join two commands with the pipe character in your shell, the shell starts both programs at
+the same time, and attaches the output of the first process to the second process' input. This
+attachment mechanism uses the [`pipe`](http://linux.die.net/man/2/pipe) syscall provided by the
+operating system.
+
+Note that this wiring is not done by the programs themselves, but by the shell -- this allows them
+to be [loosely coupled](http://en.wikipedia.org/wiki/Loose_coupling), and not worry about where
+their input is coming from, or where their output is going.
 
 <img src="/2015/08/unixphil-09.png" width="550" height="412">
 
@@ -144,18 +128,16 @@ similar to the mechanism for reading and writing files. We now call this input r
 the contents of a file as input to a process) and output redirection (writing the output of
 a process to a file).
 
-<img src="/2015/08/unixphil-11.png" width="550" height="311">
-
 The reason that Unix programs can be composed so flexibly is that they all conform to the same
 interface: most programs have one stream for input data (`stdin`) and two output streams (`stdout`
 for regular output data, and `stderr` for errors and diagnostic messages).
+
+<img src="/2015/08/unixphil-12.png" width="550" height="311">
 
 Programs may also do other things besides reading `stdin` and writing `stdout`, such as reading and
 writing files, communicating over the network, or drawing a graphical user interface. However, the
 `stdin`/`stdout` communication is considered to be the main way how data flows from one Unix tool to
 another.
-
-<img src="/2015/08/unixphil-12.png" width="550" height="311">
 
 And the great thing about the `stdin`/`stdout` interface is that anyone can implement it easily, in
 any programming language. You can develop your own tool that conforms to this interface, and it will
@@ -174,9 +156,10 @@ previously, and it will work just fine. This may seem painfully obvious if you'v
 Unix for a while, but I'd like to emphasise how remarkable this is: your own code runs on equal
 terms with the tools provided by the operating system.
 
-This means that you can reuse existing tools where appropriate, and write your own only where
-necessary. It means that you can extend the operating system arbitrarily. It's such a simple idea,
-but it's very powerful.
+Apps with graphical user interfaces or web apps cannot simply be extended and wired together like
+this. You can't just pipe Gmail into a separate search engine app, and post results to a wiki.
+Today it's an exception, not the norm, to have programs that work together as smoothly as Unix tools
+do.
 
 <img src="/2015/08/unixphil-14.png" width="550" height="285">
 
@@ -276,9 +259,9 @@ The uniform interface of file descriptors in Unix doesn't just apply to the inpu
 processes, but it's a very broadly applied pattern. If you open a file on the filesystem, you get
 a file descriptor. Pipes and unix sockets provide file descriptors that are a communication channel
 to another process on the same machine. On Linux, the virtual files in `/dev` are the interfaces of
-device drivers, so you might be talking to a disk drive or even a graphics card. The virtual files
-in `/proc` are an API for the kernel, but since they're exposed as files, you can access them with
-the same tools as regular files.
+device drivers, so you might be talking to a USB port or even a GPU. The virtual files in `/proc`
+are an API for the kernel, but since they're exposed as files, you can access them with the same
+tools as regular files.
 
 Even a TCP connection to a process on another machine is a file descriptor, although the BSD sockets
 API (which is most commonly used to establish TCP connections) is arguably not as Unixy as it could
@@ -336,7 +319,8 @@ Unix has some limitations:
   can be made to look somewhat like a file, I don't think that's the right answer: it only works if
   both sides of the connection are up, and it has
   [somewhat messy](http://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable)
-  edge case semantics.
+  edge case semantics. TCP is good, but by itself it's too low-level to serve as a distributed pipe
+  implementation.
 * ASCII text (or rather, UTF-8) is great for making data easily explorable, but it quickly gets
   messy. Every process needs to be set up with its own input parsing: first breaking the byte stream
   into records (usually separated by newline, though some advocate `0x1e`, the [ASCII record
@@ -424,12 +408,17 @@ briefly:
   slow down the producer or other consumers. As long as the buffer fits within your available disk
   space, the slow consumer can catch up later. This makes the system less sensitive to individual
   slow components, and more robust overall.
-* Finally, a Unix pipe connects exactly one process output with exactly one process input (you can
-  branch a pipeline with [`tee`](http://linux.die.net/man/1/tee), but a pipe itself is always
-  one-to-one). By contrast, a Kafka stream can have many producers and many consumers, making it
-  more like a broadcast channel. This is very useful, since it allows the same data stream to be
-  consumed independently for several different purposes (including monitoring and audit purposes,
-  which are often outside of the application itself).
+* A Unix pipe connects exactly one process output with exactly one process input (you can branch
+  a pipeline with [`tee`](http://linux.die.net/man/1/tee), but a pipe itself is always one-to-one).
+  By contrast, a Kafka stream can have many producers and many consumers, making it more like
+  a broadcast channel. This is very useful, since it allows the same data stream to be consumed
+  independently for several different purposes (including monitoring and audit purposes, which are
+  often outside of the application itself).
+* A data stream in Kafka is called a *topic*, and you can refer to it by name (which makes it more
+  like a Unix [named pipe](http://vincebuffalo.com/2013/08/08/the-mighty-named-pipe.html).
+  A pipeline of Unix programs is usually started all at once, but a long-running application has
+  bits added, removed or replaced gradually over time. This means your pipes need names, so that
+  you can tell the system what you want to connect to.
 
 Despite those differences, I still think it makes sense to think of Kafka as Unix pipes for
 distributed data. For example, one thing they have in common is that Kafka keeps messages in a fixed
@@ -463,6 +452,7 @@ independently develop and maintain stream processing jobs that consume streams a
 streams. Since a stream can have any number of independent consumers, no coordination is required to
 set up a new consumer.
 
+We've been calling this idea a [stream data platform](http://www.confluent.io/blog/stream-data-platform-1/).
 In this kind of architecture, the data streams in Kafka act as the communication channel between
 different teams' systems. Each team focusses on making their particular part of the system do one
 thing well. While Unix tools can be composed to accomplish a data processing task, distributed
@@ -477,11 +467,98 @@ of the system, it remains localised. And
 structures to be made safely, so that each team can move fast without breaking things for other
 teams.
 
-Kafka doesn't try to do everything, and that's its strength. It does one thing, and does it well: it
-is a fault-tolerant, scalable implementation of a pipe. It's not a database, but it can be used to
-connect databases to each other. It's not an application server, but it allows you to compose stream
-processing jobs in a robust way.
+<img src="/2015/08/unixphil-30.png" width="550" height="412">
+
+This idea of decomposing a large application into loosely coupled components is reminiscent of
+microservices. Indeed, many of the goals are the same, and microservices
+[have also been compared to Unix tools](http://www.infoq.com/articles/microservices-intro). So what
+should you be using?
+
+Microservices are great for gathering together various pieces of information that need to be shown
+to the user as part of a user's web request. These requests are usually *synchronous*, i.e. they
+need to complete before the response can be sent to the user. Such service calls are on the critical
+path to getting the page rendered, so you need them to be always fast and reliable, otherwise the
+user experience is degraded.
+
+However, not everything has to be on that critical path. Many metrics, monitoring, analytics or
+recommendation systems just need to find out about what is happening, but they don't immediately
+feed into the response to the user. It's better to get those things off the critical path and into
+*asynchronous* background processes, so that they don't slow down the user's request unnecessarily.
+For such use cases, stream processing works better.
+
+<img src="/2015/08/unixphil-31.png" width="550" height="412">
+
+Here are a few points for comparing microservices and stream processing:
+
+* As previously mentioned, Kafka acts as a buffer for stream processors, so if a processor is
+  running slow, it doesn't affect the services that are publishing messages. This is good for
+  robustness of the system overall: since the services that publish messages are often the ones
+  handling user requests, it's important to make sure that they is not disrupted by some
+  non-critical monitoring job in the background.
+
+  The buffer also ensures that the slow processor can catch up when it recovers. By contrast,
+  microservices have no such buffer: if a service is slow to respond, the caller can at best retry
+  a few times (perhaps exacerbating the load problem further), but eventually it will have to give
+  up, so the message is lost.
+
+* Since a Kafka topic can have many subscribers, a service can just publish events without caring
+  who consumes them. Anyone with appropriate permissions can consume the data, without having to ask
+  the publisher for permission.
+  
+  Microservices don't have this decoupling, since service calls are one-to-one: if you want to
+  receive a service call every time a user views a page, you have to modify the service that handles
+  page views, and make it call your service. You can't just passively attach to a service (unless
+  it has specifically made some provision for registering callbacks or suchlike).
+
+* Calls to microservices often modify data stored within a service, i.e. they have side-effects. On
+  the other hand, stream processing doesn't modify the original data (if any data is written, it is
+  normally written to a new location, not overwriting existing data). This makes stream processing
+  more friendly to experimentation: you can try something, write the output to a temporary file, and
+  delete it again without doing any harm. With microservices, you'd have to first create a separate
+  sandbox copy of your data, since otherwise your experimental requests would be modifying real
+  data.
+
+  One way of thinking about this: microservices are a distributed version of object-oriented
+  programming (objects encapsulate their instance variables, services encapsulate their databases),
+  whereas stream processing is a distributed version of functional programming.
+
+<img src="/2015/08/unixphil-32.png" width="550" height="412">
+
+To wrap up this post, let's consider a real-life example of how this works at LinkedIn. As you may
+know, companies can post their job openings on LinkedIn, and jobseekers can browse and apply for
+those jobs. What happens if a LinkedIn member (user) views one of those job postings?
+
+It's very useful to know who has looked at which jobs, so the service that handles job views
+publishes an event to Kafka, saying something like "member 123 viewed job 456 at time 789". Now that
+this information is in Kafka, it can be used for many good purposes:
+
+* **Monitoring systems**: Companies pay LinkedIn to post their job openings, so it's important that
+  the site is working correctly. If the rate of job views drops unexpectedly, alarms should go off,
+  because it indicates a problem that needs to be investigated.
+* **Relevance and recommendations**: It's annoying for users to see the same thing over and over
+  again, so it's good to track how many times the users has seen a job posting, and feed that into
+  the scoring process. Keeping track of who viewed what also allows for collaborative filtering
+  recommendations (people who viewed X also viewed Y).
+* **Preventing abuse**: LinkedIn doesn't want people to be able to scrape all the jobs, submit
+  spam, or otherwise violate the terms of service. Knowing who is doing what is the first step
+  towards detecting and blocking abuse.
+* **Job poster analytics**: The companies who post their job openings want to see
+  [stats](https://engineering.linkedin.com/analytics/real-time-analytics-massive-scale-pinot)
+  (in the style of Google Analytics) about who is viewing their postings, for example so that
+  they can test which wording attracts the best candidates.
+* **Import into Hadoop and Data Warehouse**: For LinkedIn's internal business analytics, for senior
+  management's dashboards, for crunching numbers that are reported to Wall Street, for evaluating
+  A/B tests, and so on.
+
+All of those systems are complex in their own right, and are maintained by different teams. Kafka
+provides a fault-tolerant, scalable implementation of a pipe. A stream data platform based on Kafka
+allows all of these various systems to be developed independently, and to be connected and composed
+in a robust way.
+
 
 *If you enjoyed this post, you'll love my book
 [Designing Data-Intensive Applications](http://dataintensive.net/), published by
 [O'Reilly](http://shop.oreilly.com/product/0636920032175.do).*
+
+*Thank you to [Jay Kreps](https://twitter.com/jaykreps) for feedback on a draft of this post, and
+for providing the LinkedIn job view example.*
