@@ -5,7 +5,8 @@ SHORTLINKS = {
   craft:  '/2015/04/24/logs-for-data-infrastructure-at-craft.html',
   strata: '/2015/05/06/data-agility-at-strata.html',
   bbuzz:  '/2015/06/02/change-capture-at-berlin-buzzwords.html',
-  pwl:    '/2015/07/08/attiya-welch-at-papers-we-love.html'
+  pwl:    '/2015/07/08/attiya-welch-at-papers-we-love.html',
+  unix:   'http://hubs.ly/H0125_b0'
 }
 
 require 'rubygems'
@@ -37,7 +38,7 @@ get(/.*[^\/]$/) do
   unless File.file?(path)
     _, longlink = SHORTLINKS.detect{|short, long| request.path_info =~ %r{^/#{short}} }
     if longlink
-      new_url = "https://martin.kleppmann.com#{longlink}"
+      new_url = if longlink =~ %r{//} then longlink else "https://martin.kleppmann.com#{longlink}" end
     elsif request.path_info =~ %r{^/2010/12/21/.*}
       new_url = "https://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html"
     elsif request.path_info =~ %r{^/ssh-keys\.html}
