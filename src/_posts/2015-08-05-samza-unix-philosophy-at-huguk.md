@@ -4,7 +4,14 @@ title: Samza and the Unix philosophy of distributed systems
 venue: UK Hadoop Users Group
 place: London, UK
 venue_url: http://www.meetup.com/hadoop-users-group-uk/events/223836730/
+slides_url: https://speakerdeck.com/ept/kafka-samza-and-the-unix-philosophy-of-distributed-data
+transcript_url: http://hubs.ly/H0125_b0
 ---
+
+<script async class="speakerdeck-embed" data-id="98f3dbb96b9640c28c82fbd2355cc1db" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+Abstract
+--------
 
 One of the big ideas in Unix was to allow small, simple command-line tools to be chained together
 with pipes. Each of those tools would do one thing and do it well. Even now, 50 years later, Unix
