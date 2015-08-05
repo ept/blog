@@ -1,6 +1,6 @@
 ---
 layout: ync-post
-title: The Unix Philosophy of distributed data
+title: Kafka, Samza, and the Unix philosophy of distributed data
 ---
 
 One of the things I realised while doing research for [my book](http://dataintensive.net/) is that
@@ -17,8 +17,11 @@ data systems learnt a thing or two from Unix.
 
 <img src="/2015/08/unixphil-01.png" width="550" height="412">
 
-You've probably seen the power of Unix tools before -- but to get started, let me give you
-a concrete example that we can talk about.
+In particular, I'm going to argue that there are a lot of similarities between Unix pipes and Apache
+Kafka, and that this similarity enables good architectural styles for large-scale applications. But
+before we get into that, let me remind you of the foundations of the Unix philosophy. You've
+probably seen the power of Unix tools before -- but to get started, let me give you a concrete
+example that we can talk about.
 
 Say you have a web server that writes an entry to a log file every time it serves a request. For
 example, using the nginx default access log format, one line of the log might look like this:
@@ -27,14 +30,14 @@ example, using the nginx default access log format, one line of the log might lo
     200 3377 "http://martin.kleppmann.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X
     10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36"
 
-(That is actually one line, it's only broken onto multiple lines here for readability.) This line of
-the log indicates that on 27 February 2015 at 17:55:11 UTC, the server received a request for the
+(That is actually one line, it's only broken up into multiple lines here for readability.) This line
+of the log indicates that on 27 February 2015 at 17:55:11 UTC, the server received a request for the
 file `/css/typography.css` from the client IP address 216.58.210.78. It then goes on to note various
 other details, including the browser's user-agent string.
 
 Various tools can take these log files and produce pretty reports about your website traffic, but
-for the sake of exercise, let's build our own, using basic Unix tools. Let's determine the 5 most
-popular URLs on our website. To start with, we need to extract the path of the URL that was
+for the sake of the exercise, let's build our own, using basic Unix tools. Let's determine the
+5 most popular URLs on our website. To start with, we need to extract the path of the URL that was
 requested, for which we can use `awk`.
 
 `awk` doesn't know about the format of nginx logs -- it just treats the log file as text. By
@@ -189,10 +192,11 @@ procedural language such as [PL/SQL](http://www.oracle.com/technetwork/database/
 [JavaScript](https://blog.heroku.com/archives/2013/6/5/javascript_in_your_postgres)). However, the
 things you can do in stored procedures are limited.
 
-Other extension points in some databases are support for custom datatypes (this was one of the early
-[design goals of Postgres](http://db.cs.berkeley.edu/papers/ERL-M85-95.pdf)), or pluggable storage
-engines. Essentially, these are plugin APIs: you can run your code in the database server, provided
-that your module adheres to a plugin API exposed by the database server for a particular purpose.
+Other extension points in some databases are support for custom data types (this was one of the
+early [design goals of Postgres](http://db.cs.berkeley.edu/papers/ERL-M85-95.pdf)), or pluggable
+storage engines. Essentially, these are plugin APIs: you can run your code in the database server,
+provided that your module adheres to a plugin API exposed by the database server for a particular
+purpose.
 
 This kind of extensibility is not the same as the arbitrary composability we saw with Unix tools.
 The plugin API is totally controlled by the database server, and subordinate to it. Your extension
@@ -227,12 +231,13 @@ full-text search, graph indexes for connected data, machine learning systems for
 engines, a push mechanism for notifications, various different cached representations of the data
 for fast reads, and so on.
 
-There is no way that a single monolithic database can provide all of those capabilities. There is no
-[“one size fits all” database](https://cs.brown.edu/~ugur/fits_all.pdf); rather, there are various
-different data storage and indexing systems that provide individual capabilities that you need. For
-example, you may take the same data and store it in a relational database for random access, in
-Elasticsearch for full-text search, in a columnar format in Hadoop for analytics, and cached in
-a denormalised form in memcached.
+A general-purpose database may try to do all of those things in one product
+([“one size fits all”](https://cs.brown.edu/~ugur/fits_all.pdf)), but in all likelihood it will not
+perform as well as a tool that is specialized for one particular purpose. In practice, you can often
+get the best results by combining various different data storage and indexing systems: for example,
+you may take the same data and store it in a relational database for random access, in Elasticsearch
+for full-text search, in a columnar format in Hadoop for analytics, and cached in a denormalized
+form in memcached.
 
 When you need to integrate different databases, the lack of Unix-style composability is a severe
 limitation. (I've
@@ -321,6 +326,10 @@ Unix has some limitations:
   [somewhat messy](http://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable)
   edge case semantics. TCP is good, but by itself it's too low-level to serve as a distributed pipe
   implementation.
+* A Unix pipe is designed to have a single sender process, and a single recipient. You can't use
+  pipes to send output to several processes, or to collect input from several processes. (You can
+  branch a pipeline with [`tee`](http://linux.die.net/man/1/tee), but a pipe itself is always
+  one-to-one.)
 * ASCII text (or rather, UTF-8) is great for making data easily explorable, but it quickly gets
   messy. Every process needs to be set up with its own input parsing: first breaking the byte stream
   into records (usually separated by newline, though some advocate `0x1e`, the [ASCII record
@@ -329,8 +338,9 @@ Unix has some limitations:
   beginning. Separator characters that appear in the data need to be escaped somehow. Even
   a fairly simple tool like [`xargs`](http://unixhelp.ed.ac.uk/CGI/man-cgi?xargs) has about half
   a dozen command-line options to specify how its input should be parsed. Text-based interfaces work
-  tolerably well, but in retrospect, I am pretty sure this is not what you'd design if you were
-  starting out from scratch.
+  tolerably well, but in retrospect, I am pretty sure that a richer data model with
+  [explicit schemas](http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html)
+  would have worked better.
 * Unix processes are generally assumed to be fairly short-running. For example, if a process
   in the middle of a pipeline crashes, there is no way for it to resume processing from its input
   pipe -- the entire pipeline fails and must be re-run from scratch. That's no problem if the
@@ -346,16 +356,22 @@ The cool thing is that this solution already exists, and is implemented in
 [Kafka](http://kafka.apache.org/) and [Samza](http://samza.apache.org/), two open source projects
 that work together to provide distributed stream processing.
 
-As you probably already know from other posts on this blog, Kafka is a scalable distributed message
-broker, and Samza is a framework that lets you write code to consume and produce data streams.
+
+
+As you probably already know from
+[other](http://www.confluent.io/blog/stream-data-platform-1/)
+[posts](http://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/)
+on this blog, Kafka is a scalable distributed message broker, and Samza is a framework that lets you
+write code to consume and produce data streams.
 
 <img src="/2015/08/unixphil-25.png" width="550" height="412">
 
 In fact, when you look at it through the Unix lens, Kafka looks quite like the pipe that connects
 the output of one process to the input of another. And Samza looks quite like a standard library
 that helps you read `stdin` and write `stdout` (and a few helpful additions, such as a deployment
-mechanism, [state management](http://samza.apache.org/learn/documentation/0.9/container/state-management.html),
-metrics and monitoring).
+mechanism,
+[state management](http://samza.apache.org/learn/documentation/0.9/container/state-management.html),
+metrics, and monitoring).
 
 The style of stream processing jobs that you can write with Kafka and Samza closely follows the Unix
 tradition of small, composable tools:
@@ -371,6 +387,12 @@ Kafka addresses the downsides of Unix pipes that we discussed previously:
 
 * The single-machine limitation is lifted: Kafka itself is distributed by default, and any stream
   processors that use it can also be distributed across multiple machines.
+* A Unix pipe connects exactly one process output with exactly one process input, whereas a stream
+  in Kafka can have many producers and many consumers. Many inputs is important for services that
+  are distributed across multiple machines, and many outputs makes Kafka more like a broadcast
+  channel. This is very useful, since it allows the same data stream to be consumed independently
+  for several different purposes (including monitoring and audit purposes, which are often outside
+  of the application itself). Kafka consumers can come and go without affecting other consumers.
 * Kafka also provides good fault tolerance: data is replicated across multiple Kafka nodes, so if
   one node fails, another node can automatically take over. If a stream processor node fails and is
   restarted, it can resume processing at its last checkpoint.
@@ -398,27 +420,22 @@ briefly:
   making it safe for multiple processes to concurrently write to the same stream.
 * Unix pipes are just a small in-memory buffer, whereas Kafka durably writes all messages to disk.
   In this regard, Kafka is less like a pipe, and more like one process writing to a temporary file,
-  while another process continuously reads that file using `tail -f`. Kafka's approach provides
-  better fault tolerance, since it allows a consumer to fail and restart without skipping messages.
-  Kafka automatically splits those 'temporary' files into segments and garbage-collects old segments
-  on a configurable schedule.
+  while several other processes continuously read that file using `tail -f` (each consumer tails the
+  file independently). Kafka's approach provides better fault tolerance, since it allows a consumer
+  to fail and restart without skipping messages. Kafka automatically splits those 'temporary' files
+  into segments and garbage-collects old segments on a configurable schedule.
 * In Unix, if the consuming process of a pipe is slow to read the data, the buffer fills up and the
   sending process is blocked from writing to the pipe. This is a kind of backpressure. In Kafka, the
   producer and consumer are more decoupled: a slow consumer has its input buffered, so it doesn't
-  slow down the producer or other consumers. As long as the buffer fits within your available disk
-  space, the slow consumer can catch up later. This makes the system less sensitive to individual
-  slow components, and more robust overall.
-* A Unix pipe connects exactly one process output with exactly one process input (you can branch
-  a pipeline with [`tee`](http://linux.die.net/man/1/tee), but a pipe itself is always one-to-one).
-  By contrast, a Kafka stream can have many producers and many consumers, making it more like
-  a broadcast channel. This is very useful, since it allows the same data stream to be consumed
-  independently for several different purposes (including monitoring and audit purposes, which are
-  often outside of the application itself).
+  slow down the producer or other consumers. As long as the buffer fits within Kafka's available
+  disk space, the slow consumer can catch up later. This makes the system less sensitive to
+  individual slow components, and more robust overall.
 * A data stream in Kafka is called a *topic*, and you can refer to it by name (which makes it more
   like a Unix [named pipe](http://vincebuffalo.com/2013/08/08/the-mighty-named-pipe.html).
-  A pipeline of Unix programs is usually started all at once, but a long-running application has
-  bits added, removed or replaced gradually over time. This means your pipes need names, so that
-  you can tell the system what you want to connect to.
+  A pipeline of Unix programs is usually started all at once, so the pipes normally don't need
+  explicit names. On the other hand, a long-running application usually has bits added, removed or
+  replaced gradually over time, so you need names in order to tell the system what you want to
+  connect to. Naming also helps with discovery and management.
 
 Despite those differences, I still think it makes sense to think of Kafka as Unix pipes for
 distributed data. For example, one thing they have in common is that Kafka keeps messages in a fixed
@@ -469,68 +486,14 @@ teams.
 
 <img src="/2015/08/unixphil-30.png" width="550" height="412">
 
-This idea of decomposing a large application into loosely coupled components is reminiscent of
-microservices. Indeed, many of the goals are the same, and microservices
-[have also been compared to Unix tools](http://www.infoq.com/articles/microservices-intro). So what
-should you be using?
-
-Microservices are great for gathering together various pieces of information that need to be shown
-to the user as part of a user's web request. These requests are usually *synchronous*, i.e. they
-need to complete before the response can be sent to the user. Such service calls are on the critical
-path to getting the page rendered, so you need them to be always fast and reliable, otherwise the
-user experience is degraded.
-
-However, not everything has to be on that critical path. Many metrics, monitoring, analytics or
-recommendation systems just need to find out about what is happening, but they don't immediately
-feed into the response to the user. It's better to get those things off the critical path and into
-*asynchronous* background processes, so that they don't slow down the user's request unnecessarily.
-For such use cases, stream processing works better.
-
-<img src="/2015/08/unixphil-31.png" width="550" height="412">
-
-Here are a few points for comparing microservices and stream processing:
-
-* As previously mentioned, Kafka acts as a buffer for stream processors, so if a processor is
-  running slow, it doesn't affect the services that are publishing messages. This is good for
-  robustness of the system overall: since the services that publish messages are often the ones
-  handling user requests, it's important to make sure that they is not disrupted by some
-  non-critical monitoring job in the background.
-
-  The buffer also ensures that the slow processor can catch up when it recovers. By contrast,
-  microservices have no such buffer: if a service is slow to respond, the caller can at best retry
-  a few times (perhaps exacerbating the load problem further), but eventually it will have to give
-  up, so the message is lost.
-
-* Since a Kafka topic can have many subscribers, a service can just publish events without caring
-  who consumes them. Anyone with appropriate permissions can consume the data, without having to ask
-  the publisher for permission.
-  
-  Microservices don't have this decoupling, since service calls are one-to-one: if you want to
-  receive a service call every time a user views a page, you have to modify the service that handles
-  page views, and make it call your service. You can't just passively attach to a service (unless
-  it has specifically made some provision for registering callbacks or suchlike).
-
-* Calls to microservices often modify data stored within a service, i.e. they have side-effects. On
-  the other hand, stream processing doesn't modify the original data (if any data is written, it is
-  normally written to a new location, not overwriting existing data). This makes stream processing
-  more friendly to experimentation: you can try something, write the output to a temporary file, and
-  delete it again without doing any harm. With microservices, you'd have to first create a separate
-  sandbox copy of your data, since otherwise your experimental requests would be modifying real
-  data.
-
-  One way of thinking about this: microservices are a distributed version of object-oriented
-  programming (objects encapsulate their instance variables, services encapsulate their databases),
-  whereas stream processing is a distributed version of functional programming.
-
-<img src="/2015/08/unixphil-32.png" width="550" height="412">
-
 To wrap up this post, let's consider a real-life example of how this works at LinkedIn. As you may
 know, companies can post their job openings on LinkedIn, and jobseekers can browse and apply for
 those jobs. What happens if a LinkedIn member (user) views one of those job postings?
 
 It's very useful to know who has looked at which jobs, so the service that handles job views
 publishes an event to Kafka, saying something like "member 123 viewed job 456 at time 789". Now that
-this information is in Kafka, it can be used for many good purposes:
+this information is in Kafka, it can be used for many
+[good purposes](http://sites.computer.org/debull/A12june/A12JUN-CD.pdf):
 
 * **Monitoring systems**: Companies pay LinkedIn to post their job openings, so it's important that
   the site is working correctly. If the rate of job views drops unexpectedly, alarms should go off,
@@ -560,5 +523,11 @@ in a robust way.
 [Designing Data-Intensive Applications](http://dataintensive.net/), published by
 [O'Reilly](http://shop.oreilly.com/product/0636920032175.do).*
 
-*Thank you to [Jay Kreps](https://twitter.com/jaykreps) for feedback on a draft of this post, and
-for providing the LinkedIn job view example.*
+*Thank you to [Jay Kreps](https://twitter.com/jaykreps),
+[Gwen Shapira](https://twitter.com/gwenshap),
+[Michael Noll](http://www.michael-noll.com/),
+[Ewen Cheslack-Postava](http://www.ewencp.org/),
+[Jason Gustafson](https://www.linkedin.com/in/jasongustafson), and
+[Jeff Hartley](https://twitter.com/jeff_hartley)
+for feedback on a draft of this post,
+and thanks also to Jay for providing the LinkedIn job view example.*
