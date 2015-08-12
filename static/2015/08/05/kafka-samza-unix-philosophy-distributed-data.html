@@ -49,7 +49,14 @@
 
                 <h1>Kafka, Samza, and the Unix philosophy of distributed data</h1>
 
-                <p>One of the things I realised while doing research for <a href="http://dataintensive.net/">my book</a> is that
+                <p><em>This is an edited transcript of a <a href="/2015/08/05/samza-unix-philosophy-at-huguk.html">talk</a> I gave at the
+<a href="http://www.meetup.com/hadoop-users-group-uk/events/223836730/">UK Hadoop Users Group</a>.
+<a href="https://youtu.be/m-0cSdxiLLY?t=3m40s">Video</a> and
+<a href="https://speakerdeck.com/ept/kafka-samza-and-the-unix-philosophy-of-distributed-data">slides</a>
+are also available. This transcript was originally published on the
+<a href="http://www.confluent.io/blog/apache-kafka-samza-and-the-unix-philosophy-of-distributed-data">Confluent blog</a>.</em></p>
+
+<p>One of the things I realised while doing research for <a href="http://dataintensive.net/">my book</a> is that
 contemporary software engineering still has a lot to learn from the 1970s. As we’re in such
 a fast-moving field, we often have a tendency of dismissing older ideas as irrelevant – and
 consequently, we end up having to learn the same lessons over and over again, the hard way.
@@ -301,10 +308,10 @@ can read or write like a file. This interface is simple enough that anyone can e
 but it is also powerful enough that you can use it for anything.</p>
 
 <p>Because all Unix tools implement the same interface, we call it a <em>uniform interface</em>. That’s why
-you can pipe the output of <code>gunzip</code> to <code>wc</code> without a second thought, even though the authors of
-those two tools probably never spoke to each other. It’s like lego bricks, which all implement the
-same pattern of knobbly bits and grooves, allowing you to stack any lego brick on any other,
-regardless of their shape, size or colour.</p>
+you can pipe the output of <code>gunzip</code> to <code>wc</code> without a second thought, even though those two tools
+appear to have nothing in common. It’s like lego bricks, which all implement the same pattern of
+knobbly bits and grooves, allowing you to stack any lego brick on any other, regardless of their
+shape, size or colour.</p>
 
 <p><img src="/2015/08/unixphil-20.png" width="550" height="412" /></p>
 
@@ -589,6 +596,11 @@ and thanks also to Jay for providing the LinkedIn job view example.</em></p>
 
 
                 
+                <div class="hackernews">
+                    Join the discussion about this article
+                    <a href="https://news.ycombinator.com/item?id=10010783" target="_blank">on Hacker News</a>.
+                </div>
+                
 
                 <div id="disqus_thread"></div>
             </div>
@@ -647,6 +659,8 @@ and thanks also to Jay for providing the LinkedIn job view example.</em></p>
         <h2 class="title">Recent posts</h2>
         <ul>
             
+              <li>05 Aug 2015: <a href="/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html">Kafka, Samza, and the Unix philosophy of distributed data</a></li>
+            
               <li>27 May 2015: <a href="/2015/05/27/logs-for-data-infrastructure.html">Using logs to build a solid data infrastructure (or: why dual writes are a bad idea)</a></li>
             
               <li>11 May 2015: <a href="/2015/05/11/please-stop-calling-databases-cp-or-ap.html">Please stop calling databases CP or AP</a></li>
@@ -654,8 +668,6 @@ and thanks also to Jay for providing the LinkedIn job view example.</em></p>
               <li>23 Apr 2015: <a href="/2015/04/23/bottled-water-real-time-postgresql-kafka.html">Bottled Water: Real-time integration of PostgreSQL and Kafka</a></li>
             
               <li>13 Apr 2015: <a href="/2015/04/13/real-time-full-text-search-luwak-samza.html">Real-time full-text search with Luwak and Samza</a></li>
-            
-              <li>04 Mar 2015: <a href="/2015/03/04/turning-the-database-inside-out.html">Turning the database inside-out with Apache Samza</a></li>
             
             <li><a href="/archive.html">Full archive</a></li>
         </ul>
@@ -707,7 +719,7 @@ and thanks also to Jay for providing the LinkedIn job view example.</em></p>
 
     <script type="text/javascript">
     var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/unix-philosophy-draft.html';
+    var disqus_url = 'http://martin.kleppmann.com/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html';
     var disqus_identifier = disqus_url;
 
     (function() {
