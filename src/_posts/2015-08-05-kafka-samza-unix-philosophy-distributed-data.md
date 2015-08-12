@@ -1,7 +1,15 @@
 ---
 layout: ync-post
 title: Kafka, Samza, and the Unix philosophy of distributed data
+hackernews: https://news.ycombinator.com/item?id=10010783
 ---
+
+*This is an edited transcript of a [talk](/2015/08/05/samza-unix-philosophy-at-huguk.html) I gave at the
+[UK Hadoop Users Group](http://www.meetup.com/hadoop-users-group-uk/events/223836730/).
+[Video](https://youtu.be/m-0cSdxiLLY?t=3m40s) and
+[slides](https://speakerdeck.com/ept/kafka-samza-and-the-unix-philosophy-of-distributed-data)
+are also available. This transcript was originally published on the
+[Confluent blog](http://www.confluent.io/blog/apache-kafka-samza-and-the-unix-philosophy-of-distributed-data).*
 
 One of the things I realised while doing research for [my book](http://dataintensive.net/) is that
 contemporary software engineering still has a lot to learn from the 1970s. As we're in such
@@ -253,10 +261,10 @@ can read or write like a file. This interface is simple enough that anyone can e
 but it is also powerful enough that you can use it for anything.
 
 Because all Unix tools implement the same interface, we call it a *uniform interface*. That's why
-you can pipe the output of `gunzip` to `wc` without a second thought, even though the authors of
-those two tools probably never spoke to each other. It's like lego bricks, which all implement the
-same pattern of knobbly bits and grooves, allowing you to stack any lego brick on any other,
-regardless of their shape, size or colour.
+you can pipe the output of `gunzip` to `wc` without a second thought, even though those two tools
+appear to have nothing in common. It's like lego bricks, which all implement the same pattern of
+knobbly bits and grooves, allowing you to stack any lego brick on any other, regardless of their
+shape, size or colour.
 
 <img src="/2015/08/unixphil-20.png" width="550" height="412">
 
