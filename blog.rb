@@ -18,9 +18,9 @@ before do
   if !%w(martin.kleppmann.com localhost localhost:9292 localhost:4000).include?(request.env['HTTP_HOST']) &&
       request.path =~ /\A\/[a-zA-Z0-9_!\$%&\(\)\*\+,\-\.\/:;<=>\?@\[\]\^\{\}\|~]*\Z/
     new_path = request.path.gsub %r{\A(/\d+/\d+/\d+/.*)/\z}, '\1.html'
-    halt 301, {"Location" => "https://martin.kleppmann.com#{new_path}"}, <<-HTML
+    halt 301, {"Location" => "http://martin.kleppmann.com#{new_path}"}, <<-HTML
     <h1>Moved Permanently</h1>
-    <p>This document has moved <a href="https://martin.kleppmann.com#{new_path}">here</a>.</p>
+    <p>This document has moved <a href="http://martin.kleppmann.com#{new_path}">here</a>.</p>
     HTML
   end
 end
@@ -38,11 +38,11 @@ get(/.*[^\/]$/) do
   unless File.file?(path)
     _, longlink = SHORTLINKS.detect{|short, long| request.path_info =~ %r{^/#{short}} }
     if longlink
-      new_url = if longlink =~ %r{//} then longlink else "https://martin.kleppmann.com#{longlink}" end
+      new_url = if longlink =~ %r{//} then longlink else "http://martin.kleppmann.com#{longlink}" end
     elsif request.path_info =~ %r{^/2010/12/21/.*}
-      new_url = "https://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html"
+      new_url = "http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html"
     elsif request.path_info =~ %r{^/ssh-keys\.html}
-      new_url = "https://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html"
+      new_url = "http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html"
     end
 
     if new_url
