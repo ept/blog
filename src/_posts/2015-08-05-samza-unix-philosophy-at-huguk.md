@@ -5,11 +5,11 @@ venue: UK Hadoop Users Group
 place: London, UK
 venue_url: http://www.meetup.com/hadoop-users-group-uk/events/223836730/
 slides_url: https://speakerdeck.com/ept/kafka-samza-and-the-unix-philosophy-of-distributed-data
-video_url: https://youtu.be/m-0cSdxiLLY?t=3m40s
+video_url: https://www.youtube.com/watch?v=Gqdr0DiNh5g&index=1&list=PL5OOLwV_m9vaKzwGX7lM8oVT3aFw_CN5O
 transcript_url: http://hubs.ly/H0125_b0
 ---
 
-<iframe width="550" height="309" src="https://www.youtube.com/embed/m-0cSdxiLLY" frameborder="0" allowfullscreen></iframe>
+<iframe width="550" height="309" src="https://www.youtube.com/embed/Gqdr0DiNh5g?list=PL5OOLwV_m9vaKzwGX7lM8oVT3aFw_CN5O" frameborder="0" allowfullscreen></iframe>
 
 <script async class="speakerdeck-embed" data-id="98f3dbb96b9640c28c82fbd2355cc1db" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 

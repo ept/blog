@@ -6,7 +6,7 @@ hackernews: https://news.ycombinator.com/item?id=10010783
 
 *This is an edited transcript of a [talk](/2015/08/05/samza-unix-philosophy-at-huguk.html) I gave at the
 [UK Hadoop Users Group](http://www.meetup.com/hadoop-users-group-uk/events/223836730/).
-[Video](https://youtu.be/m-0cSdxiLLY?t=3m40s) and
+[Video](https://www.youtube.com/watch?v=Gqdr0DiNh5g&index=1&list=PL5OOLwV_m9vaKzwGX7lM8oVT3aFw_CN5O) and
 [slides](https://speakerdeck.com/ept/kafka-samza-and-the-unix-philosophy-of-distributed-data)
 are also available. This transcript was originally published on the
 [Confluent blog](http://www.confluent.io/blog/apache-kafka-samza-and-the-unix-philosophy-of-distributed-data).*
