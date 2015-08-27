@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Wed, 12 Aug 2015 16:45:04 BST</lastBuildDate>
+        <lastBuildDate>Thu, 27 Aug 2015 21:55:55 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -30,7 +30,7 @@
                 <content:encoded><![CDATA[
                     <p><em>This is an edited transcript of a <a href="/2015/08/05/samza-unix-philosophy-at-huguk.html">talk</a> I gave at the
 <a href="http://www.meetup.com/hadoop-users-group-uk/events/223836730/">UK Hadoop Users Group</a>.
-<a href="https://youtu.be/m-0cSdxiLLY?t=3m40s">Video</a> and
+<a href="https://www.youtube.com/watch?v=Gqdr0DiNh5g&amp;index=1&amp;list=PL5OOLwV_m9vaKzwGX7lM8oVT3aFw_CN5O">Video</a> and
 <a href="https://speakerdeck.com/ept/kafka-samza-and-the-unix-philosophy-of-distributed-data">slides</a>
 are also available. This transcript was originally published on the
 <a href="http://www.confluent.io/blog/apache-kafka-samza-and-the-unix-philosophy-of-distributed-data">Confluent blog</a>.</em></p>
@@ -585,7 +585,7 @@ and thanks also to Jay for providing the LinkedIn job view example.</em></p>
                 
                     <guid isPermaLink="true">http://martin.kleppmann.com/2015/05/27/logs-for-data-infrastructure.html</guid>
                 
-                <description><![CDATA[ This is an edited transcript of a talk I gave at the Craft Conference 2015. The video and slides are also available. This transcript was originally published on the Confluent blog. How does your database store data on disk reliably? It uses a log. How does one database replica synchronise... ]]></description>
+                <description><![CDATA[ This is an edited transcript of a talk I gave at the Craft Conference 2015. The video and slides are also available. This transcript was originally published on the Confluent blog. It has also been translated into Japanese (part 1, part 2). How does your database store data on disk... ]]></description>
                 <content:encoded><![CDATA[
                     <p><em>This is an edited transcript of a
 <a href="https://martin.kleppmann.com/2015/04/24/logs-for-data-infrastructure-at-craft.html">talk</a> I gave
@@ -593,7 +593,10 @@ at the <a href="http://craft-conf.com/2015">Craft Conference 2015</a>. The
 <a href="http://www.ustream.tv/recorded/61479591/theater">video</a> and
 <a href="https://speakerdeck.com/ept/using-logs-to-create-a-solid-data-infrastructure">slides</a> are also
 available. This transcript was originally published <a href="http://blog.confluent.io/2015/05/27/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/">on the Confluent
-blog</a>.</em></p>
+blog</a>.
+It has also been translated into Japanese
+(<a href="http://postd.cc/using-logs-to-build-a-solid-data-infrastructure-part-1/">part 1</a>,
+<a href="http://postd.cc/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea-part-2/">part 2</a>).</em></p>
 
 <iframe width="550" height="346" src="http://www.ustream.tv/embed/recorded/61479591?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;"></iframe>
 
