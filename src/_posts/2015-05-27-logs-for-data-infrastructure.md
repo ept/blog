@@ -10,7 +10,10 @@ at the [Craft Conference 2015](http://craft-conf.com/2015). The
 [video](http://www.ustream.tv/recorded/61479591/theater) and
 [slides](https://speakerdeck.com/ept/using-logs-to-create-a-solid-data-infrastructure) are also
 available. This transcript was originally published [on the Confluent
-blog](http://blog.confluent.io/2015/05/27/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/).*
+blog](http://blog.confluent.io/2015/05/27/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/).
+It has also been translated into Japanese
+([part 1](http://postd.cc/using-logs-to-build-a-solid-data-infrastructure-part-1/),
+[part 2](http://postd.cc/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea-part-2/)).*
 
 <iframe width="550" height="346" src="http://www.ustream.tv/embed/recorded/61479591?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;"></iframe>
 
