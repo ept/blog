@@ -8,7 +8,9 @@ This is an edited transcript of a
 given by [Alan Woodward](https://twitter.com/romseygeek) and
 [Martin Kleppmann](https://martin.kleppmann.com/) at [FOSDEM 2015](https://fosdem.org/2015/).
 It was originally published
-[on the Confluent blog](http://blog.confluent.io/2015/04/13/real-time-full-text-search-with-luwak-and-samza/).
+[on the Confluent blog](http://blog.confluent.io/2015/04/13/real-time-full-text-search-with-luwak-and-samza/),
+and has been
+[translated into Korean](http://www.slideshare.net/myunghyunlee/realtime-fulltext-search-with-luwak-and-samza).
 
 *Traditionally, search works like this: you have a large corpus of documents, and users write ad-hoc
 queries to find documents within that corpus. Documents may change from time to time, but on the
