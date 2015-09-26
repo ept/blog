@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Sat, 12 Sep 2015 14:39:15 BST</lastBuildDate>
+        <lastBuildDate>Sat, 26 Sep 2015 10:07:40 CDT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -2027,14 +2027,16 @@ June — hope to see you there.</p>
                 
                     <guid isPermaLink="true">http://martin.kleppmann.com/2015/04/13/real-time-full-text-search-luwak-samza.html</guid>
                 
-                <description><![CDATA[ This is an edited transcript of a talk given by Alan Woodward and Martin Kleppmann at FOSDEM 2015. It was originally published on the Confluent blog. Traditionally, search works like this: you have a large corpus of documents, and users write ad-hoc queries to find documents within that corpus. Documents... ]]></description>
+                <description><![CDATA[ This is an edited transcript of a talk given by Alan Woodward and Martin Kleppmann at FOSDEM 2015. It was originally published on the Confluent blog, and has been translated into Korean. Traditionally, search works like this: you have a large corpus of documents, and users write ad-hoc queries to... ]]></description>
                 <content:encoded><![CDATA[
                     <p>This is an edited transcript of a
 <a href="https://fosdem.org/2015/schedule/event/searching_over_streams_with_luwak_and_apache_samza/">talk</a>
 given by <a href="https://twitter.com/romseygeek">Alan Woodward</a> and
 <a href="https://martin.kleppmann.com/">Martin Kleppmann</a> at <a href="https://fosdem.org/2015/">FOSDEM 2015</a>.
 It was originally published
-<a href="http://blog.confluent.io/2015/04/13/real-time-full-text-search-with-luwak-and-samza/">on the Confluent blog</a>.</p>
+<a href="http://blog.confluent.io/2015/04/13/real-time-full-text-search-with-luwak-and-samza/">on the Confluent blog</a>,
+and has been
+<a href="http://www.slideshare.net/myunghyunlee/realtime-fulltext-search-with-luwak-and-samza">translated into Korean</a>.</p>
 
 <p><em>Traditionally, search works like this: you have a large corpus of documents, and users write ad-hoc
 queries to find documents within that corpus. Documents may change from time to time, but on the

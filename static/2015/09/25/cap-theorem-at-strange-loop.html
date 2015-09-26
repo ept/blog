@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>About/Contact &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>CAP is broken, and it's time to replace it &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,37 +44,50 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="About/Contact"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="CAP is broken, and it's time to replace it"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>About/Contact</h1>
+                <h1>CAP is broken, and it's time to replace it</h1>
 
-                <p>My name is Martin Kleppmann. I am probably best described by the snippets of digital identity
-that are scattered across the interwebs:</p>
+                <p>
+                  A talk at
+                  
+                    <a href="https://github.com/strangeloop/StrangeLoop2015/wiki/Unsessions#cap">Strange Loop</a>,
+                  
+                  St. Louis, Missouri, US, 25 Sep 2015
+                </p>
 
-<ul>
-<li><a rel="me" href="http://martin.kleppmann.com/">My Blog</a></li>
-<li><a rel="me" href="http://twitter.com/martinkl">@martinkl on Twitter</a></li>
-<li><a rel="me" href="http://github.com/ept">My Open Source projects on Github</a></li>
-<li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
-<li><a rel="me" href="https://speakerdeck.com/ept">My presentations on Speakerdeck</a></li>
-<li><a rel="me" href="http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html">My undergraduate dissertation</a></li>
-</ul>
+                <ul>
+                  
+                  
+                    <li><a href="https://speakerdeck.com/ept/a-critique-of-the-cap-theorem">Slides</a></li>
+                  
+                  
+                  
+                </ul>
 
-<p>Email: firstname at lastname dot com.</p>
+                <script async="" class="speakerdeck-embed" data-id="b9da18d42bf240cba5891d963956b950" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
 
-<p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/" style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
-Unless otherwise specified, all content on this site is licensed under a
-<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
-    Attribution 3.0 Unported License</a>.
-Theme borrowed from
-<span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.</p>
+<h2 id="abstract">Abstract</h2>
 
+<p>This is a discussion session around my paper
+“<a href="http://arxiv.org/abs/1509.05393">A Critique of the CAP Theorem</a>”,
+<a href="http://arxiv.org/abs/1509.05393">arXiv:1509.05393</a> [cs.DC].</p>
 
-                
+<p>The CAP Theorem, as proposed by Brewer and formalized by Gilbert and Lynch, has been subject of much
+debate and confusion over the last few years. The confusion arises partly from the definitions of
+“consistency,” “availability” and “partition tolerance,” which are not as intuitive or precise as
+one might hope, and which are therefore prone to being misinterpreted. I will also argue that there
+are some formal problems with Gilbert and Lynch’s proof which weaken the result. With so many
+problems, it is becoming doubtful whether CAP is still useful for reasoning about systems.</p>
 
-                <div id="disqus_thread"></div>
+<p>The trade-off between consistency guarantees and tolerance of network faults is real, but we need
+better tools for reasoning about these trade-offs. In this session I will show some formal results
+from distributed systems theory that I have found useful: they focus the discussion on <strong>latency</strong>
+(which has been described as the “missing piece of the CAP theorem”). We’ll then open up for
+discussion, and hopefully together we can work towards replacing CAP with something better:
+something more precise, more intuitive, and more relevant to practice.</p>
+
             </div>
 
             <div id="sidebar">
@@ -188,18 +201,6 @@ ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Klepp
 <img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/contact.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Google Analytics -->
 <script type="text/javascript">
