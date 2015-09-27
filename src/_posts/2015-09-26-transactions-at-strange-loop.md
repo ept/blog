@@ -5,7 +5,10 @@ venue: Strange Loop
 place: "St. Louis, Missouri, US"
 venue_url: http://www.thestrangeloop.com/2015/transactions-myths-surprises-and-opportunities.html
 slides_url: https://speakerdeck.com/ept/transactions-myths-surprises-and-opportunities
+video_url: https://www.youtube.com/watch?v=5ZjhNTM8XU8
 ---
+
+<iframe width="550" height="309" src="https://www.youtube.com/embed/5ZjhNTM8XU8" frameborder="0" allowfullscreen></iframe>
 
 <script async class="speakerdeck-embed" data-id="0a5b3e46260542ff9e557458e33afd33" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
