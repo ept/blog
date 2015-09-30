@@ -4,16 +4,19 @@ title: "Data liberation and data integration with Kafka"
 venue: Strata + Hadoop World
 place: New York, NY, US
 venue_url: http://strataconf.com/big-data-conference-ny-2015/public/schedule/detail/42723
+slides_url: https://speakerdeck.com/ept/data-liberation-and-data-integration-with-kafka
 ---
+
+<script async class="speakerdeck-embed" data-id="e44d9f8df3284f7ca9deea573cb35f6f" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
+
+Abstract
+--------
 
 Even the best data scientist can't do anything if they cannot easily get access to the necessary
 data. Simply making the data available is step 1 towards becoming a data-driven organization. In
 this talk, we'll explore how Apache Kafka can replace slow, fragile ETL processes with real-time
 data pipelines, and discuss best practices for data formats and integration with existing systems.
-
-
-Abstract
---------
 
 [Apache Kafka](http://kafka.apache.org/) is a popular open source message broker for high-throughput
 real-time event data, such as user activity logs or IoT sensor data. It originated at LinkedIn,
