@@ -41,3 +41,21 @@ useful:
 * Using [Avro](http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html) for schema
   management and future-proofing your data
 * Designing your data pipelines to be resilient, but also flexible and amenable to change
+
+
+References
+----------
+
+1. Jay Kreps: “[Putting Apache Kafka to use: A practical guide to building a stream data platform
+   (part 1)](http://blog.confluent.io/2015/02/25/stream-data-platform-1/).” 25 February 2015. 
+2. Gwen Shapira: “[The problem of managing
+   schemas](http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html),” 4 November 2014.
+3. Martin Kleppmann: “[Schema evolution in Avro, Protocol Buffers and
+   Thrift](/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html),” 5 December 2012. 
+4. Martin Kleppmann: “[Bottled Water: Real-time integration of PostgreSQL and
+   Kafka](/2015/04/23/bottled-water-real-time-postgresql-kafka.html).” 23 April 2015. 
+5. Martin Kleppmann: “[Designing data-intensive applications](http://dataintensive.net).”
+   O’Reilly Media, to appear.
+6. Shirshanka Das, Chavdar Botev, Kapil Surlaker, et al.:
+   “[All Aboard the Databus!](http://www.socc2012.org/s18-das.pdf),” at *ACM Symposium on Cloud
+   Computing* (SoCC), October 2012. 
