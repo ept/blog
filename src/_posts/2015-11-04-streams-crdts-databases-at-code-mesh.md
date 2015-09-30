@@ -1,6 +1,6 @@
 ---
 layout: talk
-title: Streams, CRDTs and the Future of Databases
+title: "Transactions: Myths, Surprises and Opportunities"
 venue: Code Mesh
 place: London, UK
 venue_url: http://www.codemesh.io/codemesh2015/martin-kleppmann
@@ -9,17 +9,26 @@ venue_url: http://www.codemesh.io/codemesh2015/martin-kleppmann
 Abstract
 --------
 
-What do multi-datacenter database clusters, calendar sync on mobile phones, and real-time
-collaboration apps like Google Docs have in common?
+Back in the 1970s, the earliest databases had transactions. Then NoSQL abolished them. And now,
+perhaps, they are making a comeback... but reinvented.
 
-Answer: They all need to handle updates on a local node, and asynchronously synchronise data with
-other nodes. They all need to cope with network interruptions and offline operation. They are all
-optimised for low latency data access. And they all allow data to be modified concurrently on
-different nodes, leading to conflicts that need to be resolved.
+The purpose of transactions is to make application code simpler, by reducing the amount of failure
+handling you need to do yourself. However, they have also gained a reputation for being slow and
+unscalable. With the traditional implementation of serializable transactions (2-phase locking), that
+reputation was somewhat deserved.
 
-In this talk, we will discuss a category of data structures called CRDTs (conflict-free replicated
-data types), which are designed for this kind of environment. We will do a tour of theory and
-practical implementations, and we'll explore how they relate to stream processing, dataflow
-programming and functional data structures.
+In the last few years, there has been a resurgence of interest in transaction algorithms that
+perform well and scale well. This talk answers some of the biggest questions about the bright new
+landscape of transactions:
 
-And perhaps we'll catch a glimpse of what the future of databases will look like.
+* You know that ACID stands for Atomicity, Consistency, Isolation and Durability, but are you
+  certain that you know precisely what those words mean? What race conditions can you get with weak
+  isolation (such as "read committed" and "repeatable read"), and how does this affect your
+  application?
+* How do modern implementations of serializability work, and how are they different from traditional
+  algorithms?
+* What are the strongest guarantees we can achieve, while maintaining high availability and high
+  performance at scale?
+* When you build a microservices architecture or use stream processing, you often end up with data
+  spread across multiple databases. Does this mean you inevitably have to give up transactional
+  guarantees?
