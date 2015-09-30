@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Streams, CRDTs and the Future of Databases &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Transactions: Myths, Surprises and Opportunities &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,10 +44,10 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Streams, CRDTs and the Future of Databases"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Transactions: Myths, Surprises and Opportunities"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Streams, CRDTs and the Future of Databases</h1>
+                <h1>Transactions: Myths, Surprises and Opportunities</h1>
 
                 <p>
                   A talk at
@@ -66,20 +66,31 @@
 
                 <h2 id="abstract">Abstract</h2>
 
-<p>What do multi-datacenter database clusters, calendar sync on mobile phones, and real-time
-collaboration apps like Google Docs have in common?</p>
+<p>Back in the 1970s, the earliest databases had transactions. Then NoSQL abolished them. And now,
+perhaps, they are making a comeback… but reinvented.</p>
 
-<p>Answer: They all need to handle updates on a local node, and asynchronously synchronise data with
-other nodes. They all need to cope with network interruptions and offline operation. They are all
-optimised for low latency data access. And they all allow data to be modified concurrently on
-different nodes, leading to conflicts that need to be resolved.</p>
+<p>The purpose of transactions is to make application code simpler, by reducing the amount of failure
+handling you need to do yourself. However, they have also gained a reputation for being slow and
+unscalable. With the traditional implementation of serializable transactions (2-phase locking), that
+reputation was somewhat deserved.</p>
 
-<p>In this talk, we will discuss a category of data structures called CRDTs (conflict-free replicated
-data types), which are designed for this kind of environment. We will do a tour of theory and
-practical implementations, and we’ll explore how they relate to stream processing, dataflow
-programming and functional data structures.</p>
+<p>In the last few years, there has been a resurgence of interest in transaction algorithms that
+perform well and scale well. This talk answers some of the biggest questions about the bright new
+landscape of transactions:</p>
 
-<p>And perhaps we’ll catch a glimpse of what the future of databases will look like.</p>
+<ul>
+  <li>You know that ACID stands for Atomicity, Consistency, Isolation and Durability, but are you
+certain that you know precisely what those words mean? What race conditions can you get with weak
+isolation (such as “read committed” and “repeatable read”), and how does this affect your
+application?</li>
+  <li>How do modern implementations of serializability work, and how are they different from traditional
+algorithms?</li>
+  <li>What are the strongest guarantees we can achieve, while maintaining high availability and high
+performance at scale?</li>
+  <li>When you build a microservices architecture or use stream processing, you often end up with data
+spread across multiple databases. Does this mean you inevitably have to give up transactional
+guarantees?</li>
+</ul>
 
             </div>
 

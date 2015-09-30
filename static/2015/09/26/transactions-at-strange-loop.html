@@ -98,6 +98,81 @@ what’s really going on here?</li>
 maintaining transactional guarantees?</li>
 </ul>
 
+<h2 id="references">References</h2>
+
+<ol>
+  <li>Atul Adya: “<a href="http://pmg.csail.mit.edu/papers/adya-phd.pdf">Weak Consistency: A Generalized Theory and Optimistic Implementations for
+  Distributed Transactions</a>,” PhD thesis,
+  Massachusetts Institute of Technology, Cambridge, MA, USA, March 1999.</li>
+  <li>Hagit Attiya, Faith Ellen, and Adam Morrison: “<a href="http://www.cs.technion.ac.il/people/mad/online-publications/podc2015-replds.pdf">Limitations of Highly-Available
+Eventually-Consistent Data Stores</a>,”
+at <em>ACM Symposium on Principles of Distributed Computing</em> (PODC), July 2015.</li>
+  <li>Peter Bailis, Alan Fekete, Ali Ghodsi, Joseph M Hellerstein, and Ion Stoica:
+“<a href="http://www.bailis.org/papers/hat-hotos2013.pdf">HAT, not CAP: Towards Highly Available Transactions</a>,”
+at <em>14th USENIX Workshop on Hot Topics in Operating Systems</em> (HotOS), May 2013.</li>
+  <li>Peter Bailis, Ali Ghodsi, Joseph M Hellerstein, and Ion Stoica:
+“<a href="http://db.cs.berkeley.edu/papers/sigmod13-bolton.pdf">Bolt-on Causal Consistency</a>,”
+at <em>ACM International Conference on Management of Data</em> (SIGMOD), June 2013.</li>
+  <li>Peter Bailis, Aaron Davidson, Alan Fekete, et al.:
+“<a href="http://www.bailis.org/papers/hat-vldb2014.pdf">Highly Available Transactions: Virtues and Limitations</a>,”
+at <em>40th International Conference on Very Large Data Bases</em> (VLDB), September 2014.</li>
+  <li>Hal Berenson, Philip A Bernstein, Jim N Gray, et al.:
+“<a href="http://research.microsoft.com/pubs/69541/tr-95-51.pdf">A Critique of ANSI SQL Isolation Levels</a>,”
+at <em>ACM International Conference on Management of Data</em> (SIGMOD), May 1995.</li>
+  <li>Eric A Brewer: “<a href="http://cs609.cs.ua.edu/CAP12.pdf">CAP Twelve Years Later: How the “Rules” Have Changed</a>,”
+<em>IEEE Computer Magazine</em>, volume 45, number 2, pages 23–29, February 2012.</li>
+  <li>Michael J Cahill, Uwe Röhm, and Alan Fekete:
+“<a href="http://www.cs.nyu.edu/courses/fall12/CSCI-GA.2434-001/p729-cahill.pdf">Serializable Isolation for Snapshot Databases</a>,”
+at <em>ACM International Conference on Management of Data</em> (SIGMOD), pages 729–738, June 2008.</li>
+  <li>Donald D Chamberlin, Morton M Astrahan, Michael W Blasgen, et al.:
+“<a href="http://diaswww.epfl.ch/courses/adms07/papers/p632-chamberlin.pdf">A History and Evaluation of System R</a>,”
+<em>Communications of the ACM</em>, volume 24, number 10, pages 632–646, October 1981.</li>
+  <li>Tushar Deepak Chandra and Sam Toueg:
+“<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf">Unreliable Failure Detectors for Reliable Distributed Systems</a>,”
+<em>Journal of the ACM</em>, volume 43, number 2, pages 225–267, March 1996.</li>
+  <li>Kapali P Eswaran, Jim N Gray, Raymond A Lorie, and Irving L Traiger:
+“<a href="http://paul.rutgers.edu/cs545/S02/papers/eswaran-transaction.pdf">The Notions of Consistency and Predicate Locks in a Database System</a>,”
+<em>Communications of the ACM</em>, volume 19, number 11, pages 624–633, November 1976.</li>
+  <li>Hector Garcia-Molina and Kenneth Salem: “<a href="http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf">Sagas</a>,”
+at <em>ACM International Conference on Management of Data</em> (SIGMOD), May 1987.</li>
+  <li>Jim N Gray, Raymond A Lorie, Gianfranco R Putzolu, and Irving L Traiger:
+“<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.92.8248">Granularity of Locks and Degrees of Consistency in a Shared Data Base</a>,”
+in <em>Modelling in Data Base Management Systems: Proceedings of the IFIP Working Conference on
+Modelling in Data Base Management Systems</em>, G.M. Nijssen, Editor. Elsevier/North Holland
+Publishing, pages 364–394, 1976.</li>
+  <li>Rachid Guerraoui: “<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.27.6456">Revisiting the relationship between non-blocking atomic commitment and
+consensus</a>,” at <em>9th
+International Workshop on Distributed Algorithms</em> (WDAG), pages 87–100, September 1995.</li>
+  <li>Theo Härder and Andreas Reuter:
+“<a href="http://web.stanford.edu/class/cs340v/papers/recovery.pdf">Principles of Transaction-Oriented Database Recovery</a>,”
+<em>ACM Computing Surveys</em>, volume 15, number 4, pages 287–317, December 1983.</li>
+  <li>Pat Helland and Dave Campbell:
+“<a href="https://database.cs.wisc.edu/cidr/cidr2009/Paper_133.pdf">Building on Quicksand</a>,”
+at <em>4th Biennial Conference on Innovative Data Systems Research</em> (CIDR), January 2009.</li>
+  <li>Joseph M Hellerstein: “<a href="http://www.sigmod.org/publications/sigmod-record/1003/p05.article.hellerstein.pdf">The Declarative Imperative: Experiences and Conjectures in Distributed
+Logic</a>,”
+<em>ACM SIGMOD Record</em>, volume 39, number 1, March 2010.</li>
+  <li>Martin Kleppmann: “<a href="http://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html">Hermitage: Testing the ‘I’ in
+ACID</a>,” 25 November 2014.</li>
+  <li>Martin Kleppmann: “<a href="http://arxiv.org/abs/1509.05393">A Critique of the CAP Theorem</a>,”
+Preprint arXiv:1509.05393 [cs.DC], Sep 2015.</li>
+  <li>Martin Kleppmann: <a href="http://dataintensive.net/"><em>Designing Data-Intensive Applications</em></a>.
+O’Reilly Media, to appear. ISBN 1-4493-7332-1.</li>
+  <li>Wyatt Lloyd, Michael J Freedman, Michael Kaminsky, and David G Andersen:
+“<a href="https://www.cs.cmu.edu/~dga/papers/cops-sosp2011.pdf">Don’t Settle for Eventual: Scalable Causal Consistency for Wide-Area Storage with COPS</a>,”
+at <em>23rd ACM Symposium on Operating Systems Principles</em> (SOSP), pages 401–416, October 2011.</li>
+  <li>Dan R K Ports and Kevin Grittner:
+“<a href="http://drkp.net/papers/ssi-vldb12.pdf">Serializable Snapshot Isolation in PostgreSQL</a>,”
+at <em>38th International Conference on Very Large Data Bases</em> (VLDB), volume 5, number 12, pages
+1850–1861, August 2012.</li>
+  <li>Michael Stonebraker, Samuel Madden, Daniel J Abadi, et al.:
+“<a href="http://www.vldb.org/conf/2007/papers/industrial/p1150-stonebraker.pdf">The End of an Architectural Era (It’s Time for a Complete Rewrite)</a>,”
+at <em>33rd International Conference on Very Large Data Bases</em> (VLDB), pages 1150–1160, September 2007.</li>
+  <li>Marek Zawirski, Annette Bieniusa, Valter Balegas, et al.:
+“<a href="http://arxiv.org/abs/1310.3107">SwiftCloud: Fault-Tolerant Geo-Replication Integrated all the Way to the Client Machine</a>,”
+INRIA Research Report 8347, August 2013.</li>
+</ol>
+
             </div>
 
             <div id="sidebar">
