@@ -10,12 +10,180 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Wed, 30 Sep 2015 13:55:59 EDT</lastBuildDate>
+        <lastBuildDate>Sun, 11 Oct 2015 18:46:49 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>The Recurse Center and the joy of learning</title>
+                <link>http://martin.kleppmann.com/2015/10/11/recurse-center-joy-of-learning.html</link>
+                <comments>http://martin.kleppmann.com/2015/10/11/recurse-center-joy-of-learning.html#disqus_thread</comments>
+                <pubDate>Sun, 11 Oct 2015 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/10/11/recurse-center-joy-of-learning.html</guid>
+                
+                <description><![CDATA[ I have just spent an excellent two weeks as a resident at the Recurse Center (RC). As RC is a somewhat unusual institution, and several people have asked me about it, I would like to take this opportunity to reflect on what I have learnt. Recurse Center describes itself as... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>I have just spent an excellent two weeks as a <a href="https://www.recurse.com/blog/85-more-new-residents-for-2015">resident</a> at the <a href="https://www.recurse.com/">Recurse Center</a> (RC).
+As RC is a somewhat unusual institution, and several people have asked me about it, I would like to
+take this opportunity to reflect on what I have learnt.</p>
+
+<p>Recurse Center describes itself as an <em>educational retreat for programmers</em>. Anyone can apply, and
+if you are accepted, you get to spend three months at the Recurse Center in New York. It is free to
+attend. You are part of a <em>batch</em>, a group of people who all start at the same time. A new batch
+starts every six weeks, so the first and second half of each batch overlaps with the preceding and
+following batch, respectively. A batch consists of about 15 to 30 people.</p>
+
+<p>What do you do during those three months? That is largely up to you. There is no curriculum, no exam
+or dissertation. The goal is simply for you to become a better programmer during that time, through
+self-directed study and practice. How you go about that goal is your choice, but RC provides support
+structures to help you achieve the goal.</p>
+
+<p>The three months give you time to focus, without the distraction of a job or project deadlines. This
+is your chance to learn challenging new things: three months is long enough that you can build up
+a significant amount of new skills, but short enough that great focus is needed.</p>
+
+<p>At the end of the three months, RC will help you find a job at a good company, if you want one, but
+there is no obligation to take a job. Alumni often stay involved with the RC community long after
+their three months have come to an end.</p>
+
+<h2 id="the-culture-of-recurse-center">The culture of Recurse Center</h2>
+
+<p>The most striking thing about RC is the care with which the atmosphere and culture is designed.
+Everything is geared towards providing a supportive environment in which everyone feels welcome, no
+matter who they are or what background they come from.</p>
+
+<p>Most technology companies and events I’ve seen are dominated by straight middle-class white and
+Asian men. I count myself towards that group, and I don’t have any problem with white men <em>per se</em>,
+but it’s an extremely biased sample of humanity, and such bias is not healthy for a community.
+Fortunately, the Recurse Center is different. The people who go to RC are a much more representative
+cross-section of humanity (in terms of ethnicity, gender, nationality, sexuality, social background,
+etc) than most other venues in technology, which is wonderful and heartwarming.</p>
+
+<p>I attribute this diversity directly to RC’s conscious efforts to create a safe space in which
+everyone feels welcome. This includes explicit social rules to avoid bigoted (sexist, racist,
+homophobic, transphobic, ageist, ableist, etc) language and ideas, and encouraging everybody to ask
+questions and discuss technical topics without fear of being seen as stupid or clueless. Not knowing
+something is celebrated as an opportunity to learn, not a fault to be embarrassed about.</p>
+
+<p>In the batches I met at RC, some people had been programming for decades, and some only for a few
+months. Some had built websites or mobile apps, some had built machine learning systems, others had
+built low-level communication systems for satellites. Some people had non-computing backgrounds such
+as oceanography, microbiology, religious studies, linguistics and poetry. But all had an
+enthusiastic desire to learn.</p>
+
+<h2 id="everyone-is-a-beginner-at-something">Everyone is a beginner at something</h2>
+
+<p>One thing I had wondered about before coming to RC: if people have such vastly differing amounts of
+programming experience, how can people productively help each other? If they are all in the same
+room, won’t the beginners get intimidated and overwhelmed, while the experienced software engineers
+get bored?</p>
+
+<p>After working with a few members of the batch, I realised why the varying levels of experience are
+not a problem for RC: everyone is a beginner at the thing they are exploring at RC. If you are an
+experienced software developer, you don’t go to RC in order to keep doing the same things as you did
+at your last job, using the same languages to build the same kind of application. No, you probably
+join RC because you want to learn something completely different.</p>
+
+<p>Your time at RC is an opportunity to “level up” your craft. If you’re an experienced web developer,
+how about learning a functional language like <a href="https://www.haskell.org/">Haskell</a> or <a href="http://www.idris-lang.org/">Idris</a>? If you’re a veteran C++
+hacker, maybe you want to learn about formal methods like <a href="https://coq.inria.fr/">Coq</a> or <a href="http://research.microsoft.com/en-us/um/people/lamport/tla/tla.html">TLA+</a>? Even if you’ve
+been writing software for 20 years, you’re a complete newbie when you move so far out of your
+comfort zone – so you’re actually not that different from someone who is trying to get their first
+small piece of Python code to work. You’re a beginner too.</p>
+
+<p>At RC, I learnt to appreciate that each individual person has a rich and interesting background, and
+that it’s actually not particularly important what percentage of that background is in programming
+activities versus non-programming activities. There is nothing about programming that makes it in
+any way superior to, say, oceanography or poetry. All of us are just trying to learn something new,
+and occasionally one person can help out another because they have more experience in one particular
+area, but in another area those roles may well be reversed.</p>
+
+<h2 id="the-joy-of-learning-for-its-own-sake">The joy of learning for its own sake</h2>
+
+<p>Another thing that struck me about RC was the breadth of different things that people wanted to
+learn: from fairly mainstream things like game programming in JavaScript, to obscure experimental
+programming languages that I hadn’t even heard of.</p>
+
+<p>Each person has their own reasons for their choice of technology to work on, and no justification is
+required. Outside of the Recurse Center, people tend to focus on <em>marketable</em> skills, i.e. learning
+things that are likely to help them in a job. Within RC, although getting a job is certainly a goal
+for some people, the marketability of a technology does not seem to be a dominant factor in
+Recursers’ choice of technology to work on. RC is not a training program for web developers or
+mobile developers!</p>
+
+<p>In practical terms, this means that some people will choose to work on things that are unlikely to
+directly help them in a job, but which are simply <em>interesting</em> (e.g. creating a new programming
+language). I find this non-utilitarian approach wonderful. Nobody will criticize your project for
+not being “useful”: what matters is what you learn from doing it.</p>
+
+<p>Recurse Center is not about startups. It is specifically about sharpening your technical skills, not
+about building a product. During RC you will probably work on projects, because the best way of
+deeply understanding an idea is to apply it to a concrete problem. However, the focus is on your
+learning, not on the artifacts that you create as a side-effect of learning.</p>
+
+<p>Only at the Recurse Center have I seen people genuinely giddy, bouncing up and down with excitement,
+at the prospect of trying out some new language or technology. I don’t think I ever saw that while
+studying computer science at university. This joy of learning something simply because it is
+interesting, this intellectual curiosity, this childlike sense of wonder, is something we must
+treasure.</p>
+
+<h2 id="levelling-up-for-experienced-programmers">“Levelling up” for experienced programmers</h2>
+
+<p>There is no doubt that the Recurse Center is ideal for beginner programmers: it is an incredibly
+welcoming, supportive, encouraging environment where you can learn a lot in a short time. But is it
+also worthwhile for experienced software engineers?</p>
+
+<p>For the last year I have taken a “sabbatical” (read: been unemployed), doing only occasional bits of
+consulting work, and otherwise focussing on on writing my <a href="http://dataintensive.net/">book</a>, doing <a href="http://arxiv.org/abs/1509.05393">research</a>, and giving
+<a href="http://martin.kleppmann.com/talks.html">talks</a> about my work. It has been incredibly rewarding, because I have had the opportunity to
+think through and understand topics in much greater depth than I could have done whilst working
+a job and meeting project deadlines. I have worked hard during this year, and I feel that I have
+grown substantially in my craft.</p>
+
+<p>Now, I understand if such a completely self-organised sabbatical is not for everyone. But when
+I look at RC, I see an opportunity for other experienced programmers to have a similar personal
+growth experience as I have enjoyed. In the supportive environment of RC it is easier to leave your
+comfortable software engineering job and set sail into uncharted waters.</p>
+
+<p>If you want to help <em>create</em> the future of software development, rather than just coming along for
+the ride, you will need to bring together ideas from very different areas of computer science, and
+even incorporate ideas from outside of computer science. You will need to learn about things that do
+not have much commercial value today, but which will make programming better for everyone in ten
+years’ time.</p>
+
+<p>It is unlikely that you will have the time to learn those things and take such a long-term view on
+the side during your day job – you will need to make dedicated time. A sabbatical is a good option,
+but it requires a lot of self-discipline to stay on track. The support structures of RC can help you
+take your craft to the next level.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>If you’re a programmer (no matter what your level of experience), do take a look at the Recurse
+Center <a href="https://www.recurse.com/about">about page</a>, <a href="https://www.recurse.com/faq">FAQ</a> and <a href="https://www.recurse.com/manual">user’s manual</a>. If the ideas there resonate with
+you, I can warmly encourage you to apply.</p>
+
+<p>If you’re at a company that hires software engineers, you should totally work with Recurse Center to
+recruit Recursers. They are people who are intellectually curious, approach their work with joy, and
+treat others with respect. The companies I have spoken to which recruit through RC have been very
+happy with the people they hired.</p>
+
+<p>I personally spent only two weeks at RC. I would have loved to stay for longer, but (a) my partner
+can’t get three months off her job to stay in New York, and (b) I’ve just started a new dream job,
+in which I will continue to have great freedom to explore, learn and teach (more on that in a future
+blog post).</p>
+
+<p>The thing that impressed me most about the Recurse Center is how they have succeeded in creating
+a respectful, thoughtful, encouraging atmosphere that is welcoming to people from a very diverse set
+of backgrounds. The tech industry would be vastly improved if more people would learn from RC’s
+example. I, for my part, will try to carry that spirit of RC with me.</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Kafka, Samza, and the Unix philosophy of distributed data</title>
@@ -4316,137 +4484,6 @@ level. I don’t know enough about type systems to know whether that’s even po
 could potentially cut out a whole class of bugs that are very hard to find through testing.</p>
 
 <p><em>Thank you to Peter Bailis and his collaborators for feedback on a draft of this post.</em></p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Hey, I'm writing a book!</title>
-                <link>http://martin.kleppmann.com/2014/09/15/writing-a-book.html</link>
-                <comments>http://martin.kleppmann.com/2014/09/15/writing-a-book.html#disqus_thread</comments>
-                <pubDate>Mon, 15 Sep 2014 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2014/09/15/writing-a-book.html</guid>
-                
-                <description><![CDATA[ About two years ago I wrote a blog post called “Rethinking caching in web apps”. At almost 4,000 words, it was a lot longer than the received wisdom says a blog post should be. Nevertheless I had the feeling that I was only scratching the surface of what needed to... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>About two years ago I wrote a blog post called
-<a href="/2012/10/01/rethinking-caching-in-web-apps.html">“Rethinking caching in web apps”</a>.
-At almost 4,000 words, it was a lot longer than the
-<a href="http://blog.bufferapp.com/the-ideal-length-of-everything-online-according-to-science">received wisdom</a>
-says a blog post should be. Nevertheless I had the feeling that I was only scratching
-the surface of what needed to be said.</p>
-
-<p>That got me thinking whether I should try writing something longer, like a book perhaps.
-I love writing because it forces me to research something in depth, think it through,
-and then try to explain it in a logical way. That helps me understand it much better
-than if I just casually read about it. Or, put more eloquently:</p>
-
-<blockquote>
-  <p>“Writing is nature’s way of letting you know how sloppy your thinking is.”
-– Dick Guindon</p>
-</blockquote>
-
-<h2 id="existing-books">Existing books</h2>
-
-<p>I am writing because the book I wanted to read didn’t exist. I wanted a book that
-would explain data systems to me – the whole area of databases, distributed systems,
-batch and stream processing, consistency, caching and indexing – at the right level.
-But I found that almost all the existing books, blog posts etc. fell into one of the
-following categories:</p>
-
-<ol>
-  <li>Most computing books are hands-on guides to one particular technology. They assume that
-you’ve been told to use database X or programming language Y, and so they teach you
-how to use it. Those books are fine, but they are of little use if you’re trying to
-decide whether X or Y is the right tool for you in the first place. These books tend to
-focus on the strong points of that particular technology, and fail to mention its
-shortcomings.</li>
-  <li>It’s common to see blog posts with side-by-side comparisons of several similar
-technologies, but I find they tend to just focus on superficial aspects (performance
-benchmarks, API, software license) while completely missing the fundamental workings
-of the technology. They are like Top Trumps for databases, and don’t actually help you
-understand anything any better.</li>
-  <li>By contrast, academic textbooks cover the fundamental principles and trade-offs that
-are common to many different technologies, but in doing so, they often lose all
-contact with reality. These books are generally written by academics with deep research
-experience in their field, but little awareness of the practicalities of real
-production systems. They often end up saying things which are technically correct,
-but useless or misleading if you want to actually build a real system.</li>
-</ol>
-
-<p>I wanted something in between all of these. A book which would tell a story of the big ideas in
-data systems, the fundamental principles which don’t change from one software version to
-another. But the book would also stay grounded in reality, explaining what works in practice
-and what doesn’t, and <em>why</em>. The book would examine the tools and systems that we already
-use in production, compare their fundamental approaches, and help you figure out which
-technology is appropriate to which use case.</p>
-
-<p>I wanted to understand not just how to <em>use</em> a particular system, but also how it <em>works under
-the hood</em>. That is partly out of intellectual curiosity, but equally importantly, because it
-allows me to imagine what the system is doing. If some kind of unexpected behaviour occurs, or
-if I want to push the limits of what a technology can do, it is tremendously useful to have
-at least a rough idea of what is happening internally.</p>
-
-<p>As I spoke to various people about these ideas, including some folks at O’Reilly, it became
-clear that I wasn’t the only one who wanted a book like this. And so,
-<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a> was born.
-And you’ll know it when you see it, because it has an awesome Indian Wild Boar on the cover.</p>
-
-<p style="text-align: center"><a href="http://dataintensive.net" title="Designing Data-Intensive Applications (the wild boar book)"><img src="/2014/09/book-cover.png" alt="Designing Data-Intensive Applications (the wild boar book)" width="250" height="328" /></a>
-</p>
-
-<p><em>Designing Data-Intensive Applications</em> (sorry about the verbose title – you can just call it
-“the wild boar book”) has been in the works for some time, and today we’re announcing the
-<a href="http://shop.oreilly.com/product/0636920032175.do">early release</a>. The first four chapters
-are now available – ten or eleven are planned in total, so there’s still long way to go.
-But I left my job to work on this book full-time, so it’s definitely happening.</p>
-
-<h2 id="who-should-read-this">Who should read this?</h2>
-
-<p>If you’re a software engineer working on server-side applications (a web application backend,
-for instance), then this book is for you. It assumes that you already know how to build an
-application and use a database, and that you want to “level up” in your craft. Perhaps you
-want to work on highly scalable systems with millions of users, perhaps you want to deal with
-particularly complex or ever-changing data, or perhaps you want to make an old legacy
-environment more agile.</p>
-
-<p>This book starts at the foundations, and gradually builds up a picture of modern data systems
-layer by layer, one chapter at a time. I’m not trying to sell you any particular architecture
-or approach, because I firmly believe that different use cases require different solutions.
-Therefore, each chapter contains a broad overview and comparison of the different approaches
-that have been successful in different circumstances.</p>
-
-<p>It doesn’t matter what your preferred programming language or framework is – this book is
-agnostic. It’s about architecture and algorithms, about fundamental principles and practical
-constraints, about the reasoning behind every design decision.</p>
-
-<p>None of the ideas in this book are really new, and indeed many ideas are decades old.
-Everything has already been said somewhere, in conference presentations, research papers,
-blog posts, code, bug trackers, and engineering folklore. However, to my knowledge the ideas
-haven’t previously been collected, compared and evaluated like this.</p>
-
-<p>I hope that by understanding what our options are, and the pros and cons of each approach,
-we’ll all become better engineers. By making conscious trade-offs and choosing our tools
-wisely, we will build systems that are more reliable and much easier to maintain in the long
-run. It’s a quest to help us engineers be better at our jobs, and build better software.</p>
-
-<h2 id="lets-make-software-development-better">Let’s make software development better</h2>
-
-<p>Please join me on this quest by reading the draft of the book, and sending us your feedback:</p>
-
-<ul>
-  <li>The book’s website is <a href="http://dataintensive.net/">dataintensive.net</a>.</li>
-  <li>You can buy the early release ebook from
-<a href="http://shop.oreilly.com/product/0636920032175.do">O’Reilly</a>, or if you’re a Safari Books
-subscriber, you can <a href="http://my.safaribooksonline.com/9781491903063">read it online</a>.</li>
-  <li>If you can think of any way the book could be improved, please email your thoughts to
-<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#102;&#101;&#101;&#100;&#098;&#097;&#099;&#107;&#064;&#100;&#097;&#116;&#097;&#105;&#110;&#116;&#101;&#110;&#115;&#105;&#118;&#101;&#046;&#110;&#101;&#116;">&#102;&#101;&#101;&#100;&#098;&#097;&#099;&#107;&#064;&#100;&#097;&#116;&#097;&#105;&#110;&#116;&#101;&#110;&#115;&#105;&#118;&#101;&#046;&#110;&#101;&#116;</a> or tweet us
-<a href="https://twitter.com/intensivedata">@intensivedata</a>. Now is the time to be involved.</li>
-  <li>…and if you like the sound of this, don’t forget to tell your friends and colleagues
-about it!</li>
-</ul>
 
                 ]]></content:encoded>
             </item>
