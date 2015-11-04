@@ -5,9 +5,12 @@ venue: Crunch Conference
 place: Budapest, Hungary
 venue_url: http://crunchconf.com/
 slides_url: https://speakerdeck.com/ept/patterns-for-real-time-stream-processing
+video_url: http://www.ustream.tv/recorded/76606401
 ---
 
 <script async class="speakerdeck-embed" data-id="74f7bbd817ec4001b9c4c4e92deaef4f" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="480" height="270" src="http://www.ustream.tv/embed/recorded/76606401?html5ui" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0" style="border: 0 none transparent;"></iframe>
 
 Abstract
 --------
