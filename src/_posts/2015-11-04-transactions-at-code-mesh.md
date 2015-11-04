@@ -4,7 +4,10 @@ title: "Transactions: Myths, Surprises and Opportunities"
 venue: Code Mesh
 place: London, UK
 venue_url: http://www.codemesh.io/codemesh2015/martin-kleppmann
+slides_url: https://speakerdeck.com/ept/transactions-myths-surprises-and-opportunities
 ---
+
+<script async class="speakerdeck-embed" data-id="0a5b3e46260542ff9e557458e33afd33" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
