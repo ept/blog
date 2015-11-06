@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Do-it-yourself 3G iPhone &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Turning the database inside-out &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,40 +44,58 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Do-it-yourself 3G iPhone"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Turning the database inside-out"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Do-it-yourself 3G iPhone</h1>
+                <h1>Turning the database inside-out</h1>
 
-                <p>I’ve just worked out how you could make a 3G iPhone yourself, even adding GPS support, and still get
-away with a lower cost than buying a regular iPhone. The solution:</p>
+                <p>
+                  A talk at
+                  
+                    <a href="http://oredev.org/2015/sessions/turning-the-database-inside-out-with-apache-samza">Øredev</a>,
+                  
+                  Malmö, Sweden, 05 Nov 2015
+                </p>
 
-<ul>
-  <li>Get an iPod Touch (from £199).</li>
-  <li>Get a Symbian smartphone, such as the N95, with an internet plan (on 3 you’d pay
-about £34 per month over 18 months for a N95 and a tariff roughly equivalent to O2’s iPhone
-tariff).</li>
-  <li>Download
-<a href="http://www.joikuspot.com/aboutJoikuSpot.php">JoikuSpot</a> and install it on the N95. Use it to create
-an ad-hoc wireless network, and connect the iPod Touch to that
-network.</li>
-  <li>Voilà. Total cost is about £811 over 18 months (compared to the iPhone total
-cost of £899), you get 3G or even HSDPA, and you get a whole additional handset with Nokia’s
-awesome features.</li>
-</ul>
+                <ul>
+                  
+                    <li><a href="/2015/03/04/turning-the-database-inside-out.html">Transcript</a></li>
+                  
+                  
+                    <li><a href="https://speakerdeck.com/ept/turning-the-database-inside-out-with-apache-samza">Slides</a></li>
+                  
+                  
+                  
+                </ul>
 
-<p>JoikuSpot is still a bit limited – rather than just routing packets,
-it proxies HTTP traffic and doesn’t support anything else, so e.g. IMAP isn’t going to work for the
-time being. I hope that will get fixed soon. I tested JoikuSpot briefly for plain web traffic on my
-E65 and it seems to be working.</p>
+                <script async="" class="speakerdeck-embed" data-id="bee4676021bf0132b11b1a9c43b4c166" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
 
-<p>I’m not going to rush out and buy all those things now, I just find
-this situation curious.</p>
+<p>This was a repeat of my
+<a href="/2014/09/18/turning-database-inside-out-at-strange-loop.html">talk at Strange Loop 2014</a>.</p>
 
+<h2 id="abstract">Abstract</h2>
 
-                
+<p>Databases are global, shared, mutable state. That’s the way it has been since the 1960s, and no
+amount of NoSQL has changed that. However, most self-respecting developers have got rid of mutable
+global variables in their code long ago. So why do we tolerate databases as they are?</p>
 
-                <div id="disqus_thread"></div>
+<p>A more promising model, used in some systems, is to think of a database as an always-growing
+collection of immutable facts. You can query it at some point in time — but that’s still old,
+imperative style thinking. A more fruitful approach is to take the streams of facts as they come in,
+and functionally process them in real-time.</p>
+
+<p>This talk introduces Apache Samza, a distributed stream processing framework developed at LinkedIn.
+At first it looks like yet another tool for computing real-time analytics, but it’s more than that.
+Really it’s a surreptitious attempt to take the database architecture we know, and turn it inside
+out.</p>
+
+<p>At its core is a distributed, durable commit log, implemented by Apache Kafka. Layered on top are
+simple but powerful tools for joining streams and managing large amounts of data reliably.</p>
+
+<p>What we have to gain from turning the database inside out? Simpler code, better scalability, better
+robustness, lower latency, and more flexibility for doing interesting things with data. After this
+talk, you’ll see the architecture of your own applications in a completely new light.</p>
+
             </div>
 
             <div id="sidebar">
@@ -191,18 +209,6 @@ this situation curious.</p>
 <img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2008/03/30/do-it-yourself-3g-iphone.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Google Analytics -->
 <script type="text/javascript">
