@@ -4,8 +4,10 @@ title: Streams as the team interface
 venue: Øredev
 place: Malmö, Sweden
 venue_url: http://oredev.org/2015/sessions/streams-as-the-team-interface
+slides_url: https://speakerdeck.com/ept/streams-as-the-team-interface
 ---
 
+<script async class="speakerdeck-embed" data-id="cd8f6b0806d746bbaeff46752622f3af" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
