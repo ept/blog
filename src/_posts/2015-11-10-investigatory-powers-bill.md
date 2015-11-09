@@ -1,6 +1,6 @@
 ---
 layout: ync-post
-title: The Investigatory Powers Bill is a boon to criminals and terrorists
+title: The Investigatory Powers Bill would increase cybercrime
 ---
 
 As widely reported, the UK government proposed the draft of a new [Investigatory Powers
@@ -12,26 +12,11 @@ ordinary citizens. In this article I argue that if the bill is passed in its cur
 effect will be exactly the opposite of that intended: it would leave citizens *more* exposed to the
 risks of crime and terrorism, and not reduce those risks as intended.
 
-As to my background: I am a researcher at the [University of Cambridge Computer Laboratory][CL],
-working on a project related to information security. Thus, I think I can claim to have a reasonably
-good understanding of the technical issues in this domain. However, the opinions in this article are
-my own, and not those of my university department or anybody else.
-
 [bill-draft]: https://www.gov.uk/government/collections/draft-investigatory-powers-bill
-[CL]: http://www.cl.cam.ac.uk/
 
 
 Background of the bill
 ----------------------
-
-<!--
-In a democratic society, the reason we have a government and public services is to make society
-function better. The public sector builds the roads, bridges and tunnels that we all rely on; it
-upholds the rule of law through the police and judiciary; it protects us from foreign aggression
-through diplomacy and the military; it supports disadvantaged and vulnerable people through social
-services; it provides public health services, education, infrastructure, and other things that we
-all need. This is an incredibly valuable role in society.
--->
 
 The stated purpose of the Investigatory Powers Bill is to help fight crime and terrorism -- in other
 words, to uphold the rule of law and to keep us safe from aggression. If people break the law or
@@ -72,10 +57,10 @@ However, encryption can be applied at different levels. For example, in a chat o
 there are two options:
 
 * **Encryption in transit:** In this case, the data is encrypted as it is transmitted between your
-  device and the service provider (e.g. a mobile network operator), but the service provider handles
-  the data in unencrypted form. This is illustrated in Figure 1a. In this case, the service provider
-  is able to read all of the communication, and you need to trust them to safeguard your information
-  appropriately.
+  device and the service provider (e.g. a mobile network operator or a social network), but the
+  service provider handles the data in unencrypted form. This is illustrated in Figure 1a. In this
+  case, the service provider is able to read all of the communication, and you need to trust them to
+  safeguard your information appropriately.
 * **End-to-end encryption:** In this case, data is encrypted all the way between you and the person
   you're talking to. The service provider only passes on the messages, but it cannot see what you
   are talking about (Figure 1b). There may not even *be* a service provider, because anybody can
@@ -92,7 +77,7 @@ communicating. For example, they can obtain a court order to seize your phone, o
 
 <img src="/2015/11/end-to-end.png" width="550" height="357" alt="Figure 1: The difference between encryption in transit and end-to-end encryption."/>
 
-<p style="font-style: italic; text-align: center;">Figure 1: The difference between encryption in transit and end-to-end encryption.</p>
+<p style="text-align: center;"><em>Figure 1: The difference between encryption in transit and end-to-end encryption.</em></p>
 
 [electromagnetic]: http://www.cl.cam.ac.uk/~mgk25/pet2004-fpd.pdf
 
@@ -116,11 +101,11 @@ or in legal professions, it is crucial that sensitive information is adequately 
 
 End-to-end encryption helps protect our own information against theft and manipulation by
 adversaries -- ranging from an individual disgruntled employee, to hostile foreign intelligence
-services who may be spying for economic, political or military reasons. As more and more aspects of
-the world are [controlled by software][andreessen], and as increasingly many devices are connected
-to the internet, a cyberattack against weakly secured systems could have catastrophic consequences.
-We will need all the defences we can get, and end-to-end encryption is going to be an indispensable
-part of our security infrastructure.
+services who may be spying or sabotaging for economic, political or military reasons. As more and
+more aspects of the world are [controlled by software][andreessen], and as increasingly many devices
+are connected to the internet, a cyberattack against weakly secured systems could have catastrophic
+consequences.  We will need all the defences we can get, and end-to-end encryption is going to be an
+indispensable part of our security infrastructure.
 
 [steel-mill]: http://www.wired.com/2015/01/german-steel-mill-hack-destruction/
 [jeep]: http://www.wired.com/2015/07/hackers-remotely-kill-jeep-highway/
@@ -163,8 +148,8 @@ violate them -- and the text of the bill itself is very vague and ambiguous.
 If the bill requires communication services to have some mechanism of obtaining the content of the
 communication in response to a warrant, that means the service must somehow retain the ability to
 decrypt the data when required. Provisions for such *exceptional access* (e.g. [key
-escrow][key-escrow]) are normally avoided in encryption products, because they introduce serious
-security problems.
+escrow][key-escrow] or backdoors) are normally avoided in encryption products, because they
+introduce serious security problems.
 
 [cameron-speech]: https://embed.theguardian.com/embed/video/uk-news/video/2015/jan/12/david-cameron-spy-agencies-britain-video
 [banning-e2e]: http://www.telegraph.co.uk/news/uknews/terrorism-in-the-uk/11970391/Internet-firms-to-be-banned-from-offering-out-of-reach-communications-under-new-laws.html
@@ -209,6 +194,13 @@ locks][tsa-keys] were accidentally posted on the internet. The US Air Force has 
 These incidents do not fill me with confidence that any government would be able to handle
 cryptographic master keys securely.
 
+If the law enforcement services can remotely break into the device of a suspect, then sooner or
+later criminals will find ways to use the same mechanism to break into devices and steal or destroy
+your personal data. They will know your location, and the PIN for your burglar alarm, so they will
+have an easy time breaking into your house. There is simply no technical mechanism that will allow
+legitimate access by law enforcement, and which is also unbreakable by people who want to do you
+harm.
+
 I'll say it again, to be absolutely clear: *any* mechanism that can allow law enforcement legitimate
 access to data can *inevitably* be abused by hostile foreign intelligence services, and even
 technically sophisticated individuals, to break into systems and gain unauthorised access to the
@@ -249,14 +241,17 @@ The problem is not only extortion of money from the victims of blackmail, but al
 problem. What if someone succeeds in blackmailing employees of an intelligence agency, or senior
 civil servants, or a government official? If the victim fears for their reputation or repercussions
 from the release of the sensitive information, the attacker gains power over the victim, which is
-worrisome if the victim is in a position of power. Increasingly, stolen personal information is
-being used for [politically motivated purposes][doxing].
+worrisome if the victim is in a position of power.
+
+Increasingly, stolen personal information is being used for [politically motivated blackmail and
+intimidation][doxing]. Even if you personally have never done anything embarrassing, and you have
+nothing to hide, the fact that other people can be blackmailed is a risk to you if those people have
+power over you.
 
 "Give me six lines written by the most honest man in the world, and I will find enough in them to
 hang him." (Origin uncertain, attributed to [Cardinal Richelieu][richelieu].) Or, to give a more
 modern equivalent: "We kill people based on metadata." (Former CIA and NSA director [Michael
-Hayden][metadata].) The proposed retention of browsing history creates many new opportunities for
-potentially embarrassing information to be exposed.
+Hayden][metadata].)
 
 [talktalk]: http://www.theguardian.com/business/2015/oct/23/talktalk-hacking-crisis-deepens-as-more-details-emerge
 [sql-injection]: https://tommorris.org/posts/9396
@@ -268,8 +263,8 @@ potentially embarrassing information to be exposed.
 [metadata]: https://www.rt.com/usa/158460-cia-director-metadata-kill-people/
 
 
-Summary
--------
+We must make systems more secure, not less
+------------------------------------------
 
 As [David Cameron said][cameron-speech], "the first duty of any government is to keep our country
 and our people safe." The proposed Investigatory Powers Bill is supposed to make us more safe by
@@ -282,18 +277,34 @@ place. With regard to encryption technologies, it fails to specify what is allow
 But the Prime Minister's repeated assertion that we "make sure we do not allow terrorists safe
 spaces to communicate with each other" implies a worrisome weakening of security technologies.
 
-I am worried that the Investigatory Powers Bill would effectively mandate systems to be insecure,
-and thus leave our infrastructure vulnerable to cyberattacks from people who want to do us harm. As
-internet-connected devices are increasingly used for matters of life and death, the security of
-those devices becomes paramount, and breaches could have catastrophic consequences. We need to do
-everything we can to *strengthen* the security of those systems, not to weaken them.
+Nobody wants to give criminals a safe space in which they can operate. However, the technologies
+that help protect industrial control systems, cars, medical devices, lawyers, journalists and
+businesses against attacks by malicious parties are *the same* as the technologies behind which
+criminals can hide. Any technology can be used for good and bad.
+
+It is not possible to eliminate "safe spaces" for criminals without also eliminating security from
+the computer systems that our daily lives depend on. I am worried that the Investigatory Powers
+Bill would effectively mandate computer systems to be insecure, and thus leave our infrastructure
+vulnerable to cyberattacks from people who want to do us harm. 
+
+According to the [government's own report][cybercrime], cybercrime is a Tier One risk to national
+security, and already costs the UK £27bn per year. This is only going to get worse if we do not
+improve the security of our computer systems. As internet-connected devices are increasingly used
+for matters of life and death, the security of those devices becomes paramount, and breaches could
+have catastrophic consequences. We need to do everything we can to *strengthen* the security of
+those systems, not to weaken them.
 
 I recognise that as systems become more secure, surveillance becomes more difficult for the
 intelligence services. I acknowledge that secure communication systems may allow a terrorist plot or
 a crime to succeed which may have been thwarted if surveillance was easy for law enforcement
-services. But I argue that this risk is tiny compared to the risk of an insecure, vulnerable
-infrastructure in which terrorist cyberattackers could wreak havoc.
+services. But I argue that this risk is [tiny][surveillance-benefit] compared to the risk of an
+insecure, vulnerable infrastructure in which terrorist cyberattackers could wreak havoc.
 
 Aside from the proposed bill's disregard for civil liberties, even if we consider only the security
 implications of the bill, it is deeply worrisome. As more technical details of the proposal become
 clear, we must carefully examine to what extent they leave us less secure than we were before.
+
+[cybercrime]: https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/60943/the-cost-of-cyber-crime-full-report.pdf
+[surveillance-benefit]: http://motherboard.vice.com/blog/youll-never-guess-how-many-terrorist-plots-the-nsas-domestic-spy-program-has-foiled
+
+*Thank you to Alastair Beresford and Diana Vasile for reviewing a draft of this article.*
