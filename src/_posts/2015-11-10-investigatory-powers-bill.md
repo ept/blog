@@ -35,11 +35,17 @@ However, this article is not about the tension between security and privacy -- i
 security. The Investigatory Powers Bill is supposed to increase our security by giving law
 enforcement services the tools they need to catch criminals and terrorists. I will argue that, in
 fact, the proposed bill *harms our security* by making us *more vulnerable* to attacks by criminals
-and terrorists. Therefore, even if you do not care about privacy, you should be strongly opposed to
-this bill.
+and terrorists.
+
+People who defend surveillance often say that a loss of privacy is [a price that many people are
+willing to pay][price-pay] for the sake of increased safety. However, what if the surveillance
+measures actually make people *less* safe? Even if you do not care about privacy, you should be
+strongly opposed to this bill, because it vastly increases the risks of cybercrime, as explained
+below.
 
 [privacy]: http://gilc.org/privacy/survey/intro.html
 [surveillance]: http://www.theguardian.com/commentisfree/2015/nov/08/surveillance-bill-snoopers-charter-george-orwell
+[price-pay]: http://www.theyworkforyou.com/debates/?id=2015-11-04a.969.0#g991.4
 
 
 Encrypted communication
@@ -73,7 +79,8 @@ wiretap your communication without you ever knowing. With end-to-end encryption,
 still possible, but it's more expensive: since the service provider cannot access the messages,
 a warrant to the service provider is of no use. Instead, law enforcement must go to the people
 communicating. For example, they can obtain a court order to seize your phone, or they can point
-[microphones and antennas][electromagnetic] at your house to listen to your communications.
+[microphones and antennas][electromagnetic] at your house to listen to your communications, or they
+can infiltrate the suspected gang.
 
 <img src="/2015/11/end-to-end.png" width="550" height="357" alt="Figure 1: The difference between encryption in transit and end-to-end encryption."/>
 
@@ -275,7 +282,8 @@ to cyberattacks, and by increasing the risk of blackmail.
 The proposed bill, as it stands now, is too vague to allow any serious technical analysis to take
 place. With regard to encryption technologies, it fails to specify what is allowed and what is not.
 But the Prime Minister's repeated assertion that we "make sure we do not allow terrorists safe
-spaces to communicate with each other" implies a worrisome weakening of security technologies.
+spaces to communicate with each other" implies a [worrisome weakening of security
+technologies][apple].
 
 Nobody wants to give criminals a safe space in which they can operate. However, the technologies
 that help protect industrial control systems, cars, medical devices, lawyers, journalists and
@@ -283,9 +291,9 @@ businesses against attacks by malicious parties are *the same* as the technologi
 criminals can hide. Any technology can be used for good and bad.
 
 It is not possible to eliminate "safe spaces" for criminals without also eliminating security from
-the computer systems that our daily lives depend on. I am worried that the Investigatory Powers
-Bill would effectively mandate computer systems to be insecure, and thus leave our infrastructure
-vulnerable to cyberattacks from people who want to do us harm. 
+the computer systems that our daily lives depend on. I am worried that the Investigatory Powers Bill
+would effectively [mandate computer systems to be insecure][mandate-insecure], and thus leave our
+infrastructure vulnerable to cyberattacks from people who want to do us harm. 
 
 According to the [government's own report][cybercrime], cybercrime is a Tier One risk to national
 security, and already costs the UK £27bn per year. This is only going to get worse if we do not
@@ -304,6 +312,8 @@ Aside from the proposed bill's disregard for civil liberties, even if we conside
 implications of the bill, it is deeply worrisome. As more technical details of the proposal become
 clear, we must carefully examine to what extent they leave us less secure than we were before.
 
+[apple]: http://www.theguardian.com/world/2015/nov/10/surveillance-bill-dire-consequences-apple-tim-cook
+[mandate-insecure]: http://www.theguardian.com/technology/2015/nov/09/tech-firms-snoopers-charter-end-strong-encryption-britain-ip-bill
 [cybercrime]: https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/60943/the-cost-of-cyber-crime-full-report.pdf
 [surveillance-benefit]: http://motherboard.vice.com/blog/youll-never-guess-how-many-terrorist-plots-the-nsas-domestic-spy-program-has-foiled
 
