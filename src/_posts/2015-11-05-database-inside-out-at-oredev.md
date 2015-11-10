@@ -6,9 +6,12 @@ place: Malmö, Sweden
 venue_url: http://oredev.org/2015/sessions/turning-the-database-inside-out-with-apache-samza
 transcript_url: /2015/03/04/turning-the-database-inside-out.html
 slides_url: https://speakerdeck.com/ept/turning-the-database-inside-out-with-apache-samza
+video_url: https://vimeo.com/144819293
 ---
 
 <script async class="speakerdeck-embed" data-id="bee4676021bf0132b11b1a9c43b4c166" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe src="https://player.vimeo.com/video/144863186" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 This was a repeat of my
 [talk at Strange Loop 2014](/2014/09/18/turning-database-inside-out-at-strange-loop.html).

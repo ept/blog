@@ -5,9 +5,12 @@ venue: Øredev
 place: Malmö, Sweden
 venue_url: http://oredev.org/2015/sessions/streams-as-the-team-interface
 slides_url: https://speakerdeck.com/ept/streams-as-the-team-interface
+video_url: https://vimeo.com/144863186
 ---
 
 <script async class="speakerdeck-embed" data-id="cd8f6b0806d746bbaeff46752622f3af" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe src="https://player.vimeo.com/video/144863186" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 Abstract
 --------
