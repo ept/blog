@@ -10,12 +10,295 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Fri, 06 Nov 2015 10:35:36 CET</lastBuildDate>
+        <lastBuildDate>Tue, 10 Nov 2015 14:50:59 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>The Investigatory Powers Bill would increase cybercrime</title>
+                <link>http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html</link>
+                <comments>http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html#disqus_thread</comments>
+                <pubDate>Tue, 10 Nov 2015 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html</guid>
+                
+                <description><![CDATA[ As widely reported, the UK government proposed the draft of a new Investigatory Powers Bill last week. There has been much discussion of the bill already, but there are some important questions which I have not yet seen addressed. These open questions raise serious concerns about the effects that the... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>As widely reported, the UK government proposed the draft of a new <a href="https://www.gov.uk/government/collections/draft-investigatory-powers-bill">Investigatory Powers
+Bill</a> last week. There has been much discussion of the bill already, but there are some
+important questions which I have not yet seen addressed.</p>
+
+<p>These open questions raise serious concerns about the effects that the proposed law would have on
+ordinary citizens. In this article I argue that if the bill is passed in its current form, its
+effect will be exactly the opposite of that intended: it would leave citizens <em>more</em> exposed to the
+risks of crime and terrorism, and not reduce those risks as intended.</p>
+
+<h2 id="background-of-the-bill">Background of the bill</h2>
+
+<p>The stated purpose of the Investigatory Powers Bill is to help fight crime and terrorism – in other
+words, to uphold the rule of law and to keep us safe from aggression. If people break the law or
+harm citizens (for example through paedophilia, murder, or acts of terrorism), our law enforcement
+services require the means to find the perpetrators and hold them responsible. This is an important
+public service: a country with ineffective law enforcement would quickly become dysfunctional. </p>
+
+<p>There is a well-known tension between the ability of law enforcement services to get the information
+they require to find and convict criminals, and the basic <a href="http://gilc.org/privacy/survey/intro.html">human right of privacy</a> for
+innocent citizens. In order to do their job, the police and the intelligence services must
+necessarily intrude on individuals’ privacy to some degree. For us as a society, it is important
+that we decide how much privacy we are collectively <a href="http://www.theguardian.com/commentisfree/2015/nov/08/surveillance-bill-snoopers-charter-george-orwell">willing to sacrifice</a> for the
+sake of helping law enforcement services do their job.</p>
+
+<p>However, this article is not about the tension between security and privacy – it is only about
+security. The Investigatory Powers Bill is supposed to increase our security by giving law
+enforcement services the tools they need to catch criminals and terrorists. I will argue that, in
+fact, the proposed bill <em>harms our security</em> by making us <em>more vulnerable</em> to attacks by criminals
+and terrorists.</p>
+
+<p>People who defend surveillance often say that a loss of privacy is <a href="http://www.theyworkforyou.com/debates/?id=2015-11-04a.969.0#g991.4">a price that many people are
+willing to pay</a> for the sake of increased safety. However, what if the surveillance
+measures actually make people <em>less</em> safe? Even if you do not care about privacy, you should be
+strongly opposed to this bill, because it vastly increases the risks of cybercrime, as explained
+below.</p>
+
+<h2 id="encrypted-communication">Encrypted communication</h2>
+
+<p>Encryption ensures that your information can only be read by the correct recipient, and not by any
+random bystander. Whenever you send information over the internet, if that information has any
+value whatsoever, it should be encrypted – otherwise anyone (e.g. people using the same coffee shop
+wifi as you) can trivially steal it. Thus, almost all websites use encryption whenever passwords,
+credit card numbers, online banking information, or similar sensitive information is involved. If we
+didn’t encrypt this information, fraud and identity theft would be rampant. Encryption is a basic
+necessity for the internet.</p>
+
+<p>However, encryption can be applied at different levels. For example, in a chat or telephony app,
+there are two options:</p>
+
+<ul>
+  <li><strong>Encryption in transit:</strong> In this case, the data is encrypted as it is transmitted between your
+device and the service provider (e.g. a mobile network operator or a social network), but the
+service provider handles the data in unencrypted form. This is illustrated in Figure 1a. In this
+case, the service provider is able to read all of the communication, and you need to trust them to
+safeguard your information appropriately.</li>
+  <li><strong>End-to-end encryption:</strong> In this case, data is encrypted all the way between you and the person
+you’re talking to. The service provider only passes on the messages, but it cannot see what you
+are talking about (Figure 1b). There may not even <em>be</em> a service provider, because anybody can
+write their own app that communicates over the internet, without requiring a centrally managed
+service (Figure 1c).</li>
+</ul>
+
+<p>If law enforcement decides to investigate you, and encryption in transit is used, that makes life
+very easy for law enforcement: they can serve a warrant to the service provider, and get them to
+wiretap your communication without you ever knowing. With end-to-end encryption, surveillance is
+still possible, but it’s more expensive: since the service provider cannot access the messages,
+a warrant to the service provider is of no use. Instead, law enforcement must go to the people
+communicating. For example, they can obtain a court order to seize your phone, or they can point
+<a href="http://www.cl.cam.ac.uk/~mgk25/pet2004-fpd.pdf">microphones and antennas</a> at your house to listen to your communications, or they
+can infiltrate the suspected gang.</p>
+
+<p><img src="/2015/11/end-to-end.png" width="550" height="357" alt="Figure 1: The difference between encryption in transit and end-to-end encryption." /></p>
+
+<p style="text-align: center;"><em>Figure 1: The difference between encryption in transit and end-to-end encryption.</em></p>
+
+<h2 id="the-value-of-end-to-end-encryption">The value of end-to-end encryption</h2>
+
+<p>Although encryption in transit is widely used, it has serious security problems. For example, the
+service provider could be hacked by an adversary, or compromised by an insider, causing sensitive
+information can be leaked. A fault in the service provider could cause data to be corrupted. For
+these reasons, security experts are pushing towards widespread use of end-to-end encryption, which
+reduces the exposure to such attacks.</p>
+
+<p>The goal of end-to-end encryption is <em>not</em> to prevent legitimate access by law enforcement in cases
+where it is justified for a criminal investigation. Rather, the goal is to defend systems against
+adversaries who want to steal sensitive data or cause systems to malfunction. Such defence is
+particularly critical in cases where human life is at stake, such as <a href="http://www.wired.com/2015/01/german-steel-mill-hack-destruction/">industrial control
+systems</a>, <a href="http://www.wired.com/2015/07/hackers-remotely-kill-jeep-highway/">internet-connected cars</a>, or <a href="http://www.slideshare.net/MarieGMoe/2015-1021keynotehacklumariemoe">medical data and devices</a>. But
+even in other domains, such as trade secrets and financial information in enterprises, in journalism
+or in legal professions, it is crucial that sensitive information is adequately protected.</p>
+
+<p>End-to-end encryption helps protect our own information against theft and manipulation by
+adversaries – ranging from an individual disgruntled employee, to hostile foreign intelligence
+services who may be spying or sabotaging for economic, political or military reasons. As more and
+more aspects of the world are <a href="http://www.wsj.com/articles/SB10001424053111903480904576512250915629460">controlled by software</a>, and as increasingly many devices
+are connected to the internet, a cyberattack against weakly secured systems could have catastrophic
+consequences.  We will need all the defences we can get, and end-to-end encryption is going to be an
+indispensable part of our security infrastructure.</p>
+
+<h2 id="exceptional-access-to-encrypted-communication">Exceptional access to encrypted communication</h2>
+
+<p>On the other hand, end-to-end encryption makes life harder for law enforcement services, because
+they cannot simply serve a warrant to the service provider in order to obtain the content of the
+communication. For this reason, politicians have recently attacked end-to-end encryption; for
+example, in a speech in January 2015, <a href="https://embed.theguardian.com/embed/video/uk-news/video/2015/jan/12/david-cameron-spy-agencies-britain-video">PM David Cameron said</a>:</p>
+
+<blockquote>
+  <p>In our country, do we want to allow a means of communication between people which, even in
+extremis, with a signed warrant from the home secretary personally, that we cannot read? […] The
+question remains: are we going to allow a means of communications where it simply is not possible
+to do that? My answer to that question is: no, we must not. The first duty of any government is to
+keep our country and our people safe.</p>
+</blockquote>
+
+<p>The proposed Investigatory Powers Bill is an attempt to cast into law this principle outlined by the
+Prime Minister. In particular, it places a duty on communications service providers to allow law
+enforcement agencies to intercept communication when served with a warrant – even if the service
+provider is outside the UK (§31). It also requires service providers to assist with hacking devices
+and removing encryption if compelled by an order from the home secretary (§189).</p>
+
+<p>The bill and related guidance notes from the government do not explain how these rules might be put
+into practice, but they have <a href="http://www.telegraph.co.uk/news/uknews/terrorism-in-the-uk/11970391/Internet-firms-to-be-banned-from-offering-out-of-reach-communications-under-new-laws.html">been interpreted</a> as requiring services with end-to-end
+encryption to have some kind of “backdoor” by which they <a href="http://www.independent.co.uk/life-style/gadgets-and-tech/news/investigatory-powers-bill-could-allow-government-to-ban-end-to-end-encryption-technology-powering-a6725311.html">can be broken</a>, if required.
+Other sources say that the government <a href="http://uk.businessinsider.com/investigatory-powers-bill-wont-ban-end-to-end-encryption-2015-11">does not wish to ban end-to-end encryption</a>,
+but in that case it is not clear what they <em>do</em> want, since the Prime Minister has reiterated his
+plea that terrorists, paedophiles and criminals must not be allowed a “safe space” online.</p>
+
+<p>Security professionals have no interest in making life easy for terrorists, paedophiles and
+criminals. However, <em>any</em> technology can be used for both good and bad purposes. The government has
+not explained which technologies would comply with the new rules, and which technologies would
+violate them – and the text of the bill itself is very vague and ambiguous.</p>
+
+<p>If the bill requires communication services to have some mechanism of obtaining the content of the
+communication in response to a warrant, that means the service must somehow retain the ability to
+decrypt the data when required. Provisions for such <em>exceptional access</em> (e.g. <a href="https://www.schneier.com/paper-key-escrow.html">key
+escrow</a> or backdoors) are normally avoided in encryption products, because they
+introduce serious security problems.</p>
+
+<h2 id="exceptional-access-is-insecure">Exceptional access is insecure</h2>
+
+<p>At first glance, it may seem reasonable to require that all encryption products must include
+a provision for data to be decrypted by law enforcement agencies, as long as the decryption order is
+protected with sufficient oversight to prevent abuse. However, on closer inspection, it turns out
+that this proposal is deeply flawed.</p>
+
+<p>The problem is laid out very clearly in <a href="http://dspace.mit.edu/handle/1721.1/97690">a recent report</a>, written by some of the biggest
+names in cryptographic research and security engineering worldwide. To quote from the report:</p>
+
+<blockquote>
+  <p>Political and law enforcement leaders in the United States and United Kingdom … propose that
+data storage and communications systems must be designed for exceptional access by law enforcement
+agencies. These proposals are unworkable in practice, raise enormous legal and ethical questions,
+and would undo progress on security at a time when Internet vulnerabilities are causing extreme
+economic harm. As computer scientists with extensive security and systems experience, we believe
+that law enforcement has failed to account for the risks inherent in exceptional access systems.</p>
+</blockquote>
+
+<p>The report lays out in <a href="http://dspace.mit.edu/handle/1721.1/97690">no uncertain terms</a>: there is no known method for securely
+providing law enforcement with exceptional access to systems with end-to-end encryption. Any method
+that provides exceptional access immediately exposes the system to attacks by malicious parties,
+rendering the protection of encryption essentially worthless.</p>
+
+<p>Exceptional access would probably require that government departments have some kind of master keys
+that allowed them to decrypt any communication if required. Those master keys would obviously have
+to be kept extremely secret: if they were to become public, the entire security infrastructure of
+the internet would crumble into dust.</p>
+
+<p>How good are government agencies at keeping secrets? Even just in the last few months, the OPM
+failed to protect <a href="http://www.theguardian.com/technology/2015/jul/09/opm-hack-21-million-personal-information-stolen">millions of their own personnel records</a> from hackers, the email
+account of <a href="http://motherboard.vice.com/read/hackers-release-alleged-ssn-numbers-stolen-from-cia-directors-aol-account">CIA Director John Brennan was hacked</a>, and the <a href="https://theintercept.com/2015/09/17/tsa-doesnt-really-care-luggage-locks-hacked/">master keys for TSA
+locks</a> were accidentally posted on the internet. The US Air Force has been accused of
+<a href="http://thebulletin.org/okinawa-missiles-october8826">accidentally broadcasting the launch codes for nuclear missiles</a> over radio in the 1960s.
+These incidents do not fill me with confidence that any government would be able to handle
+cryptographic master keys securely.</p>
+
+<p>If the law enforcement services can remotely break into the device of a suspect, then sooner or
+later criminals will find ways to use the same mechanism to break into devices and steal or destroy
+your personal data. They will know your location, and the PIN for your burglar alarm, so they will
+have an easy time breaking into your house. There is simply no technical mechanism that will allow
+legitimate access by law enforcement, and which is also unbreakable by people who want to do you
+harm.</p>
+
+<p>I’ll say it again, to be absolutely clear: <em>any</em> mechanism that can allow law enforcement legitimate
+access to data can <em>inevitably</em> be abused by hostile foreign intelligence services, and even
+technically sophisticated individuals, to break into systems and gain unauthorised access to the
+same data. There is <em>no known method</em> for making this secure. If we add provisions for exceptional
+access to encryption products, we are simply shooting ourselves in the foot.</p>
+
+<h2 id="retention-of-browsing-history">Retention of browsing history</h2>
+
+<p>Another provision of the proposed Investigatory Powers Bill is that internet service providers
+(ISPs) must retain a record of all the websites you visit (more specifically, all the IP addresses
+you connect to) for one year. This appears to be another measure to weaken privacy while
+strengthening security – but in fact, it is harmful to <em>both</em> privacy and security.</p>
+
+<p>In order to maintain a record of every website you have visited in the last year, the ISP must store
+that information somewhere accessible. Information that is stored somewhere accessible will sooner
+or later be stolen by attackers. For example, just a few weeks ago, <a href="http://www.theguardian.com/business/2015/oct/23/talktalk-hacking-crisis-deepens-as-more-details-emerge">records of millions of TalkTalk
+customers were stolen</a> due to a <a href="https://tommorris.org/posts/9396">SQL injection</a> (one of the most easily
+preventable security issues – the fact that TalkTalk was vulnerable to such a simple bug casts
+serious doubt on their competence in elementary software engineering practices). If ISPs are
+required to store your browsing history, it is only a matter of time before it is stolen.</p>
+
+<p>And stolen browsing history is a security problem. After the website <a href="http://www.theguardian.com/technology/2015/aug/19/ashley-madison-hackers-release-10gb-database-of-33m-infidelity-site-accounts">Ashley
+Madison</a> (which helps married people have an affair) was hacked, millions of its
+users found their real name, home address, email address and credit card numbers spewed all over the
+internet. It did not take long before <a href="http://www.csoonline.com/article/2980631/data-breach/blackmail-rising-from-ashley-madison-breach.html">blackmailers started using the data</a>, threatening
+users that <a href="http://www.zdnet.com/article/in-ashley-madisons-wake-heres-one-mans-story-of-sex-sorrow-and-extortion/">their spouse would be informed</a> unless a ransom was paid. Browsing history
+retained by an ISP would carry the same blackmail risk.</p>
+
+<p>The problem is not only extortion of money from the victims of blackmail, but also a security
+problem. What if someone succeeds in blackmailing employees of an intelligence agency, or senior
+civil servants, or a government official? If the victim fears for their reputation or repercussions
+from the release of the sensitive information, the attacker gains power over the victim, which is
+worrisome if the victim is in a position of power.</p>
+
+<p>Increasingly, stolen personal information is being used for <a href="https://www.schneier.com/blog/archives/2015/11/the_rise_of_pol.html">politically motivated blackmail and
+intimidation</a>. Even if you personally have never done anything embarrassing, and you have
+nothing to hide, the fact that other people can be blackmailed is a risk to you if those people have
+power over you.</p>
+
+<p>“Give me six lines written by the most honest man in the world, and I will find enough in them to
+hang him.” (Origin uncertain, attributed to <a href="https://en.wikiquote.org/wiki/Cardinal_Richelieu">Cardinal Richelieu</a>.) Or, to give a more
+modern equivalent: “We kill people based on metadata.” (Former CIA and NSA director <a href="https://www.rt.com/usa/158460-cia-director-metadata-kill-people/">Michael
+Hayden</a>.)</p>
+
+<h2 id="we-must-make-systems-more-secure-not-less">We must make systems more secure, not less</h2>
+
+<p>As <a href="https://embed.theguardian.com/embed/video/uk-news/video/2015/jan/12/david-cameron-spy-agencies-britain-video">David Cameron said</a>, “the first duty of any government is to keep our country
+and our people safe.” The proposed Investigatory Powers Bill is supposed to make us more safe by
+giving great powers to the law enforcement services. However, in this article I have argued that the
+bill would in fact make us <em>significantly less safe</em>, by making internet security systems vulnerable
+to cyberattacks, and by increasing the risk of blackmail.</p>
+
+<p>The proposed bill, as it stands now, is too vague to allow any serious technical analysis to take
+place. With regard to encryption technologies, it fails to specify what is allowed and what is not.
+But the Prime Minister’s repeated assertion that we “make sure we do not allow terrorists safe
+spaces to communicate with each other” implies a <a href="http://www.theguardian.com/world/2015/nov/10/surveillance-bill-dire-consequences-apple-tim-cook">worrisome weakening of security
+technologies</a>.</p>
+
+<p>Nobody wants to give criminals a safe space in which they can operate. However, the technologies
+that help protect industrial control systems, cars, medical devices, lawyers, journalists and
+businesses against attacks by malicious parties are <em>the same</em> as the technologies behind which
+criminals can hide. Any technology can be used for good and bad.</p>
+
+<p>It is not possible to eliminate “safe spaces” for criminals without also eliminating security from
+the computer systems that our daily lives depend on. I am worried that the Investigatory Powers Bill
+would effectively <a href="http://www.theguardian.com/technology/2015/nov/09/tech-firms-snoopers-charter-end-strong-encryption-britain-ip-bill">mandate computer systems to be insecure</a>, and thus leave our
+infrastructure vulnerable to cyberattacks from people who want to do us harm. </p>
+
+<p>According to the <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/60943/the-cost-of-cyber-crime-full-report.pdf">government’s own report</a>, cybercrime is a Tier One risk to national
+security, and already costs the UK £27bn per year. This is only going to get worse if we do not
+improve the security of our computer systems. As internet-connected devices are increasingly used
+for matters of life and death, the security of those devices becomes paramount, and breaches could
+have catastrophic consequences. We need to do everything we can to <em>strengthen</em> the security of
+those systems, not to weaken them.</p>
+
+<p>I recognise that as systems become more secure, surveillance becomes more difficult for the
+intelligence services. I acknowledge that secure communication systems may allow a terrorist plot or
+a crime to succeed which may have been thwarted if surveillance was easy for law enforcement
+services. But I argue that this risk is <a href="http://motherboard.vice.com/blog/youll-never-guess-how-many-terrorist-plots-the-nsas-domestic-spy-program-has-foiled">tiny</a> compared to the risk of an
+insecure, vulnerable infrastructure in which terrorist cyberattackers could wreak havoc.</p>
+
+<p>Aside from the proposed bill’s disregard for civil liberties, even if we consider only the security
+implications of the bill, it is deeply worrisome. As more technical details of the proposal become
+clear, we must carefully examine to what extent they leave us less secure than we were before.</p>
+
+<p><em>Thank you to Alastair Beresford and Diana Vasile for reviewing a draft of this article.</em></p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>The Recurse Center and the joy of learning</title>
@@ -4299,191 +4582,6 @@ collective outpourings of humanity. How about <a href="http://web.stanford.edu/d
 intellect</a>, which
 we’ve talked about for so long? Can we use this data to create fairer societies, better mutual
 understanding, better education, and such good things?</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Hermitage: Testing the “I” in ACID</title>
-                <link>http://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html</link>
-                <comments>http://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html#disqus_thread</comments>
-                <pubDate>Tue, 25 Nov 2014 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html</guid>
-                
-                <description><![CDATA[ tl;dr: I have created a test suite for comparing the transaction isolation levels in different databases. I did this as background research for my book. This post explains why. What is isolation? First came the NoSQL movement, with its siren call that our systems could be so scalable, so much... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>tl;dr:</em> I have created a <a href="https://github.com/ept/hermitage">test suite</a> for comparing the
-transaction isolation levels in different databases. I did this as background research for
-<a href="http://dataintensive.net/">my book</a>. This post explains why.</p>
-
-<h2 id="what-is-isolation">What is isolation?</h2>
-
-<p>First came the NoSQL movement, with its siren call that our systems could be so scalable, so much
-faster and so highly available if we just abandon ACID transactions and make our systems
-<a href="http://queue.acm.org/detail.cfm?id=1394128">BASE</a> instead.</p>
-
-<p>Then came the concurrency bugs — for example, the Bitcoin exchange that was
-<a href="https://bitcointalk.org/index.php?topic=499580">almost bankrupted</a> because it had a race condition
-on outgoing payments. (An attacker circumvented the account balance check by making many concurrent
-transactions, and thus was able withdraw more money than they had in their account. And this
-<a href="http://www.reddit.com/r/Bitcoin/comments/1wtbiu/how_i_stole_roughly_100_btc_from_an_exchange_and/">wasn’t even</a>
-the only case.)</p>
-
-<p>Internet commenters, in their infinite wisdom, were quick to point out that if you’re dealing with
-money, you had <a href="https://twitter.com/kellabyte/status/452982674626711552">better use an ACID database</a>.
-But there was a major flaw in their argument. Most so-called ACID databases — for example Postgres,
-MySQL, Oracle or MS SQL Server — would <em>not</em> have prevented this race condition in their default
-configuration.</p>
-
-<p>Yes, you read that right. Those databases — the ones that have probably processed the vast majority
-of commercial transactions over the last 20 years — do not by default guarantee that your
-transactions are protected from race conditions. Let me explain.</p>
-
-<h2 id="the-story-of-weak-isolation">The story of weak isolation</h2>
-
-<p>Among the ACID properties, the letter I stands for <em>isolation</em>. The idea of isolation is that we
-want our database to be able to process several transactions at the same time (otherwise it would be
-terribly slow), but we don’t want to have to worry about concurrency (because it’s terribly
-complicated). In an ideal world, the database could guarantee that transactions behave as if they
-executed without any concurrency, one after another, <em>serially</em> — in other words, they are
-<em>serializable</em>.</p>
-
-<p>Unfortunately, most implementations of serializability have quite bad performance. The team working
-on the first SQL database (<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.84.348&amp;rep=rep1&amp;type=pdf">System R</a>)
-already <a href="http://citeseer.ist.psu.edu/viewdoc/download?doi=10.1.1.92.8248&amp;rep=rep1&amp;type=pdf">realised this in 1975</a>,
-and decided to offer weaker isolation levels than serializability. Those isolation levels would not
-quite prevent all race conditions, but they had much better performance, so it was considered an
-acceptable trade-off. That research group made up some names for those weak isolation levels
-(“repeatable read”, “read committed”, and “read uncommitted”). 39 years later, some implementation
-details have changed, but on the whole isolation levels still look
-<a href="http://www.bailis.org/blog/when-is-acid-acid-rarely/">remarkably similar</a> to System R.</p>
-
-<p>The problem, however, is this: in order to understand what those isolation levels mean, you pretty
-much have to understand how the database implements concurrency control internally. The levels
-basically have no intuitive meaning, because they are an incredibly
-<a href="http://www.joelonsoftware.com/articles/LeakyAbstractions.html">leaky abstraction</a> — they are
-defined by implementation detail, not because someone thought they’d make a great API. And that’s
-also why they are so hard to understand.</p>
-
-<h2 id="understanding-weak-isolation">Understanding weak isolation</h2>
-
-<p>Here’s a challenge for you: can you find any colleague in your organisation who can explain — off
-the cuff and without looking at the docs — the difference between “repeatable read” and “read
-committed”, including an example situation in which they behave differently? And what about the
-difference between “repeatable read”, “snapshot isolation” and “serializable”?</p>
-
-<p>If you can find such a person, I bet they worked on database systems previously. I can’t imagine
-there are many application developers who really understand isolation levels, because they are so
-confusing. Application developers are smart, but they have more important things to worry about
-than obscure implementation details of databases.</p>
-
-<p>That’s a big problem. The isolation level is part of the database’s API. It’s just as important as
-the data model. People have
-<a href="http://www.sarahmei.com/blog/2013/11/11/why-you-should-never-use-mongodb/">endless debates</a> about
-relational vs. document vs. other data models, but I’ve never overheard a heated debate about
-isolation levels — only seen slightly embarrassed smirks signifying “I really ought to know more
-about this, but I don’t”.</p>
-
-<p>If you don’t understand the concurrency guarantees, you have no idea whether your code will still
-behave correctly when processing a few simultaneous requests. You can’t easily write unit tests for
-concurrency, either. How do you know your code is correct?</p>
-
-<h2 id="a-rigorous-system-for-comparing-isolation-levels">A rigorous system for comparing isolation levels</h2>
-
-<p>Fortunately, some academic researchers have been on the case, creating formal models of isolation
-levels and proving some of their properties. For example, <a href="http://www.bailis.org/">Peter Bailis</a> et
-al. at <a href="http://db.cs.berkeley.edu/">Berkeley</a> have been doing some
-<a href="http://www.bailis.org/blog/understanding-weak-isolation-is-a-serious-problem/">good work</a> in this
-area. It’s not yet easy to understand, but at least it’s logically sound. </p>
-
-<p><img src="/2014/11/isolation-levels.png" width="550" alt="Hierarchy of isolation levels" /></p>
-
-<p>You may have seen this diagram from their <a href="http://arxiv.org/pdf/1302.0309.pdf">VLDB paper</a>, which
-shows the relative strength of different isolation levels, and also relates them to availability (as
-per the <a href="http://henryr.github.io/cap-faq/">CAP theorem</a>). It has also appeared in <a href="http://aphyr.com/">Kyle Kingsbury</a>’s
-“<a href="https://www.youtube.com/watch?v=QdkS6ZjeR7Q">Linearizable Boogaloo</a>” talk (around 8:30). In this
-diagram, 1SR = serializability, RR = repeatable read, SI = snapshot isolation, RC = read committed.</p>
-
-<p>Unfortunately, even though terms like <em>repeatable read</em> sound like they should be standardised (and
-indeed they are defined in the ANSI SQL standard), in practice different databases interpret them
-differently. One database’s <em>repeatable read</em> guarantees things that another doesn’t. Not only are
-the names of the isolation levels confusing, they are also inconsistent.</p>
-
-<p>If you read the documentation of a database, the description of the isolation levels tends to be
-quite vague. How do you know what guarantees your application actually needs, and thus which
-isolation level you should use? How do you learn to look at a piece of code and say “this won’t be
-safe to run at <em>read committed</em>, it’ll need at least <em>repeatable read</em>”? Even better, could we write
-automated tests or type checkers which fail if we write code that is not concurrency-safe?</p>
-
-<p>If we want any hope of reasoning about concurrency safety, we first need to understand exactly which
-guarantees existing databases do and don’t provide. We need to express those guarantees in terms of
-precisely defined, testable properties (not vague English sentences in the documentation). Research
-on isolation has produced those precise definitions, but as far as I know they so far haven’t been
-systematically tested on actual database implementations.</p>
-
-<h2 id="introducing-hermitage">Introducing Hermitage</h2>
-
-<p><a href="https://github.com/ept/hermitage">Hermitage</a> is a small project that I started to address this. It
-is a test suite for databases which probes for a variety of concurrency issues, and thus allows
-a fair and accurate comparison of isolation levels. Each test case simulates a particular kind of
-race condition that can happen when two or more transactions concurrently access the same data. Each
-test can pass (if the database’s implementation of isolation prevents the race condition from
-occurring) or fail (if the race condition does occur).</p>
-
-<p>The tests are fairly direct translations of the anomalies described in research papers. The
-properties that they check have quite obscure names (such as Predicate-Many-Preceders) and
-abbreviations (such as P4), but rather than inventing even more terminology I thought I’d rather
-stick with the terms in the literature.</p>
-
-<p>So far I have ported and run this test suite on four relational databases: PostgreSQL, MySQL, Oracle
-DB and Microsoft SQL Server. But it’s not limited to old-school relational databases: in fact, it
-would be very interesting to run it with some of the recent “NewSQL” databases that
-<a href="https://foundationdb.com/acid-claims">claim to support ACID transactions</a>. The whole point of this
-test suite is that it allows an exact comparison not just between isolation levels within one
-database, but across different databases.</p>
-
-<p>For the details please <a href="https://github.com/ept/hermitage">check out the repository</a>. To mention
-just a few highlights:</p>
-
-<ul>
-  <li>PostgreSQL, MySQL and MS SQL Server all boast an isolation level called “repeatable read”, but
-it means something different in every one of them. Yay for standards.</li>
-  <li>On the other hand, “read committed” has the same safety properties in all databases I’ve tested.</li>
-  <li>Oracle “serializable” is actually not serializable at all, but snapshot isolation. (This has been
-<a href="http://www.researchgate.net/publication/220225203_Making_snapshot_isolation_serializable/file/e0b49520567eace81f.pdf">documented</a>
-<a href="http://www.bailis.org/papers/hat-hotos2013.pdf">previously</a>.)</li>
-  <li>SQL Server’s lock-based isolation modes (the default) are remarkably similar to System R in 1975,
-which seems pretty terrible to me. If you use SQL Server in production, I’d be interested to hear
-whether you’ve configured it to use MVCC instead (allow_snapshot_isolation on, and/or
-read_committed_snapshot on).</li>
-</ul>
-
-<h2 id="why">Why?</h2>
-
-<p>In the book I’m writing (<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>) I’m
-determined to explain transaction isolation in a way that we can all understand. But in order to
-write that chapter, I first had to understand isolation levels myself. </p>
-
-<p>So Hermitage was primarily background research for the book, allowing me to write an
-easy-to-understand but <em>accurate</em> description of what databases do in practice. If you find
-Hermitage incredibly confusing, don’t worry: the book doesn’t go into all the detail of G1b, PMP,
-P4 and G2-item. I first had to make it complicated for myself so that I could make it simple
-(but accurate) for readers.</p>
-
-<p>However, going beyond this book, I’m hoping that this little project can encourage others to
-explore how application developers interact with isolation. Simply cataloguing what databases
-actually do, using test cases rather than vague langauge, is a step forward.</p>
-
-<p>And perhaps some enterprising researcher could take this further. For example, perhaps it’s
-possible to create a type system for transactions, which would allow
-<a href="http://www.vldb.org/conf/2007/papers/industrial/p1263-jorwekar.pdf">static analysis</a> of an
-application to verify that it doesn’t contain concurrency bugs when run at a particular isolation
-level. I don’t know enough about type systems to know whether that’s even possible – but if yes, it
-could potentially cut out a whole class of bugs that are very hard to find through testing.</p>
-
-<p><em>Thank you to Peter Bailis and his collaborators for feedback on a draft of this post.</em></p>
 
                 ]]></content:encoded>
             </item>
