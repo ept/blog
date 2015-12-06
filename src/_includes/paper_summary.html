@@ -1,0 +1,6 @@
+<li>
+    {{ include.paper.authors }}:
+    “<a href="{{ include.paper.url }}">{{ include.paper.title }}</a>”.
+    {{ include.paper.venue }},
+    {{ include.paper.date | date: '%B %Y' }}.
+</li>

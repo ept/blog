@@ -24,6 +24,7 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
 
 {% assign articles = site.posts | where:'layout','ync-post' %}
 {% assign talks    = site.posts | where:'layout','talk'     %}
+{% assign papers   = site.posts | where:'layout','paper'    %}
 
 <h2 class="title">Recent posts</h2>
 <p>Things I have written recently.</p>
@@ -51,4 +52,12 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
     {% include talk_summary.html talk=talk %}
   {% endfor %}
   <li><a href="/talks.html">Full archive</a></li>
+</ul>
+
+<h2 class="title">Publications</h2>
+<p>Academic papers and reports.</p>
+<ul>
+  {% for paper in papers limit:5 %}
+    {% include paper_summary.html paper=paper %}
+  {% endfor %}
 </ul>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{{ page.title }} &mdash; Martin Kleppmann&rsquo;s talks</title>
+    {% include headers.html %}
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        {% include header.html %}
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="{{ page.title }}"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>{{ page.title }}</h1>
+
+                <p>{{ page.authors }}</p>
+
+                <p>
+                  {% if page.venue_url %}
+                    <a href="{{ page.venue_url }}">{{ page.venue }}</a>,
+                  {% else %}
+                    {{ page.venue }},
+                  {% endif %}
+                  {% if page.place %}
+                    {{ page.place }},
+                  {% endif %}
+                  {{ page.date | date: '%B %Y' }}.
+                </p>
+
+                <ul>
+                  {% if page.paper_url %}
+                    <li><a href="{{ page.paper_url }}">Paper</a></li>
+                  {% endif %}
+                  {% if page.transcript_url %}
+                    <li><a href="{{ page.transcript_url }}">Transcript</a></li>
+                  {% endif %}
+                  {% if page.slides_url %}
+                    <li><a href="{{ page.slides_url }}">Slides</a></li>
+                  {% endif %}
+                  {% if page.video_url %}
+                    <li><a href="{{ page.video_url }}">Video</a></li>
+                  {% endif %}
+                  {% if page.lanyrd_url %}
+                    <li><a href="{{ page.lanyrd_url }}">Lanyrd</a></li>
+                  {% endif %}
+                </ul>
+
+                {{ content }}
+            </div>
+
+            <div id="sidebar">
+                {% include sidebar_top.html %}
+                {% include sidebar_index.html %}
+            </div>
+        </div>
+
+        {% include footer.html %}
+    </div>
+
+    {% include analytics.html %}
+</body>
+</html>
