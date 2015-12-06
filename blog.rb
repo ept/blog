@@ -6,7 +6,8 @@ SHORTLINKS = {
   strata: '/2015/05/06/data-agility-at-strata.html',
   bbuzz:  '/2015/06/02/change-capture-at-berlin-buzzwords.html',
   pwl:    '/2015/07/08/attiya-welch-at-papers-we-love.html',
-  unix:   'http://hubs.ly/H0125_b0'
+  unix:   'http://hubs.ly/H0125_b0',
+  pass15: '/2015/12/08/preventing-key-theft-at-passwords15.html'
 }
 
 require 'rubygems'
