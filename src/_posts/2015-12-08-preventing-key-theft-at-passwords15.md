@@ -6,7 +6,10 @@ venue: 9th International Conference on Passwords (Passwords15)
 place: Cambridge, UK
 venue_url: http://www.cl.cam.ac.uk/events/passwords2015/
 paper_url: /papers/mrsa-pass15.pdf
+slides_url: https://speakerdeck.com/ept/strengthening-public-key-authentication-against-key-theft
 ---
+
+<script async class="speakerdeck-embed" data-id="2e56aa7d1efa466fb4893ea18b2ed6ca" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
