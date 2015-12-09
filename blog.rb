@@ -30,7 +30,8 @@ get '/' do
   send_file 'static/index.html'
 end
 
-# static files route (reimplemented outside of Sinatra to make host-dependent redirect work)
+# Static files route (reimplemented outside of Sinatra to make host-dependent redirect work)
+# Note this code is not used when using `jekyll serve`, only when running through Rack!
 get(/.*[^\/]$/) do
   public_dir = File.expand_path('static')
   path = File.expand_path(public_dir + unescape(request.path_info))
