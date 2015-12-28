@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>My year 2015 in review &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="My year 2015 in review"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>My year 2015 in review</h1>
+
+                <p>I’ve had a pretty busy and interesting year 2015. Inspired by
+<a href="http://caitiem.com/2015/12/26/2015-a-year-in-review/">Caitie McCaffrey</a> and
+<a href="http://jvns.ca/blog/2015/12/26/2015-year-in-review/">Julia Evans</a>,
+who recently wrote up reflections on their past year, I will try the same.</p>
+
+<p>A lot of my work this year has been to write and speak in public about technical topics, and I am
+fortunate to have received a very positive response. Judging from what people have told me, both
+online and in person, it seems that my ideas have been useful for people in designing their
+software. This is very gratifying: although I find these topics interesting and useful (and hence
+I wanted to talk about them), that doesn’t guarantee that other people will find them useful too.</p>
+
+<h2 id="public-speaking">Public speaking</h2>
+
+<p>I gave approximately 25 talks and lectures over the course of the year (I’m losing track of how many
+I did exactly). Many of these were at major software engineering and data conferences in the UK, US,
+Germany, Belgium, Sweden and Hungary, including
+<a href="/2015/09/26/transactions-at-strange-loop.html">Strange Loop</a>,
+<a href="/2015/11/04/transactions-at-code-mesh.html">Code Mesh</a>,
+<a href="/2015/04/24/logs-for-data-infrastructure-at-craft.html">Craft</a>,
+<a href="/2015/10/30/stream-processing-patterns-at-crunch.html">Crunch</a>,
+<a href="/2015/06/02/change-capture-at-berlin-buzzwords.html">Berlin Buzzwords</a>,
+<a href="/2015/11/13/change-data-capture-at-all-your-base.html">All Your Base</a>,
+<a href="/2015/11/06/streams-as-team-interface-at-oredev.html">Øredev</a>,
+<a href="/2015/09/30/data-liberation-with-kafka-at-strata.html">Strata New York</a> and
+<a href="/2015/05/06/data-agility-at-strata.html">Strata London</a>.  A few were at internal events at various
+organisations. See my <a href="/talks.html">talks archive</a> for the list of talks, and my
+<a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx">YouTube playlist</a> for
+the selection of talk recordings that made it onto YouTube.</p>
+
+<p>Fairly few of those talks were verbatim repeats – I count at least 17 distinct talks over the
+course of the year. Some of the talks shared material, of course (I don’t have anywhere near enough
+new ideas to produce 17 entirely non-overlapping talks), but I like to think that there was at least
+a nugget of something new and interesting in every one. I would get bored if I kept giving the same
+talk over and over again, and it’s not much fun to listen to a speaker who’s bored of their own
+talk!</p>
+
+<p>Preparing all those talks and travelling to the various conferences has been quite time-consuming
+and tiring. Thus, even though it has been a great experience, and I have enjoyed many great
+conversations with people at those conferences, I will be reducing my conference activity to a more
+sustainable level next year.</p>
+
+<h2 id="book-writing">Book writing</h2>
+
+<p>In 2015, we released chapters 4, 7 and 8 of my work-in-progress book,
+<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>, as early release. This means
+that two thirds of the planned 12 chapters are now available. However, work on chapter 9 has been
+painfully slow, and I am painfully aware that it has now been over 6 months since we last released
+a chapter.</p>
+
+<p>The reason for the delay is twofold: I was too distracted by giving lots of talks, and the topic of
+chapter 9 (consistency and consensus) is really hard. I wanted to make sure I really understood the
+topic all the way to the core, with no niggling uncertanties or doubts, and so I spent a huge amount
+of time researching the topic, reading many papers, and challenging myself to find intuitive and
+correct explanations for things.</p>
+
+<p>Frankly, so much nonsense has been written about the topic of distributed consistency that it has
+been a bit of a challenge to find good source material. But the good news is that I think I have got
+it figured out now, and making good headway with writing it up, so the release of chapter 9 should
+not be too far away. And then the following chapters will be much easier, since they will cover more
+straightfoward topics.</p>
+
+<p>And by scaling back my speaking activity next year, I hope to get the rest of the book out quickly.</p>
+
+<h2 id="new-job">New job</h2>
+
+<p>After leaving LinkedIn in 2014, I took a 14-month sabbatical/funemployment to focus full-time on
+book writing, speaking, blogging and open source. Since October 2015, I am once again employed,
+namely as a postdoc on a research project at the
+<a href="http://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>.</p>
+
+<p>The fact that I got a postdoc position may be surprising, since I actually don’t have a PhD.
+However, the university was happy to regard my industrial experience as “equivalent to a PhD”,
+whatever that means. Thumbs up to them for recognising my degree from the School of Hard Knocks.</p>
+
+<p>So far I’m really enjoying being in academia, and the research project I’m on is super interesting.
+I’ll be blogging and talking about it lots more in future, but for now I’ll just say this: my area
+of focus is moving away from stream processing, and towards information security. There are big and
+important problems to be solved at the intersection of data systems, distributed systems, infosec
+and cryptography. Watch this space!</p>
+
+<h2 id="non-book-writing">Non-book writing</h2>
+
+<p>As a way of procrastinating from book-writing, I published three research papers in 2015, in three
+different areas of computer science (namely distributed systems, cryptographic protocols, and data
+management):</p>
+
+<ul>
+  <li>“<a href="http://arxiv.org/abs/1509.05393">A Critique of the CAP Theorem</a>” explains in detail why I think
+the CAP theorem is terrible, and why we should all stop quoting it. In this paper I catalogue
+various common misunderstandings and ambiguities, prove a more precisely formulated theorem, and
+suggest a saner alternative to CAP.</li>
+  <li>“<a href="/papers/mrsa-pass15.pdf">Strengthening public key authentication against key theft</a>” (with
+<a href="http://cirw.in/">Conrad Irwin</a>) describes a cryptographic authentication protocol that is
+somewhat robust against someone stealing your private key. We presented this paper at the
+<a href="/2015/12/08/preventing-key-theft-at-passwords15.html">9th International Conference on Passwords</a>.</li>
+  <li>“<a href="/papers/kafka-debull15.pdf">Kafka, Samza and the Unix philosophy of distributed data</a>” (with
+<a href="https://twitter.com/jaykreps">Jay Kreps</a>) describes the design philosophy of Apache Kafka and
+stream processing framework Apache Samza by analogy to Unix pipes. This article is a refined
+version of my <a href="/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html">prior blog post</a>
+on the topic. It was invited to appear in the December 2015 issue of the
+<a href="http://sites.computer.org/debull/bull_issues.html">IEEE Data Engineering Bulletin</a>.</li>
+</ul>
+
+<p>I also wrote up transcripts of several of my conference talks as oversized blog posts:</p>
+
+<ul>
+  <li><a href="/2015/01/29/stream-processing-event-sourcing-reactive-cep.html">Stream processing, Event sourcing, Reactive, CEP… and making sense of it all</a></li>
+  <li><a href="/2015/03/04/turning-the-database-inside-out.html">Turning the database inside-out with Apache Samza</a></li>
+  <li><a href="/2015/04/13/real-time-full-text-search-luwak-samza.html">Real-time full-text search with Luwak and Samza</a></li>
+  <li><a href="/2015/04/23/bottled-water-real-time-postgresql-kafka.html">Bottled Water: Real-time integration of PostgreSQL and Kafka</a></li>
+  <li><a href="/2015/05/27/logs-for-data-infrastructure.html">Using logs to build a solid data infrastructure (or: why dual writes are a bad idea)</a></li>
+  <li><a href="/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html">Kafka, Samza, and the Unix philosophy of distributed data</a></li>
+</ul>
+
+<p>An edited and updated version of those blog posts is planned to be published as a report by O’Reilly
+in 2016. Complete with hand-drawn slides, of course.</p>
+
+<p>Besides those transcripts, I published a few blog posts on topics other than stream processing:</p>
+
+<ul>
+  <li><a href="/2015/05/11/please-stop-calling-databases-cp-or-ap.html">Please stop calling databases CP or AP</a>
+was a precursor to my <a href="http://arxiv.org/abs/1509.05393">CAP theorem paper</a>. It was a bit
+contentious, but I stand by my point that the CP/AP categorisation is more confusing than helpful.</li>
+  <li><a href="/2015/10/11/recurse-center-joy-of-learning.html">The Recurse Center and the joy of learning</a>
+describes my experience of spending two weeks as a resident at the
+<a href="https://www.recurse.com/">Recurse Center</a>, an educational retreat for programmers in NYC.</li>
+  <li><a href="/2015/11/10/investigatory-powers-bill.html">The Investigatory Powers Bill would increase cybercrime</a> –
+see politics section below. Apologies for the “cyber”, but I decided it was important to speak the
+language of my target audience.</li>
+</ul>
+
+<h2 id="interviews">Interviews</h2>
+
+<ul>
+  <li>Werner Schuster <a href="http://www.infoq.com/interviews/kleppmann-data-infrastructure-logs-crdt">interviewed me for InfoQ</a>
+about my <a href="/2015/05/27/logs-for-data-infrastructure.html">talk at Craft</a>, and about the future of
+data systems design.</li>
+  <li>Jim Brikman interviewed me for his book “<a href="http://www.hello-startup.net/">Hello, Startup</a>”
+regarding the pros and cons of startup life.</li>
+  <li>PwC Technology Forecast used some quotes from me in their report on “<a href="http://www.pwc.com/us/en/technology-forecast/2015/remapping-database-landscape/immutable-data-stores--rise.html">Remapping the database landscape: 
+the rise of immutable data stores</a>”.</li>
+  <li>The September 2015 issue of <a href="http://www.linuxjournal.com/">Linux Journal</a> republished some of my
+older work on <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">SSH private key encryption</a>.</li>
+</ul>
+
+<h2 id="politics">Politics</h2>
+
+<p>The UK government has been pursuing some disastrous information security policies. I have
+participated in the political process by adding a technical voice to the debate:</p>
+
+<ul>
+  <li>Early in 2015, I warned members of the House of Lords about the draft
+<a href="https://en.wikipedia.org/wiki/Draft_Communications_Data_Bill">Communications Data Bill</a>
+(“Snoopers’ Charter”), which was eventually withdrawn. However, an even worse proposal called the
+<a href="https://en.wikipedia.org/wiki/Draft_Investigatory_Powers_Bill">Investigatory Powers Bill</a>
+was introduced in November 2015, about which I contacted my MP.</li>
+  <li>I wrote a <a href="/2015/11/10/investigatory-powers-bill.html">blog post</a> explaining why you should be
+worried about the Investigatory Powers Bill even if you don’t care about privacy, and you are
+happy with government services scanning all your communication. In a nutshell: the bill
+mandates backdoors and security holes in software. It is a bad idea to make systems insecure by
+design.</li>
+  <li>I submitted <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/science-and-technology-committee/investigatory-powers-bill-technology-issues/written/25146.html">written evidence</a>
+to the <a href="http://www.parliament.uk/business/committees/committees-a-z/commons-select/science-and-technology-committee/inquiries/parliament-2015/investigatory-powers-bill-technology-issues-inquiry-launch-15-16/publications/">House of Commons Science and Technology Committee</a>,
+explaining the problems I see with the draft Investigatory Powers Bill.</li>
+  <li>I also submitted written evidence to the <a href="http://www.parliament.uk/documents/joint-committees/draft-investigatory-powers-bill/ipb-call-for-evidence.pdf">House of Commons and House of Lords joint committee on the draft
+Investigatory Powers Bill</a>
+(not yet published).</li>
+</ul>
+
+<p>The debate is still ongoing, but I hope the warnings from computer scientists and software
+developers will be heard.</p>
+
+<h2 id="open-source">Open Source</h2>
+
+<p>This year I released <a href="https://github.com/confluentinc/bottledwater-pg">Bottled Water</a>, a tool for
+Postgres that captures all the data written to a database, and replicates it to Kafka for use in
+other systems (e.g. building search indexes or maintaining caches). Lots of people have started
+playing with Bottled Water, and I have received several good pull requests and bug reports.</p>
+
+<p>Bottled Water is still a very early-stage project, but I am optimistic about it. I plan to integrate
+it with the new <a href="http://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect">Kafka Connect</a>
+framework (pull requests welcome!), which will make it easier to deploy. Similar ideas have also been
+popping up for other databases, for example
+<a href="https://developer.zendesk.com/blog/introducing-maxwell-a-mysql-to-kafka-binlog-processor">Maxwell for MySQL</a>.</p>
+
+<p>Besides Bottled Water, I have made some small open source contributions to
+<a href="http://avro.apache.org/">Apache Avro</a> and a few other projects. My
+<a href="https://github.com/ept/warc-hadoop">WARC library</a> is now
+<a href="https://issues.apache.org/jira/browse/NUTCH-2102">used in Apache Nutch</a>.
+There are probably some more things that I have forgotten.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Another year has passed, and it’s easy to forget everything one has done. So I find it motivating
+to write down the major things that have happened, and see that actually it was quite a lot.</p>
+
+<p>If anything, I have spread myself too thin, trying to do too many different things. Certainly my
+progress with the book has not been as fast as I (or my editor!) would have liked. I am honoured
+that so many conferences want me to speak, but unfortunately I will have to dial down my number of
+talks, otherwise I’ll never get the book finished.</p>
+
+<p>Thank you to <a href="http://confluent.io/">Confluent</a>, who sponsored a lot of my work in the last year on
+a freelance basis. Thank you also to all the great people I’ve met, who have shared their ideas and
+helped me understand things. Happy new year!</p>
+
+
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>,
+        is available in early release from O’Reilly.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>,
+        working at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>28 Dec 2015: <a href="/2015/12/28/year-2015-review.html">My year 2015 in review</a></li>
+            
+              <li>10 Nov 2015: <a href="/2015/11/10/investigatory-powers-bill.html">The Investigatory Powers Bill would increase cybercrime</a></li>
+            
+              <li>11 Oct 2015: <a href="/2015/10/11/recurse-center-joy-of-learning.html">The Recurse Center and the joy of learning</a></li>
+            
+              <li>05 Aug 2015: <a href="/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html">Kafka, Samza, and the Unix philosophy of distributed data</a></li>
+            
+              <li>27 May 2015: <a href="/2015/05/27/logs-for-data-infrastructure.html">Using logs to build a solid data infrastructure (or: why dual writes are a bad idea)</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2016/01/29/event-sourcing-stream-processing-at-ddd-europe.html">29 Jan 2016 at Domain Driven Design Europe</a></li>
+            
+              <li><a href="/2015/11/13/change-data-capture-at-all-your-base.html">13 Nov 2015 at All Your Base</a></li>
+            
+              <li><a href="/2015/11/06/streams-as-team-interface-at-oredev.html">06 Nov 2015 at Øredev</a></li>
+            
+              <li><a href="/2015/11/05/database-inside-out-at-oredev.html">05 Nov 2015 at Øredev</a></li>
+            
+              <li><a href="/2015/11/04/transactions-at-code-mesh.html">04 Nov 2015 at Code Mesh</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+<img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2015/12/28/year-2015-review.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Google Analytics -->
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+<!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

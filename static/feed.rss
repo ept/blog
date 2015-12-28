@@ -10,12 +10,231 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description>Entrepreneurship, web technology and the user experience</description>
-        <lastBuildDate>Wed, 09 Dec 2015 09:29:06 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 28 Dec 2015 20:39:51 CET</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>My year 2015 in review</title>
+                <link>http://martin.kleppmann.com/2015/12/28/year-2015-review.html</link>
+                <comments>http://martin.kleppmann.com/2015/12/28/year-2015-review.html#disqus_thread</comments>
+                <pubDate>Mon, 28 Dec 2015 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/12/28/year-2015-review.html</guid>
+                
+                <description><![CDATA[ I’ve had a pretty busy and interesting year 2015. Inspired by Caitie McCaffrey and Julia Evans, who recently wrote up reflections on their past year, I will try the same. A lot of my work this year has been to write and speak in public about technical topics, and I... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>I’ve had a pretty busy and interesting year 2015. Inspired by
+<a href="http://caitiem.com/2015/12/26/2015-a-year-in-review/">Caitie McCaffrey</a> and
+<a href="http://jvns.ca/blog/2015/12/26/2015-year-in-review/">Julia Evans</a>,
+who recently wrote up reflections on their past year, I will try the same.</p>
+
+<p>A lot of my work this year has been to write and speak in public about technical topics, and I am
+fortunate to have received a very positive response. Judging from what people have told me, both
+online and in person, it seems that my ideas have been useful for people in designing their
+software. This is very gratifying: although I find these topics interesting and useful (and hence
+I wanted to talk about them), that doesn’t guarantee that other people will find them useful too.</p>
+
+<h2 id="public-speaking">Public speaking</h2>
+
+<p>I gave approximately 25 talks and lectures over the course of the year (I’m losing track of how many
+I did exactly). Many of these were at major software engineering and data conferences in the UK, US,
+Germany, Belgium, Sweden and Hungary, including
+<a href="/2015/09/26/transactions-at-strange-loop.html">Strange Loop</a>,
+<a href="/2015/11/04/transactions-at-code-mesh.html">Code Mesh</a>,
+<a href="/2015/04/24/logs-for-data-infrastructure-at-craft.html">Craft</a>,
+<a href="/2015/10/30/stream-processing-patterns-at-crunch.html">Crunch</a>,
+<a href="/2015/06/02/change-capture-at-berlin-buzzwords.html">Berlin Buzzwords</a>,
+<a href="/2015/11/13/change-data-capture-at-all-your-base.html">All Your Base</a>,
+<a href="/2015/11/06/streams-as-team-interface-at-oredev.html">Øredev</a>,
+<a href="/2015/09/30/data-liberation-with-kafka-at-strata.html">Strata New York</a> and
+<a href="/2015/05/06/data-agility-at-strata.html">Strata London</a>.  A few were at internal events at various
+organisations. See my <a href="/talks.html">talks archive</a> for the list of talks, and my
+<a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx">YouTube playlist</a> for
+the selection of talk recordings that made it onto YouTube.</p>
+
+<p>Fairly few of those talks were verbatim repeats – I count at least 17 distinct talks over the
+course of the year. Some of the talks shared material, of course (I don’t have anywhere near enough
+new ideas to produce 17 entirely non-overlapping talks), but I like to think that there was at least
+a nugget of something new and interesting in every one. I would get bored if I kept giving the same
+talk over and over again, and it’s not much fun to listen to a speaker who’s bored of their own
+talk!</p>
+
+<p>Preparing all those talks and travelling to the various conferences has been quite time-consuming
+and tiring. Thus, even though it has been a great experience, and I have enjoyed many great
+conversations with people at those conferences, I will be reducing my conference activity to a more
+sustainable level next year.</p>
+
+<h2 id="book-writing">Book writing</h2>
+
+<p>In 2015, we released chapters 4, 7 and 8 of my work-in-progress book,
+<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>, as early release. This means
+that two thirds of the planned 12 chapters are now available. However, work on chapter 9 has been
+painfully slow, and I am painfully aware that it has now been over 6 months since we last released
+a chapter.</p>
+
+<p>The reason for the delay is twofold: I was too distracted by giving lots of talks, and the topic of
+chapter 9 (consistency and consensus) is really hard. I wanted to make sure I really understood the
+topic all the way to the core, with no niggling uncertanties or doubts, and so I spent a huge amount
+of time researching the topic, reading many papers, and challenging myself to find intuitive and
+correct explanations for things.</p>
+
+<p>Frankly, so much nonsense has been written about the topic of distributed consistency that it has
+been a bit of a challenge to find good source material. But the good news is that I think I have got
+it figured out now, and making good headway with writing it up, so the release of chapter 9 should
+not be too far away. And then the following chapters will be much easier, since they will cover more
+straightfoward topics.</p>
+
+<p>And by scaling back my speaking activity next year, I hope to get the rest of the book out quickly.</p>
+
+<h2 id="new-job">New job</h2>
+
+<p>After leaving LinkedIn in 2014, I took a 14-month sabbatical/funemployment to focus full-time on
+book writing, speaking, blogging and open source. Since October 2015, I am once again employed,
+namely as a postdoc on a research project at the
+<a href="http://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>.</p>
+
+<p>The fact that I got a postdoc position may be surprising, since I actually don’t have a PhD.
+However, the university was happy to regard my industrial experience as “equivalent to a PhD”,
+whatever that means. Thumbs up to them for recognising my degree from the School of Hard Knocks.</p>
+
+<p>So far I’m really enjoying being in academia, and the research project I’m on is super interesting.
+I’ll be blogging and talking about it lots more in future, but for now I’ll just say this: my area
+of focus is moving away from stream processing, and towards information security. There are big and
+important problems to be solved at the intersection of data systems, distributed systems, infosec
+and cryptography. Watch this space!</p>
+
+<h2 id="non-book-writing">Non-book writing</h2>
+
+<p>As a way of procrastinating from book-writing, I published three research papers in 2015, in three
+different areas of computer science (namely distributed systems, cryptographic protocols, and data
+management):</p>
+
+<ul>
+  <li>“<a href="http://arxiv.org/abs/1509.05393">A Critique of the CAP Theorem</a>” explains in detail why I think
+the CAP theorem is terrible, and why we should all stop quoting it. In this paper I catalogue
+various common misunderstandings and ambiguities, prove a more precisely formulated theorem, and
+suggest a saner alternative to CAP.</li>
+  <li>“<a href="/papers/mrsa-pass15.pdf">Strengthening public key authentication against key theft</a>” (with
+<a href="http://cirw.in/">Conrad Irwin</a>) describes a cryptographic authentication protocol that is
+somewhat robust against someone stealing your private key. We presented this paper at the
+<a href="/2015/12/08/preventing-key-theft-at-passwords15.html">9th International Conference on Passwords</a>.</li>
+  <li>“<a href="/papers/kafka-debull15.pdf">Kafka, Samza and the Unix philosophy of distributed data</a>” (with
+<a href="https://twitter.com/jaykreps">Jay Kreps</a>) describes the design philosophy of Apache Kafka and
+stream processing framework Apache Samza by analogy to Unix pipes. This article is a refined
+version of my <a href="/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html">prior blog post</a>
+on the topic. It was invited to appear in the December 2015 issue of the
+<a href="http://sites.computer.org/debull/bull_issues.html">IEEE Data Engineering Bulletin</a>.</li>
+</ul>
+
+<p>I also wrote up transcripts of several of my conference talks as oversized blog posts:</p>
+
+<ul>
+  <li><a href="/2015/01/29/stream-processing-event-sourcing-reactive-cep.html">Stream processing, Event sourcing, Reactive, CEP… and making sense of it all</a></li>
+  <li><a href="/2015/03/04/turning-the-database-inside-out.html">Turning the database inside-out with Apache Samza</a></li>
+  <li><a href="/2015/04/13/real-time-full-text-search-luwak-samza.html">Real-time full-text search with Luwak and Samza</a></li>
+  <li><a href="/2015/04/23/bottled-water-real-time-postgresql-kafka.html">Bottled Water: Real-time integration of PostgreSQL and Kafka</a></li>
+  <li><a href="/2015/05/27/logs-for-data-infrastructure.html">Using logs to build a solid data infrastructure (or: why dual writes are a bad idea)</a></li>
+  <li><a href="/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html">Kafka, Samza, and the Unix philosophy of distributed data</a></li>
+</ul>
+
+<p>An edited and updated version of those blog posts is planned to be published as a report by O’Reilly
+in 2016. Complete with hand-drawn slides, of course.</p>
+
+<p>Besides those transcripts, I published a few blog posts on topics other than stream processing:</p>
+
+<ul>
+  <li><a href="/2015/05/11/please-stop-calling-databases-cp-or-ap.html">Please stop calling databases CP or AP</a>
+was a precursor to my <a href="http://arxiv.org/abs/1509.05393">CAP theorem paper</a>. It was a bit
+contentious, but I stand by my point that the CP/AP categorisation is more confusing than helpful.</li>
+  <li><a href="/2015/10/11/recurse-center-joy-of-learning.html">The Recurse Center and the joy of learning</a>
+describes my experience of spending two weeks as a resident at the
+<a href="https://www.recurse.com/">Recurse Center</a>, an educational retreat for programmers in NYC.</li>
+  <li><a href="/2015/11/10/investigatory-powers-bill.html">The Investigatory Powers Bill would increase cybercrime</a> –
+see politics section below. Apologies for the “cyber”, but I decided it was important to speak the
+language of my target audience.</li>
+</ul>
+
+<h2 id="interviews">Interviews</h2>
+
+<ul>
+  <li>Werner Schuster <a href="http://www.infoq.com/interviews/kleppmann-data-infrastructure-logs-crdt">interviewed me for InfoQ</a>
+about my <a href="/2015/05/27/logs-for-data-infrastructure.html">talk at Craft</a>, and about the future of
+data systems design.</li>
+  <li>Jim Brikman interviewed me for his book “<a href="http://www.hello-startup.net/">Hello, Startup</a>”
+regarding the pros and cons of startup life.</li>
+  <li>PwC Technology Forecast used some quotes from me in their report on “<a href="http://www.pwc.com/us/en/technology-forecast/2015/remapping-database-landscape/immutable-data-stores--rise.html">Remapping the database landscape: 
+the rise of immutable data stores</a>”.</li>
+  <li>The September 2015 issue of <a href="http://www.linuxjournal.com/">Linux Journal</a> republished some of my
+older work on <a href="/2013/05/24/improving-security-of-ssh-private-keys.html">SSH private key encryption</a>.</li>
+</ul>
+
+<h2 id="politics">Politics</h2>
+
+<p>The UK government has been pursuing some disastrous information security policies. I have
+participated in the political process by adding a technical voice to the debate:</p>
+
+<ul>
+  <li>Early in 2015, I warned members of the House of Lords about the draft
+<a href="https://en.wikipedia.org/wiki/Draft_Communications_Data_Bill">Communications Data Bill</a>
+(“Snoopers’ Charter”), which was eventually withdrawn. However, an even worse proposal called the
+<a href="https://en.wikipedia.org/wiki/Draft_Investigatory_Powers_Bill">Investigatory Powers Bill</a>
+was introduced in November 2015, about which I contacted my MP.</li>
+  <li>I wrote a <a href="/2015/11/10/investigatory-powers-bill.html">blog post</a> explaining why you should be
+worried about the Investigatory Powers Bill even if you don’t care about privacy, and you are
+happy with government services scanning all your communication. In a nutshell: the bill
+mandates backdoors and security holes in software. It is a bad idea to make systems insecure by
+design.</li>
+  <li>I submitted <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/science-and-technology-committee/investigatory-powers-bill-technology-issues/written/25146.html">written evidence</a>
+to the <a href="http://www.parliament.uk/business/committees/committees-a-z/commons-select/science-and-technology-committee/inquiries/parliament-2015/investigatory-powers-bill-technology-issues-inquiry-launch-15-16/publications/">House of Commons Science and Technology Committee</a>,
+explaining the problems I see with the draft Investigatory Powers Bill.</li>
+  <li>I also submitted written evidence to the <a href="http://www.parliament.uk/documents/joint-committees/draft-investigatory-powers-bill/ipb-call-for-evidence.pdf">House of Commons and House of Lords joint committee on the draft
+Investigatory Powers Bill</a>
+(not yet published).</li>
+</ul>
+
+<p>The debate is still ongoing, but I hope the warnings from computer scientists and software
+developers will be heard.</p>
+
+<h2 id="open-source">Open Source</h2>
+
+<p>This year I released <a href="https://github.com/confluentinc/bottledwater-pg">Bottled Water</a>, a tool for
+Postgres that captures all the data written to a database, and replicates it to Kafka for use in
+other systems (e.g. building search indexes or maintaining caches). Lots of people have started
+playing with Bottled Water, and I have received several good pull requests and bug reports.</p>
+
+<p>Bottled Water is still a very early-stage project, but I am optimistic about it. I plan to integrate
+it with the new <a href="http://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect">Kafka Connect</a>
+framework (pull requests welcome!), which will make it easier to deploy. Similar ideas have also been
+popping up for other databases, for example
+<a href="https://developer.zendesk.com/blog/introducing-maxwell-a-mysql-to-kafka-binlog-processor">Maxwell for MySQL</a>.</p>
+
+<p>Besides Bottled Water, I have made some small open source contributions to
+<a href="http://avro.apache.org/">Apache Avro</a> and a few other projects. My
+<a href="https://github.com/ept/warc-hadoop">WARC library</a> is now
+<a href="https://issues.apache.org/jira/browse/NUTCH-2102">used in Apache Nutch</a>.
+There are probably some more things that I have forgotten.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Another year has passed, and it’s easy to forget everything one has done. So I find it motivating
+to write down the major things that have happened, and see that actually it was quite a lot.</p>
+
+<p>If anything, I have spread myself too thin, trying to do too many different things. Certainly my
+progress with the book has not been as fast as I (or my editor!) would have liked. I am honoured
+that so many conferences want me to speak, but unfortunately I will have to dial down my number of
+talks, otherwise I’ll never get the book finished.</p>
+
+<p>Thank you to <a href="http://confluent.io/">Confluent</a>, who sponsored a lot of my work in the last year on
+a freelance basis. Thank you also to all the great people I’ve met, who have shared their ideas and
+helped me understand things. Happy new year!</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>The Investigatory Powers Bill would increase cybercrime</title>
@@ -4357,231 +4576,6 @@ and I’ll be talking and writing more about CDC in future.</li>
 a committer on <a href="http://samza.apache.org/">Apache Samza</a> and author of the upcoming O’Reilly book
 <a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>. He’s
 <a href="https://twitter.com/martinkl">@martinkl</a> on Twitter.</em></p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Wouldn’t it be fun to build your own Google?</title>
-                <link>http://martin.kleppmann.com/2014/12/10/build-your-own-google.html</link>
-                <comments>http://martin.kleppmann.com/2014/12/10/build-your-own-google.html#disqus_thread</comments>
-                <pubDate>Wed, 10 Dec 2014 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2014/12/10/build-your-own-google.html</guid>
-                
-                <description><![CDATA[ Exploring open web crawl data. What if you had your own copy of the entire web, and you could do with it whatever you want? This article was originally published on O’Reilly Radar. For the last few millennia, libraries have been the custodians of human knowledge. By collecting books, and... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><strong>Exploring open web crawl data. What if you had your own copy of the entire web, and you could do
-with it whatever you want?</strong></p>
-
-<p><em>This article was originally published on
-<a href="http://radar.oreilly.com/2014/12/wouldnt-it-be-fun-to-build-your-own-google.html">O’Reilly Radar</a>.</em></p>
-
-<p>For the last few <a href="http://en.wikipedia.org/wiki/Library_of_Alexandria">millennia</a>, libraries have
-been the custodians of human knowledge. By collecting books, and making them findable and
-accessible, they have done an incredible service to humanity. Our modern society, culture, science,
-and technology are all founded upon ideas that were transmitted through books and libraries.</p>
-
-<p>Then the web came along, and allowed us to also publish all the stuff that wasn’t good enough to put
-in books, and do it all much faster and cheaper. Although the average quality of material you find
-on the web is quite poor, there are some pockets of excellence, and in aggregate, the sum of all web
-content is probably even more amazing than all libraries put together.</p>
-
-<p>Google (and a few brave contenders like Bing, Baidu, DuckDuckGo and Blekko) have kindly indexed it
-all for us, acting as the web’s librarians. Without search engines, it would be terribly difficult
-to actually find anything, so hats off to them. However, what comes next, after search engines? It
-seems unlikely that search engines are the last thing we’re going to do with the web.</p>
-
-<h2 id="what-if-you-had-your-own-web-crawl">What if you had your own web crawl?</h2>
-
-<p>A small number of organizations, including Google, have crawled the web, processed, and indexed it,
-and generated a huge amount of value from it. However, there’s a problem: those indexes, the result
-of crawling the web, are hidden away inside Google’s data centers. We’re allowed to make individual
-search queries, but we don’t have bulk access to the data.</p>
-
-<p>Imagine you had your own copy of the entire web, and you could do with it whatever you want. (Yes,
-it would be very expensive, but we’ll get to that later.) You could do automated analyses and
-surface the results to users. For example, you could collate the “best” articles (by some
-definition) written on many different subjects, no matter where on the web they are published. You
-could then create a tool which, whenever a user is reading something about one of those subjects,
-suggests further reading: perhaps deeper background information, or a contrasting viewpoint, or an
-argument on why the thing you’re reading is full of shit.</p>
-
-<p>(I’ll gloss over the problem of actually implementing those analyses. The signal-to-noise ratio on
-the web is terrible, so it’s difficult to determine algorithmically whether a particular piece of
-content is any good. Nevertheless, search engines are able to give us useful search results because
-they spend a huge amount of effort on spam filtering and other measures to improve the quality of
-results. Any product that uses web crawl data will have to decide what is noise, and get rid of it.
-However, you can’t even start solving the signal-to-noise problem until you have the raw data.
-Having crawled the web is step one.)</p>
-
-<p>Unfortunately, at the moment, only Google and a small number of other companies that have crawled
-the web have the resources to perform such analyses and build such products. Much as I believe
-Google try their best to be neutral, a pluralistic society requires a diversity of voices, not
-a filter bubble controlled by one organization. Surely there are people outside of Google who want
-to work on this kind of thing. Many a start-up could be founded on the basis of doing useful things
-with data extracted from a web crawl.</p>
-
-<h2 id="the-web-link-graph">The web link graph</h2>
-
-<p>The idea of collating several related, useful pieces of content on one subject was recently
-<a href="https://medium.com/@justpw/its-time-to-rethink-the-link-66d32ff0e2e2">suggested</a> by
-<a href="http://fugit.co/">Justin Wohlstadter</a> (indeed it was a discussion with Justin that inspired me to
-write this article). His start-up, <a href="http://wayfinder.is/">Wayfinder</a>, aims to create such
-cross-references between URLs, by way of human curation. However, it relies on users actively
-submitting links to Wayfinder’s service.</p>
-
-<p>I argued to Justin that I shouldn’t need to submit anything to a centralized database. By writing
-a blog post (such as this one) that references some things on the web, I am implicitly creating
-a connection between the URLs that appear in this blog post. By linking to those URLs, I am
-implicitly suggesting that they might be worth reading. (Of course, this is an
-<a href="http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf">old idea</a>.) The web is already, in a sense,
-a huge distributed database.</p>
-
-<p>By analogy, citations are very important in scientific publishing. Every scientific paper uses
-references to acknowledge its sources, to cite prior work, and to make the reader aware of related
-work. In the opposite direction, the number of times a paper is cited by other authors is a metric
-of how important the work is, and citation counts have even become a
-<a href="http://en.wikipedia.org/wiki/H-index">metric</a> for researchers’ careers.</p>
-
-<p><a href="http://scholar.google.com/">Google Scholar</a> and
-<a href="http://citeseer.ist.psu.edu/">bibliography databases</a> maintain an index of citations, so you can
-find later work that builds upon (or invalidates!) a particular paper. As a researcher, following
-those forward and backward citations is an important way of learning about the state of the art.</p>
-
-<p>Similarly, if you want to analyze the web, you need to need to be able to traverse the link graph
-and see which pages link to each other. For a given URL, you need to be able to see which pages it
-links to (outgoing links) and which pages link to it (incoming links).</p>
-
-<p>You can easily write a program that fetches the HTML for a given URL, and parses out all the links
-– in other words, you can easily find all the outgoing links for an URL. Unfortunately, finding all
-the incoming links is very difficult. You need to download every page on the entire web, extract all
-of their links, and then collate all the web pages that reference the same URL. You need a copy of
-the entire web.</p>
-
-<p><img src="/2014/12/incoming-outgoing-links.png" width="550" height="430" /></p>
-
-<p><em>Incoming and outgoing links for a URL. Finding the outgoing ones is easy (just parse the page);
-finding the incoming ones is hard.</em></p>
-
-<h2 id="publicly-available-crawl-data">Publicly available crawl data</h2>
-
-<p>An interesting move in this direction is <a href="http://commoncrawl.org/">CommonCrawl</a>, a nonprofit. Every
-couple of months they send a crawler out into the web, download a whole bunch of web pages (about
-2.8 billion pages, at latest count), and store the result as a publicly available data set in S3.
-The data is in <a href="http://en.wikipedia.org/wiki/Web_ARChive">WARC format</a>, and you can do whatever you
-want with it. (If you want to play with the data, I wrote an
-<a href="https://github.com/ept/warc-hadoop">implementation of WARC</a> for use in Hadoop.)</p>
-
-<p>As an experiment, I wrote a simple MapReduce job that processed the entire CommonCrawl data set. It
-cost me about $100 in EC2 instance time to process all 2.8 billion pages (a bit of optimization
-would probably bring that down). Crunching through such quantities of data isn’t free, but it’s
-surprisingly affordable.</p>
-
-<p>The CommonCrawl data set is about 35 TB in size (unparsed, compressed HTML). That’s a lot, but
-Google says they crawl 60 trillion distinct pages, and the index is
-<a href="http://www.google.com/insidesearch/howsearchworks/thestory/">reported</a> as being over 100 PB, so
-it’s safe to assume that the CommonCrawl data set represents only a small fraction of the web.</p>
-
-<p><img src="/2014/12/dataset-size.png" width="550" height="311" /></p>
-
-<p><em>Relative sizes of CommonCrawl, Internet Archive, and Google (sources:
-<a href="http://blog.commoncrawl.org/2014/09/august-2014-crawl-data-available/">1</a>,
-<a href="https://blog.archive.org/2013/01/09/updated-wayback/">2</a>,
-<a href="http://www.google.com/insidesearch/howsearchworks/thestory/">3</a>).</em></p>
-
-<p>CommonCrawl is a good start. But what would it take to create a publicly available crawl of the
-entire web? Is it just a matter of getting some generous donations to finance CommonCrawl? But if
-all the data is on S3, you have to either use EC2 to process it or pay Amazon for the bandwidth to
-download it. A long-term solution would have to be less AWS-centric.</p>
-
-<p>I don’t know for sure, but my gut instinct is that a full web crawl would best be undertaken as
-a decentralized effort, with many organizations donating some bandwidth, storage, and computing
-resources toward a shared goal. (Perhaps this is what <a href="http://www.faroo.com/hp/p2p/p2p.html">Faroo</a>
-and <a href="http://yacy.net/en/Technology.html">YaCy</a> are doing, but I’m not familiar with the details of
-their systems.)</p>
-
-<h2 id="an-architectural-sketch">An architectural sketch</h2>
-
-<p>Here are some rough ideas on how a decentralized web crawl project could look.</p>
-
-<p>The participants in the crawl can communicate peer-to-peer, using something like BitTorrent.
-A distributed hash table can be used to assign a portion of the URL space to a participant. That
-means each URL is assigned to one or more participants, and that participant is in charge of
-fetching the URL, storing the response, and parsing any links that appear in the page. Every URL
-that is found in a link is sent to the crawl participant to whom the URL is assigned. The recipient
-can ignore that message if it has already fetched that URL recently.</p>
-
-<p>The system will need to ensure it is well-behaved as a whole (obey robots.txt, stay within rate
-limits, de-duplicate URLs that return the same content, etc.). This will require some coordination
-between crawl participants. However, even if the crawl was done by a single organization, it would
-have to be distributed across multiple nodes, probably using asynchronous message passing for loose
-coordination. The same principles apply if the crawl nodes are distributed across several
-participants – it just means the message-passing is across the Internet rather than within one
-organization’s data center.</p>
-
-<p><img src="/2014/12/distributed-crawl.png" width="550" height="413" /></p>
-
-<p><em>A hypothetical architecture for distributed web crawling. Each participant crawls and stores
-a portion of the web.</em></p>
-
-<p>There remain many questions. What if your crawler downloads some content that is illegal in your
-country? How do you keep crawlers honest (ensuring they don’t manipulate the crawl results to their
-own advantage)? How is the load balanced across participants with different amounts of resources to
-offer? Is it necessary to enforce some kind of reciprocity (you can only use crawl data if you also
-contribute data), or have a payment model (bitcoin?) to create an incentive for people to run
-crawlers? How can index creation be distributed across participants?</p>
-
-<p>(As an aside, I think <a href="http://samza.incubator.apache.org/">Samza</a>’s model of stream computation
-would be a good starting point for implementing a scalable distributed crawler. I’d love to see
-someone implement a proof of concept.)</p>
-
-<h2 id="motivations-for-contributing">Motivations for contributing</h2>
-
-<p>Why would different organizations – many of them probably competitors – potentially collaborate on
-creating a public domain crawl data set? Well, there is precedence for this, namely in open source
-software.</p>
-
-<p>Simplifying for the sake of brevity, there are a few reasons why this model works well:</p>
-
-<ul>
-  <li><strong>Cost:</strong> Creating and maintaining a large software project (eg. Hadoop, Linux kernel, database
-system) is very expensive, and only a small number of very large companies can afford to run
-a project of that size by themselves. As a mid-size company, you have to either buy an
-off-the-shelf product from a vendor or collaborate with other organizations in creating an open
-solution.</li>
-  <li><strong>Competitive advantage:</strong> With infrastructure software (databases, operating systems) there is
-little competitive advantage in keeping a project proprietary because competitive differentiation
-happens at the higher levels (closer to the user interface). On the other hand, by making it open,
-everybody benefits from better software infrastructure. This makes open source a very attractive
-option for infrastructure-level software.</li>
-  <li><strong>Public relations:</strong> Companies want to be seen as doing good, and contributing to open source is
-seen as such. Many engineers also want to work on open source, perhaps for idealistic reasons, or
-because it makes their skills and accomplishments publicly visible and recognized, including to
-prospective future employers.</li>
-</ul>
-
-<p>I would argue that all the same arguments apply to the creation of an open data set, not only to the
-creation of open source software. If we believe that there is enough value in having publicly
-accessible crawl data, it looks like it could be done.</p>
-
-<h2 id="perhaps-we-can-make-it-happen">Perhaps we can make it happen</h2>
-
-<p>What I’ve described is a pie in the sky right now (although CommonCrawl is totally real).</p>
-
-<p>Collaboratively created data sets such as Wikipedia and OpenStreetMap are an amazing resource and
-accomplishment. At first, people thought the creators of these projects were crazy, but they turned
-out to work very well. We can safely say they have made a positive impact on the world, by
-summarizing a certain subset of human knowledge and making it freely accessible to all.</p>
-
-<p>I don’t know if freely available web crawl data would be similarly valuable because it’s hard to
-imagine all the possible applications, which only arise when you actually have the data and start
-exploring it. However, there must be interesting things you can do if you have access to the
-collective outpourings of humanity. How about <a href="http://web.stanford.edu/dept/SUL/library/extra4/sloan/MouseSite/1968Demo.html">augmenting human
-intellect</a>, which
-we’ve talked about for so long? Can we use this data to create fairer societies, better mutual
-understanding, better education, and such good things?</p>
 
                 ]]></content:encoded>
             </item>
