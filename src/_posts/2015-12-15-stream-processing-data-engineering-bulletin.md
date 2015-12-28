@@ -4,6 +4,7 @@ title: Kafka, Samza and the Unix philosophy of distributed data
 authors: Martin Kleppmann and Jay Kreps
 venue: IEEE Data Engineering Bulletin
 venue_url: http://sites.computer.org/debull/bull_issues.html
+paper_url: /papers/kafka-debull15.pdf
 ---
 
 Abstract
