@@ -7,9 +7,12 @@ place: Cambridge, UK
 venue_url: http://www.cl.cam.ac.uk/events/passwords2015/
 paper_url: /papers/mrsa-pass15.pdf
 slides_url: https://speakerdeck.com/ept/strengthening-public-key-authentication-against-key-theft
+video_url: https://www.youtube.com/watch?v=8aENZMoiRZg&index=22&list=PLdIqs92nsIzQvvbTiWLLjZOVE7jPBDomw
 ---
 
 <script async class="speakerdeck-embed" data-id="2e56aa7d1efa466fb4893ea18b2ed6ca" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/8aENZMoiRZg?list=PLdIqs92nsIzQvvbTiWLLjZOVE7jPBDomw" frameborder="0" allowfullscreen></iframe>
 
 Abstract
 --------
