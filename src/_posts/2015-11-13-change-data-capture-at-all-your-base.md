@@ -5,7 +5,10 @@ venue: All Your Base
 place: London, UK
 venue_url: http://allyourbaseconf.com/2015/speakers#martin-kleppmann
 slides_url: https://speakerdeck.com/ept/getting-data-out-of-databases-a-surprisingly-tricky-problem
+video_url: https://vimeo.com/145847021
 ---
+
+<!-- Vimeo video does not allow embedding -->
 
 <script async class="speakerdeck-embed" data-id="60a5d4be5e77446abcafc0dfe43be894" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
