@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 06 Jan 2016 09:58:30 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 07 Jan 2016 13:25:34 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -192,9 +192,9 @@ design.</li>
   <li>I submitted <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/science-and-technology-committee/investigatory-powers-bill-technology-issues/written/25146.html">written evidence</a>
 to the <a href="http://www.parliament.uk/business/committees/committees-a-z/commons-select/science-and-technology-committee/inquiries/parliament-2015/investigatory-powers-bill-technology-issues-inquiry-launch-15-16/publications/">House of Commons Science and Technology Committee</a>,
 explaining the problems I see with the draft Investigatory Powers Bill.</li>
-  <li>I also submitted written evidence to the <a href="http://www.parliament.uk/documents/joint-committees/draft-investigatory-powers-bill/ipb-call-for-evidence.pdf">House of Commons and House of Lords joint committee on the draft
-Investigatory Powers Bill</a>
-(not yet published).</li>
+  <li>I also submitted similar <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/draft-investigatory-powers-bill-committee/draft-investigatory-powers-bill/written/26275.html">written evidence</a>
+to the <a href="http://www.parliament.uk/documents/joint-committees/draft-investigatory-powers-bill/ipb-call-for-evidence.pdf">House of Commons and House of Lords joint committee on the draft
+Investigatory Powers Bill</a>.</li>
 </ul>
 
 <p>The debate is still ongoing, but I hope the warnings from computer scientists and software
@@ -232,6 +232,9 @@ talks, otherwise I’ll never get the book finished.</p>
 <p>Thank you to <a href="http://confluent.io/">Confluent</a>, who sponsored a lot of my work in the last year on
 a freelance basis. Thank you also to all the great people I’ve met, who have shared their ideas and
 helped me understand things. Happy new year!</p>
+
+<p><em>Update 7 Jan 2016</em>: added link to
+<a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/draft-investigatory-powers-bill-committee/draft-investigatory-powers-bill/written/26275.html">evidence I submitted to parliament</a>, which has now bene published.</p>
 
                 ]]></content:encoded>
             </item>
