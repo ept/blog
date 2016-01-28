@@ -7,7 +7,8 @@ SHORTLINKS = {
   bbuzz:  '/2015/06/02/change-capture-at-berlin-buzzwords.html',
   pwl:    '/2015/07/08/attiya-welch-at-papers-we-love.html',
   unix:   'http://hubs.ly/H0125_b0',
-  pass15: '/2015/12/08/preventing-key-theft-at-passwords15.html'
+  pass15: '/2015/12/08/preventing-key-theft-at-passwords15.html',
+  dddeu:  '/2016/01/29/event-sourcing-stream-processing-at-ddd-europe.html'
 }
 
 require 'rubygems'
