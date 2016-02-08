@@ -10,12 +10,411 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Thu, 28 Jan 2016 22:29:42 CET</lastBuildDate>
+        <lastBuildDate>Mon, 08 Feb 2016 10:29:11 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>How to do distributed locking</title>
+                <link>http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html</link>
+                <comments>http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html#disqus_thread</comments>
+                <pubDate>Mon, 08 Feb 2016 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html</guid>
+                
+                <description><![CDATA[ As part of the research for my book, I came across an algorithm called Redlock on the Redis website. The algorithm claims to implement fault-tolerant distributed locks (or rather, leases [1]) on top of Redis, and the page asks for feedback from people who are into distributed systems. The algorithm instinctively... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>As part of the research for <a href="http://dataintensive.net/">my book</a>, I came across an algorithm called <a href="http://redis.io/topics/distlock">Redlock</a> on the
+<a href="http://redis.io/">Redis</a> website. The algorithm claims to implement fault-tolerant distributed locks (or rather,
+<a href="http://web.stanford.edu/class/cs240/readings/89-leases.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">leases</a> [1]) on top of Redis, and the page asks for feedback from people who are into
+distributed systems. The algorithm instinctively set off some alarm bells in the back of my mind, so
+I spent a bit of time thinking about it and writing up these notes.</p>
+
+<p>Since there are already <a href="http://redis.io/topics/distlock">over 10 independent implementations of Redlock</a> and we don’t know
+who is already relying on this algorithm, I thought it would be worth sharing my notes publicly.
+I won’t go into other aspects of Redis, some of which have already been critiqued
+<a href="https://aphyr.com/tags/Redis">elsewhere</a>.</p>
+
+<p>Before I go into the details of Redlock, let me say that I quite like Redis, and I have successfully
+used it in production in the past. I think it’s a good fit in situations where you want to share
+some transient, approximate, fast-changing data between servers, and where it’s not a big deal if
+you occasionally lose that data for whatever reason. For example, a good use case is maintaining
+request counters per IP address (for rate limiting purposes) and sets of distinct IP addresses per
+user ID (for abuse detection).</p>
+
+<p>However, Redis has been gradually making inroads into areas of data management where there are
+stronger consistency and durability expectations – which worries me, because this is not what Redis
+is designed for. Arguably, distributed locking is one of those areas. Let’s examine it in some more
+detail.</p>
+
+<h2 id="what-are-you-using-that-lock-for">What are you using that lock for?</h2>
+
+<p>The purpose of a lock is to ensure that among several nodes that might try to do the same piece of
+work, only one actually does it (at least only one at a time). That work might be to write some data
+to a shared storage system, to perform some computation, to call some external API, or suchlike. At
+a high level, there are two reasons why you might want a lock in a distributed application:
+<a href="http://research.google.com/archive/chubby.html" title="Mike Burrows. The Chubby lock service for loosely-coupled distributed systems. OSDI 2006">for efficiency or for correctness</a> [2]. To distinguish these cases, you can ask what
+would happen if the lock failed:</p>
+
+<ul>
+  <li><strong>Efficiency:</strong> Taking a lock saves you from unnecessarily doing the same work twice (e.g. some
+expensive computation). If the lock fails and two nodes end up doing the same piece of work, the
+result is a minor increase in cost (you end up paying 5 cents more to AWS than you otherwise would
+have) or a minor inconvenience (e.g. a user ends up getting the same email notification twice).</li>
+  <li><strong>Correctness:</strong> Taking a lock prevents concurrent processes from stepping on each others’ toes
+and messing up the state of your system. If the lock fails and two nodes concurrently work on the
+same piece of data, the result is a corrupted file, data loss, permanent inconsistency, the wrong
+dose of a drug administered to a patient, or some other serious problem.</li>
+</ul>
+
+<p>Both are valid cases for wanting a lock, but you need to be very clear about which one of the two
+you are dealing with.</p>
+
+<p>I will argue that if you are using locks merely for efficiency purposes, it is unnecessary to incur
+the cost and complexity of Redlock, running 5 Redis servers and checking for a majority to acquire
+your lock. You are better off just using a single Redis instance, perhaps with asynchronous
+replication to a secondary instance in case the primary crashes. </p>
+
+<p>If you use a single Redis instance, of course you will drop some locks if the power suddenly goes
+out on your Redis node, or something else goes wrong. But if you’re only using the locks as an
+efficiency optimization, and the crashes don’t happen too often, that’s no big deal. This “no big
+deal” scenario is where Redis shines. At least if you’re relying on a single Redis instance, it is
+clear to everyone who looks at the system that the locks are approximate, and only to be used for
+non-critical purposes.</p>
+
+<p>On the other hand, the Redlock algorithm, with its 5 replicas and majority voting, looks at first
+glance as though it is suitable for situations in which your locking is important for <em>correctness</em>.
+I will argue in the following sections that it is <em>not</em> suitable for that purpose. For the rest of
+this article we will assume that your locks are important for correctness, and that it is a serious
+bug if two different nodes concurrently believe that they are holding the same lock.</p>
+
+<h2 id="protecting-a-resource-with-a-lock">Protecting a resource with a lock</h2>
+
+<p>Let’s leave the particulars of Redlock aside for a moment, and discuss how a distributed lock is
+used in general (independent of the particular locking algorithm used). It’s important to remember
+that a lock in a distributed system is not like a mutex in a multi-threaded application. It’s a more
+complicated beast, due to the problem that different nodes and the network can all fail
+independently in various ways.</p>
+
+<p>For example, say you have an application in which a client needs to update a file in shared storage
+(e.g. HDFS or S3). A client first acquires the lock, then reads the file, makes some changes, writes
+the modified file back, and finally releases the lock. The lock prevents two clients from performing
+this read-modify-write cycle concurrently, which would result in lost updates. The code might look
+something like this:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// THIS CODE IS BROKEN</span>
+<span class="kd">function</span> <span class="nx">writeData</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">lock</span> <span class="o">=</span> <span class="nx">lockService</span><span class="p">.</span><span class="nx">acquireLock</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lock</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="s1">&#39;Failed to acquire lock&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nx">updateContents</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+        <span class="nx">storage</span><span class="p">.</span><span class="nx">writeFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">updated</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+        <span class="nx">lock</span><span class="p">.</span><span class="nx">release</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Unfortunately, even if you have a perfect lock service, the code above is broken. The following
+diagram shows how you can end up with corrupted data:</p>
+
+<p><img src="/2016/02/unsafe-lock.png" width="550" height="200" alt="Unsafe access to a resource protected by a distributed lock" /></p>
+
+<p>In this example, the client that acquired the lock is paused for an extended period of time while
+holding the lock – for example because the garbage collector (GC) kicked in. The lock has a timeout
+(i.e. it is a lease), which is always a good idea (otherwise a crashed client could end up holding
+a lock forever and never releasing it). However, if the GC pause lasts longer than the lease expiry
+period, and the client doesn’t realise that it has expired, it may go ahead and make some unsafe
+change.</p>
+
+<p>This bug is not theoretical: HBase used to <a href="http://www.slideshare.net/enissoz/hbase-and-hdfs-understanding-filesystem-usage" title="Enis Söztutar. HBase and HDFS: Understanding filesystem usage in HBase. HBaseCon 2013">have this problem</a> [3,4]. Normally,
+GC pauses are quite short, but “stop-the-world” GC pauses have sometimes been known to last for
+<a href="http://blog.cloudera.com/blog/2011/02/avoiding-full-gcs-in-hbase-with-memstore-local-allocation-buffers-part-1/" title="Todd Lipcon. Avoiding Full GCs in Apache HBase with MemStore-Local Allocation Buffers: Part 1. 2011">several minutes</a> [5] – certainly long enough for a lease to expire. Even so-called
+“concurrent” garbage collectors like the HotSpot JVM’s CMS cannot fully run in parallel with the
+application code – even they <a href="http://mechanical-sympathy.blogspot.co.uk/2013/07/java-garbage-collection-distilled.html" title="Martin Thompson. Java Garbage Collection Distilled. 2013">need to stop the world</a> from time to time [6].</p>
+
+<p>You cannot fix this problem by inserting a check on the lock expiry just before writing back to
+storage. Remember that GC can pause a running thread at <em>any point</em>, including the point that is
+maximally inconvenient for you (between the last check and the write operation).</p>
+
+<p>And if you’re feeling smug because your programming language runtime doesn’t have long GC pauses,
+there are many other reasons why your process might get paused. Maybe your process tried to read an
+address that is not yet loaded into memory, so it gets a page fault and is paused until the page is
+loaded from disk. Maybe your disk is actually EBS, and so reading a variable unwittingly turned into
+a synchronous network request over Amazon’s congested network. Maybe there are many other processes
+contending for CPU, and you hit a <a href="https://twitter.com/aphyr/status/682077908953792512">black node in your scheduler tree</a>. Maybe someone
+accidentally sent SIGSTOP to the process. Whatever. Your processes will get paused.</p>
+
+<p>If you still don’t believe me about process pauses, then consider instead that the file-writing
+request may get delayed in the network before reaching the storage service. Packet networks such as
+Ethernet and IP may delay packets <em>arbitrarily</em>, and <a href="https://queue.acm.org/detail.cfm?id=2655736" title="P Bailis and K Kingsbury. The Network is Reliable. ACM Queue 12(7), 2014.">they do</a> [7]: in a famous
+<a href="https://github.com/blog/1364-downtime-last-saturday" title="Mark Imbriaco. Downtime last Saturday. 2012">incident at GitHub</a>, packets were delayed in the network for approximately 90
+seconds [8]. This means that an application process may send a write request, and it may reach
+the storage server a minute later when the lease has already expired.</p>
+
+<p>Even in well-managed networks, this kind of thing can happen. You simply cannot make any assumptions
+about timing, which is why the code above is fundamentally unsafe, no matter what lock service you
+use.</p>
+
+<h2 id="making-the-lock-safe-with-fencing">Making the lock safe with fencing</h2>
+
+<p>The fix for this problem is actually pretty simple: you need to include a <em>fencing token</em> with every
+write request to the storage service. In this context, a fencing token is simply a number that
+increases (e.g. incremented by the lock service) every time a client acquires the lock. This is
+illustrated in the following diagram:</p>
+
+<p><img src="/2016/02/fencing-tokens.png" width="550" height="200" alt="Using fencing tokens to make resource access safe" /></p>
+
+<p>Client 1 acquires the lease and gets a token of 33, but then it goes into a long pause and the lease
+expires. Client 2 acquires the lease, gets a token of 34 (the number always increases), and then
+sends its write to the storage service, including the token of 34. Later, client 1 comes back to
+life and sends its write to the storage service, including its token value 33. However, the storage
+server rembers that it has already processed a write with a higher token number (34), and so it
+rejects the request with token 33.</p>
+
+<p>Note this requires the storage server to take an active role in checking tokens, and rejecting any
+writes on which the token has gone backwards. But this is not particularly hard, once you know the
+trick. And provided that the lock service generates strictly monotonically increasing tokens, this
+makes the lock safe. For example, if you are using ZooKeeper as lock service, you can use the <code>zxid</code>
+or the znode version number as fencing token, and you’re in good shape [3].</p>
+
+<p>However, this leads us to the first big problem with Redlock: <em>it does not have any facility for
+generating fencing tokens</em>. The algorithm does not produce any number that is guaranteed to increase
+every time a client acquires a lock. This means that even if the algorithm were otherwise perfect,
+it would not be safe to use, because you cannot prevent the race condition between clients in the
+case where one client is paused or its packets are delayed.</p>
+
+<p>And it’s not obvious to me how one would change the Redlock algorithm to start generating fencing
+tokens. The unique random value it uses does not provide the required monotonicity. Simply keeping
+a counter on one Redis node would not be sufficient, because that node may fail. Keeping counters on
+several nodes would mean they would go out of sync. It’s likely that you would need a consensus
+algorithm just to generate the fencing tokens. (If only <a href="https://twitter.com/lindsey/status/575006945213485056">incrementing a counter</a> was
+simple.)</p>
+
+<h2 id="using-time-to-solve-consensus">Using time to solve consensus</h2>
+
+<p>The fact that Redlock fails to generate fencing tokens should already be sufficient reason not to
+use it in situations where correctness depends on the lock. But there are some further problems that
+are worth discussing.</p>
+
+<p>In the academic literature, the most practical system model for this kind of algorithm is the
+<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf" title="TD Chandra and S Toueg. Unreliable Failure Detectors for Reliable Distributed Systems. JACM 43(2):225–267, 1996">asynchronous model with unreliable failure detectors</a> [9]. In plain English,
+this means that the algorithms make no assumptions about timing: processes may pause for arbitrary
+lengths of time, packets may be arbitrarily delayed in the network, and clocks may be arbitrarily
+wrong – and the algorithm is nevertheless expected to do the right thing. Given what we discussed
+above, these are very reasonable assumptions.</p>
+
+<p>The only purpose for which algorithms may use clocks is to generate timeouts, to avoid waiting
+forever if a node is down. But timeouts do not have to be accurate: just because a request times
+out, that doesn’t mean that the other node is definitely down – it could just as well be that there
+is a large delay in the network, or that your local clock is wrong. When used as a failure detector,
+timeouts are just a guess that something is wrong. (If they could, distributed algorithms would do
+without clocks entirely, but then <a href="http://www.cs.princeton.edu/courses/archive/fall07/cos518/papers/flp.pdf" title="MJ Fischer, N Lynch, and MS Paterson. Impossibility of Distributed Consensus with One Faulty Process. JACM 32(2):374–382, 1985">consensus becomes impossible</a> [10]. Acquiring a lock is
+like a compare-and-set operation, which <a href="https://cs.brown.edu/~mph/Herlihy91/p124-herlihy.pdf" title="Maurice Herlihy. Wait-Free Synchronization. TOPLAS 13(1):124–149, 1991">requires consensus</a> [11].)</p>
+
+<p>Note that Redis <a href="https://github.com/antirez/redis/blob/edd4d555df57dc84265fdfb4ef59a4678832f6da/src/server.c#L390-L404">uses <code>gettimeofday</code></a>, not a <a href="http://linux.die.net/man/2/clock_gettime">monotonic clock</a>, to
+determine the <a href="https://github.com/antirez/redis/blob/f0b168e8944af41c4161249040f01ece227cfc0c/src/db.c#L933-L959">expiry of keys</a>. The man page for <code>gettimeofday</code> <a href="http://linux.die.net/man/2/gettimeofday">explicitly
+says</a> that the time it returns is subject to discontinuous jumps in system time –
+that is, it might suddenly jump forwards by a few minutes, or even jump back in time (e.g. if the
+clock is <a href="https://www.eecis.udel.edu/~mills/ntp/html/clock.html">stepped by NTP</a> because it differs from a NTP server by too much, or if the
+clock is manually adjusted by an administrator). Thus, if the system clock is doing weird things, it
+could easily happen that the expiry of a key in Redis is much faster or much slower than expected.</p>
+
+<p>For algorithms in the asynchronous model this is not a big problem: these algorithms generally
+ensure that their <em>safety</em> properties always hold, <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">without making any timing
+assumptions</a> [12]. Only <em>liveness</em> properties depend on timeouts or some other failure
+detector. In plain English, this means that even if the timings in the system are all over the place
+(processes pausing, networks delaying, clocks jumping forwards and backwards), the performance of an
+algorithm might go to hell, but the algorithm will never make an incorrect decision.</p>
+
+<p>However, Redlock is not like this. Its safety depends on a lot of timing assumptions: it assumes
+that all Redis nodes hold keys for approximately the right length of time before expiring; that that
+the network delay is small compared to the expiry duration; and that process pauses are much shorter
+than the expiry duration.</p>
+
+<h2 id="breaking-redlock-with-bad-timings">Breaking Redlock with bad timings</h2>
+
+<p>Let’s look at some examples to demonstrate Redlock’s reliance on timing assumptions. Say the system
+has five Redis nodes (A, B, C, D and E), and two clients (1 and 2). What happens if a clock on one
+of the Redis nodes jumps forward?</p>
+
+<ol>
+  <li>Client 1 acquires lock on nodes A, B, C. Due to a network issue, D and E cannot be reached.</li>
+  <li>The clock on node C jumps forward, causing the lock to expire.</li>
+  <li>Client 2 acquires lock on nodes C, D, E. Due to a network issue, A and B cannot be reached.</li>
+  <li>Clients 1 and 2 now both believe they hold the lock.</li>
+</ol>
+
+<p>A similar issue could happen if C crashes before persisting the lock to disk, and immediately
+restarts. For this reason, the Redlock documentation <a href="http://redis.io/topics/distlock#performance-crash-recovery-and-fsync">recommends delaying restarts</a> of
+crashed nodes for at least the time-to-live of the longest-lived lock. But this restart delay again
+relies on a reasonably accurate measurement of time, and would fail if the clock jumps.</p>
+
+<p>Okay, so maybe you think that a clock jump is unrealistic, because you’re very confident in having
+correctly configured NTP to only ever slew the clock. In that case, let’s look at an example of how
+a process pause may cause the algorithm to fail:</p>
+
+<ol>
+  <li>Client 1 requests lock on nodes A, B, C, D, E.</li>
+  <li>While the responses to client 1 are in flight, client 1 goes into stop-the-world GC.</li>
+  <li>Locks expire on all Redis nodes.</li>
+  <li>Client 2 acquires lock on nodes A, B, C, D, E.</li>
+  <li>Client 1 finishes GC, and receives the responses from Redis nodes indicating that it successfully
+acquired the lock (they were held in client 1’s kernel network buffers while the process was
+paused).</li>
+  <li>Clients 1 and 2 now both believe they hold the lock.</li>
+</ol>
+
+<p>Note that even though Redis is written in C, and thus doesn’t have GC, that doesn’t help us here:
+any system in which the <em>clients</em> may experience a GC pause has this problem. You can only make this
+safe by preventing client 1 from performing any operations under the lock after client 2 has
+acquired the lock, for example using the fencing approach above.</p>
+
+<p>A long network delay can produce the same effect as the process pause. It perhaps depends on your
+TCP user timeout – if you make the timeout significantly shorter than the Redis TTL, perhaps the
+delayed network packets would be ignored, but we’d have to look in detail at the TCP implementation
+to be sure. Also, with the timeout we’re back down to accuracy of time measurement again!</p>
+
+<h2 id="the-synchrony-assumptions-of-redlock">The synchrony assumptions of Redlock</h2>
+
+<p>These examples show that Redlock works correctly only if you assume a <em>synchronous</em> system model –
+that is, a system with the following properties:</p>
+
+<ul>
+  <li>bounded network delay (you can guarantee that packets always arrive within some guaranteed maximum
+delay),</li>
+  <li>bounded process pauses (in other words, hard real-time constraints, which you typically only
+find in car airbag systems and suchlike), and</li>
+  <li>bounded clock error (cross your fingers that you don’t get your time from a <a href="http://xenia.media.mit.edu/~nelson/research/ntp-survey99/">bad NTP
+server</a>).</li>
+</ul>
+
+<p>Note that a synchronous model does not mean exactly synchronised clocks: it means you are assuming
+a <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988"><em>known, fixed upper bound</em></a> on network delay, pauses and clock drift [12]. Redlock
+assumes that delays, pauses and drift are all small relative to the time-to-live of a lock; if the
+timing issues become as large as the time-to-live, the algorithm fails.</p>
+
+<p>In a reasonably well-behaved datacenter environment, the timing assumptions will be satisfied <em>most</em>
+of the time – this is known as a <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">partially synchronous system</a> [12]. But is that good
+enough? As soon as those timing assumptions are broken, Redlock may violate its safety properties,
+e.g. granting a lease to one client before another has expired. If you’re depending on your lock for
+correctness, “most of the time” is not enough – you need it to <em>always</em> be correct. </p>
+
+<p>There is plenty of evidence that it is not safe to assume a synchronous system model for most
+practical system environments [7,8]. Keep reminding yourself of the GitHub incident with the
+<a href="https://github.com/blog/1364-downtime-last-saturday" title="Mark Imbriaco. Downtime last Saturday. 2012">90-second packet delay</a>. It is unlikely that Redlock would survive a <a href="https://aphyr.com/tags/jepsen">Jepsen</a> test.</p>
+
+<p>On the other hand, a consensus algorithm designed for a partially synchronous system model (or
+asynchronous model with failure detector) actually has a chance of working. Raft, Viewstamped
+Replication, Zab and Paxos all fall in this category. Such an algorithm must let go of all timing
+assumptions. That’s hard: it’s so tempting to assume networks, processes and clocks are more
+reliable than they really are. But in the messy reality of distributed systems, you have to be very
+careful with your assumptions.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I think the Redlock algorithm is a poor choice because it is “neither fish nor fowl”: it is
+unnecessarily heavyweight and expensive for efficiency-optimization locks, but it is not
+sufficiently safe for situations in which correctness depends on the lock.</p>
+
+<p>In particular, the algorithm makes dangerous assumptions about timing and system clocks (essentially
+assuming a synchronous system with bounded network delay and bounded execution time for operations),
+and it violates safety properties if those assumptions are not met. Moreover, it lacks a facility
+for generating fencing tokens (which protect a system against long delays in the network or in
+paused processes).</p>
+
+<p>If you need locks only on a best-effort basis (as an efficiency optimization, not for correctness),
+I would recommend sticking with the <a href="http://redis.io/commands/set">straightforward single-node locking algorithm</a> for
+Redis (conditional set-if-not-exists to obtain a lock, atomic delete-if-value-matches to release
+a lock), and documenting very clearly in your code that the locks are only approximate and may
+occasionally fail. Don’t bother with setting up a cluster of five Redis nodes.</p>
+
+<p>On the other hand, if you need locks for correctness, please don’t use Redlock. Instead, please use
+a proper consensus system such as <a href="https://zookeeper.apache.org/">ZooKeeper</a>, probably via one of the <a href="http://curator.apache.org/curator-recipes/index.html">Curator recipes</a>
+that implements a lock. (At the very least, use a <a href="http://www.postgresql.org/">database with reasonable transactional
+guarantees</a>.) And please enforce use of fencing tokens on all resource accesses under the
+lock.</p>
+
+<p>As I said at the beginning, Redis is an excellent tool if you use it correctly. None of the above
+diminishes the usefulness of Redis for its intended purposes. <a href="http://antirez.com/">Salvatore</a> has been very
+dedicated to the project for years, and its success is well deserved. But every tool has
+limitations, and it is important to know them and to plan accordingly.</p>
+
+<p>If you want to learn more, I explain this topic in greater detail in <a href="http://dataintensive.net/">chapters 8 and 9 of my
+book</a>, now available in Early Release from O’Reilly. (The diagrams above are taken from my
+book.) For learning how to use ZooKeeper, I recommend <a href="http://shop.oreilly.com/product/0636920028901.do" title="FP Junqueira and B Reed. ZooKeeper: Distributed Process Coordination. O'Reilly, 2013">Junqueira and Reed’s book</a> [3].
+For a good introduction to the theory of distributed systems, I recommend <a href="http://www.distributedprogramming.net/" title="C Cachin, R Guerraoui, and L Rodrigues. Introduction to Reliable and Secure Distributed Programming, 2nd ed. Springer, 2011">Cachin, Guerraoui and
+Rodrigues’ textbook</a> [13].</p>
+
+<p><em>Thank you to <a href="https://aphyr.com">Kyle Kingsbury</a>, <a href="https://twitter.com/skamille">Camille Fournier</a>, <a href="https://twitter.com/fpjunqueira">Flavio Junqueira</a>, and
+<a href="http://antirez.com/">Salvatore Sanfilippo</a> for reviewing a draft of this article. Any errors are mine, of
+course. Salvatore may not agree with this analysis, and I respect his viewpoints.</em></p>
+
+<h2 id="references">References</h2>
+
+<p>[1] Cary G Gray and David R Cheriton:
+“<a href="http://web.stanford.edu/class/cs240/readings/89-leases.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency</a>,”
+at <em>12th ACM Symposium on Operating Systems Principles</em> (SOSP), December 1989.
+<a href="http://dx.doi.org/10.1145/74850.74870">doi:10.1145/74850.74870</a></p>
+
+<p>[2] Mike Burrows:
+“<a href="http://research.google.com/archive/chubby.html" title="Mike Burrows. The Chubby lock service for loosely-coupled distributed systems. OSDI 2006">The Chubby lock service for loosely-coupled distributed systems</a>,”
+at <em>7th USENIX Symposium on Operating System Design and Implementation</em> (OSDI), November 2006.</p>
+
+<p>[3] Flavio P Junqueira and Benjamin Reed:
+<a href="http://shop.oreilly.com/product/0636920028901.do" title="FP Junqueira and B Reed. ZooKeeper: Distributed Process Coordination. O'Reilly, 2013"><em>ZooKeeper: Distributed Process Coordination</em></a>. O’Reilly Media, November 2013.
+ISBN: 978-1-4493-6130-3</p>
+
+<p>[4] Enis Söztutar:
+“<a href="http://www.slideshare.net/enissoz/hbase-and-hdfs-understanding-filesystem-usage" title="Enis Söztutar. HBase and HDFS: Understanding filesystem usage in HBase. HBaseCon 2013">HBase and HDFS: Understanding filesystem usage in HBase</a>,” at <em>HBaseCon</em>, June 2013.</p>
+
+<p>[5] Todd Lipcon:
+“<a href="http://blog.cloudera.com/blog/2011/02/avoiding-full-gcs-in-hbase-with-memstore-local-allocation-buffers-part-1/" title="Todd Lipcon. Avoiding Full GCs in Apache HBase with MemStore-Local Allocation Buffers: Part 1. 2011">Avoiding Full GCs in Apache HBase with MemStore-Local Allocation Buffers: Part 1</a>,”
+blog.cloudera.com, 24 February 2011.</p>
+
+<p>[6] Martin Thompson: “<a href="http://mechanical-sympathy.blogspot.co.uk/2013/07/java-garbage-collection-distilled.html" title="Martin Thompson. Java Garbage Collection Distilled. 2013">Java Garbage Collection Distilled</a>,”
+mechanical-sympathy.blogspot.co.uk, 16 July 2013.</p>
+
+<p>[7] Peter Bailis and Kyle Kingsbury: “<a href="https://queue.acm.org/detail.cfm?id=2655736" title="P Bailis and K Kingsbury. The Network is Reliable. ACM Queue 12(7), 2014.">The Network is Reliable</a>,”
+<em>ACM Queue</em>, volume 12, number 7, July 2014.
+<a href="http://dx.doi.org/10.1145/2639988.2639988">doi:10.1145/2639988.2639988</a></p>
+
+<p>[8] Mark Imbriaco: “<a href="https://github.com/blog/1364-downtime-last-saturday" title="Mark Imbriaco. Downtime last Saturday. 2012">Downtime last Saturday</a>,” github.com, 26 December 2012.</p>
+
+<p>[9] Tushar Deepak Chandra and Sam Toueg:
+“<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf" title="TD Chandra and S Toueg. Unreliable Failure Detectors for Reliable Distributed Systems. JACM 43(2):225–267, 1996">Unreliable Failure Detectors for Reliable Distributed Systems</a>,”
+<em>Journal of the ACM</em>, volume 43, number 2, pages 225–267, March 1996.
+<a href="http://dx.doi.org/10.1145/226643.226647">doi:10.1145/226643.226647</a></p>
+
+<p>[10] Michael J Fischer, Nancy Lynch, and Michael S Paterson:
+“<a href="http://www.cs.princeton.edu/courses/archive/fall07/cos518/papers/flp.pdf" title="MJ Fischer, N Lynch, and MS Paterson. Impossibility of Distributed Consensus with One Faulty Process. JACM 32(2):374–382, 1985">Impossibility of Distributed Consensus with One Faulty Process</a>,”
+<em>Journal of the ACM</em>, volume 32, number 2, pages 374–382, April 1985.
+<a href="http://dx.doi.org/10.1145/3149.214121">doi:10.1145/3149.214121</a></p>
+
+<p>[11] Maurice P Herlihy: “<a href="https://cs.brown.edu/~mph/Herlihy91/p124-herlihy.pdf" title="Maurice Herlihy. Wait-Free Synchronization. TOPLAS 13(1):124–149, 1991">Wait-Free Synchronization</a>,”
+<em>ACM Transactions on Programming Languages and Systems</em>, volume 13, number 1, pages 124–149, January 1991.
+<a href="http://dx.doi.org/10.1145/114005.102808">doi:10.1145/114005.102808</a></p>
+
+<p>[12] Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer:
+“<a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">Consensus in the Presence of Partial Synchrony</a>,”
+<em>Journal of the ACM</em>, volume 35, number 2, pages 288–323, April 1988.
+<a href="http://dx.doi.org/10.1145/42282.42283">doi:10.1145/42282.42283</a></p>
+
+<p>[13] Christian Cachin, Rachid Guerraoui, and Luís Rodrigues:
+<a href="http://www.distributedprogramming.net/" title="C Cachin, R Guerraoui, and L Rodrigues. Introduction to Reliable and Secure Distributed Programming, 2nd ed. Springer, 2011"><em>Introduction to Reliable and Secure Distributed Programming</em></a>,
+Second Edition. Springer, February 2011. ISBN: 978-3-642-15259-7,
+<a href="http://dx.doi.org/10.1007/978-3-642-15260-3">doi:10.1007/978-3-642-15260-3</a></p>
+
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>My year 2015 in review</title>
@@ -4008,577 +4407,6 @@ a good summary.</em></li>
   <li><em>Jay Kreps has also written an applied guide to
 <a href="http://blog.confluent.io/2015/02/25/stream-data-platform-1/">putting stream data to work in a company</a>.</em></li>
 </ul>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Stream processing, Event sourcing, Reactive, CEP… and making sense of it all</title>
-                <link>http://martin.kleppmann.com/2015/01/29/stream-processing-event-sourcing-reactive-cep.html</link>
-                <comments>http://martin.kleppmann.com/2015/01/29/stream-processing-event-sourcing-reactive-cep.html#disqus_thread</comments>
-                <pubDate>Thu, 29 Jan 2015 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/01/29/stream-processing-event-sourcing-reactive-cep.html</guid>
-                
-                <description><![CDATA[ This is an edited transcript of a talk I gave at /dev/winter 2015. It was originally published on the Confluent blog. Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors,... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>This is an edited transcript of a
-<a href="https://martin.kleppmann.com/2015/01/24/stream-processing-at-dev-winter.html">talk</a> I gave at
-<a href="http://devcycles.net/2015/winter/">/dev/winter 2015</a>. It was originally published
-<a href="http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/">on the Confluent blog</a>.</em></p>
-
-<p><em>Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it
-Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors,
-invented by companies who want to sell you stuff. But sometimes, they contain a kernel of wisdom
-which can really help us design better systems.</em></p>
-
-<p><em>In this talk, we will go in search of the wisdom behind the buzzwords. We will discuss how event
-streams can help make your application more scalable, more reliable and more maintainable. Founded
-in the experience of building large-scale data systems at LinkedIn, and implemented in open source
-projects like Apache Kafka and Apache Samza, stream processing is finally coming of age.</em></p>
-
-<p><img src="/2015/01/stream-01.png" alt="Title: making sense of stream processing" width="550" height="412" /></p>
-
-<p>In this presentation, I’m going to discuss some of the ideas that people have about processing event
-streams. The idea of structuring data as a stream of events is nothing new, but I’ve recently
-noticed this idea reappearing in many different places, often with different terminology and
-different use cases, but with the same underlying principles.</p>
-
-<p>The problem when a technique becomes fashionable is that people start generating a lot of hype and
-buzzwords around it, often reinventing ideas that are already commonplace in a different field, but
-using different words to describe the same thing. In this talk I’m going to try to cut through some
-of the hype and jargon in the general area of stream processing, and try to get down to the
-underlying fundamental ideas.</p>
-
-<p>Although the jargon can be off-putting when you first encounter it, there’s no need to be scared.
-A lot of the ideas are quite simple when you get down to the core. Also, there are a lot of good
-ideas which are worth learning about, because they can help us build applications better.</p>
-
-<p><img src="/2015/01/stream-02.png" alt="Overview of event-based technologies" width="550" height="412" /></p>
-
-<p>The notion of processing events appears in many different areas, which is really confusing at first.
-People in different fields use different vocabulary to refer to the same thing. I think this is
-mainly because the techniques originated in different communities of people, and people seem to
-often stick within their own community and not look at what their neighbours are doing.</p>
-
-<p>The current tools for distributed stream processing have come out of internet companies like
-LinkedIn, with philosophical roots in database research of the early 2000s. On the other hand,
-complex event processing (CEP) originated in
-<a href="http://complexevents.com/stanford/rapide/">event simulation research</a> in the 1990s and is now used
-for operational purposes in enterprises. Event sourcing has its roots in the domain-driven design
-community, which deals with enterprise software development — people who have to work with very
-complex data models, but often smaller datasets than the internet companies.</p>
-
-<p>My background is in internet companies, but I’m doing my best to understand the jargon of the other
-communities, and figure out the commonalities and differences. If I’ve misunderstood something,
-please correct me.</p>
-
-<p><img src="/2015/01/stream-03.png" alt="Stream processing (analytics)" width="550" height="202" /></p>
-
-<p>To make this concrete, I’m going to start by giving an example from the field of stream processing,
-specifically analytics. I’ll then draw parallels with other areas.</p>
-
-<p><img src="/2015/01/stream-04.png" alt="Google Analytics screenshot" width="550" height="447" /></p>
-
-<p>To start with, take something like Google Analytics. As you probably know, Google Analytics is a bit
-of Javascript that you can put on your website, and that keeps track of which pages have been viewed
-by which visitors. An administrator can then explore this data, breaking it down by time period, or
-by URL, and so on.</p>
-
-<p>How would you implement something like Google Analytics?</p>
-
-<p>First take the input to the system. Every time a user views a page, we need to log an event to
-record that fact. A page view event may look something like this (using a kind of pseudo-JSON):</p>
-
-<p><img src="/2015/01/stream-05.png" alt="PageViewEvent example" width="550" height="323" /></p>
-
-<p>A page view has an event type (PageViewEvent), a Unix timestamp that indicates when the event
-happened, the IP address of the client, the session ID (this may be a unique identifier from
-a cookie, which allows you to figure out what series of page views is from the same person), the URL
-of the page that was viewed, how the user got to that page (for example, from a search engine, or
-clicking a link from another site), the user’s browser and language settings, and so on.</p>
-
-<p>Note that each page view event is a simple, immutable fact. It simply records that something
-happened.</p>
-
-<p>Now, how do you go from these page view events to the nice graphical dashboard on which you can
-explore how people are using your website?</p>
-
-<p><img src="/2015/01/stream-06.png" alt="Use cases for events vs. materialized aggregates" width="550" height="412" /></p>
-
-<p>Broadly speaking, you have two options.</p>
-
-<p><strong>Option (a):</strong> you can simply store every single event as it comes in, dump them all in a big
-database, a data warehouse or a Hadoop cluster. Now, whenever you want to analyze this data in some
-way, you run a big SELECT query against this dataset. For example, you might group by URL and by
-time period, you might filter by some condition, and then COUNT(*) to get the number of page views
-for each URL over time. This will scan over essentially all the events, or at least some large
-subset, and do the aggregation on the fly.</p>
-
-<p><strong>Option (b):</strong> if storing every single event is too much for you, you can instead store an
-aggregated summary of the events. For example, if you’re counting things, you increment a few
-counters every time an event comes in, and then you throw away the actual event. You might keep
-several counters in something that’s called an <a href="http://arxiv.org/pdf/cs/0701155.pdf">OLAP cube</a>:
-imagine a multi-dimensional cube, where one dimension is the URL, another dimension is the time of
-the event, another dimension is the browser, and so on. For each event, you just need to increment
-the counters for that particular URL, that particular time, etc.</p>
-
-<p>With an OLAP cube, when you want to find the number of page views for a particular URL on
-a particular day, you just need to read the counter for that combination of URL and date. You don’t
-have to scan over a long list of events; it’s just a matter of reading a single value.</p>
-
-<p><img src="/2015/01/stream-07.png" alt="Raw event data vs. materialized aggregates" width="550" height="412" /></p>
-
-<p>Now option (a) may sound a bit crazy, but it actually works surprisingly well. I believe Google
-Analytics actually does store the raw events, or at least a large sample of events, and performs
-a big scan over those events when you look at the data. Modern analytic databases have become really
-good at scanning quickly over large amounts of data.</p>
-
-<p>The big advantage of storing raw event data is that you have maximum flexibility for analysis. For
-example, you can trace the sequence of pages that one person visited over the course of their
-session. You can’t do that if you’ve squashed all the events into counters. That sort of analysis is
-really important for some offline processing tasks, such as training a recommender system (“people
-who bought X also bought Y”, that sort of thing). For such use cases, it’s best to simply keep all
-the raw events, so that you can later feed them all into your shiny new machine learning system.</p>
-
-<p>However, option (b) also has its uses, especially when you need to make decisions or react to things
-in real time. For example, if you want to prevent people from scraping your website, you can
-introduce a rate limit, so that you only allow 100 requests per hour from any particular IP address;
-if a client goes over the limit, you block it. Implementing that with raw event storage would be
-incredibly inefficient, because you’d be continually re-scanning your history of events to determine
-whether someone has gone over the limit. It’s much more efficient to just keep a counter of number
-of page views per IP address per time window, and then you can check on every request whether that
-number has crossed your threshold.</p>
-
-<p>Similarly, for alerting purposes, you need to respond quickly to what the events are telling you.
-For stock market trading, you also need to be quick.</p>
-
-<p>The bottom line here is that raw event storage and aggregated summaries of events are both very
-useful. They just have different use cases.</p>
-
-<p><img src="/2015/01/stream-08.png" alt="Streaming aggregation by directly incrementing a counter from the app" width="550" height="277" /></p>
-
-<p>Let’s focus on those aggregated summaries for now. How do you implement those?</p>
-
-<p>Well, in the simplest case, you simply have the web server update the aggregates directly. Say you
-want to count page views per IP address per hour, for rate limiting purposes. You can keep those
-counters in something like memcached or Redis, which have an atomic increment operation. Every time
-a web server processes a request, it directly sends an increment command to the store, with a key
-that is constructed from the client IP address and the current time (truncated to the nearest hour).</p>
-
-<p><img src="/2015/01/stream-09.png" alt="Streaming aggregation via event stream" width="550" height="412" /></p>
-
-<p>If you want to get a bit more sophisticated, you can introduce an event stream, or a message queue,
-or an event log, or whatever you want to call it. The messages on that stream are the PageViewEvent
-records that we saw earlier: one message contains the properties of one particular page view.</p>
-
-<p>The nice thing about this architecture is that you can now have multiple consumers for the same
-event data. You can have one consumer which simply archives the raw events to some big storage; even
-if you don’t yet have the capability to process the raw events, you might as well store them, since
-storage is cheap and you can use them in future. Then you can have another consumer which does some
-aggregation (for example, incrementing counters), and another consumer which does something else.
-Those can all feed off the same event stream.</p>
-
-<p><img src="/2015/01/stream-10.png" alt="Title: event sourcing" width="550" height="272" /></p>
-
-<p>Let’s now change topic for a moment, and look at similar ideas from a different field. Event
-sourcing is an idea that has come out of the domain-driven design community — it seems to be fairly
-well known amongst enterprise software developers, but it’s totally unknown in internet companies.
-It comes with a large amount of jargon that I find very confusing, but there seem to be some very
-good ideas in event sourcing.</p>
-
-<p>So I’m going to try to extract those good ideas without going into all the jargon, and we’ll see
-that there are some surprising parallels with my last example from the field of stream processing
-analytics.</p>
-
-<p><img src="/2015/01/stream-11.png" alt="Shopping cart example" width="550" height="412" /></p>
-
-<p>Event sourcing is concerned with how we structure data in databases. As example database I’m going
-to use a shopping cart from an e-commerce website. Each customer may have some number of different
-products in their cart at one time, and for each item in the cart there is a quantity. Nothing very
-complicated here.</p>
-
-<p><img src="/2015/01/stream-12.png" alt="Shopping cart example: updating quantity" width="550" height="412" /></p>
-
-<p>Now say that customer 123 updates their cart: instead of quantity 1 of product 999, they now want
-quantity 3 of that product. You can imagine this being recorded in the database using an UPDATE
-query, which matches the row for customer 123 and product 999, and modifies that row, changing the
-quantity from 1 to 3.</p>
-
-<p>This example uses a relational data model, but that doesn’t really matter. With most non-relational
-databases you’d do more or less the same thing: overwrite the old value with the new value when it
-changes.</p>
-
-<p>However, event sourcing says that this isn’t a good way to design databases. Instead, we should
-individually record every change that happens to the database.</p>
-
-<p><img src="/2015/01/stream-13.png" alt="Shopping cart example: change event log" width="550" height="412" /></p>
-
-<p>For example, we first record an AddToCart event when customer 123 first adds product 888 to their
-cart, with quantity 1. We then record a separate UpdateCartQuantity event when they change the
-quantity to 3. Later, the customer changes their mind again, and reduces the quantity to 2, and
-finally they go to the checkout. Each of these actions is recorded as a separate event, and appended
-to the database. You can imagine having a timestamp on every event too.</p>
-
-<p><img src="/2015/01/stream-14.png" alt="No to state mutation, yes to immutable commands" width="550" height="412" /></p>
-
-<p>When you structure the data like this, every change to the shopping cart is an immutable event —
-a fact. Even if the customer did change the quantity to 2, it is still true that at a previous point
-in time, the selected quantity was 3. If you overwrite data in your database, you lose this historic
-information. Keeping the list of all changes as a log of immutable events thus gives you strictly
-richer information than if you overwrite things in the database.</p>
-
-<p>And this is really the essence of event sourcing: rather than performing destructive state mutation
-on a database when writing to it, we should record every write as a “command”, as an immutable
-event.</p>
-
-<p><img src="/2015/01/stream-15.png" alt="History of what happened vs. current state" width="550" height="412" /></p>
-
-<p>And that brings us back to our stream processing example (Google Analytics). Remember we discussed
-two options for storing data: (a) raw events, or (b) aggregated summaries.</p>
-
-<p>What we have here with event sourcing is looking very similar. You can think of those event-sourced
-commands (AddToCart, UpdateCartQuantity) as raw events: they comprise the history of what happened
-over time. But when you’re looking at the contents of your shopping cart, you see the its current
-state — the end result, which is what you get when you have applied the entire history of events and
-squashed them together into one thing.</p>
-
-<p>So the current state of the cart may say quantity 2. The history of raw events will tell you that at
-some previous point in time the quantity was 3, but that the customer later changed their mind and
-updated it to 2. The aggregated end result only tells you that the current quantity is 2.</p>
-
-<p><img src="/2015/01/stream-16.png" alt="Events = writes, aggregates = reads" width="550" height="412" /></p>
-
-<p>Thinking about it further, you can observe that the raw events are the form in which it’s ideal to
-write the data: all the information in the database write is contained in a single blob. You don’t
-need to go and update five different tables if you’re storing raw events — you only need to append
-the event to the end of a log. That’s the simplest and fastest possible way of writing to
-a database.</p>
-
-<p>On the other hand, the aggregated data is the form in which it’s ideal to read data from the
-database. If a customer is looking at the contents of their shopping cart, they are not interested
-in the entire history of modifications that led to the current state — they only want to know what’s
-in the cart right now. So when you’re reading, you can get the best performance if the history of
-changes has already been squashed together into a single object representing the current state.</p>
-
-<p><img src="/2015/01/stream-17.png" alt="Events = buttons, aggregates = screens" width="550" height="412" /></p>
-
-<p>Going even further, think about the user interfaces that lead to database writes and database reads.
-A database write typically happened because the user clicked some button: for example, they edited
-some data, and now they click the save button. So, buttons in the user interface correspond to raw
-events in the event sourcing history.</p>
-
-<p>On the other hand, a database read typically happens because the user views some screen: they click
-on some link or open some document, and now they need to read the contents. These reads typically
-want to know the current state of the database. So screens in the user interface correspond to
-aggregated state.</p>
-
-<p>This is quite an abstract idea, so let me go through a few examples.</p>
-
-<p><img src="/2015/01/stream-18.png" alt="Twitter example: input = tweet, output = timeline" width="550" height="412" /></p>
-
-<p>Take Twitter, for example. The most common way of writing to Twitter’s database — i.e. to provide
-input into the Twitter system — is to tweet something. A tweet is very simple: it consists of some
-text, a timestamp, and the ID of the user who tweeted. (Perhaps optionally a location, or a photo,
-or something.) The user then clicks that “Tweet” button, which causes a database write to happen,
-i.e. an event is generated.</p>
-
-<p>On the output side, the way how you read from Twitter’s database is by viewing your timeline. It
-shows all the stuff that was written by people you follow. It’s a vastly more complicated structure:</p>
-
-<p><img src="/2015/01/stream-19.png" alt="Twitter example: input and output data" width="550" height="412" /></p>
-
-<p>For each tweet, you now have not just the text, timestamp and user ID, but also the name of the
-user, their profile photo, and other information that has been joined with the tweet. Also, the list
-of tweets has been selected based on the people you follow, which may itself change.</p>
-
-<p>How would you go from the simple input to the more complex output? Well, you could try expressing it
-in SQL, something like this:</p>
-
-<p><img src="/2015/01/stream-20.png" alt="Twitter example: query to generate timeline" width="550" height="412" /></p>
-
-<p>That is, find all of the users who $user is following, find all the tweets that they have written,
-order them by time and pick the 100 most recent. Turns out this query really doesn’t scale very
-well. Do you remember in the early days of Twitter, when they kept having the fail whale all the
-time? <a href="http://www.infoq.com/presentations/Twitter-Timeline-Scalability">Apparently</a> that was
-essentially because they were using something like the query above.</p>
-
-<p>When a user views their timeline, it’s too expensive to iterate over all the people they are
-following to get those users’ tweets. Instead, Twitter must compute a user’s timeline ahead of time,
-and cache it, so that it’s fast when a user looks at it. To do that, they need a process that
-translates from the write-optimized event (a single tweet) to the read-optimized aggregate (a
-timeline). Twitter has such a process, and calls it the
-<a href="http://www.infoq.com/presentations/Twitter-Timeline-Scalability">fanout service</a>.</p>
-
-<p><img src="/2015/01/stream-21.png" alt="Facebook example: input = like button, output = post" width="550" height="412" /></p>
-
-<p>Another example: take Facebook. It has many buttons that enable you to write something to Facebook’s
-database, but a classic one is the “Like” button. When you click it, that generates an event, a fact
-with a very simple structure: <em>you</em> (identified by your user ID) <em>like</em> (an action verb) <em>some item</em>
-(identified by its ID).</p>
-
-<p>However, if you look at the output side, reading something on Facebook, it’s incredibly complicated.
-In this example we have a Facebook post which is not just some text, but also the name of the author
-and his profile photo; and it’s telling me that 160,216 people like this update, of which three have
-been especially highlighted (presumably because Facebook thinks that amongst the likers of this
-update, these are the ones I am most likely to know); it’s telling me that there are 6,027 shares
-and 12,851 comments, of which the top 4 comments are shown (clearly some kind of comment ranking is
-happening here); and so on.</p>
-
-<p><img src="/2015/01/stream-22.png" alt="Facebook example: input and output data" width="550" height="412" /></p>
-
-<p>There must be some translation process happening here, which takes the very simple events as input,
-and produces the massively complex and personalized output structure. You can’t even conceive what
-the database query would look like to fetch all the information in that Facebook update. There is no
-way they could efficiently query all of that on the fly, not with over 100,000 likes. Clever caching
-is absolutely essential if you want to build something like this.</p>
-
-<p><img src="/2015/01/stream-23.png" alt="Events = source of truth, derived data can be denormalized" width="550" height="412" /></p>
-
-<p>From the Twitter and Facebook examples we can see a certain pattern: the input events, corresponding
-to the buttons in the user interface, are quite simple. They are immutable facts, we can simply
-store them all, and we can treat them as the <em>source of truth</em>.</p>
-
-<p>Everything that you can see on a website, i.e. everything that you read from the database, can be
-derived from those raw events. There is a process which derives those aggregates from the raw
-events, and which updates the caches when new events come in, and that process is entirely
-deterministic. You could, if necessary, re-run it from scratch: if you feed in the entire history of
-everything that ever happened on the site, you can reconstruct every cache entry to be exactly as it
-was before. The database you read from is just a
-<a href="http://blogs.msdn.com/b/pathelland/archive/2007/06/14/accountants-don-t-use-erasers.aspx">cached view of the event log</a>.</p>
-
-<p>The beautiful thing about this separation between source of truth and caches is that in your caches,
-you can denormalize data to your heart’s content. In regular databases, it is often considered best
-practice to normalize data, because if something changes, you then only have to change it one place.
-Normalization makes writes fast and simple, but means you have to do more work (joins) at read time.</p>
-
-<p>In order to speed up reads, you can denormalize data, i.e. duplicate information in various places
-so that it can be read faster. The problem is now that if the original data changes, all the places
-where you copied it to also need to change. In a typical database, that’s a nightmare, because you
-may not know all the places where something has been copied. But if your caches are built from your
-raw events using a repeatable process, you have much more freedom to denormalize, because you know
-what data is flowing where.</p>
-
-<p><img src="/2015/01/stream-24.png" alt="Wikipedia example: input = wiki markup, output = wiki page" width="550" height="412" /></p>
-
-<p>Another example: Wikipedia. This is almost a counter-example to Twitter and Facebook, because on
-Wikipedia the input and the output are almost the same.</p>
-
-<p><img src="/2015/01/stream-25.png" alt="Wikipedia example: input and output are almost the same" width="550" height="412" /></p>
-
-<p>When you edit a page on Wikipedia, you get a big text field containing the entire page content
-(using wiki markup), and when you click the save button, it sends that entire page content back to
-the server. The server replaces the entire page with whatever you posted to it. When someone views
-the page, it returns that same content back to the user (formatted into HTML).</p>
-
-<p>So, in this case, the input and the output are the same. What would event sourcing mean in this
-case? Would it perhaps make sense to represent a write event as a diff, like a patch file, rather
-than a copy of the entire page? It’s an interesting case to think about. (Google Docs works by
-continually applying diffs at a character granularity — effectively an event per keystroke.)</p>
-
-<p><img src="/2015/01/stream-26.png" alt="LinkedIn example: input = profile edit, output = search index" width="550" height="412" /></p>
-
-<p>Final example: LinkedIn. Say you update your LinkedIn profile, and add your current job, which
-consists of a job title, a company, and some text. Again, the edit event for writing to the database
-is very simple.</p>
-
-<p>There are various ways how you can read this data, and in this example, let’s look at the search
-feature. On the output side, one way you can read LinkedIn’s database is by typing some keywords and
-maybe a company name into a search box, and find all the people matching those criteria.</p>
-
-<p><img src="/2015/01/stream-27.png" alt="LinkedIn example: profile edit vs. search index" width="550" height="412" /></p>
-
-<p>How is that implemented? Well, in order to search, you need a full-text index, which is essentially
-a big dictionary — for every keyword, it tells you the IDs of all the profiles that contain the
-keyword. This search index is another aggregate structure, and whenever some data is written to the
-database, this structure needs to be updated with the new data.</p>
-
-<p>So for example, if I add my job “Author at O’Reilly” to my profile, the search index must now be
-updated to include my profile ID under the entries for “author” and “o’reilly”. The search index is
-just another kind of cache. It also needs to be built from the source of truth (all the profile
-edits that have ever occurred) and it needs to be updated whenever a new event occurs (someone edits
-their profile).</p>
-
-<p><img src="/2015/01/stream-09.png" alt="Streaming aggregation via event stream" width="550" height="412" /></p>
-
-<p>Now, returning to stream processing. I first described how you might build something like Google
-Analytics, and compared storing raw page view events versus aggregated counters, and discussed how
-you can maintain those aggregates by consuming a stream of events.</p>
-
-<p><img src="/2015/01/stream-29.png" alt="Stream processing as data integration" width="550" height="412" /></p>
-
-<p>I then explained event sourcing, which applies a similar approach to databases: treat all the
-database writes as a stream of events, and build aggregates (views, caches, search indexes) from
-that stream. Once you have that event stream, you can do many great things with it:</p>
-
-<ul>
-  <li>You can take all the raw events, perhaps transform them a bit, and load them into a big data
-warehouse where analysts can query the data to their heart’s content.</li>
-  <li>You can update full-text search indexes, so that when a user hits the search box, they are
-searching an up-to-date version of the data.</li>
-  <li>You can invalidate or refill any caches, so that reads can be served from fast caches while also
-making sure that the data in the cache remains fresh.</li>
-  <li>And finally, you can even take one event stream, and process it in some way (perhaps joining a few
-streams together) to create a new output stream. This way, you can plug the output of one system
-into the input of another system. This is a very powerful way of building complex applications
-cleanly.</li>
-</ul>
-
-<p><img src="/2015/01/stream-30.png" alt="Advantages of event sourcing" width="550" height="412" /></p>
-
-<p>Moving to an event-sourcing-like approach for databases is a big change from the way that databases
-have traditionally been used (where you can update and delete data at will). Why would you want to
-go to all that effort of changing the way you do things? What’s the benefit of using append-only
-streams of immutable events?</p>
-
-<p>Several reasons:</p>
-
-<ul>
-  <li><strong>Loose coupling.</strong> If you write data to the database in the same schema as you use for reading,
-you have tight coupling between the part of the application doing the writing (the “button”) and
-the part doing the reading (the “screen”). We know that loose coupling is a good design principle
-for software. By separating the form in which you write and read data, and by explicitly
-translating from one to the other, you get much looser coupling between different parts of your
-application.</li>
-  <li><strong>Read and write performance.</strong> The decades-old debate over normalization (faster writes) vs.
-denormalization (faster reads) exists only because of the assumption that writes and reads use the
-same schema. If you separate the two, you can have fast writes <em>and</em> fast reads.</li>
-  <li>Event streams are great for <strong>scalability</strong>, because they are a simple abstraction (comparatively
-easy to parallelize and scale across multiple machines), and because they allow you to decompose
-your application into producers and consumers of streams (which can operate independently, and can
-take advantage of more parallelism in hardware).</li>
-  <li><strong>Flexibility and agility.</strong> Raw events are so simple and obvious that a “schema migration”
-doesn’t really make sense (you may just add a new field from time to time, but you don’t usually
-need to rewrite historic data into a new format). On the other hand, the ways in which you want to
-present data to users are much more complex, and may be continually changing. If you have an
-explicit translation process between the source of truth and the caches that you read from, you
-can experiment with new user interfaces by just building new caches using new logic, running the
-new system in parallel with the old one, gradually moving people over from the old system, and
-then discarding the old system (or reverting to the old system if the new one didn’t work). Such
-flexibility is incredibly liberating.</li>
-  <li>Finally, <strong>error scenarios</strong> are much easier to reason about if data is immutable. If something
-goes wrong in your system, you can always replay events in the same order, and
-<a href="http://martinfowler.com/articles/lmax.html">reconstruct exactly what happened</a> (especially
-important in finance, where auditability is crucial). If you deploy buggy code that writes bad
-data to a database, you can just re-run it after you fixed the bug, and thus correct the outputs.
-Those things are not possible if your database writes are destructive.</li>
-</ul>
-
-<p><img src="/2015/01/stream-31.png" alt="Title: tools" width="550" height="193" /></p>
-
-<p>Finally, let’s talk about how you might put these ideas into practice.</p>
-
-<p>I should point out that in reality, database writes often already do have a certain event-like
-<a href="http://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf">immutable quality</a>. The write-ahead log
-that exists in most databases is essentially an event stream of writes, although it’s very specific
-to a particular database. The MVCC mechanism in databases like PostgreSQL, MySQL’s InnoDB and
-Oracle, and the append-only B-trees of CouchDB, Datomic and LMDB are examples of the same thinking:
-it’s better to structure writes as an append-only log than to perform destructive overwrites.</p>
-
-<p>However, here we’re not talking about the internals of storage engines, but about using event
-streams at the application level.</p>
-
-<p><img src="/2015/01/stream-32.png" alt="Kafka and Samza" width="550" height="412" /></p>
-
-<p>Some databases such as <a href="http://geteventstore.com/">Event Store</a> have oriented themselves
-specifically at the event sourcing model, and some people have implemented event sourcing on top of
-relational databases. Those may be viable solutions if you’re operating at fairly small scale.</p>
-
-<p>The systems I have worked with most are <a href="http://kafka.apache.org/">Apache Kafka</a> and
-<a href="http://samza.apache.org/">Apache Samza</a>. They are open source projects that originated at LinkedIn,
-and now have a big community around them. Kafka is a message broker, like a publish-subscribe
-message queue, which supports event streams with many millions of messages per second, durably
-stored on disk and replicated across multiple machines.</p>
-
-<p>Samza is the processing counterpart to Kafka: a framework which lets you write code to consume input
-streams and produce output streams, and it handles stuff like deploying your code to a cluster and
-recovering from failures.</p>
-
-<p><img src="/2015/01/stream-33.png" alt="Distributed stream processing frameworks overview" width="550" height="412" /></p>
-
-<p>I would definitely recommend Kafka as a system for high-throughput reliable event streams. On the
-processing side, there are a few choices: <a href="http://samza.apache.org/">Samza</a>,
-<a href="http://storm.apache.org/">Storm</a> and <a href="https://spark.apache.org/streaming/">Spark Streaming</a> are the
-most popular stream processing frameworks. They all allow you to run your stream processing code
-distributed across multiple machines.</p>
-
-<p>There are interesting design differences (pros and cons) between these three frameworks, which
-I don’t have time to go into here. You can read up a detailed comparison between them in the
-<a href="http://samza.apache.org/learn/documentation/0.8/comparisons/introduction.html">Samza documentation</a>.
-And yes, I also think it’s funny that they all start with the letter S.</p>
-
-<p>Today’s distributed stream processing systems have come out of internet companies (Samza from
-LinkedIn, Storm from Backtype/Twitter). Arguably, they have their roots in stream processing
-research from the early 2000s (<a href="http://db.csail.mit.edu/madden/html/TCQcidr03.pdf">TelegraphCQ</a>,
-<a href="http://cs.brown.edu/research/borealis/public/">Borealis</a>, etc), which originated from a relational
-database background. Just as NoSQL datastores stripped databases down to a minimal feature set,
-modern stream processing systems look quite stripped-down compared to the earlier research.</p>
-
-<p><img src="/2015/01/stream-34.png" alt="Stream query engines" width="550" height="412" /></p>
-
-<p>The modern stream processing frameworks (Samza, Storm, Spark Streaming) are mostly concerned with
-low-level matters: how to scale processing across multiple machines, how to deploy a job to
-a cluster, how to handle faults (crashes, machine failures, network outages), and how to achieve
-reliable performance in a
-<a href="https://twitter.com/jaykreps/status/528235702480142336">multi-tenant environment</a>. The APIs they
-provide are quite low-level (e.g. a callback that is invoked for every message). They look much more
-like MapReduce and less like a database. They are more interested in reliable operation than in
-fancy features.</p>
-
-<p>By contrast, there is also some work on high-level query languages for stream processing,
-and Complex Event Processing is especially worth mentioning. It originated in 1990s research on
-<a href="http://www.complexevents.com/2006/08/01/what%E2%80%99s-the-difference-between-esp-and-cep/">event-driven simulation</a>,
-and most CEP products are commercial, expensive enterprise software (only
-<a href="http://esper.codehaus.org/">Esper</a> is free/open source, and it’s limited to running on a single
-machine).</p>
-
-<p>With CEP, you write queries or rules that match certain patterns in the events. They are comparable
-to SQL queries (which describe what results you want to return from a database), except that the CEP
-engine continually searches the stream for sets of events that match the query and notifies you
-(generates a “complex event”) whenever a match is found. This is useful for fraud detection or
-monitoring business processes, for example.</p>
-
-<p>For use cases that can be easily described in terms of a CEP query language, such a high-level
-language is much more convenient than a low-level event processing API. On the other hand,
-a low-level API gives you more freedom, allowing you to do a wider range of things than a query
-language would let you do. Also, by focussing their efforts on scalability and fault tolerance,
-stream processing frameworks provide a solid foundation upon which query languages can be built.</p>
-
-<p>A related idea is doing full-text search on streams, where you register a search query in advance,
-and then get notified whenever an event matches your query. We’ve done some
-<a href="https://github.com/romseygeek/samza-luwak">experimental work</a> with
-<a href="https://github.com/flaxsearch/luwak">Luwak</a> in this area, but it’s still very new.</p>
-
-<p><img src="/2015/01/stream-35.png" alt="Event-based technologies" width="550" height="412" /></p>
-
-<p>Finally, there are a lot of other things that are somehow related to stream processing. Going into
-laundry-list mode, here is a brief summary:</p>
-
-<ul>
-  <li><strong>Actor frameworks</strong> such as Akka, Orleans and Erlang OTP are also based on streams of immutable
-events. However, they are primarily a mechanism for concurrency, less a mechanism for data
-management. Some actor frameworks do have a distributed component, so you could build
-a distributed stream processing framework on top of actors. However, it’s worth looking carefully
-at the fault-tolerance guarantees and failure modes of these systems: many don’t provide
-durability, for example.</li>
-  <li>There’s a lot of buzz around “<strong>reactive</strong>”, which seems to encompass a quite loosely-defined
-<a href="http://www.reactivemanifesto.org/">set of ideas</a>. My impression is that there is some good work
-happening in dataflow languages and functional reactive programming (FRP), which I see as mostly
-about bringing event streams to the user interface, i.e. updating the user interface when some
-underlying data changes. This is a natural counterpart to event streams in the data backend.</li>
-  <li>Finally, <strong>change data capture</strong> (CDC) means using an existing database in the familiar way, but
-extracting any inserts, updates and deletes into a stream of data change events which other
-applications can consume. This is a great migration path towards a stream-oriented architecture,
-and I’ll be talking and writing more about CDC in future.</li>
-</ul>
-
-<p>I hope this talk helped you make some sense of the many facets of stream processing!</p>
-
-<p><em><a href="https://martin.kleppmann.com/">Martin Kleppmann</a> is a software engineer and entrepreneur. He is
-a committer on <a href="http://samza.apache.org/">Apache Samza</a> and author of the upcoming O’Reilly book
-<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>. He’s
-<a href="https://twitter.com/martinkl">@martinkl</a> on Twitter.</em></p>
 
                 ]]></content:encoded>
             </item>
