@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Tue, 09 Feb 2016 09:30:48 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 09 Feb 2016 14:48:33 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -176,7 +176,7 @@ illustrated in the following diagram:</p>
 expires. Client 2 acquires the lease, gets a token of 34 (the number always increases), and then
 sends its write to the storage service, including the token of 34. Later, client 1 comes back to
 life and sends its write to the storage service, including its token value 33. However, the storage
-server rembers that it has already processed a write with a higher token number (34), and so it
+server remembers that it has already processed a write with a higher token number (34), and so it
 rejects the request with token 33.</p>
 
 <p>Note this requires the storage server to take an active role in checking tokens, and rejecting any
@@ -235,8 +235,8 @@ detector. In plain English, this means that even if the timings in the system ar
 algorithm might go to hell, but the algorithm will never make an incorrect decision.</p>
 
 <p>However, Redlock is not like this. Its safety depends on a lot of timing assumptions: it assumes
-that all Redis nodes hold keys for approximately the right length of time before expiring; that that
-the network delay is small compared to the expiry duration; and that process pauses are much shorter
+that all Redis nodes hold keys for approximately the right length of time before expiring; that the
+network delay is small compared to the expiry duration; and that process pauses are much shorter
 than the expiry duration.</p>
 
 <h2 id="breaking-redlock-with-bad-timings">Breaking Redlock with bad timings</h2>
