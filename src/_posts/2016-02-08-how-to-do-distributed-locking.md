@@ -165,7 +165,7 @@ Client 1 acquires the lease and gets a token of 33, but then it goes into a long
 expires. Client 2 acquires the lease, gets a token of 34 (the number always increases), and then
 sends its write to the storage service, including the token of 34. Later, client 1 comes back to
 life and sends its write to the storage service, including its token value 33. However, the storage
-server rembers that it has already processed a write with a higher token number (34), and so it
+server remembers that it has already processed a write with a higher token number (34), and so it
 rejects the request with token 33.
 
 Note this requires the storage server to take an active role in checking tokens, and rejecting any
@@ -234,8 +234,8 @@ detector. In plain English, this means that even if the timings in the system ar
 algorithm might go to hell, but the algorithm will never make an incorrect decision.
 
 However, Redlock is not like this. Its safety depends on a lot of timing assumptions: it assumes
-that all Redis nodes hold keys for approximately the right length of time before expiring; that that
-the network delay is small compared to the expiry duration; and that process pauses are much shorter
+that all Redis nodes hold keys for approximately the right length of time before expiring; that the
+network delay is small compared to the expiry duration; and that process pauses are much shorter
 than the expiry duration.
 
 
