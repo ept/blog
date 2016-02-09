@@ -365,12 +365,19 @@ Rodrigues' textbook][rsdp]&nbsp;[13].
 
 *Thank you to [Kyle Kingsbury][aphyr], [Camille Fournier][camille], [Flavio Junqueira][flavio], and
 [Salvatore Sanfilippo][antirez] for reviewing a draft of this article. Any errors are mine, of
-course. Salvatore may not agree with this analysis, and I respect his viewpoints.*
+course.*
 
 [aphyr]: https://aphyr.com
 [flavio]: https://twitter.com/fpjunqueira
 [camille]: https://twitter.com/skamille
 [antirez]: http://antirez.com/
+
+**Update 9 Feb 2016:** [Salvatore][antirez], the original author of Redlock, has
+[posted a rebuttal](http://antirez.com/news/101) to this article (see also
+[HN discussion](https://news.ycombinator.com/item?id=11065933)). He makes some good points, but
+I stand by my conclusions. I may elaborate in a follow-up post if I have time, but please form your
+own opinions -- and please consult the references below, many of which have received rigorous
+academic peer review (unlike either of our blog posts).
 
 
 References
