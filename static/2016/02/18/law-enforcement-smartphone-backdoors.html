@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Bupa's 'Quitclock' Facebook app now online &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Should law enforcement services have a backdoor into smartphones? &mdash; Martin Kleppmann&rsquo;s blog</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,25 +44,90 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Bupa's 'Quitclock' Facebook app now online"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Should law enforcement services have a backdoor into smartphones?"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Bupa's 'Quitclock' Facebook app now online</h1>
+                <h1>Should law enforcement services have a backdoor into smartphones?</h1>
 
-                <p>Just a brief note to say that the
-<a href="http://www.facebook.com/apps/application.php?id=39245025835">Quitclock Facebook application</a> which
-I developed for the
-<a href="http://www.bupa.co.uk/">health insurance company Bupa</a> has now been officially launched
-(<a href="http://www.bupa.co.uk/health_information/html/health_news/171208_quitclock.html">see the press release</a>).</p>
+                <p><em>This article was originally supposed to be published on <a href="https://theconversation.com/">The Conversation</a>,
+but was dropped because they already had another, very similar article.</em></p>
 
-<p>Purpose of the application is to help people who want to give up smoking. Users can enter the date when they
-stopped smoking, and get updates on how much money they have saved, display a box on their profile,
-get support messages etc. The application was launched now because many people try to give up
-smoking as their new year’s resolution.</p>
+<p>Apple has found itself challenging a judge’s ruling after it <a href="http://www.theguardian.com/us-news/2016/feb/17/apple-ordered-to-hack-iphone-of-san-bernardino-shooter-for-fbi">refused to help the FBI</a>
+break into the secured iPhone of Syed Rizwan Farook, one of the shooters at last year’s attack in
+San Bernardino, California. As the data on the phone is encrypted and investigators need the
+passcode in order to decrypt it they have <a href="https://www.documentcloud.org/documents/2714001-SB-Shooter-Order-Compelling-Apple-Asst-iPhone.html">demanded that Apple</a>, as the phone’s
+manufacturer, help them.</p>
 
-<p>The application is hosted on Google App Engine, marking my
-first real-life use of GAE. It has been a bit frustrating at times, and I may post some more
-comments about my App Engine experience at some later stage.</p>
+<p>On the face of it, assisting with the investigation of a terrorist act seems like a very reasonable
+demand. Why would Apple refuse it? To understand we have to take a closer look at how smartphone
+security works.</p>
+
+<p>Apple’s <a href="https://www.apple.com/business/docs/iOS_Security_Guide.pdf">iOS operating system security guide</a> explains that the iPhone deliberately
+introduces a delay when checking a passcode: it allows at most 12 passcode guesses per second, and
+sometimes waits several seconds after an incorrect guess, depending on your settings. This is to
+prevent “brute force attacks”, where software tries every possible combination in order to find the
+correct passcode.</p>
+
+<p>On recent iPhones, this delay is enforced by the so-called <a href="http://blog.cryptographyengineering.com/2014/10/why-cant-apple-decrypt-your-iphone.html">Secure Enclave</a>,
+a special chip that handles security-critical aspects of the phone – such as encryption and the
+fingerprint sensor – in hardware. In the case of Farook’s phone, it’s an iPhone 5C which <a href="http://blog.trailofbits.com/2016/02/17/apple-can-comply-with-the-fbi-court-order/">does not
+have a Secure Enclave</a>.</p>
+
+<p>The reason Apple develops these security features is not anti-government activism – it is simply
+commercial demand. The job of big corporate IT departments is to protect sensitive company data
+against industrial espionage by competitors, and against attacks from criminal gangs. In many
+industries a compromise of sensitive data would breach compliance with government regulations, and
+<a href="http://www.theguardian.com/society/2014/aug/26/ministry-justice-fined-180000-losing-hard-drive-sensitive-data-prisoners">risk a heavy fine</a> or even criminal charges. This is not to mention the
+reputational damage, as <a href="https://theconversation.com/talktalk-hack-perhaps-well-finally-take-cybersecurity-seriously-50144">many firms have found</a>. And the same applies to individuals for
+much the same reasons.</p>
+
+<p>So if companies are willing to pay a premium for products that will keep their data safe, they will
+happily buy iPhones for their employees, and require them to set a strong passcode. That way, even
+if an employee accidentally forgets their phone at a bar, or it is <a href="http://www.bbc.co.uk/news/uk-england-manchester-19960966">stolen from the employee’s
+home</a>, the IT department can feel confident that whoever picks up the phone won’t be able
+to access the sensitive emails and business records that may be stored on it.</p>
+
+<p>For example, even if the phone is picked up by an agent of a hostile foreign intelligence service,
+and they take it to their lab and open it up, remove the storage chips and attach them to computer
+forensics apparatus – even then, they probably <a href="http://www.darthnull.org/2014/10/06/ios-encryption">won’t be able to salvage the data</a>.
+An unlikely scenario for most people, but if you work for a defence contractor or the diplomatic
+corps, you have to worry about such things. If companies are willing to pay for security features to
+protect against such scenarios, it makes sense for companies such as Apple <a href="http://www.apple.com/customer-letter/">to take note of their
+wishes</a>.</p>
+
+<p>But what about situations when it might be legitimate for law enforcement to try to access this
+data? If the FBI turn up with a warrant signed by a judge, should they not be able to get their
+hands on the information?</p>
+
+<p>The problem is that if there is a special method or technique, besides knowing the right passcode,
+that grants access to protected data – known as a <a href="https://theconversation.com/could-encryption-backdoors-safeguard-privacy-and-fight-terror-online-53419">backdoor</a> – then that method or technique could
+be used for both legitimate and illegitimate uses. How do you control who can use that backdoor? If
+a phone manufacturer creates a backdoor for police, it <a href="https://www.cl.cam.ac.uk/~rja14/Papers/doormats.pdf">will inevitably be used by criminals as
+well</a>.</p>
+
+<p>For example, imagine the FBI had a special piece of software that would allow them to unlock an
+iPhone if authorised by a warrant. It would only take one rogue employee, or one hack of the FBI’s
+computer systems, to leak that software onto the internet for any criminal – or foreign spies – to
+use. Imagine they had a hardware device that would magically open an iPhone and reveal it’s data:
+a few of those devices would end up on the black market very quickly. <a href="http://www.theguardian.com/technology/2015/jul/09/opm-hack-21-million-personal-information-stolen">Government departments can be
+hacked</a>, just like anyone else, and there are always employees looking to make a quick
+buck.</p>
+
+<p>Encryption backdoors <a href="https://www.eff.org/deeplinks/2016/02/eff-support-apple-encryption-battle">deliberately weaken security</a>. This is fundamentally a bad idea, and can
+have many <a href="http://blog.cryptographyengineering.com/2015/12/on-juniper-backdoor.html">unforeseen consequences</a>. Trying to restrict access to strong encryption, as the
+<a href="https://en.wikipedia.org/wiki/Export_of_cryptography_from_the_United_States">US government tried and failed to do in the 1990s</a>, is counterproductive and
+pointless: <a href="http://blog.cryptographyengineering.com/2015/03/attack-of-week-freak-or-factoring-nsa.html">counterproductive</a> because it only harms innocent people, whereas those its aimed
+at will find a way to work around it, and pointless because strong encryption products are <a href="https://www.schneier.com/cryptography/paperfiles/worldwide-survey-of-encryption-products.pdf">found
+throughout the world</a>: people will just go somewhere else for their encryption if they
+can’t get it at home.</p>
+
+<p>It is understandable that in the wake of a crime or terrorist attack, politicians and law
+enforcement need to be seen as “doing something”. However, that does not mean law enforcement should
+be able to do everything. It is worth remembering why security mechanisms like encryption exist in
+the first place: to protect sensitive medical, legal, journalistic, financial, diplomatic,
+commercial or military data from falling into the wrong hands. Trying to weaken those protections
+would cause far more harm than good.</p>
+
 
 
                 
@@ -191,7 +256,7 @@ comments about my App Engine experience at some later stage.</p>
 
     <script type="text/javascript">
     var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2009/01/01/bupas-quitclock-facebook-app-now-online.html';
+    var disqus_url = 'http://martin.kleppmann.com/2016/02/18/law-enforcement-smartphone-backdoors.html';
     var disqus_identifier = disqus_url;
 
     (function() {
