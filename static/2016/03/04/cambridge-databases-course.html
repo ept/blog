@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Streams as the team interface &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Beyond relational databases &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,52 +44,41 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Streams as the team interface"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Beyond relational databases"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Streams as the team interface</h1>
+                <h1>Beyond relational databases</h1>
 
                 <p>
                   A talk at
                   
-                    <a href="http://oredev.org/2015/sessions/streams-as-the-team-interface">Øredev</a>,
+                    <a href="http://www.cl.cam.ac.uk/teaching/1516/Databases/">University of Cambridge</a>,
                   
-                  Malmö, Sweden, 06 Nov 2015
+                  Cambridge, UK, 04 Mar 2016
                 </p>
 
                 <ul>
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/streams-as-the-team-interface">Slides</a></li>
+                    <li><a href="https://speakerdeck.com/ept/beyond-relational-databases">Slides</a></li>
                   
-                  
-                    <li><a href="https://vimeo.com/144863186">Video</a></li>
                   
                   
                 </ul>
 
-                <script async="" class="speakerdeck-embed" data-id="cd8f6b0806d746bbaeff46752622f3af" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+                <script async="" class="speakerdeck-embed" data-id="7a29aeb8c5344a13baac2985a023c5d9" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
-<iframe src="https://player.vimeo.com/video/144863186" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+<p>I was asked to give a guest lecture on “NoSQL” for the University of Cambridge undergraduate course
+in computer science, part of the lecture series on databases.</p>
 
-<h2 id="abstract">Abstract</h2>
+<p>The audience for this lecture was second-year undergraduate students who have learnt about SQL and
+relational algebra, but who have little practical experience in working with database systems.</p>
 
-<p>How do you remain agile when working on a large application? How do you keep feedback cycles short
-and ship features quickly? How do you adapt rapidly to changing requirements?</p>
-
-<p>Somehow, you need to break the big application into smaller, more manageable chunks. Microservices
-are a growing trend for splitting up monolithic applications into independently deployable services.
-Although there are many good things about microservices, it’s not all roses: keeping them reliable
-and consistently performant can take serious effort.</p>
-
-<p>In this talk, we’ll discuss a different approach to breaking down a big application into smaller
-chunks: stream processing. Many applications can be designed as a cascade of jobs that consume and
-produce real-time data streams. When you build applications this way, streams are not just an
-implementation detail — they become the interface from one team to another.</p>
-
-<p>Building on the experience of building large-scale stream processing systems with Apache Kafka, this
-talk will explore how streams can help make our software development more agile, and our systems
-faster and more robust at the same time.</p>
+<p>My goal in this lecture was to use various examples to illustrate why one might use different data
+models and different storage technologies in different situations — there is no “one size fits all”
+database that can handle all possible data management needs. Every data management approach works
+well in some scenarios, and runs into limitations in other scenarios. These trade-offs help explain
+why there is such a variety of technologies.</p>
 
             </div>
 
