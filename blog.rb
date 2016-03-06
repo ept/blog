@@ -8,7 +8,8 @@ SHORTLINKS = {
   pwl:    '/2015/07/08/attiya-welch-at-papers-we-love.html',
   unix:   'http://hubs.ly/H0125_b0',
   pass15: '/2015/12/08/preventing-key-theft-at-passwords15.html',
-  dddeu:  '/2016/01/29/event-sourcing-stream-processing-at-ddd-europe.html'
+  dddeu:  '/2016/01/29/event-sourcing-stream-processing-at-ddd-europe.html',
+  qcon:   '/2016/03/07/qcon-london.html'
 }
 
 require 'rubygems'
