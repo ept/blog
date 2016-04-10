@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Device security and the FBI &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Device security and the FBI"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Device security and the FBI</h1>
+
+                <p><em>This article was originally <a href="https://theconversation.com/fbi-backs-off-from-its-day-in-court-with-apple-this-time-but-there-will-be-others-56932">published on The Conversation</a> under the title
+“FBI backs off from its day in court with Apple this time – but there will be others”.</em></p>
+
+<p>After a <a href="https://theconversation.com/why-apple-is-making-a-stand-against-the-fbi-54925">very public stand-off</a> over an encrypted terrorist’s smartphone, the FBI has
+<a href="http://www.theguardian.com/technology/2016/mar/21/fbi-apple-court-hearing-postpone-unlock-terrorist-iphone">backed down</a> in its court case against Apple, stating that an “outside party”
+– rumoured to be <a href="https://www.rt.com/usa/336948-fbi-israel-crack-iphone/">an Israeli mobile forensics company</a> – has found a way of accessing
+the data on the phone.</p>
+
+<p>The exact method is not known. Forensics experts <a href="http://www.zdziarski.com/blog/?p=5966">have speculated</a> that it involves tricking
+the hardware into not recording how many passcode combinations have been tried, which would allow
+all 10,000 possible four-digit passcodes to be tried within a fairly short time. This technique
+would apply to the iPhone 5C in question, but not newer models, which have stronger hardware
+protection through the so-called <a href="https://www.apple.com/business/docs/iOS_Security_Guide.pdf">secure enclave</a>, a chip that performs
+security-critical operations in hardware. The FBI has denied that the technique involves
+<a href="https://www.washingtonpost.com/world/national-security/the-fbi-is-testing-a-code-based-way-to-get-into-the-san-bernardino-iphone/2016/03/24/bc79cd14-f1dc-11e5-a61f-e9c95c06edca_story.html">copying storage chips</a>.</p>
+
+<p>So while the details of the technique <a href="http://www.theguardian.com/technology/2016/mar/22/apple-fbi-san-bernardino-iphone-method-for-cracking">remain classified</a>, it’s reasonable to assume
+that <a href="https://theintercept.com/2016/03/08/snowden-fbi-claim-that-only-apple-can-unlock-phone-is-bullshit/">any security technology can be broken</a> given sufficient resources. In fact, the
+technology industry’s dirty secret is that most products are frighteningly insecure.</p>
+
+<p>Even when security technologies are carefully designed and reviewed by experts, mistakes happen. For
+example, researchers recently found a way of <a href="http://blog.cryptographyengineering.com/2016/03/attack-of-week-apple-imessage.html">breaking the encryption of Apple’s iMessage
+service</a>, one of the most prominent examples of end-to-end encryption (which ensures that
+even the service provider cannot read the messages travelling via its network).</p>
+
+<p>Most products have a much worse security record, as they are not designed by security experts, and
+often contain flaws that are easily found by attackers. For example, <a href="http://boingboing.net/2016/01/19/griefer-hacks-baby-monitor-te.html">internet-connected baby
+monitors</a> that could be hacked and allow strangers to <a href="http://sfglobe.com/2016/01/06/stranger-hacks-familys-baby-monitor-and-talks-to-child-at-night/">talk to their child</a> at
+night. Insecure cars that <a href="https://theconversation.com/auto-industry-must-tackle-its-software-problems-to-stop-hacks-as-cars-go-online-45325">could be controlled via an internet connection</a> while being driven.
+Drug infusion pumps at US hospitals that could be hacked by an attacker to <a href="https://www.boxer.senate.gov/?p=release&amp;id=3254">manipulate drug dosage
+levels</a>.</p>
+
+<p>Even national infrastructure is vulnerable, with software weaknesses exploited to cause serious
+damage at a <a href="http://www.bbc.co.uk/news/technology-30575104">German steel mill</a>, bring down parts of the <a href="https://theconversation.com/the-cyberattack-on-ukraines-power-grid-is-a-warning-of-whats-to-come-52832">Ukrainian power
+grid</a>, and <a href="http://news.softpedia.com/news/hackers-modify-water-treatment-parameters-by-accident-502043.shtml">alter the mix of chemicals added to drinking water</a>.
+While our lives depend more and more on “smart” devices, they are frequently designed in incredibly
+stupid ways.</p>
+
+<h2 id="insecure-by-design">Insecure by design</h2>
+
+<p>The conflict between Apple and the FBI was particularly jarring to security experts, seen as an
+attempt to deliberately make technology less secure and win legal precedent to gain access to other
+devices in the future. Smartphones are becoming increasingly ubiquitous, and we know from the
+Snowden files that the NSA can <a href="http://www.theguardian.com/world/2014/feb/01/edward-snowden-intelligence-leak-nsa-contractor-extract">turn on a phone’s microphone</a> remotely without
+the owner’s knowledge. We are heading towards a state in which every inhabited space contains
+a microphone (and a camera) that is connected to the internet and which might be recording anything
+you say. This is not even a paranoid exaggeration.</p>
+
+<p>So, in a world in which we are constantly struggling to make things more secure, the FBI’s desire to
+create a backdoor to provide it access is like pouring gasoline on the fire.</p>
+
+<p>The problem with security weaknesses is that it is impossible to control who can use them.
+Responsible researchers report them to the vendor so that they can be fixed, and sometimes receive
+a <a href="http://www.tripwire.com/state-of-security/vulnerability-management/11-essential-bug-bounty-programs-of-2015/">bug bounty</a> in return. But those who want to make more money may <a href="http://www.wired.com/2015/11/heres-a-spy-firms-price-list-for-secret-hacker-techniques/">secretly sell the
+knowledge to the highest bidder</a>. Customers of this <a href="https://theconversation.com/trusting-hackers-with-your-security-youd-better-be-able-to-sort-the-whitehats-from-the-blackhats-44477">dark trade in
+vulnerabilities</a> often include <a href="https://citizenlab.org/2015/08/hacking-team-leak-highlights-citizen-lab-research/">governments with repressive human rights
+records</a>.</p>
+
+<p>If the FBI has found a means of getting data off a locked phone, that means the intelligence
+services of other countries have probably independently developed the same technique – or been sold
+it by someone who has. So if an American citizen has data on their phone that is of intelligence
+interest to another country that data is at risk if the phone is lost or stolen.</p>
+
+<p>Most people will never be of intelligence interest of course, so perhaps such fears are overblown.
+But the push from governments, for example through the pending <a href="https://theconversation.com/us/topics/investigatory-powers-bill">Investigatory Powers Bill</a>
+in the UK, to allow the security services to hack devices in bulk – even if the devices belong to
+people who are not suspected of any crime – cannot be ignored.</p>
+
+<p>Bulk hacking powers, taken together with insecure, internet-connected microphones and cameras in
+every room, are a worrying combination. It is a cliche to conjure up Nineteen Eighty-Four, but the
+picture it paints is something very much like Orwell’s telescreens.</p>
+
+<iframe width="440" height="260" src="https://www.youtube.com/embed/CCfW6HFP5cI?wmode=transparent&amp;start=0" frameborder="0" allowfullscreen=""></iframe>
+
+<h2 id="used-by-one-used-by-all">Used by one, used by all</h2>
+
+<p>To some extent law enforcement has historically benefited from poor computer security, as hacking
+a poorly secured digital device is easier and cheaper than planting a microphone in someone’s house
+or rifling their physical belongings. No wonder that the former CIA director <a href="http://www.wired.com/2012/03/petraeus-tv-remote/">loves the Internet of
+Things</a>.</p>
+
+<p>This convenience often tempts governments to deliberately weaken device security – the FBI’s case
+against Apple is just one example. In the UK, the proposed Investigatory Powers Bill allows the
+secretary of state to issue “<a href="http://www.theguardian.com/technology/2015/nov/09/tech-firms-snoopers-charter-end-strong-encryption-britain-ip-bill">technical capability notices</a>”, which are secret
+government orders to demand manufacturers make a device or service deliberately less secure than it
+could be. GCHQ’s new MIKEY-SAKKE standard for encrypted phone calls is also <a href="https://www.benthamsgaze.org/2016/01/19/insecure-by-design-protocols-for-encrypted-phone-calls/">deliberately
+weakened</a> to allow easier surveillance.</p>
+
+<p>But a security flaw that can be used by one can be used by all, whether legitimate police
+investigations or hostile foreign intelligence services or organised crime. The fears of <a href="https://cyber.law.harvard.edu/pubrelease/dont-panic/Dont_Panic_Making_Progress_on_Going_Dark_Debate.pdf">criminals
+and terrorists “going dark” are overblown</a>, but the risk to life from insecure
+infrastructure is real: fixing these weaknesses should be our priority, not striving to make devices
+less secure for the sake of law enforcement.</p>
+
+
+
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>,
+        is available in early release from O’Reilly.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>,
+        working at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>30 Mar 2016: <a href="/2016/03/30/device-security-fbi.html">Device security and the FBI</a></li>
+            
+              <li>18 Feb 2016: <a href="/2016/02/18/law-enforcement-smartphone-backdoors.html">Should law enforcement services have a backdoor into smartphones?</a></li>
+            
+              <li>08 Feb 2016: <a href="/2016/02/08/how-to-do-distributed-locking.html">How to do distributed locking</a></li>
+            
+              <li>28 Dec 2015: <a href="/2015/12/28/year-2015-review.html">My year 2015 in review</a></li>
+            
+              <li>10 Nov 2015: <a href="/2015/11/10/investigatory-powers-bill.html">The Investigatory Powers Bill would increase cybercrime</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2016/03/07/qcon-london.html">07 Mar 2016 at QCon</a></li>
+            
+              <li><a href="/2016/03/04/cambridge-databases-course.html">04 Mar 2016 at University of Cambridge</a></li>
+            
+              <li><a href="/2016/01/29/event-sourcing-stream-processing-at-ddd-europe.html">29 Jan 2016 at Domain Driven Design Europe</a></li>
+            
+              <li><a href="/2015/11/13/change-data-capture-at-all-your-base.html">13 Nov 2015 at All Your Base</a></li>
+            
+              <li><a href="/2015/11/06/streams-as-team-interface-at-oredev.html">06 Nov 2015 at Øredev</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+<img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2016/03/30/device-security-fbi.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Google Analytics -->
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+<!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
