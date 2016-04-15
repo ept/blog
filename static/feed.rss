@@ -10,12 +10,193 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Sun, 10 Apr 2016 21:57:23 BST</lastBuildDate>
+        <lastBuildDate>Fri, 15 Apr 2016 15:58:39 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Announcing TRVE DATA: Placing a bit less trust in the cloud</title>
+                <link>http://martin.kleppmann.com/2016/04/15/announcing-trve-data.html</link>
+                <comments>http://martin.kleppmann.com/2016/04/15/announcing-trve-data.html#disqus_thread</comments>
+                <pubDate>Fri, 15 Apr 2016 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2016/04/15/announcing-trve-data.html</guid>
+                
+                <description><![CDATA[ In 2014, after 7 years in startups and internet companies, I left LinkedIn to take a sabbatical. (“Sabbatical” sounds better than “unemployment”, don’t you think?) For a year I worked full-time on my book, and explored what I wanted to do next. Then last year an opportunity came up that... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>In 2014, after 7 years in startups and internet companies, I left LinkedIn to take a sabbatical.
+(“Sabbatical” sounds better than “unemployment”, don’t you think?) For a year I worked full-time on
+<a href="http://dataintensive.net/">my book</a>, and explored what I wanted to do next. Then last year an opportunity came up that
+was just perfect. I started the new job part-time in October 2015, while finishing off the book
+during my remaining time (it should be done in the next few months).</p>
+
+<p>Today I would like to introduce the project that we are working on: <a href="https://www.cl.cam.ac.uk/research/dtg/trve/">TRVE DATA</a>, pronounced
+“true data”. We’ve put up a little <a href="https://www.cl.cam.ac.uk/research/dtg/trve/">website</a> explaining the high-level idea, and in this blog
+post I would like to briefly explain what it is, why we are doing it, and what makes me so excited
+about it. If you want to keep in touch about the project, please <a href="https://lists.cam.ac.uk/mailman/listinfo/cl-trvedata">join our mailing
+list</a>.</p>
+
+<p>The project is based at <a href="https://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>, where I am working with
+some excellent people: <a href="http://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>, <a href="http://www.cl.cam.ac.uk/~dac53/">Diana Vasile</a>, and
+<a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>. </p>
+
+<h2 id="placing-a-bit-less-trust-in-the-cloud">Placing a bit less trust in the cloud</h2>
+
+<p>As you have perhaps heard, <a href="https://www.chriswatterston.com/blog/my-there-no-cloud-sticker">there is no cloud</a> – it’s just someone else’s computer. And
+people are storing all sorts of sensitive data on it, blindly trusting that this computer will only
+allow authorised users access. What if it is compromised?</p>
+
+<p>It’s not just individuals’ personal data, but we’re talking about medical records, journalistic
+materials, and data about critical infrastructure like power stations and chemical plants. Here are
+a few anecdotes from conversations I have had recently:</p>
+
+<ul>
+  <li>A BBC journalist told me that they are officially banned from using Google Docs, but they use it
+anyway, because it’s just so convenient.</li>
+  <li>I have even heard rumours that the NHS (the English national health service) stores a worrying
+amount of patient medical data in Google spreadsheets.</li>
+  <li>Lawyers on high-profile court cases will happily communicate with their clients by unencrypted
+email. Even though their communication enjoys <a href="https://en.wikipedia.org/wiki/Legal_professional_privilege">special protections under the law</a>, the
+technology doesn’t reflect that importance.</li>
+  <li>The same thing goes for <a href="https://twitter.com/csoghoian/status/700802867322441728">diplomats</a>.</li>
+  <li>Some Internet-of-Things companies… oh my god, don’t ask about their security if you want to
+sleep at night.</li>
+</ul>
+
+<p>I don’t object to cloud services <em>per se</em> – it’s incredibly convenient not to have to run your own
+infrastructure, and Google, Amazon or Microsoft almost certainly do a better job than you would if
+you were running your own server. However, I am concerned that there is too much blind trust
+involved.</p>
+
+<p>When data is stored in AWS, Google Cloud Platform, Google Docs, Evernote, iCloud, Dropbox, etc. you
+have no idea what the cloud provider is doing with it. Are they using it to train neural networks?
+Are they letting governments around the world access it? Are they mining it and selling the results
+for advertising purposes? Do they have an untrustworthy employee who is secretly looking at the
+data? Do they have a security vulnerability through which criminals can steal it? At best you have
+a vaguely-worded and unenforceable privacy policy to read, but most likely you simply don’t know
+what is happening to your data.</p>
+
+<h2 id="end-to-end-encryption">End-to-end encryption</h2>
+
+<p>Today, it is common to use SSL/TLS for encryption of data as it moves across the internet, and disk
+encryption for data at rest. But that encryption ends at the server software, and almost all cloud
+services today process data in the clear on the servers. Therefore, anyone who can get access to the
+server can also get access to the data.</p>
+
+<p>On the other hand, <a href="http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html">end-to-end encryption</a> techniques mostly remove the need to trust the
+server, by encrypting data on one end-user device such that only another end-user device can decrypt
+it. There may still be servers and cloud services involved, but they cannot read or tamper with the
+data. Someone who wants to steal the data would then have to break into one of the end-user devices
+– which is <a href="https://www.theguardian.com/technology/2016/mar/21/fbi-apple-court-hearing-postpone-unlock-terrorist-iphone">still possible in most cases</a>, depending on security practices, but at
+least it is a much reduced attack surface, with fewer things that can go wrong.</p>
+
+<p>End-to-end encryption is becoming popular for messaging apps, most recently rolled out in
+<a href="https://blog.whatsapp.com/10000618/end-to-end-encryption">WhatsApp</a>, along with <a href="https://whispersystems.org/">Signal</a>, iMessage (with
+<a href="http://blog.cryptographyengineering.com/2016/03/attack-of-week-apple-imessage.html">reservations</a>), and others. But we have <a href="https://dymaxion.org/essays/pleasestop.html">so much other important data besides text
+messages</a>! What about that?</p>
+
+<p>The problem is that it’s fairly easy to knock together a SaaS web app with Rails, or to build
+a mobile app with a backend-as-a-service, but it is really hard to do the same in a way that uses
+end-to-end encryption. The crypto itself is terribly difficult to get right, and even if you use an
+established secure messaging protocol, you then have the problem that many services, databases,
+libraries and tools can no longer be used, since they assume they can work with unencrypted data –
+so you have to start almost from scratch. At the moment it is simply not feasible for most
+application developers to use end-to-end encryption.</p>
+
+<p>And that is what we are trying to change.</p>
+
+<h2 id="making-end-to-end-security-the-new-default">Making end-to-end security the new default</h2>
+
+<p>The long-term goal of TRVE DATA is quite ambitious: namely, to make it just as easy to build
+applications with end-to-end security, and to make those applications equally usable, as the apps
+without end-to-end security today.</p>
+
+<p>Today, using http instead of https is increasingly frowned upon; I hope that in some years time, not
+using end-to-end security will be equally frowned upon. Today, we trust cloud services but not the
+network; in future, I hope that we will trust neither cloud services nor the network. We will still
+be using the internet and cloud services, but we will use cryptographic tools to ensure they can’t
+mess with our data.</p>
+
+<p>I want the tools for building secure applications to be so good that it will be a no-brainer to use
+them. I want strong security to become the new default, and to raise the bar for all apps.</p>
+
+<p>Of course, we have a very long way to go before this is reality. For now, we are concentrating on
+a particular type of application: collaborative document editing. This is still a quite broad
+category, including text documents, spreadsheets, graphics, to-do lists, notes, address books,
+calendars, and so on.</p>
+
+<p>For this kind of data, the TRVE project is building general-purpose libraries and tools that will
+automatically sync data across several devices, allow sharing with other users, allow several people
+to edit the same document in real time, and allow users to continue working offline. And all of the
+communication between devices will, of course, be encrypted and authenticated end-to-end, with TRVE
+handling key management as well as data sync.</p>
+
+<p>The software we build will be open source and freely available. Our work-in-progress prototype is
+already on GitHub, but I won’t link to it — remember, this project only started six months ago, and
+I’m working on in part-time. The code is not yet in a fit state to be used. But this is where we’re
+heading.</p>
+
+<h2 id="motivation-and-concerns">Motivation and concerns</h2>
+
+<blockquote>
+  <p>“Let us speak no more of faith in man, but bind him down from mischief by the chains of cryptography.”</p>
+
+  <p>— <a href="http://www.theatlantic.com/politics/archive/2014/05/edward-snowdens-other-motive-for-leaking/370068/">Edward Snowden</a>, invoking <a href="http://www.constitution.org/cons/kent1798.htm">Thomas Jefferson</a></p>
+</blockquote>
+
+<p>Jefferson’s original quote was about the US constitution: a document designed to deliberately
+restrict the powers of government, and to keep it accountable to its citizens. History has
+repeatedly shown that putting too much unchecked power in the hands of a small number of people
+leads to abuses of power and various problems, even if they start with benevolent intentions.</p>
+
+<p>Snowden’s quote is so apt because the rise of cloud services and “Big Data” have caused
+a concentration of power in the hands of a small number of large companies. Cryptography is to data
+what the constitution is to political power: a means of giving some power and control back to
+individuals, and keeping powerful people honest. It makes mass surveillance harder and helps
+preserve civil liberties.</p>
+
+<p>I will preempt the inevitable question: <em>“What if terrorists use this software to plan an
+attack?”</em> This issue merits a longer discussion, but the short answer is: terrorists use cars, guns
+and explosives as well, all of which are far more dangerous than crypto. And I don’t see any sign of
+Ford stopping production of their cars because they might be used by terrorists.</p>
+
+<p>It’s actually pretty hard to kill someone with cryptography. You can try boring someone to death, or
+hitting them over the head with a crypto textbook, but that’s about it. As technologies go, crypto
+is pretty non-lethal — in fact, it is a purely defensive technology.</p>
+
+<p>On the other hand, encryption is absolutely essential for protecting data that is legitimately
+sensitive, and to give some freedom to people <a href="https://twitter.com/matthew_d_green/status/720538970640269313">living under repressive regimes</a>. Weakening it
+for the convenience of law enforcement, as proposed in the <a href="http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html">Investigatory Powers Bill</a> in
+the UK and <a href="http://www.burr.senate.gov/imo/media/doc/BAG16460.pdf">Feinstein-Burr</a> in the US, would be a <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/draft-investigatory-powers-bill-committee/draft-investigatory-powers-bill/written/26275.html">big mistake</a>.</p>
+
+<h2 id="the-way-forward">The way forward</h2>
+
+<p>I believe that end-to-end security will soon be regarded as a necessity for any sort of important
+data. For example, the Bar Council of the UK (the association of lawyers who represent their clients
+in court) already <a href="http://www.barcouncil.org.uk/media/407878/cloud_computing.pdf">recommends using end-to-end encryption</a> for  data stored in the
+cloud.</p>
+
+<p>This trend starts with the most sensitive professions like doctors and lawyers, but I expect it to
+grow – in order to maintain regulatory compliance, to prevent industrial espionage, and to meet
+data protection requirements. The demand for better security comes not from criminals trying to
+evade the law, but from professionals whose job involves dealing with important data.</p>
+
+<p>I am working on the TRVE DATA project because I feel this is one of the most important issues in
+computing and society today, and I am hoping we will be able to make a positive difference. It’s
+a long-term project, and we’re only just getting started.</p>
+
+<p>We have set up a <a href="https://lists.cam.ac.uk/mailman/listinfo/cl-trvedata">public mailing list</a> for anyone who is interested in the project,
+where we are planning to post monthly updates on our progress, and invite ideas and discussion from
+anyone who would like to contribute. You can also find <a href="https://twitter.com/trvedata">@trvedata</a> on Twitter. Please join
+us, and spread the word.</p>
+
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Device security and the FBI</title>
@@ -2988,314 +3169,6 @@ stop talking about CP and AP, because they just don’t make any sense.</p>
 
 <p><em>Thank you to <a href="https://aphyr.com/">Kyle Kingsbury</a> and <a href="https://twitter.com/skamille">Camille Fournier</a>
 for comments on a draft of this post. Any errors or unpalatable opinions are mine, of course.</em></p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Bottled Water: Real-time integration of PostgreSQL and Kafka</title>
-                <link>http://martin.kleppmann.com/2015/04/23/bottled-water-real-time-postgresql-kafka.html</link>
-                <comments>http://martin.kleppmann.com/2015/04/23/bottled-water-real-time-postgresql-kafka.html#disqus_thread</comments>
-                <pubDate>Thu, 23 Apr 2015 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/04/23/bottled-water-real-time-postgresql-kafka.html</guid>
-                
-                <description><![CDATA[ This post was originally published on the Confluent blog. Writing to a database is easy, but getting the data out again is surprisingly hard. Of course, if you just want to query the database and get some results, that’s fine. But what if you want a copy of your database... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>This post was originally published
-<a href="http://blog.confluent.io/2015/04/23/bottled-water-real-time-integration-of-postgresql-and-kafka/">on the Confluent blog</a>.</em></p>
-
-<p>Writing to a database is easy, but getting the data out again is surprisingly hard.</p>
-
-<p>Of course, if you just want to query the database and get some results, that’s fine. But what if you
-want a copy of your database contents in some other system — for example, to make it searchable in
-Elasticsearch, or to pre-fill caches so that they’re nice and fast, or to load it into a data
-warehouse for analytics, or if you want to migrate to a different database technology?</p>
-
-<p>If your data never changed, it would be easy. You could just take a snapshot of the database (a full
-dump, e.g. a backup), copy it over, and load it into the other system. The problem is that the data
-in the database is constantly changing, and so the snapshot is already out-of-date by the time
-you’ve loaded it. Even if you take a snapshot once a day, you still have one-day-old data in the
-downstream system, and on a large database those snapshots and bulk loads can become very expensive.
-Not really great.</p>
-
-<p>So what do you do if you want a copy of your data in several different systems?</p>
-
-<p>One option is for your application to do so-called “dual writes”. That is, every time your
-application code writes to the database, it also updates/invalidates the appropriate cache entries,
-reindexes the data in your search engine, sends it to your analytics system, and so on:</p>
-
-<p><img src="/2015/04/bottledwater-01.png" alt="Application-managed dual writes" width="550" height="412" /></p>
-
-<p>However, as I explain in <a href="http://martin.kleppmann.com/2014/10/28/staying-agile-at-span.html">one of my talks</a>,
-the dual-writes approach is really problematic. It suffers from race conditions and reliability
-problems. If slightly different data gets written to two different datastores (perhaps due to a bug
-or a race condition), the contents of the datastores will gradually drift apart — they will become
-more and more inconsistent over time. Recovering from such gradual data corruption is difficult.</p>
-
-<p>If you rebuild a cache or index from a snapshot of a database, that has the advantage that any
-inconsistencies get <a href="http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html">blown away</a> when
-you rebuild from a new database dump. However, on a large database, it’s slow and inefficient to
-process the entire database dump once a day (or more frequently). How could we make it fast?</p>
-
-<p>Typically, only a small part of the database changes between one snapshot and the next. What if you
-could process only a “diff” of what changed in the database since the last snapshot? That would also
-be a smaller amount of data, so you could take such diffs more frequently. What if you could take
-such a “diff” every minute? Every second? 100 times a second?</p>
-
-<p>When you take it to the extreme, the changes to a database become a stream. Every time someone
-writes to the database, that is a message in the stream. If you apply those messages to a database
-in exactly the same order as the original database committed them, you end up with an exact copy of
-the database. And if you think about it, this is exactly
-<a href="http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/">how database replication works</a>.</p>
-
-<p>The replication approach to data synchronization works much better than dual writes. First, you
-write all your data to one database (which is probably what you’re already doing anyway). Next, you
-extract two things from that database:</p>
-
-<ul>
-  <li>a <strong>consistent snapshot</strong> at one point in time, and</li>
-  <li>a <strong>real-time stream of changes</strong> from that point onwards.</li>
-</ul>
-
-<p>You can load the snapshot into the other systems (for example your search indexes or caches), and
-then apply the real-time changes on an ongoing basis. If this pipeline is well tuned, you can
-probably get a latency of less than a second, so your downstream systems remain very almost
-up-to-date. And since the stream of changes provides ordering of writes, race conditions are
-<a href="https://martin.kleppmann.com/2015/04/24/logs-for-data-infrastructure-at-craft.html">much less of a problem</a>.</p>
-
-<p>This approach to building systems is sometimes called
-<a href="http://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a> (CDC), though the tools for
-doing it are currently not very good. However, at some companies, CDC has become a key building
-block for applications — for example, LinkedIn built <a href="http://www.socc2012.org/s18-das.pdf">Databus</a>
-and Facebook built
-<a href="https://code.facebook.com/posts/188966771280871/wormhole-pub-sub-system-moving-data-through-space-and-time/">Wormhole</a>
-for this purpose.</p>
-
-<p>I am excited about change capture because it allows you to unlock the value in the data you already
-have. You can feed the data into a
-<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-1/">central hub of data streams</a>, where it
-can readily be combined with event streams and data from other databases in real-time. This approach
-makes it much easier to experiment with new kinds of analysis or data format, it allows gradual
-migration from one system to another with minimal risk, and it is much more robust to data
-corruption: if something goes wrong, you can always rebuild a datastore from the snapshot and the
-stream.</p>
-
-<p><img src="/2015/04/bottledwater-02.png" alt="Using change capture to drive derived data stores" width="550" height="412" /></p>
-
-<h2 id="getting-the-real-time-stream-of-changes">Getting the real-time stream of changes</h2>
-
-<p>Getting a consistent snapshot of a database is a common feature, because you need it in order to
-take backups. But getting a real-time stream of changes has traditionally been an overlooked feature
-of databases. Oracle
-<a href="http://www.oracle.com/us/products/middleware/data-integration/goldengate/overview/index.html">GoldenGate</a>, the
-<a href="https://dev.mysql.com/doc/refman/5.7/en/binary-log.html">MySQL binlog</a>, the
-<a href="http://www.manuel-schoebel.com/blog/meteorjs-and-mongodb-replica-set-for-oplog-tailing">MongoDB oplog</a> or the
-<a href="http://guide.couchdb.org/draft/notifications.html">CouchDB changes feed</a> do something like
-this, but they’re not exactly easy to use correctly. More recently, a few databases such as
-<a href="http://rethinkdb.com/blog/realtime-web/">RethinkDB</a> or
-<a href="https://www.firebase.com/docs/web/guide/retrieving-data.html">Firebase</a> have oriented themselves
-towards real-time change streams.</p>
-
-<p>However, today we will talk about <strong>PostgreSQL</strong>. It’s an old-school database, but it’s good. It is
-very stable, has good performance, and is <a href="https://vimeo.com/61044807">surprisingly full-featured</a>.</p>
-
-<p>Until recently, if you wanted to get a stream of changes from Postgres, you had to use triggers.
-This is possible (see below), but it is fiddly, requires schema changes and doesn’t perform very
-well. However, Postgres 9.4 (released in December 2014) introduced a new feature that changes
-everything: <a href="http://www.postgresql.org/docs/9.4/static/logicaldecoding.html">logical decoding</a>
-(which I explain in more detail below).</p>
-
-<p>With logical decoding, change data capture for Postgres suddenly becomes much more appealing. So,
-when this feature was released, I set out to build a change data capture tool for Postgres that
-would take advantage of the new facilities. <a href="http://confluent.io/">Confluent</a> sponsored me to work
-on it (thank you Confluent!), and today we are releasing an alpha version of this tool as open
-source. It is called <a href="https://github.com/confluentinc/bottledwater-pg">Bottled Water</a>.</p>
-
-<p><img src="/2015/04/bottledwater-03.png" alt="Bottled Water: Data streams freshly bottled at source" width="550" height="412" /></p>
-
-<h2 id="introducing-bottled-water">Introducing Bottled Water</h2>
-
-<p>Logical decoding takes the database’s write-ahead log (WAL), and gives us access to row-level change
-events: every time a row in a table is inserted, updated or deleted, that’s an event. Those events
-are grouped by transaction, and appear in the order in which they were committed to the database.
-Aborted/rolled-back transactions do not appear in the stream. Thus, if you apply the change events
-in the same order, you end up with an exact, transactionally consistent copy of the database.</p>
-
-<p>The Postgres logical decoding is well designed: it even creates a consistent snapshot that is
-coordinated with the change stream. You can use this snapshot to make a point-in-time copy of the
-entire database (without locking — you can continue writing to the database while the copy is being
-made), and then use the change stream to get all writes that happened since the snapshot.</p>
-
-<p>Bottled Water uses these features to copy all the data in a database, and encodes it in the
-efficient binary <a href="http://avro.apache.org/">Avro format</a>. The encoded data is sent to
-<a href="http://kafka.apache.org/">Kafka</a> — each table in the database becomes a Kafka topic, and each row
-in the database becomes a message in Kafka.</p>
-
-<p>Once the data is in Kafka, you can easily write a Kafka consumer that does whatever you need: send
-it to Elasticsearch, or populate a cache, or process it in a <a href="http://samza.apache.org/">Samza</a> job,
-or load it into HDFS with <a href="http://confluent.io/docs/current/camus/docs/intro.html">Camus</a>… the
-possibilities are endless.</p>
-
-<h2 id="why-kafka">Why Kafka?</h2>
-
-<p>Kafka is a messaging system, best known for transporting high-volume activity events, such as web
-server logs and user click events. In Kafka, such events are typically retained for a certain time
-period and then discarded. Is Kafka really a good fit for database change events? We don’t want
-database data to be discarded!</p>
-
-<p>In fact, Kafka is a perfect fit — the key is Kafka’s
-<a href="http://kafka.apache.org/documentation.html#compaction">log compaction feature</a>, which was designed
-precisely for this purpose. If you enable log compaction, there is no time-based expiry of data.
-Instead, every message has a key, and Kafka retains the latest message for a given key indefinitely.
-Earlier messages for a given key are eventually garbage-collected. This is quite similar to new
-values overwriting old values in a key-value store.</p>
-
-<p>Bottled Water identifies the primary key (or
-<a href="http://michael.otacoo.com/postgresql-2/postgres-9-4-feature-highlight-replica-identity-logical-replication/">replica identity</a>)
-of each table in Postgres, and uses that as the key of the messages sent to Kafka. The value of the
-message depends on the kind of event:</p>
-
-<ul>
-  <li>For inserts and updates, the message value contains all of the row’s fields, encoded as Avro.</li>
-  <li>For deletes, the message value is set to null. This causes Kafka to remove the message during log
-compaction, so its disk space is freed up.</li>
-</ul>
-
-<p>With log compaction, you don’t need one system to store the snapshot of the entire database and
-another system for the real-time messages — they can live perfectly well within the same system.
-Bottled Water writes the initial snapshot to Kafka by turning every single row in the database into
-a message, keyed by primary key, and sending them all to the Kafka brokers. When the snapshot is
-done, every row that is inserted, updated or deleted similarly turns into a message.</p>
-
-<p>If a row frequently gets updated, there will be many messages with the same key (because each update
-turns into a message). Fortunately, Kafka’s log compaction will sort this out, and garbage-collect
-the old values, so that we don’t waste disk space. On the other hand, if a row never gets updated or
-deleted, it just stays unchanged in Kafka forever — it never gets garbage-collected.</p>
-
-<p>Having the full database dump and the real-time stream in the same system is tremendously powerful.
-If you want to rebuild a downstream database from scratch, you can start with an empty database,
-start consuming the Kafka topic from the beginning, and scan through the whole topic, writing each
-message to your database. When you reach the end, you have an up-to-date copy of the entire
-database. What’s more, you can continue keeping it up-to-date by simply continuing to consume the
-stream. Building alternative views onto your data was never easier!</p>
-
-<p>The idea maintaining a copy of your database in Kafka surprises people who are more familiar with
-traditional enterprise messaging and its limitations. Actually, this use case is exactly why Kafka
-is built around a
-<a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">replicated log abstraction</a>:
-it makes this kind of large-scale data retention and distribution possible. Downstream systems can
-reload and re-process data at will, without impacting the performance of the upstream database that
-is serving low-latency queries.</p>
-
-<h2 id="why-avro">Why Avro?</h2>
-
-<p>The data extracted from Postgres could be encoded as JSON, or Protobuf, or Thrift, or any number of
-formats. However, I believe Avro is the best choice. Gwen Shapira has written about the
-<a href="http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html">advantages of Avro</a> for
-schema management, and I’ve got a
-<a href="http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">blog post</a>
-comparing it to Protobuf and Thrift. The
-<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-2/">Confluent stream data platform guide</a>
-gives some more reasons why Avro is good for data integration.</p>
-
-<p>Bottled Water inspects the schema of your database tables, and automatically generates an Avro
-schema for each table. The schemas are automatically registered with
-<a href="http://confluent.io/docs/current/schema-registry/docs/index.html">Confluent’s schema registry</a>,
-and the schema version is embedded in the messages sent to Kafka. This means it “just works” with
-the stream data platform’s
-<a href="http://confluent.io/docs/current/schema-registry/docs/serializer-formatter.html">serializers</a>: you
-can work with the data from Postgres as meaningful application objects and rich datatypes, without
-writing a lot of tedious parsing code.</p>
-
-<p>The translation of Postgres datatypes into Avro is already fairly comprehensive, covering all the
-common datatypes, and providing a lossless and sensibly typed conversion. I intend to extend it to
-support all of Postgres’ built-in datatypes (of which there are many!) — it’s some effort, but it’s
-worth it, because good schemas for your data are tremendously important.</p>
-
-<p><img src="/2015/04/bottledwater-04.png" alt="Inside the bottle factory" width="550" height="316" /></p>
-
-<h2 id="the-logical-decoding-output-plugin">The logical decoding output plugin</h2>
-
-<p>An interesting property of Postgres’ logical decoding feature is that it does not define a wire
-format in which change data is sent over the network to a consumer. Instead, it defines an
-<a href="http://www.postgresql.org/docs/9.4/static/logicaldecoding-output-plugin.html">output plugin API</a>,
-which receives a function call for every insert, update or delete. Bottled Water uses this API to
-read data in the database’s internal format, and serializes it to Avro.</p>
-
-<p>The output plugin must be written in C using the Postgres extension mechanism, and loaded into the
-database server as a shared library. This requires superuser privileges and filesystem access on the
-database server, so it’s not something to be undertaken lightly. I understand that many a database
-administrator will be scared by the prospect of running custom code inside the database server.
-Unfortunately, this is the only way logical decoding can currently be used.</p>
-
-<p>At the moment, the logical decoding plugin must be installed on the leader database. In principle,
-it would be possible to have it run on a separate follower, so that it cannot impact other clients,
-but the current implementation in Postgres does not allow this. This limitation will hopefully be
-lifted in future versions of Postgres.</p>
-
-<p><img src="/2015/04/bottledwater-05.png" alt="Bottled Water architecture" width="550" height="412" /></p>
-
-<h2 id="the-client-daemon">The client daemon</h2>
-
-<p>Besides the plugin (which runs inside the database server), Bottled Water consists of a client
-program which you can run anywhere. It connects to the Postgres server and to the Kafka brokers,
-receives the Avro-encoded data from the database, and forwards it to Kafka.</p>
-
-<p>The client is also written in C, because it’s easiest to use the Postgres client libraries that way,
-and because some code is shared between the plugin and the client. It’s fairly lightweight and
-doesn’t need to write to disk.</p>
-
-<p>What happens if the client crashes, or gets disconnected from either Postgres or Kafka? No problem.
-It keeps track of which messages have been published and acknowledged by the Kafka brokers. When the
-client restarts after an error, it replays all messages that haven’t been acknowledged. Thus, some
-messages could appear twice in Kafka, but no data should be lost.</p>
-
-<h2 id="related-work">Related work</h2>
-
-<p>Various other people are working on similar problems:</p>
-
-<ul>
-  <li><a href="https://github.com/xstevens/decoderbufs">Decoderbufs</a> is an experimental Postgres plugin by
-<a href="https://twitter.com/xstevens">Xavier Stevens</a> that decodes the change stream into a Protocol
-Buffers format. It only provides the logical decoding plugin part of the story — it doesn’t have
-the consistent snapshot or client parts (Xavier mentions he has written a client which reads from
-Postgres and writes to Kafka, but it’s not open source).</li>
-  <li><a href="https://github.com/xstevens/pg_kafka">pg_kafka</a> (also from Xavier) is a Kafka producer client in
-a Postgres function, so you could potentially produce to Kafka from a trigger.</li>
-  <li><a href="https://wiki.postgresql.org/wiki/PGQ_Tutorial">PGQ</a> is a Postgres-based queue implementation, and
-<a href="https://wiki.postgresql.org/wiki/SkyTools">Skytools Londiste</a> (developed at Skype) uses it to
-provide trigger-based replication. <a href="https://bucardo.org/wiki/Bucardo">Bucardo</a> is another
-trigger-based replicator. I get the impression that trigger-based replication is somewhat of
-a hack, requiring schema changes and fiddly configuration, and incurring significant overhead.
-Also, none of these projects seems to be endorsed by the PostgreSQL core team, whereas logical
-decoding is fully supported.</li>
-  <li><a href="http://sqoop.apache.org/">Sqoop</a> recently added support for
-<a href="https://issues.apache.org/jira/browse/SQOOP-1852">writing to Kafka</a>. To my knowledge, Sqoop can
-only take full snapshots of a database, and not capture an ongoing stream of changes. Also, I’m
-unsure about the transactional consistency of its snapshots.</li>
-  <li>For those using MySQL, <a href="https://twitter.com/lorax_james">James Cheng</a> has put together a list of
-<a href="https://github.com/wushujames/mysql-cdc-projects/wiki">change capture projects</a> that get data
-from MySQL into Kafka. AFAIK, they all focus on the binlog parsing piece and don’t do the
-consistent snapshot piece.</li>
-</ul>
-
-<h2 id="status-of-bottled-water">Status of Bottled Water</h2>
-
-<p>At present, Bottled Water is alpha-quality software. It’s more than a proof of concept — quite a bit
-of care has gone into its design and implementation — but it hasn’t yet been tested in any
-real-world scenarios. It’s definitely not ready for production use right now, but with some testing
-and tweaking it will hopefully become production-ready in future.</p>
-
-<p>We’re releasing it as open source now in the hope of getting feedback from the community. Also,
-a few people who heard I was working on this have been bugging me to release it :-)</p>
-
-<p>The <a href="https://github.com/confluentinc/bottledwater-pg/blob/master/README.md">README</a> has more
-information on how to get started. Please let us know how you get on! Also, I’ll be talking more
-about Bottled Water at
-<a href="http://berlinbuzzwords.de/session/change-data-capture-magic-wand-we-forgot">Berlin Buzzwords</a> in
-June — hope to see you there.</p>
 
                 ]]></content:encoded>
             </item>

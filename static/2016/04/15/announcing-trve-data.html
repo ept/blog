@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Announcing TRVE DATA: Placing a bit less trust in the cloud &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Announcing TRVE DATA: Placing a bit less trust in the cloud"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Announcing TRVE DATA: Placing a bit less trust in the cloud</h1>
+
+                <p>In 2014, after 7 years in startups and internet companies, I left LinkedIn to take a sabbatical.
+(“Sabbatical” sounds better than “unemployment”, don’t you think?) For a year I worked full-time on
+<a href="http://dataintensive.net/">my book</a>, and explored what I wanted to do next. Then last year an opportunity came up that
+was just perfect. I started the new job part-time in October 2015, while finishing off the book
+during my remaining time (it should be done in the next few months).</p>
+
+<p>Today I would like to introduce the project that we are working on: <a href="https://www.cl.cam.ac.uk/research/dtg/trve/">TRVE DATA</a>, pronounced
+“true data”. We’ve put up a little <a href="https://www.cl.cam.ac.uk/research/dtg/trve/">website</a> explaining the high-level idea, and in this blog
+post I would like to briefly explain what it is, why we are doing it, and what makes me so excited
+about it. If you want to keep in touch about the project, please <a href="https://lists.cam.ac.uk/mailman/listinfo/cl-trvedata">join our mailing
+list</a>.</p>
+
+<p>The project is based at <a href="https://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>, where I am working with
+some excellent people: <a href="http://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>, <a href="http://www.cl.cam.ac.uk/~dac53/">Diana Vasile</a>, and
+<a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>. </p>
+
+<h2 id="placing-a-bit-less-trust-in-the-cloud">Placing a bit less trust in the cloud</h2>
+
+<p>As you have perhaps heard, <a href="https://www.chriswatterston.com/blog/my-there-no-cloud-sticker">there is no cloud</a> – it’s just someone else’s computer. And
+people are storing all sorts of sensitive data on it, blindly trusting that this computer will only
+allow authorised users access. What if it is compromised?</p>
+
+<p>It’s not just individuals’ personal data, but we’re talking about medical records, journalistic
+materials, and data about critical infrastructure like power stations and chemical plants. Here are
+a few anecdotes from conversations I have had recently:</p>
+
+<ul>
+  <li>A BBC journalist told me that they are officially banned from using Google Docs, but they use it
+anyway, because it’s just so convenient.</li>
+  <li>I have even heard rumours that the NHS (the English national health service) stores a worrying
+amount of patient medical data in Google spreadsheets.</li>
+  <li>Lawyers on high-profile court cases will happily communicate with their clients by unencrypted
+email. Even though their communication enjoys <a href="https://en.wikipedia.org/wiki/Legal_professional_privilege">special protections under the law</a>, the
+technology doesn’t reflect that importance.</li>
+  <li>The same thing goes for <a href="https://twitter.com/csoghoian/status/700802867322441728">diplomats</a>.</li>
+  <li>Some Internet-of-Things companies… oh my god, don’t ask about their security if you want to
+sleep at night.</li>
+</ul>
+
+<p>I don’t object to cloud services <em>per se</em> – it’s incredibly convenient not to have to run your own
+infrastructure, and Google, Amazon or Microsoft almost certainly do a better job than you would if
+you were running your own server. However, I am concerned that there is too much blind trust
+involved.</p>
+
+<p>When data is stored in AWS, Google Cloud Platform, Google Docs, Evernote, iCloud, Dropbox, etc. you
+have no idea what the cloud provider is doing with it. Are they using it to train neural networks?
+Are they letting governments around the world access it? Are they mining it and selling the results
+for advertising purposes? Do they have an untrustworthy employee who is secretly looking at the
+data? Do they have a security vulnerability through which criminals can steal it? At best you have
+a vaguely-worded and unenforceable privacy policy to read, but most likely you simply don’t know
+what is happening to your data.</p>
+
+<h2 id="end-to-end-encryption">End-to-end encryption</h2>
+
+<p>Today, it is common to use SSL/TLS for encryption of data as it moves across the internet, and disk
+encryption for data at rest. But that encryption ends at the server software, and almost all cloud
+services today process data in the clear on the servers. Therefore, anyone who can get access to the
+server can also get access to the data.</p>
+
+<p>On the other hand, <a href="http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html">end-to-end encryption</a> techniques mostly remove the need to trust the
+server, by encrypting data on one end-user device such that only another end-user device can decrypt
+it. There may still be servers and cloud services involved, but they cannot read or tamper with the
+data. Someone who wants to steal the data would then have to break into one of the end-user devices
+– which is <a href="https://www.theguardian.com/technology/2016/mar/21/fbi-apple-court-hearing-postpone-unlock-terrorist-iphone">still possible in most cases</a>, depending on security practices, but at
+least it is a much reduced attack surface, with fewer things that can go wrong.</p>
+
+<p>End-to-end encryption is becoming popular for messaging apps, most recently rolled out in
+<a href="https://blog.whatsapp.com/10000618/end-to-end-encryption">WhatsApp</a>, along with <a href="https://whispersystems.org/">Signal</a>, iMessage (with
+<a href="http://blog.cryptographyengineering.com/2016/03/attack-of-week-apple-imessage.html">reservations</a>), and others. But we have <a href="https://dymaxion.org/essays/pleasestop.html">so much other important data besides text
+messages</a>! What about that?</p>
+
+<p>The problem is that it’s fairly easy to knock together a SaaS web app with Rails, or to build
+a mobile app with a backend-as-a-service, but it is really hard to do the same in a way that uses
+end-to-end encryption. The crypto itself is terribly difficult to get right, and even if you use an
+established secure messaging protocol, you then have the problem that many services, databases,
+libraries and tools can no longer be used, since they assume they can work with unencrypted data –
+so you have to start almost from scratch. At the moment it is simply not feasible for most
+application developers to use end-to-end encryption.</p>
+
+<p>And that is what we are trying to change.</p>
+
+<h2 id="making-end-to-end-security-the-new-default">Making end-to-end security the new default</h2>
+
+<p>The long-term goal of TRVE DATA is quite ambitious: namely, to make it just as easy to build
+applications with end-to-end security, and to make those applications equally usable, as the apps
+without end-to-end security today.</p>
+
+<p>Today, using http instead of https is increasingly frowned upon; I hope that in some years time, not
+using end-to-end security will be equally frowned upon. Today, we trust cloud services but not the
+network; in future, I hope that we will trust neither cloud services nor the network. We will still
+be using the internet and cloud services, but we will use cryptographic tools to ensure they can’t
+mess with our data.</p>
+
+<p>I want the tools for building secure applications to be so good that it will be a no-brainer to use
+them. I want strong security to become the new default, and to raise the bar for all apps.</p>
+
+<p>Of course, we have a very long way to go before this is reality. For now, we are concentrating on
+a particular type of application: collaborative document editing. This is still a quite broad
+category, including text documents, spreadsheets, graphics, to-do lists, notes, address books,
+calendars, and so on.</p>
+
+<p>For this kind of data, the TRVE project is building general-purpose libraries and tools that will
+automatically sync data across several devices, allow sharing with other users, allow several people
+to edit the same document in real time, and allow users to continue working offline. And all of the
+communication between devices will, of course, be encrypted and authenticated end-to-end, with TRVE
+handling key management as well as data sync.</p>
+
+<p>The software we build will be open source and freely available. Our work-in-progress prototype is
+already on GitHub, but I won’t link to it — remember, this project only started six months ago, and
+I’m working on in part-time. The code is not yet in a fit state to be used. But this is where we’re
+heading.</p>
+
+<h2 id="motivation-and-concerns">Motivation and concerns</h2>
+
+<blockquote>
+  <p>“Let us speak no more of faith in man, but bind him down from mischief by the chains of cryptography.”</p>
+
+  <p>— <a href="http://www.theatlantic.com/politics/archive/2014/05/edward-snowdens-other-motive-for-leaking/370068/">Edward Snowden</a>, invoking <a href="http://www.constitution.org/cons/kent1798.htm">Thomas Jefferson</a></p>
+</blockquote>
+
+<p>Jefferson’s original quote was about the US constitution: a document designed to deliberately
+restrict the powers of government, and to keep it accountable to its citizens. History has
+repeatedly shown that putting too much unchecked power in the hands of a small number of people
+leads to abuses of power and various problems, even if they start with benevolent intentions.</p>
+
+<p>Snowden’s quote is so apt because the rise of cloud services and “Big Data” have caused
+a concentration of power in the hands of a small number of large companies. Cryptography is to data
+what the constitution is to political power: a means of giving some power and control back to
+individuals, and keeping powerful people honest. It makes mass surveillance harder and helps
+preserve civil liberties.</p>
+
+<p>I will preempt the inevitable question: <em>“What if terrorists use this software to plan an
+attack?”</em> This issue merits a longer discussion, but the short answer is: terrorists use cars, guns
+and explosives as well, all of which are far more dangerous than crypto. And I don’t see any sign of
+Ford stopping production of their cars because they might be used by terrorists.</p>
+
+<p>It’s actually pretty hard to kill someone with cryptography. You can try boring someone to death, or
+hitting them over the head with a crypto textbook, but that’s about it. As technologies go, crypto
+is pretty non-lethal — in fact, it is a purely defensive technology.</p>
+
+<p>On the other hand, encryption is absolutely essential for protecting data that is legitimately
+sensitive, and to give some freedom to people <a href="https://twitter.com/matthew_d_green/status/720538970640269313">living under repressive regimes</a>. Weakening it
+for the convenience of law enforcement, as proposed in the <a href="http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html">Investigatory Powers Bill</a> in
+the UK and <a href="http://www.burr.senate.gov/imo/media/doc/BAG16460.pdf">Feinstein-Burr</a> in the US, would be a <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/draft-investigatory-powers-bill-committee/draft-investigatory-powers-bill/written/26275.html">big mistake</a>.</p>
+
+<h2 id="the-way-forward">The way forward</h2>
+
+<p>I believe that end-to-end security will soon be regarded as a necessity for any sort of important
+data. For example, the Bar Council of the UK (the association of lawyers who represent their clients
+in court) already <a href="http://www.barcouncil.org.uk/media/407878/cloud_computing.pdf">recommends using end-to-end encryption</a> for  data stored in the
+cloud.</p>
+
+<p>This trend starts with the most sensitive professions like doctors and lawyers, but I expect it to
+grow – in order to maintain regulatory compliance, to prevent industrial espionage, and to meet
+data protection requirements. The demand for better security comes not from criminals trying to
+evade the law, but from professionals whose job involves dealing with important data.</p>
+
+<p>I am working on the TRVE DATA project because I feel this is one of the most important issues in
+computing and society today, and I am hoping we will be able to make a positive difference. It’s
+a long-term project, and we’re only just getting started.</p>
+
+<p>We have set up a <a href="https://lists.cam.ac.uk/mailman/listinfo/cl-trvedata">public mailing list</a> for anyone who is interested in the project,
+where we are planning to post monthly updates on our progress, and invite ideas and discussion from
+anyone who would like to contribute. You can also find <a href="https://twitter.com/trvedata">@trvedata</a> on Twitter. Please join
+us, and spread the word.</p>
+
+
+
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>,
+        is available in early release from O’Reilly.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>,
+        working at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>15 Apr 2016: <a href="/2016/04/15/announcing-trve-data.html">Announcing TRVE DATA: Placing a bit less trust in the cloud</a></li>
+            
+              <li>30 Mar 2016: <a href="/2016/03/30/device-security-fbi.html">Device security and the FBI</a></li>
+            
+              <li>18 Feb 2016: <a href="/2016/02/18/law-enforcement-smartphone-backdoors.html">Should law enforcement services have a backdoor into smartphones?</a></li>
+            
+              <li>08 Feb 2016: <a href="/2016/02/08/how-to-do-distributed-locking.html">How to do distributed locking</a></li>
+            
+              <li>28 Dec 2015: <a href="/2015/12/28/year-2015-review.html">My year 2015 in review</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2016/03/07/qcon-london.html">07 Mar 2016 at QCon</a></li>
+            
+              <li><a href="/2016/03/04/cambridge-databases-course.html">04 Mar 2016 at University of Cambridge</a></li>
+            
+              <li><a href="/2016/01/29/event-sourcing-stream-processing-at-ddd-europe.html">29 Jan 2016 at Domain Driven Design Europe</a></li>
+            
+              <li><a href="/2015/11/13/change-data-capture-at-all-your-base.html">13 Nov 2015 at All Your Base</a></li>
+            
+              <li><a href="/2015/11/06/streams-as-team-interface-at-oredev.html">06 Nov 2015 at Øredev</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+<img src="https://www.lduhtrp.net/image-7658334-11260198" width="1" height="1" border="0"/>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2016/04/15/announcing-trve-data.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Google Analytics -->
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-7958895-1");
+        pageTracker._trackPageview();
+    } catch (err) {}
+</script>
+
+<!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
