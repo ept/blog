@@ -18,7 +18,12 @@ require 'sinatra'
 # Redirect traffic for any domain to martin.kleppmann.com, and catch
 # requests for old yes-no-cancel.co.uk pages
 before do
-  if !%w(martin.kleppmann.com localhost localhost:9292 localhost:4000).include?(request.env['HTTP_HOST']) &&
+  if request.env['HTTP_HOST'].downcase.include? 'trve'
+    halt 307, {"Location" => "https://www.cl.cam.ac.uk/research/dtg/trve/"}, <<-HTML
+    <h1>Moved Temporarily</h1>
+    <p>This document has moved <a href="https://www.cl.cam.ac.uk/research/dtg/trve/">here</a>.</p>
+    HTML
+  elsif !%w(martin.kleppmann.com localhost localhost:9292 localhost:4000).include?(request.env['HTTP_HOST']) &&
       request.path =~ /\A\/[a-zA-Z0-9_!\$%&\(\)\*\+,\-\.\/:;<=>\?@\[\]\^\{\}\|~]*\Z/
     new_path = request.path.gsub %r{\A(/\d+/\d+/\d+/.*)/\z}, '\1.html'
     halt 301, {"Location" => "http://martin.kleppmann.com#{new_path}"}, <<-HTML
