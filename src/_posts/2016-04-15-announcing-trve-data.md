@@ -27,9 +27,9 @@ As you have perhaps heard, [there is no cloud][no-cloud] -- it's just someone el
 people are storing all sorts of sensitive data on it, blindly trusting that this computer will only
 allow authorised users access. What if it is compromised?
 
-It's not just individuals' personal data, but we're talking about medical records, journalistic
-materials, and data about critical infrastructure like power stations and chemical plants. Here are
-a few anecdotes from conversations I have had recently:
+It's not just individuals' personal data, but we're talking about medical records, [journalistic
+materials][mcgregor], and data about critical infrastructure like power stations and chemical
+plants. Here are a few anecdotes from conversations I have had recently:
 
 * A BBC journalist told me that they are officially banned from using Google Docs, but they use it
   anyway, because it's just so convenient.
@@ -133,9 +133,9 @@ leads to abuses of power and various problems, even if they start with benevolen
 
 Snowden's quote is so apt because the rise of cloud services and "Big Data" have caused
 a concentration of power in the hands of a small number of large companies. Cryptography is to data
-what the constitution is to political power: a means of giving some power and control back to
-individuals, and keeping powerful people honest. It makes mass surveillance harder and helps
-preserve civil liberties.
+what the constitution is to political power: a means of [giving some power and control back to
+individuals][rogaway], and keeping powerful people honest. It makes mass surveillance harder and
+helps preserve civil liberties.
 
 I will preempt the inevitable question: *"What if terrorists use this software to plan an
 attack?"* This issue merits a longer discussion, but the short answer is: terrorists use cars, guns
@@ -157,13 +157,14 @@ The way forward
 
 I believe that end-to-end security will soon be regarded as a necessity for any sort of important
 data. For example, the Bar Council of the UK (the association of lawyers who represent their clients
-in court) already [recommends using end-to-end encryption][bar-council] for  data stored in the
+in court) already [recommends using end-to-end encryption][bar-council] for data stored in the
 cloud.
 
-This trend starts with the most sensitive professions like doctors and lawyers, but I expect it to
-grow -- in order to maintain regulatory compliance, to prevent industrial espionage, and to meet
-data protection requirements. The demand for better security comes not from criminals trying to
-evade the law, but from professionals whose job involves dealing with important data.
+This trend starts with the most sensitive professions like doctors, lawyers, and [journalists][],
+but I expect it to grow -- in order to maintain regulatory compliance, to prevent industrial
+espionage, and to meet data protection requirements. The demand for better security comes not from
+criminals trying to evade the law, but from professionals whose job involves dealing with important
+data.
 
 I am working on the TRVE DATA project because I feel this is one of the most important issues in
 computing and society today, and I am hoping we will be able to make a positive difference. It's
@@ -183,6 +184,7 @@ us, and spread the word.
 [stephan]: http://www.cl.cam.ac.uk/~sak70/
 [mailing-list]: https://lists.cam.ac.uk/mailman/listinfo/cl-trvedata
 [no-cloud]: https://www.chriswatterston.com/blog/my-there-no-cloud-sticker
+[mcgregor]: https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-mcgregor.pdf
 [privilege]: https://en.wikipedia.org/wiki/Legal_professional_privilege
 [diplomats]: https://twitter.com/csoghoian/status/700802867322441728
 [ipbill]: http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html
@@ -193,8 +195,10 @@ us, and spread the word.
 [beyond-msg]: https://dymaxion.org/essays/pleasestop.html
 [snowden]: http://www.theatlantic.com/politics/archive/2014/05/edward-snowdens-other-motive-for-leaking/370068/
 [jefferson]: http://www.constitution.org/cons/kent1798.htm
+[rogaway]: http://web.cs.ucdavis.edu/~rogaway/papers/moral.html
 [tor]: https://twitter.com/matthew_d_green/status/720538970640269313
 [feinstein]: http://www.burr.senate.gov/imo/media/doc/BAG16460.pdf
 [evidence]: http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/draft-investigatory-powers-bill-committee/draft-investigatory-powers-bill/written/26275.html
 [bar-council]: http://www.barcouncil.org.uk/media/407878/cloud_computing.pdf
+[journalists]: http://www.cima.ned.org/wp-content/uploads/2016/03/CIMA-Journalist-Digital-Tools-03-01-15.pdf
 [twitter]: https://twitter.com/trvedata
