@@ -5,6 +5,7 @@ venue: QCon
 place: London, UK
 venue_url: http://qconlondon.com/presentation/staying-sync-transactions-streams
 slides_url: https://speakerdeck.com/ept/staying-in-sync-from-transactions-to-streams
+video_url: https://www.infoq.com/presentations/event-streams-kafka
 ---
 
 <script async class="speakerdeck-embed" data-id="430b40b305d2465a9802c2119f51be70" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
