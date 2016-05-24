@@ -5,9 +5,12 @@ venue: Domain Driven Design Europe
 place: Brussels, Belgium
 venue_url: http://dddeurope.com/2016/martin-kleppmann.html
 slides_url: https://speakerdeck.com/ept/event-sourcing-and-stream-processing-at-scale
+video_url: https://www.youtube.com/watch?v=avi-TZI9t2I
 ---
 
 <script async class="speakerdeck-embed" data-id="c4860907b26946ca8ef4e36575a7b71a" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/avi-TZI9t2I?rel=0" frameborder="0" allowfullscreen></iframe>
 
 Abstract
 --------
