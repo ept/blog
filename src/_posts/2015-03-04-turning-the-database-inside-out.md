@@ -2,6 +2,7 @@
 layout: ync-post
 title: "Turning the database inside-out with Apache Samza"
 hackernews: https://news.ycombinator.com/item?id=9145197
+highlight: true
 ---
 
 This is an edited and expanded transcript of a

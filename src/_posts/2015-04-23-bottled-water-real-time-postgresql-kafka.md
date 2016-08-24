@@ -2,6 +2,7 @@
 layout: ync-post
 title: "Bottled Water: Real-time integration of PostgreSQL and Kafka"
 hackernews: https://news.ycombinator.com/item?id=9427441
+highlight: true
 ---
 
 *This post was originally published
