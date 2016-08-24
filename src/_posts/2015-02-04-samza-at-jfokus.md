@@ -3,13 +3,15 @@ layout: talk
 title: "Scalable real-time data processing with Apache Samza"
 venue: Jfokus
 place: Stockholm, Sweden
-venue_url: http://www.jfokus.se/jfokus/talks.jsp#Scalablereal-timedat
+venue_url: http://www.jfokus.se/jfokus/
 lanyrd_url: http://lanyrd.com/2015/jfokus/
 slides_url: https://speakerdeck.com/ept/scalable-stream-processing-with-apache-kafka-and-apache-samza
-video_url: https://www.parleys.com/talk/scalable-real-time-data-processing-apache-samza
+video_url: https://www.youtube.com/watch?v=uRmYJGRPfKU
 ---
 
 <script async class="speakerdeck-embed" data-id="861136005156013261a506fa84ad753a" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/uRmYJGRPfKU?rel=0" frameborder="0" allowfullscreen></iframe>
 
 
 Abstract
