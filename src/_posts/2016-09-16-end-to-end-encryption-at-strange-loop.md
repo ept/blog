@@ -5,11 +5,14 @@ venue: Strange Loop
 place: St. Louis, Missouri, USA
 venue_url: http://thestrangeloop.com/2016/end-to-end-encryption-behind-the-scenes.html
 slides_url: https://speakerdeck.com/ept/end-to-end-encryption-behind-the-scenes
+video_url: https://www.youtube.com/watch?v=oRZoeDRACrY
 ---
 
 This is a joint talk with [Diana Vasile](http://www.cl.cam.ac.uk/~dac53/).
 
 <script async class="speakerdeck-embed" data-id="5060ce99a98c4faa86d8817f59dfbcf6" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/oRZoeDRACrY?rel=0" frameborder="0" allowfullscreen></iframe>
 
 Abstract
 --------
