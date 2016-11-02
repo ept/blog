@@ -144,7 +144,7 @@ a network partition.
 Let's say you have replicas of your database in two different datacenters. The exact method of
 replication doesn't matter for now -- it may be single-leader (master/slave), multi-leader
 (master/master) or quorum-based replication ([Dynamo-style][dynamo]). The requirement of replication
-is that whenever data is written to data in one datacenter, it also has to be written to the replica
+is that whenever data is written in one datacenter, it also has to be written to the replica
 in the other datacenter. Assuming that clients only connect to one datacenter, there must be
 a network link between the two datacenters over which the replication happens.
 
