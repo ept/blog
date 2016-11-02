@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>CamCow (Cambridge Coworking) Update &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>End-to-end encryption: Behind the scenes &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -44,44 +44,91 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="CamCow (Cambridge Coworking) Update"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="End-to-end encryption: Behind the scenes"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>CamCow (Cambridge Coworking) Update</h1>
+                <h1>End-to-end encryption: Behind the scenes</h1>
 
-                
-                <p style="font-size: 80%">Published by Martin Kleppmann on 05 Feb 2009.</p>
-                
+                <p>
+                  A talk at
+                  
+                    <a href="http://talks.cam.ac.uk/talk/index/67806">University of Cambridge Computer Laboratory</a>,
+                  
+                  Cambridge, UK, 26 Oct 2016
+                </p>
 
-                <p>Yesterday evening I went to a
-<a href="http://www.refreshcambridge.org/">Refresh Cambridge</a> event – there was an interesting talk by
-<a href="http://www.greenisgood.co.uk/">Matt Wood</a> from the
-<a href="http://www.sanger.ac.uk/Users/mw4/">Sanger Institute</a> on
-<a href="http://greenisgood.co.uk/pages/show/introduction_to_scrum">how they use Scrum</a> in a very agile
-scientific computing environment.
-<a href="http://www.slideshare.net/mza/introduction-to-scrum">Matt’s slides are online</a>.</p>
+                <ul>
+                  
+                  
+                    <li><a href="https://speakerdeck.com/ept/end-to-end-encryption-behind-the-scenes">Slides</a></li>
+                  
+                  
+                    <li><a href="https://www.youtube.com/watch?v=oRZoeDRACrY">Video</a></li>
+                  
+                  
+                </ul>
 
-<p>Then, before we
-all went off to the pub, I gave a quick update on our progress on setting up a
-<a href="http://camcow.org">coworking space in Cambridge under the name of “CamCow”</a>. Here are my slides
-(<a href="http://www.slideshare.net/martinkleppmann/camcow-building-a-coworking-space-for-cambridge">on SlideShare</a>):</p>
+                <p>This is a joint talk with <a href="http://www.cl.cam.ac.uk/~dac53/">Diana Vasile</a>, a repeat of a
+<a href="/2016/09/16/end-to-end-encryption-at-strange-loop.html">talk we previously gave at Strange Loop</a>.</p>
 
-<div style="width:425px;text-align:left" id="__ss_991691">
-    <object style="margin:0px" width="425" height="355">
-        <param name="movie" value="http://static.slideshare.net/swf/ssplayer2.swf?doc=camcowrefresh20090204-1233824337412768-2&amp;rel=0&amp;stripped_title=camcow-building-a-coworking-space-for-cambridge" />
-        <param name="allowFullScreen" value="true" />
-        <param name="allowScriptAccess" value="always" />
-        <embed src="http://static.slideshare.net/swf/ssplayer2.swf?doc=camcowrefresh20090204-1233824337412768-2&amp;rel=0&amp;stripped_title=camcow-building-a-coworking-space-for-cambridge" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355" />
-    </object>
-</div>
+<script async="" class="speakerdeck-embed" data-id="5060ce99a98c4faa86d8817f59dfbcf6" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
-<p>If you’re interested in looking around the new coworking space
-or want to find out more, please <a href="/contact.html">get in touch</a>.</p>
+<iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/oRZoeDRACrY?rel=0" frameborder="0" allowfullscreen=""></iframe>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Everyone is talking about “cloud computing”, a marketing term for “renting time on someone else’s
+computers on the internet”. While the cloud is great from an efficiency point of view, it is
+a potential security nightmare: applications have to blindly trust cloud providers that they will
+preserve the integrity of the data and prevent unauthorised access. Data breaches and compromises of
+cloud providers are a serious risk.</p>
+
+<p>End-to-end encryption allows us to avoid having to blindly trust the servers. An early example is
+PGP/GnuPG encrypted email, which never went mainstream, but more recent secure messaging apps like
+WhatsApp, Signal and iMessage have shown that it is feasible for millions of people to use
+end-to-end encryption without being security experts.</p>
+
+<p>How do these protocols actually work? In this talk, we will give a friendly introduction to secure
+messaging protocols — to understand the threats against which they defend, and how cryptographic
+operations are combined to implement those defences in the protocol. If you have ever wondered what
+“forward secrecy” means, how key exchange works, or how protocols can ensure you’re communicating
+with the right person (not an impostor like a “man in the middle”), this talk will clear things up.</p>
+
+<p>We will give a dramatic live performance of security protocols, guaranteed to make a dry subject
+interesting!</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li>David Adrian, Karthikeyan Bhargavan, Zakir Durumeric, et al.:
+“<a href="https://weakdh.org/imperfect-forward-secrecy-ccs15.pdf">Imperfect Forward Secrecy: How Diffie-Hellman Fails in Practice</a>,”
+at <em>22nd ACM Conference on Computer and Communications Security</em> (CCS), October 2015.</li>
+  <li>Nikita Borisov, Ian Goldberg, and Eric A Brewer:
+“<a href="https://otr.cypherpunks.ca/otr-wpes.pdf">Off-the-Record Communication, or, Why Not To Use PGP</a>,”
+at <em>ACM Workshop on Privacy in the Electronic Society</em> (WPES), October 2004.</li>
+  <li>Tilman Frosch, Christian Mainka, Christoph Bader, et al.:
+“<a href="https://eprint.iacr.org/2014/904">How Secure is TextSecure?</a>,” at <em>1st IEEE European Symposium on
+Security and Privacy</em> (EuroS&amp;P), March 2016.</li>
+  <li>Christina Garman, Matthew Green, Gabriel Kaptchuk, Ian Miers, and Michael Rushanan:
+“<a href="https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/garman">Dancing on the Lip of the Volcano: Chosen Ciphertext Attacks on Apple iMessage</a>,”
+at <em>25th USENIX Security Symposium</em>, August 2016.</li>
+  <li>Hugo Krawczyk: “<a href="http://iacr.org/archive/crypto2003/27290399/27290399.pdf">SIGMA: the “SIGn-and-MAc” Approach to Authenticated Diffie-Hellman
+and its Use in the IKE Protocols</a>,” at
+<em>23rd Annual International Cryptology Conference</em> (CRYPTO), August 2003.</li>
+  <li>Ben Laurie: “<a href="http://queue.acm.org/detail.cfm?id=2668154">Certificate Transparency</a>,” <em>ACM Queue</em>, volume 12, number 8, August 2014.</li>
+  <li>Moxie Marlinspike: “<a href="https://whispersystems.org/blog/advanced-ratcheting/">Advanced cryptographic ratcheting</a>,” 26 November 2013.</li>
+  <li>Marcela S Melara, Aaron Blankstein, Joseph Bonneau, Edward W Felten, and Michael J Freedman:
+“<a href="https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-melara.pdf">CONIKS: Bringing Key Transparency to End Users</a>,” at
+<em>24th USENIX Security Symposium</em>, August 2015.</li>
+  <li>Wade Trappe and Lawrence C Washington: <em>Introduction to Cryptography with Coding Theory</em>,
+2nd edition. Pearson, July 2005. ISBN: 978-0131862395</li>
+  <li>Nik Unger, Sergej Dechand, Joseph Bonneau, et al.:
+“<a href="http://cacr.uwaterloo.ca/techreports/2015/cacr2015-02.pdf">SoK: Secure Messaging</a>,” at <em>36th IEEE Symposium on Security and Privacy</em>, May 2015.</li>
+  <li>“<a href="http://www.apple.com/business/docs/iOS_Security_Guide.pdf">iOS Security White Paper</a>,” Apple Inc., May 2016.</li>
+  <li>“<a href="https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf">WhatsApp Encryption Overview</a>,” WhatsApp Inc., April 2016.</li>
+</ol>
 
 
-                
-
-                <div id="disqus_thread"></div>
             </div>
 
             <div id="sidebar">
@@ -200,18 +247,6 @@ or want to find out more, please <a href="/contact.html">get in touch</a>.</p>
 </div>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2009/02/05/camcow-cambridge-coworking-update.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Twitter -->
 <script>

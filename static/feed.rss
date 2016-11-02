@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Sat, 17 Sep 2016 10:19:10 CDT</lastBuildDate>
+        <lastBuildDate>Wed, 02 Nov 2016 15:02:50 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -2942,7 +2942,7 @@ a network partition.</p>
 <p>Let’s say you have replicas of your database in two different datacenters. The exact method of
 replication doesn’t matter for now – it may be single-leader (master/slave), multi-leader
 (master/master) or quorum-based replication (<a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo-style</a>). The requirement of replication
-is that whenever data is written to data in one datacenter, it also has to be written to the replica
+is that whenever data is written in one datacenter, it also has to be written to the replica
 in the other datacenter. Assuming that clients only connect to one datacenter, there must be
 a network link between the two datacenters over which the replication happens.</p>
 

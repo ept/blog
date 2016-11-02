@@ -49,6 +49,10 @@
 
                 <h1>Please stop calling databases CP or AP</h1>
 
+                
+                <p style="font-size: 80%">Published by Martin Kleppmann on 11 May 2015.</p>
+                
+
                 <p>In his excellent blog post <a href="http://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/">Notes on Distributed Systems for Young Bloods</a>, Jeff Hodges
 recommends that you use the <a href="http://henryr.github.io/cap-faq/">CAP theorem</a> to critique systems. A lot of people have taken
 that advice to heart, describing their systems as “CP” (consistent but not available under network
@@ -182,7 +186,7 @@ a network partition.</p>
 <p>Let’s say you have replicas of your database in two different datacenters. The exact method of
 replication doesn’t matter for now – it may be single-leader (master/slave), multi-leader
 (master/master) or quorum-based replication (<a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo-style</a>). The requirement of replication
-is that whenever data is written to data in one datacenter, it also has to be written to the replica
+is that whenever data is written in one datacenter, it also has to be written to the replica
 in the other datacenter. Assuming that clients only connect to one datacenter, there must be
 a network link between the two datacenters over which the replication happens.</p>
 
@@ -505,11 +509,11 @@ for comments on a draft of this post. Any errors or unpalatable opinions are min
             
               <li><a href="/2016/11/03/code-mesh.html">03 Nov 2016 at Code Mesh</a></li>
             
+              <li><a href="/2016/10/26/end-to-end-encryption-wednesday-seminars.html">26 Oct 2016 at University of Cambridge Computer Laboratory</a></li>
+            
               <li><a href="/2016/09/16/end-to-end-encryption-at-strange-loop.html">16 Sep 2016 at Strange Loop</a></li>
             
               <li><a href="/2016/03/07/qcon-london.html">07 Mar 2016 at QCon</a></li>
-            
-              <li><a href="/2016/03/04/cambridge-databases-course.html">04 Mar 2016 at University of Cambridge</a></li>
             
             <li><a href="/talks.html">Full archive</a></li>
         </ul>

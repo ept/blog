@@ -60,11 +60,15 @@
                 <ul>
                   
                   
+                    <li><a href="https://speakerdeck.com/ept/conflict-resolution-for-eventual-consistency">Slides</a></li>
+                  
                   
                   
                 </ul>
 
-                <h2 id="abstract">Abstract</h2>
+                <script async="" class="speakerdeck-embed" data-id="4919ab73fb794e7ba0ff36501c981d5a" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<h2 id="abstract">Abstract</h2>
 
 <p>What do collaborative editors like Google Docs, the calendar app on your phone, and multi-datacenter
 database clusters have in common?</p>
@@ -84,6 +88,58 @@ Replicated Datatypes (CRDTs) to achieve a similar thing.</p>
 but as we shall see, they soon become fascinatingly mind-bending once you start trying to do more
 ambitious things. For example, if you wanted to write your own spreadsheet app or graphics software
 that allows several users to edit the same document concurrently, how would you go about doing that?</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li>Carlos Baquero, Paulo Sérgio Almeida, and Carl Lerche: “<a href="http://haslab.uminho.pt/cbm/files/abstractcounterpapocfinal.pdf">The problem with embedded CRDT counters
+and a solution</a>,” at <em>2nd Workshop on the Principles and Practice of Consistency for
+Distributed Data</em> (PaPoC), April 2016.</li>
+  <li>Russell Brown: “<a href="https://gist.github.com/russelldb/f92f44bdfb619e089a4d">A Bluffers Guide to CRDTs in Riak</a>,” gist.github.com, 28 October 2013.</li>
+  <li>John Day-Richter: “<a href="https://drive.googleblog.com/2010/09/whats-different-about-new-google-docs.html">What’s different about the new Google Docs: Making collaboration
+fast</a>,” drive.googleblog.com, 23 September 2010.</li>
+  <li>Clarence Ellis and S J Gibbs: “<a href="http://www-ihm.lri.fr/~mbl/ENS/CSCW/material/papers/Ellis-SIGMOD89.pdf">Concurrency Control in Groupware Systems</a>,” at <em>ACM
+International Conference on Management of Data</em> (SIGMOD), pages 399–407, May 1989.</li>
+  <li>Abdessamad Imine, Pascal Molli, Gérald Oster, and Michaël Rusinowitch: “<a href="http://www.ecscw.org/2003/015Imine_ecscw03.pdf">Proving Correctness of
+Transformation Functions in Real-Time Groupware</a>,” at <em>8th European Conference on
+Computer-Supported Cooperative Work</em> (ECSCW), pages 277–293, September 2003.</li>
+  <li>Martin Kleppmann and Alastair R Beresford: “<a href="http://arxiv.org/abs/1608.03960">A Conflict-Free Replicated JSON
+Datatype</a>,” arXiv:1608.03960, August 2016.</li>
+  <li>Brice Nédelec, Pascal Molli, Achour Mostefaoui, and Emmanuel Desmontils: “<a href="https://hal.archives-ouvertes.fr/file/index/docid/921633/filename/fp025-nedelec.pdf">LSEQ: an Adaptive
+Structure for Sequences in Distributed Collaborative Editing</a>,” at <em>13th ACM Symposium on
+Document Engineering</em> (DocEng), pages 37–46, September 2013.</li>
+  <li>David A Nichols, Pavel Curtis, Michael Dixon, and John Lamping: “<a href="http://www.lively-kernel.org/repository/webwerkstatt/projects/Collaboration/paper/Jupiter.pdf">High-Latency, Low-Bandwidth
+Windowing in the Jupiter Collaboration System</a>,” at <em>8th Annual ACM Symposium on User
+Interface Software and Technology</em> (UIST), pages 111–120, November 1995.</li>
+  <li>Gérald Oster, Pascal Urso, Pascal Molli, and Abdessamad Imine: “<a href="https://hal.archives-ouvertes.fr/file/index/docid/108523/filename/OsterCSCW06.pdf">Data Consistency for P2P
+Collaborative Editing</a>,” at <em>ACM Conference on Computer Supported Cooperative Work</em>
+(CSCW), November 2006.</li>
+  <li>Nuno Preguiça, Joan Manuel Marquès, Marc Shapiro, and Mihai Letia: “<a href="https://hal.inria.fr/inria-00445975/document">A commutative replicated
+data type for cooperative editing</a>,” at <em>29th IEEE International Conference on
+Distributed Computing Systems</em> (ICDCS), June 2009.</li>
+  <li>Matthias Ressel, Doris Nitsche-Ruhland, and Rul Gunzenhäuer: “<a href="https://pdfs.semanticscholar.org/6a31/3d12c90b01efae531e70f8d0cd1d1e8565ae.pdf">An Integrating,
+Transformation-Oriented Approach to Concurrency Control and Undo in Group Editors</a>,” at
+<em>ACM Conference on Computer Supported Cooperative Work</em> (CSCW), pages 288–297, November 1996.</li>
+  <li>Hyun-Gul Roh, Myeongjae Jeon, Jin-Soo Kim, and Joonwon Lee: “<a href="http://csl.skku.edu/papers/jpdc11.pdf">Replicated abstract data types:
+Building blocks for collaborative applications</a>,” <em>Journal of Parallel and Distributed
+Computing</em>, volume 71, number 3, pages 354–368, March 2011.</li>
+  <li>Marc Shapiro, Nuno Preguiça, Carlos Baquero, and Marek Zawirski: “<a href="http://hal.inria.fr/inria-00555588/">A comprehensive study of
+Convergent and Commutative Replicated Data Types</a>,” INRIA Research Report 7506,
+January 2011.</li>
+  <li>Daniel Spiewak: “<a href="http://www.codecommit.com/blog/java/understanding-and-applying-operational-transformation">Understanding and Applying Operational Transformation</a>,”
+codecommit.com, 17 May 2010.</li>
+  <li>Chengzheng Sun and Clarence Ellis: “<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.53.933&amp;rep=rep1&amp;type=pdf">Operational Transformation in Real-Time Group Editors:
+Issues, Algorithms, and Achievements</a>,” at <em>ACM Conference on Computer Supported
+Cooperative Work</em> (CSCW), pages 59–68, November 1998.</li>
+  <li>Chengzheng Sun, Xiaohua Jia, Yanchun Zhang, Yun Yang, and David Chen: “<a href="http://salvin.jeancharles.free.fr/Documents/Projet%20-%20Boulot/NTU-Singapore/p63-sun.pdf">Achieving Convergence,
+Causality Preservation, and Intention Preservation in Real-Time Cooperative Editing
+Systems</a>,” <em>ACM Transactions on Computer-Human Interaction</em>, volume 5, number 1, pages
+63–108, 1998.</li>
+  <li>Stéphane Weiss, Pascal Urso, and Pascal Molli: “<a href="https://www.researchgate.net/profile/Pascal_Urso/publication/233882440_Logoot-Undo_Distributed_Collaborative_Editing_System/links/0fcfd50c84f5194937000000.pdf">Logoot-Undo: Distributed Collaborative Editing
+System on P2P networks</a>,” <em>IEEE Transactions on Parallel and Distributed Systems</em>,
+volume 21, number 8, pages 1162–1174, January 2010.</li>
+</ol>
+
 
             </div>
 
@@ -170,11 +226,11 @@ that allows several users to edit the same document concurrently, how would you 
             
               <li><a href="/2016/11/03/code-mesh.html">03 Nov 2016 at Code Mesh</a></li>
             
+              <li><a href="/2016/10/26/end-to-end-encryption-wednesday-seminars.html">26 Oct 2016 at University of Cambridge Computer Laboratory</a></li>
+            
               <li><a href="/2016/09/16/end-to-end-encryption-at-strange-loop.html">16 Sep 2016 at Strange Loop</a></li>
             
               <li><a href="/2016/03/07/qcon-london.html">07 Mar 2016 at QCon</a></li>
-            
-              <li><a href="/2016/03/04/cambridge-databases-course.html">04 Mar 2016 at University of Cambridge</a></li>
             
             <li><a href="/talks.html">Full archive</a></li>
         </ul>
