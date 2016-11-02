@@ -17,6 +17,10 @@
 
                 <h1>{{ page.title }}</h1>
 
+                {% if page.date %}
+                <p style="font-size: 80%">Published by Martin Kleppmann on {{ page.date | date_to_string }}.</p>
+                {% endif %}
+
                 {{ content }}
 
                 {% for hn_link in page.hackernews %}
