@@ -5,6 +5,8 @@ hackernews: https://news.ycombinator.com/item?id=9427441
 highlight: true
 ---
 
+<!-- Alternative HN: https://news.ycombinator.com/item?id=12844240 -->
+
 *This post was originally published
 [on the Confluent blog](http://blog.confluent.io/2015/04/23/bottled-water-real-time-integration-of-postgresql-and-kafka/).*
 
