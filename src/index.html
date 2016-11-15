@@ -57,7 +57,7 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
 <h2 class="title">Publications</h2>
 <p>Academic papers and reports.</p>
 <ul>
-  {% for paper in papers limit:5 %}
+  {% for paper in papers %}
     {% include paper_summary.html paper=paper %}
   {% endfor %}
 </ul>
