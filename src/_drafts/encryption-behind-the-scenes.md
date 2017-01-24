@@ -11,8 +11,8 @@ included the "stage directions" for acting in the text below.
 A [video recording](https://www.youtube.com/watch?v=oRZoeDRACrY) of the talk is also available.
 Our acting is not very good, but hopefully it is nevertheless educational and entertaining!
 
-Thank you to [Mike Bridge](https://twitter.com/michaelbridge) for taking photos of us on-stage
-(included in the text below).
+Thank you to [Mike Bridge](https://twitter.com/michaelbridge) for giving us permission to use the
+photos he took of us on-stage (included in the text below).
 
 
 Abstract
