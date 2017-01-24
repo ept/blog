@@ -5,10 +5,12 @@ venue: GOTO Berlin
 place: Berlin, Germany
 venue_url: http://gotocon.com/berlin-2016/presentations/show_talk.jsp?oid=7910
 slides_url: https://speakerdeck.com/ept/conflict-resolution-for-eventual-consistency
+video_url: https://www.youtube.com/watch?v=yCcWpzY8dIA
 ---
 
 <script async class="speakerdeck-embed" data-id="4919ab73fb794e7ba0ff36501c981d5a" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
+<iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/yCcWpzY8dIA?rel=0" frameborder="0" allowfullscreen></iframe>
 
 Abstract
 --------
