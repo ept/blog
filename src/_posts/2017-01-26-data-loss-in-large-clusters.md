@@ -44,7 +44,7 @@ three disks. The probability of a disk dying doesn't depend on the size of the c
 should the size of the cluster matter?" But I calculated the probabilities and drew a graph, and it
 looked like this:
 
-<a href="/2017/01/dataloss.png"><img src="/2017/02/dataloss.png" width="550" alt="Graph of data loss probability depending on the number of nodes in the cluster"></a>
+<a href="/2017/01/dataloss.png"><img src="/2017/01/dataloss.png" width="550" alt="Graph of data loss probability depending on the number of nodes in the cluster"></a>
 
 To be clear, this isn't the probability of a single node failing -- this is the probability of
 **permanently losing all three replicas** of some piece of data, so restoring from backup (if you
