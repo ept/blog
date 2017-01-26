@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>The probability of data loss in large clusters &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="The probability of data loss in large clusters"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>The probability of data loss in large clusters</h1>
+
+                
+                <p style="font-size: 80%">Published by Martin Kleppmann on 26 Jan 2017.</p>
+                
+
+                <p><em>This blog post uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematics. You need JavaScript
+enabled for MathJax to work.</em></p>
+
+<p>Many distributed storage systems (e.g. Cassandra, Riak, HDFS, MongoDB, Kafka, …) use replication
+to make data durable. They are typically deployed in a <a href="https://en.wikipedia.org/wiki/Non-RAID_drive_architectures">“Just a Bunch of Disks”</a> (JBOD)
+configuration – that is, without RAID to handle disk failure. If one of the disks on a node dies,
+that disk’s data is simply lost. To avoid losing data permanently, the database system keeps a copy
+(replica) of the data on some other disks on other nodes.</p>
+
+<p>The most common replication factor is 3 – that is, the database keeps copies of every piece of data
+on three separate disks attached to three different computers. The reasoning goes something like
+this: disks only die once in a while, so if a disk dies, you have a bit of time to replace it, and
+then you still have two copies from which you can restore the data onto the new disk. The risk that
+a second disk dies before you restore the data is quite low, and the risk that all three disks die
+at the same time is so tiny that you’re more likely to get hit by an asteroid.</p>
+
+<p>As a back-of-the-envelope calculation, if the probability of a single disk failing within some time
+period is 0.1% (to pick an arbitrary number), then the probability of two disks failing is
+(0.001)<sup>2</sup> = 10<sup>-6</sup>, and the probability of all three disks failing is
+(0.001)<sup>3</sup> = 10<sup>-9</sup>, or one in a billion. This calculation assumes that
+one disk’s failure is independent from another disk’s failure – which is not actually true, since
+for example disks from the same manufacturing batch may show correlated failures – but it’s a good
+enough approximation for our purposes.</p>
+
+<p>So far the common wisdom. It sounds reasonable, but unfortunately it turns out to be untrue for many
+data storage systems. In this post I will show why.</p>
+
+<h2 id="its-so-easy-to-lose-data-la-la-laaa">It’s so easy to lose data, la la laaa</h2>
+
+<p>If your database cluster really only consists of three machines, then the probability of all three
+of them dying simultaneously is indeed very low (ignoring correlated faults, such as the datacenter
+burning down). However, as you move to larger clusters, the probabilities change. The more nodes and
+disks you have in your cluster, the more likely it is that you lose data.</p>
+
+<p>This is a counter-intuitive idea. “Surely,” you think, “every piece of data is still replicated on
+three disks. The probability of a disk dying doesn’t depend on the size of the cluster. So why
+should the size of the cluster matter?” But I calculated the probabilities and drew a graph, and it
+looked like this:</p>
+
+<p><a href="/2017/01/dataloss.png"><img src="/2017/02/dataloss.png" width="550" alt="Graph of data loss probability depending on the number of nodes in the cluster" /></a></p>
+
+<p>To be clear, this isn’t the probability of a single node failing – this is the probability of
+<strong>permanently losing all three replicas</strong> of some piece of data, so restoring from backup (if you
+have one) is the only remaining way to recover that data. The bigger your cluster, the more likely
+you are haemorrhaging data. This is probably not what you intended when you decided to pay for
+a replication factor of 3.</p>
+
+<p>The y axis on that graph is a bit arbitrary, and depends on a lot of assumptions, but the direction
+of the line is scary. Under the assumption that a node has a 0.1% chance of dying within some time
+period, the graph shows that in a 8,000-node cluster, the chance of permanently losing all three
+replicas of some piece of data (within the same time period) is about 0.2%. Yes, you read that
+correctly: the risk of losing <strong>all three</strong> copies of some data is <strong>twice as great</strong> as the risk of
+losing a single node! What is the point of all this replication again?</p>
+
+<p>The intuition behind this graph is as follows: in an 8,000-node cluster it’s almost certain that
+a <em>few</em> nodes are always dead at any given moment. That is normally not a problem: a certain rate of
+churn and node replacement is expected and a part of routine maintenance. However, if you get
+unlucky, there is <em>some piece of data</em> whose three replicas just happen to be three of those nodes
+that have died – and if this is the case, that piece of data is gone forever. The data that is lost
+is only a small fraction of the total dataset in the cluster, but still that’s not great: when you
+use a replication factor of 3, you generally mean “I really don’t want to lose this data”, not “I
+don’t mind occasionally losing a bit of this data, as long as it’s not too much”. Maybe that piece
+of lost data was a particularly important one.</p>
+
+<p>The probability that all three replicas are dead nodes depends crucially on the algorithm that the
+system uses to assign data to replicas. The graph above is calculated under the assumption that the
+data is split into a number of partitions (shards), and that each partition is stored on three
+<em>randomly chosen</em> nodes (or pseudo-randomly with a hash function). This is the case with
+<a href="https://www.akamai.com/kr/ko/multimedia/documents/technical-publication/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf">consistent hashing</a>, used in Cassandra and Riak, among others (as far as I know). With
+other systems I’m not sure how the replica assignment works, so I’d appreciate any insights from
+people who know about the internals of various storage systems.</p>
+
+<h2 id="calculating-the-probability-of-data-loss">Calculating the probability of data loss</h2>
+
+<p>Let me show you how I calculated that graph above, using a probabilistic model of a replicated
+database.</p>
+
+<p>Let’s assume that the probability of losing an individual node is \(p=P(\text{node loss})\). I am
+going to ignore time in this model, and simply look at the probability of failure in some arbitrary
+time period. For example, we could assume that \(p=0.001\) is the probability of a node failing
+within a given day, which would make sense if it takes about a day to replace the node and restore
+the lost data onto new disks. For simplicity I won’t distinguish between node failure and
+<a href="https://www.backblaze.com/blog/hard-drive-reliability-update-september-2014/">disk failure</a>, and I will consider only permanent failures (ignoring crashes where
+the node comes back again after a reboot).</p>
+
+<p>Let \(n\) be the number of nodes in the cluster. Then the probability that \(f\) out of \(n\)
+nodes have failed (assuming that failures are independent) is given by the
+<a href="https://en.wikipedia.org/wiki/Binomial_distribution">binomial distribution</a>:</p>
+
+<p>\[ P(f \text{ nodes failed}) = \binom{n}{f} \, p^f \, (1-p)^{n-f} \]</p>
+
+<p>The term \(p^f\) is the probability that \(f\) nodes have failed, the term \((1-p)^{n-f}\) is
+the probability that the remaining \(n-f\) have not failed, and \(\binom{n}{f}\) is the number
+of different ways of picking \(f\) out of \(n\) nodes. \(\binom{n}{f}\) is pronounced
+“n choose f”, and it is defined as:</p>
+
+<p>\[ \binom{n}{f} = \frac{n!}{f! \; (n-f)!} \]</p>
+
+<p>Let \(r\) be the replication factor (typically \(r=3\)). If we assume that \(f\) out of
+\(n\) nodes have failed, what is the probability that a particular partition has all \(r\)
+replicas on failed nodes?</p>
+
+<p>Well, in a system that uses consistent hashing, each partition is assigned to nodes independently
+and randomly (or pseudo-randomly). For a given partition, there are \(\binom{n}{r}\) different
+ways of assigning the \(r\) replicas to nodes, and these assignments are all equally likely to
+occur. Moreover, there are \(\binom{f}{r}\) different ways of choosing \(r\) replicas out of
+\(f\) failed nodes – these are the ways in which all \(r\) replicas can be assigned to failed
+nodes. We then work out the fraction of the assignments that result in all replicas having failed:</p>
+
+<p>\[ P(\text{partition lost} \mid f \text{ nodes failed}) = \frac{\binom{f}{r}}{\binom{n}{r}} =
+    \frac{f! \; (n-r)!}{(f-r)! \; n!} \]</p>
+
+<p>(The vertical bar after “partition lost” is pronounced “given that”, and it indicates a
+<a href="https://en.wikipedia.org/wiki/Conditional_probability">conditional probability</a>: the probability is given <em>under the assumption</em> that \(f\)
+nodes have failed.)</p>
+
+<p>So that’s the probability that all replicas of one particular partition has been lost. What about
+a cluster with \(k\) partitions? If one or more partitions have been lost, we have lost data.
+Thus, in order to not lose data, we require that all \(k\) partitions are not lost:</p>
+
+<p>\begin{align}
+P(\text{data loss} \mid f \text{ nodes failed})
+    &amp;= 1 - P(\text{partition not lost} \mid f \text{ nodes failed})^k \\
+    &amp;= 1 - \left( 1 - \frac{f! \; (n-r)!}{(f-r)! \; n!} \right)^k
+\end{align}</p>
+
+<p>Cassandra and Riak call partitions “vnodes” instead, but they are the same thing. In general, the
+number of partitions \(k\) is independent from the number of nodes \(n\). In the case of
+Cassandra, there is usually a <a href="http://www.datastax.com/dev/blog/virtual-nodes-in-cassandra-1-2">fixed number of partitions per node</a>; the default
+is \(k=256\,n\) (configured by the <code>num_tokens</code> parameter), and this is also what I assumed for the
+graph above. In Riak, the number of partitions is <a href="https://docs.basho.com/riak/kv/2.1.4/setup/planning/cluster-capacity/#ring-size-number-of-partitions">fixed when you create the cluster</a>, but
+generally more nodes also mean more partitions.</p>
+
+<p>With all of this in place, we can now work out the probability of losing one or more partitions in
+a cluster of size \(n\) with a replication factor of \(r\). If the number of failures \(f\) is
+less than the replication factor, we can be sure that no data is lost. Thus, we need to add up the
+probabilities for all possible numbers of failures \(f\) with \(r \le f \le n\):</p>
+
+<p>\begin{align}
+P(\text{data loss})
+    &amp;= \sum_{f=r}^{n} \; P(\text{data loss} \;\cap\; f \text{ nodes failed}) \\
+    &amp;= \sum_{f=r}^{n} \; P(f \text{ nodes failed}) \; P(\text{data loss} \mid f \text{ nodes failed}) \\
+    &amp;= \sum_{f=r}^{n} \binom{n}{f} \, p^f \, (1-p)^{n-f}
+       \left[ 1 - \left( 1 - \frac{f! \; (n-r)!}{(f-r)! \; n!} \right)^k \right]
+\end{align}</p>
+
+<p>That is a bit of a mouthful, but I think it’s accurate. And if you plug in \(r=3\),
+\(p=0.001\) and \(k=256\,n\), and vary \(n\) between 3 and 10,000, then you
+get the graph above. I wrote <a href="https://gist.github.com/ept/1e094caaab5fa6471f529f589c4aaaf0">a little Ruby program</a> to do the calculation.</p>
+
+<p>We can get a simpler approximation using the <a href="https://en.wikipedia.org/wiki/Boole%27s_inequality">union bound</a>:</p>
+
+<p>\begin{align}
+P(\text{data loss})
+    &amp;= P(\ge\text{ 1 partition lost}) \\
+    &amp;= P\left( \bigcup_{i=1}^k \text{partition } i \text{ lost} \right) \\
+    &amp;\le k\, P(\text{partition lost}) = k\, p^r
+\end{align}</p>
+
+<p>Even though one partition failing is not independent from another partition failing, this
+approximation still applies. And it seems to match the exact result quite closely: in the graph, the
+data loss probability looks like a straight line, proportional to the number of nodes. The
+approximation says that the probability is proportional to the number of partitions, which is
+equivalent since we assumed a fixed 256 partitions per node.</p>
+
+<p>Moreover, if we plug in the numbers for 10,000 nodes into the approximation, we get 
+\(P(\text{data loss}) \le 256 \cdot 10^4 \cdot (10^{-3})^3 = 0.00256\), which matches the result
+from the Ruby program very closely.</p>
+
+<h2 id="and-in-practice">And in practice…?</h2>
+
+<p>Is this a problem in practice? I don’t know. Mostly I think it’s an interesting and
+counter-intuitive phenomenon. I’ve heard rumours that it is causing real data loss at companies with
+large database clusters, but I’ve not seen the issue documented anywhere. If you’re aware of any
+discussions on this topic, please point me at them.</p>
+
+<p>The calculation indicates that in order to reduce the probability of data loss, you can reduce the
+number of partitions or increase the replication factor. Using more replicas costs more, so it’s not
+ideal for large clusters that are already expensive. However, the number of partitions presents an
+interesting trade-off. Cassandra originally used one partition per node, but then
+<a href="http://www.datastax.com/dev/blog/virtual-nodes-in-cassandra-1-2">switched to 256 partitions per node</a> a few years ago in order to achieve better
+load distribution and more efficient rebalancing. The downside, as we can see from this calculation,
+is a much higher probability of losing at least one of the partitions.</p>
+
+<p>I think it’s probably possible to devise replica assignment algorithms in which the probability of
+data loss does not grow with the cluster size, or at least does not grow as fast, but which
+nevertheless have good load distribution and rebalancing properties. That would be an interesting
+area to explore further. In that context, my colleague <a href="http://www.cl.cam.ac.uk/~sak70/">Stephan</a> pointed out that the expected
+rate of data loss is constant in a cluster of a particular size, independent of the replica
+assignment algorithm – in other words, you can choose between a high probability of losing a small
+amount of data, and a low probability of losing a large amount of data! Is the latter better?</p>
+
+<p>You need fairly large clusters before this effect really shows up, but clusters of thousands of
+nodes are used by various large companies, so I’d be interested to hear from people with operational
+experience at such scale. If the probability of permanently losing data in a 10,000 node cluster is
+really 0.25% per day, that would mean a 60% chance of losing data in a year. That’s way higher than
+the “one in a billion” getting-hit-by-an-asteroid probability that I talked about at the start.</p>
+
+<p>Are the designers of distributed data systems aware of this issue? If I got this right, it’s
+something that should be taken into account when designing replication schemes. Hopefully this blog
+post will raise some awareness of the fact that just because you have three replicas you’re not
+automatically guaranteed to be safe.</p>
+
+<p><em>Thank you to <a href="https://twitter.com/matclayton">Mat Clayton</a> for bringing this issue to my attention, and to
+<a href="http://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>, <a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>, <a href="https://twitter.com/cmeik">Christopher Meiklejohn</a>,
+and <a href="http://www.cl.cam.ac.uk/~drt24/">Daniel Thomas</a> for comments on a draft of this post.</em></p>
+
+
+
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://www.anrdoezrs.net/click-7658334-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920032175.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781491903094_%2525zp&cjsku=0636920032175" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net">Designing Data-Intensive Applications</a>,
+        is available in early release from O’Reilly.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>,
+        working at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>26 Jan 2017: <a href="/2017/01/26/data-loss-in-large-clusters.html">The probability of data loss in large clusters</a></li>
+            
+              <li>15 Apr 2016: <a href="/2016/04/15/announcing-trve-data.html">Announcing TRVE DATA: Placing a bit less trust in the cloud</a></li>
+            
+              <li>30 Mar 2016: <a href="/2016/03/30/device-security-fbi.html">Device security and the FBI</a></li>
+            
+              <li>18 Feb 2016: <a href="/2016/02/18/law-enforcement-smartphone-backdoors.html">Should law enforcement services have a backdoor into smartphones?</a></li>
+            
+              <li>08 Feb 2016: <a href="/2016/02/08/how-to-do-distributed-locking.html">How to do distributed locking</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2016/11/15/goto-berlin.html">15 Nov 2016 at GOTO Berlin</a></li>
+            
+              <li><a href="/2016/11/03/code-mesh.html">03 Nov 2016 at Code Mesh</a></li>
+            
+              <li><a href="/2016/10/26/end-to-end-encryption-wednesday-seminars.html">26 Oct 2016 at University of Cambridge Computer Laboratory</a></li>
+            
+              <li><a href="/2016/09/16/end-to-end-encryption-at-strange-loop.html">16 Sep 2016 at Strange Loop</a></li>
+            
+              <li><a href="/2016/03/07/qcon-london.html">07 Mar 2016 at QCon</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2017/01/26/data-loss-in-large-clusters.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
