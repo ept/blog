@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Drawing a map of distributed data systems &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Drawing a map of distributed data systems"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Drawing a map of distributed data systems</h1>
+
+                
+                <p style="font-size: 80%">Published by Martin Kleppmann on 15 Mar 2017.</p>
+                
+
+                <p><strong>How we created an illustrated guide to help you find your way through the data landscape.</strong></p>
+
+<p><a href="http://dataintensive.net/"><em>Designing Data-Intensive Applications</em></a>, the book I’ve been working on
+for four years, is finally finished, and should be available in your favorite bookstore in the next
+week or two. An incomplete beta (Early Release) edition has been available for the last 2½ years as
+I continued working on the final chapters.</p>
+
+<p>Throughout that process, we have been quietly working on a surprise. Something that has not been
+part of any of the Early Releases of the book. In fact, something that I have never seen in any tech
+book. And today we are excited to share it with you.</p>
+
+<p>In <em>Designing Data-Intensive Applications</em>, each of the 12 chapters is accompanied by a map. The map
+is a kind of graphical table of contents of the chapter, showing how some of the main ideas in the
+chapter relate to each other.</p>
+
+<p>Here is an example, from Chapter 3 (on storage engines):</p>
+
+<p><a href="https://d3ansictanv2wj.cloudfront.net/ch03-map_lg-12f05f19df9e49098d509847518f1c03.jpg"><img src="/2017/03/ch3-map.jpg" width="550" height="419" alt="Chapter 3 map illustration from Designing Data-Intensive Applications" /></a><br />
+<small>Figure 1. Map illustration from <em>Designing Data-Intensive Applications</em>, O’Reilly Media, 2017.</small></p>
+
+<p>Don’t take it too seriously—some of it is a little tongue-in-cheek, we have taken some artistic
+license, and the things included on the map are not exhaustive.</p>
+
+<p>But it does reflect the structure of the chapter: political or geographic regions represent ways of
+doing something, and cities represent particular implementations of those approaches. Similar things
+are more likely to be close together, and roads or rivers represent concepts that connect different
+implementations or regions.</p>
+
+<p>Most computing books describe one particular piece of software and discuss all the aspects of how it
+works. This book is structured differently: it starts with the concepts—discussing the high-level
+approaches of how you might solve some problem, and comparing the pros and cons of each—and then
+points out which pieces of software use which approach. The maps use the same structure: the region
+in which a city is located tells you what approach it uses.</p>
+
+<p>For example, in the map above, you can see a high-level subdivision into two countries: transaction
+processing and analytics. Within transaction processing, there are two regions: log-structured
+storage and B-trees, which are two ways of implementing OLTP storage engines. Within the B-tree
+region, you see databases like MySQL and PostgreSQL<sup><a href="#_ftn1">[1]</a></sup>, while within
+the log-structured region you see databases like Cassandra and HBase. On the analytics side, you can
+see that the mountain range representing column storage reaches into both the data warehousing and
+the Hadoop regions, since the approach applies to both.</p>
+
+<p>The maps are in black and white, both because of practicalities of printing and also because I was
+looking for a
+<a href="http://www.tolkien.co.uk/file/IfbTdA8/5d04a105-e66b-4d9b-b218-928c691eb83d.jpg">Tolkien-esque style</a>.
+You are, of course, welcome to color them in yourself. In fact, by coloring them in, you would be
+following a fine tradition: for over three centuries, maps were printed in black and white from an
+<a href="http://www.maphistory.info/understanding.html">engraved copper plate</a>, and then colored in by hand.</p>
+
+<p>Each of the chapters has a map like that, focusing on the particular aspects discussed in that
+chapter. This means that some cities appear on multiple islands—the data landscape is
+multidimensional, so a city may lie in more than one (conceptual) realm. For example, the map below
+is for Chapter 5 (on the topic of replication):</p>
+
+<p><a href="https://d3ansictanv2wj.cloudfront.net/ch05-map_lg-32ac8f29402e391034f664a63461eef5.jpg"><img src="/2017/03/ch5-map.jpg" width="550" height="550" alt="Chapter 5 map illustration from Designing Data-Intensive Applications" /></a><br />
+<small>Figure 2. Map illustration from <em>Designing Data-Intensive Applications</em>, O’Reilly Media, 2017.</small></p>
+
+<p>Cities representing Cassandra, MongoDB, MySQL, and others appear on both this map, the Chapter 3 map
+above, and some other maps, too.</p>
+
+<p>Shipping routes connect some of the ports shown in the maps, in cases where there is a noteworthy
+link between chapters. Most of the maps are of islands, but there are some exceptions. (I won’t give
+away too much, but I just want to say…beware of the
+<a href="https://en.wikipedia.org/wiki/Kraken">Kraken</a>.)</p>
+
+<p>I am incredibly delighted that O’Reilly was willing to take on this crazy idea of creating maps. It
+took a whole team to make them happen: from my
+<a href="https://www.dropbox.com/s/yvuj7rqg66i93os/chapter3-map.jpg?dl=0">rough pencil sketches</a> (which
+showed the structure but had absolutely zero artistic value),
+<a href="http://shabbirdiwan.com/category/technique/scratch-board/">Shabbir Diwan</a>,
+<a href="http://www.ediefreedman.com/">Edie Freedman</a>, and <a href="http://www.oreilly.com/pub/au/3771">Ron Bilodeau</a>
+created the beautifully illustrated versions you see above, and
+<a href="https://twitter.com/cmariebeau">Marie Beaugureau</a> patiently managed several rounds of revisions, in
+which we painstakingly polished all the details.</p>
+
+<p>Perhaps you’re curious to know how we got onto the idea of creating maps. Early on in the Early
+Release of the book, some readers told me they would love some kind of flowchart to help them decide
+quickly which database they should use for their application. Such flowcharts
+<a href="https://medium.baqend.com/nosql-databases-a-survey-and-decision-guidance-ea7823a822d">have been attempted</a>,
+but I never liked them much—it is tempting to read them out of context and jump to conclusions too
+quickly, and they have to simplify the issues to the point of almost being intellectually dishonest.</p>
+
+<p>My goal for <em>Designing Data-Intensive Applications</em> was different. I can’t in good faith give you
+a recommendation for one particular tool because I don’t know enough about your particular
+requirements. However, I can teach you what questions to ask and how to evaluate vendors’ claims
+critically. That requires more subtlety and detail than can be expressed in a one-page flowchart,
+which is why the book is 600 pages long, not one page.</p>
+
+<p>However, I did think that some kind of graphical representation of the main ideas and structure
+would be useful. I thought about <a href="https://en.wikipedia.org/wiki/Venn_diagram">Venn diagrams</a>, but
+they’re excruciatingly boring. I thought about <a href="https://en.wikipedia.org/wiki/Mind_map">mind maps</a>,
+and then started taking the “maps” bit more literally. I thought about the
+<a href="https://www.goodreads.com/book/show/1175738.The_Atlas_of_Experience">Atlas of Experience</a> by Louise
+van Swaaij and Jean Klare, a sublime book that represents aspects of human life as fictitious
+<a href="http://www.imaginaryatlas.com/wp-content/uploads/2013/04/worldof-experience.jpg">places on a geographic map</a>.
+(It is <a href="http://www.deharmonie.nl/titel/grote-atlas-van-de-belevingswereld/">originally in Dutch</a>;
+the English translation is, sadly, out of print.)
+<a href="https://www.goodreads.com/book/show/378.The_Phantom_Tollbooth">The Phantom Tollbooth</a> by Norton
+Juster and Jules Feiffer does
+<a href="http://bowenpeters.weebly.com/uploads/8/1/1/9/8119969/phantom_tollbooth_map.jpg">a similar thing</a>.</p>
+
+<p>Closer to technology, similar map-style visualizations have been used to
+<a href="https://xkcd.com/802/">represent online communities</a>, to visualize the
+<a href="https://hpi.de/naumann/projects/rdbms-genealogy.html">history of relational databases</a> and
+<a href="http://www.oreilly.com/go/languageposter">programming languages</a>, and to
+<a href="https://twitter.com/linclark/status/708071521286266881">explain libraries related to Facebook’s React</a>.
+I simply love the style.</p>
+
+<p>Other inspirations for me are the ornate maps produced in the medieval and renaissance periods,
+especially when it comes to whimsical
+<a href="https://www.bl.uk/shop/sea-monsters-on-medieval-and-renaissance-maps/p-284">sea monsters</a>.
+For example, around 1590, Abraham Ortelius published a
+<a href="https://commons.wikimedia.org/wiki/File:Abraham_Ortelius-Islandia-ca_1590.jpg">wonderful map of Iceland</a>,
+with <a href="https://en.wikipedia.org/wiki/Hekla">Mount Hekla</a> spewing fire, and surrounded by fantastical
+sea monsters:</p>
+
+<p><a href="/2017/03/ortelius-iceland.jpg"><img src="/2017/03/ortelius-iceland.jpg" width="550" height="410" alt="“Islandia” map by Abraham Ortelius, ca. 1590." /></a><br />
+<small>Figure 3. “Islandia” map by Abraham Ortelius, ca. 1590. Source:
+<a href="https://commons.wikimedia.org/wiki/File:Abraham_Ortelius-Islandia-ca_1590.jpg">Wikimedia Commons</a></small></p>
+
+<p>I feel those maps and sea monsters reflect the 16th-century sense of excitement to explore the earth
+and discover new places, as well as the dangers of sailing across unknown seas. And perhaps a bit of
+that excitement exists today in our exploration of technologies for storing, processing, and using
+data. There seems to be a lot of potential, but we also don’t really know what we’re doing, and it’s
+sometimes a bit dangerous (raise your hand if you’ve lost data at some point because something went
+wrong).</p>
+
+<p>We hope the maps in <em>Designing Data-Intensive Applications</em> will help convey some of that
+excitement, and also make you smile. In both the print and ebook editions, the map for each chapter
+appears at the start of each chapter.</p>
+
+<p>What’s more, we have taken all the individual chapter maps and assembled them into a poster—an
+archipelago of islands representing technologies in the sea of distributed data. The poster also
+includes some bonus sea monsters (of course).</p>
+
+<p>If you are at
+<a href="https://conferences.oreilly.com/strata/strata-ca">Strata + Hadoop World, San Jose</a>
+this week, you can drop by the O’Reilly booth to pick up a free print of the poster so you have
+something geeky and cool to hang on the wall in your office. Alternatively,
+<a href="https://d3ansictanv2wj.cloudfront.net/ddia-poster-web-89b1c62f6eb4b57336c6cbe2148cc9a9.jpg">you can download a JPG version for free from the O’Reilly website</a>
+for your personal, noncommercial use.</p>
+
+<p>We hope you enjoy <em>Designing Data-Intensive Applications</em> and the maps as much as we enjoyed making them!</p>
+
+<p><a href="/2017/03/ddia-poster.jpg"><img src="/2017/03/ddia-poster.jpg" width="550" height="733" alt="Me holding the poster with the maps" /></a><br />
+<small>Figure 4. Me holding the poster with the maps.</small></p>
+
+<p id="_ftn1">
+[1] Footnote for the <a href="http://tirania.org/blog/archive/2011/Feb-17.html">well-actually</a>
+crowd: yes, I know about hash indexes and GiST in PostgreSQL, various other index types in other
+databases, and the fact that in MySQL the index type is actually a matter of the storage engine
+(such as InnoDB), but those details are beside the point here. I am highlighting a dichotomy between
+a page-oriented update-in-place approach and a log-structured, compaction-based approach. This
+distinction is best explained with concrete examples, and the graphical representation cannot
+capture all the subtleties that are discussed in the text of the book.
+</p>
+
+
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>,
+        was published by O’Reilly in March 2017.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>15 Mar 2017: <a href="/2017/03/15/map-distributed-data-systems.html">Drawing a map of distributed data systems</a></li>
+            
+              <li>26 Jan 2017: <a href="/2017/01/26/data-loss-in-large-clusters.html">The probability of data loss in large clusters</a></li>
+            
+              <li>15 Apr 2016: <a href="/2016/04/15/announcing-trve-data.html">Announcing TRVE DATA: Placing a bit less trust in the cloud</a></li>
+            
+              <li>30 Mar 2016: <a href="/2016/03/30/device-security-fbi.html">Device security and the FBI</a></li>
+            
+              <li>18 Feb 2016: <a href="/2016/02/18/law-enforcement-smartphone-backdoors.html">Should law enforcement services have a backdoor into smartphones?</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2017/06/19/curry-on.html">19 Jun 2017 at Curry On</a></li>
+            
+              <li><a href="/2016/11/15/goto-berlin.html">15 Nov 2016 at GOTO Berlin</a></li>
+            
+              <li><a href="/2016/11/03/code-mesh.html">03 Nov 2016 at Code Mesh</a></li>
+            
+              <li><a href="/2016/10/26/end-to-end-encryption-wednesday-seminars.html">26 Oct 2016 at University of Cambridge Computer Laboratory</a></li>
+            
+              <li><a href="/2016/09/16/end-to-end-encryption-at-strange-loop.html">16 Sep 2016 at Strange Loop</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/2017/03/15/map-distributed-data-systems.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
