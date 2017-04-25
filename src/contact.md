@@ -12,7 +12,9 @@ that are scattered across the interwebs:
 <li><a rel="me" href="http://github.com/ept">My Open Source projects on Github</a></li>
 <li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
 <li><a rel="me" href="https://speakerdeck.com/ept">My presentations on Speakerdeck</a></li>
-<li><a rel="me" href="http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html">My undergraduate dissertation</a></li>
+<li><a rel="me" href="https://keybase.io/martinkl">My PGP public key on Keybase</a></li>
+<li><a rel="me" href="https://arxiv.org/a/kleppmann_m_1.html">My papers on arXiv</a></li>
+<li><a rel="me" href="https://orcid.org/0000-0001-7252-6958">My ORCID (Open Researcher and Contributor ID)</a></li>
 </ul>
 
 Email: firstname at lastname dot com.
