@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: The probability of data loss in large clusters
+hackernews: https://news.ycombinator.com/item?id=13493219
 ---
 
 *This blog post uses [MathJax](https://www.mathjax.org/) to render mathematics. You need JavaScript
