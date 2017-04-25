@@ -2,6 +2,7 @@
 layout: ync-post
 title: How to do distributed locking
 hackernews: https://news.ycombinator.com/item?id=11059738
+highlight: true
 ---
 
 As part of the research for [my book][book], I came across an algorithm called [Redlock][] on the

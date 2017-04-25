@@ -3,4 +3,8 @@
     “<a href="{{ include.paper.url }}">{{ include.paper.title }}</a>”.
     {{ include.paper.venue }},
     {{ include.paper.date | date: '%B %Y' }}.
+
+    {% if include.paper.doi %}
+        <a href="http://dx.doi.org/{{ include.paper.doi }}">doi:{{ include.paper.doi }}</a>
+    {% endif %}
 </li>
