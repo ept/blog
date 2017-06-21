@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>A Conflict-Free Replicated JSON Datatype &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>ACID versus eventual consistency... Can we get the best of both worlds? &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -47,51 +47,47 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="A Conflict-Free Replicated JSON Datatype"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="ACID versus eventual consistency... Can we get the best of both worlds?"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>A Conflict-Free Replicated JSON Datatype</h1>
-
-                <p>Martin Kleppmann and Alastair R. Beresford</p>
+                <h1>ACID versus eventual consistency... Can we get the best of both worlds?</h1>
 
                 <p>
+                  A talk at
                   
-                    IEEE Transactions on Parallel and Distributed Systems,
+                    <a href="https://conferences.oreilly.com/velocity/vl-eu/public/schedule/detail/62690">O'Reilly Velocity</a>,
                   
-                  
-                  August 2016.
+                  London, UK, 19 Oct 2017
                 </p>
 
                 <ul>
-                  
-                    <li><a href="http://arxiv.org/abs/1608.03960">Paper (open access)</a></li>
-                  
-                  
-                    <li><a href="http://ieeexplore.ieee.org/document/7909007/">Paper (official, paywalled edition)</a></li>
-                  
-                  
-                    <li><a href="http://dx.doi.org/10.1109/TPDS.2017.2697382">doi:10.1109/TPDS.2017.2697382</a></li>
-                  
-                  
                   
                   
                   
                   
                 </ul>
 
-                <h2 id="abstract">Abstract</h2>
+                <p>This talk is an invited keynote.</p>
 
-<p>Many applications model their data in a general-purpose storage format such as JSON. This data
-structure is modified by the application as a result of user input. Such modifications are well
-understood if performed sequentially on a single copy of the data, but if the data is replicated and
-modified concurrently on multiple devices, it is unclear what the semantics should be. In this paper
-we present an algorithm and formal semantics for a JSON data structure that automatically resolves
-concurrent modifications such that no updates are lost, and such that all replicas converge towards
-the same state (a conflict-free replicated datatype or CRDT). It supports arbitrarily nested list
-and map types, which can be modified by insertion, deletion and assignment. The algorithm performs
-all merging client-side and does not depend on ordering guarantees from the network, making it
-suitable for deployment on mobile devices with poor network connectivity, in peer-to-peer networks,
-and in messaging systems with end-to-end encryption.</p>
+<h2 id="abstract">Abstract</h2>
+
+<p>In distributed data systems, people often talk about the trade-off between consistency and
+availability. The conclusion from the CAP theorem seems to be that you can’t have both. However,
+when you take a closer look, you discover that there is much more subtlety than first meets the eye.
+The words “consistency” and “availability” mean very different things to different people. For sure,
+some forms of consistency and some forms of availability are at odds with each other, but many other
+variants are actually perfectly compatible.</p>
+
+<p>Systems with eventual consistency make very weak guarantees, which enables them to achieve good
+performance and operational robustness in the face of failures. That’s a fine choice for some
+applications, but other applications need stronger degrees of consistency, which begs the question:
+how far can we ratchet up the consistency guarantees, without losing all that nice performance and
+robustness that we get from eventual consistency?</p>
+
+<p>In this talk, we will explore how we can split “consistency” into two separate concepts: “integrity”
+and “timeliness”. And we will see how that distinction allows us to build systems that behave
+correctly, even in the face of faults, while also achieving better availability and performance than
+the classic approach of ACID transactions.</p>
 
             </div>
 
@@ -175,6 +171,8 @@ and in messaging systems with end-to-end encryption.</p>
         <h2 class="title">Conference talks</h2>
         <ul>
             
+              <li><a href="/2017/10/19/integrity-timeliness-at-velocity.html">19 Oct 2017 at O'Reilly Velocity</a></li>
+            
               <li><a href="/2017/06/19/curry-on.html">19 Jun 2017 at Curry On</a></li>
             
               <li><a href="/2016/11/15/goto-berlin.html">15 Nov 2016 at GOTO Berlin</a></li>
@@ -182,8 +180,6 @@ and in messaging systems with end-to-end encryption.</p>
               <li><a href="/2016/11/03/code-mesh.html">03 Nov 2016 at Code Mesh</a></li>
             
               <li><a href="/2016/10/26/end-to-end-encryption-wednesday-seminars.html">26 Oct 2016 at University of Cambridge Computer Laboratory</a></li>
-            
-              <li><a href="/2016/09/16/end-to-end-encryption-at-strange-loop.html">16 Sep 2016 at Strange Loop</a></li>
             
             <li><a href="/talks.html">Full archive</a></li>
         </ul>
