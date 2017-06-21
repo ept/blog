@@ -50,6 +50,8 @@ get(/.*[^\/]$/) do
       new_url = if longlink =~ %r{//} then longlink else "http://martin.kleppmann.com#{longlink}" end
     elsif request.path_info =~ %r{^/2010/12/21/.*}
       new_url = "http://martin.kleppmann.com/2010/12/21/having-a-launched-product-is-hard.html"
+    elsif request.path_info =~ %r{^/2016/08/13/.*}
+      new_url = "http://martin.kleppmann.com/2017/04/24/json-crdt.html"
     elsif request.path_info =~ %r{^/ssh-keys\.html}
       new_url = "http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html"
     end
