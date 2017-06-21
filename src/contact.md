@@ -13,6 +13,8 @@ that are scattered across the interwebs:
 <li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
 <li><a rel="me" href="https://speakerdeck.com/ept">My presentations on Speakerdeck</a></li>
 <li><a rel="me" href="https://keybase.io/martinkl">My PGP public key on Keybase</a></li>
+<li><a rel="me" href="http://dblp.uni-trier.de/pers/hd/k/Kleppmann:Martin">My publications on DBLP</a></li>
+<li><a rel="me" href="https://scholar.google.com/citations?user=Cxuyy6EAAAAJ&hl=en">My publications on Google Scholar</a></li>
 <li><a rel="me" href="https://arxiv.org/a/kleppmann_m_1.html">My papers on arXiv</a></li>
 <li><a rel="me" href="https://orcid.org/0000-0001-7252-6958">My ORCID (Open Researcher and Contributor ID)</a></li>
 </ul>
