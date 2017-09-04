@@ -389,7 +389,7 @@ References
 at *12th ACM Symposium on Operating Systems Principles* (SOSP), December 1989.
 [doi:10.1145/74850.74870](http://dx.doi.org/10.1145/74850.74870)
 
-[leases]: http://web.stanford.edu/class/cs240/readings/89-leases.pdf
+[leases]: https://pdfs.semanticscholar.org/a25e/ee836dbd2a5ae680f835309a484c9f39ae4e.pdf
   "Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989"
 
 [2] Mike Burrows:
