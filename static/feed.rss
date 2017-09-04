@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Fri, 11 Aug 2017 18:23:31 BST</lastBuildDate>
+        <lastBuildDate>Mon, 04 Sep 2017 13:17:21 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -808,7 +808,7 @@ would cause far more harm than good.</p>
                 <content:encoded><![CDATA[
                     <p>As part of the research for <a href="http://dataintensive.net/">my book</a>, I came across an algorithm called <a href="http://redis.io/topics/distlock">Redlock</a> on the
 <a href="http://redis.io/">Redis</a> website. The algorithm claims to implement fault-tolerant distributed locks (or rather,
-<a href="http://web.stanford.edu/class/cs240/readings/89-leases.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">leases</a> [1]) on top of Redis, and the page asks for feedback from people who are into
+<a href="https://pdfs.semanticscholar.org/a25e/ee836dbd2a5ae680f835309a484c9f39ae4e.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">leases</a> [1]) on top of Redis, and the page asks for feedback from people who are into
 distributed systems. The algorithm instinctively set off some alarm bells in the back of my mind, so
 I spent a bit of time thinking about it and writing up these notes.</p>
 
@@ -1145,7 +1145,7 @@ academic peer review (unlike either of our blog posts).</p>
 <h2 id="references">References</h2>
 
 <p>[1] Cary G Gray and David R Cheriton:
-“<a href="http://web.stanford.edu/class/cs240/readings/89-leases.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency</a>,”
+“<a href="https://pdfs.semanticscholar.org/a25e/ee836dbd2a5ae680f835309a484c9f39ae4e.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency</a>,”
 at <em>12th ACM Symposium on Operating Systems Principles</em> (SOSP), December 1989.
 <a href="http://dx.doi.org/10.1145/74850.74870">doi:10.1145/74850.74870</a></p>
 
