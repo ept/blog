@@ -2,8 +2,9 @@
 layout: paper
 title: Strengthening public key authentication against key theft
 authors: Martin Kleppmann and Conrad Irwin
-venue: 9th International Conference on Passwords (Passwords15)
+venue: 9th International Conference on Passwords
 place: Cambridge, UK
+doi: 10.1007/978-3-319-29938-9_9
 venue_url: http://www.cl.cam.ac.uk/events/passwords2015/
 paper_url: /papers/mrsa-pass15.pdf
 slides_url: https://speakerdeck.com/ept/strengthening-public-key-authentication-against-key-theft
