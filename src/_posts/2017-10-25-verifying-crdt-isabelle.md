@@ -5,8 +5,10 @@ authors: Victor B. F. Gomes, Martin Kleppmann, Dominic P. Mulligan, and Alastair
 venue: Proceedings of the ACM on Programming Languages (PACMPL), Vol. 1, OOPSLA, Article 109
 place: Vancouver, BC, Canada
 doi: 10.1145/3133933
-paper_url: https://arxiv.org/abs/1707.01747
+paper_url: /papers/crdt-isabelle-oopsla17.pdf
 ---
+
+* [arXiv: 1707.01747](https://arxiv.org/abs/1707.01747)
 
 Abstract
 --------
