@@ -31,6 +31,10 @@
                   {{ page.date | date: '%B %Y' }}.
                 </p>
 
+                {% if page.award %}
+                  <p>This paper received a <strong>{{ page.award }}</strong>.</p>
+                {% endif %}
+
                 <ul>
                   {% if page.paper_url %}
                     <li><a href="{{ page.paper_url }}">Paper (open access)</a></li>

@@ -7,4 +7,8 @@
     {% if include.paper.doi %}
         <a href="http://dx.doi.org/{{ include.paper.doi }}">doi:{{ include.paper.doi }}</a>
     {% endif %}
+
+    {% if include.paper.award %}
+        &mdash; <strong>{{ include.paper.award }}! :-)</strong>
+    {% endif %}
 </li>
