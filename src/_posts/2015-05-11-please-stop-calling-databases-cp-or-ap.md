@@ -2,7 +2,14 @@
 layout: ync-post
 title: Please stop calling databases CP or AP
 hackernews: https://news.ycombinator.com/item?id=9525266
+highlight: true
 ---
+
+*This blog post has been translated into
+[Russian](https://habrahabr.ru/post/258145/) and
+[Japanese](http://suzuki79.hatenablog.com/entry/2017/11/24/222827).
+For more detail on problems with CAP, and a proposal for an alternative, please see my paper
+[A Critique of the CAP Theorem](https://arxiv.org/abs/1509.05393).*
 
 In his excellent blog post [Notes on Distributed Systems for Young Bloods][youngbloods], Jeff Hodges
 recommends that you use the [CAP theorem][cap-faq] to critique systems. A lot of people have taken
