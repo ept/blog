@@ -96,14 +96,14 @@ library for writing REST APIs. (It falls into a similar category as
 <a href="http://www.sinatrarb.com/">Sinatra</a> in the Ruby world.) For example, a resource which returns a
 HTML document can be written in just a few lines of Scala code:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">com.example.restapi</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span></span><span class="k">package</span> <span class="nn">com.example.restapi</span>
 <span class="k">import</span> <span class="nn">javax.ws.rs._</span>
 
 <span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/hello&quot;</span><span class="o">)</span>
 <span class="k">class</span> <span class="nc">Hello</span> <span class="o">{</span>
   <span class="nd">@GET</span> <span class="nd">@Produces</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span><span class="s">&quot;text/html&quot;</span><span class="o">))</span>
   <span class="k">def</span> <span class="n">doGet</span> <span class="k">=</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello jersey/scala world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>A resource is defined by a
 class, annotated with the path(s) under which it can be accessed, and has one or more methods to
@@ -136,7 +136,7 @@ resulting war file to a Tomcat server, again and again.</p>
 
 <p>First, put the following in a file called <code>pom.xml</code> in the base directory of your project:</p>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;modelversion&gt;</span>4.0.0<span class="nt">&lt;/modelversion&gt;</span>
@@ -282,12 +282,12 @@ resulting war file to a Tomcat server, again and again.</p>
             <span class="nt">&lt;layout&gt;</span>default<span class="nt">&lt;/layout&gt;</span>
         <span class="nt">&lt;/pluginrepository&gt;</span>
     <span class="nt">&lt;/pluginrepositories&gt;</span>
-<span class="nt">&lt;/project&gt;</span></code></pre></div>
+<span class="nt">&lt;/project&gt;</span></code></pre></figure>
 
 <p>That was a terrible mouthful. Urgh. But worry not, the worst is over. Just one other XML file, and this one
 goes in <code>src/main/webapp/WEB-INF/web.xml</code>:</p>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">&quot;http://java.sun.com/xml/ns/j2ee&quot;</span> <span class="na">version=</span><span class="s">&quot;2.4&quot;</span>
         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;</span><span class="nt">&gt;</span>
@@ -310,7 +310,7 @@ goes in <code>src/main/webapp/WEB-INF/web.xml</code>:</p>
     <span class="nt">&lt;session-config&gt;</span>
         <span class="nt">&lt;session-timeout&gt;</span>30<span class="nt">&lt;/session-timeout&gt;</span>
     <span class="nt">&lt;/session-config&gt;</span>
-<span class="nt">&lt;/web-app&gt;</span></code></pre></div>
+<span class="nt">&lt;/web-app&gt;</span></code></pre></figure>
 
 <p>And that’s all the boilerplate you need. You can now write the actual code, with Scala source files in
 <code>src/main/scala</code> and Java source files in <code>src/main/java</code> (if you want to use Java alongside Scala).
@@ -345,21 +345,21 @@ but it needed a bit of improvement, so my own version is included below.</p>
 
 <p>Create the following shell script in <code>/etc/tomcat5.5/symlink-webapp</code> and make it executable:</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/sh</span>
-<span class="c"># Allows an unprivileged user to deploy an application to Tomcat. Add a rule for this</span>
-<span class="c"># script and /etc/init.d/tomcat to /etc/sudoers. Then to deploy an application, call:</span>
-<span class="c">#     sudo /etc/tomcat5.5/symlink-webapp webapp-name /location/of/war/file</span>
-<span class="nv">NAME</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="s2">&quot;$1&quot;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\[^a-zA-Z0-9\\.-\]//g&#39;</span><span class="sb">`</span>
-<span class="nb">echo</span> <span class="s2">&quot;ln -f -s \&quot;$2\&quot; /var/lib/tomcat5.5/webapps/$NAME&quot;</span>
-ln -f -s <span class="s2">&quot;$2&quot;</span> /var/lib/tomcat5.5/webapps/<span class="nv">$NAME</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="ch">#!/bin/sh</span>
+<span class="c1"># Allows an unprivileged user to deploy an application to Tomcat. Add a rule for this</span>
+<span class="c1"># script and /etc/init.d/tomcat to /etc/sudoers. Then to deploy an application, call:</span>
+<span class="c1">#     sudo /etc/tomcat5.5/symlink-webapp webapp-name /location/of/war/file</span>
+<span class="nv">NAME</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\[^a-zA-Z0-9\\.-\]//g&#39;</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">&quot;ln -f -s \&quot;</span><span class="nv">$2</span><span class="s2">\&quot; /var/lib/tomcat5.5/webapps/</span><span class="nv">$NAME</span><span class="s2">&quot;</span>
+ln -f -s <span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span> /var/lib/tomcat5.5/webapps/<span class="nv">$NAME</span></code></pre></figure>
 
 <p>Next, add the following line to <code>/etc/sudoers</code>:</p>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">restapi ALL = NOPASSWD: /etc/init.d/tomcat5.5, /etc/tomcat5.5/symlink-webapp</code></pre></div>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>restapi ALL = NOPASSWD: /etc/init.d/tomcat5.5, /etc/tomcat5.5/symlink-webapp</code></pre></figure>
 
 <p>With that set up, here’s the <code>Capfile</code> for you to put in the base directory of your project:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># This recipe is based on:</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span></span><span class="c1"># This recipe is based on:</span>
 <span class="c1"># http://github.com/andynu/capistrano-recipes/blob/master/capfile_tomcat</span>
 
 <span class="nb">load</span> <span class="s1">&#39;deploy&#39;</span>
@@ -468,7 +468,7 @@ ln -f -s <span class="s2">&quot;$2&quot;</span> /var/lib/tomcat5.5/webapps/<span
       <span class="k">end</span>
     <span class="k">end</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>So there we go. For the first time use <code>cap deploy:setup</code> to create the directories on the server, and
 thereafter always type <code>cap deploy</code>. Those 11 keystrokes are all you need to fetch all the dependencies (no more

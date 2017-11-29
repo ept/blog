@@ -65,7 +65,7 @@ reasonably large data systems, and there are a few things I really wish we had k
 look. They are the kind of things that made me think <em>“I can’t believe I didn’t know that, I’m so
 stupid #facepalm”</em> in retrospect. But perhaps I’m not the only one who started out not knowing these
 things, so I’ll write them down for the benefit of anyone else who finds themself having to scale
-a system. </p>
+a system.</p>
 
 <p>The kind of system I’m talking about is the data backend of a consumer web/mobile app with a million
 users (order of magnitude). At the scale of Google, LinkedIn, Facebook or Twitter (hundreds of
@@ -75,7 +75,7 @@ a million users is interesting, because it’s quite feasible for a small startu
 with some luck and good marketing skills. If that sounds like you, here are a few things to keep in
 mind.</p>
 
-<h2 id="realistic-load-testing-is-hard">1. Realistic load testing is hard</h2>
+<h2 id="1-realistic-load-testing-is-hard">1. Realistic load testing is hard</h2>
 
 <p>Improving the performance of a system is ideally a very scientific process. You have in your head
 a model of what your system is doing, and a theory of where the expensive operations are. You
@@ -114,7 +114,7 @@ possible. Usually we often just cross our fingers, deploy, and roll back if the 
 made things worse. That is deeply unsatisfying for a scientifically-minded person, but it more or
 less gets the job done.</p>
 
-<h2 id="data-evolution-is-difficult">2. Data evolution is difficult</h2>
+<h2 id="2-data-evolution-is-difficult">2. Data evolution is difficult</h2>
 
 <p>Being able to rapidly respond to change is one of the biggest advantages of a small startup. Agility
 in product and process means you also need the freedom to change your mind about the structure of
@@ -152,7 +152,7 @@ learn how to use it, figure out how to get your data into it, and figure out how
 transformed data out to your live systems again. Big companies like LinkedIn have figured out how to
 do that, but in a small team it can be a massive time-sink.</p>
 
-<h2 id="database-connections-are-a-real-limitation">3. Database connections are a real limitation</h2>
+<h2 id="3-database-connections-are-a-real-limitation">3. Database connections are a real limitation</h2>
 
 <p>In PostgreSQL, each client connection to the database is handled by a separate unix process; in
 MySQL, each connection uses a separate thread. Both of these models impose a fairly low limit on the
@@ -181,7 +181,7 @@ can go wrong, another thing that needs to be monitored and maintained.</p>
 <p>(Databases that use a lightweight connection model don’t have this problem, but they may have other
 problems instead.)</p>
 
-<h2 id="read-replicas-are-an-operational-pain">4. Read replicas are an operational pain</h2>
+<h2 id="4-read-replicas-are-an-operational-pain">4. Read replicas are an operational pain</h2>
 
 <p>A common architecture is to designate one database instance as a <em>leader</em> (also known as <em>master</em>)
 and to send all database writes to that instance. The writes are then replicated to other database
@@ -213,7 +213,7 @@ model, and they automate the replica creation and master failover processes. Jus
 that doesn’t mean they automatically give you magic scaling sauce, but it is a very valuable
 feature.</p>
 
-<h2 id="think-about-memory-efficiency">5. Think about memory efficiency</h2>
+<h2 id="5-think-about-memory-efficiency">5. Think about memory efficiency</h2>
 
 <p>At various times, we puzzled about weird latency spikes in our database activity. After many
 <a href="http://www.pagerduty.com/">PagerDuty</a> alerts and troubleshooting, it usually turned out that we
@@ -221,7 +221,7 @@ could fix the issue by throwing more RAM at the problem, either in the form of a
 instance, or separate caches in front of it. It’s sad, but true: many performance problems can be
 solved by simply buying more RAM. And if you’re in a hurry because your hair is on fire, it’s often
 the best thing to do. There are limitations to that approach, of course – a m2.4xlarge instance on
-EC2 costs quite a bit of money, and eventually there are no bigger machines to turn to. </p>
+EC2 costs quite a bit of money, and eventually there are no bigger machines to turn to.</p>
 
 <p>Besides buying more RAM, an effective solution is to use RAM more efficiently in the first place, so
 that a bigger part of your dataset fits in RAM. In order to decide where to optimise, you need to
@@ -241,7 +241,7 @@ than the string itself. (More on that in another post.) That reduced the memory 
 system, and helped keep things ticking along for another few months. That’s just one example of how
 it can be helpful to think about using memory efficiently.</p>
 
-<h2 id="change-capture-is-under-appreciated">6. Change capture is under-appreciated</h2>
+<h2 id="6-change-capture-is-under-appreciated">6. Change capture is under-appreciated</h2>
 
 <p>So far I’ve only talked about things that suck – sorry about the negativity. As final point, I’d
 like to mention a technique which is awesome, but not nearly as widely known and appreciated as it

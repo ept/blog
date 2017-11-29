@@ -105,7 +105,7 @@ you are dealing with.</p>
 <p>I will argue that if you are using locks merely for efficiency purposes, it is unnecessary to incur
 the cost and complexity of Redlock, running 5 Redis servers and checking for a majority to acquire
 your lock. You are better off just using a single Redis instance, perhaps with asynchronous
-replication to a secondary instance in case the primary crashes. </p>
+replication to a secondary instance in case the primary crashes.</p>
 
 <p>If you use a single Redis instance, of course you will drop some locks if the power suddenly goes
 out on your Redis node, or something else goes wrong. But if you’re only using the locks as an
@@ -134,7 +134,7 @@ the modified file back, and finally releases the lock. The lock prevents two cli
 this read-modify-write cycle concurrently, which would result in lost updates. The code might look
 something like this:</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// THIS CODE IS BROKEN</span>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// THIS CODE IS BROKEN</span>
 <span class="kd">function</span> <span class="nx">writeData</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">lock</span> <span class="o">=</span> <span class="nx">lockService</span><span class="p">.</span><span class="nx">acquireLock</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lock</span><span class="p">)</span> <span class="p">{</span>
@@ -148,7 +148,7 @@ something like this:</p>
     <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
         <span class="nx">lock</span><span class="p">.</span><span class="nx">release</span><span class="p">();</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>Unfortunately, even if you have a perfect lock service, the code above is broken. The following
 diagram shows how you can end up with corrupted data:</p>
@@ -333,7 +333,7 @@ timing issues become as large as the time-to-live, the algorithm fails.</p>
 of the time – this is known as a <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">partially synchronous system</a> [12]. But is that good
 enough? As soon as those timing assumptions are broken, Redlock may violate its safety properties,
 e.g. granting a lease to one client before another has expired. If you’re depending on your lock for
-correctness, “most of the time” is not enough – you need it to <em>always</em> be correct. </p>
+correctness, “most of the time” is not enough – you need it to <em>always</em> be correct.</p>
 
 <p>There is plenty of evidence that it is not safe to assume a synchronous system model for most
 practical system environments [7,8]. Keep reminding yourself of the GitHub incident with the

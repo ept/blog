@@ -111,11 +111,11 @@ the requested URL path is the seventh whitespace-separated component:</p>
 <p>Now that you’ve extracted the path, you can determine the 5 most popular pages on your website as
 follows:</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">awk <span class="s1">&#39;{print $7}&#39;</span> access.log <span class="p">|</span> <span class="c"># Split by whitespace, 7th field is request path</span>
-    sort     <span class="p">|</span> <span class="c"># Make occurrences of the same URL appear consecutively in file</span>
-    uniq -c  <span class="p">|</span> <span class="c"># Replace consecutive occurrences of the same URL with a count</span>
-    sort -rn <span class="p">|</span> <span class="c"># Sort by number of occurrences, descending</span>
-    head -n <span class="m">5</span>  <span class="c"># Output top 5 URLs</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>awk <span class="s1">&#39;{print $7}&#39;</span> access.log <span class="p">|</span> <span class="c1"># Split by whitespace, 7th field is request path</span>
+    sort     <span class="p">|</span> <span class="c1"># Make occurrences of the same URL appear consecutively in file</span>
+    uniq -c  <span class="p">|</span> <span class="c1"># Replace consecutive occurrences of the same URL with a count</span>
+    sort -rn <span class="p">|</span> <span class="c1"># Sort by number of occurrences, descending</span>
+    head -n <span class="m">5</span>  <span class="c1"># Output top 5 URLs</span></code></pre></figure>
 
 <p>The output of that series of commands looks something like this:</p>
 

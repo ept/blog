@@ -138,7 +138,7 @@ the database. This approach is simple to understand and works pretty well.</p>
 requests, your database gets slow, and you add a cache to speed it up – perhaps memcached or Redis,
 for example. Perhaps you need to add full-text search to your application, and the basic search
 facility built into your database is not good enough, so you end up setting a separate indexing
-service such as Elasticsearch or Solr. </p>
+service such as Elasticsearch or Solr.</p>
 
 <p>Perhaps you need to do some graph operations that are not efficient on a relational or document
 database, for example for social features or recommendations, so you add a separate graph index
@@ -153,7 +153,7 @@ to your background workers.</p>
 <p>By now, other parts of the system are getting slow again, so you add another cache. More caches
 always make things faster, right? But now you have a lot of systems and services, so you need
 to add metrics and monitoring so that you can see whether they are actually working, and the
-metrics system is another system in its own right. </p>
+metrics system is another system in its own right.</p>
 
 <p>Next, you want to send notifications, such as email or push notifications to your users, so you
 chain a notification system off the side of the job queue for background workers, and it perhaps
@@ -773,7 +773,7 @@ abstraction</a>,”
 Samza</a>,” at <em>Strange Loop</em>, 18 Sep 2014.</li>
   <li>Pat Helland has also observed that immutability and append-only datasets are a recurring pattern
 at many levels of the stack: see “<a href="http://www.cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf">Immutability Changes Everything</a>,”
-at <em>7th Biennial Conference on Innovative Data Systems Research</em> (CIDR), January 2015. </li>
+at <em>7th Biennial Conference on Innovative Data Systems Research</em> (CIDR), January 2015.</li>
   <li>LinkedIn’s approach to building derived data systems based on totally ordered logs is described in
 Shirshanka Das, Chavdar Botev, Kapil Surlaker, et al.: “<a href="http://www.socc2012.org/s18-das.pdf">All Aboard the Databus!</a>,”
 at <em>ACM Symposium on Cloud Computing</em> (SoCC), October 2012.</li>
@@ -784,7 +784,7 @@ Symposium on Networked Systems Design and Implementation</em> (NSDI), May 2015.<
   <li>If you need transactional semantics (e.g. linearizability), you can add a transaction protocol on top of the
 asynchronous log. I like the one described in Mahesh Balakrishnan, Dahlia Malkhi, Ted Wobber, et al.:
 “<a href="http://research.microsoft.com/pubs/199947/Tango.pdf">Tango: Distributed Data Structures over a Shared Log</a>,”
-at <em>24th ACM Symposium on Operating Systems Principles</em> (SOSP), pages 325–340, November 2013. </li>
+at <em>24th ACM Symposium on Operating Systems Principles</em> (SOSP), pages 325–340, November 2013.</li>
   <li>Write-ahead logs are described in many places. For a detailed discussion, see
 C Mohan, Don Haderle, Bruce G Lindsay, Hamid Pirahesh, and Peter Schwarz:
 “<a href="http://db.csail.mit.edu/madden/html/aries.pdf">ARIES: A Transaction Recovery Method Supporting Fine-Granularity Locking and Partial Rollbacks Using

@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Mon, 27 Nov 2017 10:55:08 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 29 Nov 2017 12:15:38 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -435,7 +435,7 @@ list</a>.</p>
 
 <p>The project is based at <a href="https://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>, where I am working with
 some excellent people: <a href="http://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>, <a href="http://www.cl.cam.ac.uk/~dac53/">Diana Vasile</a>, and
-<a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>. </p>
+<a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>.</p>
 
 <h2 id="placing-a-bit-less-trust-in-the-cloud">Placing a bit less trust in the cloud</h2>
 
@@ -855,7 +855,7 @@ you are dealing with.</p>
 <p>I will argue that if you are using locks merely for efficiency purposes, it is unnecessary to incur
 the cost and complexity of Redlock, running 5 Redis servers and checking for a majority to acquire
 your lock. You are better off just using a single Redis instance, perhaps with asynchronous
-replication to a secondary instance in case the primary crashes. </p>
+replication to a secondary instance in case the primary crashes.</p>
 
 <p>If you use a single Redis instance, of course you will drop some locks if the power suddenly goes
 out on your Redis node, or something else goes wrong. But if you’re only using the locks as an
@@ -884,7 +884,7 @@ the modified file back, and finally releases the lock. The lock prevents two cli
 this read-modify-write cycle concurrently, which would result in lost updates. The code might look
 something like this:</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// THIS CODE IS BROKEN</span>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// THIS CODE IS BROKEN</span>
 <span class="kd">function</span> <span class="nx">writeData</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">lock</span> <span class="o">=</span> <span class="nx">lockService</span><span class="p">.</span><span class="nx">acquireLock</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lock</span><span class="p">)</span> <span class="p">{</span>
@@ -898,7 +898,7 @@ something like this:</p>
     <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
         <span class="nx">lock</span><span class="p">.</span><span class="nx">release</span><span class="p">();</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>Unfortunately, even if you have a perfect lock service, the code above is broken. The following
 diagram shows how you can end up with corrupted data:</p>
@@ -1083,7 +1083,7 @@ timing issues become as large as the time-to-live, the algorithm fails.</p>
 of the time – this is known as a <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">partially synchronous system</a> [12]. But is that good
 enough? As soon as those timing assumptions are broken, Redlock may violate its safety properties,
 e.g. granting a lease to one client before another has expired. If you’re depending on your lock for
-correctness, “most of the time” is not enough – you need it to <em>always</em> be correct. </p>
+correctness, “most of the time” is not enough – you need it to <em>always</em> be correct.</p>
 
 <p>There is plenty of evidence that it is not safe to assume a synchronous system model for most
 practical system environments [7,8]. Keep reminding yourself of the GitHub incident with the
@@ -1449,7 +1449,7 @@ risks of crime and terrorism, and not reduce those risks as intended.</p>
 words, to uphold the rule of law and to keep us safe from aggression. If people break the law or
 harm citizens (for example through paedophilia, murder, or acts of terrorism), our law enforcement
 services require the means to find the perpetrators and hold them responsible. This is an important
-public service: a country with ineffective law enforcement would quickly become dysfunctional. </p>
+public service: a country with ineffective law enforcement would quickly become dysfunctional.</p>
 
 <p>There is a well-known tension between the ability of law enforcement services to get the information
 they require to find and convict criminals, and the basic <a href="http://gilc.org/privacy/survey/intro.html">human right of privacy</a> for
@@ -1682,7 +1682,7 @@ criminals can hide. Any technology can be used for good and bad.</p>
 <p>It is not possible to eliminate “safe spaces” for criminals without also eliminating security from
 the computer systems that our daily lives depend on. I am worried that the Investigatory Powers Bill
 would effectively <a href="http://www.theguardian.com/technology/2015/nov/09/tech-firms-snoopers-charter-end-strong-encryption-britain-ip-bill">mandate computer systems to be insecure</a>, and thus leave our
-infrastructure vulnerable to cyberattacks from people who want to do us harm. </p>
+infrastructure vulnerable to cyberattacks from people who want to do us harm.</p>
 
 <p>According to the <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/60943/the-cost-of-cyber-crime-full-report.pdf">government’s own report</a>, cybercrime is a Tier One risk to national
 security, and already costs the UK £27bn per year. This is only going to get worse if we do not
@@ -1940,11 +1940,11 @@ the requested URL path is the seventh whitespace-separated component:</p>
 <p>Now that you’ve extracted the path, you can determine the 5 most popular pages on your website as
 follows:</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">awk <span class="s1">&#39;{print $7}&#39;</span> access.log <span class="p">|</span> <span class="c"># Split by whitespace, 7th field is request path</span>
-    sort     <span class="p">|</span> <span class="c"># Make occurrences of the same URL appear consecutively in file</span>
-    uniq -c  <span class="p">|</span> <span class="c"># Replace consecutive occurrences of the same URL with a count</span>
-    sort -rn <span class="p">|</span> <span class="c"># Sort by number of occurrences, descending</span>
-    head -n <span class="m">5</span>  <span class="c"># Output top 5 URLs</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>awk <span class="s1">&#39;{print $7}&#39;</span> access.log <span class="p">|</span> <span class="c1"># Split by whitespace, 7th field is request path</span>
+    sort     <span class="p">|</span> <span class="c1"># Make occurrences of the same URL appear consecutively in file</span>
+    uniq -c  <span class="p">|</span> <span class="c1"># Replace consecutive occurrences of the same URL with a count</span>
+    sort -rn <span class="p">|</span> <span class="c1"># Sort by number of occurrences, descending</span>
+    head -n <span class="m">5</span>  <span class="c1"># Output top 5 URLs</span></code></pre></figure>
 
 <p>The output of that series of commands looks something like this:</p>
 

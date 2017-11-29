@@ -76,7 +76,7 @@ would take to achieve that flexibility.</p>
 
 <p>To illustrate, consider the clichéd Rails blogging engine example:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span></span><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">attr_accessible</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:author</span>
   <span class="n">has_many</span> <span class="ss">:comments</span>
 <span class="k">end</span>
@@ -96,22 +96,22 @@ would take to achieve that flexibility.</p>
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="c1"># posts/show.html.erb:</span></code></pre></div>
+<span class="c1"># posts/show.html.erb:</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-html-erb" data-lang="html+erb"><span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">title</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;author&quot;</span><span class="nt">&gt;</span>By <span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-html-erb" data-lang="html+erb"><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">title</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;author&quot;</span><span class="p">&gt;</span>By <span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span><span class="p">&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">simple_format</span><span class="p">(</span><span class="vi">@post</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="cp">%&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;h2&gt;</span>Comments<span class="nt">&lt;/h2&gt;</span>
-<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;comments&quot;</span><span class="nt">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Comments<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comments&quot;</span><span class="p">&gt;</span>
   <span class="cp">&lt;%</span> <span class="vi">@post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">comment</span><span class="o">|</span> <span class="cp">%&gt;</span>
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;blockquote&gt;</span><span class="cp">&lt;%=</span> <span class="n">simple_format</span><span class="p">(</span><span class="n">comment</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/blockquote&gt;</span>
-      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;author&quot;</span><span class="nt">&gt;</span><span class="cp">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">blockquote</span><span class="p">&gt;</span><span class="cp">&lt;%=</span> <span class="n">simple_format</span><span class="p">(</span><span class="n">comment</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;author&quot;</span><span class="p">&gt;</span><span class="cp">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
-<span class="nt">&lt;/ul&gt;</span></code></pre></div>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span></code></pre></figure>
 
 <p>Pretty good code by various standards, but it has always irked me a bit that I can’t see where the
 network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code>

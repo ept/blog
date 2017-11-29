@@ -111,11 +111,11 @@ comparing them I think you can become a better engineer (by a little bit).</p>
 
 <p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="p">{</span>
     <span class="s2">&quot;userName&quot;</span><span class="o">:</span> <span class="s2">&quot;Martin&quot;</span><span class="p">,</span>
     <span class="s2">&quot;favouriteNumber&quot;</span><span class="o">:</span> <span class="mi">1337</span><span class="p">,</span>
     <span class="s2">&quot;interests&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;daydreaming&quot;</span><span class="p">,</span> <span class="s2">&quot;hacking&quot;</span><span class="p">]</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
 
@@ -174,7 +174,7 @@ see in a minute, it’s not the only way of doing things.</p>
 
 <p>Avro schemas can be written in two ways, either in a JSON format:</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="p">{</span>
     <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;record&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Person&quot;</span><span class="p">,</span>
     <span class="s2">&quot;fields&quot;</span><span class="o">:</span> <span class="p">[</span>
@@ -182,7 +182,7 @@ see in a minute, it’s not the only way of doing things.</p>
         <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;favouriteNumber&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;long&quot;</span><span class="p">]},</span>
         <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;interests&quot;</span><span class="p">,</span>       <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}}</span>
     <span class="p">]</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>…or in an IDL:</p>
 

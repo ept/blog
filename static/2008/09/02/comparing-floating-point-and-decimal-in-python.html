@@ -60,48 +60,48 @@
 floating-point and decimal numbers, as this example
 shows:</p>
 
-<div class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span class="go">Python 2.5.1 (r251:54863, Jan 17 2008, 19:35:17)</span>
+<figure class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span></span><span class="go">Python 2.5.1 (r251:54863, Jan 17 2008, 19:35:17)</span>
 <span class="go">[GCC 4.0.1 (Apple Inc. build 5465)] on darwin</span>
 <span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
-<span class="go">True</span></code></pre></div>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="go">True</span></code></pre></figure>
 
 <p>But that’s not the end yet. I have
 <a href="http://nltk.sourceforge.net/">NLTK</a> 0.9.4 installed, and watch how truth is reversed if I simply
 import the NLTK package:</p>
 
-<div class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<figure class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">2.0</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&lt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;3.0&#39;</span><span class="p">)</span>
-<span class="go">False</span></code></pre></div>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span> <span class="o">&gt;</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="go">False</span></code></pre></figure>
 
 <p>I’m filing bugs about this, but I do find this quite entertaining in a
 ‘oh-my-God-I-always-believed-Python-was-a-well-behaved-language’ sort of way.</p>
@@ -118,10 +118,10 @@ numbers:</p>
 <code>float</code>, which isn't allowed, as evidenced by the
 following:</blockquote>
 
-<div class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;.1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">__cmp__</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-pycon" data-lang="pycon"><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;.1&#39;</span><span class="p">)</span><span class="o">.</span><span class="fm">__cmp__</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">-1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;.1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">__cmp__</span><span class="p">(</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">NotImplemented</span></code></pre></div>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;.1&#39;</span><span class="p">)</span><span class="o">.</span><span class="fm">__cmp__</span><span class="p">(</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">NotImplemented</span></code></pre></figure>
 
 <blockquote><p>Since Decimal's
 <code>__cmp__</code> method returns
