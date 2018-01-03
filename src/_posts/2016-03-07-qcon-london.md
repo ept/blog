@@ -3,7 +3,7 @@ layout: talk
 title: "Staying in Sync: From Transactions to Streams"
 venue: QCon
 place: London, UK
-venue_url: http://qconlondon.com/presentation/staying-sync-transactions-streams
+venue_url: https://qconlondon.com/london-2016/presentation/staying-sync-transactions-streams.html
 slides_url: https://speakerdeck.com/ept/staying-in-sync-from-transactions-to-streams
 video_url: https://www.infoq.com/presentations/event-streams-kafka
 ---
