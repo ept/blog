@@ -10,12 +10,169 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 03 Jan 2018 09:35:36 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 18 Jan 2018 16:38:50 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Should you put several event types in the same Kafka topic?</title>
+                <link>http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html</link>
+                <comments>http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html#disqus_thread</comments>
+                <pubDate>Thu, 18 Jan 2018 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html</guid>
+                
+                <description><![CDATA[ This article was originally published on the Confluent blog. If you adopt a streaming data platform such as Apache Kafka, one of the most important questions to answer is: what topics are you going to use? In particular, if you have a bunch of different events that you want to... ]]></description>
+                <content:encoded><![CDATA[
+                    <p><em>This article was originally published
+<a href="https://www.confluent.io/blog/put-several-event-types-kafka-topic/">on the Confluent blog</a>.</em></p>
+
+<p>If you adopt a streaming data platform such as <a href="http://kafka.apache.org/">Apache Kafka</a>, one of the most important questions to answer is: <em>what topics are you going to use?</em>
+In particular, if you have a bunch of different events that you want to publish to Kafka as messages, do you put them in the same topic, or do you split them across different topics?</p>
+
+<p>The most important function of a topic is to allow a consumer to specify which subset of messages it wants to consume.
+At the one extreme, putting absolutely all your data in a single topic is probably a bad idea, since it would mean consumers have no way of selecting the events of interest – they would just get everything.
+At the other extreme, having millions of different topics is also a bad idea, since each topic in Kafka has a cost, and thus having a large number of topics will harm performance.</p>
+
+<p>Actually, from a performance point of view, it’s the number of <em>partitions</em> that matters.
+But since each topic in Kafka has at least one partition, if you have <em>n</em> topics, you inevitably have at least <em>n</em> partitions.
+A while ago, <a href="https://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/">Jun Rao wrote a blog post</a> explaining the cost of having many partitions (end-to-end latency, file descriptors, memory overhead, recovery time after a failure).
+As a rule of thumb, if you care about latency, you should probably aim for (order of magnitude) hundreds of topic-partitions per broker node.
+If you have thousands, or even tens of thousands of partitions per node, your latency will suffer.</p>
+
+<p>That performance argument provides some guidance for designing your topic structure: if you’re finding yourself with many thousands of topics, it would be advisable to merge some of the fine-grained, low-throughput topics into coarser-grained topics, and thus reduce the proliferation of partitions.</p>
+
+<p>However, performance is not the end of the story.
+Even more important, in my opinion, are the data integrity and data modelling aspects of your topic structure.
+We will discuss those in the rest of this article.</p>
+
+<h2 id="topic--collection-of-events-of-the-same-type">Topic = collection of events of the same type?</h2>
+
+<p>The common wisdom (according to several conversations I’ve had, and according to a <a href="https://groups.google.com/forum/#!topic/confluent-platform/XQTjNJd-TrU">mailing list thread</a>) seems to be: put all events of the same type in the same topic, and use different topics for different event types.
+That line of thinking is reminiscent of relational databases, where a table is a collection of records with the same type (i.e. the same set of columns), so we have an analogy between a relational table and a Kafka topic.</p>
+
+<p>The <a href="https://docs.confluent.io/current/schema-registry/docs/index.html">Confluent Avro Schema Registry</a> has traditionally reinforced this pattern, because it encourages you to use the same Avro schema for all messages in a topic.
+That schema can be evolved while maintaining compatibility (e.g. by adding optional fields), but ultimately all messages have been expected to conform to a certain record type.
+We’ll revisit this later in the post, after we’ve covered some more background.</p>
+
+<p>For some types of streaming data, such as logged activity events, it makes sense to require that all messages in the same topic conform to the same schema.
+However, some people are using Kafka for more database-like purposes, such as <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/event-sourcing">event sourcing</a>, or <a href="https://www.confluent.io/blog/build-services-backbone-events/">exchanging data between microservices</a>.
+In this context, I believe it’s less important to define a topic a grouping of messages with the same schema.
+Much more important is the fact that Kafka maintains <strong>ordering</strong> of messages within a topic-partition.</p>
+
+<p>Imagine a scenario in which you have some entity (say, a customer), and many different things can happen to that entity: a customer is created, a customer changes their address, a customer adds a new credit card to their account, a customer makes a customer support enquiry, a customer pays an invoice, a customer closes their account.</p>
+
+<p>The order of those events matters.
+For example, we might expect that a customer is created before anything else can happen to a customer, and we might expect that after a customer closes their account nothing more will happen to them.
+When using Kafka, you can preserve the order of those events by putting them all in the same partition.
+In this example, you would use the customer ID as the partitioning key, and then put all these different events in the <strong>same</strong> topic.
+They must be in the same topic because different topics mean different partitions, and ordering is not preserved across partitions.</p>
+
+<h2 id="ordering-problems">Ordering problems</h2>
+
+<p>If you did use different topics for (say) the customerCreated, customerAddressChanged, and customerInvoicePaid events, then a consumer of those topics may see the events in a nonsensical order.
+For example, the consumer may see an address change for a customer that does not exist (because it has not yet been created, since the corresponding customerCreated event has been delayed).</p>
+
+<p>The risk of reordering is particularly high if a consumer is shut down for a while, perhaps for maintenance or to deploy a new version.
+While the consumer is stopped, events continue to be published, and those events are stored in the selected topic-partition on the Kafka brokers.
+When the consumer starts up again, it consumes the backlog of events from all of its input partitions.
+If the consumer has only one input, that’s no problem: the pending events are simply processed sequentially in the order they are stored.
+But if the consumer has several input topics, it will pick input topics to read in some arbitrary order.
+It may read all of the pending events from one input topic before it reads the backlog on another input topic, or it may interleave the inputs in some way.</p>
+
+<p>Thus, if you put the customerCreated, customerAddressChanged, and customerInvoicePaid events in three separate topics, the consumer may well see all of the customerAddressChanged events before it sees any of the customerCreated events.
+And so it is likely that the consumer will see a customerAddressChanged event for a customer that, according to its view of the world, has not yet been created.</p>
+
+<p>You might be tempted to attach a timestamp to each message and use that for event ordering.
+That might just about work if you are importing events into a data warehouse, where you can order the events after the fact.
+But in a stream process, timestamps are not enough: if you get an event with a certain timestamp, you don’t know whether you still need to wait for some previous event with a lower timestamp, or if all previous events have arrived and you’re ready to process the event.
+And relying on clock synchronisation generally leads to nightmares; for more detail on the problems with clocks, I refer you to Chapter 8 of <a href="http://dataintensive.net/">my book</a>.</p>
+
+<h2 id="when-to-split-topics-when-to-combine">When to split topics, when to combine?</h2>
+
+<p>Given that background, I will propose some rules of thumb to help you figure out which things to put in the same topic, and which things to split into separate topics:</p>
+
+<ol>
+  <li>
+    <p>The most important rule is that <strong>any events that need to stay in a fixed order must go in the same topic</strong> (and they must also use the same partitioning key).
+Most commonly, the order of events matters if they are about the same entity.
+So, as a rule of thumb, we could say that all events <strong>about the same entity</strong> need to go in the same topic.</p>
+
+    <p>The ordering of events is particularly relevant if you are using an <a href="https://msdn.microsoft.com/en-us/library/jj591559.aspx">event sourcing</a> approach to data modelling.
+Here, the state of an <a href="https://www.martinfowler.com/bliki/DDD_Aggregate.html">aggregate object</a> is derived from a log of events by replaying them in a particular order.
+Thus, even though there may be many different event types, all of the events that define an aggregate must go in the same topic.</p>
+  </li>
+  <li>
+    <p>When you have events about different entities, should they go in the same topic or different topics?
+I would say that if one entity depends on another (e.g. an address belongs to a customer), or if they are often needed together, they might as well go in the same topic.
+On the other hand, if they are unrelated and managed by different teams, they are better put in separate topics.</p>
+
+    <p>It also depends on the throughput of events: if one entity type has a much higher rate of events than another entity type, they are better split into separate topics, to avoid overwhelming consumers who only want the entity with low write throughput (see point four).
+But several entities that all have a low rate of events can easily be merged.</p>
+  </li>
+  <li>
+    <p>What if an event involves several entities?
+For example, a purchase relates a product and a customer, and a transfer from one account to another involves at least those two accounts.</p>
+
+    <p>I would recommend initially recording the event as a single atomic message, and not splitting it up into several messages in several topics.
+It’s best to record events exactly as you receive them, in a form that is <a href="https://vimeo.com/123985284">as raw as possible</a>.
+You can always split up the compound event later, using a stream processor – but it’s much harder to reconstruct the original event if you split it up prematurely.
+Even better, you can give the initial event a unique ID (e.g. a UUID); that way later on when you split the original event into one event for each entity involved, you can carry that ID forward, making the provenance of each event traceable.</p>
+  </li>
+  <li>
+    <p>Look at the number of topics that a consumer needs to subscribe to.
+If several consumers all read a particular group of topics, this suggests that maybe those topics <a href="http://grokbase.com/t/kafka/users/15a7k5f1rr/mapping-events-to-topics">should be combined</a>.</p>
+
+    <p>If you combine the fine-grained topics into coarser-grained ones, some consumers may receive unwanted events that they need to ignore.
+That is not a big deal: consuming messages from Kafka is very cheap, so even if a consumer ends up ignoring half of the events, the cost of this overconsumption is probably not significant.
+Only if the consumer needs to ignore the vast majority of messages (e.g. 99.9% are unwanted) would I recommend splitting the low-volume event stream from the high-volume stream.</p>
+  </li>
+  <li>
+    <p>A changelog topic for a <a href="http://kafka.apache.org/10/documentation/streams/developer-guide#streams_duality">Kafka Streams state store</a> (KTable) should be a separate from all other topics.
+In this case, the topic is managed by Kafka Streams process, and it should not be shared with anything else.</p>
+  </li>
+  <li>
+    <p>Finally, what if none of the rules above tell you whether to put some events in the same topic or in different topics?
+Then by all means group them by event type, by putting events of the same type in the same topic.
+However, I think this rule is the least important of all.</p>
+  </li>
+</ol>
+
+<h2 id="schema-management">Schema management</h2>
+
+<p>If you are using a data encoding such as JSON, without a statically defined schema, you can easily put many different event types in the same topic.
+However, if you are using a schema-based encoding such as Avro, a bit more thought is needed to handle multiple event types in a single topic.</p>
+
+<p>As mentioned above, the Avro-based <a href="https://docs.confluent.io/current/schema-registry/docs/index.html">Confluent Schema Registry for Kafka</a> currently relies on the assumption that there is one schema for each topic (or rather, one schema for the key and one for the value of a message).
+You can register new versions of a schema, and the registry checks that the schema changes are forward and backward compatible.
+A nice thing about this design is that you can have different producers and consumers using different schema versions at the same time, and they still remain compatible with each other.</p>
+
+<p>More precisely, when Confluent’s Avro serializer registers a schema in the registry, it does so under a <em>subject name</em>.
+By default, that subject is <code>&lt;topic&gt;-key</code> for message keys and <code>&lt;topic&gt;-value</code> for message values.
+The schema registry then checks the mutual compatibility of all schemas that are registered under a particular subject.</p>
+
+<p>I have recently <a href="https://github.com/confluentinc/schema-registry/pull/680">made a patch to the Avro serializer</a> that makes the compatibility check more flexible.
+The patch adds two new configuration options: <code>key.subject.name.strategy</code> (which defines how to construct the subject name for message keys), and <code>value.subject.name.strategy</code> (how to construct the subject name for message values).
+The options can take one of the following values:</p>
+
+<ul>
+  <li><code>io.confluent.kafka.serializers.subject.TopicNameStrategy</code> (default): The subject name for message keys is <code>&lt;topic&gt;-key</code>, and <code>&lt;topic&gt;-value</code> for message values.
+This means that the schemas of all messages in the topic must be compatible with each other.</li>
+  <li><code>io.confluent.kafka.serializers.subject.RecordNameStrategy</code>: The subject name is the fully-qualified name of the Avro record type of the message.
+Thus, the schema registry checks the compatibility for a particular record type, regardless of topic. This setting allows any number of different event types in the same topic.</li>
+  <li><code>io.confluent.kafka.serializers.subject.TopicRecordNameStrategy</code>: The subject name is <code>&lt;topic&gt;-&lt;type&gt;</code>, where <code>&lt;topic&gt;</code> is the Kafka topic name, and <code>&lt;type&gt;</code> is the fully-qualified name of the Avro record type of the message.
+This setting also allows any number of event types in the same topic, and further constrains the compatibility check to the current topic only.</li>
+</ul>
+
+<p>With this new feature, you can easily and cleanly put all the different events for a particular entity in the same topic.
+Now you can freely choose the granularity of topics based on the criteria above, and not be limited to a single event type per topic.</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Drawing a map of distributed data systems</title>
@@ -1870,565 +2027,6 @@ blog post).</p>
 a respectful, thoughtful, encouraging atmosphere that is welcoming to people from a very diverse set
 of backgrounds. The tech industry would be vastly improved if more people would learn from RC’s
 example. I, for my part, will try to carry that spirit of RC with me.</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Kafka, Samza, and the Unix philosophy of distributed data</title>
-                <link>http://martin.kleppmann.com/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html</link>
-                <comments>http://martin.kleppmann.com/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html#disqus_thread</comments>
-                <pubDate>Wed, 05 Aug 2015 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/08/05/kafka-samza-unix-philosophy-distributed-data.html</guid>
-                
-                <description><![CDATA[ This is an edited transcript of a talk I gave at the UK Hadoop Users Group. Video and slides are also available. This transcript was originally published on the Confluent blog. One of the things I realised while doing research for my book is that contemporary software engineering still has... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>This is an edited transcript of a <a href="/2015/08/05/samza-unix-philosophy-at-huguk.html">talk</a> I gave at the
-<a href="http://www.meetup.com/hadoop-users-group-uk/events/223836730/">UK Hadoop Users Group</a>.
-<a href="https://www.youtube.com/watch?v=Gqdr0DiNh5g&amp;index=1&amp;list=PL5OOLwV_m9vaKzwGX7lM8oVT3aFw_CN5O">Video</a> and
-<a href="https://speakerdeck.com/ept/kafka-samza-and-the-unix-philosophy-of-distributed-data">slides</a>
-are also available. This transcript was originally published on the
-<a href="http://www.confluent.io/blog/apache-kafka-samza-and-the-unix-philosophy-of-distributed-data">Confluent blog</a>.</em></p>
-
-<p>One of the things I realised while doing research for <a href="http://dataintensive.net/">my book</a> is that
-contemporary software engineering still has a lot to learn from the 1970s. As we’re in such
-a fast-moving field, we often have a tendency of dismissing older ideas as irrelevant – and
-consequently, we end up having to learn the same lessons over and over again, the hard way.
-Although computers have got faster, data has got bigger and requirements have become more complex,
-many old ideas are actually still highly relevant today.</p>
-
-<p>In this blog post I’d like to highlight one particular set of old ideas that I think deserves more
-attention today: the Unix philosophy. I’ll show how this philosophy is very different from the
-design approach of mainstream databases, and explore what it would look like if modern distributed
-data systems learnt a thing or two from Unix.</p>
-
-<p><img src="/2015/08/unixphil-01.png" width="550" height="412" /></p>
-
-<p>In particular, I’m going to argue that there are a lot of similarities between Unix pipes and Apache
-Kafka, and that this similarity enables good architectural styles for large-scale applications. But
-before we get into that, let me remind you of the foundations of the Unix philosophy. You’ve
-probably seen the power of Unix tools before – but to get started, let me give you a concrete
-example that we can talk about.</p>
-
-<p>Say you have a web server that writes an entry to a log file every time it serves a request. For
-example, using the nginx default access log format, one line of the log might look like this:</p>
-
-<pre><code>216.58.210.78 - - [27/Feb/2015:17:55:11 +0000] "GET /css/typography.css HTTP/1.1"
-200 3377 "http://martin.kleppmann.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X
-10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36"
-</code></pre>
-
-<p>(That is actually one line, it’s only broken up into multiple lines here for readability.) This line
-of the log indicates that on 27 February 2015 at 17:55:11 UTC, the server received a request for the
-file <code>/css/typography.css</code> from the client IP address 216.58.210.78. It then goes on to note various
-other details, including the browser’s user-agent string.</p>
-
-<p>Various tools can take these log files and produce pretty reports about your website traffic, but
-for the sake of the exercise, let’s build our own, using basic Unix tools. Let’s determine the
-5 most popular URLs on our website. To start with, we need to extract the path of the URL that was
-requested, for which we can use <code>awk</code>.</p>
-
-<p><code>awk</code> doesn’t know about the format of nginx logs – it just treats the log file as text. By
-default, <code>awk</code> takes one line of input at a time, splits it by whitespace, and makes the
-whitespace-separated components available as variables <code>$1</code>, <code>$2</code>, etc. In the nginx log example,
-the requested URL path is the seventh whitespace-separated component:</p>
-
-<p><img src="/2015/08/unixphil-03.png" width="550" height="412" /></p>
-
-<p>Now that you’ve extracted the path, you can determine the 5 most popular pages on your website as
-follows:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>awk <span class="s1">&#39;{print $7}&#39;</span> access.log <span class="p">|</span> <span class="c1"># Split by whitespace, 7th field is request path</span>
-    sort     <span class="p">|</span> <span class="c1"># Make occurrences of the same URL appear consecutively in file</span>
-    uniq -c  <span class="p">|</span> <span class="c1"># Replace consecutive occurrences of the same URL with a count</span>
-    sort -rn <span class="p">|</span> <span class="c1"># Sort by number of occurrences, descending</span>
-    head -n <span class="m">5</span>  <span class="c1"># Output top 5 URLs</span></code></pre></figure>
-
-<p>The output of that series of commands looks something like this:</p>
-
-<pre><code>4189 /favicon.ico
-3631 /2013/05/24/improving-security-of-ssh-private-keys.html
-2124 /2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html
-1369 /
- 915 /css/typography.css
-</code></pre>
-
-<p><img src="/2015/08/unixphil-04.png" width="550" height="412" /></p>
-
-<p>Although the above command line looks a bit obscure if you’re unfamiliar with Unix tools, it is
-incredibly powerful. It will process gigabytes of log files in a matter of seconds, and you can
-easily modify the analysis to suit your needs. For example, if you want to count top client IP
-addresses instead of top pages, change the <code>awk</code> argument to <code>'{print $1}'</code>.</p>
-
-<p>Many data analyses can be done in a few minutes using some combination of <code>awk</code>, <code>sed</code>, <code>grep</code>,
-<code>sort</code>, <code>uniq</code> and <code>xargs</code>, and they perform
-<a href="http://aadrake.com/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html">surprisingly well</a>.
-This is no coincidence: it is a direct result of the design philosophy of Unix.</p>
-
-<p><img src="/2015/08/unixphil-05.png" width="550" height="412" /></p>
-
-<p>The Unix philosophy is a set of principles that emerged gradually during the design and
-implementation of Unix systems during the late 1960s and ’70s. There are various interpretations of
-the Unix philosophy, but two points that particularly stand out were
-<a href="https://archive.org/details/bstj57-6-1899">described</a> by Doug McIlroy, Elliot Pinson and Berk Tague
-as follows in 1978:</p>
-
-<ul>
-  <li>Make each program do one thing well. To do a new job, build afresh rather than complicate old
-programs by adding new “<a href="http://harmful.cat-v.org/cat-v/unix_prog_design.pdf">features</a>.”</li>
-  <li>Expect the output of every program to become the input to another, as yet unknown, program.</li>
-</ul>
-
-<p>These principles are the foundation for chaining together programs into pipelines that can
-accomplish complex processing tasks. The key idea here is that a program does not know or care
-where its input is coming from, or where its output is going to: it may be a file, or another
-program that’s part of the operating system, or another program written by someone else entirely.</p>
-
-<p><img src="/2015/08/unixphil-06.png" width="550" height="165" /></p>
-
-<p>The tools that come with the operating system are generic, but they are designed such that they can
-be <em>composed</em> together into larger programs that can perform application-specific tasks.</p>
-
-<p>The benefits that the designers of Unix derived from this design approach sound quite like the ideas
-of the Agile and DevOps movements that appeared decades later: scripting and automation, rapid
-prototyping, incremental iteration, being friendly to experimentation, and breaking down large
-projects into manageable chunks. Plus ça change.</p>
-
-<p><img src="/2015/08/unixphil-08.png" width="550" height="322" /></p>
-
-<p>When you join two commands with the pipe character in your shell, the shell starts both programs at
-the same time, and attaches the output of the first process to the second process’ input. This
-attachment mechanism uses the <a href="http://linux.die.net/man/2/pipe"><code>pipe</code></a> syscall provided by the
-operating system.</p>
-
-<p>Note that this wiring is not done by the programs themselves, but by the shell – this allows them
-to be <a href="http://en.wikipedia.org/wiki/Loose_coupling">loosely coupled</a>, and not worry about where
-their input is coming from, or where their output is going.</p>
-
-<p><img src="/2015/08/unixphil-09.png" width="550" height="412" /></p>
-
-<p>The pipe had been invented in 1964 by Doug McIlroy, who first
-<a href="http://doc.cat-v.org/unix/pipes/">described</a> it like this in an internal Bell Labs memo: “We should
-have some ways of connecting programs like [a] garden hose – screw in another segment when it
-becomes necessary to massage data in another way.” Dennis Richie later
-<a href="http://cm.bell-labs.co/who/dmr/mdmpipe.html">wrote up his perspective</a> on the memo.</p>
-
-<p><img src="/2015/08/unixphil-10.png" width="550" height="233" /></p>
-
-<p>They also realised early that the inter-process communication mechanism (pipes) can look very
-similar to the mechanism for reading and writing files. We now call this input redirection (using
-the contents of a file as input to a process) and output redirection (writing the output of
-a process to a file).</p>
-
-<p>The reason that Unix programs can be composed so flexibly is that they all conform to the same
-interface: most programs have one stream for input data (<code>stdin</code>) and two output streams (<code>stdout</code>
-for regular output data, and <code>stderr</code> for errors and diagnostic messages).</p>
-
-<p><img src="/2015/08/unixphil-12.png" width="550" height="311" /></p>
-
-<p>Programs may also do other things besides reading <code>stdin</code> and writing <code>stdout</code>, such as reading and
-writing files, communicating over the network, or drawing a graphical user interface. However, the
-<code>stdin</code>/<code>stdout</code> communication is considered to be the main way how data flows from one Unix tool to
-another.</p>
-
-<p>And the great thing about the <code>stdin</code>/<code>stdout</code> interface is that anyone can implement it easily, in
-any programming language. You can develop your own tool that conforms to this interface, and it will
-play nicely with all the standard tools that ship as part of the operating system.</p>
-
-<p><img src="/2015/08/unixphil-13.png" width="550" height="412" /></p>
-
-<p>For example, when analysing a web server log file, perhaps you want to find out how many visitors
-you have from each country. The log doesn’t tell you the country, but it does tell you the IP
-address, which you can translate into a country using an IP geolocation database. Such a database
-isn’t included with your operating system by default, but you can write your own tool that takes
-IP addresses on <code>stdin</code> and outputs country codes on <code>stdout</code>.</p>
-
-<p>Once you’ve written that tool, you can include it in the data processing pipeline we discussed
-previously, and it will work just fine. This may seem painfully obvious if you’ve been working with
-Unix for a while, but I’d like to emphasise how remarkable this is: your own code runs on equal
-terms with the tools provided by the operating system.</p>
-
-<p>Apps with graphical user interfaces or web apps cannot simply be extended and wired together like
-this. You can’t just pipe Gmail into a separate search engine app, and post results to a wiki.
-Today it’s an exception, not the norm, to have programs that work together as smoothly as Unix tools
-do.</p>
-
-<p><img src="/2015/08/unixphil-14.png" width="550" height="285" /></p>
-
-<p>Change of scene. Around the same time as Unix was being developed, the
-<a href="http://people.csail.mit.edu/tdanford/6830papers/codd-relational-model.pdf">relational data model</a>
-was proposed, which in time became SQL, and was implemented in many popular databases. Many
-databases actually run on Unix systems. Does that mean they also follow the Unix philosophy?</p>
-
-<p><img src="/2015/08/unixphil-15.png" width="550" height="354" /></p>
-
-<p>The dataflow in most database systems is very different from Unix tools. Rather than using <code>stdin</code>
-and <code>stdout</code> as communication channels, there is a <em>database server</em>, and several <em>clients</em>. The
-clients send queries to read or write data on the server, the server handles the queries and sends
-responses to the clients. This relationship is fundamentally asymmetric: clients and servers are
-distinct roles.</p>
-
-<p><img src="/2015/08/unixphil-16.png" width="550" height="412" /></p>
-
-<p>What about the composability and extensibility that we find in Unix systems? Clients can do anything
-they like (since they are application code), but database servers are mostly in the business of
-storing and retrieving your data. Letting you run arbitrary code is not their top priority.</p>
-
-<p>That said, many databases do provide some ways of extending the database server with your own code.
-For example, many relational databases let you write stored procedures in their own, rudimentary
-procedural language such as <a href="http://www.oracle.com/technetwork/database/features/plsql/index.html">PL/SQL</a>
-(and some let you run code in a general-purpose programming language such as
-<a href="https://blog.heroku.com/archives/2013/6/5/javascript_in_your_postgres">JavaScript</a>). However, the
-things you can do in stored procedures are limited.</p>
-
-<p>Other extension points in some databases are support for custom data types (this was one of the
-early <a href="http://db.cs.berkeley.edu/papers/ERL-M85-95.pdf">design goals of Postgres</a>), or pluggable
-storage engines. Essentially, these are plugin APIs: you can run your code in the database server,
-provided that your module adheres to a plugin API exposed by the database server for a particular
-purpose.</p>
-
-<p>This kind of extensibility is not the same as the arbitrary composability we saw with Unix tools.
-The plugin API is totally controlled by the database server, and subordinate to it. Your extension
-code is a guest in the database server’s home, not an equal partner.</p>
-
-<p><img src="/2015/08/unixphil-17.png" width="550" height="338" /></p>
-
-<p>A consequence of this design is that you can’t just pipe one database into another, even if they
-have the same data model. Nor can you insert your own code into the database’s internal processing
-pipelines (unless the server has specifically provided an extension point for you, such as
-triggers).</p>
-
-<p>I feel the design of databases is very self-centered. A database seems to assume that it’s the
-centre of your universe: the only place where you might want to store and query your data, the
-source of truth, and the destination for all queries. The closest you can get to piping data in and
-out of it is through bulk-loading and bulk-dumping (backup) operations, but those operations don’t
-really use any of the database’s features, such as query planning and indexes.</p>
-
-<p>If a database was designed according to the Unix philosophy, it would be based on a small number of
-core primitives that you could easily combine, extend and replace at will. Instead, databases are
-tremendously complicated, monolithic beasts. While Unix acknowledges that the operating system will
-never do everything you might want, and thus encourages you to extend it, databases try to implement
-all the features you may need in a single program.</p>
-
-<p><img src="/2015/08/unixphil-18.png" width="550" height="412" /></p>
-
-<p>Perhaps that design is fine in simple applications where a single database is indeed sufficient.
-However, many complex applications find that they have to use their data in
-<a href="http://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/">various different ways</a>:
-they need fast random access for OLTP, big sequential scans for analytics, inverted indexes for
-full-text search, graph indexes for connected data, machine learning systems for recommendation
-engines, a push mechanism for notifications, various different cached representations of the data
-for fast reads, and so on.</p>
-
-<p>A general-purpose database may try to do all of those things in one product
-(<a href="https://cs.brown.edu/~ugur/fits_all.pdf">“one size fits all”</a>), but in all likelihood it will not
-perform as well as a tool that is specialized for one particular purpose. In practice, you can often
-get the best results by combining various different data storage and indexing systems: for example,
-you may take the same data and store it in a relational database for random access, in Elasticsearch
-for full-text search, in a columnar format in Hadoop for analytics, and cached in a denormalized
-form in memcached.</p>
-
-<p>When you need to integrate different databases, the lack of Unix-style composability is a severe
-limitation. (I’ve
-<a href="http://www.confluent.io/blog/bottled-water-real-time-integration-of-postgresql-and-kafka/">done some work</a>
-on piping data out of Postgres into other applications, but there’s still a long way to go before we
-can simply pipe any database into any other database.)</p>
-
-<p><img src="/2015/08/unixphil-19.png" width="550" height="412" /></p>
-
-<p>We said that Unix tools are composable because they all implement the same interface of <code>stdin</code>,
-<code>stdout</code> and <code>stderr</code> – and each of these is a <em>file descriptor</em>, i.e. a stream of bytes that you
-can read or write like a file. This interface is simple enough that anyone can easily implement it,
-but it is also powerful enough that you can use it for anything.</p>
-
-<p>Because all Unix tools implement the same interface, we call it a <em>uniform interface</em>. That’s why
-you can pipe the output of <code>gunzip</code> to <code>wc</code> without a second thought, even though those two tools
-appear to have nothing in common. It’s like lego bricks, which all implement the same pattern of
-knobbly bits and grooves, allowing you to stack any lego brick on any other, regardless of their
-shape, size or colour.</p>
-
-<p><img src="/2015/08/unixphil-20.png" width="550" height="412" /></p>
-
-<p>The uniform interface of file descriptors in Unix doesn’t just apply to the input and output of
-processes, but it’s a very broadly applied pattern. If you open a file on the filesystem, you get
-a file descriptor. Pipes and unix sockets provide file descriptors that are a communication channel
-to another process on the same machine. On Linux, the virtual files in <code>/dev</code> are the interfaces of
-device drivers, so you might be talking to a USB port or even a GPU. The virtual files in <code>/proc</code>
-are an API for the kernel, but since they’re exposed as files, you can access them with the same
-tools as regular files.</p>
-
-<p>Even a TCP connection to a process on another machine is a file descriptor, although the BSD sockets
-API (which is most commonly used to establish TCP connections) is arguably not as Unixy as it could
-be. <a href="http://www.catb.org/esr/writings/taoup/html/plan9.html">Plan 9</a> shows that even the network
-could have been cleanly integrated into the same uniform interface.</p>
-
-<p>To a first approximation, everything on Unix is a file. This uniformity means the logic of Unix
-tools is separated from the wiring, making it more composable. <code>sed</code> doesn’t need to care whether
-it’s talking to a pipe to another process, or a socket, or a device driver, or a real file on the
-filesystem. It’s all the same.</p>
-
-<p><img src="/2015/08/unixphil-21.png" width="550" height="412" /></p>
-
-<p>A file is a <em>stream of bytes</em>, perhaps with an end-of-file (EOF) marker at some point, indicating
-that the stream has ended (a stream can be of arbitrary length, and a process may not know in
-advance how long its input is going to be).</p>
-
-<p>A few tools (e.g. <code>gzip</code>) operate purely on byte streams, and don’t care about the structure of the
-data. But most tools need to parse their input in order to do anything useful with it. For this,
-most Unix tools use ASCII, with each record on one line, and fields separated by tabs or spaces, or
-maybe commas.</p>
-
-<p>Files are totally obvious to us today, which shows that a byte stream turned out to be a good
-uniform interface. However, the implementors of Unix could have decided to do it very differently.
-For example, it could have been a function callback interface, using a schema to pass records from
-process to process. Or it could have been shared memory (like
-<a href="http://www.tldp.org/LDP/lpg/node21.html">System V IPC</a> or
-<a href="http://man7.org/linux/man-pages/man2/mmap.2.html">mmap</a>, which came along later). Or it could have
-been a <em>bit</em> stream rather than a byte stream.</p>
-
-<p>In a sense, a byte stream is a lowest common denominator – the simplest possible interface.
-Everything can be expressed in terms of a stream of bytes, and it’s fairly agnostic to the transport
-medium (pipe from another process, file on disk, TCP connection, tape, etc). But this is also a
-disadvantage, as we shall discuss later.</p>
-
-<p><img src="/2015/08/unixphil-22.png" width="550" height="412" /></p>
-
-<p>We’ve seen that Unix developed some very good design principles for software development, and that
-databases have taken a very different route. I would love to see a future in which we can learn from
-both paths of development, and combine the best ideas from each.</p>
-
-<p>How can we make 21st-century data systems better by learning from the Unix philosophy? In the rest
-of this post I’d like to explore what it might look like if we bring the Unix philosophy to the
-world of databases.</p>
-
-<p><img src="/2015/08/unixphil-23.png" width="550" height="412" /></p>
-
-<p>First, let’s acknowledge that Unix is not perfect. Although I think the simple, uniform interface of
-byte streams was very successful at enabling an ecosystem of flexible, composable, powerful tools,
-Unix has some limitations:</p>
-
-<ul>
-  <li>It’s designed for use on a single machine. As our applications get every more data and traffic,
-and have higher uptime requirements, moving to distributed systems is becoming
-<a href="http://queue.acm.org/detail.cfm?id=2482856">increasingly inevitable</a>. Although a TCP connection
-can be made to look somewhat like a file, I don’t think that’s the right answer: it only works if
-both sides of the connection are up, and it has
-<a href="http://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable">somewhat messy</a>
-edge case semantics. TCP is good, but by itself it’s too low-level to serve as a distributed pipe
-implementation.</li>
-  <li>A Unix pipe is designed to have a single sender process, and a single recipient. You can’t use
-pipes to send output to several processes, or to collect input from several processes. (You can
-branch a pipeline with <a href="http://linux.die.net/man/1/tee"><code>tee</code></a>, but a pipe itself is always
-one-to-one.)</li>
-  <li>ASCII text (or rather, UTF-8) is great for making data easily explorable, but it quickly gets
-messy. Every process needs to be set up with its own input parsing: first breaking the byte stream
-into records (usually separated by newline, though some advocate <code>0x1e</code>, the <a href="https://ronaldduncan.wordpress.com/2009/10/31/text-file-formats-ascii-delimited-text-not-csv-or-tab-delimited-text/">ASCII record
-separator</a>).
-Then a record needs to be broken up into fields, like the <code>$7</code> in the <code>awk</code> example at the
-beginning. Separator characters that appear in the data need to be escaped somehow. Even
-a fairly simple tool like <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?xargs"><code>xargs</code></a> has about half
-a dozen command-line options to specify how its input should be parsed. Text-based interfaces work
-tolerably well, but in retrospect, I am pretty sure that a richer data model with
-<a href="http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html">explicit schemas</a>
-would have worked better.</li>
-  <li>Unix processes are generally assumed to be fairly short-running. For example, if a process
-in the middle of a pipeline crashes, there is no way for it to resume processing from its input
-pipe – the entire pipeline fails and must be re-run from scratch. That’s no problem if the
-commands run only for a few seconds, but if an application is expected to run continuously for
-years, better fault tolerance is needed.</li>
-</ul>
-
-<p>I think we can find a solution that overcomes these downsides, while retaining the Unix philosophy’s
-benefits.</p>
-
-<p><img src="/2015/08/unixphil-24.png" width="550" height="412" /></p>
-
-<p>The cool thing is that this solution already exists, and is implemented in
-<a href="http://kafka.apache.org/">Kafka</a> and <a href="http://samza.apache.org/">Samza</a>, two open source projects
-that work together to provide distributed stream processing.</p>
-
-<p>As you probably already know from
-<a href="http://www.confluent.io/blog/stream-data-platform-1/">other</a>
-<a href="http://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/">posts</a>
-on this blog, Kafka is a scalable distributed message broker, and Samza is a framework that lets you
-write code to consume and produce data streams.</p>
-
-<p><img src="/2015/08/unixphil-25.png" width="550" height="412" /></p>
-
-<p>In fact, when you look at it through the Unix lens, Kafka looks quite like the pipe that connects
-the output of one process to the input of another. And Samza looks quite like a standard library
-that helps you read <code>stdin</code> and write <code>stdout</code> (and a few helpful additions, such as a deployment
-mechanism,
-<a href="http://samza.apache.org/learn/documentation/0.9/container/state-management.html">state management</a>,
-metrics, and monitoring).</p>
-
-<p>The style of stream processing jobs that you can write with Kafka and Samza closely follows the Unix
-tradition of small, composable tools:</p>
-
-<ul>
-  <li>In Unix, the operating system kernel provides the pipe, a transport mechanism for getting a stream
-of bytes from one process to another.</li>
-  <li>In stream processing, Kafka provides publish-subscribe streams, a transport mechanism for getting
-messages from one stream processing job to another.</li>
-</ul>
-
-<p><img src="/2015/08/unixphil-26.png" width="550" height="412" /></p>
-
-<p>Kafka addresses the downsides of Unix pipes that we discussed previously:</p>
-
-<ul>
-  <li>The single-machine limitation is lifted: Kafka itself is distributed by default, and any stream
-processors that use it can also be distributed across multiple machines.</li>
-  <li>A Unix pipe connects exactly one process output with exactly one process input, whereas a stream
-in Kafka can have many producers and many consumers. Many inputs is important for services that
-are distributed across multiple machines, and many outputs makes Kafka more like a broadcast
-channel. This is very useful, since it allows the same data stream to be consumed independently
-for several different purposes (including monitoring and audit purposes, which are often outside
-of the application itself). Kafka consumers can come and go without affecting other consumers.</li>
-  <li>Kafka also provides good fault tolerance: data is replicated across multiple Kafka nodes, so if
-one node fails, another node can automatically take over. If a stream processor node fails and is
-restarted, it can resume processing at its last checkpoint.</li>
-  <li>Rather than a stream of bytes, Kafka provides a stream of messages, which saves the first step of
-input parsing (breaking the stream of bytes into a sequence of records). Each message is just an
-array of bytes, so you can use your
-<a href="http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">favourite serialisation format</a>
-for individual messages: JSON, XML, Avro, Thrift or Protocol Buffers are all reasonable choices.
-It’s well worth <a href="http://www.confluent.io/blog/stream-data-platform-2/">standardising</a> on one
-encoding, and Confluent provides particularly good
-<a href="http://docs.confluent.io/1.0/schema-registry/docs/intro.html">schema management support for Avro</a>.
-This allows applications to work with objects that have meaningful field names, and not have to
-worry about input parsing or output escaping. It also provides good support for schema evolution
-without breaking compatibility.</li>
-</ul>
-
-<p><img src="/2015/08/unixphil-27.png" width="550" height="412" /></p>
-
-<p>There are a few more things that Kafka does differently from Unix pipes, which are worth calling out
-briefly:</p>
-
-<ul>
-  <li>As mentioned, Unix pipes provide a byte stream, whereas Kafka provides a stream of messages. This
-is especially important if several processes are concurrently writing to the same stream: in
-a byte stream, the bytes from different writers can be interleaved, leading to an unparseable
-mess. Since messages are coarser-grained and self-contained, they can be safely interleaved,
-making it safe for multiple processes to concurrently write to the same stream.</li>
-  <li>Unix pipes are just a small in-memory buffer, whereas Kafka durably writes all messages to disk.
-In this regard, Kafka is less like a pipe, and more like one process writing to a temporary file,
-while several other processes continuously read that file using <code>tail -f</code> (each consumer tails the
-file independently). Kafka’s approach provides better fault tolerance, since it allows a consumer
-to fail and restart without skipping messages. Kafka automatically splits those ‘temporary’ files
-into segments and garbage-collects old segments on a configurable schedule.</li>
-  <li>In Unix, if the consuming process of a pipe is slow to read the data, the buffer fills up and the
-sending process is blocked from writing to the pipe. This is a kind of backpressure. In Kafka, the
-producer and consumer are more decoupled: a slow consumer has its input buffered, so it doesn’t
-slow down the producer or other consumers. As long as the buffer fits within Kafka’s available
-disk space, the slow consumer can catch up later. This makes the system less sensitive to
-individual slow components, and more robust overall.</li>
-  <li>A data stream in Kafka is called a <em>topic</em>, and you can refer to it by name (which makes it more
-like a Unix <a href="http://vincebuffalo.com/2013/08/08/the-mighty-named-pipe.html">named pipe</a>.
-A pipeline of Unix programs is usually started all at once, so the pipes normally don’t need
-explicit names. On the other hand, a long-running application usually has bits added, removed or
-replaced gradually over time, so you need names in order to tell the system what you want to
-connect to. Naming also helps with discovery and management.</li>
-</ul>
-
-<p>Despite those differences, I still think it makes sense to think of Kafka as Unix pipes for
-distributed data. For example, one thing they have in common is that Kafka keeps messages in a fixed
-order (like Unix pipes, which keep the byte stream in a fixed order). This is a
-<a href="http://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/">very useful property</a>
-for event log data: the order in which things happened is often meaningful and needs to be preserved.
-Other types of message broker, like AMQP and JMS, do not have this ordering property.</p>
-
-<p><img src="/2015/08/unixphil-28.png" width="550" height="412" /></p>
-
-<p>So we’ve got Unix tools and stream processors that look quite similar. Both read some input stream,
-modify or transform it in some way, and produce an output stream that is somehow derived from the
-input.</p>
-
-<p>Importantly, the processing does not modify the input itself: it remains immutable. If you run <code>awk</code>
-on some input file, the file remains unmodified (unless you explicitly choose to overwrite it).
-Also, most Unix tools are <em>deterministic</em>, i.e. if you give them the same input, they always produce
-the same output. This means you can re-run the same command as many times as you want, and gradually
-iterate your way towards a working program. It’s great for experimentation, because you can always
-go back to your original data if you mess up the processing.</p>
-
-<p>This deterministic and side-effect-free processing looks a lot like functional programming. That
-doesn’t mean you have to use a functional programming language like Haskell (although you’re welcome
-to do so if you want), but you still get many of the benefits of functional code.</p>
-
-<p><img src="/2015/08/unixphil-29.png" width="550" height="412" /></p>
-
-<p>The Unix-like design principles of Kafka enable building composable systems at a large scale. In
-a large organisation, different teams can each publish their data to Kafka. Each team can
-independently develop and maintain stream processing jobs that consume streams and produce new
-streams. Since a stream can have any number of independent consumers, no coordination is required to
-set up a new consumer.</p>
-
-<p>We’ve been calling this idea a <a href="http://www.confluent.io/blog/stream-data-platform-1/">stream data platform</a>.
-In this kind of architecture, the data streams in Kafka act as the communication channel between
-different teams’ systems. Each team focusses on making their particular part of the system do one
-thing well. While Unix tools can be composed to accomplish a data processing task, distributed
-streaming systems can be composed to comprise the
-<a href="http://www.confluent.io/blog/stream-data-platform-1/">entire operation of a large organisation</a>.</p>
-
-<p>A Unixy approach manages the complexity of a large system by encouraging loose coupling: thanks to
-the uniform interface of streams, different components can be developed and deployed independently.
-Thanks to the fault tolerance and buffering of the pipe (Kafka), when a problem occurs in one part
-of the system, it remains localised. And
-<a href="http://www.confluent.io/blog/stream-data-platform-2/">schema management</a> allows changes to data
-structures to be made safely, so that each team can move fast without breaking things for other
-teams.</p>
-
-<p><img src="/2015/08/unixphil-30.png" width="550" height="412" /></p>
-
-<p>To wrap up this post, let’s consider a real-life example of how this works at LinkedIn. As you may
-know, companies can post their job openings on LinkedIn, and jobseekers can browse and apply for
-those jobs. What happens if a LinkedIn member (user) views one of those job postings?</p>
-
-<p>It’s very useful to know who has looked at which jobs, so the service that handles job views
-publishes an event to Kafka, saying something like “member 123 viewed job 456 at time 789”. Now that
-this information is in Kafka, it can be used for many
-<a href="http://sites.computer.org/debull/A12june/A12JUN-CD.pdf">good purposes</a>:</p>
-
-<ul>
-  <li><strong>Monitoring systems</strong>: Companies pay LinkedIn to post their job openings, so it’s important that
-the site is working correctly. If the rate of job views drops unexpectedly, alarms should go off,
-because it indicates a problem that needs to be investigated.</li>
-  <li><strong>Relevance and recommendations</strong>: It’s annoying for users to see the same thing over and over
-again, so it’s good to track how many times the users has seen a job posting, and feed that into
-the scoring process. Keeping track of who viewed what also allows for collaborative filtering
-recommendations (people who viewed X also viewed Y).</li>
-  <li><strong>Preventing abuse</strong>: LinkedIn doesn’t want people to be able to scrape all the jobs, submit
-spam, or otherwise violate the terms of service. Knowing who is doing what is the first step
-towards detecting and blocking abuse.</li>
-  <li><strong>Job poster analytics</strong>: The companies who post their job openings want to see
-<a href="https://engineering.linkedin.com/analytics/real-time-analytics-massive-scale-pinot">stats</a>
-(in the style of Google Analytics) about who is viewing their postings, for example so that
-they can test which wording attracts the best candidates.</li>
-  <li><strong>Import into Hadoop and Data Warehouse</strong>: For LinkedIn’s internal business analytics, for senior
-management’s dashboards, for crunching numbers that are reported to Wall Street, for evaluating
-A/B tests, and so on.</li>
-</ul>
-
-<p>All of those systems are complex in their own right, and are maintained by different teams. Kafka
-provides a fault-tolerant, scalable implementation of a pipe. A stream data platform based on Kafka
-allows all of these various systems to be developed independently, and to be connected and composed
-in a robust way.</p>
-
-<p><em>If you enjoyed this post, you’ll love my book
-<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>, published by
-<a href="http://shop.oreilly.com/product/0636920032175.do">O’Reilly</a>.</em></p>
-
-<p><em>Thank you to <a href="https://twitter.com/jaykreps">Jay Kreps</a>,
-<a href="https://twitter.com/gwenshap">Gwen Shapira</a>,
-<a href="http://www.michael-noll.com/">Michael Noll</a>,
-<a href="http://www.ewencp.org/">Ewen Cheslack-Postava</a>,
-<a href="https://www.linkedin.com/in/jasongustafson">Jason Gustafson</a>, and
-<a href="https://twitter.com/jeff_hartley">Jeff Hartley</a>
-for feedback on a draft of this post,
-and thanks also to Jay for providing the LinkedIn job view example.</em></p>
 
                 ]]></content:encoded>
             </item>
