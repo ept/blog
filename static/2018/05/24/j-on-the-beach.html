@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Imitating the iPhone User Agent in Firefox &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Automerge: Making servers optional for real-time collaboration &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -47,65 +47,44 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Imitating the iPhone User Agent in Firefox"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Automerge: Making servers optional for real-time collaboration"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Imitating the iPhone User Agent in Firefox</h1>
+                <h1>Automerge: Making servers optional for real-time collaboration</h1>
 
-                
-                <p style="font-size: 80%">Published by Martin Kleppmann on 03 Jan 2008.</p>
-                
+                <p>
+                  A talk at
+                  
+                    <a href="https://jonthebeach.com/">J on the Beach</a>,
+                  
+                  Málaga, Spain, 24 May 2018
+                </p>
 
-                <p>There are a number of web sites out there which provide specifically optimised versions for the
-iPhone. I was curious to test them (and to look at their source code to see what they are doing),
-but don’t have an iPhone myself. Many sites will only give a visitor the iPhone version of their
-site if the web browser identifies itself as Safari Mobile. How do you get it?</p>
+                <ul>
+                  
+                  
+                  
+                  
+                </ul>
 
-<p>The solution is the
-“<a href="http://en.wikipedia.org/wiki/User_agent">user agent</a>” – a string sent by the web browser to the
-server as part of every request. It contains the name and version of the browser software you are
-using, the operating system, and a few other bits and pieces. It’s a very useful piece of
-information to website administrators, who can use it to compile anonymous statistics about the
-people who visit their site.</p>
+                <h2 id="abstract">Abstract</h2>
 
-<p>Many people consider it to be bad practice to serve different versions
-of a site depending on the user agent, but it happens often enough anyway. And that’s exactly what
-is going on here. Fortunately there are tools which will let you modify the user agent, so you can
-see what you would get if you were using some other software. This is sometimes called
-“masquerading” as another browser. The technique described here is for
-<a href="http://www.mozilla.com/en-US/firefox/">Firefox</a>, but
-<a href="http://www.ericgiguere.com/articles/masquerading-your-browser.html">it’s possible to do the same thing with other browsers
-too</a>.</p>
+<p>Once upon a time, we used software that ran on our own computers, that worked offline, and that
+stored its data in files on the local disk. Then we decided to put it all in the cloud. We gained
+some great features: real-time collaboration, like in Google Docs, for example. But we also lost
+control of our own data, and became dependent on far-away servers to allow us to access the data
+that we created.</p>
 
-<p>Download the
-<a href="https://addons.mozilla.org/en-US/firefox/addon/59">User Agent Switcher add-on for Firefox</a>, and
-restart Firefox. In the menu, go to Tools -&gt; User Agent Switcher -&gt; Options -&gt; Options. Add
-a new user agent, with description “iPhone”, and the following entry in the user agent
-field:</p>
+<p>Automerge is part of an effort to get the best of both worlds. It is a JavaScript library for
+building real-time collaborative applications. However, apps built with Automerge also work offline,
+storing data locally, and synchronise their data with collaborators whenever a network is available.
+And although you can use it with servers, you don’t have to: synchronisation also works
+peer-to-peer, or via any network you choose.</p>
 
-<blockquote>Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420.1 (KHTML, like
-Gecko) Version/3.0 Mobile/3B48b Safari/419.3</blockquote>
+<p>In this talk we will explore how Automerge deals with different users independently modifying shared
+data in a collaborative application (hint: by merging the changes… automatically!), how it
+achieves consistency in highly distributed settings, and where it is heading in the future.</p>
 
-<p>The remaining fields (app version etc.)
-can stay empty. Now you can click Tools -&gt; User Agent Switcher -&gt; iPhone, and your browser
-instantly “becomes” an iPhone. If the site uses features which are not available in Firefox, it will
-not render correctly, but at least the site should serve you the same content as it would do to an
-iPhone. (The user agent above is taken from a real iPhone; there are probably many others which work
-too, but that one has worked for me.)</p>
-
-<p>One big caveat: you shouldn’t really be doing this! Use it
-only briefly for testing a site, then reset the user agent to the Firefox default. Otherwise you’ll
-end up sending the iPhone user agent to all other web sites you visit too, and that isn’t good for
-anybody. You may up being locked out of certain web sites or getting the wrong version, and
-administrators of web sites will hate you because you mess up their statistics.</p>
-
-<p>So please, please
-reset the user agent to the default when you’ve finished testing.</p>
-
-
-                
-
-                <div id="disqus_thread"></div>
             </div>
 
             <div id="sidebar">
@@ -225,18 +204,6 @@ reset the user agent to the default when you’ve finished testing.</p>
 </div>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2008/01/03/imitating-the-iphone-user-agent-in-firefox.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Twitter -->
 <script>
