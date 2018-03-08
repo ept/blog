@@ -4,7 +4,10 @@ title: "CRDTs and the Quest for Distributed Consistency"
 venue: QCon
 place: London, UK
 venue_url: https://qconlondon.com/london2018/presentation/crdts-and-quest-distributed-consistency
+slides_url: https://speakerdeck.com/ept/convergence-versus-consensus-crdts-and-the-quest-for-distributed-consistency
 ---
+
+<script async class="speakerdeck-embed" data-id="98909ba60fa84498889ea81643e3be83" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
