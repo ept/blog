@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>CRDTs and the Quest for Distributed Consistency &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Automerge: Making servers optional for real-time collaboration &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -47,10 +47,10 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="CRDTs and the Quest for Distributed Consistency"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Automerge: Making servers optional for real-time collaboration"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>CRDTs and the Quest for Distributed Consistency</h1>
+                <h1>Automerge: Making servers optional for real-time collaboration</h1>
 
                 <p>
                   A talk at
@@ -69,21 +69,21 @@
 
                 <h2 id="abstract">Abstract</h2>
 
-<p>We all know how to build applications that rely on a central server. However, such centralisation is
-not always desirable, and recently there has been new interest in developing decentralised
-applications. Blockchains inevitably come up in that conversation, but when you examine them
-critically, not every problem is best solved by a blockchain.</p>
+<p>Once upon a time, we used software that ran on our own computers, that worked offline, and that
+stored its data in files on the local disk. Then we decided to put it all in the cloud. We gained
+some great features: real-time collaboration, like in Google Docs, for example. But we also lost
+control of our own data, and became dependent on far-away servers to allow us to access the data
+that we created.</p>
 
-<p>In this talk we will explore how to ensure data consistency in distributed systems, especially in
-systems that don’t have an authoritative leader. We will see how to sync data between your phone and
-your laptop without sending it via a remote server. We will explore algorithms that allow several
-people to collaborate on a shared document, communicating via a peer-to-peer network.</p>
+<p>Automerge is part of an effort to get the best of both worlds. It is a JavaScript library for
+building real-time collaborative applications. However, apps built with Automerge also work offline,
+storing data locally, and synchronise their data with collaborators whenever a network is available.
+And although you can use it with servers, you don’t have to: synchronisation also works
+peer-to-peer, or via any network you choose.</p>
 
-<p>Conflict-Free Replicated Datatypes (CRDTs) are a set of algorithms that ensure data consistency in
-such settings. Recent research on CRDTs has enabled us to better understand their consistency
-guarantees and design richer datatypes. On the practical side, CRDTs are making their way into more
-and more applications. This talk will examine that research and its uses, showing where we are now
-and where we are heading in the future.</p>
+<p>In this talk we will explore how Automerge deals with different users independently modifying shared
+data in a collaborative application (hint: by merging the changes… automatically!), how it
+achieves consistency in highly distributed settings, and where it is heading in the future.</p>
 
             </div>
 
@@ -171,7 +171,7 @@ and where we are heading in the future.</p>
             
               <li><a href="/2018/05/10/craft-conf.html">10 May 2018 at Craft Conference</a></li>
             
-              <li><a href="/2018/03/05/qcon-london.html">05 Mar 2018 at QCon</a></li>
+              <li><a href="/2018/03/05/qcon-london.html">05 Mar 2018 at QCon London</a></li>
             
               <li><a href="/2018/02/26/dagstuhl-data-consistency.html">26 Feb 2018 at Dagstuhl Seminar 18091</a></li>
             
