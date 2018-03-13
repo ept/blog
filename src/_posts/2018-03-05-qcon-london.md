@@ -7,6 +7,8 @@ venue_url: https://qconlondon.com/london2018/presentation/crdts-and-quest-distri
 slides_url: https://speakerdeck.com/ept/convergence-versus-consensus-crdts-and-the-quest-for-distributed-consistency
 ---
 
+* [Summary blog post](https://www.infoq.com/news/2018/03/data-consistency-crdt)
+
 <script async class="speakerdeck-embed" data-id="98909ba60fa84498889ea81643e3be83" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
