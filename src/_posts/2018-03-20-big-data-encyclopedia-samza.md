@@ -1,12 +1,11 @@
 ---
 layout: paper
-title: Samza
+title: Apache Samza
 authors: Martin Kleppmann
 venue: "In: Encyclopedia of Big Data Technologies, Springer"
-doi: 10.1007/978-3-319-63962-8_197-1
+doi: 10.1007/978-3-319-63962-8_197-2
 paper_url: /papers/samza-encyclopedia.pdf
-publisher_url: https://doi.org/10.1007/978-3-319-63962-8_197-1
-slides_url: https://speakerdeck.com/ept/convergence-versus-consensus-crdts-and-the-quest-for-distributed-consistency
+publisher_url: https://doi.org/10.1007/978-3-319-63962-8_197-2
 ---
 
 Chapter on [Apache Samza](http://samza.apache.org/) for the
