@@ -54,6 +54,8 @@ get(/.*/) do
       new_url = "http://martin.kleppmann.com/2017/04/24/json-crdt.html"
     elsif request.path_info =~ %r{^/ssh-keys\.html}
       new_url = "http://martin.kleppmann.com/2013/05/24/improving-security-of-ssh-private-keys.html"
+    elsif request.path_info =~ %r{^/papers/opsets\.pdf}
+      new_url = "https://arxiv.org/abs/1805.04263"
     end
 
     if new_url
