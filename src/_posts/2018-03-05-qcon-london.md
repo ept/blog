@@ -5,6 +5,7 @@ venue: QCon London
 place: London, UK
 venue_url: https://qconlondon.com/london2018/presentation/crdts-and-quest-distributed-consistency
 slides_url: https://speakerdeck.com/ept/convergence-versus-consensus-crdts-and-the-quest-for-distributed-consistency
+video_url: https://www.infoq.com/presentations/crdt-distributed-consistency
 ---
 
 * [Summary blog post](https://www.infoq.com/news/2018/03/data-consistency-crdt)
