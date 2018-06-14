@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: book
 title: Designing Data-Intensive Applications
 authors: Martin Kleppmann
 venue: "O’Reilly Media"

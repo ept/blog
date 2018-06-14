@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: report
 title: A framework for establishing Strong Eventual Consistency for Conflict-free Replicated Datatypes
 authors: Victor B. F. Gomes, Martin Kleppmann, Dominic P. Mulligan, and Alastair R. Beresford
 venue: Archive of Formal Proofs

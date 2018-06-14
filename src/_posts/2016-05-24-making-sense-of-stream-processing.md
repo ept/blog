@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: report
 title: Making Sense of Stream Processing
 authors: Martin Kleppmann
 venue: O’Reilly Media

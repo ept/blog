@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: refereed
 title: From Secure Messaging to Secure Collaboration
 authors: Martin Kleppmann, Stephan A. Kollmann, Diana A. Vasile and Alastair R. Beresford
 venue: 26th International Workshop on Security Protocols

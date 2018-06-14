@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: report
 title: A critique of the CAP theorem
 authors: Martin Kleppmann
 venue: "arXiv:1509.05393 [cs.DC]"

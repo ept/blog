@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: report
 title: Apache Samza
 authors: Martin Kleppmann
 venue: "In: Encyclopedia of Big Data Technologies, Springer"

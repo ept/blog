@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: refereed
 title: Strengthening public key authentication against key theft
 authors: Martin Kleppmann and Conrad Irwin
 venue: 9th International Conference on Passwords

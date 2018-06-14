@@ -54,9 +54,27 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
 </ul>
 
 <h2 class="title">Publications</h2>
-<p>Academic papers and reports.</p>
+<p>Books:</p>
 <ul>
   {% for paper in papers %}
-    {% include paper_summary.html paper=paper %}
+    {% if paper.type == 'book' %}
+      {% include paper_summary.html paper=paper %}
+    {% endif %}
+  {% endfor %}
+</ul>
+<p>Refereed journal and conference papers:</p>
+<ul>
+  {% for paper in papers %}
+    {% if paper.type == 'refereed' %}
+      {% include paper_summary.html paper=paper %}
+    {% endif %}
+  {% endfor %}
+</ul>
+<p>Invited papers, book chapters, and reports:</p>
+<ul>
+  {% for paper in papers %}
+    {% if paper.type != 'book' and paper.type != 'refereed' %}
+      {% include paper_summary.html paper=paper %}
+    {% endif %}
   {% endfor %}
 </ul>

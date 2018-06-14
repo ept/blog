@@ -1,5 +1,6 @@
 ---
 layout: paper
+type: report
 title: Simulation of colliding constrained rigid bodies
 authors: Martin Kleppmann
 venue: University of Cambridge, Computer Laboratory, Tech Report UCAM-CL-TR-683
