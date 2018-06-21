@@ -5,9 +5,12 @@ venue: J on the Beach
 place: Málaga, Spain
 venue_url: https://jonthebeach.com/speakers/4/Martin+Kleppmann
 slides_url: https://speakerdeck.com/ept/automerge-making-servers-optional-for-real-time-collaboration
+video_url: https://www.youtube.com/watch?v=PHz17gwiOc8
 ---
 
 <script async class="speakerdeck-embed" data-id="5cfe4dbf817b4c34a7a5321af9f80234" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/PHz17gwiOc8?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Abstract
 --------
