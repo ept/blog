@@ -6,8 +6,9 @@ highlight: true
 ---
 
 *This blog post has been translated into
-[Russian](https://habrahabr.ru/post/258145/) and
-[Japanese](http://suzuki79.hatenablog.com/entry/2017/11/24/222827).
+[Russian](https://habrahabr.ru/post/258145/),
+[Japanese](http://suzuki79.hatenablog.com/entry/2017/11/24/222827), and
+[Chinese](https://blog.the-pans.com/cap/).
 For more detail on problems with CAP, and a proposal for an alternative, please see my paper
 [A Critique of the CAP Theorem](https://arxiv.org/abs/1509.05393).*
 
