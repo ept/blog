@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Bug trackers and version control &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Automerge: Real-time data sync between edge devices &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -47,50 +47,40 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Bug trackers and version control"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Automerge: Real-time data sync between edge devices"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Bug trackers and version control</h1>
+                <h1>Automerge: Real-time data sync between edge devices</h1>
 
-                
-                <p style="font-size: 80%">Published by Martin Kleppmann on 31 Jul 2008.</p>
-                
+                <p>
+                  A talk at
+                  
+                    <a href="https://mobiuk.org/programme2018.html">MobiUK</a>,
+                  
+                  Cambridge, UK, 12 Sep 2018
+                </p>
 
-                <p>I believe strongly that teams of software engineers should have good tools which help to manage the
-development process (as a minimum, bug tracking and version control of source code). We use
-<a href="http://subversion.tigris.org/">Subversion</a> and
-<a href="http://www.fogcreek.com/FogBUGZ/">FogBugz</a>, but there are lots of other good tools too. These tools
-get particularly useful when connected, so that it’s possible to see e.g. which changes were made to
-the code in order to fix a particular bug.</p>
+                <ul>
+                  
+                  
+                  
+                  
+                </ul>
 
-<p>The usual way of connecting version control and issue
-tracking is that developers must enter a bug number every time they make a commit to the source code
-repository. And because most version control systems don’t foresee integration with a bug tracker,
-this is usually this is just a special string in the commit message (“BUG:12345”). A bit ugly, but
-works.</p>
+                <p>A talk at the <a href="https://mobiuk.org/">First UK Mobile, Wearable and Ubiquitous Systems Research Symposium (MobiUK)</a>.</p>
 
-<p>A neater way of doing this, for users of  <a href="http://subclipse.tigris.org/">Subclipse</a> or
-<a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, is to set a few magic properties in the base
-directory of your project. These graphical front-ends detect the presence of those properties and
-add a separate input box for the bug number to the commit dialog. The number entered there just gets
-translated into a line in the commit message, so it’s nothing magic, but it helps as a reminder to
-put in the bug number, and avoids having to remember the syntax for the bug reference (was it
-“Bug:12345” or “Bug#12345”?).</p>
+<ul>
+  <li><a href="/papers/automerge-mobiuk18.pdf">Extended abstract (1 page PDF)</a></li>
+</ul>
 
-<p>Full details of
-<a href="http://markphip.blogspot.com/2007/01/integrating-subversion-with-your-issue.html">this ‘bugtraq’ convention are described on the “svn commit ./me”
-blog</a>.</p>
+<h2 id="abstract">Abstract</h2>
 
-<p>Here’s what it looks like:</p>
+<p>We introduce Automerge, a JavaScript library for data synchronisation between mobile devices such as
+laptop computers and smartphones. It allows users to read and modify data even while their device is
+offline, and it automatically merges changes made concurrently on different devices. Unlike most
+existing data synchronisation systems, Automerge does not require data to be sent via a centralised
+server, but rather allows local and peer-to-peer networks to be used.</p>
 
-<p><a href="/2008/07/screenshot.png"><img class="size-medium wp-image-95" title="Screenshot of bug
-tracker, subversion and eclipse integration" src="/2008/07/screenshot.png" alt="Screenshot of
-bug tracker, subversion and eclipse integration" width="300" height="272" /></a></p>
-
-
-                
-
-                <div id="disqus_thread"></div>
             </div>
 
             <div id="sidebar">
@@ -210,18 +200,6 @@ bug tracker, subversion and eclipse integration" width="300" height="272" /></a>
 </div>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2008/07/31/bug-trackers-and-version-control.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Twitter -->
 <script>
