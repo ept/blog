@@ -12,6 +12,7 @@ that are scattered across the interwebs:
 <li><a rel="me" href="http://github.com/ept">My Open Source projects on Github</a></li>
 <li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
 <li><a rel="me" href="https://speakerdeck.com/ept">My presentations on Speakerdeck</a></li>
+<li><a rel="me" href="https://www.youtube.com/channel/UClB4KPy5LkJj1t3SgYVtMOQ">My talks on YouTube</a></li>
 <li><a rel="me" href="https://keybase.io/martinkl">My PGP public key on Keybase</a></li>
 <li><a rel="me" href="http://dblp.uni-trier.de/pers/hd/k/Kleppmann:Martin">My publications on DBLP</a></li>
 <li><a rel="me" href="https://scholar.google.com/citations?user=Cxuyy6EAAAAJ&hl=en">My publications on Google Scholar</a></li>
