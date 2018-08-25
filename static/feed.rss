@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Thu, 16 Aug 2018 15:50:42 BST</lastBuildDate>
+        <lastBuildDate>Sat, 25 Aug 2018 20:21:11 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -26,10 +26,11 @@
                 
                     <guid isPermaLink="true">http://martin.kleppmann.com/2018/01/18/event-types-in-kafka-topic.html</guid>
                 
-                <description><![CDATA[ This article was originally published on the Confluent blog. If you adopt a streaming data platform such as Apache Kafka, one of the most important questions to answer is: what topics are you going to use? In particular, if you have a bunch of different events that you want to... ]]></description>
+                <description><![CDATA[ This article was originally published on the Confluent blog. It has also been translated into Chinese. If you adopt a streaming data platform such as Apache Kafka, one of the most important questions to answer is: what topics are you going to use? In particular, if you have a bunch... ]]></description>
                 <content:encoded><![CDATA[
                     <p><em>This article was originally published
-<a href="https://www.confluent.io/blog/put-several-event-types-kafka-topic/">on the Confluent blog</a>.</em></p>
+<a href="https://www.confluent.io/blog/put-several-event-types-kafka-topic/">on the Confluent blog</a>.
+It has also been <a href="http://www.infoq.com/cn/articles/event-types-in-kafka-topic">translated into Chinese</a>.</em></p>
 
 <p>If you adopt a streaming data platform such as <a href="http://kafka.apache.org/">Apache Kafka</a>, one of the most important questions to answer is: <em>what topics are you going to use?</em>
 In particular, if you have a bunch of different events that you want to publish to Kafka as messages, do you put them in the same topic, or do you split them across different topics?</p>
