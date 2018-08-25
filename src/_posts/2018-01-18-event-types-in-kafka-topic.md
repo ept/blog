@@ -4,7 +4,8 @@ title: Should you put several event types in the same Kafka topic?
 ---
 
 *This article was originally published
-[on the Confluent blog](https://www.confluent.io/blog/put-several-event-types-kafka-topic/).*
+[on the Confluent blog](https://www.confluent.io/blog/put-several-event-types-kafka-topic/).
+It has also been [translated into Chinese](http://www.infoq.com/cn/articles/event-types-in-kafka-topic).*
 
 If you adopt a streaming data platform such as [Apache Kafka](http://kafka.apache.org/), one of the most important questions to answer is: *what topics are you going to use?*
 In particular, if you have a bunch of different events that you want to publish to Kafka as messages, do you put them in the same topic, or do you split them across different topics?
