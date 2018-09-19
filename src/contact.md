@@ -15,7 +15,7 @@ that are scattered across the interwebs:
 <li><a rel="me" href="https://www.youtube.com/channel/UClB4KPy5LkJj1t3SgYVtMOQ">My talks on YouTube</a></li>
 <li><a rel="me" href="https://keybase.io/martinkl">My PGP public key on Keybase</a></li>
 <li><a rel="me" href="http://dblp.uni-trier.de/pers/hd/k/Kleppmann:Martin">My publications on DBLP</a></li>
-<li><a rel="me" href="https://scholar.google.com/citations?user=Cxuyy6EAAAAJ&hl=en">My publications on Google Scholar</a></li>
+<li><a rel="me" href="https://scholar.google.com/citations?hl=en&user=TbyvU7oAAAAJ">My publications on Google Scholar</a></li>
 <li><a rel="me" href="https://arxiv.org/a/kleppmann_m_1.html">My papers on arXiv</a></li>
 <li><a rel="me" href="https://orcid.org/0000-0001-7252-6958">My ORCID (Open Researcher and Contributor ID)</a></li>
 </ul>
