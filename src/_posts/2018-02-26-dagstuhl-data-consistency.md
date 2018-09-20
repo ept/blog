@@ -10,6 +10,8 @@ slides_url: https://speakerdeck.com/ept/data-structures-as-queries-expressing-cr
 I participated in [Dagstuhl Seminar 18091:
 *Data Consistency in Distributed Systems: Algorithms, Programs, and Databases.*](http://www.dagstuhl.de/18091)
 
+<script async class="speakerdeck-embed" data-id="f45f22e4fb1d4726b408a516cb11f2a8" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
 Abstract
 --------
 
