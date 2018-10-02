@@ -9,6 +9,9 @@ video_url: https://www.infoq.com/presentations/crdt-distributed-consistency
 ---
 
 * [Summary blog post](https://www.infoq.com/news/2018/03/data-consistency-crdt)
+* [YouTube video](https://www.youtube.com/watch?v=B5NULPSiOGw)
+
+<iframe width="550" height="315" src="https://www.youtube.com/embed/B5NULPSiOGw?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 <script async class="speakerdeck-embed" data-id="98909ba60fa84498889ea81643e3be83" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
