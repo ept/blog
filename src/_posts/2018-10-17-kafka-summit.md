@@ -5,9 +5,12 @@ venue: Kafka Summit
 place: San Francisco, CA, USA
 venue_url: https://kafka-summit.org/speakers/martin-kleppmann/
 slides_url: https://speakerdeck.com/ept/is-kafka-a-database
+video_url: https://www.youtube.com/watch?v=v2RJQELoM6Y
 ---
 
 <script async class="speakerdeck-embed" data-id="b28e2b42bd8c4d17aec61c54aded7c45" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v2RJQELoM6Y?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Abstract
 --------
