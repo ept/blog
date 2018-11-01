@@ -4,7 +4,10 @@ title: "Keynote: What changes when we go offline-first?"
 venue: Velocity London
 place: London, UK
 venue_url: https://conferences.oreilly.com/velocity/vl-eu/public/schedule/detail/71411
+slides_url: https://speakerdeck.com/ept/what-changes-when-you-go-offline-first
 ---
+
+<script async class="speakerdeck-embed" data-id="15f6958506e84133b9ed2b89f54fa06b" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
