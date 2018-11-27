@@ -7,7 +7,9 @@ venue: 26th International Workshop on Security Protocols
 place: Cambridge, UK
 venue_url: http://spw2018.crocs.fi.muni.cz/programme.html
 slides_url: https://speakerdeck.com/ept/from-secure-messaging-to-secure-collaboration
+doi: 10.1007/978-3-030-03251-7_21
 paper_url: /papers/secure-collaboration-spw18.pdf
+publisher_url: https://link.springer.com/chapter/10.1007/978-3-030-03251-7_21
 ---
 
 <script async class="speakerdeck-embed" data-id="04780a3879624d5cb46f59e45408ca87" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
