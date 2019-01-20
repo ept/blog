@@ -1,0 +1,46 @@
+<!doctype html>
+
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta id="author" content="Martin Kleppmann / Ink &amp; Switch">
+    <meta id="description" content="{{ page.abstract }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>{{ page.title }}</title>
+
+    <!-- unfurl tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.inkandswitch.com{{ page.url }}" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:description" content="{{ page.abstract }}" />
+    <meta property="og:image" content="https://www.inkandswitch.com{{ page.unfurl_image }}" />
+
+    <link rel="shortcut icon" type="image/png" href="black-square.png"/>
+
+    {% include twocolumn-style.html %}
+  </head>
+
+  <body>
+    <header>
+      <div class="title">
+        <h1>{{ page.title }}</h1>
+        <h2>Martin Kleppmann / Ink &amp; Switch</h2>
+        <h3>{{ page.date | date: "%B %Y" }}</h3>
+      </div>
+    </header>
+
+    <div class="container">
+      {% if page.introduction %}
+      <div class="introduction">
+        <p>{{ page.abstract }}</p>
+        {{ page.introduction }}
+      </div>
+      {% endif %}
+
+      <div class="body">
+        {{ content }}
+      </div>
+    </div>
+  </body>
+</html>

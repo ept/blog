@@ -1,0 +1,205 @@
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 13pt;
+        line-height: 150%;
+      }
+
+      body {
+        color: #1c1c1c;
+        background-color: #faf7fc;
+      }
+
+      a {
+        color: #0f7173;
+      }
+
+      div, img, video, aside, figure {
+        margin: 0;
+        padding: 0;
+        display: block;
+      }
+
+      h1, h2, h3, h4, p {
+        padding: 0;
+        display: block;
+      }
+
+      code {
+        font-family: monospace;
+      }
+
+      /*** Small window (phone) responsive layout ***/
+      @media only screen and (max-width: 560pt) {
+        .title, .introduction, .body {
+          margin: 0 auto;
+          padding: 2.5%;
+          width: 95%;
+        }
+
+        iframe.youtube {
+          width: 100%;
+          height: 180pt;  /* arbitrary but seems to work ok */
+        }
+
+        /* Marginalia goes inline on the smaller screen */
+        aside {
+          border-left: 4px solid #ccc;
+          padding-left: 8pt;
+          margin-bottom: 9pt;
+        }
+
+        figcaption {
+          margin-top: -6pt;   /* hug the image above */
+          margin-bottom: 12pt;
+        }
+
+        .introduction img, figure img {
+          width: 100%;
+        }
+      }
+
+      /*** Regular-sized window (desktop, tablet) layout ***/
+      @media only screen and (min-width: 561pt) {
+        .title, .introduction, .container {
+          width: 540pt;
+          margin: 0 auto;
+        }
+
+        header {
+          margin-bottom: 18pt;
+        }
+
+        .introduction {
+          padding: 20.25pt 27pt;
+        }
+
+        /* Primary article content in the main column */
+        .body {
+          width: 390pt;
+        }
+
+        iframe.youtube {
+          /* youtube iframe defualts to 560px x 315px = 0.626785714:1 aspect ratio */
+          width: 390pt;
+          height: 244.44642846pt;
+        }
+
+        /* Full justification of text with hyphenation for newspaper-style clean columns */
+        .body p, .body ul {
+          text-align: justify;
+          text-justify: inter-word;
+          -webkit-hyphens: auto;
+          -moz-hyphens: auto;
+          -ms-hyphens: auto;
+          hyphens: auto;
+        }
+
+        figure img, figure iframe {
+          float: left;
+          width: 390pt;
+        }
+
+        .has-aside {
+          float: left;
+        }
+
+        aside, figcaption {
+          float: right;
+          width: 132pt;
+          margin-right: -150pt;
+          margin-top: 4pt;
+          height: 1em;
+          overflow: visible;
+        }
+      }
+
+      .title, .introduction, .body {
+        position: relative;
+      }
+
+      /* Header is a full-bleed display of title, author, and date */
+      header {
+        width: 100%;
+        background-color: #2a4344;
+        padding: 9pt 0;
+        padding-bottom: 18pt;
+      }
+
+      header h1 {
+        color: #fff;
+      }
+      header h2 {
+        color: #bcdfe0;
+        line-height: 0pt;
+        font-size: 13pt;
+      }
+      header h3 {
+        color: #96abad;
+        font-size: 11pt;
+        margin-top: 13pt;
+      }
+
+      /* Introduction is a grey box with some text and table of contents */
+      .introduction {
+        background-color: #e3e6ea;
+      }
+
+      figcaption, aside {
+        color: #616369;
+        font-size: 10.4pt;
+        line-height: 14.56pt;
+        text-align: left;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      figcaption a, aside a {
+        color: #558082;
+      }
+
+      aside img {
+        width: 100%;
+        margin-top: 1em;
+      }
+
+      /* Article main content */
+      h1 {
+        font-size: 24pt;
+        font-weight: bold;
+        margin-top: 24pt;
+        margin-bottom: 9pt;
+        letter-spacing: -0.7pt;
+        line-height: 120%;
+      }
+
+      h2 {
+        font-size: 19.2pt;
+        font-weight: bold;
+        margin-top: 12pt;
+        margin-bottom: 7pt;
+        letter-spacing: -0.1pt;
+        color: #303030;
+        line-height: 120%;
+      }
+
+      h3 {
+        font-size: 15.36pt;
+        font-weight: bold;
+        margin-bottom: 5pt;
+        color: #595959;
+        line-height: 120%;
+      }
+
+      p, ul, ol, li, figure img, figure iframe, .introduction img {
+        margin: 0 0 9pt 0;
+      }
+
+      .body {
+        margin-bottom: 32pt;
+      }
+    </style>
