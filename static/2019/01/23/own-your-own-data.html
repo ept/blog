@@ -1,0 +1,471 @@
+<!doctype html>
+
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta id="author" content="Martin Kleppmann / Ink &amp; Switch">
+    <meta id="description" content="Cloud services centralise control over data, which is problematic. We can do better, without sacrificing the things that make cloud services so convenient.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>How to own your own data, in spite of the cloud</title>
+
+    <!-- unfurl tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.inkandswitch.com/2019/01/23/own-your-own-data.html" />
+    <meta property="og:title" content="How to own your own data, in spite of the cloud" />
+    <meta property="og:description" content="Cloud services centralise control over data, which is problematic. We can do better, without sacrificing the things that make cloud services so convenient." />
+    <meta property="og:image" content="https://www.inkandswitch.com/2019/01/there-is-no-cloud.png" />
+
+    <link rel="shortcut icon" type="image/png" href="black-square.png"/>
+
+        <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 13pt;
+        line-height: 150%;
+      }
+
+      body {
+        color: #1c1c1c;
+        background-color: #faf7fc;
+      }
+
+      a {
+        color: #0f7173;
+      }
+
+      div, img, video, aside, figure {
+        margin: 0;
+        padding: 0;
+        display: block;
+      }
+
+      h1, h2, h3, h4, p {
+        padding: 0;
+        display: block;
+      }
+
+      code {
+        font-family: monospace;
+      }
+
+      /*** Small window (phone) responsive layout ***/
+      @media only screen and (max-width: 560pt) {
+        .title, .introduction, .body {
+          margin: 0 auto;
+          padding: 2.5%;
+          width: 95%;
+        }
+
+        iframe.youtube {
+          width: 100%;
+          height: 180pt;  /* arbitrary but seems to work ok */
+        }
+
+        /* Marginalia goes inline on the smaller screen */
+        aside {
+          border-left: 4px solid #ccc;
+          padding-left: 8pt;
+          margin-bottom: 9pt;
+        }
+
+        figcaption {
+          margin-top: -6pt;   /* hug the image above */
+          margin-bottom: 12pt;
+        }
+
+        .introduction img, figure img {
+          width: 100%;
+        }
+      }
+
+      /*** Regular-sized window (desktop, tablet) layout ***/
+      @media only screen and (min-width: 561pt) {
+        .title, .introduction, .container {
+          width: 540pt;
+          margin: 0 auto;
+        }
+
+        header {
+          margin-bottom: 18pt;
+        }
+
+        .introduction {
+          padding: 20.25pt 27pt;
+        }
+
+        /* Primary article content in the main column */
+        .body {
+          width: 390pt;
+        }
+
+        iframe.youtube {
+          /* youtube iframe defualts to 560px x 315px = 0.626785714:1 aspect ratio */
+          width: 390pt;
+          height: 244.44642846pt;
+        }
+
+        /* Full justification of text with hyphenation for newspaper-style clean columns */
+        .body p, .body ul {
+          text-align: justify;
+          text-justify: inter-word;
+          -webkit-hyphens: auto;
+          -moz-hyphens: auto;
+          -ms-hyphens: auto;
+          hyphens: auto;
+        }
+
+        figure img, figure iframe {
+          float: left;
+          width: 390pt;
+        }
+
+        .has-aside {
+          float: left;
+        }
+
+        aside, figcaption {
+          float: right;
+          width: 132pt;
+          margin-right: -150pt;
+          margin-top: 4pt;
+          height: 1em;
+          overflow: visible;
+        }
+      }
+
+      .title, .introduction, .body {
+        position: relative;
+      }
+
+      /* Header is a full-bleed display of title, author, and date */
+      header {
+        width: 100%;
+        background-color: #2a4344;
+        padding: 9pt 0;
+        padding-bottom: 18pt;
+      }
+
+      header h1 {
+        color: #fff;
+      }
+      header h2 {
+        color: #bcdfe0;
+        line-height: 0pt;
+        font-size: 13pt;
+      }
+      header h3 {
+        color: #96abad;
+        font-size: 11pt;
+        margin-top: 13pt;
+      }
+
+      /* Introduction is a grey box with some text and table of contents */
+      .introduction {
+        background-color: #e3e6ea;
+      }
+
+      figcaption, aside {
+        color: #616369;
+        font-size: 10.4pt;
+        line-height: 14.56pt;
+        text-align: left;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      figcaption a, aside a {
+        color: #558082;
+      }
+
+      aside img {
+        width: 100%;
+        margin-top: 1em;
+      }
+
+      /* Article main content */
+      h1 {
+        font-size: 24pt;
+        font-weight: bold;
+        margin-top: 24pt;
+        margin-bottom: 9pt;
+        letter-spacing: -0.7pt;
+        line-height: 120%;
+      }
+
+      h2 {
+        font-size: 19.2pt;
+        font-weight: bold;
+        margin-top: 12pt;
+        margin-bottom: 7pt;
+        letter-spacing: -0.1pt;
+        color: #303030;
+        line-height: 120%;
+      }
+
+      h3 {
+        font-size: 15.36pt;
+        font-weight: bold;
+        margin-bottom: 5pt;
+        color: #595959;
+        line-height: 120%;
+      }
+
+      p, ul, ol, li, figure img, figure iframe, .introduction img {
+        margin: 0 0 9pt 0;
+      }
+
+      .body {
+        margin-bottom: 32pt;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <header>
+      <div class="title">
+        <h1>How to own your own data, in spite of the cloud</h1>
+        <h2>Martin Kleppmann / Ink &amp; Switch</h2>
+        <h3>January 2019</h3>
+      </div>
+    </header>
+
+    <div class="container">
+      
+
+      <div class="body">
+        <p>It’s amazing how easily we can collaborate online nowadays.
+We use Google Docs to collaborate on documents, spreadsheets and presentations; we communicate with colleagues using Slack; we track tasks in Trello; and so on.
+We depend on these and many other online services, e.g. for taking notes, planning projects or events, remembering contacts, and a whole raft of business applications.</p>
+
+<p class="has-aside">
+As we run more and more of our lives and work through these cloud apps, they become more and more critical to us.
+The more time we invest in using one of these apps, the more valuable the data in it becomes to us.
+</p>
+
+<aside>
+I will call these services “cloud apps”, but you could just as well call them “<a href="https://en.wikipedia.org/wiki/Software_as_a_service">SaaS</a>” or “web-based apps”.
+What they have in common is that we typically access them through a web browser or through mobile apps, and that they store their data on a server.
+</aside>
+
+<p>I don’t know about you, but I find that when I have put a lot of creative energy and effort into creating something, I have a deep emotional attachment to it.
+Creative work is not just visual art, or music, or poetry: explaining a technical thing, implementing an intricate algorithm, designing a user interface, or figuring out how to lead a team towards some goal are just as much creative efforts.</p>
+
+<p>In the process of performing that creative work you most likely produce files and data: documents, presentations, spreadsheets, code, notes, drawings, and so on.
+And if you’re anything like me, you will want to keep that data: so that you can refer to it again in the future for inspiration, or to include it in a portfolio, or simply to archive because you feel proud of it.
+You will want to <strong>own</strong> that data, because it’s a part of you.
+It’s an expression of yourself.</p>
+
+<p>However, cloud apps are problematic in this regard: they don’t let you really <strong>take ownership</strong> of your own data.
+Let me explain.</p>
+
+<figure>
+  <img src="/2019/01/there-is-no-cloud.png" alt="There is no cloud… it’s just someone else’s computer" />
+  <figcaption>“There is no cloud” motif borrowed from <a href="http://www.chriswatterston.com/blog/my-there-is-no-cloud-sticker">Chris Watterston</a>, redrawn by <a href="https://martin.kleppmann.com/">Martin Kleppmann</a>.</figcaption>
+</figure>
+
+<h2 id="the-problems-with-cloud-apps">The problems with cloud apps</h2>
+
+<p>Today’s cloud apps have a number of serious shortcomings:</p>
+
+<ol>
+  <li>
+    <p>If the service is unavailable, you cannot use the software, and you can no longer access your data created with that software.
+This means you are betting that the creators of the software will continue supporting it for a long time – at least as long as you care about the data.
+If you think you will still care about the data in 20 years’ time, then that is how long you are betting the service will last.</p>
+
+    <p class="has-aside">
+Now, I don’t see a great danger of Google shutting down Google Docs anytime soon (although popular products <a href="https://en.wikipedia.org/wiki/Google_Reader">do sometimes get shut down</a>, so you never know).
+But with any software developed by a startup there is a significant danger of an <a href="https://ourincrediblejourney.tumblr.com/">“incredible journey”</a> event.
+And even with long-lived software there is the risk that the pricing or features change in a way you don’t like, and with a cloud app, continuing to use the old version is not an option – you will be upgraded whether you like it or not.
+</p>
+
+    <aside>
+<a href="https://ourincrediblejourney.tumblr.com/">Our incredible journey</a> is a blog that documents and mocks startup products getting shut down after an acquisition.
+The blog posts announcing such shutdowns often smugly remark that the staff of the startup had an “incredible journey” over the lifetime of the company, to the frustration of the users.
+</aside>
+  </li>
+  <li>
+    <p>Today’s cloud apps typically don’t work very well offline.
+That is surprising, because today’s mobile devices are often offline: due to poor cellular data coverage, poor coffee shop wifi, while on a plane or on a train going through a tunnel.
+There is plenty of need for offline-capable apps.</p>
+
+    <p>There are <a href="http://offlinefirst.org/">some efforts</a> to improve offline support in web and mobile apps, but I think it is fair to say that most current cloud apps do not score very well in this regard.</p>
+  </li>
+  <li>
+    <p>Programmatic access to data in the service is limited.
+It might have a REST API through which you can read and modify the data on the server, but these APIs are often limited in capability and laborious to use.
+The service might have a data export feature, allowing you to download a zip file of JSON blobs or suchlike, but that is read-only data access.
+This means it is often difficult or impossible to extend a cloud app with your own logic, or to integrate it with another app.</p>
+  </li>
+</ol>
+
+<p>The common theme with these complaints is that although you can access your data in a cloud app, you <strong>don’t really own that data</strong> – the cloud provider does.
+All data access must go via the server, and your access is restricted: you can only do the things that the server will let you do.
+If the data was really your own, you would be able to hack up a quick script to programmatically manipulate it without restriction, you could access it anywhere and everywhere (even while offline), and you could store it for the long term along with your family photos.</p>
+
+<p class="has-aside">
+To put it bluntly, the cloud is someone else’s computer; and unlike the computer on your desk, that cloud computer is not under your control.
+As they say, “never trust a computer you can’t throw out of a window”.
+</p>
+
+<aside>
+The origin of the quote <em>“never trust a computer you can’t throw out of a window”</em> is unknown; it is often <a href="https://lifehacker.com/5222989/how-apple-co-founder-steve-wozniak-gets-things-done">falsely attributed to Steve Wozniak</a>.
+</aside>
+
+<h2 id="the-old-fashioned-way">The old-fashioned way</h2>
+
+<p>Let’s contrast cloud apps with the way software used to work before web apps came along: programs running on your local computer, reading and writing files on the local disk.
+I’ll call this type of software “old-fashioned apps”, although of course we still use a lot of software of this type today: text editors and IDEs, git and other version control systems, and many specialised software packages such as graphics applications or CAD software.</p>
+
+<p>Old-fashioned apps still use the Internet (e.g. <code>git pull</code> and <code>git push</code>), but most of their features work offline because they only depend on files on the local disk.
+They are more easily hackable and programmable, because the data is just lying there in files, ready for you to access: textual file formats can be manipulated with Unix tools such as <a href="https://linux.die.net/man/1/sed">sed</a> and <a href="https://linux.die.net/man/1/awk">awk</a>, and even for complex binary file formats there are often command-line tools.
+You don’t need anybody’s permission to access your files, since they are yours.</p>
+
+<p>And, most importantly, old-fashioned apps continue to work forever, as long as you have a copy of the data and some way of running the software.
+Even if the software author goes bust, you can continue running the last released version of the software.
+Even if the operating system it runs on becomes obsolete (think: software from the 1990s running on MS-DOS), you can still run it in a virtual machine.
+It helps if the software is open source, but even closed-source software can be preserved this way.
+As storage media evolve over the decades, you can copy your files to new storage media, and then you can continue to access it.</p>
+
+<p>Long-term data preservation is something that I ponder about from time to time.
+Will future historians be able to read the data we are creating today, or are we creating, in the words of Vint Cerf, a <a href="https://www.bbc.co.uk/news/science-environment-31450389">“digital Dark Age”</a>?
+Some file formats (such as UTF-8 plain text, JPEG, and PDF), are so ubiquitous that they will probably be readable for centuries to come.
+But a lot of data is only accessible by running the software that can read and write it.</p>
+
+<aside>
+For an interesting discussion of long-term data preservation, see <a href="http://www.vpri.org/pdf/tr2015004_cuneiform.pdf">“The Cuneiform Tablets of 2015”</a>, a paper by Long Tien Nguyen and Alan Kay at <a href="https://2015.onward-conference.org/track/onward2015-essays">Onward! 2015</a>.<br />
+<img src="/2019/01/cuneiform.jpg" alt="Cuneiform script on clay tablet, ca. 3000 BC" /><br />
+Cuneiform script on clay tablet, ca. 3000 BC. Image from <a href="https://commons.wikimedia.org/wiki/File:Early_writing_tablet_recording_the_allocation_of_beer.jpg">Wikimedia Commons</a>.
+</aside>
+
+<p>If that software is old-fashioned, at least you could still run it in a VM.
+But if that software is a cloud app, you probably cannot run it yourself, unless the server is open source.
+You can’t just run your own build of Google Docs or Trello – you are forever dependent on the software author to run it for you.
+I worry that cloud apps are going to be problematic for long-term data preservation; the best we can probably do is to try to remember to export the data from cloud services as PDF files or some other read-only format from time to time.
+But all interactivity would be lost in that export process.</p>
+
+<p>For some kinds of data, you might not care about long-term preservation: for example, you might perhaps not be so upset if your Facebook posts or Tweets were suddenly to disappear tomorrow (unless you are particularly proud of the jokes you told on Twitter, or the Facebook posts contain the only copy of the photos of a close relative).
+But if you think of the data you care about the most – the very best piece of work you have done, or photos of the most memorable event in your life – those are probably things you would want to preserve.</p>
+
+<h2 id="getting-the-best-of-both-worlds">Getting the best of both worlds</h2>
+
+<p>I’ve pointed out how old-fashioned apps are better than cloud apps in three ways: long-term availability (even in the face of companies shutting down), offline support, and programmatic access (“hackability”).
+All of these are important aspects of <strong>owning your own data</strong>.</p>
+
+<p>However, not everything is great with old-fashioned apps.
+In particular, collaboration is a pain: when you have several people working on a file, you have to send it back and forth by email, or use some kind of network filesystem or version control system.
+But if several people concurrently update the same file, you need to merge the changes together.
+This is doable for text files such as source code, but quickly becomes very difficult or impossible for complex file formats such as spreadsheets or graphics documents.</p>
+
+<p>Moreover, long-term preservation of data only works in practice if you back it up, and move the files to new storage media from time to time.
+Most people are not very good at backing up data; depending on how diligent you are, the risk of losing data due to your laptop dying might be greater than the risk of losing data due to a cloud service you use shutting down.
+In that case, a cloud app would provide <em>better</em> data preservation than an old-fashioned app.</p>
+
+<p>What I would really like is the best of both worlds!
+I would like software that allows me to own my own data, while also providing the convenience of cloud apps.
+The software should:</p>
+
+<ul>
+  <li><strong>Run as a local executable</strong> without requiring a server (so that it works offline, and so that the software can be archived), but with a good software update mechanism to get new versions;</li>
+  <li><strong>Store its data in files on the local disk</strong> (so that it works offline, and so that you can back up the files yourself), in a file format that can be easily read and written programmatically (so that you can extend the software with your own code);</li>
+  <li>
+    <p class="has-aside"><strong>Optionally <em>also</em> store its data on a server</strong> (so that you don’t have to back up the data yourself if you don’t want to, and so that you can easily share the data with other people);</p>
+    <aside>To improve security, the data stored on the server could also be encrypted end-to-end, since the server only provides storage and does not need to interpret or manipulate the data itself. All display and modification of the data is performed by installed applications on end-user devices.</aside>
+  </li>
+  <li><strong>Support real-time collaboration</strong> in the same way as Google Docs and other cloud apps (so that you don’t have to email files back and forth).</li>
+</ul>
+
+<p>One app/service that meets three out of the four criteria is <a href="https://www.dropbox.com/">Dropbox</a>, which synchronises a folder full of files between devices.
+However, it doesn’t do anything about file formats or real-time collaboration: if two people modify the same file in Dropbox concurrently, you have to resolve the resulting conflict yourself.
+(<a href="https://www.dropbox.com/paper">Dropbox Paper</a> supports real-time collaboration, but that feature comes at the cost of the other criteria: documents created with Dropbox Paper don’t appear as files on your filesystem – they only exist in the web app.)</p>
+
+<h2 id="adding-real-time-collaboration-to-old-fashioned-apps">Adding real-time collaboration to old-fashioned apps</h2>
+
+<p class="has-aside">
+The big mistake that cloud apps make, in my opinion, is that they treat the data on the server as the <strong>primary, authoritative copy</strong> of the data.
+In a cloud app, if a client has a copy of the data (e.g. for offline use), it is considered to merely be a cache that is subordinate to the server.
+Any data modification must be sent to the server, otherwise it “didn’t happen”.
+</p>
+
+<aside>
+There is a similarity here to database replication: in many database systems, one replica is designated as the <em>leader</em> or <em>master</em>, and the others follow its lead.
+However, highly available systems often need to allow the use of multiple leaders.
+This topic is discussed in detail in <a href="http://dataintensive.net/">my book</a>.<br />
+<a href="http://dataintensive.net/"><img src="/images/book-cover-small.png" alt="Designing Data-Intensive Applications" /></a>
+</aside>
+
+<p>In order to take back ownership of your data, this model needs to change: we need to treat the <strong>copy of the data on your local device</strong> – your laptop, tablet, or phone – as the primary copy.
+(This is, of course, what old-fashioned apps have been doing all along.)
+If you have multiple devices that each have a copy, that means there are multiple primary copies that need to be synchronised.
+If you have collaborators, each of their devices also needs to be synchronised.
+If there is a server, we consider it to just have one of the copies, and it is not otherwise special.</p>
+
+<p>As we allow users to modify their local copy of the data while offline, it will inevitably sometimes happen that different users modify the same file without knowing that another user is also modifying it.
+In these situations, we will need to merge those modifications in a way that preserves everybody’s changes.
+For example, in the following diagram, two different users concurrently modify a text file.</p>
+
+<figure>
+  <img src="/2019/01/text-edit.png" alt="Example of concurrent text editing" />
+  <figcaption>The red user adds the word “World” before the exclamation mark, and the blue user concurrently adds a smiley after the exclamation mark. The two changes can be merged cleanly in the final text document.</figcaption>
+</figure>
+
+<p>For the last few years I have been doing research on <a href="https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type">Conflict-free Replicated Data Types</a> (CRDTs), which can perform exactly this kind of synchronisation of data and merging of different users’ changes.
+Together with collaborators at <a href="https://www.inkandswitch.com/">Ink &amp; Switch</a> I have developed <a href="https://github.com/automerge/automerge">Automerge</a>, a JavaScript CRDT implementation aimed at exactly this problem.
+I won’t go into into detail about Automerge and CRDTs in this blog post, but you can watch the following <a href="https://www.youtube.com/watch?v=PHz17gwiOc8">conference talk recording</a> if you’re interested in more.</p>
+
+<figure>
+  <iframe src="https://www.youtube-nocookie.com/embed/PHz17gwiOc8?rel=0" class="youtube" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+  <figcaption>Recording of my <a href="https://martin.kleppmann.com/2018/05/24/j-on-the-beach.html">conference talk on Automerge</a> from May 2018. The <a href="https://speakerdeck.com/ept/automerge-making-servers-optional-for-real-time-collaboration">slides</a> are also available.</figcaption>
+</figure>
+
+<h2 id="changing-our-mindset">Changing our mindset</h2>
+
+<p>This all sounds very idealistic and well, but could it actually work in the real world?</p>
+
+<p>This is something we have been exploring in several projects at <a href="https://www.inkandswitch.com/">Ink &amp; Switch</a>.
+We have built several pieces of software that work this way: a <a href="https://www.inkandswitch.com/capstone-manuscript.html">tablet app for collecting ideas and thinking</a>, a <a href="https://inkandswitch.github.io/pushpin/">collaborative pinboarding tool</a>, a <a href="https://medium.com/@pvh/pixelpusher-real-time-peer-to-peer-collaboration-with-react-7c7bc8ecbf74">pixel art editor</a>, and a <a href="https://github.com/automerge/trellis">Trello clone</a>.
+They are all built on a modern JavaScript stack using <a href="https://reactjs.org/">React</a> and deployed as locally installed software (either using <a href="https://electronjs.org/">Electron</a> or <a href="https://support.google.com/chrome/a/answer/2714278?hl=en">Chrome Apps</a>).
+They all store their data in files on local disk, and synchronise with other devices using peer-to-peer protocols (either <a href="https://datproject.org/">Dat</a> or <a href="https://webrtc.org/">WebRTC</a>).
+We learnt many things along the way, but the bottom line is: it works!</p>
+
+<p>There are many technical lessons from these projects, but we also found conceptual differences compared to standard web development and cloud apps: we found that we need to <strong>think differently</strong> about this kind of software.
+To summarise some of the key ideas:</p>
+
+<ul>
+  <li>If you have a copy of the data on your local device, <strong>nobody can stop you from modifying it</strong>.
+This means that the typical server-centric view of access permissions has to change.
+Instead of preventing modifications, we have to move to a model where devices and users choose which modifications to pay attention to, and which to ignore.
+In slogan form: we need <strong>attention, not permission</strong>.</li>
+  <li>
+    <p class="has-aside">The <strong>role of servers</strong> is totally different compared to cloud apps.
+Servers may assist with storing and transmitting data, but they do not control your data.
+Since the new role of servers is much less critical, we explored new ideas, such as running a server on a <a href="https://www.raspberrypi.org/">$20 Raspberry Pi</a> on a home WiFi.
+No need for a beefy server in a datacenter!</p>
+    <aside>WebRTC and Dat <a href="https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/">both</a> <a href="https://github.com/datprotocol/whitepaper/raw/master/dat-paper.pdf">perform</a> <a href="https://en.wikipedia.org/wiki/NAT_traversal">NAT traversal</a>, so they can connect to a device even if it does not have a publicly routable IP address (such as on a typical home WiFi).</aside>
+  </li>
+  <li>
+    <p>Concepts from version control, such as <strong>branching/forking and merging</strong>, apply to the world of CRDTs.
+This is something that most collaborative apps currently don’t do, but it could be very powerful.</p>
+
+    <p>For example, I recently had a situation where the university administration would send me some student data as a spreadsheet by email.
+Every couple of days they would send an updated version of the spreadsheet.
+I wanted to add some of my own information to the file, so I added some custom columns for myself (this change was not shared with the administration).
+Essentially, I wanted to maintain my own fork of the spreadsheet, and whenever admin sent a new version (i.e. for every <a href="https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches">“upstream change”</a>), I wanted to merge the upstream changes into my fork.
+We can do these kinds of things with source code in git, but I don’t know of any spreadsheet that support this kind of workflow.</p>
+  </li>
+</ul>
+
+<p>There is more work to be done, but I believe that in these projects we have uncovered a very promising way forward.
+It allows us to get the best of both worlds: the real-time collaboration and convenience of cloud apps, and the personal ownership and long-term preservation of old-fashioned software.
+If these topics strike a chord, we’d love to hear your thoughts: get in touch at <a href="https://twitter.com/inkandswitch">@inkandswitch</a> or <a href="mailto:hello@inkandswitch.com">hello@inkandswitch.com</a>.</p>
+
+      </div>
+    </div>
+  </body>
+</html>
