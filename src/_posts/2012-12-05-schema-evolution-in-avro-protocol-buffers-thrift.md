@@ -39,7 +39,7 @@ Plenty of comparisons have been written about them already
 [2](http://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/),
 [3](http://blog.mirthlab.com/2009/06/01/thrift-vs-protocol-bufffers-vs-json/),
 [4](http://tech.puredanger.com/2011/05/27/serialization-comparison/)).
-However, many posts overlook a detail that seems mundane at first, but is actually cruicial: **What
+However, many posts overlook a detail that seems mundane at first, but is actually crucial: **What
 happens if the schema changes?**
 
 In real life, data is always in flux. The moment you think you have finalised a schema, someone will
