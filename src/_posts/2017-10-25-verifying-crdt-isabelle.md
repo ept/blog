@@ -1,6 +1,6 @@
 ---
 layout: paper
-type: refereed
+type: journal
 title: Verifying Strong Eventual Consistency in Distributed Systems
 authors: Victor B. F. Gomes, Martin Kleppmann, Dominic P. Mulligan, and Alastair R. Beresford
 venue: Proceedings of the ACM on Programming Languages (PACMPL), Vol. 1, OOPSLA, Article 109

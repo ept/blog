@@ -62,10 +62,18 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
     {% endif %}
   {% endfor %}
 </ul>
-<p>Refereed journal and conference papers:</p>
+<p>Journal papers:</p>
 <ul>
   {% for paper in papers %}
-    {% if paper.type == 'refereed' %}
+    {% if paper.type == 'journal' %}
+      {% include paper_summary.html paper=paper %}
+    {% endif %}
+  {% endfor %}
+</ul>
+<p>Conference and workshop papers:</p>
+<ul>
+  {% for paper in papers %}
+    {% if paper.type == 'conference' %}
       {% include paper_summary.html paper=paper %}
     {% endif %}
   {% endfor %}
@@ -73,7 +81,7 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
 <p>Invited papers, book chapters, and reports:</p>
 <ul>
   {% for paper in papers %}
-    {% if paper.type != 'book' and paper.type != 'refereed' %}
+    {% if paper.type != 'book' and paper.type != 'journal' and paper.type != 'conference' %}
       {% include paper_summary.html paper=paper %}
     {% endif %}
   {% endfor %}

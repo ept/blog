@@ -1,6 +1,6 @@
 ---
 layout: paper
-type: refereed
+type: conference
 title: Interleaving anomalies in collaborative text editors
 authors: Martin Kleppmann, Victor B. F. Gomes, Dominic P. Mulligan, and Alastair R. Beresford
 venue: 6th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)
