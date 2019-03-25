@@ -278,6 +278,9 @@ To summarise some of the key ideas:
   We can do these kinds of things with source code in git, but I don't know of any spreadsheet that support this kind of workflow.
 
 <!-- TODO: conclusions section; image to illustrate aforementioned spreadsheet workflow; "cloud peer"/"just another device" -->
+<!-- apps need to de be deeply changed to make the new model work - the data implications reach all the way into the guts of the code.
+    e.g. adapting a single-user editor to make it collaborative is a quite intrusive change.
+    that said, in one of our projects we did take a simple single-user app ([Pixel Art to CSS](https://github.com/jvalen/pixel-art-react) by [Javier Valencia Romero](https://www.jvalen.com/)) and turned it into a collaborative app ([Pixelpusher](https://github.com/automerge/pixelpusher)) by replacing its internal data model with [Automerge](https://github.com/automerge/automerge). -->
 
 There is more work to be done, but I believe that in these projects we have uncovered a very promising way forward.
 It allows us to get the best of both worlds: the real-time collaboration and convenience of cloud apps, and the personal ownership and long-term preservation of old-fashioned software.
