@@ -81,7 +81,7 @@ DEPENDENCIES
   unicorn
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.3.7p456
 
 BUNDLED WITH
-   1.16.2
+   2.0.1
