@@ -1,6 +1,7 @@
 ---
 layout: paper
 type: conference
+me_presenting: true
 title: From Secure Messaging to Secure Collaboration
 authors: Martin Kleppmann, Stephan A. Kollmann, Diana A. Vasile and Alastair R. Beresford
 venue: 26th International Workshop on Security Protocols

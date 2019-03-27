@@ -22,7 +22,9 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
 <a rel="author" href="/contact.html">contact me directly</a>.</p>
 
 {% assign articles = site.posts | where:'layout','ync-post' %}
-{% assign talks    = site.posts | where:'layout','talk'     %}
+{% assign talks1   = site.posts | where:'layout','talk' %}
+{% assign talks2   = site.posts | where:'type','conference' | where:'me_presenting',true %}
+{% assign talks    = talks1 | concat: talks2 | sort: 'date' | reverse %}
 {% assign papers   = site.posts | where:'layout','paper'    %}
 
 <h2 class="title">Recent posts</h2>

@@ -1,5 +1,8 @@
 {% assign articles = site.posts | where:'layout','ync-post' %}
-{% assign talks    = site.posts | where:'layout','talk' %}
+
+{% assign talks1   = site.posts | where:'layout','talk' %}
+{% assign talks2   = site.posts | where:'type','conference' | where:'me_presenting',true %}
+{% assign talks    = talks1 | concat: talks2 | sort: 'date' | reverse %}
 
 <div id="secondary-sidebar">
     <div class="widget">
