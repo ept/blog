@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Data liberation and data integration with Kafka &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Online Event Processing: Achieving consistency where distributed transactions have failed &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -47,84 +47,50 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Data liberation and data integration with Kafka"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Online Event Processing: Achieving consistency where distributed transactions have failed"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Data liberation and data integration with Kafka</h1>
+                <h1>Online Event Processing: Achieving consistency where distributed transactions have failed</h1>
+
+                <p>Martin Kleppmann, Alastair R. Beresford, and Boerge Svingen</p>
 
                 <p>
-                  A talk at
                   
-                    <a href="http://strataconf.com/big-data-conference-ny-2015/public/schedule/detail/42723">Strata + Hadoop World</a>,
+                    ACM Queue,
                   
-                  New York, NY, US, 30 Sep 2015
+                  
+                  February 2019.
                 </p>
+
+                
 
                 <ul>
                   
+                    <li><a href="/papers/olep-acm-queue.pdf">Paper (open access)</a></li>
                   
-                    <li><a href="https://speakerdeck.com/ept/data-liberation-and-data-integration-with-kafka">Slides</a></li>
+                  
+                    <li><a href="https://queue.acm.org/detail.cfm?id=3321612">Paper (official, paywalled edition)</a></li>
                   
                   
-                    <li><a href="https://www.youtube.com/watch?v=GfJZ7duV_MM">Video</a></li>
+                    <li><a href="https://doi.org/10.1145/3317287.3321612">doi:10.1145/3317287.3321612</a></li>
+                  
+                  
+                  
+                  
                   
                   
                 </ul>
 
-                <script async="" class="speakerdeck-embed" data-id="e44d9f8df3284f7ca9deea573cb35f6f" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+                <h2 id="abstract">Abstract</h2>
 
-<iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/GfJZ7duV_MM?rel=0" frameborder="0" allowfullscreen=""></iframe>
-
-<h2 id="abstract">Abstract</h2>
-
-<p>Even the best data scientist can’t do anything if they cannot easily get access to the necessary
-data. Simply making the data available is step 1 towards becoming a data-driven organization. In
-this talk, we’ll explore how Apache Kafka can replace slow, fragile ETL processes with real-time
-data pipelines, and discuss best practices for data formats and integration with existing systems.</p>
-
-<p><a href="http://kafka.apache.org/">Apache Kafka</a> is a popular open source message broker for high-throughput
-real-time event data, such as user activity logs or IoT sensor data. It originated at LinkedIn,
-where it reliably handles around a trillion messages per day.</p>
-
-<p>What is less widely known: Kafka is also well suited for extracting data from existing databases,
-and making it available for analysis or for building data products. Unlike slow batch-oriented ETL,
-Kafka can make database data available to consumers in real-time, while also allowing efficient
-archiving to HDFS, for use in Spark, Hadoop or data warehouses.</p>
-
-<p>When data science and product teams can process operational data in real-time, and combine it with
-user activity logs or sensor data, that turns out to be a potent mixture. Having all the data
-centrally available in a
-<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-1/">stream data platform</a> is an exciting
-enabler for data-driven innovation.</p>
-
-<p>In this talk, we will discuss what a Kafka-based stream data platform looks like, and how it is
-useful:</p>
-
-<ul>
-  <li>Examples of the kinds of problems you can solve with Kafka</li>
-  <li>Extracting real-time data feeds from databases, and sending them to Kafka</li>
-  <li>Using <a href="http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html">Avro</a> for schema
-management and future-proofing your data</li>
-  <li>Designing your data pipelines to be resilient, but also flexible and amenable to change</li>
-</ul>
-
-<h2 id="references">References</h2>
-
-<ol>
-  <li>Jay Kreps: “<a href="http://blog.confluent.io/2015/02/25/stream-data-platform-1/">Putting Apache Kafka to use: A practical guide to building a stream data platform
-(part 1)</a>.” 25 February 2015.</li>
-  <li>Gwen Shapira: “<a href="http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html">The problem of managing
-schemas</a>,” 4 November 2014.</li>
-  <li>Martin Kleppmann: “<a href="/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html">Schema evolution in Avro, Protocol Buffers and
-Thrift</a>,” 5 December 2012.</li>
-  <li>Martin Kleppmann: “<a href="/2015/04/23/bottled-water-real-time-postgresql-kafka.html">Bottled Water: Real-time integration of PostgreSQL and
-Kafka</a>.” 23 April 2015.</li>
-  <li>Martin Kleppmann: “<a href="http://dataintensive.net">Designing data-intensive applications</a>.”
-O’Reilly Media, to appear.</li>
-  <li>Shirshanka Das, Chavdar Botev, Kapil Surlaker, et al.:
-“<a href="http://www.socc2012.org/s18-das.pdf">All Aboard the Databus!</a>,” at <em>ACM Symposium on Cloud
-Computing</em> (SoCC), October 2012.</li>
-</ol>
+<p>Distributed transactions have failed as a mechanism for ensuring consistency across heterogeneous
+storage technologies in today’s large-scale applications. Instead, we are witnessing the emergence
+of a programming model that relies on append-only event logs rather than transactions, and which we
+call OnLine Event Processing (OLEP) in contrast to OLTP. In this article we show that, although an
+event log is a very simple abstraction, applications that rely on such logs can efficiently provide
+strong consistency guarantees, such as atomicity and enforcing invariants, which are normally
+associated with ACID transactions. We provide case studies from real industrial data systems that
+have adopted the OLEP approach, demonstrating the practical advantages of building upon event logs.</p>
 
             </div>
 
