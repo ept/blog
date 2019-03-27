@@ -6,6 +6,7 @@ authors: Martin Kleppmann, Alastair R. Beresford, and Boerge Svingen
 venue: ACM Queue
 doi: 10.1145/3317287.3321612
 paper_url: /papers/olep-acm-queue.pdf
+publisher_url: https://queue.acm.org/detail.cfm?id=3321612
 ---
 
 
