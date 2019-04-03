@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Verifying Strong Eventual Consistency in Distributed Systems &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Snapdoc: Authenticated snapshots with history privacy in peer-to-peer collaborative editing &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -47,70 +47,53 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Verifying Strong Eventual Consistency in Distributed Systems"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Snapdoc: Authenticated snapshots with history privacy in peer-to-peer collaborative editing"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Verifying Strong Eventual Consistency in Distributed Systems</h1>
+                <h1>Snapdoc: Authenticated snapshots with history privacy in peer-to-peer collaborative editing</h1>
 
-                <p>Victor B. F. Gomes, Martin Kleppmann, Dominic P. Mulligan, and Alastair R. Beresford</p>
+                <p>Stephan A. Kollmann, Martin Kleppmann, and Alastair R. Beresford</p>
 
                 <p>
                   
-                    <a href="https://2017.splashcon.org/program/program-splash-2017">Proceedings of the ACM on Programming Languages (PACMPL), Vol. 1, OOPSLA, Article 109</a>,
+                    <a href="https://www.petsymposium.org/2019/paperlist.php">Proceedings on Privacy Enhancing Technologies (PoPETS), Vol. 2019, Issue 3</a>,
                   
                   
-                    Vancouver, BC, Canada,
+                    Stockholm, Sweden,
                   
-                  October 2017.
+                  July 2019.
                 </p>
 
-                
-                  <p>This paper received a <strong>Distinguished Paper Award and Distinguished Artifact Award</strong>.</p>
                 
 
                 <ul>
                   
-                    <li><a href="/papers/crdt-isabelle-oopsla17.pdf">Paper (open access)</a></li>
-                  
-                  
-                    <li><a href="https://dl.acm.org/citation.cfm?id=3133933">Paper (version of record)</a></li>
-                  
-                  
-                    <li><a href="https://doi.org/10.1145/3133933">doi:10.1145/3133933</a></li>
+                    <li><a href="/papers/snapdoc-pets19.pdf">Paper (open access)</a></li>
                   
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/verifying-strong-eventual-consistency-in-distributed-systems">Slides</a></li>
+                  
                   
                   
                   
                   
                 </ul>
 
-                <ul>
-  <li><a href="https://arxiv.org/abs/1707.01747">arXiv: 1707.01747</a></li>
-  <li><a href="https://2017.splashcon.org/attending/splash-awards">Awards for this paper</a></li>
-</ul>
+                <h2 id="abstract">Abstract</h2>
 
-<h2 id="abstract">Abstract</h2>
-
-<p>Data replication is used in distributed systems to maintain up-to-date copies of shared data across
-multiple computers in a network. However, despite decades of research, algorithms for achieving
-consistency in replicated systems are still poorly understood. Indeed, many published algorithms
-have later been shown to be incorrect, even some that were accompanied by supposed mechanised proofs
-of correctness. In this work, we focus on the correctness of Conflict-free Replicated Data Types
-(CRDTs), a class of algorithm that provides strong eventual consistency guarantees for replicated
-data. We develop a modular and reusable framework in the Isabelle/HOL interactive proof assistant
-for verifying the correctness of CRDT algorithms. We avoid correctness issues that have dogged
-previous mechanised proofs in this area by including a network model in our formalisation, and
-proving that our theorems hold in all possible network behaviours. Our axiomatic network model is
-a standard abstraction that accurately reflects the behaviour of real-world computer networks.
-Moreover, we identify an abstract convergence theorem, a property of order relations, which provides
-a formal definition of strong eventual consistency. We then obtain the first machine-checked
-correctness theorems for three concrete CRDTs: the Replicated Growable Array, the Observed-Remove
-Set, and an Increment-Decrement Counter. We find that our framework is highly reusable, developing
-proofs of correctness for the latter two CRDTs in a few hours and with relatively little
-CRDT-specific code.</p>
+<p>Document collaboration applications, such as Google Docs or Microsoft Office Online, need to ensure
+that all collaborators have a consistent view of the shared document, and usually achieve this by
+relying on a trusted server. Other existing approaches that do not rely on a trusted third party
+assume that all collaborating devices are trusted. In particular, when inviting a new collaborator
+to a group, one needs to choose between a) keeping past edits private and sending only the latest
+state (a snapshot) of the document; or b) allowing the new collaborator to verify her view of the
+document is consistent with other honest devices by sending the full history of (signed) edits. We
+present a new protocol which allows an authenticated snapshot to be sent to new collaborators while
+both hiding the past editing history, and allowing them to verify consistency. We evaluate the costs
+of the protocol by emulating the editing history of 270 Wikipedia pages; 99% of insert operations
+were processed within 11.0 ms; 64.9 ms for delete operations. An additional benefit of authenticated
+snapshots is a median 84% reduction in the amount of data sent to a new collaborator compared to
+a basic protocol that transfers a full edit history.</p>
 
             </div>
 
