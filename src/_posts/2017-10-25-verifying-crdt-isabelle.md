@@ -8,6 +8,8 @@ award: Distinguished Paper Award and Distinguished Artifact Award
 place: Vancouver, BC, Canada
 doi: 10.1145/3133933
 paper_url: /papers/crdt-isabelle-oopsla17.pdf
+venue_url: https://2017.splashcon.org/program/program-splash-2017
+publisher_url: https://dl.acm.org/citation.cfm?id=3133933
 slides_url: https://speakerdeck.com/ept/verifying-strong-eventual-consistency-in-distributed-systems
 ---
 
