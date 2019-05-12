@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Keynote: Is Kafka a Database? &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Keynote: Is Kafka a Database?"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Keynote: Is Kafka a Database?</h1>
+
+                <p>
+                  A talk at
+                  
+                    <a href="https://kafka-summit.org/events/kafka-summit-london-2019/">Kafka Summit London</a>,
+                  
+                  London, UK, 13 May 2019
+                </p>
+
+                <ul>
+                  
+                  
+                    <li><a href="https://speakerdeck.com/ept/is-kafka-a-database">Slides</a></li>
+                  
+                  
+                  
+                </ul>
+
+                <script async="" class="speakerdeck-embed" data-id="b28e2b42bd8c4d17aec61c54aded7c45" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Let’s explore a contentious question: is Kafka a database? In some ways, yes: it writes everything
+to disk, and it replicates data across several machines to ensure durability. In other ways, no: it
+has no data model, no indexes, no way of querying data except by subscribing to the messages in
+a topic.</p>
+
+<p>But there’s more to this question than meets the eye. In an organisation, data flows between
+different systems managed by different teams, and Kafka is becoming a popular way of realizing such
+data flows. In doing so, it allows us to ensure certain kinds of consistency across different
+systems. And if you look deeply at the structure of these data flows, it becomes possible to do new
+things that would have been very difficult to do otherwise.</p>
+
+<p>Four years after his talk “<a href="https://www.youtube.com/watch?v=fU9hR3kiOK0">Turning the database inside-out</a>”,
+which has been watched 100,000 times, Martin delivers an update on the big ideas that connect
+databases and streams.</p>
+
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>,
+        was published by O’Reilly in March 2017.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>18 Jan 2018: <a href="/2018/01/18/event-types-in-kafka-topic.html">Should you put several event types in the same Kafka topic?</a></li>
+            
+              <li>15 Mar 2017: <a href="/2017/03/15/map-distributed-data-systems.html">Drawing a map of distributed data systems</a></li>
+            
+              <li>26 Jan 2017: <a href="/2017/01/26/data-loss-in-large-clusters.html">The probability of data loss in large clusters</a></li>
+            
+              <li>15 Apr 2016: <a href="/2016/04/15/announcing-trve-data.html">Announcing TRVE DATA: Placing a bit less trust in the cloud</a></li>
+            
+              <li>30 Mar 2016: <a href="/2016/03/30/device-security-fbi.html">Device security and the FBI</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2019/07/11/hydra-distributed.html">11 Jul 2019 at Hydra distributed computing conference</a></li>
+            
+              <li><a href="/2019/06/07/tng-big-techday.html">07 Jun 2019 at TNG Big Techday</a></li>
+            
+              <li><a href="/2019/05/13/kafka-summit.html">13 May 2019 at Kafka Summit London</a></li>
+            
+              <li><a href="/2019/04/03/without-the-google.html">03 Apr 2019 at University of Cambridge Department of Computer Science and Technology</a></li>
+            
+              <li><a href="/2019/03/25/papoc-interleaving-anomalies.html">25 Mar 2019 at 6th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
