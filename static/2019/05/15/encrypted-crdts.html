@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Our social future &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <title>Adapting secure group messaging for encrypted CRDTs &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -47,27 +47,41 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Our social future"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Adapting secure group messaging for encrypted CRDTs"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Our social future</h1>
+                <h1>Adapting secure group messaging for encrypted CRDTs</h1>
 
-                
-                <p style="font-size: 80%">Published by Martin Kleppmann on 09 Apr 2010.</p>
-                
+                <p>
+                  A talk at
+                  
+                    LightKone workshop on Verification, Security and Antidote,
+                  
+                  Kaiserslautern, Germany, 15 May 2019
+                </p>
 
-                <p>You know you’re doing something good if someone you’ve never met before spontaneously comes up to
-you and asks: “Are you with Rapportive? Just wanted to say that I love it.”</p>
+                <ul>
+                  
+                  
+                    <li><a href="https://speakerdeck.com/ept/adapting-secure-group-messaging-for-encrypted-crdts">Slides</a></li>
+                  
+                  
+                  
+                </ul>
 
-<p>He could recognise me because we had exchanged emails, and he had therefore seen my photo in
-Rapportive next to my email.</p>
+                <h2 id="abstract">Abstract</h2>
 
-<p>This is our social future. We’re busy creating it.</p>
+<p>Secure messaging apps like WhatsApp, Signal, and iMessage have brought end-to-end encryption to over
+1 billion users. The protocols underlying these apps provide much stronger security properties than
+earlier encryption systems such as PGP/GnuPG. This makes them an interesting basis for implementing
+CRDT-based data systems with end-to-end security: if we simply send all the CRDT operations or state
+updates via a secure messaging protocol, we inherit its strong security properties.</p>
 
+<p>However, there are lots of subtleties about the guarantees provided by secure messaging protocols:
+in particular, the properties that hold for communication between two parties often don’t easily
+generalise to groups of more than two participants. This talk will summarise the current state of
+research in secure group messaging, and discuss how we can bring this work into the world of CRDTs.</p>
 
-                
-
-                <div id="disqus_thread"></div>
             </div>
 
             <div id="sidebar">
@@ -190,18 +204,6 @@ Rapportive next to my email.</p>
 </div>
 
     </div>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2010/04/09/our-social-future.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 
     <!-- Twitter -->
 <script>
