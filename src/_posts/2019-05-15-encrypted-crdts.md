@@ -6,6 +6,8 @@ place: Kaiserslautern, Germany
 slides_url: https://speakerdeck.com/ept/adapting-secure-group-messaging-for-encrypted-crdts
 ---
 
+<script async class="speakerdeck-embed" data-id="b073059e8cba471293d33b2c453108cf" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
 Abstract
 --------
 

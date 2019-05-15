@@ -8,6 +8,8 @@ slides_url: https://speakerdeck.com/ept/local-first-software-returning-data-owne
 
 * [Article](https://www.inkandswitch.com/local-first.html)
 
+<script async class="speakerdeck-embed" data-id="381b8e1dc145434ba504128cc3270ce2" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
 Abstract
 --------
 
