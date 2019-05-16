@@ -5,10 +5,12 @@ venue: Kafka Summit London
 place: London, UK
 venue_url: https://kafka-summit.org/events/kafka-summit-london-2019/
 slides_url: https://speakerdeck.com/ept/is-kafka-a-database
+video_url: https://www.youtube.com/watch?v=BuE6JvQE_CY
 ---
 
 <script async class="speakerdeck-embed" data-id="b28e2b42bd8c4d17aec61c54aded7c45" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/BuE6JvQE_CY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Abstract
 --------
