@@ -87,9 +87,9 @@ can reason about consistency and availability using your own definitions of thos
 welcome to prove your own theorem. But please don't call it CAP theorem, because that name is
 already taken.
 
-[cap-proof]: http://webpages.cs.luc.edu/~pld/353/gilbert_lynch_brewer_proof.pdf
-[linearizability]: http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf
-[cap-faq]: http://henryr.github.io/cap-faq/
+[cap-proof]: https://www.comp.nus.edu.sg/~gilbert/pubs/BrewersConjecture-SigAct.pdf "Seth Gilbert and Nancy A Lynch: “Brewer's conjecture and the feasibility of consistent, available, partition-tolerant web services,” ACM SIGACT News, vol. 33, no. 2, pp. 51–59, Jun. 2002."
+[linearizability]: http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf "Maurice P Herlihy and Jeannette M Wing: “Linearizability: a correctness condition for concurrent objects,” TOPLAS, vol. 12, no. 3, pp. 463–492, Jul. 1990."
+[cap-faq]: http://henryr.github.io/cap-faq/ "Henry Robinson: The CAP FAQ"
 [network-reliable]: https://aphyr.com/posts/288-the-network-is-reliable
 [abadi]: http://dbmsmusings.blogspot.co.uk/2010/04/problems-with-cap-and-yahoos-little.html
 
@@ -139,7 +139,7 @@ linearizability. And even testing whether a system provides linearizability is [
 
 [book]: http://dataintensive.net/
 [football]: http://www.bbc.co.uk/sport/0/football/28181689
-[x86-memory]: http://www.cl.cam.ac.uk/~pes20/weakmemory/x86tso-paper.tphols.pdf
+[x86-memory]: http://www.cl.cam.ac.uk/~pes20/weakmemory/cacm.pdf "Peter Sewell, Susmit Sarkar, Scott Owens, Francesco Zappa Nardelli, and Magnus O Myreen: “x86-TSO: A rigorous and usable programmer's model for x86 multiprocessors,” Communications of the ACM, vol. 53, no. 7, pp. 89–97, Jul. 2010."
 [memory-barrier]: http://mechanical-sympathy.blogspot.co.uk/2011/07/memory-barriersfences.html
 [knossos]: https://github.com/aphyr/knossos
 
@@ -195,7 +195,7 @@ In practice, multi-datacenter systems *are* often designed with asynchronous rep
 non-linearizable. However, the reason for that choice is often the latency of wide-area networks,
 not just wanting to tolerate datacenter and network failures.
 
-[dynamo]: http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf
+[dynamo]: http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf "Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, et al.: “Dynamo: Amazon's highly available key-value store,” at 21st ACM Symposium on Operating Systems Principles, 2007, pp. 205–220."
 [liochon]: http://blog.thislongrun.com/2015/04/cap-availability-high-availability-and_16.html
 
 
@@ -250,9 +250,9 @@ we haven't been able to rigorously classify them as "AP" or "CP", either because
 particular operation or configuration, or because the system meets neither of the CAP theorem's
 strict definitions of consistency or availability.
 
-[berenson]: http://research.microsoft.com/pubs/69541/tr-95-51.pdf
-[ports-grittner]: http://drkp.net/papers/ssi-vldb12.pdf
-[fekete]: http://www.researchgate.net/publication/220225203_Making_snapshot_isolation_serializable/file/e0b49520567eace81f.pdf
+[berenson]: http://research.microsoft.com/pubs/69541/tr-95-51.pdf "Hal Berenson, Philip A Bernstein, Jim N Gray, et al.: “A critique of ANSI SQL isolation levels,” ACM SIGMOD Record, vol. 24, no. 2, pp. 1–10, May 1995."
+[ports-grittner]: http://drkp.net/papers/ssi-vldb12.pdf "Dan R K Ports and Kevin Grittner: “Serializable Snapshot Isolation in PostgreSQL,” at 38th International Conference on Very Large Data Bases, 2012, vol. 5, no. 12, pp. 1850–1861."
+[fekete]: http://db.cs.berkeley.edu/cs286/papers/ssi-tods2005.pdf "Alan Fekete, Dimitrios Liarokapis, Elizabeth O'Neil, Patrick O'Neil, and Dennis Shasha: “Making snapshot isolation serializable,” TODS, vol. 30, no. 2, pp. 492–528, Jun. 2005."
 [riak-params]: http://basho.com/riaks-config-behaviors-part-3/
 
 
@@ -299,11 +299,11 @@ nor CAP-available in the presence of partitions, and by default isn't even linea
 *absence* of partitions. (I guess that would be PC/EL in [Abadi's PACELC framework][abadi], but
 I don't find that any more enlightening than CAP.)
 
-[zookeeper-cp]: http://www.knewton.com/tech/blog/2014/12/eureka-shouldnt-use-zookeeper-service-discovery/
-[zab]: http://web.stanford.edu/class/cs347/reading/zab.pdf
+[zookeeper-cp]: https://web.archive.org/web/20160511230421/http://tech.knewton.com/blog/2014/12/eureka-shouldnt-use-zookeeper-service-discovery/
+[zab]: http://ds.qcri.org/people/mserafini/zab.pdf "Flavio P Junqueira, Benjamin C Reed, and Marco Serafini: “Zab: High-performance broadcast for primary-backup systems,” at 41st IEEE/IFIP International Conference on Dependable Systems & Networks, 2011, pp. 245–256."
 [zk-consistency]: http://zookeeper.apache.org/doc/r3.4.6/zookeeperProgrammers.html#ch_zkGuarantees
 [zk-sync]: http://mail-archives.apache.org/mod_mbox/zookeeper-user/201303.mbox/%3CCAJwFCa0Hoekc14Zy6i0LyLj=eraF8JimqMZadohoKQJNTMtYSg@mail.gmail.com%3E
-[zk-theory-practice]: http://www.tcs.hut.fi/Studies/T-79.5001/reports/2012-deSouzaMedeiros.pdf
+[zk-theory-practice]: http://www.tcs.hut.fi/Studies/T-79.5001/reports/2012-deSouzaMedeiros.pdf "André Medeiros: “ZooKeeper’s atomic broadcast protocol: Theory and practice,” Tech Report, Aalto University School of Science, Mar. 2012."
 [read-only-mode]: http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#Experimental+Options%2FFeatures
 
 
@@ -343,14 +343,14 @@ I believe that we should stop putting datastores into the "AP" or "CP" buckets, 
   with different consistency and fault-tolerance models to choose from. CAP has served its purpose,
   and now it's time to move on.
 
-[gilbert2]: http://groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf
-[chandra]: http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf
-[causal]: http://www-i2.informatik.rwth-aachen.de/i2/fileadmin/user_upload/documents/Seminar_MCMM11/Causal_memory_1996.pdf
-[bailis]: http://arxiv.org/pdf/1302.0309.pdf
-[terry]: http://www.researchgate.net/profile/Douglas_Terry3/publication/3561300_Session_guarantees_for_weakly_consistent_replicated_data/links/02e7e52cdbe60a6cb4000000.pdf
-[baseball]: http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf
-[sequential]: http://research-srv.microsoft.com/en-us/um/people/lamport/pubs/multi.pdf
-[brewer]: http://cs609.cs.ua.edu/CAP12.pdf
+[gilbert2]: http://groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf "Seth Gilbert and Nancy A Lynch: “Perspectives on the CAP Theorem,” IEEE Computer, vol. 45, no. 2, pp. 30–36, Feb. 2012."
+[chandra]: http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf "Tushar Deepak Chandra and Sam Toueg: “Unreliable failure detectors for reliable distributed systems,” Journal of the ACM, vol. 43, no. 2, pp. 225–267, Mar. 1996."
+[causal]: http://www-i2.informatik.rwth-aachen.de/i2/fileadmin/user_upload/documents/Seminar_MCMM11/Causal_memory_1996.pdf "Mustaque Ahamad, Gil Neiger, James E Burns, Prince Kohli, and Phillip W Hutto: “Causal memory: definitions, implementation, and programming,” Distributed Computing, vol. 9, no. 1, pp. 37–49, Mar. 1995."
+[bailis]: http://arxiv.org/pdf/1302.0309.pdf "Peter Bailis, Aaron Davidson, Alan Fekete, et al.: “Highly Available Transactions: Virtues and Limitations,” at 40th International Conference on Very Large Data Bases, 2014."
+[terry]: http://www.researchgate.net/profile/Douglas_Terry3/publication/3561300_Session_guarantees_for_weakly_consistent_replicated_data/links/02e7e52cdbe60a6cb4000000.pdf "Douglas B Terry, Alan J Demers, K Petersen, et al.: “Session guarantees for weakly consistent replicated data,” at 3rd International Conference on Parallel and Distributed Information Systems, 1994, pp. 140–149."
+[baseball]: http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf "Douglas B Terry: “Replicated Data Consistency Explained Through Baseball,” Microsoft Research, MSR-TR-2011-137, Oct. 2011."
+[sequential]: https://lamport.azurewebsites.net/pubs/multi.pdf "Leslie Lamport: “How to Make a Multiprocessor Computer That Correctly Executes Multiprocess Programs,” IEEE Transactions on Computers, vol. 28, no. 9, pp. 690–691, Sep. 1979."
+[brewer]: http://cs609.cs.ua.edu/CAP12.pdf "Eric Brewer: “CAP twelve years later: How the ‘rules’ have changed,” IEEE Computer, vol. 45, no. 2, pp. 23–29, Feb. 2012."
 
 
 Learning to think for yourself
