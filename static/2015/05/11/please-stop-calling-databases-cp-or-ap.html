@@ -65,7 +65,7 @@ For more detail on problems with CAP, and a proposal for an alternative, please 
 <a href="https://arxiv.org/abs/1509.05393">A Critique of the CAP Theorem</a>.</em></p>
 
 <p>In his excellent blog post <a href="http://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/">Notes on Distributed Systems for Young Bloods</a>, Jeff Hodges
-recommends that you use the <a href="http://henryr.github.io/cap-faq/">CAP theorem</a> to critique systems. A lot of people have taken
+recommends that you use the <a href="http://henryr.github.io/cap-faq/" title="Henry Robinson: The CAP FAQ">CAP theorem</a> to critique systems. A lot of people have taken
 that advice to heart, describing their systems as “CP” (consistent but not available under network
 partitions), “AP” (available but not consistent under network partitions), or sometimes “CA”
 (meaning “I still haven’t read <a href="http://codahale.com/you-cant-sacrifice-partition-tolerance/">Coda’s post from almost 5 years ago</a>”).</p>
@@ -85,12 +85,12 @@ at least it’s a rant with lots of literature references.)</p>
 
 <p>If you want to refer to CAP as a <em>theorem</em> (as opposed to a vague hand-wavy concept in your
 database’s marketing materials), you have to be precise. Mathematics requires precision. The proof
-only holds if you use the words with the same meaning as they are used in <a href="http://webpages.cs.luc.edu/~pld/353/gilbert_lynch_brewer_proof.pdf">the proof</a>.
+only holds if you use the words with the same meaning as they are used in <a href="https://www.comp.nus.edu.sg/~gilbert/pubs/BrewersConjecture-SigAct.pdf" title="Seth Gilbert and Nancy A Lynch: “Brewer's conjecture and the feasibility of consistent, available, partition-tolerant web services,” ACM SIGACT News, vol. 33, no. 2, pp. 51–59, Jun. 2002.">the proof</a>.
 And the proof uses very particular definitions:</p>
 
 <ul>
   <li>
-    <p><em>Consistency</em> in CAP actually means <a href="http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf">linearizability</a>, which is a very specific (and very
+    <p><em>Consistency</em> in CAP actually means <a href="http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf" title="Maurice P Herlihy and Jeannette M Wing: “Linearizability: a correctness condition for concurrent objects,” TOPLAS, vol. 12, no. 3, pp. 463–492, Jul. 1990.">linearizability</a>, which is a very specific (and very
 strong) notion of consistency. In particular it has got nothing to do with the C in ACID, even
 though that C also stands for “consistency”. I explain the meaning of linearizability below.</p>
   </li>
@@ -103,7 +103,7 @@ availability.</p>
   </li>
   <li>
     <p><em>Partition Tolerance</em> (terribly mis-named) basically means that you’re communicating over an
-<a href="http://henryr.github.io/cap-faq/">asynchronous network</a> that may delay or drop messages. The internet and all our
+<a href="http://henryr.github.io/cap-faq/" title="Henry Robinson: The CAP FAQ">asynchronous network</a> that may delay or drop messages. The internet and all our
 datacenters <a href="https://aphyr.com/posts/288-the-network-is-reliable">have this property</a>, so you don’t really have any choice in this
 matter.</p>
   </li>
@@ -148,7 +148,7 @@ already taken.</p>
 <h2 id="linearizability">Linearizability</h2>
 
 <p>In case you’re not familiar with linearizability (i.e. “consistency” in the CAP sense), let me
-explain it briefly. The <a href="http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf">formal definition</a> is not entirely straightforward, but
+explain it briefly. The <a href="http://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf" title="Maurice P Herlihy and Jeannette M Wing: “Linearizability: a correctness condition for concurrent objects,” TOPLAS, vol. 12, no. 3, pp. 463–492, Jul. 1990.">formal definition</a> is not entirely straightforward, but
 the key idea, stated informally, is this:</p>
 
 <blockquote>
@@ -185,7 +185,7 @@ it appear as though there is only a single copy of the data, even though there m
 (replicas, caches) of the data in multiple places.</p>
 
 <p>This is a fairly expensive guarantee to provide, because it requires a lot of coordination. Even the
-CPU in your computer <a href="http://www.cl.cam.ac.uk/~pes20/weakmemory/x86tso-paper.tphols.pdf">doesn’t provide linearizable access to your local RAM</a>! On modern
+CPU in your computer <a href="http://www.cl.cam.ac.uk/~pes20/weakmemory/cacm.pdf" title="Peter Sewell, Susmit Sarkar, Scott Owens, Francesco Zappa Nardelli, and Magnus O Myreen: “x86-TSO: A rigorous and usable programmer's model for x86 multiprocessors,” Communications of the ACM, vol. 53, no. 7, pp. 89–97, Jul. 2010.">doesn’t provide linearizable access to your local RAM</a>! On modern
 CPUs, you need to use an explicit <a href="http://mechanical-sympathy.blogspot.co.uk/2011/07/memory-barriersfences.html">memory barrier instruction</a> in order to get
 linearizability. And even testing whether a system provides linearizability is <a href="https://github.com/aphyr/knossos">tricky</a>.</p>
 
@@ -196,7 +196,7 @@ a network partition.</p>
 
 <p>Let’s say you have replicas of your database in two different datacenters. The exact method of
 replication doesn’t matter for now – it may be single-leader (master/slave), multi-leader
-(master/master) or quorum-based replication (<a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo-style</a>). The requirement of replication
+(master/master) or quorum-based replication (<a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" title="Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, et al.: “Dynamo: Amazon's highly available key-value store,” at 21st ACM Symposium on Operating Systems Principles, 2007, pp. 205–220.">Dynamo-style</a>). The requirement of replication
 is that whenever data is written in one datacenter, it also has to be written to the replica
 in the other datacenter. Assuming that clients only connect to one datacenter, there must be
 a network link between the two datacenters over which the replication happens.</p>
@@ -260,10 +260,10 @@ allow the application to make reads from a follower, and the replication is asyn
 default in most databases), then a follower may be a little behind the leader when you read from it.
 In this case, your reads will not be linearizable, i.e. not CAP-consistent.</p>
 
-<p>Moreover, databases with <a href="http://research.microsoft.com/pubs/69541/tr-95-51.pdf">snapshot isolation</a>/MVCC are intentionally non-linearizable,
+<p>Moreover, databases with <a href="http://research.microsoft.com/pubs/69541/tr-95-51.pdf" title="Hal Berenson, Philip A Bernstein, Jim N Gray, et al.: “A critique of ANSI SQL isolation levels,” ACM SIGMOD Record, vol. 24, no. 2, pp. 1–10, May 1995.">snapshot isolation</a>/MVCC are intentionally non-linearizable,
 because enforcing linearizability would reduce the level of concurrency that the database can offer.
-For example, <a href="http://drkp.net/papers/ssi-vldb12.pdf">PostgreSQL’s SSI</a> provides <em>serializability</em> but not
-<em>linearizability</em>, and <a href="http://www.researchgate.net/publication/220225203_Making_snapshot_isolation_serializable/file/e0b49520567eace81f.pdf">Oracle provides neither</a>. Just because a database is branded “ACID”
+For example, <a href="http://drkp.net/papers/ssi-vldb12.pdf" title="Dan R K Ports and Kevin Grittner: “Serializable Snapshot Isolation in PostgreSQL,” at 38th International Conference on Very Large Data Bases, 2012, vol. 5, no. 12, pp. 1850–1861.">PostgreSQL’s SSI</a> provides <em>serializability</em> but not
+<em>linearizability</em>, and <a href="http://db.cs.berkeley.edu/cs286/papers/ssi-tods2005.pdf" title="Alan Fekete, Dimitrios Liarokapis, Elizabeth O'Neil, Patrick O'Neil, and Dennis Shasha: “Making snapshot isolation serializable,” TODS, vol. 30, no. 2, pp. 492–528, Jun. 2005.">Oracle provides neither</a>. Just because a database is branded “ACID”
 doesn’t mean it meets the CAP theorem’s definition of consistency.</p>
 
 <p>So these systems are neither CAP-consistent nor CAP-available. They are neither “CP” nor “AP”, they
@@ -275,7 +275,7 @@ supposed to, if it’s not in split-brain mode), so it’s not CAP-available by 
 Kyle <a href="https://aphyr.com/posts/322-call-me-maybe-mongodb-stale-reads">recently showed</a> that it allows non-linearizable reads even at the highest
 consistency setting, so it’s not CAP-consistent either.</p>
 
-<p>And the <a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo</a> derivatives like Riak, Cassandra and Voldemort, which are often called “AP” since
+<p>And the <a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" title="Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, et al.: “Dynamo: Amazon's highly available key-value store,” at 21st ACM Symposium on Operating Systems Principles, 2007, pp. 205–220.">Dynamo</a> derivatives like Riak, Cassandra and Voldemort, which are often called “AP” since
 they optimize for high availability? It depends on your settings. If you accept a single replica for
 reads and writes (R=W=1), they are indeed CAP-available. However, if you require quorum reads and
 writes (R+W&gt;N), and you have a network partition, clients on the minority side of the partition
@@ -296,8 +296,8 @@ strict definitions of consistency or availability.</p>
 
 <h2 id="case-study-zookeeper">Case study: ZooKeeper</h2>
 
-<p>What about ZooKeeper? It uses a <a href="http://web.stanford.edu/class/cs347/reading/zab.pdf">consensus algorithm</a>, so people generally regard it as a
-<a href="http://www.knewton.com/tech/blog/2014/12/eureka-shouldnt-use-zookeeper-service-discovery/">clear-cut case of choosing consistency over availability</a> (i.e. a “CP system”).</p>
+<p>What about ZooKeeper? It uses a <a href="http://ds.qcri.org/people/mserafini/zab.pdf" title="Flavio P Junqueira, Benjamin C Reed, and Marco Serafini: “Zab: High-performance broadcast for primary-backup systems,” at 41st IEEE/IFIP International Conference on Dependable Systems &amp; Networks, 2011, pp. 245–256.">consensus algorithm</a>, so people generally regard it as a
+<a href="https://web.archive.org/web/20160511230421/http://tech.knewton.com/blog/2014/12/eureka-shouldnt-use-zookeeper-service-discovery/">clear-cut case of choosing consistency over availability</a> (i.e. a “CP system”).</p>
 
 <p>However, if you look at the <a href="http://zookeeper.apache.org/doc/r3.4.6/zookeeperProgrammers.html#ch_zkGuarantees">ZooKeeper docs</a>, they make quite clear that ZooKeeper
 by default <em>does not</em> provide linearizable reads. Each client is connected to one of the server
@@ -310,7 +310,7 @@ the CAP theorem’s definition of consistency.</p>
 command</a>. That isn’t the default though, because it comes with a performance penalty.
 People do use <code>sync</code>, but usually not all the time.</p>
 
-<p>What about ZooKeeper availability? Well, ZK requires a <a href="http://www.tcs.hut.fi/Studies/T-79.5001/reports/2012-deSouzaMedeiros.pdf">majority quorum</a> in
+<p>What about ZooKeeper availability? Well, ZK requires a <a href="http://www.tcs.hut.fi/Studies/T-79.5001/reports/2012-deSouzaMedeiros.pdf" title="André Medeiros: “ZooKeeper’s atomic broadcast protocol: Theory and practice,” Tech Report, Aalto University School of Science, Mar. 2012.">majority quorum</a> in
 order to reach consensus, i.e. in order to process writes. If you have a partition with a majority
 of the nodes on one side and a minority on the other, then the majority side continues to function,
 but the nodes on the minority side can’t process writes, even though the nodes are up. Thus, writes
@@ -325,10 +325,10 @@ and for reads (but not for writes) it’s actually AP, if you turn on the right 
 
 <p>But this is irritating. Calling ZooKeeper “not consistent”, just because it’s not linearizable by
 default, really badly misrepresents its features. It actually provides an excellent level of
-consistency! It provides <a href="http://web.stanford.edu/class/cs347/reading/zab.pdf">atomic broadcast</a> (which is <a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf">reducible to consensus</a>)
-combined with the session guarantee of <a href="http://www-i2.informatik.rwth-aachen.de/i2/fileadmin/user_upload/documents/Seminar_MCMM11/Causal_memory_1996.pdf">causal consistency</a> – which is <a href="http://arxiv.org/pdf/1302.0309.pdf">stronger</a>
-than <a href="http://www.researchgate.net/profile/Douglas_Terry3/publication/3561300_Session_guarantees_for_weakly_consistent_replicated_data/links/02e7e52cdbe60a6cb4000000.pdf">read your writes, monotonic reads</a> and <a href="http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf">consistent prefix reads</a> combined.
-The documentation says that it provides <a href="http://research-srv.microsoft.com/en-us/um/people/lamport/pubs/multi.pdf">sequential consistency</a>, but it’s under-selling
+consistency! It provides <a href="http://ds.qcri.org/people/mserafini/zab.pdf" title="Flavio P Junqueira, Benjamin C Reed, and Marco Serafini: “Zab: High-performance broadcast for primary-backup systems,” at 41st IEEE/IFIP International Conference on Dependable Systems &amp; Networks, 2011, pp. 245–256.">atomic broadcast</a> (which is <a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf" title="Tushar Deepak Chandra and Sam Toueg: “Unreliable failure detectors for reliable distributed systems,” Journal of the ACM, vol. 43, no. 2, pp. 225–267, Mar. 1996.">reducible to consensus</a>)
+combined with the session guarantee of <a href="http://www-i2.informatik.rwth-aachen.de/i2/fileadmin/user_upload/documents/Seminar_MCMM11/Causal_memory_1996.pdf" title="Mustaque Ahamad, Gil Neiger, James E Burns, Prince Kohli, and Phillip W Hutto: “Causal memory: definitions, implementation, and programming,” Distributed Computing, vol. 9, no. 1, pp. 37–49, Mar. 1995.">causal consistency</a> – which is <a href="http://arxiv.org/pdf/1302.0309.pdf" title="Peter Bailis, Aaron Davidson, Alan Fekete, et al.: “Highly Available Transactions: Virtues and Limitations,” at 40th International Conference on Very Large Data Bases, 2014.">stronger</a>
+than <a href="http://www.researchgate.net/profile/Douglas_Terry3/publication/3561300_Session_guarantees_for_weakly_consistent_replicated_data/links/02e7e52cdbe60a6cb4000000.pdf" title="Douglas B Terry, Alan J Demers, K Petersen, et al.: “Session guarantees for weakly consistent replicated data,” at 3rd International Conference on Parallel and Distributed Information Systems, 1994, pp. 140–149.">read your writes, monotonic reads</a> and <a href="http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf" title="Douglas B Terry: “Replicated Data Consistency Explained Through Baseball,” Microsoft Research, MSR-TR-2011-137, Oct. 2011.">consistent prefix reads</a> combined.
+The documentation says that it provides <a href="https://lamport.azurewebsites.net/pubs/multi.pdf" title="Leslie Lamport: “How to Make a Multiprocessor Computer That Correctly Executes Multiprocess Programs,” IEEE Transactions on Computers, vol. 28, no. 9, pp. 690–691, Sep. 1979.">sequential consistency</a>, but it’s under-selling
 itself, because ZooKeeper’s guarantees are in fact much stronger than sequential consistency.</p>
 
 <p>As ZooKeeper demonstrates, it is quite reasonable to have a system that is neither CAP-consistent
@@ -345,7 +345,7 @@ should be telling us something: those are simply not the right labels to describ
 
 <ul>
   <li>
-    <p>Within one piece of software, you may well have various operations with <a href="http://groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf">different consistency
+    <p>Within one piece of software, you may well have various operations with <a href="http://groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf" title="Seth Gilbert and Nancy A Lynch: “Perspectives on the CAP Theorem,” IEEE Computer, vol. 45, no. 2, pp. 30–36, Feb. 2012.">different consistency
 characteristics</a>.</p>
   </li>
   <li>
@@ -370,7 +370,7 @@ guarantee than the “AP” in a system like Riak or Cassandra – so it’s rid
 into the same bucket.</p>
   </li>
   <li>
-    <p>Even Eric Brewer <a href="http://cs609.cs.ua.edu/CAP12.pdf">admits</a> that CAP is misleading and oversimplified. In 2000, it was meant
+    <p>Even Eric Brewer <a href="http://cs609.cs.ua.edu/CAP12.pdf" title="Eric Brewer: “CAP twelve years later: How the ‘rules’ have changed,” IEEE Computer, vol. 45, no. 2, pp. 23–29, Feb. 2012.">admits</a> that CAP is misleading and oversimplified. In 2000, it was meant
 to start a discussion about trade-offs in distributed data systems, and it did that very well. It
 wasn’t intended to be a breakthrough formal result, nor was it meant to be a rigorous
 classification scheme for data systems. 15 years later, we now have a much greater range of tools
@@ -388,7 +388,7 @@ deeper into the literature.</p>
 
 <ul>
   <li>
-    <p>A good starting point is Doug Terry’s paper in which he <a href="http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf">explains various different levels of
+    <p>A good starting point is Doug Terry’s paper in which he <a href="http://research.microsoft.com/pubs/157411/ConsistencyAndBaseballReport.pdf" title="Douglas B Terry: “Replicated Data Consistency Explained Through Baseball,” Microsoft Research, MSR-TR-2011-137, Oct. 2011.">explains various different levels of
 eventual consistency using Baseball examples</a>. It’s very readable and clear, even if
 (like me) you’re not American and have no clue about Baseball.</p>
   </li>
@@ -398,7 +398,7 @@ distributed replicas, but somewhat related), my little project <a href="http://m
   </li>
   <li>
     <p><a href="http://arxiv.org/pdf/1302.0309.pdf"><img src="/2014/11/isolation-levels.png" width="250" height="101" style="float: right; margin: 0 0 1em 1em;" /></a>The connections between
-replica consistency, transaction isolation and availability are explored by <a href="http://arxiv.org/pdf/1302.0309.pdf">Peter Bailis et
+replica consistency, transaction isolation and availability are explored by <a href="http://arxiv.org/pdf/1302.0309.pdf" title="Peter Bailis, Aaron Davidson, Alan Fekete, et al.: “Highly Available Transactions: Virtues and Limitations,” at 40th International Conference on Very Large Data Bases, 2014.">Peter Bailis et
 al.</a> (That paper also explains the meaning of that hierarchy of consistency levels which
 Kyle Kingsbury <a href="https://aphyr.com/posts/322-call-me-maybe-mongodb-stale-reads">likes to show</a>.)</p>
   </li>
@@ -520,15 +520,15 @@ for comments on a draft of this post. Any errors or unpalatable opinions are min
         <h2 class="title">Conference talks</h2>
         <ul>
             
+              <li><a href="/2019/09/13/strange-loop-isabelle.html">13 Sep 2019 at Strange Loop</a></li>
+            
               <li><a href="/2019/07/11/hydra-distributed.html">11 Jul 2019 at Hydra distributed computing conference</a></li>
             
               <li><a href="/2019/06/07/tng-big-techday.html">07 Jun 2019 at TNG Big Techday</a></li>
             
+              <li><a href="/2019/06/04/hochschule-aalen.html">04 Jun 2019 at Hochschule Aalen</a></li>
+            
               <li><a href="/2019/05/15/local-first-kaiserslautern.html">15 May 2019 at TU Kaiserslautern</a></li>
-            
-              <li><a href="/2019/05/15/encrypted-crdts.html">15 May 2019 at LightKone workshop on Verification, Security and Antidote</a></li>
-            
-              <li><a href="/2019/05/13/kafka-summit.html">13 May 2019 at Kafka Summit London</a></li>
             
             <li><a href="/talks.html">Full archive</a></li>
         </ul>
