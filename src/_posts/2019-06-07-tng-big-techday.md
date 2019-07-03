@@ -5,9 +5,12 @@ venue: TNG Big Techday
 place: Munich, Germany
 venue_url: https://www.tngtech.com/en/tng-about-us/bigtechday/big-techday-12/abstracts.html#c22092
 slides_url: https://speakerdeck.com/ept/automerge-making-servers-optional-for-real-time-collaboration
+video_url: https://www.youtube.com/watch?v=GXJ0D2tfZCM
 ---
 
 <script async class="speakerdeck-embed" data-id="5cfe4dbf817b4c34a7a5321af9f80234" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/GXJ0D2tfZCM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Abstract
 --------
