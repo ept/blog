@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Fri, 28 Jun 2019 10:45:52 BST</lastBuildDate>
+        <lastBuildDate>Wed, 03 Jul 2019 10:56:39 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -18,7 +18,7 @@
         
         
             <item>
-                <title>Figuring out the future of distributed data systems</title>
+                <title>Figuring out the future of distributed data systems (interview)</title>
                 <link>http://martin.kleppmann.com/2019/06/27/hydra-interview.html</link>
                 <comments>http://martin.kleppmann.com/2019/06/27/hydra-interview.html#disqus_thread</comments>
                 <pubDate>Thu, 27 Jun 2019 00:00:00 +0000</pubDate>
