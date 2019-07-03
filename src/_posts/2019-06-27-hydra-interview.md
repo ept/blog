@@ -1,6 +1,6 @@
 ---
 layout: ync-post
-title: Figuring out the future of distributed data systems
+title: Figuring out the future of distributed data systems (interview)
 ---
 
 *I will be [speaking](/2019/07/11/hydra-distributed.html) at the
