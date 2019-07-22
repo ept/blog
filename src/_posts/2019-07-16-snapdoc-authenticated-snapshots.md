@@ -5,8 +5,10 @@ title: "Snapdoc: Authenticated snapshots with history privacy in peer-to-peer co
 authors: Stephan A. Kollmann, Martin Kleppmann, and Alastair R. Beresford
 venue: Proceedings on Privacy Enhancing Technologies (PoPETS), Vol. 2019, Issue 3
 place: Stockholm, Sweden
+doi: 10.2478/popets-2019-0044
 paper_url: /papers/snapdoc-pets19.pdf
 venue_url: https://www.petsymposium.org/2019/paperlist.php
+publisher_url: https://www.degruyter.com/view/j/popets.2019.2019.issue-3/popets-2019-0044/popets-2019-0044.xml
 ---
 
 

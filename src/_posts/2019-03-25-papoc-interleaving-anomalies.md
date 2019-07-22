@@ -6,7 +6,9 @@ title: Interleaving anomalies in collaborative text editors
 authors: Martin Kleppmann, Victor B. F. Gomes, Dominic P. Mulligan, and Alastair R. Beresford
 venue: 6th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)
 place: Dresden, Germany
+doi: 10.1145/3301419.3323972
 venue_url: https://novasys.di.fct.unl.pt/conferences/papoc19/program.html
+publisher_url: https://dl.acm.org/authorize?N688079
 slides_url: https://speakerdeck.com/ept/interleaving-anomalies-in-collaborative-text-editors
 paper_url: /papers/interleaving-papoc19.pdf
 ---
