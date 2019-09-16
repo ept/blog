@@ -10,6 +10,8 @@ venue_url: https://2019.splashcon.org/track/splash-2019-Onward-Essays#program
 doi: 10.1145/3359591.3359737
 ---
 
+* [HTML version of article](https://www.inkandswitch.com/local-first.html)
+
 
 Abstract
 --------
@@ -30,8 +32,8 @@ Replicated Data Types (CRDTs): data structures that are multi-user from the grou
 being fundamentally local and private. CRDTs have the potential to be a foundational technology for
 realizing local-first software.
 
-We share some of our findings from developing local-first software prototypes at the Ink &amp;
-Switch research lab over the course of several years. These experiments test the viability of CRDTs
-in practice, and explore the user interface challenges for this new data model. Lastly, we suggest
-some next steps for moving towards local-first software: for researchers, for app developers, and
-a startup opportunity for entrepreneurs.
+We share some of our findings from developing local-first software prototypes at the
+Ink&nbsp;&amp;&nbsp;Switch research lab over the course of several years. These experiments test the
+viability of CRDTs in practice, and explore the user interface challenges for this new data model.
+Lastly, we suggest some next steps for moving towards local-first software: for researchers, for app
+developers, and a startup opportunity for entrepreneurs.
