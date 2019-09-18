@@ -5,7 +5,7 @@ title: "Local-first software: You own your data, in spite of the cloud"
 authors: Martin Kleppmann, Adam Wiggins, Peter van Hardenberg, and Mark McGranaghan
 venue: ACM SIGPLAN International Symposium on New Ideas, New Paradigms, and Reflections on Programming and Software (Onward! ’19)
 place: Athens, Greece
-paper_url: /papers/local-first-onward19.pdf
+paper_url: /papers/local-first.pdf
 venue_url: https://2019.splashcon.org/track/splash-2019-Onward-Essays#program
 doi: 10.1145/3359591.3359737
 ---
