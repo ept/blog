@@ -38,6 +38,13 @@ get '/' do
   send_file 'static/index.html'
 end
 
+%w(/ /fotos/ /fotos/2006_11_26/ /fotos/2006_11_28/ /fotos/2007_01_09/ /fotos/2007_02_04/).each do |path|
+  get '/die-tuerme-des-februar' + path do
+    send_file(File.dirname(__FILE__) + '/static/die-tuerme-des-februar' + path + 'index.html')
+  end
+end
+
+
 # Static files route (reimplemented outside of Sinatra to make host-dependent redirect work)
 # Note this code is not used when using `jekyll serve`, only when running through Rack!
 get(/.*/) do
