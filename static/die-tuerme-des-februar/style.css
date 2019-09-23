@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #333333;
+    font-family: Lucida,Verdana,sans-serif;
+    font-size: 100.01%;
+    color: black;
+}
+
+#left {
+    float: left;
+    width: 150px;
+    margin: 0;
+    padding: 0;
+}
+
+#menu {
+    background-color: #a4b4d4;
+    font-size: 80%;
+    margin: 0;
+    padding: 0;
+}
+
+#decor {
+    background-color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    margin: 20px 50px 20px 150px;
+    padding: 1.0em 1.5em;
+    background-color: #eeeeee;
+}
+
+h1 {
+    font-size: 150%;
+    font-weight: bold;
+    margin: 40px 50px 20px 150px;
+    padding: 0.5em 2em;
+    background-color: #ffcc44;
+}
+
+h2 {
+    font-size: 135%;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.4em;
+}
+
+h3 {
+    font-size: 100%;
+    font-weight: bold;
+    margin-top: 0.2em;
+    margin-bottom: 0em;
+}
+
+td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.1em 1em 0.1em 0;
+}
+
+td.middle {
+    text-align: left;
+    vertical-align: middle;
+    padding: 0.1em 1em 0.1em 0;
+}
+
+th {
+    font-weight: bold;
+    text-align: left;
+    vertical-align: top;
+    padding: 0.1em 1em 0.1em 0;
+}
+
+dt {
+    padding-top: 1.6em;
+    font-weight: bold;
+}
+
+#menu ul {
+    list-style: inside url(arrow.png);
+    margin: 0;
+    padding: 1.2em 0.2em;
+}
+
+#decor img {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border-width: 0;
+}
+
+.floatleft {
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-top: 0.5em;
+}
+
+.floatright {
+    float: right;
+    margin-right: 0;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    margin-top: 0.5em;
+}
+
+.thumbnail {
+    margin: 1em 0.6em;
+    vertical-align: middle;
+    text-align: justify;
+}
+
+a:link {
+    color: #3333ff;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #000066;
+    text-decoration: underline;
+}
+
