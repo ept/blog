@@ -22,6 +22,14 @@ that are scattered across the interwebs:
 
 Email: firstname at lastname dot com.
 
+Projects I have worked on include:
+
+<ul>
+<li><a href="/die-tuerme-des-februar/">Die Türme des Februar (a musical drama)</a></li>
+<li><a href="https://www.crunchbase.com/organization/rapportive">Rapportive</a></li>
+<li><a href="https://www.crunchbase.com/organization/go-test-it">Go Test It</a></li>
+</ul>
+
 <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
     style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
     src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
