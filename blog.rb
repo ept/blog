@@ -44,8 +44,12 @@ end
   end
 end
 
+get '/die-tuerme-des-februar' do
+  redirect '/die-tuerme-des-februar/', 301
+end
+
 get '/die-tuerme-des-februar/tdf.html' do
-  redirect '/die-tuerme-des-februar', 301
+  redirect '/die-tuerme-des-februar/', 301
 end
 
 # Static files route (reimplemented outside of Sinatra to make host-dependent redirect work)
