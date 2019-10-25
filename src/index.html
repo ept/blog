@@ -4,22 +4,44 @@ layout: front-page
 
 <h1>Hello!</h1>
 
-<p>I'm Martin Kleppmann &mdash; researcher, software engineer, entrepreneur, author and speaker.
-I am a researcher in distributed systems at the
-<a href="http://www.cst.cam.ac.uk/">University of Cambridge Department of Computer Science and Technology</a>.
-In 2017 I published a book for <a href="http://www.oreilly.com/">O'Reilly</a>, called
-<a href="http://dataintensive.net/">Designing Data-Intensive Applications</a>.
-In my past startup life I co-founded
-<a href="https://www.crunchbase.com/organization/rapportive">Rapportive</a>
-(acquired by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and
-<a href="https://www.crunchbase.com/organization/go-test-it">Go Test It</a>
-(acquired by <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</p>
+<p>I’m Dr. Martin Kleppmann. I do various things:</p>
 
-<p>I care about making stuff that people want, great people, a culture of respect and empathy,
-clarity of thinking, marvellous user experiences, maintainable code and scalable architectures.</p>
+<ul>
+    <li>I am a Senior Research Associate at the
+        <a href="http://www.cst.cam.ac.uk/">University of Cambridge Department of Computer Science and Technology</a>,
+        funded by a
+        <a href="https://www.leverhulme.ac.uk/early-career-fellowships">Leverhulme Trust Early Career Fellowship</a>
+        and the <a href="https://www.newtontrust.cam.ac.uk">Isaac Newton Trust</a>.
+        I work on <a href="https://www.inkandswitch.com/local-first.html">local-first</a> collaboration software
+        and distributed systems security.</li>
+    <li>I am also a <a href="https://www.corpus.cam.ac.uk/people/dr-martin-kleppmann">Fellow</a> and Director of Studies
+        for Computer Science at <a href="https://www.corpus.cam.ac.uk">Corpus Christi College, Cambridge</a>,
+        where I am involved in undergraduate teaching.</li>
+    <li>In 2017 I published a book for <a href="http://www.oreilly.com/">O’Reilly</a>, called
+        <a href="https://dataintensive.net">Designing Data-Intensive Applications</a>.
+        It covers the architecture of a broad range of databases and distributed data processing systems,
+        and it is one of the best-selling titles in the publisher’s entire catalogue.</li>
+    <li>I am a regular <a href="/talks.html">speaker at conferences</a>, and
+        <a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx">recordings of my talks</a>
+        have been watched over 150,000 times.</li>
+    <li>I have worked on various open source projects including
+        <a href="https://github.com/automerge/automerge">Automerge</a>,
+        <a href="https://avro.apache.org">Apache Avro</a>, and
+        <a href="https://samza.apache.org">Apache Samza</a>.</li>
+    <li>Between 2007 and 2014 I was an industrial software engineer and entrepreneur. I co-founded
+        <a href="https://www.crunchbase.com/organization/rapportive">Rapportive</a>
+        (<a href="http://allthingsd.com/20120207/linkedin-is-acquiring-contacts-start-up-rapportive/">acquired</a>
+        by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and
+        <a href="https://www.crunchbase.com/organization/go-test-it">Go Test It</a>
+        (<a href="https://thenextweb.com/uk/2009/12/02/red-gate-software-acquire-gotestit-testing-environment-start-ups/">acquired</a>
+        by <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</li>
+    <li>I have composed several musical works, including
+        “<a href="/die-tuerme-des-februar/">Die Türme des Februar</a>” (in German), a musical-dramatic adaptation of the
+        <a href="https://www.goodreads.com/book/show/254092.The_Towers_of_February">book by Tonke Dragt</a>,
+        which <a href="/die-tuerme-des-februar/">premiered</a> in 2007 with a cast of 150 people.</li>
+</ul>
 
-<p>I'd love to hear from you, so please leave comments, or feel free to
-<a rel="author" href="/contact.html">contact me directly</a>.</p>
+<p>Feel free to <a rel="author" href="/contact.html">contact me</a>.</p>
 
 {% assign articles = site.posts | where:'layout','ync-post' %}
 {% assign talks1   = site.posts | where:'layout','talk' %}
@@ -27,7 +49,7 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
 {% assign talks    = talks1 | concat: talks2 | sort: 'date' | reverse %}
 {% assign papers   = site.posts | where:'layout','paper'    %}
 
-<h2 class="title">Recent posts</h2>
+<h2 class="title">Recent blog posts</h2>
 <p>Things I have written recently.</p>
 <ul>
   {% for article in articles limit:5 %}
@@ -55,7 +77,7 @@ clarity of thinking, marvellous user experiences, maintainable code and scalable
   <li><a href="/talks.html">Full archive</a></li>
 </ul>
 
-<h2 class="title">Publications</h2>
+<h2 class="title" id="publications">Publications</h2>
 <p>Books:</p>
 <ul>
   {% for paper in papers %}
