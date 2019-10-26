@@ -3,6 +3,8 @@ layout: ync-post
 title: Projects
 ---
 
+<!-- See also: ~/dev/web.new/html/profile/index.html -->
+
 This is a list of the major projects and products I have worked on over the years.
 
 TRVE DATA (2015--)
