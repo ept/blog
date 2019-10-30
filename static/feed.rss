@@ -10,12 +10,207 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Sat, 26 Oct 2019 15:01:17 BST</lastBuildDate>
+        <lastBuildDate>Wed, 30 Oct 2019 15:37:39 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Research update for 2019</title>
+                <link>http://martin.kleppmann.com/2019/10/30/research-update.html</link>
+                <comments>http://martin.kleppmann.com/2019/10/30/research-update.html#disqus_thread</comments>
+                <pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2019/10/30/research-update.html</guid>
+                
+                <description><![CDATA[ It has now been four years since I moved from industry into academic research, and a lot has happened in this time. In 2015 I posted a year in review blog post, and in 2016 I announced the TRVE DATA project (which I am still working on), but I haven’t... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>It has now been four years since I moved from industry into academic research, and
+a lot has happened in this time.
+In 2015 I posted a <a href="/2015/12/28/year-2015-review.html">year in review</a> blog post, and
+in 2016 I announced the <a href="/2016/04/15/announcing-trve-data.html">TRVE DATA</a> project
+(which I am still working on), but I haven’t posted an update on my work since.
+So here goes!</p>
+
+<p>In academic terms, things have been going well. Last year I
+<a href="https://twitter.com/martinkl/status/1066748982129504256">got my PhD</a>, 
+and as of October 2019 I got another few upgrades to my titles:</p>
+
+<ul>
+  <li>I am now an Early Career Fellow of the <a href="https://www.leverhulme.ac.uk/early-career-fellowships">Leverhulme Trust</a>,
+with a matching fellowship from the <a href="https://www.newtontrust.cam.ac.uk">Isaac Newton Trust</a>.</li>
+  <li>In the department I am now a “Senior Research Associate” (SRA, up from “Research Associate” previously).</li>
+  <li>At <a href="https://www.corpus.cam.ac.uk">Corpus Christi College</a> I am now a
+<a href="https://www.corpus.cam.ac.uk/people/dr-martin-kleppmann">Fellow</a> and Director of Studies
+(which means that I look after the computer science students in the college).</li>
+</ul>
+
+<p>The fellowships from the Leverhulme Trust and Isaac Newton Trust are paying my salary
+for the next three years, along with additional support from the
+<a href="https://mobicentre.cst.cam.ac.uk">Cambridge Centre for Mobile, Wearable Systems and Augmented Intelligence</a>.
+The college fellowship mainly involves a very generous dining allowance, and being part of
+a community of academics across a broad range of subjects (it’s nice sometimes to talk to people who
+are not computer scientists).</p>
+
+<p>My job title of “Senior Research Associate” reflects my status as an independent researcher: that is,
+I set my own research agenda. However, to be clear, <em>independent</em> does not mean <em>alone</em>! My experience
+of research has been a very sociable one, and all of my work has been in collaboration with others.
+If you want to go far,
+<a href="https://www.npr.org/sections/goatsandsoda/2016/07/30/487925796/it-takes-a-village-to-determine-the-origins-of-an-african-proverb">go together</a>.
+On that note, shout-out to my fine collaborators of the last few years (in alphabetic order),
+<a href="https://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>,
+<a href="https://www.cl.cam.ac.uk/~vb358/">Victor Gomes</a>,
+<a href="https://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>,
+<a href="http://dominic-mulligan.co.uk/">Dominic Mulligan</a>,
+<a href="https://personal.cis.strath.ac.uk/d.thomas/">Daniel Thomas</a>,
+<a href="https://twitter.com/pvh">Peter van Hardenberg</a>,
+<a href="https://www.cl.cam.ac.uk/~dac53/">Diana Vasile</a>,
+<a href="http://about.adamwiggins.com/">Adam Wiggins</a>,
+and several more people from the <a href="https://www.inkandswitch.com">Ink &amp; Switch</a> research lab!</p>
+
+<p>Huge thanks to <a href="http://www.boeing.com">The Boeing Company</a> for funding my work for the last four years.
+Huge thanks also to <a href="https://www.cl.cam.ac.uk/~arb33/">Prof. Alastair Beresford</a>, my excellent
+adviser, mentor, collaborator, and PI (that’s academic-speak for “boss”) over the last four years.</p>
+
+<h2 id="research-funding">Research funding</h2>
+
+<p>The Leverhulme Trust and Isaac Newton Trust, which are funding my work, are UK charities that support
+research across many subjects and disciplines, including humanities and social sciences. They fund about
+<a href="https://www.leverhulme.ac.uk/early-career-fellowships-2019">140 early career fellowships</a> per year
+across all subjects; only one or two per year of these are in computer science. So it looks like
+I’m the computer scientist for this year!</p>
+
+<p>A great aspect of this charity funding is that I am free to publish all my work as open source and
+open access, with no restrictions. All the code I write is in a public repository by default. This
+is very important to me, because the goal behind the things I’m working on (see below) is to
+maximise the public benefit of these technologies through open source and open standards.</p>
+
+<p>A downside is that all my positions are for a fixed three-year term (they are not tenure-track),
+and I don’t know what comes afterwards. But for now I am going to concentrate on making the most I
+can out of those three years.</p>
+
+<h2 id="background-to-my-research">Background to my research</h2>
+
+<p>Nowadays, we increasingly depend on Internet services for communication and collaboration: for
+example, we use Google Docs to collaborate on documents, spreadsheets and presentations; we copy
+files between devices using Dropbox; we communicate with colleagues using Slack; and we use many
+other online services for task tracking, note taking, project planning, knowledge management, and
+more.</p>
+
+<p>These services are very valuable and convenient, but their use is also risky because they are
+provided through a centralised server infrastructure. If the company providing the service goes out
+of business, or decides to discontinue a product, the servers are shut down, the software stops
+working, and users are locked out of the documents and data created with that software.</p>
+
+<p>Moreover, since those servers typically process user data in unencrypted form, a rogue employee, or
+an adversary who gains access to the servers, can read and tamper with vast amounts of sensitive
+data. The provider may also use the data in arbitrary ways, e.g. to train their machine learning
+systems and target you with ads.</p>
+
+<p>When these risks are unacceptable, we can fall back to what we might call “old-fashioned”
+collaboration methods: for example, one person creates a spreadsheet with Excel and emails it to
+their collaborator, who makes changes and then sends the modified file back again by email. This
+approach has merits: it does not rely on any external services that might go away (besides the email
+infrastructure), and the file can easily be encrypted. However, it quickly becomes messy if the
+file is modified by more than one person at a time.</p>
+
+<h2 id="research-goals">Research goals</h2>
+
+<p>Together with my collaborators I am developing the foundations of a new kind of collaboration
+software, which we are calling <a href="https://www.inkandswitch.com/local-first.html">local-first software</a>.
+It aims to achieve the best of both worlds: allowing the user-friendly real-time collaboration of
+applications like Google Docs, in which several people can make changes simultaneously without
+suffering conflicts, but without relying on trusted, centralised servers.</p>
+
+<p>While most of today’s Internet services keep the primary copy of any shared data on a server, the
+local-first approach stores primary copies of the data as files on the collaborators’ devices, like
+in “old-fashioned” collaboration. Servers may still be used, but rather than being a linchpin, they
+become an optional enabling component. Because all the data is local, the software continues
+working, even when the device has no Internet access or the servers are unavailable. When a user
+modifies a document, local-first software automatically sends the changes to collaborators whenever
+a network connection is available, so there is no need to email files back and forth.</p>
+
+<p>Local-first software allows multiple users to make changes to the same document concurrently, even
+while users are offline, and ensures that all of the changes are automatically merged into
+a consistent result. We do this using <a href="https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type">CRDTs</a>.
+In this regard our approach differs from version control systems such as SVN or Git, which require
+conflicts to be resolved manually, and only offer merging of plain text files. By contrast, we can
+perform all merges automatically, and support arbitrarily complex file formats such as spreadsheets,
+CAD drawings, or databases with various data models.</p>
+
+<p>Collaborators’ devices can either communicate directly, using fast local networks in a
+<em>peer-to-peer</em> manner, or indirectly via servers. To protect the confidentiality and integrity of
+the communication between collaborators we plan to use <em>end-to-end encryption</em>. In this approach, if
+servers are used, they only ever handle encrypted data that they cannot decrypt. Thus, even if
+communication networks or servers are compromised by an attacker, user privacy and data
+confidentiality are protected.</p>
+
+<p>This approach is particularly suitable for sensitive data such as a university’s student records,
+a hospital’s patient records, legally privileged communication, journalistic investigations, law
+enforcement, diplomatic correspondence, and many other settings where regulations and
+confidentiality obligations prohibit the sharing of unencrypted data with third parties.</p>
+
+<h2 id="research-outputs">Research outputs</h2>
+
+<p>The results of our research will be published in two forms: as traditional research papers in
+academic venues, and in the form of open source software.</p>
+
+<p>Research papers are important because they document the thought process and reasoning behind our
+designs, and help others build upon our work in the future. We have already written a series of
+<a href="/#publications">publications</a> about our research in the last four years, and there is lots more
+interesting material still to come.</p>
+
+<p>Software releases are traditionally regarded as less important in academia (and, to be honest, a lot
+of code written by researchers is not very good). However, I regard open source software as a
+crucial output for this project. <a href="https://github.com/automerge/automerge">Automerge</a> is the main
+CRDT implementation I am working on, and it is designed from the start to be production-quality (in
+terms of reliability, test coverage, stability, API design, documentation, community, and so on).</p>
+
+<p>Automerge is not yet perfect, especially in terms of its performance: if it was, our research would
+already be done! But I have a plan that should lead to big improvements in the coming year, and the
+goal is that Automerge will soon be suitable for building ambitious, large-scale, local-first
+applications.</p>
+
+<p>In order to maximise the number of projects that can benefit from this work, the code is licensed
+under the liberal <a href="https://opensource.org/licenses/MIT">MIT license</a>. Moreover, as the data format
+(for representing documents on disk and for network communication) becomes stable, I think it will
+make sense to formalise it as an open standard, with interoperable implementations in several
+different programming languages and platforms.</p>
+
+<p>And finally, we are starting to see an emerging community of users and contributors around Automerge.
+New community members are regularly popping up in the
+<a href="https://communityinviter.com/apps/automerge/automerge">Automerge Slack</a>, users are helpfully
+reporting bugs, and a steadily growing
+<a href="https://github.com/automerge/automerge/graphs/contributors">set of contributors</a> have had their
+pull requests merged. It’s exciting to see this growing community engagement.</p>
+
+<h2 id="interviews">Interviews</h2>
+
+<p>If you want to hear more, I’ve done a bunch of interviews with various podcasts and blogs over the
+last few years:</p>
+
+<ul>
+  <li><a href="https://softwareengineeringdaily.com/2017/05/02/data-intensive-applications-with-martin-kleppmann/">With Software Engineering Daily about my book</a>,
+“Designing Data-Intensive Applications” (May 2017)</li>
+  <li><a href="https://softwareengineeringdaily.com/2017/12/08/decentralized-objects-with-martin-kleppman/">With Software Engineering Daily again</a>,
+this time about my research on CRDTs (December 2017)</li>
+  <li><a href="https://advancetechmedia.org/episode-008-martin-kleppmann/">With the Advance Tech Podcast</a>
+about a wide range of topics that I find interesting (October 2017)</li>
+  <li><a href="https://www.investedinvestor.com/articles/2018/1/23/martin-kleppmann">With the Invested Investor podcast</a>
+about my startup career before I switched towards research (January 2018)</li>
+  <li><a href="/2019/06/27/hydra-interview.html">With the Hydra conference</a> about distributed systems in general,
+and my work specifically (June 2019)</li>
+  <li><a href="https://medium.com/csr-tales/csrtale-13-formal-verification-of-strong-eventual-consistency-1cc0af942e64">With Computer Science Research (CSR) Tales</a>
+(July 2019) about the background story behind our paper
+“<a href="/2017/10/25/verifying-crdt-isabelle.html">Verifying Strong Eventual Consistency in Distributed Systems</a>”,
+which won the Distinguished Paper Award and Distinguished Artifact Award at the OOPSLA 2017 conference.</li>
+</ul>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Figuring out the future of distributed data systems (interview)</title>
@@ -2201,289 +2396,6 @@ helped me understand things. Happy new year!</p>
 
 <p><em>Update 7 Jan 2016</em>: added link to
 <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/draft-investigatory-powers-bill-committee/draft-investigatory-powers-bill/written/26275.html">evidence I submitted to parliament</a>, which has now been published.</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>The Investigatory Powers Bill would increase cybercrime</title>
-                <link>http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html</link>
-                <comments>http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html#disqus_thread</comments>
-                <pubDate>Tue, 10 Nov 2015 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html</guid>
-                
-                <description><![CDATA[ As widely reported, the UK government proposed the draft of a new Investigatory Powers Bill last week. There has been much discussion of the bill already, but there are some important questions which I have not yet seen addressed. These open questions raise serious concerns about the effects that the... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>As widely reported, the UK government proposed the draft of a new <a href="https://www.gov.uk/government/collections/draft-investigatory-powers-bill">Investigatory Powers
-Bill</a> last week. There has been much discussion of the bill already, but there are some
-important questions which I have not yet seen addressed.</p>
-
-<p>These open questions raise serious concerns about the effects that the proposed law would have on
-ordinary citizens. In this article I argue that if the bill is passed in its current form, its
-effect will be exactly the opposite of that intended: it would leave citizens <em>more</em> exposed to the
-risks of crime and terrorism, and not reduce those risks as intended.</p>
-
-<h2 id="background-of-the-bill">Background of the bill</h2>
-
-<p>The stated purpose of the Investigatory Powers Bill is to help fight crime and terrorism – in other
-words, to uphold the rule of law and to keep us safe from aggression. If people break the law or
-harm citizens (for example through paedophilia, murder, or acts of terrorism), our law enforcement
-services require the means to find the perpetrators and hold them responsible. This is an important
-public service: a country with ineffective law enforcement would quickly become dysfunctional.</p>
-
-<p>There is a well-known tension between the ability of law enforcement services to get the information
-they require to find and convict criminals, and the basic <a href="http://gilc.org/privacy/survey/intro.html">human right of privacy</a> for
-innocent citizens. In order to do their job, the police and the intelligence services must
-necessarily intrude on individuals’ privacy to some degree. For us as a society, it is important
-that we decide how much privacy we are collectively <a href="http://www.theguardian.com/commentisfree/2015/nov/08/surveillance-bill-snoopers-charter-george-orwell">willing to sacrifice</a> for the
-sake of helping law enforcement services do their job.</p>
-
-<p>However, this article is not about the tension between security and privacy – it is only about
-security. The Investigatory Powers Bill is supposed to increase our security by giving law
-enforcement services the tools they need to catch criminals and terrorists. I will argue that, in
-fact, the proposed bill <em>harms our security</em> by making us <em>more vulnerable</em> to attacks by criminals
-and terrorists.</p>
-
-<p>People who defend surveillance often say that a loss of privacy is <a href="http://www.theyworkforyou.com/debates/?id=2015-11-04a.969.0#g991.4">a price that many people are
-willing to pay</a> for the sake of increased safety. However, what if the surveillance
-measures actually make people <em>less</em> safe? Even if you do not care about privacy, you should be
-strongly opposed to this bill, because it vastly increases the risks of cybercrime, as explained
-below.</p>
-
-<h2 id="encrypted-communication">Encrypted communication</h2>
-
-<p>Encryption ensures that your information can only be read by the correct recipient, and not by any
-random bystander. Whenever you send information over the internet, if that information has any
-value whatsoever, it should be encrypted – otherwise anyone (e.g. people using the same coffee shop
-wifi as you) can trivially steal it. Thus, almost all websites use encryption whenever passwords,
-credit card numbers, online banking information, or similar sensitive information is involved. If we
-didn’t encrypt this information, fraud and identity theft would be rampant. Encryption is a basic
-necessity for the internet.</p>
-
-<p>However, encryption can be applied at different levels. For example, in a chat or telephony app,
-there are two options:</p>
-
-<ul>
-  <li><strong>Encryption in transit:</strong> In this case, the data is encrypted as it is transmitted between your
-device and the service provider (e.g. a mobile network operator or a social network), but the
-service provider handles the data in unencrypted form. This is illustrated in Figure 1a. In this
-case, the service provider is able to read all of the communication, and you need to trust them to
-safeguard your information appropriately.</li>
-  <li><strong>End-to-end encryption:</strong> In this case, data is encrypted all the way between you and the person
-you’re talking to. The service provider only passes on the messages, but it cannot see what you
-are talking about (Figure 1b). There may not even <em>be</em> a service provider, because anybody can
-write their own app that communicates over the internet, without requiring a centrally managed
-service (Figure 1c).</li>
-</ul>
-
-<p>If law enforcement decides to investigate you, and encryption in transit is used, that makes life
-very easy for law enforcement: they can serve a warrant to the service provider, and get them to
-wiretap your communication without you ever knowing. With end-to-end encryption, surveillance is
-still possible, but it’s more expensive: since the service provider cannot access the messages,
-a warrant to the service provider is of no use. Instead, law enforcement must go to the people
-communicating. For example, they can obtain a court order to seize your phone, or they can point
-<a href="http://www.cl.cam.ac.uk/~mgk25/pet2004-fpd.pdf">microphones and antennas</a> at your house to listen to your communications, or they
-can infiltrate the suspected gang.</p>
-
-<p><img src="/2015/11/end-to-end.png" width="550" height="357" alt="Figure 1: The difference between encryption in transit and end-to-end encryption." /></p>
-
-<p style="text-align: center;"><em>Figure 1: The difference between encryption in transit and end-to-end encryption.</em></p>
-
-<h2 id="the-value-of-end-to-end-encryption">The value of end-to-end encryption</h2>
-
-<p>Although encryption in transit is widely used, it has serious security problems. For example, the
-service provider could be hacked by an adversary, or compromised by an insider, causing sensitive
-information can be leaked. A fault in the service provider could cause data to be corrupted. For
-these reasons, security experts are pushing towards widespread use of end-to-end encryption, which
-reduces the exposure to such attacks.</p>
-
-<p>The goal of end-to-end encryption is <em>not</em> to prevent legitimate access by law enforcement in cases
-where it is justified for a criminal investigation. Rather, the goal is to defend systems against
-adversaries who want to steal sensitive data or cause systems to malfunction. Such defence is
-particularly critical in cases where human life is at stake, such as <a href="http://www.wired.com/2015/01/german-steel-mill-hack-destruction/">industrial control
-systems</a>, <a href="http://www.wired.com/2015/07/hackers-remotely-kill-jeep-highway/">internet-connected cars</a>, or <a href="http://www.slideshare.net/MarieGMoe/2015-1021keynotehacklumariemoe">medical data and devices</a>. But
-even in other domains, such as trade secrets and financial information in enterprises, in journalism
-or in legal professions, it is crucial that sensitive information is adequately protected.</p>
-
-<p>End-to-end encryption helps protect our own information against theft and manipulation by
-adversaries – ranging from an individual disgruntled employee, to hostile foreign intelligence
-services who may be spying or sabotaging for economic, political or military reasons. As more and
-more aspects of the world are <a href="http://www.wsj.com/articles/SB10001424053111903480904576512250915629460">controlled by software</a>, and as increasingly many devices
-are connected to the internet, a cyberattack against weakly secured systems could have catastrophic
-consequences.  We will need all the defences we can get, and end-to-end encryption is going to be an
-indispensable part of our security infrastructure.</p>
-
-<h2 id="exceptional-access-to-encrypted-communication">Exceptional access to encrypted communication</h2>
-
-<p>On the other hand, end-to-end encryption makes life harder for law enforcement services, because
-they cannot simply serve a warrant to the service provider in order to obtain the content of the
-communication. For this reason, politicians have recently attacked end-to-end encryption; for
-example, in a speech in January 2015, <a href="https://embed.theguardian.com/embed/video/uk-news/video/2015/jan/12/david-cameron-spy-agencies-britain-video">PM David Cameron said</a>:</p>
-
-<blockquote>
-  <p>In our country, do we want to allow a means of communication between people which, even in
-extremis, with a signed warrant from the home secretary personally, that we cannot read? […] The
-question remains: are we going to allow a means of communications where it simply is not possible
-to do that? My answer to that question is: no, we must not. The first duty of any government is to
-keep our country and our people safe.</p>
-</blockquote>
-
-<p>The proposed Investigatory Powers Bill is an attempt to cast into law this principle outlined by the
-Prime Minister. In particular, it places a duty on communications service providers to allow law
-enforcement agencies to intercept communication when served with a warrant – even if the service
-provider is outside the UK (§31). It also requires service providers to assist with hacking devices
-and removing encryption if compelled by an order from the home secretary (§189).</p>
-
-<p>The bill and related guidance notes from the government do not explain how these rules might be put
-into practice, but they have <a href="http://www.telegraph.co.uk/news/uknews/terrorism-in-the-uk/11970391/Internet-firms-to-be-banned-from-offering-out-of-reach-communications-under-new-laws.html">been interpreted</a> as requiring services with end-to-end
-encryption to have some kind of “backdoor” by which they <a href="http://www.independent.co.uk/life-style/gadgets-and-tech/news/investigatory-powers-bill-could-allow-government-to-ban-end-to-end-encryption-technology-powering-a6725311.html">can be broken</a>, if required.
-Other sources say that the government <a href="http://uk.businessinsider.com/investigatory-powers-bill-wont-ban-end-to-end-encryption-2015-11">does not wish to ban end-to-end encryption</a>,
-but in that case it is not clear what they <em>do</em> want, since the Prime Minister has reiterated his
-plea that terrorists, paedophiles and criminals must not be allowed a “safe space” online.</p>
-
-<p>Security professionals have no interest in making life easy for terrorists, paedophiles and
-criminals. However, <em>any</em> technology can be used for both good and bad purposes. The government has
-not explained which technologies would comply with the new rules, and which technologies would
-violate them – and the text of the bill itself is very vague and ambiguous.</p>
-
-<p>If the bill requires communication services to have some mechanism of obtaining the content of the
-communication in response to a warrant, that means the service must somehow retain the ability to
-decrypt the data when required. Provisions for such <em>exceptional access</em> (e.g. <a href="https://www.schneier.com/paper-key-escrow.html">key
-escrow</a> or backdoors) are normally avoided in encryption products, because they
-introduce serious security problems.</p>
-
-<h2 id="exceptional-access-is-insecure">Exceptional access is insecure</h2>
-
-<p>At first glance, it may seem reasonable to require that all encryption products must include
-a provision for data to be decrypted by law enforcement agencies, as long as the decryption order is
-protected with sufficient oversight to prevent abuse. However, on closer inspection, it turns out
-that this proposal is deeply flawed.</p>
-
-<p>The problem is laid out very clearly in <a href="http://dspace.mit.edu/handle/1721.1/97690">a recent report</a>, written by some of the biggest
-names in cryptographic research and security engineering worldwide. To quote from the report:</p>
-
-<blockquote>
-  <p>Political and law enforcement leaders in the United States and United Kingdom … propose that
-data storage and communications systems must be designed for exceptional access by law enforcement
-agencies. These proposals are unworkable in practice, raise enormous legal and ethical questions,
-and would undo progress on security at a time when Internet vulnerabilities are causing extreme
-economic harm. As computer scientists with extensive security and systems experience, we believe
-that law enforcement has failed to account for the risks inherent in exceptional access systems.</p>
-</blockquote>
-
-<p>The report lays out in <a href="http://dspace.mit.edu/handle/1721.1/97690">no uncertain terms</a>: there is no known method for securely
-providing law enforcement with exceptional access to systems with end-to-end encryption. Any method
-that provides exceptional access immediately exposes the system to attacks by malicious parties,
-rendering the protection of encryption essentially worthless.</p>
-
-<p>Exceptional access would probably require that government departments have some kind of master keys
-that allowed them to decrypt any communication if required. Those master keys would obviously have
-to be kept extremely secret: if they were to become public, the entire security infrastructure of
-the internet would crumble into dust.</p>
-
-<p>How good are government agencies at keeping secrets? Even just in the last few months, the OPM
-failed to protect <a href="http://www.theguardian.com/technology/2015/jul/09/opm-hack-21-million-personal-information-stolen">millions of their own personnel records</a> from hackers, the email
-account of <a href="http://motherboard.vice.com/read/hackers-release-alleged-ssn-numbers-stolen-from-cia-directors-aol-account">CIA Director John Brennan was hacked</a>, and the <a href="https://theintercept.com/2015/09/17/tsa-doesnt-really-care-luggage-locks-hacked/">master keys for TSA
-locks</a> were accidentally posted on the internet. The US Air Force has been accused of
-<a href="http://thebulletin.org/okinawa-missiles-october8826">accidentally broadcasting the launch codes for nuclear missiles</a> over radio in the 1960s.
-These incidents do not fill me with confidence that any government would be able to handle
-cryptographic master keys securely.</p>
-
-<p>If the law enforcement services can remotely break into the device of a suspect, then sooner or
-later criminals will find ways to use the same mechanism to break into devices and steal or destroy
-your personal data. They will know your location, and the PIN for your burglar alarm, so they will
-have an easy time breaking into your house. There is simply no technical mechanism that will allow
-legitimate access by law enforcement, and which is also unbreakable by people who want to do you
-harm.</p>
-
-<p>I’ll say it again, to be absolutely clear: <em>any</em> mechanism that can allow law enforcement legitimate
-access to data can <em>inevitably</em> be abused by hostile foreign intelligence services, and even
-technically sophisticated individuals, to break into systems and gain unauthorised access to the
-same data. There is <em>no known method</em> for making this secure. If we add provisions for exceptional
-access to encryption products, we are simply shooting ourselves in the foot.</p>
-
-<h2 id="retention-of-browsing-history">Retention of browsing history</h2>
-
-<p>Another provision of the proposed Investigatory Powers Bill is that internet service providers
-(ISPs) must retain a record of all the websites you visit (more specifically, all the IP addresses
-you connect to) for one year. This appears to be another measure to weaken privacy while
-strengthening security – but in fact, it is harmful to <em>both</em> privacy and security.</p>
-
-<p>In order to maintain a record of every website you have visited in the last year, the ISP must store
-that information somewhere accessible. Information that is stored somewhere accessible will sooner
-or later be stolen by attackers. For example, just a few weeks ago, <a href="http://www.theguardian.com/business/2015/oct/23/talktalk-hacking-crisis-deepens-as-more-details-emerge">records of millions of TalkTalk
-customers were stolen</a> due to a <a href="https://tommorris.org/posts/9396">SQL injection</a> (one of the most easily
-preventable security issues – the fact that TalkTalk was vulnerable to such a simple bug casts
-serious doubt on their competence in elementary software engineering practices). If ISPs are
-required to store your browsing history, it is only a matter of time before it is stolen.</p>
-
-<p>And stolen browsing history is a security problem. After the website <a href="http://www.theguardian.com/technology/2015/aug/19/ashley-madison-hackers-release-10gb-database-of-33m-infidelity-site-accounts">Ashley
-Madison</a> (which helps married people have an affair) was hacked, millions of its
-users found their real name, home address, email address and credit card numbers spewed all over the
-internet. It did not take long before <a href="http://www.csoonline.com/article/2980631/data-breach/blackmail-rising-from-ashley-madison-breach.html">blackmailers started using the data</a>, threatening
-users that <a href="http://www.zdnet.com/article/in-ashley-madisons-wake-heres-one-mans-story-of-sex-sorrow-and-extortion/">their spouse would be informed</a> unless a ransom was paid. Browsing history
-retained by an ISP would carry the same blackmail risk.</p>
-
-<p>The problem is not only extortion of money from the victims of blackmail, but also a security
-problem. What if someone succeeds in blackmailing employees of an intelligence agency, or senior
-civil servants, or a government official? If the victim fears for their reputation or repercussions
-from the release of the sensitive information, the attacker gains power over the victim, which is
-worrisome if the victim is in a position of power.</p>
-
-<p>Increasingly, stolen personal information is being used for <a href="https://www.schneier.com/blog/archives/2015/11/the_rise_of_pol.html">politically motivated blackmail and
-intimidation</a>. Even if you personally have never done anything embarrassing, and you have
-nothing to hide, the fact that other people can be blackmailed is a risk to you if those people have
-power over you.</p>
-
-<p>“Give me six lines written by the most honest man in the world, and I will find enough in them to
-hang him.” (Origin uncertain, attributed to <a href="https://en.wikiquote.org/wiki/Cardinal_Richelieu">Cardinal Richelieu</a>.) Or, to give a more
-modern equivalent: “We kill people based on metadata.” (Former CIA and NSA director <a href="https://www.rt.com/usa/158460-cia-director-metadata-kill-people/">Michael
-Hayden</a>.)</p>
-
-<h2 id="we-must-make-systems-more-secure-not-less">We must make systems more secure, not less</h2>
-
-<p>As <a href="https://embed.theguardian.com/embed/video/uk-news/video/2015/jan/12/david-cameron-spy-agencies-britain-video">David Cameron said</a>, “the first duty of any government is to keep our country
-and our people safe.” The proposed Investigatory Powers Bill is supposed to make us more safe by
-giving great powers to the law enforcement services. However, in this article I have argued that the
-bill would in fact make us <em>significantly less safe</em>, by making internet security systems vulnerable
-to cyberattacks, and by increasing the risk of blackmail.</p>
-
-<p>The proposed bill, as it stands now, is too vague to allow any serious technical analysis to take
-place. With regard to encryption technologies, it fails to specify what is allowed and what is not.
-But the Prime Minister’s repeated assertion that we “make sure we do not allow terrorists safe
-spaces to communicate with each other” implies a <a href="http://www.theguardian.com/world/2015/nov/10/surveillance-bill-dire-consequences-apple-tim-cook">worrisome weakening of security
-technologies</a>.</p>
-
-<p>Nobody wants to give criminals a safe space in which they can operate. However, the technologies
-that help protect industrial control systems, cars, medical devices, lawyers, journalists and
-businesses against attacks by malicious parties are <em>the same</em> as the technologies behind which
-criminals can hide. Any technology can be used for good and bad.</p>
-
-<p>It is not possible to eliminate “safe spaces” for criminals without also eliminating security from
-the computer systems that our daily lives depend on. I am worried that the Investigatory Powers Bill
-would effectively <a href="http://www.theguardian.com/technology/2015/nov/09/tech-firms-snoopers-charter-end-strong-encryption-britain-ip-bill">mandate computer systems to be insecure</a>, and thus leave our
-infrastructure vulnerable to cyberattacks from people who want to do us harm.</p>
-
-<p>According to the <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/60943/the-cost-of-cyber-crime-full-report.pdf">government’s own report</a>, cybercrime is a Tier One risk to national
-security, and already costs the UK £27bn per year. This is only going to get worse if we do not
-improve the security of our computer systems. As internet-connected devices are increasingly used
-for matters of life and death, the security of those devices becomes paramount, and breaches could
-have catastrophic consequences. We need to do everything we can to <em>strengthen</em> the security of
-those systems, not to weaken them.</p>
-
-<p>I recognise that as systems become more secure, surveillance becomes more difficult for the
-intelligence services. I acknowledge that secure communication systems may allow a terrorist plot or
-a crime to succeed which may have been thwarted if surveillance was easy for law enforcement
-services. But I argue that this risk is <a href="http://motherboard.vice.com/blog/youll-never-guess-how-many-terrorist-plots-the-nsas-domestic-spy-program-has-foiled">tiny</a> compared to the risk of an
-insecure, vulnerable infrastructure in which terrorist cyberattackers could wreak havoc.</p>
-
-<p>Aside from the proposed bill’s disregard for civil liberties, even if we consider only the security
-implications of the bill, it is deeply worrisome. As more technical details of the proposal become
-clear, we must carefully examine to what extent they leave us less secure than we were before.</p>
-
-<p><em>Thank you to Alastair Beresford and Diana Vasile for reviewing a draft of this article.</em></p>
 
                 ]]></content:encoded>
             </item>

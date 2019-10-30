@@ -1,0 +1,15 @@
+body, table, tr, td {font-family:Verdana,Arial; font-size:11px;}
+
+a {text-decoration:none; color:#5a6396;}
+
+body { scrollbar-3dlight-color:#c2c6dc;
+       scrollbar-arrow-color:#c2c6dc;
+       scrollbar-base-color:#eaebf4;
+       scrollbar-darkshadow-color:#c2c6dc;
+       scrollbar-face-color:#eaebf4;
+       scrollbar-highlight-color:#eaebf4;
+       scrollbar-shadow-color:#eaebf4;
+       scrollbar-track-color:#eaebf4;
+     }
+
+td.clLink {background:#f4f5f9; font-size:9px; text-align:center; color:#7f7f7f;}
