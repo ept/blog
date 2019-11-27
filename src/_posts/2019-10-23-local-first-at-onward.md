@@ -11,6 +11,10 @@ doi: 10.1145/3359591.3359737
 ---
 
 * [HTML version of article](https://www.inkandswitch.com/local-first.html)
+* [Summary on The Morning Paper](https://blog.acolyer.org/2019/11/20/local-first-software/)
+* [Hacker News discussion](https://news.ycombinator.com/item?id=21581444)
+
+<!-- More HN, no discussion: https://news.ycombinator.com/item?id=19811181 -->
 
 
 Abstract
