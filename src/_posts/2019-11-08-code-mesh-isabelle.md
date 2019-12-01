@@ -4,10 +4,13 @@ title: Correctness proofs of distributed systems with Isabelle
 venue: Code Mesh
 place: London, UK
 venue_url: https://www.codesync.global/speaker/martin-kleppmann/
+video_url: https://www.youtube.com/watch?v=NfdP6wwjsGk
 slides_url: https://speakerdeck.com/ept/correctness-proofs-of-distributed-systems-with-isabelle
 ---
 
 * [Isabelle code of demo](https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b)
+
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/NfdP6wwjsGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <script async class="speakerdeck-embed" data-id="e1beafadaa61453dbe5b93d41ce55c18" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
