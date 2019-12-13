@@ -9,6 +9,7 @@ slides_url: https://speakerdeck.com/ept/correctness-proofs-of-distributed-system
 ---
 
 * [Isabelle code of demo](https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b)
+* [Extended (2-hour) version of talk](https://www.youtube.com/watch?v=Uav5jWHNghY)
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/7w4KC6i9Yac" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
