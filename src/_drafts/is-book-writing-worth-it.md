@@ -109,3 +109,33 @@ over 4 years), and it could well be that you can do other things in that time (e
 important project in industry) that would be more rewarding, more prestigious, and more impactful.
 
 Hope that perspective is somewhat useful.
+
+* * *
+
+Advice on writing (from an email to Mitch Seymour <mitchseymour@gmail.com>):
+
+What worked for me was this: I tried to be very conscious of: 1. which concepts the reader has
+already seen and which they haven't (in order to ensure a logical progression of ideas); and 2.
+which things I myself understand and which I don't.
+
+While writing I found myself often wanting to write some vague statement in order to paper over the
+fact that I actually didn't fully understand something (e.g. the reason why something is done one
+way rather than another). Once I confronted my own lack of understanding, I then forced myself to
+research the topic to the point that I could honestly say to myself that I got it. That done, I was
+able to replace the vague statement with a precise one (a correct, but hopefully still simple
+statement). Then I was happy.
+
+The research was sometimes reading blog posts/papers/documentation, sometimes asking people,
+sometimes trying out stuff for myself. For some topics I was surprised about the total lack of
+decent write-ups on the topic. So this sometimes took a fair amount of time.
+
+At times of doubt, I told myself: if it's taking me a long time to figure out the answer to some
+question, then it would take a reader just as long to do the same. Thus, if I can find the answer
+and explain it concisely, I will have saved the reader a lot of time. If there was only one reader,
+this would be a zero-sum game. But hopefully there will be many readers, and so the effort that
+I put in will be magnified many times over. Thus, if I can put in time in order to save readers
+time, I should do it.
+
+I guess the short answer is just "spend a lot of time on it to make it good"! I probably spent about
+2.5 years full-time equivalent writing my book (spread over the course of about 4 years). But
+I think the effort has paid off.
