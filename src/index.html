@@ -86,7 +86,7 @@ layout: front-page
     {% endif %}
   {% endfor %}
 </ul>
-<p>Peer-reviewed journal papers:</p>
+<p>Peer-reviewed papers in journals and top-tier conferences:</p>
 <ul>
   {% for paper in papers %}
     {% if paper.type == 'journal' %}
@@ -94,7 +94,7 @@ layout: front-page
     {% endif %}
   {% endfor %}
 </ul>
-<p>Peer-reviewed conference and workshop papers:</p>
+<p>Peer-reviewed papers in other conferences and workshops:</p>
 <ul>
   {% for paper in papers %}
     {% if paper.type == 'conference' %}
