@@ -17,6 +17,8 @@ doi: 10.1145/3359591.3359737
 
 <!-- More HN, no discussion: https://news.ycombinator.com/item?id=19811181 -->
 
+<!-- The Morning Paper on ACM Queue: https://queue.acm.org/detail.cfm?id=3384393 -->
+
 
 Abstract
 --------
