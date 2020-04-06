@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>OpSets: Sequential Specifications for Replicated Datatypes (Proof Document) &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Moving Elements in List CRDTs &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -18,10 +18,12 @@
 
 
     <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
-    <meta name="citation_title" content="OpSets: Sequential Specifications for Replicated Datatypes (Proof Document)" /> 
-    <meta name="citation_publication_date" content="2018-05-10" /> 
-    <meta name="citation_authors" content="Martin Kleppmann, Victor B. F. Gomes, Dominic P. Mulligan, and Alastair R. Beresford" /> 
-    <meta name="citation_pdf_url" content="https://www.isa-afp.org/entries/OpSets.html" /> 
+    <meta name="citation_title" content="Moving Elements in List CRDTs" /> 
+    <meta name="citation_publication_date" content="2020-04-27" /> 
+    <meta name="citation_authors" content="Martin Kleppmann" /> 
+    <meta name="citation_pdf_url" content="/papers/list-move-papoc20.pdf" /> 
+    
+    <meta name="citation_doi" content="10.1145/3380787.3393677" /> 
     
 </head>
 
@@ -54,28 +56,32 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="OpSets: Sequential Specifications for Replicated Datatypes (Proof Document)"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Moving Elements in List CRDTs"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>OpSets: Sequential Specifications for Replicated Datatypes (Proof Document)</h1>
+                <h1>Moving Elements in List CRDTs</h1>
 
-                <p>Martin Kleppmann, Victor B. F. Gomes, Dominic P. Mulligan, and Alastair R. Beresford</p>
+                <p>Martin Kleppmann</p>
 
                 <p>
                   
-                    Archive of Formal Proofs,
+                    <a href="https://papoc-workshop.github.io/2020/">7th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a>,
                   
                   
-                  May 2018.
+                    Heraklion, Crete, Greece,
+                  
+                  April 2020.
                 </p>
 
                 
 
                 <ul>
                   
-                    <li><a href="https://www.isa-afp.org/entries/OpSets.html">Paper (open access)</a></li>
+                    <li><a href="/papers/list-move-papoc20.pdf">Paper (open access)</a></li>
                   
                   
+                  
+                    <li><a href="https://doi.org/10.1145/3380787.3393677">doi:10.1145/3380787.3393677</a></li>
                   
                   
                   
@@ -86,16 +92,13 @@
 
                 <h2 id="abstract">Abstract</h2>
 
-<p>We introduce OpSets, an executable framework for specifying and reasoning about the semantics of
-replicated datatypes that provide eventual consistency in a distributed system, and for mechanically
-verifying algorithms that implement these datatypes. Our approach is simple but expressive, allowing
-us to succinctly specify a variety of abstract datatypes, including maps, sets, lists, text, graphs,
-trees, and registers. Our datatypes are also composable, enabling the construction of complex data
-structures. To demonstrate the utility of OpSets for analysing replication algorithms, we highlight
-an important correctness property for collaborative text editing that has traditionally been
-overlooked; algorithms that do not satisfy this property can exhibit awkward interleaving of text.
-We use OpSets to specify this correctness property and prove that although one existing replication
-algorithm satisfies this property, several other published algorithms do not.</p>
+<p>Conflict-free Replicated Data Types (CRDTs) for lists allow multiple users to concurrently insert
+and delete elements in a shared list object. However, existing algorithms behave poorly when users
+concurrently move list elements to a new position (i.e. reorder the elements in the list). We
+demonstrate the need for such a move operation, and describe an algorithm that extends a list CRDT
+with an explicit move operation. Our algorithm can be used in conjunction with any existing list
+CRDT algorithm. In addition to moving a single list element, we also discuss the open problem of
+moving ranges of elements.</p>
 
             </div>
 
