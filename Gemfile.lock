@@ -46,7 +46,7 @@ GEM
     public_suffix (3.0.3)
     pygments.rb (1.2.1)
       multi_json (>= 1.0.0)
-    rack (2.0.8)
+    rack (2.2.3)
     rack-protection (2.0.5)
       rack
     raindrops (0.19.0)
