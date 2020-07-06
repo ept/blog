@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>From Secure Messaging to Secure Collaboration &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>CRDTs: The Hard Parts &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -16,15 +16,6 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
-
-    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
-    <meta name="citation_title" content="From Secure Messaging to Secure Collaboration" /> 
-    <meta name="citation_publication_date" content="2018-03-20" /> 
-    <meta name="citation_authors" content="Martin Kleppmann, Stephan A. Kollmann, Diana A. Vasile and Alastair R. Beresford" /> 
-    <meta name="citation_pdf_url" content="/papers/secure-collaboration-spw18.pdf" /> 
-    
-    <meta name="citation_doi" content="10.1007/978-3-030-03251-7_21" /> 
-    
 </head>
 
 <body class="wordpress">
@@ -56,55 +47,81 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="From Secure Messaging to Secure Collaboration"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="CRDTs: The Hard Parts"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>From Secure Messaging to Secure Collaboration</h1>
-
-                <p>Martin Kleppmann, Stephan A. Kollmann, Diana A. Vasile and Alastair R. Beresford</p>
+                <h1>CRDTs: The Hard Parts</h1>
 
                 <p>
+                  A talk at
                   
-                    <a href="http://spw2018.crocs.fi.muni.cz/programme.html">26th International Workshop on Security Protocols</a>,
+                    <a href="https://hydraconf.com/2020/msk/talks/3mkcfa5h151ekfvfqau4qk/">Hydra</a>,
                   
-                  
-                    Cambridge, UK,
-                  
-                  March 2018.
+                  online (originally planned to be in Moscow, Russia), 06 Jul 2020
                 </p>
-
-                
 
                 <ul>
                   
-                    <li><a href="/papers/secure-collaboration-spw18.pdf">Paper (open access)</a></li>
+                  
+                    <li><a href="https://speakerdeck.com/ept/crdts-the-hard-parts">Slides</a></li>
                   
                   
-                    <li><a href="https://link.springer.com/chapter/10.1007/978-3-030-03251-7_21">Paper (version of record)</a></li>
-                  
-                  
-                    <li><a href="https://doi.org/10.1007/978-3-030-03251-7_21">doi:10.1007/978-3-030-03251-7_21</a></li>
-                  
-                  
-                  
-                    <li><a href="https://speakerdeck.com/ept/from-secure-messaging-to-secure-collaboration">Slides</a></li>
-                  
-                  
+                    <li><a href="https://www.youtube.com/watch?v=x7drE24geUw">Video</a></li>
                   
                   
                 </ul>
 
-                <script async="" class="speakerdeck-embed" data-id="04780a3879624d5cb46f59e45408ca87" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+                <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/x7drE24geUw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<script async="" class="speakerdeck-embed" data-id="71c432e2f3004c6e991bed35810cecfe" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 <h2 id="abstract">Abstract</h2>
 
-<p>We examine the security of collaboration systems, where several users access and contribute to some
-shared resource, document, or database. To protect such systems against malicious servers, we can
-build upon existing secure messaging protocols that provide end-to-end security. However, if we want
-to ensure the consistency of the shared data in the presence of malicious users, we require features
-that are not available in existing messaging protocols. We investigate the protocol failures that
-may arise when a new collaborator is added to a group, and discuss approaches for enforcing the
-integrity of the shared data.</p>
+<p>Conflict-free Replicated Data Types (CRDTs) are an increasingly popular family of algorithms for
+optimistic replication. They allow data to be concurrently updated on several replicas, even while
+those replicas are offline, and provide a robust way of merging those updates back into a consistent
+state. CRDTs are used in geo-replicated databases, multi-user collaboration software, distributed
+processing frameworks, and various other systems.</p>
+
+<p>However, while the basic principles of CRDTs are now quite well known, many challenging problems are
+lurking below the surface. It turns out that CRDTs are easy to implement badly. Many published
+algorithms have anomalies that cause them to behave strangely in some situations. Simple
+implementations often have terrible performance, and making the performance good is challenging.</p>
+
+<p>In this talk Martin goes beyond the introductory material on CRDTs, and discusses some of the
+hard-won lessons from years of research on making CRDTs work in practice.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><strong>Logoot:</strong> Stéphane Weiss, Pascal Urso, and Pascal Molli:
+“<a href="http://pagesperso.lina.univ-nantes.fr/~molli-p/pmwiki/uploads/Main/weiss09.pdf">Logoot: A Scalable Optimistic Replication Algorithm for Collaborative Editing on P2P Networks</a>,” ICDCS 2009.</li>
+  <li><strong>LSEQ:</strong> Brice Nédelec, Pascal Molli, Achour Mostefaoui, and Emmanuel Desmontils:
+“<a href="https://hal.archives-ouvertes.fr/file/index/docid/921633/filename/fp025-nedelec.pdf">LSEQ: an Adaptive Structure for Sequences in Distributed Collaborative Editing</a>,” DocEng 2013.</li>
+  <li><strong>RGA:</strong> Hyun-Gul Roh, Myeongjae Jeon, Jin-Soo Kim, and Joonwon Lee:
+“<a href="http://csl.skku.edu/papers/jpdc11.pdf">Replicated abstract data types: Building blocks for collaborative applications</a>,”
+Journal of Parallel and Distributed Computing, 71(3):354–368, 2011.</li>
+  <li><strong>Treedoc:</strong> Nuno Preguiça, Joan Manuel Marques, Marc Shapiro, and Mihai Letia:
+“<a href="https://hal.inria.fr/inria-00445975/document">A Commutative Replicated Data Type for Cooperative Editing</a>,” ICDCS 2009.</li>
+  <li><strong>WOOT:</strong> Gérald Oster, Pascal Urso, Pascal Molli, and Abdessamad Imine:
+“<a href="https://hal.archives-ouvertes.fr/file/index/docid/108523/filename/OsterCSCW06.pdf">Data consistency for P2P collaborative editing</a>,” CSCW 2006.</li>
+  <li><strong>A<sub>strong</sub>:</strong> Hagit Attiya, Sebastian Burckhardt, Alexey Gotsman, Adam Morrison, Hongseok Yang, and Marek Zawirski:
+“<a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/podc16-complete.pdf">Specification and Complexity of Collaborative Text Editing</a>,” PODC 2016.</li>
+  <li><strong>Interleaving anomaly:</strong> Martin Kleppmann, Victor B. F. Gomes, Dominic P. Mulligan, and Alastair R. Beresford:
+“<a href="/papers/interleaving-papoc19.pdf">Interleaving anomalies in collaborative text editors</a>”. PaPoC 2019.</li>
+  <li><strong>Proof of no interleaving in RGA:</strong> Martin Kleppmann, Victor B F Gomes, Dominic P Mulligan, and Alastair R Beresford:
+“<a href="https://arxiv.org/abs/1805.04263">OpSets: Sequential Specifications for Replicated Datatypes</a>,” May 2018.</li>
+  <li><strong>Moving list items:</strong> Martin Kleppmann:
+“<a href="/papers/list-move-papoc20.pdf">Moving Elements in List CRDTs</a>”. PaPoC 2020.</li>
+  <li><strong>Move operation in CRDT trees:</strong> Martin Kleppmann, Dominic P. Mulligan, Victor B. F. Gomes, and Alastair R. Beresford:
+“<a href="/papers/move-op.pdf">A highly-available move operation for replicated trees and distributed filesystems</a>”.
+Preprint, 2020.</li>
+  <li><strong>Reducing metadata overhead:</strong> Martin Kleppmann:
+“<a href="https://github.com/automerge/automerge-perf/blob/master/columnar/README.md">Experiment: columnar data encoding for Automerge</a>”, 2019.
+Also: “<a href="https://github.com/automerge/automerge/pull/253">Preview: Automerge binary data format (Automerge PR #253)</a>”, 2020.</li>
+  <li><strong>Local-first software:</strong> Martin Kleppmann, Adam Wiggins, Peter van Hardenberg, and Mark McGranaghan:
+“<a href="https://www.inkandswitch.com/local-first.html">Local-first software: You own your data, in spite of the cloud</a>”. Onward! 2019.</li>
+</ul>
 
             </div>
 
