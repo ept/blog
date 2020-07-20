@@ -1,12 +1,14 @@
 ---
 layout: talk
 title: "CRDTs: The Hard Parts"
-venue: Hydra
+venue: Hydra distributed computing conference
 place: online (originally planned to be in Moscow, Russia)
 venue_url: https://hydraconf.com/2020/msk/talks/3mkcfa5h151ekfvfqau4qk/
 video_url: https://www.youtube.com/watch?v=x7drE24geUw
 slides_url: https://speakerdeck.com/ept/crdts-the-hard-parts
 ---
+
+* [Hacker News discussion](https://news.ycombinator.com/item?id=23802208)
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/x7drE24geUw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
