@@ -12,13 +12,13 @@ doi: 10.1145/3359591.3359737
 
 * [HTML version of article](https://www.inkandswitch.com/local-first.html)
 * [Coverage in WIRED](https://www.wired.com/story/collaborative-software-wary-cloud/)
-* [Summary on The Morning Paper](https://blog.acolyer.org/2019/11/20/local-first-software/)
-* [Hacker News discussion](https://news.ycombinator.com/item?id=21581444)
+* [Coverage in The Morning Paper](https://blog.acolyer.org/2019/11/20/local-first-software/)
+* [Coverage in ACM Queue](https://queue.acm.org/detail.cfm?id=3384393)
+* [Hacker News discussion](https://news.ycombinator.com/item?id=21581444), and
+  [again](https://news.ycombinator.com/item?id=23985816) and
+  [again](https://news.ycombinator.com/item?id=24027663)
 
 <!-- More HN, no discussion: https://news.ycombinator.com/item?id=19811181 -->
-
-<!-- The Morning Paper on ACM Queue: https://queue.acm.org/detail.cfm?id=3384393 -->
-
 
 Abstract
 --------
