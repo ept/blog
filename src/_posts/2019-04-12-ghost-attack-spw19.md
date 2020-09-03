@@ -5,10 +5,13 @@ title: Ghost trace on the wire? Using key evidence for informed decisions
 authors: Diana A. Vasile, Martin Kleppmann, Daniel R. Thomas, and Alastair R. Beresford
 venue: 27th International Workshop on Security Protocols
 place: Cambridge, UK
+doi: 10.1007/978-3-030-57043-9_23
 paper_url: /papers/ghost-attack-spw19.pdf
 venue_url: https://www.cl.cam.ac.uk/events/spw/2019/program/
+publisher_url: https://link.springer.com/chapter/10.1007/978-3-030-57043-9_23
 ---
 
+* [Transcript of discussion (version of record)](https://link.springer.com/chapter/10.1007/978-3-030-57043-9_24)
 
 Abstract
 --------
