@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Writing a book: is it worth it? &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?4" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Writing a book: is it worth it?"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Writing a book: is it worth it?</h1>
+
+                
+
+                <p>My book, <a href="https://dataintensive.net/">Designing Data-Intensive Applications</a>, recently passed the
+milestone of 100,000 copies sold. Last year, it was the second-best-selling book in O’Reilly’s
+entire catalogue, second only to
+<a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=7d47ed0da85dc67659afbfbbad99f6ec&amp;language=en_US">Aurélien Géron’s machine learning book</a>.
+Machine learning is obviously a hot topic, so I am quite content with coming second to it! 😄</p>
+
+<p>To me, the success of this book was totally unexpected: while I was writing it, I thought that it
+was going to be a bit niche, and I set myself the goal of selling 10,000 copies over the lifetime
+of the book. Having passed that goal tenfold, this seems like a good opportunity to look back and
+reflect on the process. I don’t want to make this post too self-congratulatory, but rather I will
+try to share some insights into the business of book-writing.</p>
+
+<h2 id="is-it-financially-worth-it">Is it financially worth it?</h2>
+
+<p>Most books make very little money for both authors and publishers, but then occasionally something
+like <em>Harry Potter</em> comes along. If you are considering writing a book, I strongly recommend that
+you estimate the value of your future royalties to be close to zero. Like starting a band with
+friends and hoping to become rock stars, it’s difficult to predict in advance what will be a hit and
+what will flop. Maybe this applies less to technical books than to fiction and music, but I suspect
+that even with technical books, there are a small number of hits, and most books sell quite modest
+numbers.</p>
+
+<p>That said, in my case, I am happy to report that writing this book has in retrospect turned out to
+be a financially sound decision. These graphs show the royalties I have been paid since the book
+first went on sale:</p>
+
+<p><img src="/2020/09/royalties-cumulative.png" width="550" height="311" alt="Cumulative royalties chart" /></p>
+
+<p><img src="/2020/09/royalties-monthly.png" width="550" height="311" alt="Monthly royalties chart" /></p>
+
+<p>For the first 2½ years the book was in “early release”: during this period I was still writing, and
+we released it in unedited form, one chapter at a time, as ebook only. Then in March 2017 the book
+was officially published, and the print edition went on sale. Since then, the sales have fluctuated
+from month to month, but on average they have stayed remarkably constant. At some point I would
+expect the market to become saturated (i.e. most people who were going to buy the book have already
+bought it), but that does not seem to have happened yet: indeed, sales noticeably increased in late
+2018 (I don’t know why). The x axis ends at May 2020 because from the time of sale, it takes
+a couple of months for the money to trickle through the system.</p>
+
+<p>My contract with the publisher specifies that I get 25% of publisher revenue from ebooks, online
+access, and licensing, 10% of revenue from print sales, and 5% of revenue from translations. That’s
+a percentage of the wholesale price that retailers/distributors pay to the publisher, so it doesn’t
+include the retailers’ markup. The figures in this section are the royalties I was paid, not the
+publisher revenue.</p>
+
+<p>The total sales since the beginning have been (in US dollars):</p>
+
+<ul>
+  <li>Print: 64,373	copies, $149,166 royalties ($2.32/book)</li>
+  <li>Ebook: 31,786	copies, $160,469 royalties ($5.05/book)</li>
+  <li>O’Reilly online access (formerly called Safari Books Online): $104,677 royalties
+(I don’t get readership numbers for this channel)</li>
+  <li><a href="http://dataintensive.net/translations.html">Translations</a>: 5,566 copies, $7,810 royalties ($1.40/book)</li>
+  <li>Other licensing and sponsorship: $33,988 royalties</li>
+  <li>Total: $456,110</li>
+</ul>
+
+<p>A lot of money, but I also put a lot of time into it! I estimate that I spent about 2.5 years of
+full-time equivalent work researching and writing the book, spread out over the course of 4 years.
+Of that time, I spent 1 year (2014–15) working full-time on the book without income, while the
+rest of the time I worked on the book part-time alongside part-time employment.</p>
+
+<p>Now, in retrospect, it turns out that those 2.5 years were a good investment, because the income
+that this work has generated is in the same ballpark as the Silicon Valley software engineering
+salary (including stock and benefits) I could have received in the same time if I hadn’t quit
+LinkedIn in 2014 to work on the book. But of course I didn’t know that at the time! The royalties
+could easily have turned out to be a factor of 10 lower, in which case it would have been
+a financially much less compelling proposition.</p>
+
+<h2 id="beyond-the-royalties">Beyond the royalties</h2>
+
+<p>Part of the success of my book might also be explained by the fact that I put a lot of effort into
+promoting it. Since the book went into early release I have given <a href="/talks.html">almost 50 talks</a> at
+major conferences, plus a bunch of additional invited talks at companies and universities. Every
+single talk contained at least a small advertisement for my book. Like a band going on tour to
+promote their latest album, I suspect these talks contributed to the book being widely known.
+A couple of my blog posts have also been quite popular, and these may also have brought the book to
+potential readers’ attention. I have now significantly dialled back my speaking commitments, so
+I assume it is mostly spreading via word of mouth
+(<a href="https://twitter.com/intensivedata/likes">social media</a>, and readers recommending it to their
+colleagues).</p>
+
+<p>The combination of talks and the book have allowed me to establish a significant public presence and
+reputation in this field. I now get far more invitations to speak at conferences than I can
+realistically accept. Conference talks don’t generate income <em>per se</em> (good industry conferences
+generally pay for speakers’ travel and accommodation, but they rarely pay speaking fees), but this
+kind of reputation is helpful for getting consulting gigs.</p>
+
+<p>I have only done a bit of consulting (and I now regularly turn down consulting requests from
+companies because I’m focussing on my research), but I suspect that in my current position it would
+be fairly easy to establish a lucrative consulting and training business, going into companies and
+helping them with their data infrastructure problems. That is further financial value that writing
+a book can bring: you become recognised as an expert and an authority in an area, and companies will
+pay good money to get advice from such experts.</p>
+
+<p>I have focussed a lot on the financial viability of writing a book because I believe that books are
+an extremely valuable educational resource (more on this below). I want more people to write books,
+and that requires book-writing to be a sustainable activity.</p>
+
+<p>I was able to spend a great deal of time doing background research for my book because I was able to
+afford to live without a salary for a year, but many people will not be able to do that. If people
+can get <a href="https://jvns.ca/blog/2018/09/01/who-pays-to-educate-developers-/">paid fairly for creating educational materials</a>,
+we will get more and better educational materials.</p>
+
+<p>The economics of book-writing are challenging, and I reiterate that the success of my book is
+atypical. However, I also find it heartening that it is <em>possible</em> to make a decent living from
+technical writing. Not guaranteed, but possible, and that gives me hope.</p>
+
+<h2 id="a-book-is-accessible-education">A book is accessible education</h2>
+
+<p>Besides financial value to the author, there are lots of other good things about writing books.</p>
+
+<p>A book is universally <strong>accessible</strong>: it is affordable to almost everyone, anywhere in the world. It
+is vastly cheaper than a university course or corporate training, and you don’t have to move to
+another city to take advantage of it. People in rural areas and developing countries can benefit
+equally to those living in the global centres of tech. You can skim it or read it carefully cover to
+cover, as you please. You don’t even need an internet connection to use it. Of course it doesn’t
+confer all of the benefits of a university education (such as individual feedback, credentials,
+professional network, social life), but as a medium for communicating knowledge, a book is almost
+unbeatably efficient.</p>
+
+<p>Of course there are also plenty of free resources online: Wikipedia, blog posts, videos, Stack
+Overflow, API documentation, research papers, and so on. These are good as reference material for
+answering a concrete question that you have (such as “what are the parameters of the function
+foo?”), but they are piecemeal fragments that are difficult to assemble into a coherent education.
+On the other hand, a good book provides a carefully selected and designed programme of study, and
+a narrative that is particularly valuable when you are trying to make sense of a complex topic for
+the first time.</p>
+
+<p>Compared to teaching people in person, a book is vastly more scalable. Even if I lecture in my
+university’s largest lecture theatre for the rest of my career, I will not get anywhere near
+teaching 100,000 people. For individual and small-group teaching, the disparity is greater still.
+Yet a book is able to reach such large numbers of people routinely.</p>
+
+<h2 id="creating-more-value-than-you-capture">Creating more value than you capture</h2>
+
+<p>Writing a book is an activity that
+<a href="http://radar.oreilly.com/2009/01/work-on-stuff-that-matters-fir.html">creates more value than it captures</a>.
+What I mean with this is that the benefits that readers get from it are greater than the price they
+paid for the book. To back this up, let’s try roughly estimating the value created by my book.</p>
+
+<p>Of the 100,000 people who have bought my book so far, let’s say that two thirds of them intend to
+read it but actually haven’t got round to it yet. Of those who have read it, let’s say that one
+third were able to actually apply some of the ideas in the book, and two thirds read it purely out
+of interest. So let’s say conservatively that 10% of people who bought the book, that is 10,000
+people, have applied it for some useful purpose.</p>
+
+<p>What might such a useful purpose look like? In the case of my book, much of it is about making
+architectural decisions regarding data storage. If you get them right, you can build some amazing
+systems; if you get them wrong, you have to spend ages painfully digging yourself out of a mess that
+you got yourself into.</p>
+
+<p>It’s hard to quantify that, but let’s say that the people who applied ideas from the book avoided
+a bad decision that would have taken them one month of engineering time to rectify. (I’d actually
+love to claim that the time saving is much higher, but let’s be conservative in our estimates.)
+Thus, the 10,000 readers who applied the knowledge freed up an estimated 10,000 months, or 833
+years, of engineering time to spend on things that are more useful than digging yourself out of
+a mess.</p>
+
+<p>If I spend 2.5 years writing a book, and it saves other people 833 years of time in aggregate, that
+is over 300x leverage. If we assume an average engineering salary on the order of $100k, that’s $80m
+of value created. Readers have spent approximately $4m buying those 100,000 books, so the value
+created is about 20 times greater than the value captured. And this is based on some very
+conservative estimates.</p>
+
+<p>There are further ways in which the book creates value. For example, lots of readers have sent me
+emails and tweets saying that because they read my book, they did well in a job interview, landing
+them their dream job and providing financial security for their family. I don’t know how to measure
+that sort of value created, but I think it’s tremendous.</p>
+
+<p>How to be a 10x engineer:
+<a href="https://twitter.com/peterseibel/status/512615519934230528">help ten other engineers be twice as good</a>.
+Producing high-quality educational materials enables you to be a 300x engineer.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Writing a technical book is not easy, but it is:</p>
+
+<ul>
+  <li>valuable (it helps people be better at their job),</li>
+  <li>scalable (large numbers of people can benefit from it),</li>
+  <li>accessible (it doesn’t discriminate who can benefit), and</li>
+  <li>economically viable (it is possible to generate a reasonable level of income from it).</li>
+</ul>
+
+<p>It would be interesting to compare it to working on open source software, another activity that can
+have significant positive impact but is difficult to get paid for. I don’t have a strong opinion on
+this at the moment.</p>
+
+<p>On the downside, writing a book is really hard, at least if you want to do it well. For me it was
+about the same level of difficulty as building and selling a
+<a href="https://www.crunchbase.com/organization/rapportive">startup</a> (YMMV), that is to say, involving
+multiple existential crises. The writing process was not good for my mental health. For that reason
+I haven’t rushed into writing another book: the scars from writing the first one are still too
+fresh. But the scars gradually do fade, and I’m hoping (perhaps naively) that it might be easier
+next time.</p>
+
+<p>On balance, I do think that writing a technical book is worth it. The feeling of knowing that you
+have helped a lot of people is gratifying.  The personal growth that comes from taking on such
+a challenge is also considerable. And there is no better way to learn something in depth than by
+explaining it to others.</p>
+
+<p>In my next post I will provide some advice on writing and publishing from my experience so far.</p>
+
+
+                
+
+                <div id="disqus_thread"></div>
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div id="mc_embed_signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>,
+        was published by O’Reilly in March 2017.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>31 Jan 2020: <a href="/2020/01/31/brief-brexit-lament.html">A brief Brexit lament</a></li>
+            
+              <li>30 Oct 2019: <a href="/2019/10/30/research-update.html">Research update for 2019</a></li>
+            
+              <li>27 Jun 2019: <a href="/2019/06/27/hydra-interview.html">Figuring out the future of distributed data systems (interview)</a></li>
+            
+              <li>18 Jan 2018: <a href="/2018/01/18/event-types-in-kafka-topic.html">Should you put several event types in the same Kafka topic?</a></li>
+            
+              <li>15 Mar 2017: <a href="/2017/03/15/map-distributed-data-systems.html">Drawing a map of distributed data systems</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2020/07/06/crdt-hard-parts-hydra.html">06 Jul 2020 at Hydra distributed computing conference</a></li>
+            
+              <li><a href="/2020/04/27/papoc-list-move.html">27 Apr 2020 at 7th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a></li>
+            
+              <li><a href="/2019/11/08/code-mesh-isabelle.html">08 Nov 2019 at Code Mesh</a></li>
+            
+              <li><a href="/2019/10/02/tonke-dragt-tagung.html">02 Oct 2019 at Tagung über Tonke Dragts Jugendromane</a></li>
+            
+              <li><a href="/2019/09/14/strange-loop-isabelle.html">14 Sep 2019 at Strange Loop</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'martinkl';
+    var disqus_url = 'http://martin.kleppmann.com/book1.html';
+    var disqus_identifier = disqus_url;
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
