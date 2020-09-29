@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Flickr API security weakness, and thoughts about web APIs in general"
+disqus: true
 ---
 
 I am in the process of uploading my entire digital photo archive to

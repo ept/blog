@@ -2,6 +2,7 @@
 layout: ync-post
 title: "Stream processing, Event sourcing, Reactive, CEP… and making sense of it all"
 hackernews: https://news.ycombinator.com/item?id=8966852
+disqus: true
 ---
 
 *This is an edited transcript of a

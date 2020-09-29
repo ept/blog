@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Train ticket machines in Germany (UK vs. Germany Part 2)"
+disqus: true
 ---
 
 Here it is -- my photo series documenting the menu madness of German ticket machines. See part 1 of

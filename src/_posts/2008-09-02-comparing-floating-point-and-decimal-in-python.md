@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Comparing floating-point and decimal in Python"
+disqus: true
 ---
 
 Bizarre happenings in the world of Python. It seems that you are really not supposed to compare

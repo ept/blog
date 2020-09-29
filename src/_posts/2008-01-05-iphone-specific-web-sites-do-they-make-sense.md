@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "iPhone specific web sites -- do they make sense?"
+disqus: true
 ---
 
 Looking back at 2007, I can't help but think that the iPhone was probably the most important and

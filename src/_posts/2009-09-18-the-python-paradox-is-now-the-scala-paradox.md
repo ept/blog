@@ -4,6 +4,7 @@ title: "The Python Paradox is now the Scala Paradox"
 hackernews:
 - http://news.ycombinator.com/item?id=831817
 - http://news.ycombinator.com/item?id=2218654
+disqus: true
 ---
 
 [Paul Graham](http://www.paulgraham.com/) has written a bunch of good essays on entrepreneurship,

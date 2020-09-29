@@ -2,6 +2,7 @@
 layout: ync-post
 title: "Using logs to build a solid data infrastructure (or: why dual writes are a bad idea)"
 hackernews: https://news.ycombinator.com/item?id=9613118
+disqus: true
 ---
 
 *This is an edited transcript of a

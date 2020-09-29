@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Yes/No/Cancel causes Aspirin sales to soar"
+disqus: true
 ---
 
 Welcome to Yes/No/Cancel, the online usability magazine. This first article describes the origin of

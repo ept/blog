@@ -2,6 +2,7 @@
 layout: ync-post
 title: Java's hashCode is not safe for distributed systems
 hackernews: http://news.ycombinator.com/item?id=4127664
+disqus: true
 ---
 
 As you probably know, hash functions serve many different purposes:

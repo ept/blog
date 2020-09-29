@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "OAccounts - Setting your accounts data free"
+disqus: true
 ---
 
 Open standards for data are really important. If you store your data in proprietary formats, you are

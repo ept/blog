@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "BarCamp Brighton - Notes"
+disqus: true
 ---
 
 Just been to

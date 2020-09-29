@@ -2,6 +2,7 @@
 layout: ync-post
 title: Rethinking caching in web apps
 hackernews: http://news.ycombinator.com/item?id=4599685
+disqus: true
 ---
 
 Having spent a lot of the last few years worrying about the scalability of data-heavy applications

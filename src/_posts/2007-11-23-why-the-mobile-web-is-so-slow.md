@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Why the mobile web is so slow"
+disqus: true
 ---
 
 On the "desktop/laptop web" (in contrast to the mobile web), we've become used to a page loading in

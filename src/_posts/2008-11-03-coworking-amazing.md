@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Coworking: Amazing"
+disqus: true
 ---
 
 [Coworking](http://en.wikipedia.org/wiki/Coworking) is a concept I've only recently come across, but

@@ -3,6 +3,7 @@ layout: ync-post
 title: 'Hermitage: Testing the “I” in ACID'
 hackernews: https://news.ycombinator.com/item?id=8658584
 highlight: true
+disqus: true
 ---
 
 *tl;dr:* I have created a [test suite](https://github.com/ept/hermitage) for comparing the

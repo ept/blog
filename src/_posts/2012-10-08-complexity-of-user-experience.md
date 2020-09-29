@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: The complexity of user experience
+disqus: true
 ---
 
 The problem of overly complex software is nothing new; it is almost as old as software itself. Over

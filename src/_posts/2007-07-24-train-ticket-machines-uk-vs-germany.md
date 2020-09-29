@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Train ticket machines -- UK vs. Germany (Part 1)"
+disqus: true
 ---
 
 I reveal a shocking comparison between ticket machines in British and German railway stations. The

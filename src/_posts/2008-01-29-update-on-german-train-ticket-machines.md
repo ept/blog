@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Update on German train ticket machines"
+disqus: true
 ---
 
 A while ago I wrote some posts about the user interfaces of ticket machines in Germany

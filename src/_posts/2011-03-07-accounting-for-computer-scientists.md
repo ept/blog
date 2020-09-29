@@ -3,6 +3,7 @@ layout: ync-post
 title: Accounting for Computer Scientists
 hackernews: http://news.ycombinator.com/item?id=2298471
 highlight: true
+disqus: true
 ---
 
 Every educated person really ought to have a basic understanding of accounting. Just like

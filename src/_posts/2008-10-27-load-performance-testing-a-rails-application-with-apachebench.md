@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Load/performance testing a Rails application with ApacheBench"
+disqus: true
 ---
 
 <a

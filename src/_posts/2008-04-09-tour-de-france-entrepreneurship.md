@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "The Tour de France metaphor for entrepreneurship"
+disqus: true
 ---
 
 In case you didn't know: In Cambridge, bicycles rule the roads. In the the more studenty parts of

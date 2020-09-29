@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Ubuntu upgrade woes"
+disqus: true
 ---
 
 This page has been offline for the last 24 hours because I messed up the server on which it was

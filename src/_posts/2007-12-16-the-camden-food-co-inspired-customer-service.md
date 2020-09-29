@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "The Camden Food Co.: Inspired customer service"
+disqus: true
 ---
 
 Yesterday I was travelling through St. Pancras station, and walked into a branch of the

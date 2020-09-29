@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Bid for Wine, online wine auctions coming soon"
+disqus: true
 ---
 
 <div

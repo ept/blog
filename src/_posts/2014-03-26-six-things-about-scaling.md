@@ -2,6 +2,7 @@
 layout: ync-post
 title: Six things I wish we had known about scaling
 hackernews: https://news.ycombinator.com/item?id=7476717
+disqus: true
 ---
 
 Looking back at the last few years of building [Rapportive](https://rapportive.com/) and

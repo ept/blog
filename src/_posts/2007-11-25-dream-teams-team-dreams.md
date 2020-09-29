@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Dream teams, team dreams"
+disqus: true
 ---
 
 About a year ago I went through a phase of wondering whether I might make a good management

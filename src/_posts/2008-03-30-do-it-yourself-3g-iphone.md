@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Do-it-yourself 3G iPhone"
+disqus: true
 ---
 
 I've just worked out how you could make a 3G iPhone yourself, even adding GPS support, and still get

@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Building Go Test It: Fun with Scala and REST APIs"
+disqus: true
 ---
 
 <img src="/2009/05/go-test-it.png" alt="Go Test It" width="285" height="177" class="size-full wp-image-279" />

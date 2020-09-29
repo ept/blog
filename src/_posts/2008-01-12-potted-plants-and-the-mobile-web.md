@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Potted plants and the mobile web"
+disqus: true
 ---
 
 I just got back from a garden centre, where I had ventured on the exciting mission of getting some

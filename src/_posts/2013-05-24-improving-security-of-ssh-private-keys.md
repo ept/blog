@@ -2,6 +2,7 @@
 layout: ync-post
 title: Improving the security of your SSH private key files
 hackernews: https://news.ycombinator.com/item?id=5763581
+disqus: true
 ---
 
 **Update (July 2015): This post is now rather outdated, and the procedure for modifying your

@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "How to pull off a slick tech demo (in 5 easy steps)"
+disqus: true
 ---
 
 On Thursday I gave a demo of

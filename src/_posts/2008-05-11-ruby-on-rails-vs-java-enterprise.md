@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Ruby on Rails vs. Java Enterprise"
+disqus: true
 ---
 
 Choosing a web application framework. Aaaaargh, the pain.

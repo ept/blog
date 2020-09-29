@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Usability aspects of gas cookers"
+disqus: true
 ---
 
 In this first article of the "power-off" series, I shed light on how we interact with low-tech

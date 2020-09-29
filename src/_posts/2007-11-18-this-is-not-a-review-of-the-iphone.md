@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "This is not a review of the iPhone"
+disqus: true
 ---
 
 Last week, when the iPhone was released in the UK, my housemate James came home beaming with delight

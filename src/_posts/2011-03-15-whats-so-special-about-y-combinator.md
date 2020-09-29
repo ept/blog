@@ -2,6 +2,7 @@
 layout: ync-post
 title: What's so special about Y Combinator?
 hackernews: http://news.ycombinator.com/item?id=2327960
+disqus: true
 ---
 
 Since we joined [Y Combinator's](http://ycombinator.com/) Summer 2010 funding cycle, I keep

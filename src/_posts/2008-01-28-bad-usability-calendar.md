@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Bad usability calendar"
+disqus: true
 ---
 
 <img src="/2008/01/28012008_small.jpg" align="right" hspace="20" vspace="20"

@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "On the importance of ambition"
+disqus: true
 ---
 
 The [Sagrada Familia cathedral](http://www.sagradafamilia.cat/sf-eng/) in Barcelona is an

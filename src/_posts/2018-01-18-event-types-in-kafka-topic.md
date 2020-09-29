@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Should you put several event types in the same Kafka topic?
+disqus: true
 ---
 
 *This article was originally published

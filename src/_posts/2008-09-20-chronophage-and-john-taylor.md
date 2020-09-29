@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "The Chronophage and a story about John Taylor"
+disqus: true
 ---
 
 Yesterday I went to see the unveiling of the

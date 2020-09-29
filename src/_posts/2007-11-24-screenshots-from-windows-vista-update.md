@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Screenshots from Windows Vista Update"
+disqus: true
 ---
 
 Jimmy sent me some screenshots of Windows Vista which exemplify

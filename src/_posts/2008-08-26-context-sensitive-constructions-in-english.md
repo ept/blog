@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Context-sensitive constructions in English"
+disqus: true
 ---
 
 Anybody who has read about basics of computational linguistics (i.e. the cross-over area between

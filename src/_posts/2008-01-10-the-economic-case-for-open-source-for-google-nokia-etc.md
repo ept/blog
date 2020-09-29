@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "The economic case for open source (for Google, Nokia etc.)"
+disqus: true
 ---
 
 <img src="/2008/01/joelonsoftware.jpg" alt="“Joel on Software” book cover (Image source: amazon.com)" align="right" />

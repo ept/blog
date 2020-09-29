@@ -30,7 +30,7 @@
                 </div>
                 {% endfor %}
 
-                <div id="disqus_thread"></div>
+                {% if page.disqus %}<div id="disqus_thread"></div>{% endif %}
             </div>
 
             <div id="sidebar">
@@ -42,7 +42,7 @@
         {% include footer.html %}
     </div>
 
-    {% include disqus.html %}
+    {% if page.disqus %}{% include disqus.html %}{% endif %}
     {% include analytics.html %}
 </body>
 </html>

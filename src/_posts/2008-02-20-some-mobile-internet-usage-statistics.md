@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Some mobile internet usage statistics"
+disqus: true
 ---
 
 Mobile internet usage is one of those areas which is hyped a lot, but it's actually pretty hard to

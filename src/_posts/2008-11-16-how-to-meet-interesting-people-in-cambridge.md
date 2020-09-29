@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "How to meet interesting people in Cambridge"
+disqus: true
 ---
 
 From time to time I am asked, particularly by new arrivers to Cambridge (UK), what opportunities

@@ -4,6 +4,7 @@ title: "Bottled Water: Real-time integration of PostgreSQL and Kafka"
 hackernews:
 - https://news.ycombinator.com/item?id=9427441
 - https://news.ycombinator.com/item?id=12844240
+disqus: true
 ---
 
 *This post was originally published

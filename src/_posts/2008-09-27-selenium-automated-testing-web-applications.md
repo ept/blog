@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Selenium in real-world projects: Automated testing for web applications"
+disqus: true
 ---
 
 This afternoon I gave a talk at

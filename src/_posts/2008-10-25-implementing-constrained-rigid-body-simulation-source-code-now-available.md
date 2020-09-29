@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Implementing constrained rigid body simulation - source code now available"
+disqus: true
 ---
 
 My final-year project at university was on "[Rigid body simulation for 3D character
