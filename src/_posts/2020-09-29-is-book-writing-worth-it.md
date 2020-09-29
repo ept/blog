@@ -40,28 +40,28 @@ was officially published, and the print edition went on sale. Since then, the sa
 from month to month, but on average they have stayed remarkably constant. At some point I would
 expect the market to become saturated (i.e. most people who were going to buy the book have already
 bought it), but that does not seem to have happened yet: indeed, sales noticeably increased in late
-2018 (I don't know why). The x axis ends at May 2020 because from the time of sale, it takes
+2018 (I don't know why). The x axis ends in July 2020 because from the time of sale, it takes
 a couple of months for the money to trickle through the system.
 
 My contract with the publisher specifies that I get 25% of publisher revenue from ebooks, online
 access, and licensing, 10% of revenue from print sales, and 5% of revenue from translations. That's
 a percentage of the wholesale price that retailers/distributors pay to the publisher, so it doesn't
-include the retailers' markup. The figures in this section are the royalties I was paid, not the
-publisher revenue.
+include the retailers' markup. The figures in this section are the royalties I was paid, after the
+retailer and publisher have taken their cut, but before tax.
 
 The total sales since the beginning have been (in US dollars):
 
-* Print: 64,373	copies, $149,166 royalties ($2.32/book)
-* Ebook: 31,786	copies, $160,469 royalties ($5.05/book)
-* O'Reilly online access (formerly called Safari Books Online): $104,677 royalties
+* Print: 68,763 copies, $161,549 royalties ($2.35/book)
+* Ebook: 33,420	copies, $169,350 royalties ($5.07/book)
+* O'Reilly online access (formerly called Safari Books Online): $110,069 royalties
   (I don't get readership numbers for this channel)
-* [Translations](http://dataintensive.net/translations.html): 5,566 copies, $7,810 royalties ($1.40/book)
-* Other licensing and sponsorship: $33,988 royalties
-* Total: $456,110
+* [Translations](http://dataintensive.net/translations.html): 5,896 copies, $8,278 royalties ($1.40/book)
+* Other licensing and sponsorship: $34,600 royalties
+* Total: 108,079 copies, $477,916
 
 A lot of money, but I also put a lot of time into it! I estimate that I spent about 2.5 years of
 full-time equivalent work researching and writing the book, spread out over the course of 4 years.
-Of that time, I spent 1 year (2014--15) working full-time on the book without income, while the
+Of that time, I spent one year (2014--15) working full-time on the book without income, while the
 rest of the time I worked on the book part-time alongside part-time employment.
 
 Now, in retrospect, it turns out that those 2.5 years were a good investment, because the income
@@ -190,8 +190,9 @@ Writing a technical book is not easy, but it is:
 * economically viable (it is possible to generate a reasonable level of income from it).
 
 It would be interesting to compare it to working on open source software, another activity that can
-have significant positive impact but is difficult to get paid for. I don't have a strong opinion on
-this at the moment.
+have significant positive impact but is
+[difficult to get paid for](https://www.amazon.com/Working-Public-Making-Maintenance-Software/dp/0578675862/ref=as_li_ss_tl?ref_=nav_signin&&linkCode=ll1&tag=dataintensive-20&linkId=a152ade47ab23a9351d3e24950a89515&language=en_US).
+I don't have a strong opinion on this at the moment.
 
 On the downside, writing a book is really hard, at least if you want to do it well. For me it was
 about the same level of difficulty as building and selling a
