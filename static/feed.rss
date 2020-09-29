@@ -10,12 +10,231 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Mon, 14 Sep 2020 10:36:24 BST</lastBuildDate>
+        <lastBuildDate>Tue, 29 Sep 2020 15:36:45 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Writing a book: is it worth it?</title>
+                <link>http://martin.kleppmann.com/2020/09/29/is-book-writing-worth-it.html</link>
+                <comments>http://martin.kleppmann.com/2020/09/29/is-book-writing-worth-it.html#disqus_thread</comments>
+                <pubDate>Tue, 29 Sep 2020 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2020/09/29/is-book-writing-worth-it.html</guid>
+                
+                <description><![CDATA[ My book, Designing Data-Intensive Applications, recently passed the milestone of 100,000 copies sold. Last year, it was the second-best-selling book in O’Reilly’s entire catalogue, second only to Aurélien Géron’s machine learning book. Machine learning is obviously a hot topic, so I am quite content with coming second to it! 😄... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>My book, <a href="https://dataintensive.net/">Designing Data-Intensive Applications</a>, recently passed the
+milestone of 100,000 copies sold. Last year, it was the second-best-selling book in O’Reilly’s
+entire catalogue, second only to
+<a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=7d47ed0da85dc67659afbfbbad99f6ec&amp;language=en_US">Aurélien Géron’s machine learning book</a>.
+Machine learning is obviously a hot topic, so I am quite content with coming second to it! 😄</p>
+
+<p>To me, the success of this book was totally unexpected: while I was writing it, I thought that it
+was going to be a bit niche, and I set myself the goal of selling 10,000 copies over the lifetime
+of the book. Having passed that goal tenfold, this seems like a good opportunity to look back and
+reflect on the process. I don’t want to make this post too self-congratulatory, but rather I will
+try to share some insights into the business of book-writing.</p>
+
+<h2 id="is-it-financially-worth-it">Is it financially worth it?</h2>
+
+<p>Most books make very little money for both authors and publishers, but then occasionally something
+like <em>Harry Potter</em> comes along. If you are considering writing a book, I strongly recommend that
+you estimate the value of your future royalties to be close to zero. Like starting a band with
+friends and hoping to become rock stars, it’s difficult to predict in advance what will be a hit and
+what will flop. Maybe this applies less to technical books than to fiction and music, but I suspect
+that even with technical books, there are a small number of hits, and most books sell quite modest
+numbers.</p>
+
+<p>That said, in my case, I am happy to report that writing this book has in retrospect turned out to
+be a financially sound decision. These graphs show the royalties I have been paid since the book
+first went on sale:</p>
+
+<p><img src="/2020/09/royalties-cumulative.png" width="550" height="311" alt="Cumulative royalties chart" /></p>
+
+<p><img src="/2020/09/royalties-monthly.png" width="550" height="311" alt="Monthly royalties chart" /></p>
+
+<p>For the first 2½ years the book was in “early release”: during this period I was still writing, and
+we released it in unedited form, one chapter at a time, as ebook only. Then in March 2017 the book
+was officially published, and the print edition went on sale. Since then, the sales have fluctuated
+from month to month, but on average they have stayed remarkably constant. At some point I would
+expect the market to become saturated (i.e. most people who were going to buy the book have already
+bought it), but that does not seem to have happened yet: indeed, sales noticeably increased in late
+2018 (I don’t know why). The x axis ends in July 2020 because from the time of sale, it takes
+a couple of months for the money to trickle through the system.</p>
+
+<p>My contract with the publisher specifies that I get 25% of publisher revenue from ebooks, online
+access, and licensing, 10% of revenue from print sales, and 5% of revenue from translations. That’s
+a percentage of the wholesale price that retailers/distributors pay to the publisher, so it doesn’t
+include the retailers’ markup. The figures in this section are the royalties I was paid, after the
+retailer and publisher have taken their cut, but before tax.</p>
+
+<p>The total sales since the beginning have been (in US dollars):</p>
+
+<ul>
+  <li>Print: 68,763 copies, $161,549 royalties ($2.35/book)</li>
+  <li>Ebook: 33,420	copies, $169,350 royalties ($5.07/book)</li>
+  <li>O’Reilly online access (formerly called Safari Books Online): $110,069 royalties
+(I don’t get readership numbers for this channel)</li>
+  <li><a href="http://dataintensive.net/translations.html">Translations</a>: 5,896 copies, $8,278 royalties ($1.40/book)</li>
+  <li>Other licensing and sponsorship: $34,600 royalties</li>
+  <li>Total: 108,079 copies, $477,916</li>
+</ul>
+
+<p>A lot of money, but I also put a lot of time into it! I estimate that I spent about 2.5 years of
+full-time equivalent work researching and writing the book, spread out over the course of 4 years.
+Of that time, I spent one year (2014–15) working full-time on the book without income, while the
+rest of the time I worked on the book part-time alongside part-time employment.</p>
+
+<p>Now, in retrospect, it turns out that those 2.5 years were a good investment, because the income
+that this work has generated is in the same ballpark as the Silicon Valley software engineering
+salary (including stock and benefits) I could have received in the same time if I hadn’t quit
+LinkedIn in 2014 to work on the book. But of course I didn’t know that at the time! The royalties
+could easily have turned out to be a factor of 10 lower, in which case it would have been
+a financially much less compelling proposition.</p>
+
+<h2 id="beyond-the-royalties">Beyond the royalties</h2>
+
+<p>Part of the success of my book might also be explained by the fact that I put a lot of effort into
+promoting it. Since the book went into early release I have given <a href="/talks.html">almost 50 talks</a> at
+major conferences, plus a bunch of additional invited talks at companies and universities. Every
+single talk contained at least a small advertisement for my book. Like a band going on tour to
+promote their latest album, I suspect these talks contributed to the book being widely known.
+A couple of my blog posts have also been quite popular, and these may also have brought the book to
+potential readers’ attention. I have now significantly dialled back my speaking commitments, so
+I assume it is mostly spreading via word of mouth
+(<a href="https://twitter.com/intensivedata/likes">social media</a>, and readers recommending it to their
+colleagues).</p>
+
+<p>The combination of talks and the book have allowed me to establish a significant public presence and
+reputation in this field. I now get far more invitations to speak at conferences than I can
+realistically accept. Conference talks don’t generate income <em>per se</em> (good industry conferences
+generally pay for speakers’ travel and accommodation, but they rarely pay speaking fees), but this
+kind of reputation is helpful for getting consulting gigs.</p>
+
+<p>I have only done a bit of consulting (and I now regularly turn down consulting requests from
+companies because I’m focussing on my research), but I suspect that in my current position it would
+be fairly easy to establish a lucrative consulting and training business, going into companies and
+helping them with their data infrastructure problems. That is further financial value that writing
+a book can bring: you become recognised as an expert and an authority in an area, and companies will
+pay good money to get advice from such experts.</p>
+
+<p>I have focussed a lot on the financial viability of writing a book because I believe that books are
+an extremely valuable educational resource (more on this below). I want more people to write books,
+and that requires book-writing to be a sustainable activity.</p>
+
+<p>I was able to spend a great deal of time doing background research for my book because I was able to
+afford to live without a salary for a year, but many people will not be able to do that. If people
+can get <a href="https://jvns.ca/blog/2018/09/01/who-pays-to-educate-developers-/">paid fairly for creating educational materials</a>,
+we will get more and better educational materials.</p>
+
+<p>The economics of book-writing are challenging, and I reiterate that the success of my book is
+atypical. However, I also find it heartening that it is <em>possible</em> to make a decent living from
+technical writing. Not guaranteed, but possible, and that gives me hope.</p>
+
+<h2 id="a-book-is-accessible-education">A book is accessible education</h2>
+
+<p>Besides financial value to the author, there are lots of other good things about writing books.</p>
+
+<p>A book is universally <strong>accessible</strong>: it is affordable to almost everyone, anywhere in the world. It
+is vastly cheaper than a university course or corporate training, and you don’t have to move to
+another city to take advantage of it. People in rural areas and developing countries can benefit
+equally to those living in the global centres of tech. You can skim it or read it carefully cover to
+cover, as you please. You don’t even need an internet connection to use it. Of course it doesn’t
+confer all of the benefits of a university education (such as individual feedback, credentials,
+professional network, social life), but as a medium for communicating knowledge, a book is almost
+unbeatably efficient.</p>
+
+<p>Of course there are also plenty of free resources online: Wikipedia, blog posts, videos, Stack
+Overflow, API documentation, research papers, and so on. These are good as reference material for
+answering a concrete question that you have (such as “what are the parameters of the function
+foo?”), but they are piecemeal fragments that are difficult to assemble into a coherent education.
+On the other hand, a good book provides a carefully selected and designed programme of study, and
+a narrative that is particularly valuable when you are trying to make sense of a complex topic for
+the first time.</p>
+
+<p>Compared to teaching people in person, a book is vastly more scalable. Even if I lecture in my
+university’s largest lecture theatre for the rest of my career, I will not get anywhere near
+teaching 100,000 people. For individual and small-group teaching, the disparity is greater still.
+Yet a book is able to reach such large numbers of people routinely.</p>
+
+<h2 id="creating-more-value-than-you-capture">Creating more value than you capture</h2>
+
+<p>Writing a book is an activity that
+<a href="http://radar.oreilly.com/2009/01/work-on-stuff-that-matters-fir.html">creates more value than it captures</a>.
+What I mean with this is that the benefits that readers get from it are greater than the price they
+paid for the book. To back this up, let’s try roughly estimating the value created by my book.</p>
+
+<p>Of the 100,000 people who have bought my book so far, let’s say that two thirds of them intend to
+read it but actually haven’t got round to it yet. Of those who have read it, let’s say that one
+third were able to actually apply some of the ideas in the book, and two thirds read it purely out
+of interest. So let’s say conservatively that 10% of people who bought the book, that is 10,000
+people, have applied it for some useful purpose.</p>
+
+<p>What might such a useful purpose look like? In the case of my book, much of it is about making
+architectural decisions regarding data storage. If you get them right, you can build some amazing
+systems; if you get them wrong, you have to spend ages painfully digging yourself out of a mess that
+you got yourself into.</p>
+
+<p>It’s hard to quantify that, but let’s say that the people who applied ideas from the book avoided
+a bad decision that would have taken them one month of engineering time to rectify. (I’d actually
+love to claim that the time saving is much higher, but let’s be conservative in our estimates.)
+Thus, the 10,000 readers who applied the knowledge freed up an estimated 10,000 months, or 833
+years, of engineering time to spend on things that are more useful than digging yourself out of
+a mess.</p>
+
+<p>If I spend 2.5 years writing a book, and it saves other people 833 years of time in aggregate, that
+is over 300x leverage. If we assume an average engineering salary on the order of $100k, that’s $80m
+of value created. Readers have spent approximately $4m buying those 100,000 books, so the value
+created is about 20 times greater than the value captured. And this is based on some very
+conservative estimates.</p>
+
+<p>There are further ways in which the book creates value. For example, lots of readers have sent me
+emails and tweets saying that because they read my book, they did well in a job interview, landing
+them their dream job and providing financial security for their family. I don’t know how to measure
+that sort of value created, but I think it’s tremendous.</p>
+
+<p>How to be a 10x engineer:
+<a href="https://twitter.com/peterseibel/status/512615519934230528">help ten other engineers be twice as good</a>.
+Producing high-quality educational materials enables you to be a 300x engineer.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Writing a technical book is not easy, but it is:</p>
+
+<ul>
+  <li>valuable (it helps people be better at their job),</li>
+  <li>scalable (large numbers of people can benefit from it),</li>
+  <li>accessible (it doesn’t discriminate who can benefit), and</li>
+  <li>economically viable (it is possible to generate a reasonable level of income from it).</li>
+</ul>
+
+<p>It would be interesting to compare it to working on open source software, another activity that can
+have significant positive impact but is
+<a href="https://www.amazon.com/Working-Public-Making-Maintenance-Software/dp/0578675862/ref=as_li_ss_tl?ref_=nav_signin&amp;&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=a152ade47ab23a9351d3e24950a89515&amp;language=en_US">difficult to get paid for</a>.
+I don’t have a strong opinion on this at the moment.</p>
+
+<p>On the downside, writing a book is really hard, at least if you want to do it well. For me it was
+about the same level of difficulty as building and selling a
+<a href="https://www.crunchbase.com/organization/rapportive">startup</a> (YMMV), that is to say, involving
+multiple existential crises. The writing process was not good for my mental health. For that reason
+I haven’t rushed into writing another book: the scars from writing the first one are still too
+fresh. But the scars gradually do fade, and I’m hoping (perhaps naively) that it might be easier
+next time.</p>
+
+<p>On balance, I do think that writing a technical book is worth it. The feeling of knowing that you
+have helped a lot of people is gratifying.  The personal growth that comes from taking on such
+a challenge is also considerable. And there is no better way to learn something in depth than by
+explaining it to others.</p>
+
+<p>In my next post I will provide some advice on writing and publishing from my experience so far.</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>A brief Brexit lament</title>
@@ -1810,412 +2029,6 @@ be able to do everything. It is worth remembering why security mechanisms like e
 the first place: to protect sensitive medical, legal, journalistic, financial, diplomatic,
 commercial or military data from falling into the wrong hands. Trying to weaken those protections
 would cause far more harm than good.</p>
-
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>How to do distributed locking</title>
-                <link>http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html</link>
-                <comments>http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html#disqus_thread</comments>
-                <pubDate>Mon, 08 Feb 2016 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html</guid>
-                
-                <description><![CDATA[ As part of the research for my book, I came across an algorithm called Redlock on the Redis website. The algorithm claims to implement fault-tolerant distributed locks (or rather, leases [1]) on top of Redis, and the page asks for feedback from people who are into distributed systems. The algorithm instinctively... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>As part of the research for <a href="http://dataintensive.net/">my book</a>, I came across an algorithm called <a href="http://redis.io/topics/distlock">Redlock</a> on the
-<a href="http://redis.io/">Redis</a> website. The algorithm claims to implement fault-tolerant distributed locks (or rather,
-<a href="https://pdfs.semanticscholar.org/a25e/ee836dbd2a5ae680f835309a484c9f39ae4e.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">leases</a> [1]) on top of Redis, and the page asks for feedback from people who are into
-distributed systems. The algorithm instinctively set off some alarm bells in the back of my mind, so
-I spent a bit of time thinking about it and writing up these notes.</p>
-
-<p>Since there are already <a href="http://redis.io/topics/distlock">over 10 independent implementations of Redlock</a> and we don’t know
-who is already relying on this algorithm, I thought it would be worth sharing my notes publicly.
-I won’t go into other aspects of Redis, some of which have already been critiqued
-<a href="https://aphyr.com/tags/Redis">elsewhere</a>.</p>
-
-<p>Before I go into the details of Redlock, let me say that I quite like Redis, and I have successfully
-used it in production in the past. I think it’s a good fit in situations where you want to share
-some transient, approximate, fast-changing data between servers, and where it’s not a big deal if
-you occasionally lose that data for whatever reason. For example, a good use case is maintaining
-request counters per IP address (for rate limiting purposes) and sets of distinct IP addresses per
-user ID (for abuse detection).</p>
-
-<p>However, Redis has been gradually making inroads into areas of data management where there are
-stronger consistency and durability expectations – which worries me, because this is not what Redis
-is designed for. Arguably, distributed locking is one of those areas. Let’s examine it in some more
-detail.</p>
-
-<h2 id="what-are-you-using-that-lock-for">What are you using that lock for?</h2>
-
-<p>The purpose of a lock is to ensure that among several nodes that might try to do the same piece of
-work, only one actually does it (at least only one at a time). That work might be to write some data
-to a shared storage system, to perform some computation, to call some external API, or suchlike. At
-a high level, there are two reasons why you might want a lock in a distributed application:
-<a href="http://research.google.com/archive/chubby.html" title="Mike Burrows. The Chubby lock service for loosely-coupled distributed systems. OSDI 2006">for efficiency or for correctness</a> [2]. To distinguish these cases, you can ask what
-would happen if the lock failed:</p>
-
-<ul>
-  <li><strong>Efficiency:</strong> Taking a lock saves you from unnecessarily doing the same work twice (e.g. some
-expensive computation). If the lock fails and two nodes end up doing the same piece of work, the
-result is a minor increase in cost (you end up paying 5 cents more to AWS than you otherwise would
-have) or a minor inconvenience (e.g. a user ends up getting the same email notification twice).</li>
-  <li><strong>Correctness:</strong> Taking a lock prevents concurrent processes from stepping on each others’ toes
-and messing up the state of your system. If the lock fails and two nodes concurrently work on the
-same piece of data, the result is a corrupted file, data loss, permanent inconsistency, the wrong
-dose of a drug administered to a patient, or some other serious problem.</li>
-</ul>
-
-<p>Both are valid cases for wanting a lock, but you need to be very clear about which one of the two
-you are dealing with.</p>
-
-<p>I will argue that if you are using locks merely for efficiency purposes, it is unnecessary to incur
-the cost and complexity of Redlock, running 5 Redis servers and checking for a majority to acquire
-your lock. You are better off just using a single Redis instance, perhaps with asynchronous
-replication to a secondary instance in case the primary crashes.</p>
-
-<p>If you use a single Redis instance, of course you will drop some locks if the power suddenly goes
-out on your Redis node, or something else goes wrong. But if you’re only using the locks as an
-efficiency optimization, and the crashes don’t happen too often, that’s no big deal. This “no big
-deal” scenario is where Redis shines. At least if you’re relying on a single Redis instance, it is
-clear to everyone who looks at the system that the locks are approximate, and only to be used for
-non-critical purposes.</p>
-
-<p>On the other hand, the Redlock algorithm, with its 5 replicas and majority voting, looks at first
-glance as though it is suitable for situations in which your locking is important for <em>correctness</em>.
-I will argue in the following sections that it is <em>not</em> suitable for that purpose. For the rest of
-this article we will assume that your locks are important for correctness, and that it is a serious
-bug if two different nodes concurrently believe that they are holding the same lock.</p>
-
-<h2 id="protecting-a-resource-with-a-lock">Protecting a resource with a lock</h2>
-
-<p>Let’s leave the particulars of Redlock aside for a moment, and discuss how a distributed lock is
-used in general (independent of the particular locking algorithm used). It’s important to remember
-that a lock in a distributed system is not like a mutex in a multi-threaded application. It’s a more
-complicated beast, due to the problem that different nodes and the network can all fail
-independently in various ways.</p>
-
-<p>For example, say you have an application in which a client needs to update a file in shared storage
-(e.g. HDFS or S3). A client first acquires the lock, then reads the file, makes some changes, writes
-the modified file back, and finally releases the lock. The lock prevents two clients from performing
-this read-modify-write cycle concurrently, which would result in lost updates. The code might look
-something like this:</p>
-
-<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// THIS CODE IS BROKEN</span>
-<span class="kd">function</span> <span class="nx">writeData</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">lock</span> <span class="o">=</span> <span class="nx">lockService</span><span class="p">.</span><span class="nx">acquireLock</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lock</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">throw</span> <span class="s1">&#39;Failed to acquire lock&#39;</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">try</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nx">updateContents</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
-        <span class="nx">storage</span><span class="p">.</span><span class="nx">writeFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">updated</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-        <span class="nx">lock</span><span class="p">.</span><span class="nx">release</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>Unfortunately, even if you have a perfect lock service, the code above is broken. The following
-diagram shows how you can end up with corrupted data:</p>
-
-<p><img src="/2016/02/unsafe-lock.png" width="550" height="200" alt="Unsafe access to a resource protected by a distributed lock" /></p>
-
-<p>In this example, the client that acquired the lock is paused for an extended period of time while
-holding the lock – for example because the garbage collector (GC) kicked in. The lock has a timeout
-(i.e. it is a lease), which is always a good idea (otherwise a crashed client could end up holding
-a lock forever and never releasing it). However, if the GC pause lasts longer than the lease expiry
-period, and the client doesn’t realise that it has expired, it may go ahead and make some unsafe
-change.</p>
-
-<p>This bug is not theoretical: HBase used to <a href="http://www.slideshare.net/enissoz/hbase-and-hdfs-understanding-filesystem-usage" title="Enis Söztutar. HBase and HDFS: Understanding filesystem usage in HBase. HBaseCon 2013">have this problem</a> [3,4]. Normally,
-GC pauses are quite short, but “stop-the-world” GC pauses have sometimes been known to last for
-<a href="http://blog.cloudera.com/blog/2011/02/avoiding-full-gcs-in-hbase-with-memstore-local-allocation-buffers-part-1/" title="Todd Lipcon. Avoiding Full GCs in Apache HBase with MemStore-Local Allocation Buffers: Part 1. 2011">several minutes</a> [5] – certainly long enough for a lease to expire. Even so-called
-“concurrent” garbage collectors like the HotSpot JVM’s CMS cannot fully run in parallel with the
-application code – even they <a href="http://mechanical-sympathy.blogspot.co.uk/2013/07/java-garbage-collection-distilled.html" title="Martin Thompson. Java Garbage Collection Distilled. 2013">need to stop the world</a> from time to time [6].</p>
-
-<p>You cannot fix this problem by inserting a check on the lock expiry just before writing back to
-storage. Remember that GC can pause a running thread at <em>any point</em>, including the point that is
-maximally inconvenient for you (between the last check and the write operation).</p>
-
-<p>And if you’re feeling smug because your programming language runtime doesn’t have long GC pauses,
-there are many other reasons why your process might get paused. Maybe your process tried to read an
-address that is not yet loaded into memory, so it gets a page fault and is paused until the page is
-loaded from disk. Maybe your disk is actually EBS, and so reading a variable unwittingly turned into
-a synchronous network request over Amazon’s congested network. Maybe there are many other processes
-contending for CPU, and you hit a <a href="https://twitter.com/aphyr/status/682077908953792512">black node in your scheduler tree</a>. Maybe someone
-accidentally sent SIGSTOP to the process. Whatever. Your processes will get paused.</p>
-
-<p>If you still don’t believe me about process pauses, then consider instead that the file-writing
-request may get delayed in the network before reaching the storage service. Packet networks such as
-Ethernet and IP may delay packets <em>arbitrarily</em>, and <a href="https://queue.acm.org/detail.cfm?id=2655736" title="P Bailis and K Kingsbury. The Network is Reliable. ACM Queue 12(7), 2014.">they do</a> [7]: in a famous
-<a href="https://github.com/blog/1364-downtime-last-saturday" title="Mark Imbriaco. Downtime last Saturday. 2012">incident at GitHub</a>, packets were delayed in the network for approximately 90
-seconds [8]. This means that an application process may send a write request, and it may reach
-the storage server a minute later when the lease has already expired.</p>
-
-<p>Even in well-managed networks, this kind of thing can happen. You simply cannot make any assumptions
-about timing, which is why the code above is fundamentally unsafe, no matter what lock service you
-use.</p>
-
-<h2 id="making-the-lock-safe-with-fencing">Making the lock safe with fencing</h2>
-
-<p>The fix for this problem is actually pretty simple: you need to include a <em>fencing token</em> with every
-write request to the storage service. In this context, a fencing token is simply a number that
-increases (e.g. incremented by the lock service) every time a client acquires the lock. This is
-illustrated in the following diagram:</p>
-
-<p><img src="/2016/02/fencing-tokens.png" width="550" height="200" alt="Using fencing tokens to make resource access safe" /></p>
-
-<p>Client 1 acquires the lease and gets a token of 33, but then it goes into a long pause and the lease
-expires. Client 2 acquires the lease, gets a token of 34 (the number always increases), and then
-sends its write to the storage service, including the token of 34. Later, client 1 comes back to
-life and sends its write to the storage service, including its token value 33. However, the storage
-server remembers that it has already processed a write with a higher token number (34), and so it
-rejects the request with token 33.</p>
-
-<p>Note this requires the storage server to take an active role in checking tokens, and rejecting any
-writes on which the token has gone backwards. But this is not particularly hard, once you know the
-trick. And provided that the lock service generates strictly monotonically increasing tokens, this
-makes the lock safe. For example, if you are using ZooKeeper as lock service, you can use the <code>zxid</code>
-or the znode version number as fencing token, and you’re in good shape [3].</p>
-
-<p>However, this leads us to the first big problem with Redlock: <em>it does not have any facility for
-generating fencing tokens</em>. The algorithm does not produce any number that is guaranteed to increase
-every time a client acquires a lock. This means that even if the algorithm were otherwise perfect,
-it would not be safe to use, because you cannot prevent the race condition between clients in the
-case where one client is paused or its packets are delayed.</p>
-
-<p>And it’s not obvious to me how one would change the Redlock algorithm to start generating fencing
-tokens. The unique random value it uses does not provide the required monotonicity. Simply keeping
-a counter on one Redis node would not be sufficient, because that node may fail. Keeping counters on
-several nodes would mean they would go out of sync. It’s likely that you would need a consensus
-algorithm just to generate the fencing tokens. (If only <a href="https://twitter.com/lindsey/status/575006945213485056">incrementing a counter</a> was
-simple.)</p>
-
-<h2 id="using-time-to-solve-consensus">Using time to solve consensus</h2>
-
-<p>The fact that Redlock fails to generate fencing tokens should already be sufficient reason not to
-use it in situations where correctness depends on the lock. But there are some further problems that
-are worth discussing.</p>
-
-<p>In the academic literature, the most practical system model for this kind of algorithm is the
-<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf" title="TD Chandra and S Toueg. Unreliable Failure Detectors for Reliable Distributed Systems. JACM 43(2):225–267, 1996">asynchronous model with unreliable failure detectors</a> [9]. In plain English,
-this means that the algorithms make no assumptions about timing: processes may pause for arbitrary
-lengths of time, packets may be arbitrarily delayed in the network, and clocks may be arbitrarily
-wrong – and the algorithm is nevertheless expected to do the right thing. Given what we discussed
-above, these are very reasonable assumptions.</p>
-
-<p>The only purpose for which algorithms may use clocks is to generate timeouts, to avoid waiting
-forever if a node is down. But timeouts do not have to be accurate: just because a request times
-out, that doesn’t mean that the other node is definitely down – it could just as well be that there
-is a large delay in the network, or that your local clock is wrong. When used as a failure detector,
-timeouts are just a guess that something is wrong. (If they could, distributed algorithms would do
-without clocks entirely, but then <a href="http://www.cs.princeton.edu/courses/archive/fall07/cos518/papers/flp.pdf" title="MJ Fischer, N Lynch, and MS Paterson. Impossibility of Distributed Consensus with One Faulty Process. JACM 32(2):374–382, 1985">consensus becomes impossible</a> [10]. Acquiring a lock is
-like a compare-and-set operation, which <a href="https://cs.brown.edu/~mph/Herlihy91/p124-herlihy.pdf" title="Maurice Herlihy. Wait-Free Synchronization. TOPLAS 13(1):124–149, 1991">requires consensus</a> [11].)</p>
-
-<p>Note that Redis <a href="https://github.com/antirez/redis/blob/edd4d555df57dc84265fdfb4ef59a4678832f6da/src/server.c#L390-L404">uses <code>gettimeofday</code></a>, not a <a href="http://linux.die.net/man/2/clock_gettime">monotonic clock</a>, to
-determine the <a href="https://github.com/antirez/redis/blob/f0b168e8944af41c4161249040f01ece227cfc0c/src/db.c#L933-L959">expiry of keys</a>. The man page for <code>gettimeofday</code> <a href="http://linux.die.net/man/2/gettimeofday">explicitly
-says</a> that the time it returns is subject to discontinuous jumps in system time –
-that is, it might suddenly jump forwards by a few minutes, or even jump back in time (e.g. if the
-clock is <a href="https://www.eecis.udel.edu/~mills/ntp/html/clock.html">stepped by NTP</a> because it differs from a NTP server by too much, or if the
-clock is manually adjusted by an administrator). Thus, if the system clock is doing weird things, it
-could easily happen that the expiry of a key in Redis is much faster or much slower than expected.</p>
-
-<p>For algorithms in the asynchronous model this is not a big problem: these algorithms generally
-ensure that their <em>safety</em> properties always hold, <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">without making any timing
-assumptions</a> [12]. Only <em>liveness</em> properties depend on timeouts or some other failure
-detector. In plain English, this means that even if the timings in the system are all over the place
-(processes pausing, networks delaying, clocks jumping forwards and backwards), the performance of an
-algorithm might go to hell, but the algorithm will never make an incorrect decision.</p>
-
-<p>However, Redlock is not like this. Its safety depends on a lot of timing assumptions: it assumes
-that all Redis nodes hold keys for approximately the right length of time before expiring; that the
-network delay is small compared to the expiry duration; and that process pauses are much shorter
-than the expiry duration.</p>
-
-<h2 id="breaking-redlock-with-bad-timings">Breaking Redlock with bad timings</h2>
-
-<p>Let’s look at some examples to demonstrate Redlock’s reliance on timing assumptions. Say the system
-has five Redis nodes (A, B, C, D and E), and two clients (1 and 2). What happens if a clock on one
-of the Redis nodes jumps forward?</p>
-
-<ol>
-  <li>Client 1 acquires lock on nodes A, B, C. Due to a network issue, D and E cannot be reached.</li>
-  <li>The clock on node C jumps forward, causing the lock to expire.</li>
-  <li>Client 2 acquires lock on nodes C, D, E. Due to a network issue, A and B cannot be reached.</li>
-  <li>Clients 1 and 2 now both believe they hold the lock.</li>
-</ol>
-
-<p>A similar issue could happen if C crashes before persisting the lock to disk, and immediately
-restarts. For this reason, the Redlock documentation <a href="http://redis.io/topics/distlock#performance-crash-recovery-and-fsync">recommends delaying restarts</a> of
-crashed nodes for at least the time-to-live of the longest-lived lock. But this restart delay again
-relies on a reasonably accurate measurement of time, and would fail if the clock jumps.</p>
-
-<p>Okay, so maybe you think that a clock jump is unrealistic, because you’re very confident in having
-correctly configured NTP to only ever slew the clock. In that case, let’s look at an example of how
-a process pause may cause the algorithm to fail:</p>
-
-<ol>
-  <li>Client 1 requests lock on nodes A, B, C, D, E.</li>
-  <li>While the responses to client 1 are in flight, client 1 goes into stop-the-world GC.</li>
-  <li>Locks expire on all Redis nodes.</li>
-  <li>Client 2 acquires lock on nodes A, B, C, D, E.</li>
-  <li>Client 1 finishes GC, and receives the responses from Redis nodes indicating that it successfully
-acquired the lock (they were held in client 1’s kernel network buffers while the process was
-paused).</li>
-  <li>Clients 1 and 2 now both believe they hold the lock.</li>
-</ol>
-
-<p>Note that even though Redis is written in C, and thus doesn’t have GC, that doesn’t help us here:
-any system in which the <em>clients</em> may experience a GC pause has this problem. You can only make this
-safe by preventing client 1 from performing any operations under the lock after client 2 has
-acquired the lock, for example using the fencing approach above.</p>
-
-<p>A long network delay can produce the same effect as the process pause. It perhaps depends on your
-TCP user timeout – if you make the timeout significantly shorter than the Redis TTL, perhaps the
-delayed network packets would be ignored, but we’d have to look in detail at the TCP implementation
-to be sure. Also, with the timeout we’re back down to accuracy of time measurement again!</p>
-
-<h2 id="the-synchrony-assumptions-of-redlock">The synchrony assumptions of Redlock</h2>
-
-<p>These examples show that Redlock works correctly only if you assume a <em>synchronous</em> system model –
-that is, a system with the following properties:</p>
-
-<ul>
-  <li>bounded network delay (you can guarantee that packets always arrive within some guaranteed maximum
-delay),</li>
-  <li>bounded process pauses (in other words, hard real-time constraints, which you typically only
-find in car airbag systems and suchlike), and</li>
-  <li>bounded clock error (cross your fingers that you don’t get your time from a <a href="http://xenia.media.mit.edu/~nelson/research/ntp-survey99/">bad NTP
-server</a>).</li>
-</ul>
-
-<p>Note that a synchronous model does not mean exactly synchronised clocks: it means you are assuming
-a <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988"><em>known, fixed upper bound</em></a> on network delay, pauses and clock drift [12]. Redlock
-assumes that delays, pauses and drift are all small relative to the time-to-live of a lock; if the
-timing issues become as large as the time-to-live, the algorithm fails.</p>
-
-<p>In a reasonably well-behaved datacenter environment, the timing assumptions will be satisfied <em>most</em>
-of the time – this is known as a <a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">partially synchronous system</a> [12]. But is that good
-enough? As soon as those timing assumptions are broken, Redlock may violate its safety properties,
-e.g. granting a lease to one client before another has expired. If you’re depending on your lock for
-correctness, “most of the time” is not enough – you need it to <em>always</em> be correct.</p>
-
-<p>There is plenty of evidence that it is not safe to assume a synchronous system model for most
-practical system environments [7,8]. Keep reminding yourself of the GitHub incident with the
-<a href="https://github.com/blog/1364-downtime-last-saturday" title="Mark Imbriaco. Downtime last Saturday. 2012">90-second packet delay</a>. It is unlikely that Redlock would survive a <a href="https://aphyr.com/tags/jepsen">Jepsen</a> test.</p>
-
-<p>On the other hand, a consensus algorithm designed for a partially synchronous system model (or
-asynchronous model with failure detector) actually has a chance of working. Raft, Viewstamped
-Replication, Zab and Paxos all fall in this category. Such an algorithm must let go of all timing
-assumptions. That’s hard: it’s so tempting to assume networks, processes and clocks are more
-reliable than they really are. But in the messy reality of distributed systems, you have to be very
-careful with your assumptions.</p>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>I think the Redlock algorithm is a poor choice because it is “neither fish nor fowl”: it is
-unnecessarily heavyweight and expensive for efficiency-optimization locks, but it is not
-sufficiently safe for situations in which correctness depends on the lock.</p>
-
-<p>In particular, the algorithm makes dangerous assumptions about timing and system clocks (essentially
-assuming a synchronous system with bounded network delay and bounded execution time for operations),
-and it violates safety properties if those assumptions are not met. Moreover, it lacks a facility
-for generating fencing tokens (which protect a system against long delays in the network or in
-paused processes).</p>
-
-<p>If you need locks only on a best-effort basis (as an efficiency optimization, not for correctness),
-I would recommend sticking with the <a href="http://redis.io/commands/set">straightforward single-node locking algorithm</a> for
-Redis (conditional set-if-not-exists to obtain a lock, atomic delete-if-value-matches to release
-a lock), and documenting very clearly in your code that the locks are only approximate and may
-occasionally fail. Don’t bother with setting up a cluster of five Redis nodes.</p>
-
-<p>On the other hand, if you need locks for correctness, please don’t use Redlock. Instead, please use
-a proper consensus system such as <a href="https://zookeeper.apache.org/">ZooKeeper</a>, probably via one of the <a href="http://curator.apache.org/curator-recipes/index.html">Curator recipes</a>
-that implements a lock. (At the very least, use a <a href="http://www.postgresql.org/">database with reasonable transactional
-guarantees</a>.) And please enforce use of fencing tokens on all resource accesses under the
-lock.</p>
-
-<p>As I said at the beginning, Redis is an excellent tool if you use it correctly. None of the above
-diminishes the usefulness of Redis for its intended purposes. <a href="http://antirez.com/">Salvatore</a> has been very
-dedicated to the project for years, and its success is well deserved. But every tool has
-limitations, and it is important to know them and to plan accordingly.</p>
-
-<p>If you want to learn more, I explain this topic in greater detail in <a href="http://dataintensive.net/">chapters 8 and 9 of my
-book</a>, now available in Early Release from O’Reilly. (The diagrams above are taken from my
-book.) For learning how to use ZooKeeper, I recommend <a href="http://shop.oreilly.com/product/0636920028901.do" title="FP Junqueira and B Reed. ZooKeeper: Distributed Process Coordination. O'Reilly, 2013">Junqueira and Reed’s book</a> [3].
-For a good introduction to the theory of distributed systems, I recommend <a href="http://www.distributedprogramming.net/" title="C Cachin, R Guerraoui, and L Rodrigues. Introduction to Reliable and Secure Distributed Programming, 2nd ed. Springer, 2011">Cachin, Guerraoui and
-Rodrigues’ textbook</a> [13].</p>
-
-<p><em>Thank you to <a href="https://aphyr.com">Kyle Kingsbury</a>, <a href="https://twitter.com/skamille">Camille Fournier</a>, <a href="https://twitter.com/fpjunqueira">Flavio Junqueira</a>, and
-<a href="http://antirez.com/">Salvatore Sanfilippo</a> for reviewing a draft of this article. Any errors are mine, of
-course.</em></p>
-
-<p><strong>Update 9 Feb 2016:</strong> <a href="http://antirez.com/">Salvatore</a>, the original author of Redlock, has
-<a href="http://antirez.com/news/101">posted a rebuttal</a> to this article (see also
-<a href="https://news.ycombinator.com/item?id=11065933">HN discussion</a>). He makes some good points, but
-I stand by my conclusions. I may elaborate in a follow-up post if I have time, but please form your
-own opinions – and please consult the references below, many of which have received rigorous
-academic peer review (unlike either of our blog posts).</p>
-
-<h2 id="references">References</h2>
-
-<p>[1] Cary G Gray and David R Cheriton:
-“<a href="https://pdfs.semanticscholar.org/a25e/ee836dbd2a5ae680f835309a484c9f39ae4e.pdf" title="Cary G Gray and David R Cheriton. Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency. SOSP 1989">Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency</a>,”
-at <em>12th ACM Symposium on Operating Systems Principles</em> (SOSP), December 1989.
-<a href="http://dx.doi.org/10.1145/74850.74870">doi:10.1145/74850.74870</a></p>
-
-<p>[2] Mike Burrows:
-“<a href="http://research.google.com/archive/chubby.html" title="Mike Burrows. The Chubby lock service for loosely-coupled distributed systems. OSDI 2006">The Chubby lock service for loosely-coupled distributed systems</a>,”
-at <em>7th USENIX Symposium on Operating System Design and Implementation</em> (OSDI), November 2006.</p>
-
-<p>[3] Flavio P Junqueira and Benjamin Reed:
-<a href="http://shop.oreilly.com/product/0636920028901.do" title="FP Junqueira and B Reed. ZooKeeper: Distributed Process Coordination. O'Reilly, 2013"><em>ZooKeeper: Distributed Process Coordination</em></a>. O’Reilly Media, November 2013.
-ISBN: 978-1-4493-6130-3</p>
-
-<p>[4] Enis Söztutar:
-“<a href="http://www.slideshare.net/enissoz/hbase-and-hdfs-understanding-filesystem-usage" title="Enis Söztutar. HBase and HDFS: Understanding filesystem usage in HBase. HBaseCon 2013">HBase and HDFS: Understanding filesystem usage in HBase</a>,” at <em>HBaseCon</em>, June 2013.</p>
-
-<p>[5] Todd Lipcon:
-“<a href="http://blog.cloudera.com/blog/2011/02/avoiding-full-gcs-in-hbase-with-memstore-local-allocation-buffers-part-1/" title="Todd Lipcon. Avoiding Full GCs in Apache HBase with MemStore-Local Allocation Buffers: Part 1. 2011">Avoiding Full GCs in Apache HBase with MemStore-Local Allocation Buffers: Part 1</a>,”
-blog.cloudera.com, 24 February 2011.</p>
-
-<p>[6] Martin Thompson: “<a href="http://mechanical-sympathy.blogspot.co.uk/2013/07/java-garbage-collection-distilled.html" title="Martin Thompson. Java Garbage Collection Distilled. 2013">Java Garbage Collection Distilled</a>,”
-mechanical-sympathy.blogspot.co.uk, 16 July 2013.</p>
-
-<p>[7] Peter Bailis and Kyle Kingsbury: “<a href="https://queue.acm.org/detail.cfm?id=2655736" title="P Bailis and K Kingsbury. The Network is Reliable. ACM Queue 12(7), 2014.">The Network is Reliable</a>,”
-<em>ACM Queue</em>, volume 12, number 7, July 2014.
-<a href="http://dx.doi.org/10.1145/2639988.2639988">doi:10.1145/2639988.2639988</a></p>
-
-<p>[8] Mark Imbriaco: “<a href="https://github.com/blog/1364-downtime-last-saturday" title="Mark Imbriaco. Downtime last Saturday. 2012">Downtime last Saturday</a>,” github.com, 26 December 2012.</p>
-
-<p>[9] Tushar Deepak Chandra and Sam Toueg:
-“<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf" title="TD Chandra and S Toueg. Unreliable Failure Detectors for Reliable Distributed Systems. JACM 43(2):225–267, 1996">Unreliable Failure Detectors for Reliable Distributed Systems</a>,”
-<em>Journal of the ACM</em>, volume 43, number 2, pages 225–267, March 1996.
-<a href="http://dx.doi.org/10.1145/226643.226647">doi:10.1145/226643.226647</a></p>
-
-<p>[10] Michael J Fischer, Nancy Lynch, and Michael S Paterson:
-“<a href="http://www.cs.princeton.edu/courses/archive/fall07/cos518/papers/flp.pdf" title="MJ Fischer, N Lynch, and MS Paterson. Impossibility of Distributed Consensus with One Faulty Process. JACM 32(2):374–382, 1985">Impossibility of Distributed Consensus with One Faulty Process</a>,”
-<em>Journal of the ACM</em>, volume 32, number 2, pages 374–382, April 1985.
-<a href="http://dx.doi.org/10.1145/3149.214121">doi:10.1145/3149.214121</a></p>
-
-<p>[11] Maurice P Herlihy: “<a href="https://cs.brown.edu/~mph/Herlihy91/p124-herlihy.pdf" title="Maurice Herlihy. Wait-Free Synchronization. TOPLAS 13(1):124–149, 1991">Wait-Free Synchronization</a>,”
-<em>ACM Transactions on Programming Languages and Systems</em>, volume 13, number 1, pages 124–149, January 1991.
-<a href="http://dx.doi.org/10.1145/114005.102808">doi:10.1145/114005.102808</a></p>
-
-<p>[12] Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer:
-“<a href="http://www.net.t-labs.tu-berlin.de/~petr/ADC-07/papers/DLS88.pdf" title="C Dwork, N Lynch, and L Stockmeyer. Consensus in the Presence of Partial Synchrony. JACM 35(2):288–323, 1988">Consensus in the Presence of Partial Synchrony</a>,”
-<em>Journal of the ACM</em>, volume 35, number 2, pages 288–323, April 1988.
-<a href="http://dx.doi.org/10.1145/42282.42283">doi:10.1145/42282.42283</a></p>
-
-<p>[13] Christian Cachin, Rachid Guerraoui, and Luís Rodrigues:
-<a href="http://www.distributedprogramming.net/" title="C Cachin, R Guerraoui, and L Rodrigues. Introduction to Reliable and Secure Distributed Programming, 2nd ed. Springer, 2011"><em>Introduction to Reliable and Secure Distributed Programming</em></a>,
-Second Edition. Springer, February 2011. ISBN: 978-3-642-15259-7,
-<a href="http://dx.doi.org/10.1007/978-3-642-15260-3">doi:10.1007/978-3-642-15260-3</a></p>
 
 
                 ]]></content:encoded>

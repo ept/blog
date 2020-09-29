@@ -291,9 +291,28 @@ you will probably have a tendency of overdoing certain activities to the detrime
 being aware of your them you can consciously manage and balance your life.</p>
 
 
+                <div class="mailing-list-signup">
+                    <p>
+                    To get notified when I write something new,
+                    <a href="https://twitter.com/martinkl">follow me</a> on Twitter
+                    or enter your email address:
+                    </p>
+
+                    <form action="https://mail.martinkl.com/mailing-list" method="post">
+                        <label for="signup-email">Email address:</label>
+                        <input type="email" value="" name="email" class="required email" id="signup-email">
+                        <input type="submit" value="Subscribe" name="subscribe" class="button">
+                        <input type="hidden" name="list" value="blog">
+                    </form>
+
+                    <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                    </p>
+                </div>
+
                 
 
-                <div id="disqus_thread"></div>
+                
             </div>
 
             <div id="sidebar">
@@ -303,7 +322,7 @@ being aware of your them you can consciously manage and balance your life.</p>
         Site <acronym title="Really Simple Syndication">RSS</acronym> feed
     </a>
 
-    <div id="mc_embed_signup">
+    <div class="mailing-list-signup">
         <p>
             To get notified when I write something new,
             <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
@@ -311,15 +330,14 @@ being aware of your them you can consciously manage and balance your life.</p>
             or enter your email address:
         </p>
 
-        <form action="//kleppmann.us2.list-manage.com/subscribe/post?u=9a1adaf549282981a96e171d1&amp;id=4543b695f6"
-            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+        <form action="https://mail.martinkl.com/mailing-list" method="post">
             <fieldset>
                 <div class="mc-field-group">
                     <label for="mce-EMAIL">Email address:</label>
-                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    <input type="email" value="" name="email" class="required email" id="mce-EMAIL">
                     <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
                 </div>
-                <div style="position: absolute; left: -5000px;"><input type="text" name="b_9a1adaf549282981a96e171d1_4543b695f6" tabindex="-1" value=""></div>
+                <input type="hidden" name="list" value="blog">
             </fieldset>
         </form>
 
@@ -361,6 +379,8 @@ being aware of your them you can consciously manage and balance your life.</p>
         <h2 class="title">Recent posts</h2>
         <ul>
             
+              <li>29 Sep 2020: <a href="/2020/09/29/is-book-writing-worth-it.html">Writing a book: is it worth it?</a></li>
+            
               <li>31 Jan 2020: <a href="/2020/01/31/brief-brexit-lament.html">A brief Brexit lament</a></li>
             
               <li>30 Oct 2019: <a href="/2019/10/30/research-update.html">Research update for 2019</a></li>
@@ -368,8 +388,6 @@ being aware of your them you can consciously manage and balance your life.</p>
               <li>27 Jun 2019: <a href="/2019/06/27/hydra-interview.html">Figuring out the future of distributed data systems (interview)</a></li>
             
               <li>18 Jan 2018: <a href="/2018/01/18/event-types-in-kafka-topic.html">Should you put several event types in the same Kafka topic?</a></li>
-            
-              <li>15 Mar 2017: <a href="/2017/03/15/map-distributed-data-systems.html">Drawing a map of distributed data systems</a></li>
             
             <li><a href="/archive.html">Full archive</a></li>
         </ul>
@@ -417,18 +435,7 @@ being aware of your them you can consciously manage and balance your life.</p>
 
     </div>
 
-    <script type="text/javascript">
-    var disqus_shortname = 'martinkl';
-    var disqus_url = 'http://martin.kleppmann.com/2009/04/04/managing-meta-thoughts-on-focus-and-priorities.html';
-    var disqus_identifier = disqus_url;
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-
+    
     <!-- Twitter -->
 <script>
 !function (d, s, id) {
