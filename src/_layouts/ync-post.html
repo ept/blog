@@ -23,6 +23,25 @@
 
                 {{ content }}
 
+                <div class="mailing-list-signup">
+                    <p>
+                    To get notified when I write something new,
+                    <a href="https://twitter.com/martinkl">follow me</a> on Twitter
+                    or enter your email address:
+                    </p>
+
+                    <form action="https://mail.martinkl.com/mailing-list" method="post">
+                        <label for="signup-email">Email address:</label>
+                        <input type="email" value="" name="email" class="required email" id="signup-email">
+                        <input type="submit" value="Subscribe" name="subscribe" class="button">
+                        <input type="hidden" name="list" value="blog">
+                    </form>
+
+                    <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                    </p>
+                </div>
+
                 {% for hn_link in page.hackernews %}
                 <div class="hackernews">
                     Join the discussion about this article
