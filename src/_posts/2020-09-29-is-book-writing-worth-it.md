@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "Writing a book: is it worth it?"
+hackernews: https://news.ycombinator.com/item?id=24628549
 ---
 
 My book, [Designing Data-Intensive Applications](https://dataintensive.net/), recently passed the
