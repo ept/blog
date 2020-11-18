@@ -10,12 +10,93 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 11 Nov 2020 13:30:36 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 18 Nov 2020 13:09:22 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>New courses on distributed systems and elliptic curve cryptography</title>
+                <link>http://martin.kleppmann.com/2020/11/18/distributed-systems-and-elliptic-curves.html</link>
+                <comments>http://martin.kleppmann.com/2020/11/18/distributed-systems-and-elliptic-curves.html#disqus_thread</comments>
+                <pubDate>Wed, 18 Nov 2020 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2020/11/18/distributed-systems-and-elliptic-curves.html</guid>
+                
+                <description><![CDATA[ I have just published new educational materials that might be of interest to computing people: a new 8-lecture course on distributed systems, and a tutorial on elliptic curve cryptography. Distributed Systems Since last year I have been delivering an 8-lecture undergraduate course on distributed systems at the University of Cambridge.... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>I have just published new educational materials that might be of interest to computing people:
+a new 8-lecture course on distributed systems, and a tutorial on elliptic curve cryptography.</p>
+
+<h2 id="distributed-systems">Distributed Systems</h2>
+
+<p>Since last year I have been delivering an 8-lecture undergraduate course on distributed systems at the University of Cambridge.
+The first time I delivered it, I inherited the slides and exercises from the people who lectured it in previous years (Richard Mortier, Anil Madhavapeddy, Robert Watson, Jean Bacon, and Steven Hand), and I just used those materials with minor modifications.
+It was a good course, but it was getting quite dated (e.g. lots of material on <a href="https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">CORBA</a>, which is now of mostly historical interest).</p>
+
+<p>Therefore, this year I decided to do a thorough refresh of the course content, and wrote a brand new set of slides and lecture notes.
+Also, due to the pandemic we are not having any in-person lectures, so I recorded videos for all of the lectures.
+I decided to make all of this available publicly under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">creative commons CC BY-SA license</a>, which means that you’re welcome to use it freely (including incorporating it into your own work), provided that you give credit to me, and that you share your derived work under the same license.</p>
+
+<p>The result is here:</p>
+
+<ul>
+  <li><a href="https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-notes.pdf">Lecture notes (PDF)</a> (including exercises)</li>
+  <li>Slides: <a href="https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-slides.pdf">slideshow</a> and <a href="https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-handout.pdf">printable</a> (PDF)</li>
+  <li><a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB">Lecture videos (YouTube)</a></li>
+  <li><a href="https://www.cst.cam.ac.uk/teaching/2021/ConcDisSys">Course web page</a></li>
+  <li>Solution notes for the exercises are available on demand (<a href="/contact.html">email me</a> and convince me that you’re not a student trying to cheat).
+Cambridge supervisors can <a href="https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/supervisors/dist-sys-solutions.pdf">download the solution notes directly</a> (Raven login required).</li>
+</ul>
+
+<p>The course is primarily designed for Cambridge undergraduate students, and it includes some cross-references to other courses.
+Many other courses also make their notes or slides publicly available, so you can still look them up if you’re not at Cambridge by going to the <a href="https://www.cl.cam.ac.uk/teaching/2021/part1b-75.html">course web pages</a>.
+(Many lecturers restrict their video recordings to Cambridge users only, so those might not be publicly available.)</p>
+
+<p>The distributed systems course comprises about 7 hours of video and 87 pages of lecture notes.
+It covers the following topics:</p>
+
+<ol>
+  <li>Introduction: distributed systems, computer networks, and RPC</li>
+  <li>System models: network faults, crash and Byzantine faults, synchrony assumptions</li>
+  <li>Physical clocks, clock synchronisation, and causality</li>
+  <li>Logical time, broadcast protocols (reliable, FIFO, causal, total order)</li>
+  <li>Replication, quorum protocols, state machine replication</li>
+  <li>Consensus, details on the Raft consensus algorithm</li>
+  <li>Replica consistency, two-phase commit, linearizability, eventual consistency</li>
+  <li>Case studies: collaboration software, Google’s Spanner</li>
+</ol>
+
+<p>The main focus of this course is on understanding the algorithms and the principles that allow us to build robust and reliable distributed systems.
+It uses examples of practical systems as motivation, and the videos include a few live demos of real distributed systems in action.
+The aim is to convey the fundamentals without being excessively theoretical; there are a few mathematical proofs in the exercises, but most of the discussion is informal and example-based.</p>
+
+<p>The level of this course is intended for second-year undergraduates.
+Our students at this level have reasonable fluency with mathematical notation, and some background in programming languages and operating systems, so that’s what this course assumes.</p>
+
+<h2 id="elliptic-curve-cryptography">Elliptic Curve Cryptography</h2>
+
+<p>Another document I’m releasing today is called
+<a href="https://martin.kleppmann.com/papers/curve25519.pdf">Implementing Curve25519/X25519: A Tutorial on Elliptic Curve Cryptography</a>.
+There’s no video for this one, just a 30-page PDF.</p>
+
+<p>Many textbooks cover the concepts behind Elliptic Curve Cryptography (ECC), but few explain how to go from the equations to a working, fast, and secure implementation.
+On the other hand, while the code of many cryptographic libraries is available as open source, it can be <a href="https://github.com/jedisct1/libsodium/blob/master/src/libsodium/crypto_scalarmult/curve25519/ref10/x25519_ref10.c#L91-L132">rather opaque to the untrained eye</a>, and it is rarely accompanied by detailed documentation explaining how the code came about and why it is correct.</p>
+
+<p>This tutorial bridges the gap between the mathematics and implementation of elliptic curve cryptography.
+It is written for readers who are new to cryptography, and it assumes no more mathematical background than most undergraduate computer science courses.
+Starting from first principles, this document shows how to derive every line of code in an implementation of the <a href="https://tools.ietf.org/html/rfc7748">X25519</a> Diffie-Hellman key agreement scheme, based on the <a href="https://ianix.com/pub/curve25519-deployment.html">widely-used Curve25519 elliptic curve</a>.
+The implementation is based on Dan Bernstein et al.’s <a href="https://tweetnacl.cr.yp.to/">TweetNaCl</a>.
+It is fast and secure; in particular, it uses constant-time algorithms to prevent side-channel attacks.</p>
+
+<p>I wrote this because I wanted to learn how real implementations of ECC work, but I couldn’t find good resources that explained it, so I wrote the document as I figured it out step-by-step from a number of sources (and by doing a lot of the calculations myself).
+I hope others will also find it useful.</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Writing a book: is it worth it?</title>
@@ -1935,100 +2016,6 @@ investigations or hostile foreign intelligence services or organised crime. The 
 and terrorists “going dark” are overblown</a>, but the risk to life from insecure
 infrastructure is real: fixing these weaknesses should be our priority, not striving to make devices
 less secure for the sake of law enforcement.</p>
-
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Should law enforcement services have a backdoor into smartphones?</title>
-                <link>http://martin.kleppmann.com/2016/02/18/law-enforcement-smartphone-backdoors.html</link>
-                <comments>http://martin.kleppmann.com/2016/02/18/law-enforcement-smartphone-backdoors.html#disqus_thread</comments>
-                <pubDate>Thu, 18 Feb 2016 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2016/02/18/law-enforcement-smartphone-backdoors.html</guid>
-                
-                <description><![CDATA[ This article was originally supposed to be published on The Conversation, but was dropped because they already had another, very similar article. Apple has found itself challenging a judge’s ruling after it refused to help the FBI break into the secured iPhone of Syed Rizwan Farook, one of the shooters... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>This article was originally supposed to be published on <a href="https://theconversation.com/">The Conversation</a>,
-but was dropped because they already had another, very similar article.</em></p>
-
-<p>Apple has found itself challenging a judge’s ruling after it <a href="http://www.theguardian.com/us-news/2016/feb/17/apple-ordered-to-hack-iphone-of-san-bernardino-shooter-for-fbi">refused to help the FBI</a>
-break into the secured iPhone of Syed Rizwan Farook, one of the shooters at last year’s attack in
-San Bernardino, California. As the data on the phone is encrypted and investigators need the
-passcode in order to decrypt it they have <a href="https://www.documentcloud.org/documents/2714001-SB-Shooter-Order-Compelling-Apple-Asst-iPhone.html">demanded that Apple</a>, as the phone’s
-manufacturer, help them.</p>
-
-<p>On the face of it, assisting with the investigation of a terrorist act seems like a very reasonable
-demand. Why would Apple refuse it? To understand we have to take a closer look at how smartphone
-security works.</p>
-
-<p>Apple’s <a href="https://www.apple.com/business/docs/iOS_Security_Guide.pdf">iOS operating system security guide</a> explains that the iPhone deliberately
-introduces a delay when checking a passcode: it allows at most 12 passcode guesses per second, and
-sometimes waits several seconds after an incorrect guess, depending on your settings. This is to
-prevent “brute force attacks”, where software tries every possible combination in order to find the
-correct passcode.</p>
-
-<p>On recent iPhones, this delay is enforced by the so-called <a href="http://blog.cryptographyengineering.com/2014/10/why-cant-apple-decrypt-your-iphone.html">Secure Enclave</a>,
-a special chip that handles security-critical aspects of the phone – such as encryption and the
-fingerprint sensor – in hardware. In the case of Farook’s phone, it’s an iPhone 5C which <a href="http://blog.trailofbits.com/2016/02/17/apple-can-comply-with-the-fbi-court-order/">does not
-have a Secure Enclave</a>.</p>
-
-<p>The reason Apple develops these security features is not anti-government activism – it is simply
-commercial demand. The job of big corporate IT departments is to protect sensitive company data
-against industrial espionage by competitors, and against attacks from criminal gangs. In many
-industries a compromise of sensitive data would breach compliance with government regulations, and
-<a href="http://www.theguardian.com/society/2014/aug/26/ministry-justice-fined-180000-losing-hard-drive-sensitive-data-prisoners">risk a heavy fine</a> or even criminal charges. This is not to mention the
-reputational damage, as <a href="https://theconversation.com/talktalk-hack-perhaps-well-finally-take-cybersecurity-seriously-50144">many firms have found</a>. And the same applies to individuals for
-much the same reasons.</p>
-
-<p>So if companies are willing to pay a premium for products that will keep their data safe, they will
-happily buy iPhones for their employees, and require them to set a strong passcode. That way, even
-if an employee accidentally forgets their phone at a bar, or it is <a href="http://www.bbc.co.uk/news/uk-england-manchester-19960966">stolen from the employee’s
-home</a>, the IT department can feel confident that whoever picks up the phone won’t be able
-to access the sensitive emails and business records that may be stored on it.</p>
-
-<p>For example, even if the phone is picked up by an agent of a hostile foreign intelligence service,
-and they take it to their lab and open it up, remove the storage chips and attach them to computer
-forensics apparatus – even then, they probably <a href="http://www.darthnull.org/2014/10/06/ios-encryption">won’t be able to salvage the data</a>.
-An unlikely scenario for most people, but if you work for a defence contractor or the diplomatic
-corps, you have to worry about such things. If companies are willing to pay for security features to
-protect against such scenarios, it makes sense for companies such as Apple <a href="http://www.apple.com/customer-letter/">to take note of their
-wishes</a>.</p>
-
-<p>But what about situations when it might be legitimate for law enforcement to try to access this
-data? If the FBI turn up with a warrant signed by a judge, should they not be able to get their
-hands on the information?</p>
-
-<p>The problem is that if there is a special method or technique, besides knowing the right passcode,
-that grants access to protected data – known as a <a href="https://theconversation.com/could-encryption-backdoors-safeguard-privacy-and-fight-terror-online-53419">backdoor</a> – then that method or technique could
-be used for both legitimate and illegitimate uses. How do you control who can use that backdoor? If
-a phone manufacturer creates a backdoor for police, it <a href="https://www.cl.cam.ac.uk/~rja14/Papers/doormats.pdf">will inevitably be used by criminals as
-well</a>.</p>
-
-<p>For example, imagine the FBI had a special piece of software that would allow them to unlock an
-iPhone if authorised by a warrant. It would only take one rogue employee, or one hack of the FBI’s
-computer systems, to leak that software onto the internet for any criminal – or foreign spies – to
-use. Imagine they had a hardware device that would magically open an iPhone and reveal it’s data:
-a few of those devices would end up on the black market very quickly. <a href="http://www.theguardian.com/technology/2015/jul/09/opm-hack-21-million-personal-information-stolen">Government departments can be
-hacked</a>, just like anyone else, and there are always employees looking to make a quick
-buck.</p>
-
-<p>Encryption backdoors <a href="https://www.eff.org/deeplinks/2016/02/eff-support-apple-encryption-battle">deliberately weaken security</a>. This is fundamentally a bad idea, and can
-have many <a href="http://blog.cryptographyengineering.com/2015/12/on-juniper-backdoor.html">unforeseen consequences</a>. Trying to restrict access to strong encryption, as the
-<a href="https://en.wikipedia.org/wiki/Export_of_cryptography_from_the_United_States">US government tried and failed to do in the 1990s</a>, is counterproductive and
-pointless: <a href="http://blog.cryptographyengineering.com/2015/03/attack-of-week-freak-or-factoring-nsa.html">counterproductive</a> because it only harms innocent people, whereas those its aimed
-at will find a way to work around it, and pointless because strong encryption products are <a href="https://www.schneier.com/cryptography/paperfiles/worldwide-survey-of-encryption-products.pdf">found
-throughout the world</a>: people will just go somewhere else for their encryption if they
-can’t get it at home.</p>
-
-<p>It is understandable that in the wake of a crime or terrorist attack, politicians and law
-enforcement need to be seen as “doing something”. However, that does not mean law enforcement should
-be able to do everything. It is worth remembering why security mechanisms like encryption exist in
-the first place: to protect sensitive medical, legal, journalistic, financial, diplomatic,
-commercial or military data from falling into the wrong hands. Trying to weaken those protections
-would cause far more harm than good.</p>
 
 
                 ]]></content:encoded>
