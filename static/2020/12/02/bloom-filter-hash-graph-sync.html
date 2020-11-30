@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Using Bloom filters to efficiently synchronise hash graphs &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?5" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Using Bloom filters to efficiently synchronise hash graphs"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Using Bloom filters to efficiently synchronise hash graphs</h1>
+
+                
+                <p style="font-size: 80%">Published by Martin Kleppmann on 02 Dec 2020.</p>
+                
+
+                <p><em>This blog post uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematics. You need JavaScript enabled for MathJax to work.</em></p>
+
+<p>In some recent research, <a href="http://heidihoward.co.uk/">Heidi</a> and I needed to solve the following problem.
+Say you want to sync a hash graph, such as a Git repository, between two nodes.
+In Git, each commit is identified by its hash, and a commit may include the hashes of predecessor commits (a commit may include more than one hash if it’s a merge commit).
+We want to figure out the minimal set of commits that the two nodes need to send to each other in order to make their graphs the same.</p>
+
+<p>You might wonder: isn’t this a solved problem?
+Git has to do this every time you do <code>git pull</code> or <code>git push</code>!
+You’re right, and some cases are easy, but other cases are a bit trickier.
+What’s more, the algorithm used by Git is not particularly well-documented, and in any case we think that we can do better.</p>
+
+<p>For example, say we have two nodes, and each has one of the following two hash graphs (circles are commits, arrows indicate one commit referencing the hash of another).
+The blue part (commit A and those to the left of it) is shared between the two graphs, while the dark grey and light grey parts exist in only one of the two graphs.</p>
+
+<p><a href="/2020/12/hash-dag.png"><img src="/2020/12/hash-dag.png" width="550" height="258" alt="Illustration of two hash graphs" /></a></p>
+
+<p>We want to reconcile the two nodes’ states so that one node sends all of the dark-grey-coloured commits, the other sends all of the light-grey-coloured commits, and both end up with the following graph:</p>
+
+<p><a href="/2020/12/hash-dag2.png"><img src="/2020/12/hash-dag2.png" width="550" height="143" alt="Hash graph after reconciliation" /></a></p>
+
+<p>How do we efficiently figure out which commits the two nodes need to send to each other?</p>
+
+<h2 id="traversing-the-graph">Traversing the graph</h2>
+
+<p>First, some terminology.
+Let’s say commit A is a <em>predecessor</em> of commit B if B references the hash of A, or if there is some chain of hash references from B leading to A.
+If A is a predecessor of B, then B is a <em>successor</em> of A.
+Finally, define the <em>heads</em> of the graph to be those commits that have no successors.
+In the example above, the heads are B, C, and D.
+(This is slightly different from how Git defines <code>HEAD</code>.)</p>
+
+<p>The reconciliation algorithm is easy if it’s a “fast-forward” situation: that is, if one node’s heads are commits that the other node already has.
+In that case, one node sends the other the hashes of its heads, and the other node replies with all commits that are successors of the first node’s heads.
+However, the situation is tricker in the example above, where one node’s heads B and C are unknown to the other node, and likewise head D is unknown to the first node.</p>
+
+<p>In order to reconcile the two graphs, we want to figure out which commits are the latest common predecessors of both graphs’ heads (also known as <em>common ancestors</em>, marked A in the example), and then the nodes can send each other all commits that are successors of the common predecessors.</p>
+
+<p>As a first attempt, we can try this: the two nodes send each other their heads; if those contain any unknown predecessor hashes, they request those, and repeat until all hashes resolve to known commits.
+Thus, the nodes gradually work their way from the heads towards the common predecessors.
+This works, but it is slow if your graph contains long chains of commits, since the number of round trips required equals the length of the longest path from a head to a common predecessor.</p>
+
+<p>The “smart” transfer protocol used by Git essentially <a href="https://www.git-scm.com/docs/http-protocol">works like this</a>, except that it sends 32 hashes at a time in order to reduce the number of round trips.
+Why 32? Who knows.
+It’s a trade-off: send more hashes to reduce the number of round trips, but each request/response is bigger.
+Presumably they decided that 32 was a reasonable compromise between latency and bandwidth.</p>
+
+<p>Recent versions of Git also support an experimental <a href="https://github.com/git/git/commit/42cc7485a2ec49ecc440c921d2eb0cae4da80549">“skipping” algorithm</a>, which can be enabled using the <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-fetchnegotiationAlgorithm"><code>fetch.negotiationAlgorithm</code> config option</a>.
+Rather than moving forward by a fixed number of predecessors in each round trip, this algorithm allows some commits to be skipped, so that it reaches the common predecessors faster.
+The skip size grows similarly to the Fibonacci sequence (i.e. exponentially) with each round trip.
+This reduces the number of round trips to \(O(\log n)\), but you can end up overshooting the common predecessors, and thus the protocol may end up unnecessarily transmitting commits that the other node already has.</p>
+
+<h2 id="bloom-filters-to-the-rescue">Bloom filters to the rescue</h2>
+
+<p>In our new paper draft, which we are making available on arXiv today (TODO link), Heidi and I propose a different algorithm for performing this kind of reconciliation.
+It is quite simple if you know how <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filters</a> work.</p>
+
+<p>In addition to sending the hashes of their heads, each node constructs a Bloom filter containing the hashes of the commits that it knows about.
+In our prototype, we allocate 10 bits (1.25 bytes) per commit.
+This number can be adjusted, but note that it is a lot more compact than sending the full 16-byte (for SHA-1, used by Git) or 32-byte (for SHA-256, which is more secure) hash for each commit.
+Moreover, we keep track of the heads from the last time we reconciled our state with a particular node, and then the Bloom filter only needs to include commits that were added since the last reconciliation.</p>
+
+<p>When a node receives such a Bloom filter, it checks its own commit hashes to see whether they appear in the filter.
+Any commits whose hash does not appear in the Bloom filter, and its successors, can immediately be sent to the other node, since we can be sure that the other node does not know about those commits.
+For any commits whose hash does appear in the Bloom filter, it is likely that the other node knows about that commit, but due to false positives it is possible that the other node actually does not know about those commits.</p>
+
+<p>After receiving all the commits that did not appear in the Bloom filter, we check whether we know all of their predecessor hashes.
+If any are missing, we request them in a separate round trip using the same graph traversal algrorithm as before.
+Due to the way the false positive probabilities work, the probability of requiring n round trips decreases exponentially as n grows.
+For example, you might have a 1% chance of requiring two round trips, a 0.01% chance of requiring three round trips, a 0.0001% chance of requiring four round trips, and so on.
+Almost all reconciliations complete in one round trip.</p>
+
+<p>Unlike the skipping algorithm used by Git, our algorithm never unnecessarily sends any commits that the other side already has, and the Bloom filters are very compact, even for large commit histories.</p>
+
+<h2 id="practical-relevance">Practical relevance</h2>
+
+<p>In the paper we also prove that this algorithm allows nodes to sync their state even in the presence of arbitrarily many malicious nodes, making it immune to <a href="https://en.wikipedia.org/wiki/Sybil_attack">Sybil attacks</a>.
+We then go on to prove a theorem that shows which types of applications can and cannot be implemented in this Sybil-immune way, without requiring any Sybil countermeasures such as <a href="https://en.wikipedia.org/wiki/Proof_of_work">proof-of-work</a> or the centralised control of <a href="https://arxiv.org/pdf/1711.03936.pdf">permissioned blockchains</a>.</p>
+
+<p>All of this is directly relevant for <a href="https://www.inkandswitch.com/local-first.html">local-first</a> peer-to-peer applications in which apps running on different devices need to sync up their state without necessarily trusting each other or relying on any trusted servers.
+I assume it’s also relevant for <a href="https://www.swirlds.com/downloads/SWIRLDS-TR-2016-01.pdf">blockchains that use hash graphs</a>, but I don’t know much about them.
+So, syncing a Git commit history is just one of many possible use cases – I just used it because most developers will be at least roughly familiar with it!</p>
+
+<p>The details of the algorithm and the theorems are in the paper, so I won’t repeat them here.
+Instead, I will briefly mention a few interesting things that didn’t make it into the paper.</p>
+
+<h2 id="why-bloom-filters">Why Bloom filters?</h2>
+
+<p>One thing you might be wondering: rather than creating a Bloom filters with 10 bits per commit, can we not just truncate the commit hashes to 10 bits and send those instead?
+That would use the same amount of network bandwidth, and intuitively it may seem like it should be equivalent.</p>
+
+<p>However, that is not the case: Bloom filters perform vastly better than truncated hashes.
+I will use a small amount of probability theory to explain why.</p>
+
+<p>Say we have a hash graph containing \(n\) distinct items, and we want to use \(b\) bits per item (so the total size of the data structure is \(m=bn\) bits).
+If we are using truncated hashes, there are \(2^b\) possible values for each \(b\)-bit hash.
+Thus, given two independently chosen, uniformly distributed hashes, the probability that they are the same is \(2^{-b}\).</p>
+
+<p>If we have \(n\) uniformly distributed hashes, the probability that they are all different from a given \(b\)-bit hash is \((1-2^{-b})^n\).
+The false positive probability is therefore the probability that a given \(b\)-bit hash equals one or more of the \(n\) hashes:</p>
+
+<p>\[ P(\text{false positive in truncated hashes}) = 1 - (1 - 2^{-b})^n \]</p>
+
+<p>On the other hand, with a Bloom filter, we start out with all \(m\) bits set to zero, and then for each item, we set \(k\) bits to one.
+After one uniformly distributed bit-setting operation, the probability that a given bit is zero is \(1 - 1/m\).
+Thus, after \(kn\) bit-setting operations, the probability that a given bit is still zero is \((1 - 1/m)^{kn}\).</p>
+
+<p>A Bloom filter has a false positive when we check \(k\) bits for some item and they are all one, even though that item was not in the set.
+The probability of this happening is</p>
+
+<p>\[ P(\text{false positive in Bloom filter}) = (1 - (1 - 1/m)^{kn})^k \]</p>
+
+<p>It’s not obvious from those expressions which of the two is better, so I plotted the false positive probabilities of truncated hashes and Bloom filters for varying numbers of items \(n\), and with parameters \(b=10\), \(k=7\), \(m=bn\):</p>
+
+<p><a href="/2020/12/false-pos.png"><img src="/2020/12/false-pos.png" width="550" height="200" alt="Plot of false positive probability for truncated hashes and Bloom filters" /></a></p>
+
+<p>For a Bloom filter, as long as we grow the size of the filter proportionally to the number of items (here we have 10 bits per item), the false positive probability remains pretty much constant at about 0.8%.
+But truncated hashes of the same size behave much worse, and with more than about 1,000 items the false positive probability exceeds 50%.</p>
+
+<p>The reason for this: with 10-bit truncated hashes there are only 1,024 possible hash values, and if we have 1,000 different items, then most of those 1,024 possible values are already taken.
+With truncated hashes, if we wanted to keep the false positive probability constant, we would have to use more bits per item as the number of items grows, so the total size of the data structure would grow faster than linearly in the number of items.</p>
+
+<p>Viewing it like this, it is quite remarkable that Bloom filters work as well as they do, using only a constant number of bits per item!</p>
+
+<h2 id="further-details">Further details</h2>
+
+<p>The Bloom filter false positive formula given above is the one that is commonly quoted, but it’s actually not quite correct.
+To be precise, it is a <a href="https://www.sciencedirect.com/science/article/abs/pii/S0020019008001579">lower bound</a> on the exact false positive probability (<a href="https://git.gnunet.org/bibliography.git/plain/docs/FalsepositiverateBloomFilter2008Bose.pdf">open access paper</a>).</p>
+
+<p>Out of curiosity I wrote a <a href="https://gist.github.com/ept/83b91aa07e2495c86ddd8c364a8cfbc7">little Python script</a> that calculates the false positive probability for truncated hashes, Bloom filters using the approximate formula, and Bloom filters using the exact formula.
+Fortunately, for the parameter values we are interested in, the difference between approximate and exact probability is very small.
+The <a href="https://gist.github.com/ept/83b91aa07e2495c86ddd8c364a8cfbc7">gist</a> also contains a <a href="http://www.gnuplot.info/">Gnuplot</a> script to produce the graph above.</p>
+
+<p><a href="https://twitter.com/pvh">Peter</a> suggested that a <a href="https://en.wikipedia.org/wiki/Cuckoo_filter">Cockoo filter</a> may perform even better than a Bloom filter, but we haven’t looked into that yet.
+To be honest, the Bloom filter approach already works so well, and it’s so simple, that I’m not sure the added complexity of a more sophisticated data structure would really be worth it.</p>
+
+<p>That’s all for today.
+Hope you found this interesting, and please let us know if you end up using the algorithm!</p>
+
+
+                <div class="mailing-list-signup">
+                    <p>
+                    To get notified when I write something new,
+                    <a href="https://twitter.com/martinkl">follow me</a> on Twitter
+                    or enter your email address:
+                    </p>
+
+                    <form action="https://mail.martinkl.com/mailing-list" method="post">
+                        <label for="signup-email">Email address:</label>
+                        <input type="email" value="" name="email" class="required email" id="signup-email">
+                        <input type="submit" value="Subscribe" name="subscribe" class="button">
+                        <input type="hidden" name="list" value="blog">
+                    </form>
+
+                    <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                    </p>
+                </div>
+
+                
+
+                
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div class="mailing-list-signup">
+        <p>
+            To get notified when I write something new,
+            <a href="https://twitter.com/martinkl">follow me</a> on Twitter,
+            <a href="http://feeds.feedburner.com/martinkl">subscribe</a> to the RSS feed,
+            or enter your email address:
+        </p>
+
+        <form action="https://mail.martinkl.com/mailing-list" method="post">
+            <fieldset>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Email address:</label>
+                    <input type="email" value="" name="email" class="required email" id="mce-EMAIL">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+                <input type="hidden" name="list" value="blog">
+            </fieldset>
+        </form>
+
+        <p class="disclaimer">
+            I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>,
+        was published by O’Reilly in March 2017.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>02 Dec 2020: <a href="/2020/12/02/bloom-filter-hash-graph-sync.html">Using Bloom filters to efficiently synchronise hash graphs</a></li>
+            
+              <li>18 Nov 2020: <a href="/2020/11/18/distributed-systems-and-elliptic-curves.html">New courses on distributed systems and elliptic curve cryptography</a></li>
+            
+              <li>29 Sep 2020: <a href="/2020/09/29/is-book-writing-worth-it.html">Writing a book: is it worth it?</a></li>
+            
+              <li>31 Jan 2020: <a href="/2020/01/31/brief-brexit-lament.html">A brief Brexit lament</a></li>
+            
+              <li>30 Oct 2019: <a href="/2019/10/30/research-update.html">Research update for 2019</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2020/07/06/crdt-hard-parts-hydra.html">06 Jul 2020 at Hydra distributed computing conference</a></li>
+            
+              <li><a href="/2020/04/27/papoc-list-move.html">27 Apr 2020 at 7th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a></li>
+            
+              <li><a href="/2019/11/08/code-mesh-isabelle.html">08 Nov 2019 at Code Mesh</a></li>
+            
+              <li><a href="/2019/10/02/tonke-dragt-tagung.html">02 Oct 2019 at Tagung über Tonke Dragts Jugendromane</a></li>
+            
+              <li><a href="/2019/09/14/strange-loop-isabelle.html">14 Sep 2019 at Strange Loop</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
