@@ -110,7 +110,7 @@ This reduces the number of round trips to \(O(\log n)\), but you can end up over
 
 <h2 id="bloom-filters-to-the-rescue">Bloom filters to the rescue</h2>
 
-<p>In our new paper draft, which we are making available on arXiv today (TODO link), Heidi and I propose a different algorithm for performing this kind of reconciliation.
+<p>In our new paper draft, which we are <a href="https://arxiv.org/abs/2012.00472">making available on arXiv today</a>, Heidi and I propose a different algorithm for performing this kind of reconciliation.
 It is quite simple if you know how <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filters</a> work.</p>
 
 <p>In addition to sending the hashes of their heads, each node constructs a Bloom filter containing the hashes of the commits that it knows about.
@@ -139,7 +139,7 @@ We then go on to prove a theorem that shows which types of applications can and 
 I assume it’s also relevant for <a href="https://www.swirlds.com/downloads/SWIRLDS-TR-2016-01.pdf">blockchains that use hash graphs</a>, but I don’t know much about them.
 So, syncing a Git commit history is just one of many possible use cases – I just used it because most developers will be at least roughly familiar with it!</p>
 
-<p>The details of the algorithm and the theorems are in the paper, so I won’t repeat them here.
+<p>The details of the algorithm and the theorems are in the <a href="https://arxiv.org/abs/2012.00472">paper</a>, so I won’t repeat them here.
 Instead, I will briefly mention a few interesting things that didn’t make it into the paper.</p>
 
 <h2 id="why-bloom-filters">Why Bloom filters?</h2>
@@ -193,6 +193,7 @@ The <a href="https://gist.github.com/ept/83b91aa07e2495c86ddd8c364a8cfbc7">gist<
 To be honest, the Bloom filter approach already works so well, and it’s so simple, that I’m not sure the added complexity of a more sophisticated data structure would really be worth it.</p>
 
 <p>That’s all for today.
+Our paper is at <a href="https://arxiv.org/abs/2012.00472">arxiv.org/abs/2012.00472</a>.
 Hope you found this interesting, and please let us know if you end up using the algorithm!</p>
 
 
