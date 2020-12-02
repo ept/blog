@@ -59,7 +59,7 @@ This reduces the number of round trips to \\(O(\\log n)\\), but you can end up o
 Bloom filters to the rescue
 ---------------------------
 
-In our new paper draft, which we are making available on arXiv today (TODO link), Heidi and I propose a different algorithm for performing this kind of reconciliation.
+In our new paper draft, which we are [making available on arXiv today](https://arxiv.org/abs/2012.00472), Heidi and I propose a different algorithm for performing this kind of reconciliation.
 It is quite simple if you know how [Bloom filters](https://en.wikipedia.org/wiki/Bloom_filter) work.
 
 In addition to sending the hashes of their heads, each node constructs a Bloom filter containing the hashes of the commits that it knows about.
@@ -89,7 +89,7 @@ All of this is directly relevant for [local-first](https://www.inkandswitch.com/
 I assume it's also relevant for [blockchains that use hash graphs](https://www.swirlds.com/downloads/SWIRLDS-TR-2016-01.pdf), but I don't know much about them.
 So, syncing a Git commit history is just one of many possible use cases -- I just used it because most developers will be at least roughly familiar with it!
 
-The details of the algorithm and the theorems are in the paper, so I won't repeat them here.
+The details of the algorithm and the theorems are in the [paper](https://arxiv.org/abs/2012.00472), so I won't repeat them here.
 Instead, I will briefly mention a few interesting things that didn't make it into the paper.
 
 Why Bloom filters?
@@ -145,4 +145,5 @@ The [gist](https://gist.github.com/ept/83b91aa07e2495c86ddd8c364a8cfbc7) also co
 To be honest, the Bloom filter approach already works so well, and it's so simple, that I'm not sure the added complexity of a more sophisticated data structure would really be worth it.
 
 That's all for today.
+Our paper is at [arxiv.org/abs/2012.00472](https://arxiv.org/abs/2012.00472).
 Hope you found this interesting, and please let us know if you end up using the algorithm!
