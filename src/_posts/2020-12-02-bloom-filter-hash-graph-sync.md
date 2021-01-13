@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Using Bloom filters to efficiently synchronise hash graphs
+hackernews: https://news.ycombinator.com/item?id=25278128
 ---
 
 *This blog post uses [MathJax](https://www.mathjax.org/) to render mathematics. You need JavaScript enabled for MathJax to work.*
