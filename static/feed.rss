@@ -10,12 +10,228 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 02 Dec 2020 14:32:51 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 13 Jan 2021 15:58:00 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Decentralised content moderation</title>
+                <link>http://martin.kleppmann.com/2021/01/13/decentralised-content-moderation.html</link>
+                <comments>http://martin.kleppmann.com/2021/01/13/decentralised-content-moderation.html#disqus_thread</comments>
+                <pubDate>Wed, 13 Jan 2021 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2021/01/13/decentralised-content-moderation.html</guid>
+                
+                <description><![CDATA[ Who is doing interesting work on decentralised content moderation? With Donald Trump suspended from Twitter and Facebook, and Parler kicked off AWS, there is renewed discussion about what sort of speech is acceptable online, and how it should be enforced. Let me say up front that I believe that these... ]]></description>
+                <content:encoded><![CDATA[
+                    <p><strong>Who is doing interesting work on decentralised content moderation?</strong></p>
+
+<p>With Donald Trump suspended from Twitter and Facebook, and
+<a href="https://en.wikipedia.org/wiki/Parler">Parler</a> kicked off AWS, there is renewed discussion about
+what sort of speech is acceptable online, and how it should be enforced. Let me say up front that
+I believe that these bans were justified. However, they do raise questions that need to be
+discussed, especially within the technology community.</p>
+
+<p>As many have already pointed out, Twitter, Facebook and Amazon are corporations that are free to
+enforce their terms of service in whatever way they see fit, within the bounds of applicable law
+(e.g. anti-discrimination legislation). However, we should also realise that <em>almost all</em> social
+media, the public spaces of the digital realm, are in fact privately owned spaces subject to
+a corporation’s terms of service. There is currently no viable, non-corporate alternative space that
+we could all move to. For better or for worse, Mark Zuckerberg, Jack Dorsey, and Jeff Bezos (and
+their underlings) are, for now, the arbiters of what can and cannot be said online.</p>
+
+<p>This situation draws attention to the <a href="https://redecentralize.org/">decentralised web community</a>,
+a catch-all for a broad set of projects that are aiming to reduce the degree of centralised
+corporate control in the digital sphere. This includes self-hosted/federated social networks such as
+<a href="https://joinmastodon.org/">Mastodon</a> and <a href="https://diasporafoundation.org/">Diaspora</a>, peer-to-peer
+social networks such as <a href="https://scuttlebutt.nz/">Scuttlebutt</a>, and miscellaneous blockchain
+projects. The exact aims and technicalities of those projects are not important for this post.
+I will start by focussing on one particular design goal that is mentioned by many decentralised web
+projects, and that is <em>censorship resistance</em>.</p>
+
+<h2 id="censorship-resistance">Censorship resistance</h2>
+
+<p>When we think of censorship, we think of totalitarian states exercising violent control over their
+population, crushing dissent and stifling the press. Against such an adversary, technologies that
+provide censorship resistance seem like a positive step forward, since they promote individual
+liberty and human rights.</p>
+
+<p>However, often the adversary is not a totalitarian state, but other users. Censorship resistance
+means that anybody can say anything, without suffering consequences. And unfortunately there are
+a lot of people out there who say and do rather horrible things. Thus, as soon as
+a censorship-resistant social network becomes sufficiently popular, I expect that it will be filled
+with messages from spammers, neo-nazis, and child pornographers (or any other type of content that
+you consider despicable). One person’s freedom from violence is another person’s censorship, and
+thus, a system that emphasises censorship resistance will inevitably invite violence against some
+people.</p>
+
+<p>I fear that many decentralised web projects are designed for censorship resistance not so much
+because they deliberately want to become hubs for neo-nazis, but rather out of a kind of naive
+utopian belief that more speech is always better. But I think we have learnt in the last decade that
+this is not the case. If we want technologies to help build the type of society that we want to live
+in, then certain abusive types of behaviour must be restricted. Thus, content moderation is needed.</p>
+
+<h2 id="the-difficulty-of-content-moderation">The difficulty of content moderation</h2>
+
+<p>If we want to declare some types of content as unacceptable, we need a process for distinguishing
+between acceptable and unacceptable material. But this is difficult. Where do you draw the line
+between healthy scepticism and harmful conspiracy theory? Where do you draw the line between healthy
+satire, using exaggeration for comic effect, and harmful misinformation? Between legitimate
+disagreement and harassment? Between honest misunderstanding and malicious misrepresentation?</p>
+
+<p>With all of these, some cases will be very clearly on one side or the other of the dividing line,
+but there will always be a large grey area of cases that are unclear and a matter of subjective
+interpretation. “<a href="https://en.wikipedia.org/wiki/I_know_it_when_I_see_it">I know it when I see it</a>”
+is difficult to generalise into a rule that can be applied objectively and consistently; and without
+objectivity and consistency, moderation can easily degenerate into a situation where one group of
+people forces their opinions on everyone else, like them or not.</p>
+
+<p>In a service that is used around the world, there will be cultural differences on what is considered
+acceptable or not. Maybe one culture is sensitive about nudity and tolerant of depictions of
+violence, while another culture is liberal about nudity and sensitive about violence. There is no
+single, globally agreed standard of what is or is not considered acceptable.</p>
+
+<p>Nevertheless, it is possible to come to agreement. For example, Wikipedia editors successfully
+manage to agree on what should and should not be included in Wikipedia articles, even those on
+contentious subjects. I won’t say that this process is perfect: Wikipedia editors are predominantly
+white, male, and from the Anglo-American cultural sphere, so there is bound to be bias in their
+editorial decisions. I haven’t participated in this community, but I assume the process of coming to
+agreement is sometimes messy and will not make everybody happy.</p>
+
+<p>Moreover, being an encyclopaedia, Wikipedia is focussed on widely accepted facts backed by evidence.
+Attempting to moderate social media in the same way as Wikipedia would make it joyless, with no room
+for satire, comedy, experimental art, or many of the other things that make it interesting and
+humane. Nevertheless, Wikipedia is an interesting example of decentralised content moderation that
+is not controlled by a private entity.</p>
+
+<p>Another example is federated social networks such as Mastodon or Diaspora. Here, each individual
+server administrator has the authority to
+<a href="https://docs.joinmastodon.org/admin/moderation/">set the rules for the users of their server</a>, but
+they have no control over activity on other servers (other than to block another server entirely).
+Despite the decentralised architecture, there is a
+<a href="https://arxiv.org/pdf/1909.05801.pdf">trend towards centralisation</a> (10% of Mastodon instances
+account for almost half the users), leaving a lot of power in the hand of a small number of server
+administrators. If these social networks are to go more mainstream, I expect these effects to be
+amplified.</p>
+
+<h2 id="filter-bubbles">Filter bubbles</h2>
+
+<p>One form of social media is private chat for small groups, as provided e.g. by WhatsApp, Signal, or
+even email. Here, when you post a message to a group, the only people who can see it are members of
+that group. In this setting, not much content moderation is needed: group members can kick out other
+members if they say things considered unacceptable. If one group says things that another group
+considers objectionable, that’s no problem, because the two groups can’t see each other’s
+conversations anyway. If one user is harassing another, the victim can block the harasser. Thus,
+private groups are comparatively easy to deal with.</p>
+
+<p>The situation is harder with social media that is public (anyone can read) and open (anyone can join
+a conversation), or when the groups are very large. Twitter is an example of this model (and
+Facebook to some degree, depending on your privacy settings). When anybody can write a message that
+you will see (e.g. a reply to something you posted publicly), the door is opened to harassment and
+abuse.</p>
+
+<p>One response might be to retreat into our filter bubbles. For example, we could say that you see
+only messages posted by your immediate friends and friends-of-friends. I am pretty sure that there
+are no neo-nazis among my direct friends, and probably also among my second-degree network, so such
+a rule would shield me from extremist content of one sort, at least.</p>
+
+<p>It is also possible for users to collaborate on creating filters. For example,
+<a href="https://github.com/freebsdgirl/ggautoblocker">ggautoblocker</a> was a tool to block abusive Twitter
+accounts during <a href="https://en.wikipedia.org/wiki/Gamergate_controversy">GamerGate</a>, a 2014
+misogynistic harassment campaign that
+<a href="https://www.theguardian.com/technology/2016/dec/01/gamergate-alt-right-hate-trump">foreshadowed</a>
+the rise of the alt-right and Trumpism. In the absence of central moderation by Twitter, victims of
+this harassment could use this tool to automatically block a large number of harmful users so that
+they wouldn’t have to see the abusive messages.</p>
+
+<p>Of course, even though such filtering saves you from having to see things you don’t like, it doesn’t
+stop the objectionable content from existing. Moreover, other people may have the opposite sort of
+filter bubble in which they see <em>lots</em> of extremist content, causing them to become radicalised.
+Personalised filters also stop us from seeing alternative (valid) opinions that would help broaden
+our worldview and enable better mutual understanding of different groups in society.</p>
+
+<p>Thus, subjective filtering of who sees what, such as blocking users, is an important part of
+reducing harm on social media, but by itself it is not sufficient. It is also necessary to uphold
+minimum standards on what can be posted at all, for example by requiring a baseline of civility and
+truthfulness.</p>
+
+<h2 id="democratic-content-moderation">Democratic content moderation</h2>
+
+<p>I previously argued that there is no universally agreed standard of acceptability of content; and
+yet, we must somehow keep the standard of discourse high enough that it does not become intolerable
+for those involved, and to minimise the harms e.g. from harassment, radicalisation, and incitement
+of violence. How do we solve this contradiction? Leaving the power in the hands of a small number of
+tech company CEOs, or any other small and unelected group of people, does not seem like a good
+long-term solution.</p>
+
+<p>A purely technical solution does not exist either, since code cannot make value judgements about
+what sort of behaviour is acceptable. It seems like some kind of democratic process is the only
+viable long-term solution here, perhaps supported by some technological mechanisms, such as
+AI/machine learning to flag potentially abusive material. But what might this democratic process
+look like?</p>
+
+<p>Moderation should not be so heavy-handed that it drowns out legitimate disagreement. Disagreement
+need not always be polite; indeed,
+<a href="https://everydayfeminism.com/2015/12/tone-policing-and-privilege/">tone policing</a> should not be
+a means of silencing legitimate complaints. On the other hand, aggressive criticism may quickly flip
+into the realm of harassment, and it may be unclear when exactly this line has been crossed.
+Sometimes it may be appropriate to take into account the power relationships between the people
+involved, and hold the privileged and powerful to a higher standard than the oppressed and
+disadvantaged, since otherwise the system may end up reinforcing existing imbalances. But there are
+no hard and fast rules here, and much depends on the context and background of the people involved.</p>
+
+<p>This example indicates that the moderation process needs to embed ethical principles and values. One
+way of doing this would be to have a board of moderation overseers that is elected by the user base.
+In their manifesto, candidates for this board can articulate the principles and values that they
+will bring to the job. Different candidates may choose to represent people with different world
+views, such as conservatives and liberals. Having a diverse set of opinions and cultures represented
+on such a board would both legitimise its authority and improve the quality of its decision-making.
+In time, maybe even parties and factions may emerge, which I would regard as a democratic success.</p>
+
+<p>Facebook employs
+<a href="https://bhr.stern.nyu.edu/tech-content-moderation-june-2020">around 15,000 content moderators</a>, and
+on all accounts it’s
+<a href="https://www.theverge.com/2019/2/25/18229714/cognizant-facebook-content-moderator-interviews-trauma-working-conditions-arizona">a horrible job.</a>
+Who would want to do it? On the other hand, 15,000 is a tiny number compared to Facebook’s user
+count. Rather than concentrating all the content moderation work on a comparatively small number of
+moderators, maybe every user should have to do a stint at moderation from time to time as part of
+their conditions for using a service? Precedents for this sort of thing exist: in a number of
+countries, individuals may be called to jury duty to help decide criminal cases; and researchers are
+regularly asked to review articles written by their peers. These things are not great fun either,
+but we do them for the sake of the civic system that we all benefit from.</p>
+
+<p>Moderators with differing political views may disagree on whether a certain piece of content is
+acceptable or not. In cases of such disagreement, additional people can be brought in, hopefully
+allowing the question to be settled through debate. If no agreement can be found, the matter can be
+escalated to the elected board, which has the final say and which uses the experience to set
+guidelines for future moderation.</p>
+
+<h2 id="implications-for-decentralised-technologies">Implications for decentralised technologies</h2>
+
+<p>In decentralised social media, I believe that ultimately it should be the users themselves who
+decide what is acceptable or not. This will have to be through some human process of debate and
+deliberation, although technical tools and some degree of automation may be able to support the
+process and make it more efficient. Rather than simplistic censorship resistance, or giving
+administrators dictatorial powers, we should work towards ethical principles, democratic control,
+and accountability.</p>
+
+<p>I realise that my proposals are probably naive and smack of “computer scientist finally discovers
+why the humanities are important”. Therefore, if you know of any work that is relevant to this topic
+and can help technological systems learn from centuries of experience in democracy in the civil
+society, please send it to me — I am keen to learn more. Moreover, if there is existing work in the
+decentralised web community on enabling this kind of grassroots democracy, I would love to hear
+about it too.</p>
+
+<p>You can find me on Twitter <a href="https://twitter.com/martinkl">@martinkl</a>, or contact me by email
+(firstname at lastname dot com). I will update this post with interesting things that are sent to
+me.</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Using Bloom filters to efficiently synchronise hash graphs</title>
@@ -1879,188 +2095,6 @@ automatically guaranteed to be safe.</p>
 <p><em>Thank you to <a href="https://twitter.com/matclayton">Mat Clayton</a> for bringing this issue to my attention, and to
 <a href="http://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>, <a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>, <a href="https://twitter.com/cmeik">Christopher Meiklejohn</a>,
 and <a href="http://www.cl.cam.ac.uk/~drt24/">Daniel Thomas</a> for comments on a draft of this post.</em></p>
-
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Announcing TRVE DATA: Placing a bit less trust in the cloud</title>
-                <link>http://martin.kleppmann.com/2016/04/15/announcing-trve-data.html</link>
-                <comments>http://martin.kleppmann.com/2016/04/15/announcing-trve-data.html#disqus_thread</comments>
-                <pubDate>Fri, 15 Apr 2016 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2016/04/15/announcing-trve-data.html</guid>
-                
-                <description><![CDATA[ In 2014, after 7 years in startups and internet companies, I left LinkedIn to take a sabbatical. (“Sabbatical” sounds better than “unemployment”, don’t you think?) For a year I worked full-time on my book, and explored what I wanted to do next. Then last year an opportunity came up that... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>In 2014, after 7 years in startups and internet companies, I left LinkedIn to take a sabbatical.
-(“Sabbatical” sounds better than “unemployment”, don’t you think?) For a year I worked full-time on
-<a href="http://dataintensive.net/">my book</a>, and explored what I wanted to do next. Then last year an opportunity came up that
-was just perfect. I started the new job part-time in October 2015, while finishing off the book
-during my remaining time (it should be done in the next few months).</p>
-
-<p>Today I would like to introduce the project that we are working on: <a href="https://www.cl.cam.ac.uk/research/dtg/trve/">TRVE DATA</a>, pronounced
-“true data”. We’ve put up a little <a href="https://www.cl.cam.ac.uk/research/dtg/trve/">website</a> explaining the high-level idea, and in this blog
-post I would like to briefly explain what it is, why we are doing it, and what makes me so excited
-about it. If you want to keep in touch about the project, please <a href="https://lists.cam.ac.uk/mailman/listinfo/cl-trvedata">join our mailing
-list</a>.</p>
-
-<p>The project is based at <a href="https://www.cl.cam.ac.uk/">University of Cambridge Computer Laboratory</a>, where I am working with
-some excellent people: <a href="http://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>, <a href="http://www.cl.cam.ac.uk/~dac53/">Diana Vasile</a>, and
-<a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>.</p>
-
-<h2 id="placing-a-bit-less-trust-in-the-cloud">Placing a bit less trust in the cloud</h2>
-
-<p>As you have perhaps heard, <a href="https://www.chriswatterston.com/blog/my-there-no-cloud-sticker">there is no cloud</a> – it’s just someone else’s computer. And
-people are storing all sorts of sensitive data on it, blindly trusting that this computer will only
-allow authorised users access. What if it is compromised?</p>
-
-<p>It’s not just individuals’ personal data, but we’re talking about medical records, <a href="https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-mcgregor.pdf">journalistic
-materials</a>, and data about critical infrastructure like power stations and chemical
-plants. Here are a few anecdotes from conversations I have had recently:</p>
-
-<ul>
-  <li>A BBC journalist told me that they are officially banned from using Google Docs, but they use it
-anyway, because it’s just so convenient.</li>
-  <li>I have even heard rumours that the NHS (the English national health service) stores a worrying
-amount of patient medical data in Google spreadsheets.</li>
-  <li>Lawyers on high-profile court cases will happily communicate with their clients by unencrypted
-email. Even though their communication enjoys <a href="https://en.wikipedia.org/wiki/Legal_professional_privilege">special protections under the law</a>, the
-technology doesn’t reflect that importance.</li>
-  <li>The same thing goes for <a href="https://twitter.com/csoghoian/status/700802867322441728">diplomats</a>.</li>
-  <li>Some Internet-of-Things companies… oh my god, don’t ask about their security if you want to
-sleep at night.</li>
-</ul>
-
-<p>I don’t object to cloud services <em>per se</em> – it’s incredibly convenient not to have to run your own
-infrastructure, and Google, Amazon or Microsoft almost certainly do a better job than you would if
-you were running your own server. However, I am concerned that there is too much blind trust
-involved.</p>
-
-<p>When data is stored in AWS, Google Cloud Platform, Google Docs, Evernote, iCloud, Dropbox, etc. you
-have no idea what the cloud provider is doing with it. Are they using it to train neural networks?
-Are they letting governments around the world access it? Are they mining it and selling the results
-for advertising purposes? Do they have an untrustworthy employee who is secretly looking at the
-data? Do they have a security vulnerability through which criminals can steal it? At best you have
-a vaguely-worded and unenforceable privacy policy to read, but most likely you simply don’t know
-what is happening to your data.</p>
-
-<h2 id="end-to-end-encryption">End-to-end encryption</h2>
-
-<p>Today, it is common to use SSL/TLS for encryption of data as it moves across the internet, and disk
-encryption for data at rest. But that encryption ends at the server software, and almost all cloud
-services today process data in the clear on the servers. Therefore, anyone who can get access to the
-server can also get access to the data.</p>
-
-<p>On the other hand, <a href="http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html">end-to-end encryption</a> techniques mostly remove the need to trust the
-server, by encrypting data on one end-user device such that only another end-user device can decrypt
-it. There may still be servers and cloud services involved, but they cannot read or tamper with the
-data. Someone who wants to steal the data would then have to break into one of the end-user devices
-– which is <a href="https://www.theguardian.com/technology/2016/mar/21/fbi-apple-court-hearing-postpone-unlock-terrorist-iphone">still possible in most cases</a>, depending on security practices, but at
-least it is a much reduced attack surface, with fewer things that can go wrong.</p>
-
-<p>End-to-end encryption is becoming popular for messaging apps, most recently rolled out in
-<a href="https://blog.whatsapp.com/10000618/end-to-end-encryption">WhatsApp</a>, along with <a href="https://whispersystems.org/">Signal</a>, iMessage (with
-<a href="http://blog.cryptographyengineering.com/2016/03/attack-of-week-apple-imessage.html">reservations</a>), and others. But we have <a href="https://dymaxion.org/essays/pleasestop.html">so much other important data besides text
-messages</a>! What about that?</p>
-
-<p>The problem is that it’s fairly easy to knock together a SaaS web app with Rails, or to build
-a mobile app with a backend-as-a-service, but it is really hard to do the same in a way that uses
-end-to-end encryption. The crypto itself is terribly difficult to get right, and even if you use an
-established secure messaging protocol, you then have the problem that many services, databases,
-libraries and tools can no longer be used, since they assume they can work with unencrypted data –
-so you have to start almost from scratch. At the moment it is simply not feasible for most
-application developers to use end-to-end encryption.</p>
-
-<p>And that is what we are trying to change.</p>
-
-<h2 id="making-end-to-end-security-the-new-default">Making end-to-end security the new default</h2>
-
-<p>The long-term goal of TRVE DATA is quite ambitious: namely, to make it just as easy to build
-applications with end-to-end security, and to make those applications equally usable, as the apps
-without end-to-end security today.</p>
-
-<p>Today, using http instead of https is increasingly frowned upon; I hope that in some years time, not
-using end-to-end security will be equally frowned upon. Today, we trust cloud services but not the
-network; in future, I hope that we will trust neither cloud services nor the network. We will still
-be using the internet and cloud services, but we will use cryptographic tools to ensure they can’t
-mess with our data.</p>
-
-<p>I want the tools for building secure applications to be so good that it will be a no-brainer to use
-them. I want strong security to become the new default, and to raise the bar for all apps.</p>
-
-<p>Of course, we have a very long way to go before this is reality. For now, we are concentrating on
-a particular type of application: collaborative document editing. This is still a quite broad
-category, including text documents, spreadsheets, graphics, to-do lists, notes, address books,
-calendars, and so on.</p>
-
-<p>For this kind of data, the TRVE project is building general-purpose libraries and tools that will
-automatically sync data across several devices, allow sharing with other users, allow several people
-to edit the same document in real time, and allow users to continue working offline. And all of the
-communication between devices will, of course, be encrypted and authenticated end-to-end, with TRVE
-handling key management as well as data sync.</p>
-
-<p>The software we build will be open source and freely available. Our work-in-progress prototype is
-already on GitHub, but I won’t link to it — remember, this project only started six months ago, and
-I’m working on in part-time. The code is not yet in a fit state to be used. But this is where we’re
-heading.</p>
-
-<h2 id="motivation-and-concerns">Motivation and concerns</h2>
-
-<blockquote>
-  <p>“Let us speak no more of faith in man, but bind him down from mischief by the chains of cryptography.”</p>
-
-  <p>— <a href="http://www.theatlantic.com/politics/archive/2014/05/edward-snowdens-other-motive-for-leaking/370068/">Edward Snowden</a>, invoking <a href="http://www.constitution.org/cons/kent1798.htm">Thomas Jefferson</a></p>
-</blockquote>
-
-<p>Jefferson’s original quote was about the US constitution: a document designed to deliberately
-restrict the powers of government, and to keep it accountable to its citizens. History has
-repeatedly shown that putting too much unchecked power in the hands of a small number of people
-leads to abuses of power and various problems, even if they start with benevolent intentions.</p>
-
-<p>Snowden’s quote is so apt because the rise of cloud services and “Big Data” have caused
-a concentration of power in the hands of a small number of large companies. Cryptography is to data
-what the constitution is to political power: a means of <a href="http://web.cs.ucdavis.edu/~rogaway/papers/moral.html">giving some power and control back to
-individuals</a>, and keeping powerful people honest. It makes mass surveillance harder and
-helps preserve civil liberties.</p>
-
-<p>I will preempt the inevitable question: <em>“What if terrorists use this software to plan an
-attack?”</em> This issue merits a longer discussion, but the short answer is: terrorists use cars, guns
-and explosives as well, all of which are far more dangerous than crypto. And I don’t see any sign of
-Ford stopping production of their cars because they might be used by terrorists.</p>
-
-<p>It’s actually pretty hard to kill someone with cryptography. You can try boring someone to death, or
-hitting them over the head with a crypto textbook, but that’s about it. As technologies go, crypto
-is pretty non-lethal — in fact, it is a purely defensive technology.</p>
-
-<p>On the other hand, encryption is absolutely essential for protecting data that is legitimately
-sensitive, and to give some freedom to people <a href="https://twitter.com/matthew_d_green/status/720538970640269313">living under repressive regimes</a>. Weakening it
-for the convenience of law enforcement, as proposed in the <a href="http://martin.kleppmann.com/2015/11/10/investigatory-powers-bill.html">Investigatory Powers Bill</a> in
-the UK and <a href="http://www.burr.senate.gov/imo/media/doc/BAG16460.pdf">Feinstein-Burr</a> in the US, would be a <a href="http://data.parliament.uk/writtenevidence/committeeevidence.svc/evidencedocument/draft-investigatory-powers-bill-committee/draft-investigatory-powers-bill/written/26275.html">big mistake</a>.</p>
-
-<h2 id="the-way-forward">The way forward</h2>
-
-<p>I believe that end-to-end security will soon be regarded as a necessity for any sort of important
-data. For example, the Bar Council of the UK (the association of lawyers who represent their clients
-in court) already <a href="http://www.barcouncil.org.uk/media/407878/cloud_computing.pdf">recommends using end-to-end encryption</a> for data stored in the
-cloud.</p>
-
-<p>This trend starts with the most sensitive professions like doctors, lawyers, and <a href="http://www.cima.ned.org/wp-content/uploads/2016/03/CIMA-Journalist-Digital-Tools-03-01-15.pdf">journalists</a>,
-but I expect it to grow – in order to maintain regulatory compliance, to prevent industrial
-espionage, and to meet data protection requirements. The demand for better security comes not from
-criminals trying to evade the law, but from professionals whose job involves dealing with important
-data.</p>
-
-<p>I am working on the TRVE DATA project because I feel this is one of the most important issues in
-computing and society today, and I am hoping we will be able to make a positive difference. It’s
-a long-term project, and we’re only just getting started.</p>
-
-<p>We have set up a <a href="https://lists.cam.ac.uk/mailman/listinfo/cl-trvedata">public mailing list</a> for anyone who is interested in the project,
-where we are planning to post monthly updates on our progress, and invite ideas and discussion from
-anyone who would like to contribute. You can also find <a href="https://twitter.com/trvedata">@trvedata</a> on Twitter. Please join
-us, and spread the word.</p>
 
 
                 ]]></content:encoded>
