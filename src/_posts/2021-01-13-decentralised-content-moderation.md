@@ -69,8 +69,9 @@ people forces their opinions on everyone else, like them or not.
 
 In a service that is used around the world, there will be cultural differences on what is considered
 acceptable or not. Maybe one culture is sensitive about nudity and tolerant of depictions of
-violence, while another culture is liberal about nudity and sensitive about violence. There is no
-single, globally agreed standard of what is or is not considered acceptable.
+violence, while another culture is liberal about nudity and sensitive about violence. One person's
+terrorist is another person's freedom fighter. There is no single, globally agreed standard of what
+is or is not considered acceptable.
 
 Nevertheless, it is possible to come to agreement. For example, Wikipedia editors successfully
 manage to agree on what should and should not be included in Wikipedia articles, even those on
@@ -193,11 +194,11 @@ Implications for decentralised technologies
 -------------------------------------------
 
 In decentralised social media, I believe that ultimately it should be the users themselves who
-decide what is acceptable or not. This will have to be through some human process of debate and
-deliberation, although technical tools and some degree of automation may be able to support the
-process and make it more efficient. Rather than simplistic censorship resistance, or giving
-administrators dictatorial powers, we should work towards ethical principles, democratic control,
-and accountability.
+decide what is acceptable or not. This governance will have to take place through some human process
+of debate and deliberation, although technical tools and some degree of automation may be able to
+support the process and make it more efficient. Rather than simplistic censorship resistance, or
+giving administrators dictatorial powers, we should work towards ethical principles, democratic
+control, and accountability.
 
 I realise that my proposals are probably naive and smack of “computer scientist finally discovers
 why the humanities are important”. Therefore, if you know of any work that is relevant to this topic
@@ -209,3 +210,20 @@ about it too.
 You can find me on Twitter [@martinkl](https://twitter.com/martinkl), or contact me by email
 (firstname at lastname dot com). I will update this post with interesting things that are sent to
 me.
+
+Updates: related work
+---------------------
+
+Here are some related projects that have been pointed out to me since this post was published. I
+have not vetted them, so don't take this as an endorsement. In no particular order:
+
+* [Trustnet](https://cblgh.org/articles/trustnet.html) is a way of computing numerical scores for
+  the degree of trust in indvidual users, based on the social graph.
+* [Freechains](https://github.com/Freechains/README) is a peer-to-peer content distribution
+  protocol with an embedded user reputation system.
+* A few [people](https://twitter.com/xmal/status/1349413781953273857)
+  [mentioned](https://twitter.com/weschow/status/1349417270179737604) Slashdot and
+  Reddit as successful examples of community-run moderation.
+* [Cabal](https://cabal.chat/) allows users to
+  [subscribe](https://twitter.com/substack/status/1349471659653124098) to other users' moderation
+  actions, such as blocking and hiding posts.
