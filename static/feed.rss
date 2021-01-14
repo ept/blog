@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 13 Jan 2021 15:58:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 14 Jan 2021 12:11:51 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -92,8 +92,9 @@ people forces their opinions on everyone else, like them or not.</p>
 
 <p>In a service that is used around the world, there will be cultural differences on what is considered
 acceptable or not. Maybe one culture is sensitive about nudity and tolerant of depictions of
-violence, while another culture is liberal about nudity and sensitive about violence. There is no
-single, globally agreed standard of what is or is not considered acceptable.</p>
+violence, while another culture is liberal about nudity and sensitive about violence. One person’s
+terrorist is another person’s freedom fighter. There is no single, globally agreed standard of what
+is or is not considered acceptable.</p>
 
 <p>Nevertheless, it is possible to come to agreement. For example, Wikipedia editors successfully
 manage to agree on what should and should not be included in Wikipedia articles, even those on
@@ -213,11 +214,11 @@ guidelines for future moderation.</p>
 <h2 id="implications-for-decentralised-technologies">Implications for decentralised technologies</h2>
 
 <p>In decentralised social media, I believe that ultimately it should be the users themselves who
-decide what is acceptable or not. This will have to be through some human process of debate and
-deliberation, although technical tools and some degree of automation may be able to support the
-process and make it more efficient. Rather than simplistic censorship resistance, or giving
-administrators dictatorial powers, we should work towards ethical principles, democratic control,
-and accountability.</p>
+decide what is acceptable or not. This governance will have to take place through some human process
+of debate and deliberation, although technical tools and some degree of automation may be able to
+support the process and make it more efficient. Rather than simplistic censorship resistance, or
+giving administrators dictatorial powers, we should work towards ethical principles, democratic
+control, and accountability.</p>
 
 <p>I realise that my proposals are probably naive and smack of “computer scientist finally discovers
 why the humanities are important”. Therefore, if you know of any work that is relevant to this topic
@@ -229,6 +230,24 @@ about it too.</p>
 <p>You can find me on Twitter <a href="https://twitter.com/martinkl">@martinkl</a>, or contact me by email
 (firstname at lastname dot com). I will update this post with interesting things that are sent to
 me.</p>
+
+<h2 id="updates-related-work">Updates: related work</h2>
+
+<p>Here are some related projects that have been pointed out to me since this post was published. I
+have not vetted them, so don’t take this as an endorsement. In no particular order:</p>
+
+<ul>
+  <li><a href="https://cblgh.org/articles/trustnet.html">Trustnet</a> is a way of computing numerical scores for
+the degree of trust in indvidual users, based on the social graph.</li>
+  <li><a href="https://github.com/Freechains/README">Freechains</a> is a peer-to-peer content distribution
+protocol with an embedded user reputation system.</li>
+  <li>A few <a href="https://twitter.com/xmal/status/1349413781953273857">people</a>
+<a href="https://twitter.com/weschow/status/1349417270179737604">mentioned</a> Slashdot and
+Reddit as successful examples of community-run moderation.</li>
+  <li><a href="https://cabal.chat/">Cabal</a> allows users to
+<a href="https://twitter.com/substack/status/1349471659653124098">subscribe</a> to other users’ moderation
+actions, such as blocking and hiding posts.</li>
+</ul>
 
                 ]]></content:encoded>
             </item>
