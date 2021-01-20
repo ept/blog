@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Decentralised content moderation
+hackernews: https://news.ycombinator.com/item?id=25776124
 ---
 
 **Who is doing interesting work on decentralised content moderation?**
@@ -215,15 +216,35 @@ Updates: related work
 ---------------------
 
 Here are some related projects that have been pointed out to me since this post was published. I
-have not vetted them, so don't take this as an endorsement. In no particular order:
+have not vetted them, so don't take this as an endorsement.
 
+* The [Facebook/Instagram Oversight Board](https://oversightboard.com/) is quite close to what
+  I have in mind, and I am looking forward to seeing how it works out.
+* The recently launched
+  [MIT Center for Constructive Communication](https://news.mit.edu/2021/center-constructive-communication-0113)
+  is an ambitious effort in this area.
+* “[The Decentralized Web of Hate](https://foundation.mozilla.org/en/blog/fellow-research-decentralized-web-hate/)”
+  is a detailed report by [Emmi Bevensee](http://emmibevensee.com/) on use of decentralised
+  technologies by extremists.
+* [Amy X. Zhang](https://homes.cs.washington.edu/~axz/publications.html) and her collaborators have
+  done a lot of research on moderation.
+* A few [people](https://twitter.com/xmal/status/1349413781953273857)
+  [mentioned](https://twitter.com/weschow/status/1349417270179737604) Slashdot, Reddit, and Stack Overflow
+  as successful examples of community-run moderation.
 * [Trustnet](https://cblgh.org/articles/trustnet.html) is a way of computing numerical scores for
   the degree of trust in indvidual users, based on the social graph.
+* [Matrix](https://matrix.org/), a federated messaging system, is
+  [working on](https://matrix.org/blog/2020/10/19/combating-abuse-in-matrix-without-backdoors) a
+  decentralised, subjective reputation system.
 * [Freechains](https://github.com/Freechains/README) is a peer-to-peer content distribution
   protocol with an embedded user reputation system.
-* A few [people](https://twitter.com/xmal/status/1349413781953273857)
-  [mentioned](https://twitter.com/weschow/status/1349417270179737604) Slashdot and
-  Reddit as successful examples of community-run moderation.
 * [Cabal](https://cabal.chat/) allows users to
   [subscribe](https://twitter.com/substack/status/1349471659653124098) to other users' moderation
   actions, such as blocking and hiding posts.
+* An app called [Fantastic](https://kc-fantastic-app.medium.com/decentralized-content-moderation-on-fantastic-app-3768989ced19)
+  is exploring mechanisms for moderation.
+* Felix Dietze's [2015 master's thesis](https://github.com/fdietze/notes/blob/master/felix_dietze_master_thesis_2015.pdf)
+  explores community-run moderation. He is also working on
+  [ranking](https://felix.unote.io/hacker-news-scores)
+  [algorithms](https://github.com/fdietze/downvote-scoring)
+  for news aggregators.
