@@ -42,13 +42,6 @@
                     </p>
                 </div>
 
-                {% for hn_link in page.hackernews %}
-                <div class="hackernews">
-                    Join the discussion about this article
-                    <a href="{{ hn_link }}" target="_blank">on Hacker News</a>.
-                </div>
-                {% endfor %}
-
                 {% if page.disqus %}<div id="disqus_thread"></div>{% endif %}
             </div>
 
