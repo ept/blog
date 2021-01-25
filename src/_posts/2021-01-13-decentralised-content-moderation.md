@@ -228,6 +228,10 @@ have not vetted them, so don't take this as an endorsement.
   technologies by extremists.
 * [Amy X. Zhang](https://homes.cs.washington.edu/~axz/publications.html) and her collaborators have
   done a lot of research on moderation.
+* [Jay Graber](https://twitter.com/arcalinea) recently published a comprehensive
+  [report comparing decentralised social protocols](https://twitter.com/arcalinea/status/1352316972654944257), and a
+  [blog post](https://jaygraber.medium.com/designing-decentralized-moderation-a76430a8eab)
+  on decentralised content moderation.
 * A few [people](https://twitter.com/xmal/status/1349413781953273857)
   [mentioned](https://twitter.com/weschow/status/1349417270179737604) Slashdot, Reddit, and Stack Overflow
   as successful examples of community-run moderation.
