@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 20 Jan 2021 20:45:12 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 25 Jan 2021 22:34:37 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -247,6 +247,10 @@ is a detailed report by <a href="http://emmibevensee.com/">Emmi Bevensee</a> on 
 technologies by extremists.</li>
   <li><a href="https://homes.cs.washington.edu/~axz/publications.html">Amy X. Zhang</a> and her collaborators have
 done a lot of research on moderation.</li>
+  <li><a href="https://twitter.com/arcalinea">Jay Graber</a> recently published a comprehensive
+<a href="https://twitter.com/arcalinea/status/1352316972654944257">report comparing decentralised social protocols</a>, and a
+<a href="https://jaygraber.medium.com/designing-decentralized-moderation-a76430a8eab">blog post</a>
+on decentralised content moderation.</li>
   <li>A few <a href="https://twitter.com/xmal/status/1349413781953273857">people</a>
 <a href="https://twitter.com/weschow/status/1349417270179737604">mentioned</a> Slashdot, Reddit, and Stack Overflow
 as successful examples of community-run moderation.</li>
