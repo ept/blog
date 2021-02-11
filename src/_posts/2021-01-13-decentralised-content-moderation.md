@@ -232,6 +232,9 @@ have not vetted them, so don't take this as an endorsement.
   [report comparing decentralised social protocols](https://twitter.com/arcalinea/status/1352316972654944257), and a
   [blog post](https://jaygraber.medium.com/designing-decentralized-moderation-a76430a8eab)
   on decentralised content moderation.
+* [Wes Chow](https://twitter.com/weschow) has written a
+  [thoughtful and nunanced article](https://medium.com/@wesc/opportunities-in-the-design-of-decentralized-social-networks-d66cce42d74b)
+  on decentralised content moderation, with lots of references to further reading at the end.
 * A few [people](https://twitter.com/xmal/status/1349413781953273857)
   [mentioned](https://twitter.com/weschow/status/1349417270179737604) Slashdot, Reddit, and Stack Overflow
   as successful examples of community-run moderation.
@@ -252,3 +255,5 @@ have not vetted them, so don't take this as an endorsement.
   [ranking](https://felix.unote.io/hacker-news-scores)
   [algorithms](https://github.com/fdietze/downvote-scoring)
   for news aggregators.
+* Twitter is trialling [Birdwatch](https://blog.twitter.com/en_us/topics/product/2021/introducing-birdwatch-a-community-based-approach-to-misinformation.html),
+  a crowdsourced effort to tackle misinformation.
