@@ -10,12 +10,250 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Mon, 25 Jan 2021 22:34:37 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 23 Feb 2021 15:35:17 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Building the future of computing, with your help</title>
+                <link>http://martin.kleppmann.com/2021/02/23/patreon.html</link>
+                <comments>http://martin.kleppmann.com/2021/02/23/patreon.html#disqus_thread</comments>
+                <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2021/02/23/patreon.html</guid>
+                
+                <description><![CDATA[ For the last five or six years, since I bid goodbye to the startup scene and Silicon Valley, I have been increasingly working in public. I have written a book, given around 100 talks (many of which are available on YouTube), published over 20 research papers (all freely available from... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>For the last five or six years, since I bid goodbye to the startup scene and Silicon Valley, I have
+been increasingly working in public. I have <a href="https://dataintensive.net/">written a book</a>,
+given <a href="https://martin.kleppmann.com/talks.html">around 100 talks</a> (many of which are
+<a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx">available on YouTube</a>),
+published <a href="https://martin.kleppmann.com/#publications">over 20 research papers</a>
+(all freely available from my website), and released and maintained
+<a href="https://github.com/ept">some open source projects</a>.
+Just a few months ago I released a new undergraduate-level course on distributed systems, consisting of
+<a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB">7 hours of video lectures</a> and
+<a href="https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-notes.pdf">87 pages of notes</a> and
+exercises, all free; in student evaluation at the <a href="https://www.cst.cam.ac.uk/">University of Cambridge</a>,
+over 80% rated my lectures and notes as “excellent”.</p>
+
+<p>I love doing first-rate work and making it broadly available. In fact, apart from my book, I give
+everything away for free, because I want to be able to reach and help the broadest possible set of
+people. And even my book is very cheap compared to the value that many people get out of it (just
+<a href="https://dataintensive.net/buy.html">read the reviews</a>).</p>
+
+<p>Of course, nobody goes into academia because of the money (or the job security of untentured posts,
+for that matter). I would probably be earning five times my current salary if I had stayed in
+industry. But I have absolutely no regrets about taking that pay cut: I love the freedom to work on
+whatever I find interesting, and the freedom to publish everything so that others can use it. If you
+have found any of my talks, writing, or code useful, then you have also benefitted from the freedom
+that I enjoy.</p>
+
+<p>Of course, like everybody else, I have bills to pay. At the moment I’m employed at the
+<a href="https://www.cst.cam.ac.uk/">University of Cambridge</a> on a fixed-term contract, funded by
+a charitable research grant. This grant gives me wonderful freedom to pursue my research and make it
+publicly available, but it’s a fixed amount of money, and once it runs out, my job disappears in
+a puff of smoke. This sort of grant is not renewable, regardless how amazing the work it has
+enabled. I can try applying for follow-on grants from other funders, but this takes a lot of time
+and has a low chance of success.</p>
+
+<p>Therefore I am setting up crowdfunding through <a href="https://www.patreon.com/martinkl">Patreon</a>, in the
+hope of establishing a sustainable basic income that will allow me to continue my work of research
+and teaching long-term. I want to continue making most of my work freely available, so that the
+maximum number of people can benefit from it.</p>
+
+<h2 id="why-support-me">Why support me?</h2>
+
+<p>I am offering <a href="https://www.patreon.com/martinkl">three membership tiers</a> for anyone who wants to support my work:</p>
+
+<ol>
+  <li>At the lowest tier, you will get regular news about new things I am working on, and exclusive
+early access to drafts and work-in-progress. Keep your finger on the pulse of new research as it
+is happening. I will also send you some nice stickers (once I’ve got them printed).</li>
+  <li>At the middle tier, you will additionally be invited to participate in an exclusive community
+with other supporters and myself, with both live and asynchronous discussions. I hope to
+cultivate thoughtful, high-quality exchange of ideas with likeminded people in this community.</li>
+  <li>At the highest tier, you get all the aforementioned benefits, plus the ability to influence my
+direction when I’m choosing what to work on next. Not saying I will definitely do what you want;
+also not saying that I will only take input from paying supporters (I still welcome ideas from
+everyone). However, I will consult and engage with supporters at this tier to get your opinions.
+I will also acknowledge you in any papers and books I write, making your name permanently etched
+into the scientific literature.</li>
+</ol>
+
+<p>However, the biggest benefit is that by supporting me on Patreon you are enabling the creation of
+future work: that is, new thinking, writing, talks, and code that would not be created if I had to
+spend my time writing grant proposals or working for some company instead. If I have to go and get
+a job somewhere, you will mostly hear me giving bland talks promoting the technology of whatever
+company I happen to work for. Being independent allows me to pick topics that I find interesting and
+important (such as <a href="https://www.youtube.com/watch?v=5ZjhNTM8XU8">database transactions</a>,
+<a href="https://www.youtube.com/watch?v=Uav5jWHNghY">formal verification</a>,
+<a href="https://www.youtube.com/watch?v=B5NULPSiOGw">CRDTs</a>, or
+<a href="https://martin.kleppmann.com/papers/curve25519.pdf">elliptic curve cryptography</a>),
+and present them in an accessible and neutral way.</p>
+
+<p>I will continue making most of my work publicly available for free (except for books): even if you
+cannot afford to be a Patreon supporter, it will still be available to you. Patreon supporters
+simply get earlier access, plus the warm fuzzy feeling of knowing that you enabled the creation of
+new work that, without your support, may never have existed. Supporting me on Patreon is <em>not
+a donation</em>: it is an investment in future work that will hopefully be valuable to you.</p>
+
+<p>If you have found my work useful – for example, if you have applied ideas from my talks in your
+work, or if my book helped you get a job – then I would be delighted to welcome you as a
+<a href="https://www.patreon.com/martinkl">supporter</a>! And if your company uses my book for training
+engineers, please find out how your company can support me: even my highest supporter tier is a tiny
+amount of money for a company that uses my work to improve the skills of their staff.  I only get
+around $2 to $5 for every copy of my book that is sold; if you’re getting a lot more value than this
+out of it, it would only be fair of you to <a href="https://www.patreon.com/martinkl">support me more substantially</a>.</p>
+
+<p>If you cannot contribute financially, worry not. I equally appreciate your support in the form of
+contributions to the open source community, discussing interesting ideas with me, and sharing useful
+material with others. I will continue to engage with you and answer your questions, regardless of
+whether you are a paying supporter. And most things I produce will continue to be free, so that
+everyone can benefit from them.</p>
+
+<h2 id="planned-work">Planned work</h2>
+
+<p>Keep in mind that when you support me, you are not buying a product. You don’t know exactly what
+you’re going to get, because I don’t know exactly what I am going to do in advance either. That’s
+why it’s called research – it’s open-ended, and part of its purpose is to go down unexpected
+rabbit-holes if they seem important! You are funding a person because this person has done good work
+in the past, and is likely to continue doing good work in the future.</p>
+
+<p>I do have a lot of plans, though. At a high level, I am hoping to do these things over the next few years:</p>
+
+<ul>
+  <li>Write another book to complement <a href="https://dataintensive.net/">Designing Data-Intensive Applications</a>;</li>
+  <li>Develop the foundational technologies to enable the
+<a href="https://www.cl.cam.ac.uk/research/dtg/trve/">next generation of collaboration software</a> (such as
+Google Docs), in a way that does not require
+<a href="https://www.inkandswitch.com/local-first.html">giving Google all of our data</a>;</li>
+  <li>Continue writing research papers, blog posts, and giving talks/making videos on distributed
+systems and related topics.</li>
+</ul>
+
+<p>There is no concrete timescale for these things; most likely I will work on several of them in
+tandem, as I have been doing over the last several years.</p>
+
+<p>Part of this story is creating educational content on topics that I find important, and part is
+a vision for the future of collaborative computing, which my collaborators and I are realising in
+the form of <a href="https://github.com/automerge/automerge">Automerge</a>, an open source project. Our vision
+is articulated in the essay-cum-manifesto on
+<a href="https://www.inkandswitch.com/local-first.html">local-first software</a>, which I suggest you read if
+you haven’t already. You can also read a
+<a href="/2021/02/fellowship-proposal.pdf">research proposal</a> that I wrote two years ago, and which sets out
+a concrete list of research tasks that I want to tackle. Two years later, I note that we have made
+good progress on several of the projects listed in this proposal; lots more work remains to be done,
+but the old proposal continues to be a good reflection of my thinking.</p>
+
+<h2 id="research-philosophy">Research philosophy</h2>
+
+<p>For me it is important to have this mixture of research, open source software development, and
+teaching (through speaking and writing), because all of these activities feed off each other.
+I don’t want to just work on open source without doing research, because that only leads to
+incremental improvements, no fundamental breakthroughs. I don’t want to just do research without
+applying it, because that would mean losing touch with reality. And I don’t want to just be
+a YouTuber or writer without doing original research, because I would run out of ideas and my
+content would get stale and boring; good teaching requires actively working in the area.</p>
+
+<p>This interaction was articulated wonderfully by
+<a href="https://amturing.acm.org/award_winners/gray_3649936.cfm">Turing award winner Jim Gray</a>:</p>
+
+<blockquote>
+  <p>I aspire to be a scholar of computer science. All fields of scholarship, from religion to
+medicine, emphasize three aspects: meditation, teaching and service. Meditation (called research
+by scientists) is the official part of research. But, teaching (writing papers, explaining your
+ideas, and transferring technology) and service (making computer systems and helping people use
+them) are also major aspects of the scholarly process. They keep the scholar in touch with
+reality.</p>
+
+  <p>— <a href="http://jimgray.azurewebsites.net/papers/critiqueofibm%27scsresearch.pdf">Jim Gray, 1980</a></p>
+</blockquote>
+
+<p>(That’s from Gray’s letter of resignation from IBM. The whole letter is a fascinating read if you’re
+into computing history. At the time Gray was working on
+<a href="https://people.eecs.berkeley.edu/~brewer/cs262/SystemR.pdf">System R</a>, the precursor of all
+relational databases we use today. It’s fair to say that his work has had a huge impact.)</p>
+
+<p>Another aspect of my research philosophy is that good work rarely happens with one person alone, but
+through collaboration with other good people. Quoting Jim Gray again:</p>
+
+<blockquote>
+  <p>Computer science is an empirical and multi-disciplinary field. The aspect of it that I work on,
+computer systems, requires lots of good people, time and equipment to produce anything of
+interest. Projects of five or ten people working for five or ten years seem to be about the right
+scale. More modest projects are unable to attack significant problems. More ambitious projects
+have unclear goals and have management problems.</p>
+</blockquote>
+
+<p>You might be wondering: even if I get enough Patreon funding to cover my own living expenses, it
+seems unlikely that I will be able to crowdfund a team of five to ten people. Fortunately, I have
+found over the last years that collaboration does not require all team members to be funded out of
+the same purse. I constantly collaborate with people without being responsible for their payroll.
+In open source, it is common for contributors to a project to be employed by several different
+organisations, and indeed such diversity makes projects better and more resilient.</p>
+
+<p>I work closely with the <a href="https://www.inkandswitch.com/">Ink &amp; Switch lab</a>, who have their own
+funding. Some of my collaborators are PhD students who have their own stipends, or research fellows
+who have their own grants. We come together because of our common interests, and because nobody is
+trying to profit from the others. We have a vision of the future that we want to realise, and the
+funding just lets us pay the bills as we work towards the greater goal.</p>
+
+<p>Of course, if my Patreon ends up being successful and generates more money than I need for my own
+living expenses, I will use it to help fund collaborators. I am not aiming to recreate the lavish
+Silicon Valley engineering salary that I left behind; I just want to do good work without having to
+spend a lot of time chasing grants.</p>
+
+<h2 id="alternatives-to-crowdfunding">Alternatives to crowdfunding</h2>
+
+<p>Before moving to <a href="https://www.patreon.com/martinkl">Patreon</a> I considered several alternatives:</p>
+
+<ul>
+  <li>A tenured academic job? To get one at a research-focussed university requires playing the
+publication game to get sufficiently many papers in sufficiently prestigious publication venues.
+There is a <a href="https://cacm.acm.org/blogs/blog-cacm/248824-how-objective-is-peer-review/fulltext">large degree of randomness</a>
+in that paper selection process. Playing the publication game, administrative duties, and writing
+grant proposals are time-sinks that get in the way of doing actual research. Also, for family
+reasons I can’t move to another city, and my current university has a hiring freeze anyway.</li>
+  <li>Founding a startup? Been there, <a href="https://www.crunchbase.com/person/martin-kleppmann">done that</a>
+(twice). A startup is a great way of productising technology on a 1–2 year time scale; it also
+needs fast growth and/or a strong revenue model. My current work does not fit that model since it
+focusses on foundational technolgies with a longer time-scale (the 5–10 years mentioned by Jim
+Gray), and it aims for public benefit rather than private profit.</li>
+  <li>Getting a job at someone else’s company? I want to be free to choose what to work on based on what
+I believe is important, not whatever happens to suit a company’s agenda. I also want to be free to
+publish that work openly. Not many companies are willing to support such positions long-term.</li>
+  <li>Consulting work and training? I could spend a fraction of my time helping companies solve problems
+within my area of expertise, or running training workshops. However, this type of income can
+fluctuate wildly, and generating a steady stream of clients is a lot of work and very distracting.
+It’s difficult to make consulting compatible with the deep thinking and long-term view required
+for research.</li>
+  <li>Becoming a professional author? I have been able to draw a reasonable income from
+<a href="https://martin.kleppmann.com/2020/09/29/is-book-writing-worth-it.html">royalties for sales of my book</a>.
+However, I have no idea how long those sales will last, and I have no idea whether any future book
+I write will sell similarly well. Given this unpredictability, it seems unwise to bet on royalties
+as only income. Moreover, book-writing is only one of several things I do, and I believe the
+other things generate value too. I believe my funding situation should reflect that.</li>
+</ul>
+
+<p>With crowdfunding, I hope to not only generate a steady income stream, but also build a community of
+people who are excited about the same topics as me, and who are invested in making these ideas
+a reality. It is an opportunity for me to share early-stage work with enthusiasts, and to improve
+that work through feedback from the community. And it is an opportunity for you to get an insider
+view of the research process as we build the future of computing.</p>
+
+<p>If you believe in our vision for
+<a href="https://www.inkandswitch.com/local-first.html">a better future of collaborative computing</a>, or if
+you want to see more high-quality educational materials for computer science, then why not head over
+to Patreon and <a href="https://www.patreon.com/martinkl">pledge your support</a>? It will make a huge
+difference. Thank you!</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Decentralised content moderation</title>
@@ -251,6 +489,9 @@ done a lot of research on moderation.</li>
 <a href="https://twitter.com/arcalinea/status/1352316972654944257">report comparing decentralised social protocols</a>, and a
 <a href="https://jaygraber.medium.com/designing-decentralized-moderation-a76430a8eab">blog post</a>
 on decentralised content moderation.</li>
+  <li><a href="https://twitter.com/weschow">Wes Chow</a> has written a
+<a href="https://medium.com/@wesc/opportunities-in-the-design-of-decentralized-social-networks-d66cce42d74b">thoughtful and nunanced article</a>
+on decentralised content moderation, with lots of references to further reading at the end.</li>
   <li>A few <a href="https://twitter.com/xmal/status/1349413781953273857">people</a>
 <a href="https://twitter.com/weschow/status/1349417270179737604">mentioned</a> Slashdot, Reddit, and Stack Overflow
 as successful examples of community-run moderation.</li>
@@ -271,6 +512,8 @@ explores community-run moderation. He is also working on
 <a href="https://felix.unote.io/hacker-news-scores">ranking</a>
 <a href="https://github.com/fdietze/downvote-scoring">algorithms</a>
 for news aggregators.</li>
+  <li>Twitter is trialling <a href="https://blog.twitter.com/en_us/topics/product/2021/introducing-birdwatch-a-community-based-approach-to-misinformation.html">Birdwatch</a>,
+a crowdsourced effort to tackle misinformation.</li>
 </ul>
 
                 ]]></content:encoded>
@@ -1917,228 +2160,6 @@ a page-oriented update-in-place approach and a log-structured, compaction-based 
 distinction is best explained with concrete examples, and the graphical representation cannot
 capture all the subtleties that are discussed in the text of the book.
 </p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>The probability of data loss in large clusters</title>
-                <link>http://martin.kleppmann.com/2017/01/26/data-loss-in-large-clusters.html</link>
-                <comments>http://martin.kleppmann.com/2017/01/26/data-loss-in-large-clusters.html#disqus_thread</comments>
-                <pubDate>Thu, 26 Jan 2017 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2017/01/26/data-loss-in-large-clusters.html</guid>
-                
-                <description><![CDATA[ This blog post uses MathJax to render mathematics. You need JavaScript enabled for MathJax to work. Many distributed storage systems (e.g. Cassandra, Riak, HDFS, MongoDB, Kafka, …) use replication to make data durable. They are typically deployed in a “Just a Bunch of Disks” (JBOD) configuration – that is, without... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>This blog post uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematics. You need JavaScript
-enabled for MathJax to work.</em></p>
-
-<p>Many distributed storage systems (e.g. Cassandra, Riak, HDFS, MongoDB, Kafka, …) use replication
-to make data durable. They are typically deployed in a <a href="https://en.wikipedia.org/wiki/Non-RAID_drive_architectures">“Just a Bunch of Disks”</a> (JBOD)
-configuration – that is, without RAID to handle disk failure. If one of the disks on a node dies,
-that disk’s data is simply lost. To avoid losing data permanently, the database system keeps a copy
-(replica) of the data on some other disks on other nodes.</p>
-
-<p>The most common replication factor is 3 – that is, the database keeps copies of every piece of data
-on three separate disks attached to three different computers. The reasoning goes something like
-this: disks only die once in a while, so if a disk dies, you have a bit of time to replace it, and
-then you still have two copies from which you can restore the data onto the new disk. The risk that
-a second disk dies before you restore the data is quite low, and the risk that all three disks die
-at the same time is so tiny that you’re more likely to get hit by an asteroid.</p>
-
-<p>As a back-of-the-envelope calculation, if the probability of a single disk failing within some time
-period is 0.1% (to pick an arbitrary number), then the probability of two disks failing is
-(0.001)<sup>2</sup> = 10<sup>-6</sup>, and the probability of all three disks failing is
-(0.001)<sup>3</sup> = 10<sup>-9</sup>, or one in a billion. This calculation assumes that
-one disk’s failure is independent from another disk’s failure – which is not actually true, since
-for example disks from the same manufacturing batch may show correlated failures – but it’s a good
-enough approximation for our purposes.</p>
-
-<p>So far the common wisdom. It sounds reasonable, but unfortunately it turns out to be untrue for many
-data storage systems. In this post I will show why.</p>
-
-<h2 id="its-so-easy-to-lose-data-la-la-laaa">It’s so easy to lose data, la la laaa</h2>
-
-<p>If your database cluster really only consists of three machines, then the probability of all three
-of them dying simultaneously is indeed very low (ignoring correlated faults, such as the datacenter
-burning down). However, as you move to larger clusters, the probabilities change. The more nodes and
-disks you have in your cluster, the more likely it is that you lose data.</p>
-
-<p>This is a counter-intuitive idea. “Surely,” you think, “every piece of data is still replicated on
-three disks. The probability of a disk dying doesn’t depend on the size of the cluster. So why
-should the size of the cluster matter?” But I calculated the probabilities and drew a graph, and it
-looked like this:</p>
-
-<p><a href="/2017/01/dataloss.png"><img src="/2017/01/dataloss.png" width="550" alt="Graph of data loss probability depending on the number of nodes in the cluster" /></a></p>
-
-<p>To be clear, this isn’t the probability of a single node failing – this is the probability of
-<strong>permanently losing all three replicas</strong> of some piece of data, so restoring from backup (if you
-have one) is the only remaining way to recover that data. The bigger your cluster, the more likely
-you are haemorrhaging data. This is probably not what you intended when you decided to pay for
-a replication factor of 3.</p>
-
-<p>The y axis on that graph is a bit arbitrary, and depends on a lot of assumptions, but the direction
-of the line is scary. Under the assumption that a node has a 0.1% chance of dying within some time
-period, the graph shows that in a 8,000-node cluster, the chance of permanently losing all three
-replicas of some piece of data (within the same time period) is about 0.2%. Yes, you read that
-correctly: the risk of losing <strong>all three</strong> copies of some data is <strong>twice as great</strong> as the risk of
-losing a single node! What is the point of all this replication again?</p>
-
-<p>The intuition behind this graph is as follows: in an 8,000-node cluster it’s almost certain that
-a <em>few</em> nodes are always dead at any given moment. That is normally not a problem: a certain rate of
-churn and node replacement is expected and a part of routine maintenance. However, if you get
-unlucky, there is <em>some piece of data</em> whose three replicas just happen to be three of those nodes
-that have died – and if this is the case, that piece of data is gone forever. The data that is lost
-is only a small fraction of the total dataset in the cluster, but still that’s not great: when you
-use a replication factor of 3, you generally mean “I really don’t want to lose this data”, not “I
-don’t mind occasionally losing a bit of this data, as long as it’s not too much”. Maybe that piece
-of lost data was a particularly important one.</p>
-
-<p>The probability that all three replicas are dead nodes depends crucially on the algorithm that the
-system uses to assign data to replicas. The graph above is calculated under the assumption that the
-data is split into a number of partitions (shards), and that each partition is stored on three
-<em>randomly chosen</em> nodes (or pseudo-randomly with a hash function). This is the case with
-<a href="https://www.akamai.com/kr/ko/multimedia/documents/technical-publication/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf">consistent hashing</a>, used in Cassandra and Riak, among others (as far as I know). With
-other systems I’m not sure how the replica assignment works, so I’d appreciate any insights from
-people who know about the internals of various storage systems.</p>
-
-<h2 id="calculating-the-probability-of-data-loss">Calculating the probability of data loss</h2>
-
-<p>Let me show you how I calculated that graph above, using a probabilistic model of a replicated
-database.</p>
-
-<p>Let’s assume that the probability of losing an individual node is \(p=P(\text{node loss})\). I am
-going to ignore time in this model, and simply look at the probability of failure in some arbitrary
-time period. For example, we could assume that \(p=0.001\) is the probability of a node failing
-within a given day, which would make sense if it takes about a day to replace the node and restore
-the lost data onto new disks. For simplicity I won’t distinguish between node failure and
-<a href="https://www.backblaze.com/blog/hard-drive-reliability-update-september-2014/">disk failure</a>, and I will consider only permanent failures (ignoring crashes where
-the node comes back again after a reboot).</p>
-
-<p>Let \(n\) be the number of nodes in the cluster. Then the probability that \(f\) out of \(n\)
-nodes have failed (assuming that failures are independent) is given by the
-<a href="https://en.wikipedia.org/wiki/Binomial_distribution">binomial distribution</a>:</p>
-
-<p>\[ P(f \text{ nodes failed}) = \binom{n}{f} \, p^f \, (1-p)^{n-f} \]</p>
-
-<p>The term \(p^f\) is the probability that \(f\) nodes have failed, the term \((1-p)^{n-f}\) is
-the probability that the remaining \(n-f\) have not failed, and \(\binom{n}{f}\) is the number
-of different ways of picking \(f\) out of \(n\) nodes. \(\binom{n}{f}\) is pronounced
-“n choose f”, and it is defined as:</p>
-
-<p>\[ \binom{n}{f} = \frac{n!}{f! \; (n-f)!} \]</p>
-
-<p>Let \(r\) be the replication factor (typically \(r=3\)). If we assume that \(f\) out of
-\(n\) nodes have failed, what is the probability that a particular partition has all \(r\)
-replicas on failed nodes?</p>
-
-<p>Well, in a system that uses consistent hashing, each partition is assigned to nodes independently
-and randomly (or pseudo-randomly). For a given partition, there are \(\binom{n}{r}\) different
-ways of assigning the \(r\) replicas to nodes, and these assignments are all equally likely to
-occur. Moreover, there are \(\binom{f}{r}\) different ways of choosing \(r\) replicas out of
-\(f\) failed nodes – these are the ways in which all \(r\) replicas can be assigned to failed
-nodes. We then work out the fraction of the assignments that result in all replicas having failed:</p>
-
-<p>\[ P(\text{partition lost} \mid f \text{ nodes failed}) = \frac{\binom{f}{r}}{\binom{n}{r}} =
-    \frac{f! \; (n-r)!}{(f-r)! \; n!} \]</p>
-
-<p>(The vertical bar after “partition lost” is pronounced “given that”, and it indicates a
-<a href="https://en.wikipedia.org/wiki/Conditional_probability">conditional probability</a>: the probability is given <em>under the assumption</em> that \(f\)
-nodes have failed.)</p>
-
-<p>So that’s the probability that all replicas of one particular partition has been lost. What about
-a cluster with \(k\) partitions? If one or more partitions have been lost, we have lost data.
-Thus, in order to not lose data, we require that all \(k\) partitions are not lost:</p>
-
-<p>\begin{align}
-P(\text{data loss} \mid f \text{ nodes failed})
-    &amp;= 1 - P(\text{partition not lost} \mid f \text{ nodes failed})^k \\
-    &amp;= 1 - \left( 1 - \frac{f! \; (n-r)!}{(f-r)! \; n!} \right)^k
-\end{align}</p>
-
-<p>Cassandra and Riak call partitions “vnodes” instead, but they are the same thing. In general, the
-number of partitions \(k\) is independent from the number of nodes \(n\). In the case of
-Cassandra, there is usually a <a href="http://www.datastax.com/dev/blog/virtual-nodes-in-cassandra-1-2">fixed number of partitions per node</a>; the default
-is \(k=256\,n\) (configured by the <code>num_tokens</code> parameter), and this is also what I assumed for the
-graph above. In Riak, the number of partitions is <a href="https://docs.basho.com/riak/kv/2.1.4/setup/planning/cluster-capacity/#ring-size-number-of-partitions">fixed when you create the cluster</a>, but
-generally more nodes also mean more partitions.</p>
-
-<p>With all of this in place, we can now work out the probability of losing one or more partitions in
-a cluster of size \(n\) with a replication factor of \(r\). If the number of failures \(f\) is
-less than the replication factor, we can be sure that no data is lost. Thus, we need to add up the
-probabilities for all possible numbers of failures \(f\) with \(r \le f \le n\):</p>
-
-<p>\begin{align}
-P(\text{data loss})
-    &amp;= \sum_{f=r}^{n} \; P(\text{data loss} \;\cap\; f \text{ nodes failed}) \\
-    &amp;= \sum_{f=r}^{n} \; P(f \text{ nodes failed}) \; P(\text{data loss} \mid f \text{ nodes failed}) \\
-    &amp;= \sum_{f=r}^{n} \binom{n}{f} \, p^f \, (1-p)^{n-f}
-       \left[ 1 - \left( 1 - \frac{f! \; (n-r)!}{(f-r)! \; n!} \right)^k \right]
-\end{align}</p>
-
-<p>That is a bit of a mouthful, but I think it’s accurate. And if you plug in \(r=3\),
-\(p=0.001\) and \(k=256\,n\), and vary \(n\) between 3 and 10,000, then you
-get the graph above. I wrote <a href="https://gist.github.com/ept/1e094caaab5fa6471f529f589c4aaaf0">a little Ruby program</a> to do the calculation.</p>
-
-<p>We can get a simpler approximation using the <a href="https://en.wikipedia.org/wiki/Boole%27s_inequality">union bound</a>:</p>
-
-<p>\begin{align}
-P(\text{data loss})
-    &amp;= P(\ge\text{ 1 partition lost}) \\
-    &amp;= P\left( \bigcup_{i=1}^k \text{partition } i \text{ lost} \right) \\
-    &amp;\le k\, P(\text{partition lost}) = k\, p^r
-\end{align}</p>
-
-<p>Even though one partition failing is not independent from another partition failing, this
-approximation still applies. And it seems to match the exact result quite closely: in the graph, the
-data loss probability looks like a straight line, proportional to the number of nodes. The
-approximation says that the probability is proportional to the number of partitions, which is
-equivalent since we assumed a fixed 256 partitions per node.</p>
-
-<p>Moreover, if we plug in the numbers for 10,000 nodes into the approximation, we get 
-\(P(\text{data loss}) \le 256 \cdot 10^4 \cdot (10^{-3})^3 = 0.00256\), which matches the result
-from the Ruby program very closely.</p>
-
-<h2 id="and-in-practice">And in practice…?</h2>
-
-<p>Is this a problem in practice? I don’t know. Mostly I think it’s an interesting and
-counter-intuitive phenomenon. I’ve heard rumours that it is causing real data loss at companies with
-large database clusters, but I’ve not seen the issue documented anywhere. If you’re aware of any
-discussions on this topic, please point me at them.</p>
-
-<p>The calculation indicates that in order to reduce the probability of data loss, you can reduce the
-number of partitions or increase the replication factor. Using more replicas costs more, so it’s not
-ideal for large clusters that are already expensive. However, the number of partitions presents an
-interesting trade-off. Cassandra originally used one partition per node, but then
-<a href="http://www.datastax.com/dev/blog/virtual-nodes-in-cassandra-1-2">switched to 256 partitions per node</a> a few years ago in order to achieve better
-load distribution and more efficient rebalancing. The downside, as we can see from this calculation,
-is a much higher probability of losing at least one of the partitions.</p>
-
-<p>I think it’s probably possible to devise replica assignment algorithms in which the probability of
-data loss does not grow with the cluster size, or at least does not grow as fast, but which
-nevertheless have good load distribution and rebalancing properties. That would be an interesting
-area to explore further. In that context, my colleague <a href="http://www.cl.cam.ac.uk/~sak70/">Stephan</a> pointed out that the expected
-rate of data loss is constant in a cluster of a particular size, independent of the replica
-assignment algorithm – in other words, you can choose between a high probability of losing a small
-amount of data, and a low probability of losing a large amount of data! Is the latter better?</p>
-
-<p>You need fairly large clusters before this effect really shows up, but clusters of thousands of
-nodes are used by various large companies, so I’d be interested to hear from people with operational
-experience at such scale. If the probability of permanently losing data in a 10,000 node cluster is
-really 0.25% per day, that would mean a 60% chance of losing data in a year. That’s way higher than
-the “one in a billion” getting-hit-by-an-asteroid probability that I talked about at the start.</p>
-
-<p>Are the designers of distributed data systems aware of this issue? If I got this right, it’s
-something that should be taken into account when designing replication schemes. Hopefully this blog
-post will raise some awareness of the fact that just because you have three replicas you’re not
-automatically guaranteed to be safe.</p>
-
-<p><em>Thank you to <a href="https://twitter.com/matclayton">Mat Clayton</a> for bringing this issue to my attention, and to
-<a href="http://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>, <a href="http://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>, <a href="https://twitter.com/cmeik">Christopher Meiklejohn</a>,
-and <a href="http://www.cl.cam.ac.uk/~drt24/">Daniel Thomas</a> for comments on a draft of this post.</em></p>
-
 
                 ]]></content:encoded>
             </item>
