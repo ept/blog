@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Tue, 23 Feb 2021 15:35:17 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 23 Feb 2021 22:50:40 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -144,11 +144,7 @@ a vision for the future of collaborative computing, which my collaborators and I
 the form of <a href="https://github.com/automerge/automerge">Automerge</a>, an open source project. Our vision
 is articulated in the essay-cum-manifesto on
 <a href="https://www.inkandswitch.com/local-first.html">local-first software</a>, which I suggest you read if
-you haven’t already. You can also read a
-<a href="/2021/02/fellowship-proposal.pdf">research proposal</a> that I wrote two years ago, and which sets out
-a concrete list of research tasks that I want to tackle. Two years later, I note that we have made
-good progress on several of the projects listed in this proposal; lots more work remains to be done,
-but the old proposal continues to be a good reflection of my thinking.</p>
+you haven’t already.</p>
 
 <h2 id="research-philosophy">Research philosophy</h2>
 
@@ -213,12 +209,13 @@ spend a lot of time chasing grants.</p>
 <p>Before moving to <a href="https://www.patreon.com/martinkl">Patreon</a> I considered several alternatives:</p>
 
 <ul>
-  <li>A tenured academic job? To get one at a research-focussed university requires playing the
-publication game to get sufficiently many papers in sufficiently prestigious publication venues.
-There is a <a href="https://cacm.acm.org/blogs/blog-cacm/248824-how-objective-is-peer-review/fulltext">large degree of randomness</a>
-in that paper selection process. Playing the publication game, administrative duties, and writing
-grant proposals are time-sinks that get in the way of doing actual research. Also, for family
-reasons I can’t move to another city, and my current university has a hiring freeze anyway.</li>
+  <li>Academic jobs and fellowships? It’s a difficult to get a stable position at a research-focussed
+university. Both jobs and funding are fiercely competitive (hundreds of applicants for one place),
+and they require a strong track record of publications. Unfortunately, there is a
+<a href="https://cacm.acm.org/blogs/blog-cacm/248824-how-objective-is-peer-review/fulltext">large degree of randomness</a>
+in the choice of papers that get accepted to top-tier publication venues. I am still interested in
+an academic career, but it seems unwise to put all eggs in this uncertain basket. Oh, and due to
+the pandemic my current university has a hiring freeze anyway, so no jobs anytime soon.</li>
   <li>Founding a startup? Been there, <a href="https://www.crunchbase.com/person/martin-kleppmann">done that</a>
 (twice). A startup is a great way of productising technology on a 1–2 year time scale; it also
 needs fast growth and/or a strong revenue model. My current work does not fit that model since it
