@@ -243,8 +243,13 @@ have not vetted them, so don't take this as an endorsement.
 * [Matrix](https://matrix.org/), a federated messaging system, is
   [working on](https://matrix.org/blog/2020/10/19/combating-abuse-in-matrix-without-backdoors) a
   decentralised, subjective reputation system.
+* [Freenet](https://freenetproject.org/) has a web-of-trust-based, decentralised
+  [user reputation system](https://www.draketo.de/english/freenet/friendly-communication-with-anonymity)
+  (see also this [Bachelor's thesis](https://github.com/xor-freenet/plugin-WebOfTrust/blob/master/developer-documentation/core-developers-manual/OadSFfF-version1.2-non-print-edition.pdf)).
 * [Freechains](https://github.com/Freechains/README) is a peer-to-peer content distribution
   protocol with an embedded user reputation system.
+* [Songbird](https://github.com/Murmuration-Labs/songbird-decentralized-moderation) is a sketch of a
+  decentralised moderation system for IPFS.
 * [Cabal](https://cabal.chat/) allows users to
   [subscribe](https://twitter.com/substack/status/1349471659653124098) to other users' moderation
   actions, such as blocking and hiding posts.
