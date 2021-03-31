@@ -1,0 +1,26 @@
+---
+layout: talk
+title: "Automerge: A New Foundation for Collaboration Software"
+venue: Craft Conference
+place: Online
+venue_url: https://craft-conf.com/speaker/MartinKleppmann
+---
+
+
+Abstract
+--------
+
+Lots of software these days needs to enable collaboration between several users. We know how to
+build basic web apps, where all users read and update data in a shared database. But real-time
+collaboration, as we know it from Google Docs or Figma or Trello, is a much bigger challenge. It
+gets even harder if you want to allow users to continue working while offline.
+
+Automerge is an open-source library that aims to make collaboration software simple and robust. It
+provides a shared JSON-like data structure that several users can update at the same time, and which
+automatically merges all updates into a consistent view. It provides data formats for efficiently
+storing this data and syncing it between users. It seamlessly supports both offline work and live
+real-time collaboration while online.
+
+Internally, Automerge is based on Conflict-free Replicated Data Types (CRDTs). In this talk we will
+explore some of the interesting computer science research that makes it possible, and see how it is
+used in practice.
