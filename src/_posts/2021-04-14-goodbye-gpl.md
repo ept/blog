@@ -202,9 +202,10 @@ For all these reasons, I think it no longer makes sense to cling on to the GPL a
 them go. Instead, I would encourage you to adopt a permissive license for your projects (e.g.
 [MIT](https://opensource.org/licenses/MIT), [BSD](https://opensource.org/licenses/BSD-2-Clause),
 [Apache 2.0](https://opensource.org/licenses/Apache-2.0)), and then focus your energies on the
-things that will really make a difference to software freedom: counteracting the monopolising
-effects of cloud software, developing sustainable business models that allow open source software to
-thrive, and pushing for regulation that prioritises the interests of software users over the
-interests of vendors.
+things that will really make a difference to software freedom:
+[counteracting](https://www.inkandswitch.com/local-first.html) the monopolising effects of cloud
+software, developing sustainable business models that allow open source software to thrive, and
+pushing for regulation that prioritises the interests of software users over the interests of
+vendors.
 
 *Thank you to [Rob McQueen](https://ramcq.net/) for feedback on a draft of this post.*
