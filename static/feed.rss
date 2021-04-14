@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 14 Apr 2021 15:44:56 BST</lastBuildDate>
+        <lastBuildDate>Wed, 14 Apr 2021 15:53:54 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -226,10 +226,11 @@ free software. We must distance ourselves from the FSF and their worldview.</p>
 them go. Instead, I would encourage you to adopt a permissive license for your projects (e.g.
 <a href="https://opensource.org/licenses/MIT">MIT</a>, <a href="https://opensource.org/licenses/BSD-2-Clause">BSD</a>,
 <a href="https://opensource.org/licenses/Apache-2.0">Apache 2.0</a>), and then focus your energies on the
-things that will really make a difference to software freedom: counteracting the monopolising
-effects of cloud software, developing sustainable business models that allow open source software to
-thrive, and pushing for regulation that prioritises the interests of software users over the
-interests of vendors.</p>
+things that will really make a difference to software freedom:
+<a href="https://www.inkandswitch.com/local-first.html">counteracting</a> the monopolising effects of cloud
+software, developing sustainable business models that allow open source software to thrive, and
+pushing for regulation that prioritises the interests of software users over the interests of
+vendors.</p>
 
 <p><em>Thank you to <a href="https://ramcq.net/">Rob McQueen</a> for feedback on a draft of this post.</em></p>
 
