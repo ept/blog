@@ -10,12 +10,231 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 31 Mar 2021 13:49:59 BST</lastBuildDate>
+        <lastBuildDate>Wed, 14 Apr 2021 15:44:56 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>It's time to say goodbye to the GPL</title>
+                <link>http://martin.kleppmann.com/2021/04/14/goodbye-gpl.html</link>
+                <comments>http://martin.kleppmann.com/2021/04/14/goodbye-gpl.html#disqus_thread</comments>
+                <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2021/04/14/goodbye-gpl.html</guid>
+                
+                <description><![CDATA[ The trigger for this post is the reinstating of Richard Stallman, a very problematic character, to the board of the Free Software Foundation (FSF). I am appalled by this move, and join others in the call for his removal. This occasion has caused me to reevaluate the position of the... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>The trigger for this post is the
+<a href="https://www.fsf.org/news/statement-of-fsf-board-on-election-of-richard-stallman">reinstating</a>
+of Richard Stallman, a very <a href="https://rms-open-letter.github.io/">problematic character</a>, to the
+board of the <a href="https://www.fsf.org/">Free Software Foundation</a> (FSF). I am appalled by this move, and
+join others in the call for his removal.</p>
+
+<p>This occasion has caused me to reevaluate the position of the FSF in computing. It is the steward of
+the GNU project (a part of Linux distributions,
+<a href="https://www.gnu.org/gnu/incorrect-quotation.en.html">loosely speaking</a>), and of a family of
+software licenses centred around the
+<a href="https://en.wikipedia.org/wiki/GNU_General_Public_License">GNU General Public License</a> (GPL). These
+efforts are unfortunately tainted by Stallman’s behaviour. However, this is not what I actually want
+to talk about today.</p>
+
+<p>In this post I argue that we should move away from the GPL and related licenses (LGPL, AGPL), for
+reasons that have nothing to do with Stallman, but simply because I think they have failed to
+achieve their purpose, and they are more trouble than they are worth.</p>
+
+<p>First, brief background: the defining feature of the GPL family of licenses is the concept of
+<a href="https://en.wikipedia.org/wiki/Copyleft">copyleft</a>, which states (roughly) that if you take some
+GPL-licensed code and modify it or build upon it, you must also make your modifications/extensions
+(known as a “<a href="https://en.wikipedia.org/wiki/Derivative_work">derivative work</a>”) freely available
+under the same license. This has the effect that the GPL’ed source code cannot be incorporated into
+closed-source software. At first glance, this seems like a great idea. So what is the problem?</p>
+
+<h2 id="the-enemy-has-changed">The enemy has changed</h2>
+
+<p>In the 1980s and 1990s, when the GPL was written, the enemy of the free software movement was
+Microsoft and other companies that sold closed-source (“proprietary”) software. The GPL intended to
+disrupt this business model for two main reasons:</p>
+
+<ol>
+  <li>Closed-source software cannot easily be modified by users; you can take it or leave it, but you
+cannot adapt it to your own needs. To counteract this, the GPL was designed to force companies to
+release the source code of their software, so that users of the software could study it, modify
+it, compile and use their modified version, and thus have the freedom to customise their
+computing devices to their needs.</li>
+  <li>Moreover, GPL was motivated by a desire for fairness: if you write some software in your spare
+time and release it for free, it’s understandable that you don’t want others to profit from your
+work without giving something back to the community. Forcing derivative works to be open source
+ensures at least some baseline of “giving back”.</li>
+</ol>
+
+<p>While this made sense in 1990, I think the world has changed, and closed-source software is no
+longer the main problem. <strong>In the 2020s, the enemy of freedom in computing is cloud software</strong> (aka
+software as a service/SaaS, aka web apps) – i.e. software that runs primarily on the vendor’s
+servers, with all your data also stored on those servers. Examples include Google Docs, Trello,
+Slack, Figma, Notion, and many others.</p>
+
+<p>This cloud software may have a client-side component (a mobile app, or the JavaScript running in
+your web browser), but it only works in conjunction with the vendor’s server. And there are lots of
+problems with cloud software:</p>
+
+<ul>
+  <li>If the company providing the cloud software goes out of business or decides to
+<a href="https://killedbygoogle.com/">discontinue a product</a>, the software stops working, and you are
+locked out of the documents and data you created with that software. This is an especially common
+problem with software made by a startup, which may get
+<a href="https://ourincrediblejourney.tumblr.com/">acquired by a bigger company</a> that has no interest in
+continuing to maintain the startup’s product.</li>
+  <li>Google and other cloud services may
+<a href="https://twitter.com/Demilogic/status/1358661840402845696">suddenly suspend your account</a> with no
+warning and <a href="https://www.paullimitless.com/google-account-suspended-no-reason-given/">no recourse</a>,
+for example if an automated system thinks you have violated its terms of service. Even if your own
+behaviour has been faultless, someone else may have hacked into your account and used it to send
+malware or phishing emails without your knowledge, triggering a terms of service violation. Thus,
+you could suddenly find yourself permanently locked out of every document you ever created on
+Google Docs or another app.</li>
+  <li>With software that runs on your own computer, even if the software vendor goes bust, you can
+continue running it forever (in a VM/emulator if it’s no longer compatible with your OS, and
+assuming it doesn’t need to contact a server to check for a license check). For example, the
+Internet Archive has a collection of
+<a href="https://archive.org/details/softwarelibrary">over 100,000 historical software titles</a> that you
+can run in an emulator inside your web browser! In contrast, if cloud software gets shut down,
+there is no way for you to preserve it, because you never had a copy of the server-side software,
+neither as source code nor in compiled form.</li>
+  <li>The 1990s problem of not being able to customise or extend software you use is aggravated further
+in cloud software. With closed-source software that runs on your own computer, at least someone
+could reverse-engineer the file format it uses to store its data, so that you could load it into
+alternative software (think pre-<a href="https://en.wikipedia.org/wiki/Office_Open_XML">OOXML</a> Microsoft
+Office file formats, or Photoshop files before the
+<a href="https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/">spec</a> was published). With cloud
+software, not even that is possible, since the data is only stored in the cloud, not in files on
+your own computer.</li>
+</ul>
+
+<p>If all software was free and open source, these problems would all be solved. However, making the
+source code available is not actually necessary to solve the problems with cloud software; even
+closed-source software avoids the aforementioned problems, as long as it is running on your own
+computer rather than the vendor’s cloud server. Note that the Internet Archive is able to keep
+historical software working without ever having its source code: for purposes of preservation,
+running the compiled machine code in an emulator is just fine. Maybe having the source code would
+make it a little easier, but it’s not crucial. The important thing is having a copy of the software
+<strong>at all</strong>.</p>
+
+<h2 id="local-first-software">Local-first software</h2>
+
+<p>My collaborators and I have previously argued for
+<a href="https://www.inkandswitch.com/local-first.html">local-first software</a>, which is a response to these
+problems with cloud software. Local-first software runs on your own computer, and stores its data on
+your local hard drive, while also retaining the convenience of cloud software, such as real-time
+collaboration and syncing your data across all of your devices. It is nice for local-first software
+to also be open source, but this is not necessary: 90% of its benefits apply equally to
+closed-source local-first software.</p>
+
+<p>Cloud software, not closed-source software, is the real threat to software freedom, because the harm
+from being suddenly locked out of all of your data at the whim of a cloud provider is much greater
+than the harm from not being able to view and modify the source code of your software. For that
+reason, it is much more important and pressing that we make local-first software ubiquitous. If, in
+that process, we can also make more software open-source, then that would be nice, but that is less
+critical. Focus on the biggest and most urgent challenges first.</p>
+
+<h2 id="legal-tools-to-promote-software-freedom">Legal tools to promote software freedom</h2>
+
+<p>Copyleft software licenses are a legal tool that attempts to force more software vendors to release
+their source code. In particular, the
+<a href="https://en.wikipedia.org/wiki/Affero_General_Public_License">AGPL</a> is an attempt to force providers
+of cloud services to release the source of their server-side software. However, this hasn’t really
+worked: most vendors of cloud software simply refuse to use AGPL-licensed software, and either use
+a different implementation with a more permissive license, or re-implement the necessary
+functionality themselves, or
+<a href="https://www.elastic.co/pricing/faq/licensing">buy a commercial license</a> that comes without the
+copyleft clauses. I don’t think the license has caused any source code to become available that
+wouldn’t have been open source anyway.</p>
+
+<p>As a legal tool to promote greater software freedom, I believe copyleft software licenses have
+largely failed, since they have done nothing to stop the rise of cloud software, and probably not
+done much to increase the share of software whose source is available. Open source software has
+become very successful, but much of this success is in projects with non-copyleft licenses (e.g.
+Apache, MIT, or BSD licenses), and even in the GPL-licensed projects (e.g. Linux) I am skeptical
+that the copyleft aspect was really an important factor in the project’s success.</p>
+
+<p>I believe a much more promising legal tool to promote software freedom is in government regulation.
+For example, the GDPR includes a
+<a href="https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-data-portability/">right to data portability</a>,
+which means that users must be able to move their data from one service to another. Existing
+implementations of portability, such as
+<a href="https://en.wikipedia.org/wiki/Google_Takeout">Google Takeout</a>, are quite rudimentary (what can you
+really do with a big zip archive of JSON files?), but we can lobby regulators to
+<a href="https://interoperability.news/">push for better portability/interoperability</a>, e.g. requiring
+real-time bidirectional sync of your data between two apps by competing providers.</p>
+
+<p>Another promising route I see is pushing
+<a href="https://joinup.ec.europa.eu/sites/default/files/document/2011-12/OSS-procurement-guideline%20-final.pdf">public-sector procurement to prefer open source, local-first software</a>
+over closed-source cloud software. This creates a positive incentive for businesses to develop and
+maintain high-quality open source software, in a way that copyleft clauses do not.</p>
+
+<p>You might argue that a software license is something that an individual developer can control,
+whereas governmental regulation and public policy is a much bigger issue outside of any one
+individual’s power. Yes, but how much impact can you really have by choosing a software license?
+Anyone who doesn’t like your license can simply choose not to use your software, in which case your
+power is zero. Effective change comes from collective action on big issues, not from one person’s
+little open source side project choosing one license over another.</p>
+
+<h2 id="other-problems-with-gpl-family-licenses">Other problems with GPL-family licenses</h2>
+
+<p>You can force a company to make their source code of a GPL-derived software project available, but
+you cannot force them to be good citizens of the open source community (e.g. continuing to maintain
+the features they have added, fixing bugs, helping other contributors, providing good documentation,
+participating in project governance). What worth is source code that is just “thrown over the wall”
+without genuine engagement in the open source project? At best it’s worthless, and at worst it’s
+harmful because it shifts the burden of maintenance to other contributors of the project.</p>
+
+<p>We need people to be good contributors to the open source community, and this is achieved by setting
+up the right incentives and by being welcoming, not by software licenses.</p>
+
+<p>Finally, a practical problem of GPL-family licenses is their
+<a href="http://gplv3.fsf.org/wiki/index.php/Compatible_licenses">incompatibility with other widely-used licenses</a>,
+making it difficult to use certain combinations of libraries in the same project and unnecessarily
+fragmenting the open source ecosystem. Maybe it would be worth putting up with this problem if the
+GPL had other strong advantages, but as I have explained, I don’t think those advantages exist.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The GPL and other copyleft licenses are not bad; I just think they’re pointless. They have practical
+problems, and they are tainted by the behaviour of the FSF, but most importantly, I do not believe
+they have been an effective contributor to software freedom. The only real use for copyleft nowadays
+is by commercial software vendors
+(<a href="https://www.mongodb.com/licensing/server-side-public-license/faq">MongoDB</a>,
+<a href="https://www.elastic.co/pricing/faq/licensing">Elastic</a>) who want to stop Amazon from providing
+their software as a service – which is fine, but it’s motivated purely by business concerns, not by
+software freedom.</p>
+
+<p>Open source software has been tremendously successful, and it has come a long way since the origins
+of the free software movement born from 1990s anti-Microsoft sentiment. I will acknowledge that the
+FSF was instrumental in getting this all started. However, 30 years on, the ecosystem has changed,
+but the FSF has failed to keep up, and has
+<a href="https://r0ml.medium.com/free-software-an-idea-whose-time-has-passed-6570c1d8218a">become more and more out of touch</a>.
+It has failed to establish a coherent response to cloud software and other recent threats to
+software freedom, and it just continues to rehash tired old arguments from decades ago. Now, by
+reinstating Stallman and dismissing the concerns about him, the FSF is
+<a href="https://lu.is/blog/2021/04/07/values-centered-npos-with-kmaher/">actively harming</a> the cause of
+free software. We must distance ourselves from the FSF and their worldview.</p>
+
+<p>For all these reasons, I think it no longer makes sense to cling on to the GPL and copyleft. Let
+them go. Instead, I would encourage you to adopt a permissive license for your projects (e.g.
+<a href="https://opensource.org/licenses/MIT">MIT</a>, <a href="https://opensource.org/licenses/BSD-2-Clause">BSD</a>,
+<a href="https://opensource.org/licenses/Apache-2.0">Apache 2.0</a>), and then focus your energies on the
+things that will really make a difference to software freedom: counteracting the monopolising
+effects of cloud software, developing sustainable business models that allow open source software to
+thrive, and pushing for regulation that prioritises the interests of software users over the
+interests of vendors.</p>
+
+<p><em>Thank you to <a href="https://ramcq.net/">Rob McQueen</a> for feedback on a draft of this post.</em></p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Building the future of computing, with your help</title>
@@ -1991,177 +2210,6 @@ This setting also allows any number of event types in the same topic, and furthe
 
 <p>With this new feature, you can easily and cleanly put all the different events for a particular entity in the same topic.
 Now you can freely choose the granularity of topics based on the criteria above, and not be limited to a single event type per topic.</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Drawing a map of distributed data systems</title>
-                <link>http://martin.kleppmann.com/2017/03/15/map-distributed-data-systems.html</link>
-                <comments>http://martin.kleppmann.com/2017/03/15/map-distributed-data-systems.html#disqus_thread</comments>
-                <pubDate>Wed, 15 Mar 2017 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2017/03/15/map-distributed-data-systems.html</guid>
-                
-                <description><![CDATA[ How we created an illustrated guide to help you find your way through the data landscape. Designing Data-Intensive Applications, the book I’ve been working on for four years, is finally finished, and should be available in your favorite bookstore in the next week or two. An incomplete beta (Early Release)... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><strong>How we created an illustrated guide to help you find your way through the data landscape.</strong></p>
-
-<p><a href="http://dataintensive.net/"><em>Designing Data-Intensive Applications</em></a>, the book I’ve been working on
-for four years, is finally finished, and should be available in your favorite bookstore in the next
-week or two. An incomplete beta (Early Release) edition has been available for the last 2½ years as
-I continued working on the final chapters.</p>
-
-<p>Throughout that process, we have been quietly working on a surprise. Something that has not been
-part of any of the Early Releases of the book. In fact, something that I have never seen in any tech
-book. And today we are excited to share it with you.</p>
-
-<p>In <em>Designing Data-Intensive Applications</em>, each of the 12 chapters is accompanied by a map. The map
-is a kind of graphical table of contents of the chapter, showing how some of the main ideas in the
-chapter relate to each other.</p>
-
-<p>Here is an example, from Chapter 3 (on storage engines):</p>
-
-<p><a href="https://d3ansictanv2wj.cloudfront.net/ch03-map_lg-12f05f19df9e49098d509847518f1c03.jpg"><img src="/2017/03/ch3-map.jpg" width="550" height="419" alt="Chapter 3 map illustration from Designing Data-Intensive Applications" /></a><br />
-<small>Figure 1. Map illustration from <em>Designing Data-Intensive Applications</em>, O’Reilly Media, 2017.</small></p>
-
-<p>Don’t take it too seriously—some of it is a little tongue-in-cheek, we have taken some artistic
-license, and the things included on the map are not exhaustive.</p>
-
-<p>But it does reflect the structure of the chapter: political or geographic regions represent ways of
-doing something, and cities represent particular implementations of those approaches. Similar things
-are more likely to be close together, and roads or rivers represent concepts that connect different
-implementations or regions.</p>
-
-<p>Most computing books describe one particular piece of software and discuss all the aspects of how it
-works. This book is structured differently: it starts with the concepts—discussing the high-level
-approaches of how you might solve some problem, and comparing the pros and cons of each—and then
-points out which pieces of software use which approach. The maps use the same structure: the region
-in which a city is located tells you what approach it uses.</p>
-
-<p>For example, in the map above, you can see a high-level subdivision into two countries: transaction
-processing and analytics. Within transaction processing, there are two regions: log-structured
-storage and B-trees, which are two ways of implementing OLTP storage engines. Within the B-tree
-region, you see databases like MySQL and PostgreSQL<sup><a href="#_ftn1">[1]</a></sup>, while within
-the log-structured region you see databases like Cassandra and HBase. On the analytics side, you can
-see that the mountain range representing column storage reaches into both the data warehousing and
-the Hadoop regions, since the approach applies to both.</p>
-
-<p>The maps are in black and white, both because of practicalities of printing and also because I was
-looking for a
-<a href="http://www.tolkien.co.uk/file/IfbTdA8/5d04a105-e66b-4d9b-b218-928c691eb83d.jpg">Tolkien-esque style</a>.
-You are, of course, welcome to color them in yourself. In fact, by coloring them in, you would be
-following a fine tradition: for over three centuries, maps were printed in black and white from an
-<a href="http://www.maphistory.info/understanding.html">engraved copper plate</a>, and then colored in by hand.</p>
-
-<p>Each of the chapters has a map like that, focusing on the particular aspects discussed in that
-chapter. This means that some cities appear on multiple islands—the data landscape is
-multidimensional, so a city may lie in more than one (conceptual) realm. For example, the map below
-is for Chapter 5 (on the topic of replication):</p>
-
-<p><a href="https://d3ansictanv2wj.cloudfront.net/ch05-map_lg-32ac8f29402e391034f664a63461eef5.jpg"><img src="/2017/03/ch5-map.jpg" width="550" height="550" alt="Chapter 5 map illustration from Designing Data-Intensive Applications" /></a><br />
-<small>Figure 2. Map illustration from <em>Designing Data-Intensive Applications</em>, O’Reilly Media, 2017.</small></p>
-
-<p>Cities representing Cassandra, MongoDB, MySQL, and others appear on both this map, the Chapter 3 map
-above, and some other maps, too.</p>
-
-<p>Shipping routes connect some of the ports shown in the maps, in cases where there is a noteworthy
-link between chapters. Most of the maps are of islands, but there are some exceptions. (I won’t give
-away too much, but I just want to say…beware of the
-<a href="https://en.wikipedia.org/wiki/Kraken">Kraken</a>.)</p>
-
-<p>I am incredibly delighted that O’Reilly was willing to take on this crazy idea of creating maps. It
-took a whole team to make them happen: from my
-<a href="https://www.dropbox.com/s/yvuj7rqg66i93os/chapter3-map.jpg?dl=0">rough pencil sketches</a> (which
-showed the structure but had absolutely zero artistic value),
-<a href="http://shabbirdiwan.com/category/technique/scratch-board/">Shabbir Diwan</a>,
-<a href="http://www.ediefreedman.com/">Edie Freedman</a>, and <a href="http://www.oreilly.com/pub/au/3771">Ron Bilodeau</a>
-created the beautifully illustrated versions you see above, and
-<a href="https://twitter.com/cmariebeau">Marie Beaugureau</a> patiently managed several rounds of revisions, in
-which we painstakingly polished all the details.</p>
-
-<p>Perhaps you’re curious to know how we got onto the idea of creating maps. Early on in the Early
-Release of the book, some readers told me they would love some kind of flowchart to help them decide
-quickly which database they should use for their application. Such flowcharts
-<a href="https://medium.baqend.com/nosql-databases-a-survey-and-decision-guidance-ea7823a822d">have been attempted</a>,
-but I never liked them much—it is tempting to read them out of context and jump to conclusions too
-quickly, and they have to simplify the issues to the point of almost being intellectually dishonest.</p>
-
-<p>My goal for <em>Designing Data-Intensive Applications</em> was different. I can’t in good faith give you
-a recommendation for one particular tool because I don’t know enough about your particular
-requirements. However, I can teach you what questions to ask and how to evaluate vendors’ claims
-critically. That requires more subtlety and detail than can be expressed in a one-page flowchart,
-which is why the book is 600 pages long, not one page.</p>
-
-<p>However, I did think that some kind of graphical representation of the main ideas and structure
-would be useful. I thought about <a href="https://en.wikipedia.org/wiki/Venn_diagram">Venn diagrams</a>, but
-they’re excruciatingly boring. I thought about <a href="https://en.wikipedia.org/wiki/Mind_map">mind maps</a>,
-and then started taking the “maps” bit more literally. I thought about the
-<a href="https://www.goodreads.com/book/show/1175738.The_Atlas_of_Experience">Atlas of Experience</a> by Louise
-van Swaaij and Jean Klare, a sublime book that represents aspects of human life as fictitious
-<a href="http://www.imaginaryatlas.com/wp-content/uploads/2013/04/worldof-experience.jpg">places on a geographic map</a>.
-(It is <a href="http://www.deharmonie.nl/titel/grote-atlas-van-de-belevingswereld/">originally in Dutch</a>;
-the English translation is, sadly, out of print.)
-<a href="https://www.goodreads.com/book/show/378.The_Phantom_Tollbooth">The Phantom Tollbooth</a> by Norton
-Juster and Jules Feiffer does
-<a href="http://bowenpeters.weebly.com/uploads/8/1/1/9/8119969/phantom_tollbooth_map.jpg">a similar thing</a>.</p>
-
-<p>Closer to technology, similar map-style visualizations have been used to
-<a href="https://xkcd.com/802/">represent online communities</a>, to visualize the
-<a href="https://hpi.de/naumann/projects/rdbms-genealogy.html">history of relational databases</a> and
-<a href="http://www.oreilly.com/go/languageposter">programming languages</a>, and to
-<a href="https://twitter.com/linclark/status/708071521286266881">explain libraries related to Facebook’s React</a>.
-I simply love the style.</p>
-
-<p>Other inspirations for me are the ornate maps produced in the medieval and renaissance periods,
-especially when it comes to whimsical
-<a href="https://www.bl.uk/shop/sea-monsters-on-medieval-and-renaissance-maps/p-284">sea monsters</a>.
-For example, around 1590, Abraham Ortelius published a
-<a href="https://commons.wikimedia.org/wiki/File:Abraham_Ortelius-Islandia-ca_1590.jpg">wonderful map of Iceland</a>,
-with <a href="https://en.wikipedia.org/wiki/Hekla">Mount Hekla</a> spewing fire, and surrounded by fantastical
-sea monsters:</p>
-
-<p><a href="/2017/03/ortelius-iceland.jpg"><img src="/2017/03/ortelius-iceland.jpg" width="550" height="410" alt="“Islandia” map by Abraham Ortelius, ca. 1590." /></a><br />
-<small>Figure 3. “Islandia” map by Abraham Ortelius, ca. 1590. Source:
-<a href="https://commons.wikimedia.org/wiki/File:Abraham_Ortelius-Islandia-ca_1590.jpg">Wikimedia Commons</a></small></p>
-
-<p>I feel those maps and sea monsters reflect the 16th-century sense of excitement to explore the earth
-and discover new places, as well as the dangers of sailing across unknown seas. And perhaps a bit of
-that excitement exists today in our exploration of technologies for storing, processing, and using
-data. There seems to be a lot of potential, but we also don’t really know what we’re doing, and it’s
-sometimes a bit dangerous (raise your hand if you’ve lost data at some point because something went
-wrong).</p>
-
-<p>We hope the maps in <em>Designing Data-Intensive Applications</em> will help convey some of that
-excitement, and also make you smile. In both the print and ebook editions, the map for each chapter
-appears at the start of each chapter.</p>
-
-<p>What’s more, we have taken all the individual chapter maps and assembled them into a poster—an
-archipelago of islands representing technologies in the sea of distributed data. The poster also
-includes some bonus sea monsters (of course).</p>
-
-<p>If you are at
-<a href="https://conferences.oreilly.com/strata/strata-ca">Strata + Hadoop World, San Jose</a>
-this week, you can drop by the O’Reilly booth to pick up a free print of the poster so you have
-something geeky and cool to hang on the wall in your office. Alternatively,
-<a href="https://d3ansictanv2wj.cloudfront.net/ddia-poster-web-89b1c62f6eb4b57336c6cbe2148cc9a9.jpg">you can download a JPG version for free from the O’Reilly website</a>
-for your personal, noncommercial use.</p>
-
-<p>We hope you enjoy <em>Designing Data-Intensive Applications</em> and the maps as much as we enjoyed making them!</p>
-
-<p><a href="/2017/03/ddia-poster.jpg"><img src="/2017/03/ddia-poster.jpg" width="550" height="733" alt="Me holding the poster with the maps" /></a><br />
-<small>Figure 4. Me holding the poster with the maps.</small></p>
-
-<p id="_ftn1">
-[1] Footnote for the <a href="http://tirania.org/blog/archive/2011/Feb-17.html">well-actually</a>
-crowd: yes, I know about hash indexes and GiST in PostgreSQL, various other index types in other
-databases, and the fact that in MySQL the index type is actually a matter of the storage engine
-(such as InnoDB), but those details are beside the point here. I am highlighting a dichotomy between
-a page-oriented update-in-place approach and a log-structured, compaction-based approach. This
-distinction is best explained with concrete examples, and the graphical representation cannot
-capture all the subtleties that are discussed in the text of the book.
-</p>
 
                 ]]></content:encoded>
             </item>

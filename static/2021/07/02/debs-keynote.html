@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Keynote: Event-based thinking in collaboration software &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?5" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Keynote: Event-based thinking in collaboration software"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Keynote: Event-based thinking in collaboration software</h1>
+
+                <p>
+                  A talk at
+                  
+                    <a href="https://2021.debs.org/keynote-speakers/">15th ACM International Conference on Distributed and Event-based Systems (DEBS)</a>,
+                  
+                  Online, 02 Jul 2021
+                </p>
+
+                <ul>
+                  
+                  
+                  
+                  
+                </ul>
+
+                <h2 id="abstract">Abstract</h2>
+
+<p>What do Google Docs and stream processing have in common? Both are centered around the idea of
+streams of events. In the case of Google Docs and other collaboration software, each event describes
+a change that a user has made to a document. Each user’s local device has a copy of the shared
+document, and processing the stream of changes means updating this local copy so that it is
+consistent with all of the other users’ copies of the document.</p>
+
+<p>This talk will explore collaboration software through the lens of event-based thinking, explaining
+some of the algorithms that are used to implement this kind of software, such as Conflict-free
+Replicated Data Types (CRDTs). We will highlight new developments in this area, such as local-first
+software, and identify some open challenges in the area.</p>
+
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div class="mailing-list-signup">
+        <p>
+            To find out when I write something new, sign up to receive an
+            <a href="https://martinkl.substack.com/">email notification</a>,
+            <a href="https://twitter.com/martinkl">follow me on Twitter</a>, or subscribe to the
+            <a href="http://feeds.feedburner.com/martinkl">RSS feed</a>.
+        </p>
+
+        <p class="disclaimer">
+            I won't give your email address to anyone else, won't send you any spam,
+            and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>, has received
+        <a href="https://www.goodreads.com/book/show/23466395-designing-data-intensive-applications">thousands</a>
+        of five-star reviews.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div class="widget">
+        <p>If you find my work useful, please
+        <a href="https://www.patreon.com/martinkl">support me on Patreon</a>.
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>14 Apr 2021: <a href="/2021/04/14/goodbye-gpl.html">It's time to say goodbye to the GPL</a></li>
+            
+              <li>23 Feb 2021: <a href="/2021/02/23/patreon.html">Building the future of computing, with your help</a></li>
+            
+              <li>13 Jan 2021: <a href="/2021/01/13/decentralised-content-moderation.html">Decentralised content moderation</a></li>
+            
+              <li>02 Dec 2020: <a href="/2020/12/02/bloom-filter-hash-graph-sync.html">Using Bloom filters to efficiently synchronise hash graphs</a></li>
+            
+              <li>18 Nov 2020: <a href="/2020/11/18/distributed-systems-and-elliptic-curves.html">New courses on distributed systems and elliptic curve cryptography</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2021/07/02/debs-keynote.html">02 Jul 2021 at 15th ACM International Conference on Distributed and Event-based Systems (DEBS)</a></li>
+            
+              <li><a href="/2021/06/04/craft-conf.html">04 Jun 2021 at Craft Conference</a></li>
+            
+              <li><a href="/2021/05/04/philly-ete.html">04 May 2021 at Emerging Technologies for the Enterprise (ETE)</a></li>
+            
+              <li><a href="/2020/07/06/crdt-hard-parts-hydra.html">06 Jul 2020 at Hydra distributed computing conference</a></li>
+            
+              <li><a href="/2020/04/27/papoc-list-move.html">27 Apr 2020 at 7th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
