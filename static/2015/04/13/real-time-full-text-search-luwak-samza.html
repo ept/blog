@@ -102,7 +102,7 @@ appended to the end of the file.</p>
 <p><img src="/2015/04/streamsearch-03.png" alt="Appending to a log, and tailing it" width="550" height="243" /></p>
 
 <p>There are a few ways you can read the content of a stream. For example, you can start at the
-beginning of the file and read the entire file sequentially. Or you can use <code>tail -f</code> to watch the
+beginning of the file and read the entire file sequentially. Or you can use <code class="language-plaintext highlighter-rouge">tail -f</code> to watch the
 file for any new records that are appended, and be notified when new data appears.</p>
 
 <p>We call a process that writes to a stream a <em>“producer”</em>, and a process that reads from the stream
@@ -239,8 +239,8 @@ a document, so that we don’t need to bother executing those queries. In order 
 something unusual: we can index the <em>queries</em>! In search engines you normally index documents, but
 in this case we’re going to index the queries.</p>
 
-<p>Let’s say we have three registered queries: Q1 is <code>“WHEELS” NEAR “BUS”</code>, Q2 is <code>“WHEELS” NEAR
-“CAR”</code>, and Q3 is <code>“WHEELS” OR “BUMPERS”</code>. First observe this: in a conjunction query (that is,
+<p>Let’s say we have three registered queries: Q1 is <code class="language-plaintext highlighter-rouge">“WHEELS” NEAR “BUS”</code>, Q2 is <code class="language-plaintext highlighter-rouge">“WHEELS” NEAR
+“CAR”</code>, and Q3 is <code class="language-plaintext highlighter-rouge">“WHEELS” OR “BUMPERS”</code>. First observe this: in a conjunction query (that is,
 a query like A AND B AND C), <em>all</em> the search terms must appear in the document for the query to
 match. (An operator like NEAR is a specialized form of AND that has an additional proximity
 restriction.) For example, a document must contain both “wheels” and “bus” in order to match Q1; if
@@ -283,8 +283,8 @@ queries. This will tell us which queries <em>may</em> match the document.</p>
 Q2, and the terms “bumpers” and “wheels” from Q3. Also, we turned the document “The wheels on the
 bus go round and round” into the disjunction query:</p>
 
-<pre><code>“and” OR “bus” OR “go” OR “on” OR “round” OR “the” OR “wheels”
-</code></pre>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>“and” OR “bus” OR “go” OR “on” OR “round” OR “the” OR “wheels”
+</code></pre></div></div>
 
 <p>Running that disjunction query against the query index, we get a hit on the terms “bus” (Q1) and
 “wheels” (Q3), but the terms “bumpers” (Q3) and “car” (Q2) don’t appear in the document. Therefore
@@ -353,10 +353,10 @@ the intersection of those results — a conjunction of disjunctions, if you like
 <p>The document “term1 term2 term3”, which we previously turned into a simple disjunction of terms, now
 turns into something like this:</p>
 
-<pre><code>_a:(term1 OR term2 OR term3) AND
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_a:(term1 OR term2 OR term3) AND
 _b:(term1 OR term2 OR term3) AND
 _c:(term1 OR term2 OR term3)
-</code></pre>
+</code></pre></div></div>
 
 <p>The first two terms of the conjunction match, but the third doesn’t, and so we don’t select this
 query. It’s still an approximation — you still need to execute the full query to be sure whether it
@@ -394,7 +394,7 @@ a scalable, fault-tolerant manner.</p>
 file. Whenever a producer wants to send a new message to a stream, it simply appends it to the end
 of the file. That’s the only way how you can write to Kafka: by appending to the end of a file.</p>
 
-<p>A consumer is like a <code>tail -f</code> on that file, just like what we described at the beginning of this
+<p>A consumer is like a <code class="language-plaintext highlighter-rouge">tail -f</code> on that file, just like what we described at the beginning of this
 talk. Each consumer reads the messages in the file sequentially, and each consumer has a current
 <em>position</em> or <em>offset</em> in this file. Thus, it knows that all messages before that position have
 already been read, and all messages after that position have not yet been read. This makes Kafka

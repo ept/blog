@@ -727,13 +727,13 @@ get all the advantages of a log-oriented architecture. I’ll be talking more ab
 <p><img src="/2015/05/logs-36.png" alt="Thought experiment: could you make all your writes through a log?" width="550" height="413" /></p>
 
 <p>Most APIs we work with have endpoints for both reading and writing. In RESTful terms,
-<code>GET</code> is for reading (i.e. side-effect-free operations) and <code>POST</code>, <code>PUT</code> and <code>DELETE</code>
+<code class="language-plaintext highlighter-rouge">GET</code> is for reading (i.e. side-effect-free operations) and <code class="language-plaintext highlighter-rouge">POST</code>, <code class="language-plaintext highlighter-rouge">PUT</code> and <code class="language-plaintext highlighter-rouge">DELETE</code>
 are for writing. These endpoints for writing are ok if you only have one system you’re
 writing to, but if you have more than one such system, you quickly end up with dual
 writes and all their aforementioned problems.</p>
 
 <p>Imagine a system with an API in which you eliminate all the endpoints for writing. Imagine
-that you keep all the <code>GET</code> requests, but prohibit any <code>POST</code>, <code>PUT</code> or <code>DELETE</code>. Instead,
+that you keep all the <code class="language-plaintext highlighter-rouge">GET</code> requests, but prohibit any <code class="language-plaintext highlighter-rouge">POST</code>, <code class="language-plaintext highlighter-rouge">PUT</code> or <code class="language-plaintext highlighter-rouge">DELETE</code>. Instead,
 the only way you can send writes into the system is by appending them to a log, and having
 the system consume that log. (The log must be outside of the system, so that you can have
 several consumers for the same log.)</p>

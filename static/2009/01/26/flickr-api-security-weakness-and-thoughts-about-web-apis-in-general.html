@@ -113,9 +113,9 @@ hard drive.</p>
 
 <p>Curious as I am, I searched for hex strings within the application binaries:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="nb">cd</span> /Applications/Flickr<span class="se">\ </span>Uploadr.app/
-<span class="k">for</span> file in <span class="sb">`</span>find . -type f<span class="sb">`</span><span class="p">;</span> <span class="k">do</span>
-  strings <span class="nv">$file</span> <span class="p">|</span> grep -Ei <span class="s1">&#39;[0-9a-f]{16}&#39;</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /Applications/Flickr<span class="se">\ </span>Uploadr.app/
+<span class="k">for </span>file <span class="k">in</span> <span class="sb">`</span>find <span class="nb">.</span> <span class="nt">-type</span> f<span class="sb">`</span><span class="p">;</span> <span class="k">do
+  </span>strings <span class="nv">$file</span> | <span class="nb">grep</span> <span class="nt">-Ei</span> <span class="s1">'[0-9a-f]{16}'</span>
 <span class="k">done</span></code></pre></figure>
 
 <p>In the output you can easily spot the

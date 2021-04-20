@@ -64,7 +64,7 @@ In Git, each commit is identified by its hash, and a commit may include the hash
 We want to figure out the minimal set of commits that the two nodes need to send to each other in order to make their graphs the same.</p>
 
 <p>You might wonder: isn’t this a solved problem?
-Git has to do this every time you do <code>git pull</code> or <code>git push</code>!
+Git has to do this every time you do <code class="language-plaintext highlighter-rouge">git pull</code> or <code class="language-plaintext highlighter-rouge">git push</code>!
 You’re right, and some cases are easy, but other cases are a bit trickier.
 What’s more, the algorithm used by Git is not particularly well-documented, and in any case we think that we can do better.</p>
 
@@ -86,7 +86,7 @@ Let’s say commit A is a <em>predecessor</em> of commit B if B references the h
 If A is a predecessor of B, then B is a <em>successor</em> of A.
 Finally, define the <em>heads</em> of the graph to be those commits that have no successors.
 In the example above, the heads are B, C, and D.
-(This is slightly different from how Git defines <code>HEAD</code>.)</p>
+(This is slightly different from how Git defines <code class="language-plaintext highlighter-rouge">HEAD</code>.)</p>
 
 <p>The reconciliation algorithm is easy if it’s a “fast-forward” situation: that is, if one node’s heads are commits that the other node already has.
 In that case, one node sends the other the hashes of its heads, and the other node replies with all commits that are successors of the first node’s heads.
@@ -103,7 +103,7 @@ Why 32? Who knows.
 It’s a trade-off: send more hashes to reduce the number of round trips, but each request/response is bigger.
 Presumably they decided that 32 was a reasonable compromise between latency and bandwidth.</p>
 
-<p>Recent versions of Git also support an experimental <a href="https://github.com/git/git/commit/42cc7485a2ec49ecc440c921d2eb0cae4da80549">“skipping” algorithm</a>, which can be enabled using the <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-fetchnegotiationAlgorithm"><code>fetch.negotiationAlgorithm</code> config option</a>.
+<p>Recent versions of Git also support an experimental <a href="https://github.com/git/git/commit/42cc7485a2ec49ecc440c921d2eb0cae4da80549">“skipping” algorithm</a>, which can be enabled using the <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-fetchnegotiationAlgorithm"><code class="language-plaintext highlighter-rouge">fetch.negotiationAlgorithm</code> config option</a>.
 Rather than moving forward by a fixed number of predecessors in each round trip, this algorithm allows some commits to be skipped, so that it reaches the common predecessors faster.
 The skip size grows similarly to the Fibonacci sequence (i.e. exponentially) with each round trip.
 This reduces the number of round trips to \(O(\log n)\), but you can end up overshooting the common predecessors, and thus the protocol may end up unnecessarily transmitting commits that the other node already has.</p>

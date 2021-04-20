@@ -257,29 +257,29 @@ kernel. Set an environment variable like <strong>export LOGFILE=/path/to/my/prod
 running these scripts. The first is called <strong>before-test.sh</strong> and should be run before the test
 starts:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="ch">#!/bin/sh</span>
-<span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&quot;</span><span class="nv">$LOGFILE</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="nb">echo</span> <span class="s2">&quot;LOGFILE not found&quot;</span><span class="p">;</span> <span class="nb">exit</span> <span class="m">1</span><span class="p">;</span> <span class="k">fi</span>
-<span class="nb">echo</span> <span class="s2">&quot;time,1min,5min,10min,running,procs,lastproc&quot;</span> &gt; /tmp/loadavg.csv
-<span class="o">(</span> <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/sh</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$LOGFILE</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then </span><span class="nb">echo</span> <span class="s2">"LOGFILE not found"</span><span class="p">;</span> <span class="nb">exit </span>1<span class="p">;</span> <span class="k">fi
+</span><span class="nb">echo</span> <span class="s2">"time,1min,5min,10min,running,procs,lastproc"</span> <span class="o">&gt;</span> /tmp/loadavg.csv
+<span class="o">(</span> <span class="k">while </span><span class="nb">true</span><span class="p">;</span> <span class="k">do
 
-<span class="nv">ts</span><span class="o">=</span><span class="sb">`</span>date <span class="s1">&#39;+%Y%m%d%H%M%S&#39;</span><span class="sb">`</span>
-<span class="nv">load</span><span class="o">=</span><span class="s2">&quot;`cat /proc/loadavg | tr &#39; /&#39; &#39;,&#39;`&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$ts</span><span class="s2">,</span><span class="nv">$load</span><span class="s2">&quot;</span> &gt;&gt; /tmp/loadavg.csv
-sleep <span class="m">1</span>
-<span class="k">done</span> <span class="o">)</span> <span class="p">&amp;</span>
-<span class="nb">echo</span> <span class="nv">$!</span> &gt; /tmp/loadavg.pid
-wc -l <span class="nv">$LOGFILE</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> &gt; /tmp/skip_log_lines</code></pre></figure>
+</span><span class="nv">ts</span><span class="o">=</span><span class="sb">`</span><span class="nb">date</span> <span class="s1">'+%Y%m%d%H%M%S'</span><span class="sb">`</span>
+<span class="nv">load</span><span class="o">=</span><span class="s2">"</span><span class="sb">`</span><span class="nb">cat</span> /proc/loadavg | <span class="nb">tr</span> <span class="s1">' /'</span> <span class="s1">','</span><span class="sb">`</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$ts</span><span class="s2">,</span><span class="nv">$load</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> /tmp/loadavg.csv
+<span class="nb">sleep </span>1
+<span class="k">done</span> <span class="o">)</span> &amp;
+<span class="nb">echo</span> <span class="nv">$!</span> <span class="o">&gt;</span> /tmp/loadavg.pid
+<span class="nb">wc</span> <span class="nt">-l</span> <span class="nv">$LOGFILE</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="o">&gt;</span> /tmp/skip_log_lines</code></pre></figure>
 
 <p>And <strong>after-test.sh</strong> should be run when the test has ended:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="ch">#!/bin/sh</span>
-<span class="nb">kill</span> <span class="sb">`</span>cat /tmp/loadavg.pid<span class="sb">`</span>
-<span class="nb">echo</span> <span class="s2">&quot;total,render,db,url&quot;</span> &gt; /tmp/requests.csv
-<span class="nv">skip</span><span class="o">=</span><span class="sb">`</span>cat /tmp/skip_log_lines<span class="sb">`</span>
-tail -n +<span class="sb">`</span>expr <span class="nv">$skip</span> + <span class="m">1</span><span class="sb">`</span> <span class="nv">$LOGFILE</span> <span class="p">|</span> grep
-<span class="s1">&#39;^Completed in&#39;</span> <span class="p">|</span> <span class="se">\\</span>
-awk <span class="s1">&#39;{print $3 &quot;,&quot; $8 &quot;,&quot; $12 &quot;,&quot; $17}&#39;</span> &gt;&gt; /tmp/requests.csv
-rm -f /tmp/loadavg.pid /tmp/skip_log_lines</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/sh</span>
+<span class="nb">kill</span> <span class="sb">`</span><span class="nb">cat</span> /tmp/loadavg.pid<span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">"total,render,db,url"</span> <span class="o">&gt;</span> /tmp/requests.csv
+<span class="nv">skip</span><span class="o">=</span><span class="sb">`</span><span class="nb">cat</span> /tmp/skip_log_lines<span class="sb">`</span>
+<span class="nb">tail</span> <span class="nt">-n</span> +<span class="sb">`</span><span class="nb">expr</span> <span class="nv">$skip</span> + 1<span class="sb">`</span> <span class="nv">$LOGFILE</span> | <span class="nb">grep</span>
+<span class="s1">'^Completed in'</span> | <span class="se">\\</span>
+<span class="nb">awk</span> <span class="s1">'{print $3 "," $8 "," $12 "," $17}'</span> <span class="o">&gt;&gt;</span> /tmp/requests.csv
+<span class="nb">rm</span> <span class="nt">-f</span> /tmp/loadavg.pid /tmp/skip_log_lines</code></pre></figure>
 
 <p>As you can see, it filters the processing times reported
 by the server out of the logfile and formats them as CSV for post-processing in your favourite
@@ -289,45 +289,45 @@ spreadsheet application.</p>
 I ran something like the following on an EC2
 instance:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>apt-get update
-apt-get -y dist-upgrade
-apt-get -y install
-apache2-utils
-mkdir loadtest
-<span class="nb">cd</span> loadtest
-<span class="nv">TESTS</span><span class="o">=</span><span class="s2">&quot;list1 list2 list3 list4&quot;</span>
-<span class="nv">COOKIE</span><span class="o">=</span><span class="s2">&quot;-C _session_id=12345678901234567890&quot;</span>
-<span class="nv">HOST</span><span class="o">=</span><span class="s2">&quot;http://staging.example.com/&quot;</span>
-<span class="nv">AB</span><span class="o">=</span><span class="s2">&quot;ab -n 10000 -c 16&quot;</span> <span class="c1"># 10,000 requests, concurrency 16 per process</span>
-<span class="nv">$AB</span> -g list1.log <span class="nv">$COOKIE</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2">/path/to/test&quot;</span> <span class="p">&amp;</span>
-<span class="nv">$AB</span> -g list2.log <span class="nv">$COOKIE</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2">/path/to/test&quot;</span> <span class="p">&amp;</span>
-<span class="nv">$AB</span> -g list3.log <span class="nv">$COOKIE</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2">/path/to/test&quot;</span> <span class="p">&amp;</span>
-<span class="nv">$AB</span> -g list4.log <span class="nv">$COOKIE</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2">/path/to/test&quot;</span> <span class="p">&amp;</span>
-<span class="nb">wait</span>
-<span class="k">for</span> <span class="nb">test</span> in <span class="nv">$TESTS</span><span class="p">;</span> <span class="k">do</span>
-awk -F <span class="s1">&#39;\&#39;</span> <span class="s2">&quot;{print \\</span><span class="nv">$4</span><span class="s2"> \\&quot;</span>,<span class="se">\\</span><span class="s2">&quot; \\</span><span class="nv">$5</span><span class="s2"> \\&quot;</span>,<span class="se">\\</span><span class="s2">&quot; \\</span><span class="nv">$6</span><span class="s2"> \\&quot;</span>,<span class="nv">$test</span><span class="se">\\</span><span class="s2">&quot;}&quot;</span> &lt; <span class="nv">$test</span>.log <span class="p">|</span> tail -n +2 &gt; <span class="nv">$test</span>
-<span class="k">done</span>
-<span class="nb">echo</span> <span class="s2">&quot;dtime,ttime,wait,test&quot;</span> &gt; bench.csv
-cat <span class="nv">$TESTS</span> &gt;&gt; bench.csv</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get update
+apt-get <span class="nt">-y</span> dist-upgrade
+apt-get <span class="nt">-y</span> <span class="nb">install
+</span>apache2-utils
+<span class="nb">mkdir </span>loadtest
+<span class="nb">cd </span>loadtest
+<span class="nv">TESTS</span><span class="o">=</span><span class="s2">"list1 list2 list3 list4"</span>
+<span class="nv">COOKIE</span><span class="o">=</span><span class="s2">"-C _session_id=12345678901234567890"</span>
+<span class="nv">HOST</span><span class="o">=</span><span class="s2">"http://staging.example.com/"</span>
+<span class="nv">AB</span><span class="o">=</span><span class="s2">"ab -n 10000 -c 16"</span> <span class="c"># 10,000 requests, concurrency 16 per process</span>
+<span class="nv">$AB</span> <span class="nt">-g</span> list1.log <span class="nv">$COOKIE</span> <span class="s2">"</span><span class="k">${</span><span class="nv">HOST</span><span class="k">}</span><span class="s2">/path/to/test"</span> &amp;
+<span class="nv">$AB</span> <span class="nt">-g</span> list2.log <span class="nv">$COOKIE</span> <span class="s2">"</span><span class="k">${</span><span class="nv">HOST</span><span class="k">}</span><span class="s2">/path/to/test"</span> &amp;
+<span class="nv">$AB</span> <span class="nt">-g</span> list3.log <span class="nv">$COOKIE</span> <span class="s2">"</span><span class="k">${</span><span class="nv">HOST</span><span class="k">}</span><span class="s2">/path/to/test"</span> &amp;
+<span class="nv">$AB</span> <span class="nt">-g</span> list4.log <span class="nv">$COOKIE</span> <span class="s2">"</span><span class="k">${</span><span class="nv">HOST</span><span class="k">}</span><span class="s2">/path/to/test"</span> &amp;
+<span class="nb">wait
+</span><span class="k">for </span><span class="nb">test </span><span class="k">in</span> <span class="nv">$TESTS</span><span class="p">;</span> <span class="k">do
+</span><span class="nb">awk</span> <span class="nt">-F</span> <span class="s1">'\'</span> <span class="s2">"{print </span><span class="se">\\</span><span class="nv">$4</span><span class="s2"> </span><span class="se">\\</span><span class="s2">"</span>,<span class="se">\\</span><span class="s2">" </span><span class="se">\\</span><span class="nv">$5</span><span class="s2"> </span><span class="se">\\</span><span class="s2">"</span>,<span class="se">\\</span><span class="s2">" </span><span class="se">\\</span><span class="nv">$6</span><span class="s2"> </span><span class="se">\\</span><span class="s2">"</span>,<span class="nv">$test</span><span class="se">\\</span><span class="s2">"}"</span> &lt; <span class="nv">$test</span>.log | <span class="nb">tail</span> <span class="nt">-n</span> +2 <span class="o">&gt;</span> <span class="nv">$test</span>
+<span class="k">done
+</span><span class="nb">echo</span> <span class="s2">"dtime,ttime,wait,test"</span> <span class="o">&gt;</span> bench.csv
+<span class="nb">cat</span> <span class="nv">$TESTS</span> <span class="o">&gt;&gt;</span> bench.csv</code></pre></figure>
 
 <p>Then copying and aggregating all the logs onto my machine for making pretty graphs:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="nv">TEST</span><span class="o">=</span>test7
-<span class="nv">CLIENTS</span><span class="o">=</span><span class="s2">&quot;ec2-75-101-204-213&quot;</span>
-<span class="nv">KEYFILE</span><span class="o">=</span><span class="s2">&quot;path/to/private/key/file/for/ec2/instance&quot;</span>
-<span class="k">for</span> host in prod1 prod2<span class="p">;</span> <span class="k">do</span>
-<span class="k">for</span> file in loadavg requests<span class="p">;</span> <span class="k">do</span>
-scp <span class="s2">&quot;ey-</span><span class="nv">$host</span><span class="s2">:/tmp/</span><span class="nv">$file</span><span class="s2">.csv&quot;</span> <span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">-</span><span class="nv">$host</span><span class="s2">.csv&quot;</span>
-<span class="k">done</span>
-<span class="k">done</span>
-<span class="k">for</span> client in <span class="nv">$CLIENTS</span><span class="p">;</span> <span class="k">do</span>
-scp -i <span class="nv">$KEYFILE</span> root@<span class="nv">$client</span>.compute-1.amazonaws.com:loadtest/bench.csv client-<span class="nv">$client</span>.csv
-<span class="k">done</span>
-mkdir <span class="nv">$TEST</span>
-paste -d <span class="s1">&#39;,&#39;</span> loadavg-prod1.csv loadavg-prod2.csv &gt; <span class="nv">$TEST</span>/loadavg.csv
-cat requests-prod<span class="se">\[</span><span class="m">12</span><span class="se">\]</span>.csv &gt; <span class="nv">$TEST</span>/requests.csv
-cat client*.csv &gt; <span class="nv">$TEST</span>/clients.csv
-mv loadavg-prod<span class="se">\[</span><span class="m">12</span><span class="se">\]</span>.csv requests-prod<span class="se">\[</span><span class="m">12</span><span class="se">\]</span>.csv client*.csv <span class="nv">$TEST</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">TEST</span><span class="o">=</span>test7
+<span class="nv">CLIENTS</span><span class="o">=</span><span class="s2">"ec2-75-101-204-213"</span>
+<span class="nv">KEYFILE</span><span class="o">=</span><span class="s2">"path/to/private/key/file/for/ec2/instance"</span>
+<span class="k">for </span>host <span class="k">in </span>prod1 prod2<span class="p">;</span> <span class="k">do
+for </span>file <span class="k">in </span>loadavg requests<span class="p">;</span> <span class="k">do
+</span>scp <span class="s2">"ey-</span><span class="nv">$host</span><span class="s2">:/tmp/</span><span class="nv">$file</span><span class="s2">.csv"</span> <span class="s2">"</span><span class="nv">$file</span><span class="s2">-</span><span class="nv">$host</span><span class="s2">.csv"</span>
+<span class="k">done
+done
+for </span>client <span class="k">in</span> <span class="nv">$CLIENTS</span><span class="p">;</span> <span class="k">do
+</span>scp <span class="nt">-i</span> <span class="nv">$KEYFILE</span> root@<span class="nv">$client</span>.compute-1.amazonaws.com:loadtest/bench.csv client-<span class="nv">$client</span>.csv
+<span class="k">done
+</span><span class="nb">mkdir</span> <span class="nv">$TEST</span>
+<span class="nb">paste</span> <span class="nt">-d</span> <span class="s1">','</span> loadavg-prod1.csv loadavg-prod2.csv <span class="o">&gt;</span> <span class="nv">$TEST</span>/loadavg.csv
+<span class="nb">cat </span>requests-prod<span class="se">\[</span>12<span class="se">\]</span>.csv <span class="o">&gt;</span> <span class="nv">$TEST</span>/requests.csv
+<span class="nb">cat </span>client<span class="k">*</span>.csv <span class="o">&gt;</span> <span class="nv">$TEST</span>/clients.csv
+<span class="nb">mv </span>loadavg-prod<span class="se">\[</span>12<span class="se">\]</span>.csv requests-prod<span class="se">\[</span>12<span class="se">\]</span>.csv client<span class="k">*</span>.csv <span class="nv">$TEST</span></code></pre></figure>
 
 <p>Obviously these scripts are still pretty rough around the edges, but they did the
 job of being simple and telling me what I wanted to know.</p>

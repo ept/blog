@@ -306,9 +306,9 @@ up-to-date writes on another node. This makes reads much faster than if you had 
 or contact the leader for every read, but it also means that ZooKeeper by default <em>does not</em> meet
 the CAP theorem’s definition of consistency.</p>
 
-<p>It is possible to make linearizable reads in ZooKeeper by <a href="http://mail-archives.apache.org/mod_mbox/zookeeper-user/201303.mbox/%3CCAJwFCa0Hoekc14Zy6i0LyLj=eraF8JimqMZadohoKQJNTMtYSg@mail.gmail.com%3E">preceding a read with a <code>sync</code>
+<p>It is possible to make linearizable reads in ZooKeeper by <a href="http://mail-archives.apache.org/mod_mbox/zookeeper-user/201303.mbox/%3CCAJwFCa0Hoekc14Zy6i0LyLj=eraF8JimqMZadohoKQJNTMtYSg@mail.gmail.com%3E">preceding a read with a <code class="language-plaintext highlighter-rouge">sync</code>
 command</a>. That isn’t the default though, because it comes with a performance penalty.
-People do use <code>sync</code>, but usually not all the time.</p>
+People do use <code class="language-plaintext highlighter-rouge">sync</code>, but usually not all the time.</p>
 
 <p>What about ZooKeeper availability? Well, ZK requires a <a href="http://www.tcs.hut.fi/Studies/T-79.5001/reports/2012-deSouzaMedeiros.pdf" title="André Medeiros: “ZooKeeper’s atomic broadcast protocol: Theory and practice,” Tech Report, Aalto University School of Science, Mar. 2012.">majority quorum</a> in
 order to reach consensus, i.e. in order to process writes. If you have a partition with a majority
@@ -320,7 +320,7 @@ writes).</p>
 <p>To add to the fun, ZooKeeper 3.4.0 added a <a href="http://zookeeper.apache.org/doc/r3.4.6/zookeeperAdmin.html#Experimental+Options%2FFeatures">read-only mode</a>, in which nodes on the
 minority side of a partition can continue serving read requests – no quorum needed! This read-only
 mode <em>is</em> CAP-available. Thus, ZooKeeper by default is neither CAP-consistent (CP) nor CAP-available
-(AP) – it’s really just “P”. However, you can optionally make it CP by calling <code>sync</code> if you want,
+(AP) – it’s really just “P”. However, you can optionally make it CP by calling <code class="language-plaintext highlighter-rouge">sync</code> if you want,
 and for reads (but not for writes) it’s actually AP, if you turn on the right option.</p>
 
 <p>But this is irritating. Calling ZooKeeper “not consistent”, just because it’s not linearizable by

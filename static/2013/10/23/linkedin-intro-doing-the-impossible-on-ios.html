@@ -135,12 +135,12 @@ without leaving the mail app?</p>
 — any JavaScript in an email is simply ignored. But iOS Mail does have powerful CSS capabilities,
 since it uses the same rendering engine as Safari.</p>
 
-<p>Recall that CSS has a <code>:hover</code> state that is triggered when you hover the mouse over an element.
+<p>Recall that CSS has a <code class="language-plaintext highlighter-rouge">:hover</code> state that is triggered when you hover the mouse over an element.
 This is used for popup menus in the navigation of many websites, or for tooltips. But what do you do
 on a touchscreen device, where there is no hovering or clicking, only tapping?</p>
 
 <p>A little-known fact about CSS on Mobile Safari: in certain circumstances, tapping a link once
-simulates a <code>:hover</code> state on that link, and tapping it twice has the effect of a click. Thanks to
+simulates a <code class="language-plaintext highlighter-rouge">:hover</code> state on that link, and tapping it twice has the effect of a click. Thanks to
 this feature, popup menus and tooltips still work on iOS.</p>
 
 <p>With some creativity, we figured out how to use this effect to create an interactive user interface
@@ -152,7 +152,7 @@ this feature, popup menus and tooltips still work on iOS.</p>
 
 <h2 id="impossible-3-dynamic-content-in-email">Impossible #3: Dynamic Content in Email</h2>
 
-<p>This <code>:hover</code> trick allows us to have some interactivity within a message, but for more complex
+<p>This <code class="language-plaintext highlighter-rouge">:hover</code> trick allows us to have some interactivity within a message, but for more complex
 interactions we have to take you to the browser (where we can run a normal web app, without the mail
 app’s limitations). For example, if you want to connect with your contact on LinkedIn, we take you
 to Safari.</p>
@@ -165,9 +165,9 @@ if you open the same email again, it still says that you’re not connected!</p>
 never change. It is cached on the device, and unlike a web page, it never gets refreshed. Now that
 you’re connected, the top bar content needs to change. How do we update it?</p>
 
-<p>Our solution: the connect button is in a tiny <code>&amp;lt;iframe&amp;gt;</code> which is refreshed every time you
-open the message. And if you open the message while your device is offline? No problem: the <code>iframe</code>
-is positioned on top of an identical-looking button in the static top bar HTML. If the <code>iframe</code>
+<p>Our solution: the connect button is in a tiny <code class="language-plaintext highlighter-rouge">&amp;lt;iframe&amp;gt;</code> which is refreshed every time you
+open the message. And if you open the message while your device is offline? No problem: the <code class="language-plaintext highlighter-rouge">iframe</code>
+is positioned on top of an identical-looking button in the static top bar HTML. If the <code class="language-plaintext highlighter-rouge">iframe</code>
 fails to load, it simply falls back to the connection status at the time when the message was
 downloaded.</p>
 

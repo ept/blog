@@ -181,19 +181,19 @@ You can register new versions of a schema, and the registry checks that the sche
 A nice thing about this design is that you can have different producers and consumers using different schema versions at the same time, and they still remain compatible with each other.</p>
 
 <p>More precisely, when Confluent’s Avro serializer registers a schema in the registry, it does so under a <em>subject name</em>.
-By default, that subject is <code>&lt;topic&gt;-key</code> for message keys and <code>&lt;topic&gt;-value</code> for message values.
+By default, that subject is <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-key</code> for message keys and <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-value</code> for message values.
 The schema registry then checks the mutual compatibility of all schemas that are registered under a particular subject.</p>
 
 <p>I have recently <a href="https://github.com/confluentinc/schema-registry/pull/680">made a patch to the Avro serializer</a> that makes the compatibility check more flexible.
-The patch adds two new configuration options: <code>key.subject.name.strategy</code> (which defines how to construct the subject name for message keys), and <code>value.subject.name.strategy</code> (how to construct the subject name for message values).
+The patch adds two new configuration options: <code class="language-plaintext highlighter-rouge">key.subject.name.strategy</code> (which defines how to construct the subject name for message keys), and <code class="language-plaintext highlighter-rouge">value.subject.name.strategy</code> (how to construct the subject name for message values).
 The options can take one of the following values:</p>
 
 <ul>
-  <li><code>io.confluent.kafka.serializers.subject.TopicNameStrategy</code> (default): The subject name for message keys is <code>&lt;topic&gt;-key</code>, and <code>&lt;topic&gt;-value</code> for message values.
+  <li><code class="language-plaintext highlighter-rouge">io.confluent.kafka.serializers.subject.TopicNameStrategy</code> (default): The subject name for message keys is <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-key</code>, and <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-value</code> for message values.
 This means that the schemas of all messages in the topic must be compatible with each other.</li>
-  <li><code>io.confluent.kafka.serializers.subject.RecordNameStrategy</code>: The subject name is the fully-qualified name of the Avro record type of the message.
+  <li><code class="language-plaintext highlighter-rouge">io.confluent.kafka.serializers.subject.RecordNameStrategy</code>: The subject name is the fully-qualified name of the Avro record type of the message.
 Thus, the schema registry checks the compatibility for a particular record type, regardless of topic. This setting allows any number of different event types in the same topic.</li>
-  <li><code>io.confluent.kafka.serializers.subject.TopicRecordNameStrategy</code>: The subject name is <code>&lt;topic&gt;-&lt;type&gt;</code>, where <code>&lt;topic&gt;</code> is the Kafka topic name, and <code>&lt;type&gt;</code> is the fully-qualified name of the Avro record type of the message.
+  <li><code class="language-plaintext highlighter-rouge">io.confluent.kafka.serializers.subject.TopicRecordNameStrategy</code>: The subject name is <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-&lt;type&gt;</code>, where <code class="language-plaintext highlighter-rouge">&lt;topic&gt;</code> is the Kafka topic name, and <code class="language-plaintext highlighter-rouge">&lt;type&gt;</code> is the fully-qualified name of the Avro record type of the message.
 This setting also allows any number of event types in the same topic, and further constrains the compatibility check to the current topic only.</li>
 </ul>
 

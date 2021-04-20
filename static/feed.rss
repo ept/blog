@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 14 Apr 2021 15:53:54 BST</lastBuildDate>
+        <lastBuildDate>Tue, 20 Apr 2021 12:29:51 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -760,7 +760,7 @@ In Git, each commit is identified by its hash, and a commit may include the hash
 We want to figure out the minimal set of commits that the two nodes need to send to each other in order to make their graphs the same.</p>
 
 <p>You might wonder: isn’t this a solved problem?
-Git has to do this every time you do <code>git pull</code> or <code>git push</code>!
+Git has to do this every time you do <code class="language-plaintext highlighter-rouge">git pull</code> or <code class="language-plaintext highlighter-rouge">git push</code>!
 You’re right, and some cases are easy, but other cases are a bit trickier.
 What’s more, the algorithm used by Git is not particularly well-documented, and in any case we think that we can do better.</p>
 
@@ -782,7 +782,7 @@ Let’s say commit A is a <em>predecessor</em> of commit B if B references the h
 If A is a predecessor of B, then B is a <em>successor</em> of A.
 Finally, define the <em>heads</em> of the graph to be those commits that have no successors.
 In the example above, the heads are B, C, and D.
-(This is slightly different from how Git defines <code>HEAD</code>.)</p>
+(This is slightly different from how Git defines <code class="language-plaintext highlighter-rouge">HEAD</code>.)</p>
 
 <p>The reconciliation algorithm is easy if it’s a “fast-forward” situation: that is, if one node’s heads are commits that the other node already has.
 In that case, one node sends the other the hashes of its heads, and the other node replies with all commits that are successors of the first node’s heads.
@@ -799,7 +799,7 @@ Why 32? Who knows.
 It’s a trade-off: send more hashes to reduce the number of round trips, but each request/response is bigger.
 Presumably they decided that 32 was a reasonable compromise between latency and bandwidth.</p>
 
-<p>Recent versions of Git also support an experimental <a href="https://github.com/git/git/commit/42cc7485a2ec49ecc440c921d2eb0cae4da80549">“skipping” algorithm</a>, which can be enabled using the <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-fetchnegotiationAlgorithm"><code>fetch.negotiationAlgorithm</code> config option</a>.
+<p>Recent versions of Git also support an experimental <a href="https://github.com/git/git/commit/42cc7485a2ec49ecc440c921d2eb0cae4da80549">“skipping” algorithm</a>, which can be enabled using the <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-fetchnegotiationAlgorithm"><code class="language-plaintext highlighter-rouge">fetch.negotiationAlgorithm</code> config option</a>.
 Rather than moving forward by a fixed number of predecessors in each round trip, this algorithm allows some commits to be skipped, so that it reaches the common predecessors faster.
 The skip size grows similarly to the Fibonacci sequence (i.e. exponentially) with each round trip.
 This reduces the number of round trips to \(O(\log n)\), but you can end up overshooting the common predecessors, and thus the protocol may end up unnecessarily transmitting commits that the other node already has.</p>
@@ -2193,19 +2193,19 @@ You can register new versions of a schema, and the registry checks that the sche
 A nice thing about this design is that you can have different producers and consumers using different schema versions at the same time, and they still remain compatible with each other.</p>
 
 <p>More precisely, when Confluent’s Avro serializer registers a schema in the registry, it does so under a <em>subject name</em>.
-By default, that subject is <code>&lt;topic&gt;-key</code> for message keys and <code>&lt;topic&gt;-value</code> for message values.
+By default, that subject is <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-key</code> for message keys and <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-value</code> for message values.
 The schema registry then checks the mutual compatibility of all schemas that are registered under a particular subject.</p>
 
 <p>I have recently <a href="https://github.com/confluentinc/schema-registry/pull/680">made a patch to the Avro serializer</a> that makes the compatibility check more flexible.
-The patch adds two new configuration options: <code>key.subject.name.strategy</code> (which defines how to construct the subject name for message keys), and <code>value.subject.name.strategy</code> (how to construct the subject name for message values).
+The patch adds two new configuration options: <code class="language-plaintext highlighter-rouge">key.subject.name.strategy</code> (which defines how to construct the subject name for message keys), and <code class="language-plaintext highlighter-rouge">value.subject.name.strategy</code> (how to construct the subject name for message values).
 The options can take one of the following values:</p>
 
 <ul>
-  <li><code>io.confluent.kafka.serializers.subject.TopicNameStrategy</code> (default): The subject name for message keys is <code>&lt;topic&gt;-key</code>, and <code>&lt;topic&gt;-value</code> for message values.
+  <li><code class="language-plaintext highlighter-rouge">io.confluent.kafka.serializers.subject.TopicNameStrategy</code> (default): The subject name for message keys is <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-key</code>, and <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-value</code> for message values.
 This means that the schemas of all messages in the topic must be compatible with each other.</li>
-  <li><code>io.confluent.kafka.serializers.subject.RecordNameStrategy</code>: The subject name is the fully-qualified name of the Avro record type of the message.
+  <li><code class="language-plaintext highlighter-rouge">io.confluent.kafka.serializers.subject.RecordNameStrategy</code>: The subject name is the fully-qualified name of the Avro record type of the message.
 Thus, the schema registry checks the compatibility for a particular record type, regardless of topic. This setting allows any number of different event types in the same topic.</li>
-  <li><code>io.confluent.kafka.serializers.subject.TopicRecordNameStrategy</code>: The subject name is <code>&lt;topic&gt;-&lt;type&gt;</code>, where <code>&lt;topic&gt;</code> is the Kafka topic name, and <code>&lt;type&gt;</code> is the fully-qualified name of the Avro record type of the message.
+  <li><code class="language-plaintext highlighter-rouge">io.confluent.kafka.serializers.subject.TopicRecordNameStrategy</code>: The subject name is <code class="language-plaintext highlighter-rouge">&lt;topic&gt;-&lt;type&gt;</code>, where <code class="language-plaintext highlighter-rouge">&lt;topic&gt;</code> is the Kafka topic name, and <code class="language-plaintext highlighter-rouge">&lt;type&gt;</code> is the fully-qualified name of the Avro record type of the message.
 This setting also allows any number of event types in the same topic, and further constrains the compatibility check to the current topic only.</li>
 </ul>
 

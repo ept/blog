@@ -85,7 +85,7 @@ different from each other.</p>
 
 <p>We use hash tables (dictionaries) in programming languages all the time without thinking twice. When
 you insert an item into a hash table, the language computes a hash code (an integer) for the key,
-uses that number to choose a bucket in the hash table (typically <code>mod n</code> for a table of size <code>n</code>),
+uses that number to choose a bucket in the hash table (typically <code class="language-plaintext highlighter-rouge">mod n</code> for a table of size <code class="language-plaintext highlighter-rouge">n</code>),
 and then puts the key and value in that bucket in the table. If there’s already a value there (a
 hash collision), a linked list typically takes care of storing the keys and values within the same
 hash bucket. In Ruby, for example:</p>
@@ -110,13 +110,13 @@ ruby 1.8.7 (2011-06-30 patchlevel 352) [i686-darwin11.0.0]
 [3] pry(main)&gt; ^D
 </pre>
 
-<p>When you add the key <code>'answer'</code> to the hash table, Ruby internally calls the <code>#hash</code> method on
+<p>When you add the key <code class="language-plaintext highlighter-rouge">'answer'</code> to the hash table, Ruby internally calls the <code class="language-plaintext highlighter-rouge">#hash</code> method on
 that string object. The method returns an arbitrary number, and as you see above, the number is
 always the same for the same string. A different string usually has a different hash code.
 Occasionally you might get two keys with the same hash code, but it’s extremely unlikely that you
 get a large number of collisions in normal operation.</p>
 
-<p>The problem with the example above: when I quit Ruby (<code>^D</code>) and start it again, and compute the hash
+<p>The problem with the example above: when I quit Ruby (<code class="language-plaintext highlighter-rouge">^D</code>) and start it again, and compute the hash
 for the same string, I still get the same result. <em>But why is that a problem,</em> you say, <em>isn’t that
 what a hash function is supposed to do?</em> – Well, the problem is that I can now put on my evil
 genius hat, and generate a list of strings that all have the same hash code:</p>
@@ -197,11 +197,11 @@ Both use the Java Virtual Machine’s
 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()">Object.hashCode()</a>
 method.</p>
 
-<p>I understand the use of <code>hashCode()</code> — it’s very tempting. On strings, numbers and collection
-classes, <code>hashCode()</code> always returns a consistent value, apparently even across different JVM
+<p>I understand the use of <code class="language-plaintext highlighter-rouge">hashCode()</code> — it’s very tempting. On strings, numbers and collection
+classes, <code class="language-plaintext highlighter-rouge">hashCode()</code> always returns a consistent value, apparently even across different JVM
 vendors. It’s like that despite the
 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()">documentation</a>
-for <code>hashCode()</code> explicitly <em>not</em> guaranteeing consistency across different processes:</p>
+for <code class="language-plaintext highlighter-rouge">hashCode()</code> explicitly <em>not</em> guaranteeing consistency across different processes:</p>
 
 <blockquote>
   <p>Whenever it is invoked on the same object more than once during an execution of a Java
@@ -210,11 +210,11 @@ information used in equals comparisons on the object is modified. <em>This integ
 consistent from one execution of an application to another execution of the same application.</em></p>
 </blockquote>
 
-<p>And once in a while, a bold library comes along that actually returns different <code>hashCode()</code> values
+<p>And once in a while, a bold library comes along that actually returns different <code class="language-plaintext highlighter-rouge">hashCode()</code> values
 in different processes – <a href="http://code.google.com/p/protobuf/">Protocol Buffers</a>, for example – and
 <a href="https://groups.google.com/forum/?fromgroups#!topic/protobuf/MCk1moyWgIk">people get quite confused</a>.</p>
 
-<p>The problem is that although the documentation says <code>hashCode()</code> doesn’t provide a consistency
+<p>The problem is that although the documentation says <code class="language-plaintext highlighter-rouge">hashCode()</code> doesn’t provide a consistency
 guarantee, the Java standard library behaves as if it <em>did</em> provide the guarantee. People start
 relying on it, and since backwards-compatibility is rated so highly in the Java community, it will
 probably never ever be changed, even though the documentation would allow it to be changed. So the
@@ -224,7 +224,7 @@ a hash function that can’t always safely be used for communication between pro
 <p><strong>Therefore…</strong></p>
 
 <p>So what I’d like to ask for is this: if you’re building a distributed framework based on the JVM,
-<strong>please don’t</strong> use Java’s <code>hashCode()</code> for anything that needs to work across different processes.
+<strong>please don’t</strong> use Java’s <code class="language-plaintext highlighter-rouge">hashCode()</code> for anything that needs to work across different processes.
 Because it’ll look like it works fine when you use it with strings and numbers, and then someday a
 brave soul will use (e.g.) a protocol buffers object, and then spend days banging their head against
 a wall trying to figure out why messages are getting sent to the wrong servers.</p>
@@ -238,7 +238,7 @@ heavyweight if you’re dealing with a really high-throughput service. I’ve he
 claims to be well-behaved.</p>
 
 <p>If your serialization doesn’t always produce the same sequence of bytes for a given value, then you
-can still define a hash function on the objects themselves. Just please don’t use <code>hashCode()</code>. It’s
+can still define a hash function on the objects themselves. Just please don’t use <code class="language-plaintext highlighter-rouge">hashCode()</code>. It’s
 ok for in-process hash tables, but distributed systems are a different matter.</p>
 
 <p>(Oh, and in case you were wondering: it looks like the web servers affected by Java’s

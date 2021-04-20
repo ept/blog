@@ -134,11 +134,11 @@ the modified file back, and finally releases the lock. The lock prevents two cli
 this read-modify-write cycle concurrently, which would result in lost updates. The code might look
 something like this:</p>
 
-<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// THIS CODE IS BROKEN</span>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// THIS CODE IS BROKEN</span>
 <span class="kd">function</span> <span class="nx">writeData</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">lock</span> <span class="o">=</span> <span class="nx">lockService</span><span class="p">.</span><span class="nx">acquireLock</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lock</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">throw</span> <span class="s1">&#39;Failed to acquire lock&#39;</span><span class="p">;</span>
+        <span class="k">throw</span> <span class="dl">'</span><span class="s1">Failed to acquire lock</span><span class="dl">'</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">try</span> <span class="p">{</span>
@@ -210,7 +210,7 @@ rejects the request with token 33.</p>
 <p>Note this requires the storage server to take an active role in checking tokens, and rejecting any
 writes on which the token has gone backwards. But this is not particularly hard, once you know the
 trick. And provided that the lock service generates strictly monotonically increasing tokens, this
-makes the lock safe. For example, if you are using ZooKeeper as lock service, you can use the <code>zxid</code>
+makes the lock safe. For example, if you are using ZooKeeper as lock service, you can use the <code class="language-plaintext highlighter-rouge">zxid</code>
 or the znode version number as fencing token, and you’re in good shape [3].</p>
 
 <p>However, this leads us to the first big problem with Redlock: <em>it does not have any facility for
@@ -247,8 +247,8 @@ timeouts are just a guess that something is wrong. (If they could, distributed a
 without clocks entirely, but then <a href="http://www.cs.princeton.edu/courses/archive/fall07/cos518/papers/flp.pdf" title="MJ Fischer, N Lynch, and MS Paterson. Impossibility of Distributed Consensus with One Faulty Process. JACM 32(2):374–382, 1985">consensus becomes impossible</a> [10]. Acquiring a lock is
 like a compare-and-set operation, which <a href="https://cs.brown.edu/~mph/Herlihy91/p124-herlihy.pdf" title="Maurice Herlihy. Wait-Free Synchronization. TOPLAS 13(1):124–149, 1991">requires consensus</a> [11].)</p>
 
-<p>Note that Redis <a href="https://github.com/antirez/redis/blob/edd4d555df57dc84265fdfb4ef59a4678832f6da/src/server.c#L390-L404">uses <code>gettimeofday</code></a>, not a <a href="http://linux.die.net/man/2/clock_gettime">monotonic clock</a>, to
-determine the <a href="https://github.com/antirez/redis/blob/f0b168e8944af41c4161249040f01ece227cfc0c/src/db.c#L933-L959">expiry of keys</a>. The man page for <code>gettimeofday</code> <a href="http://linux.die.net/man/2/gettimeofday">explicitly
+<p>Note that Redis <a href="https://github.com/antirez/redis/blob/edd4d555df57dc84265fdfb4ef59a4678832f6da/src/server.c#L390-L404">uses <code class="language-plaintext highlighter-rouge">gettimeofday</code></a>, not a <a href="http://linux.die.net/man/2/clock_gettime">monotonic clock</a>, to
+determine the <a href="https://github.com/antirez/redis/blob/f0b168e8944af41c4161249040f01ece227cfc0c/src/db.c#L933-L959">expiry of keys</a>. The man page for <code class="language-plaintext highlighter-rouge">gettimeofday</code> <a href="http://linux.die.net/man/2/gettimeofday">explicitly
 says</a> that the time it returns is subject to discontinuous jumps in system time –
 that is, it might suddenly jump forwards by a few minutes, or even jump back in time (e.g. if the
 clock is <a href="https://www.eecis.udel.edu/~mills/ntp/html/clock.html">stepped by NTP</a> because it differs from a NTP server by too much, or if the

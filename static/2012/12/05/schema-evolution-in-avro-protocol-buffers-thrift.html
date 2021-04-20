@@ -111,10 +111,10 @@ comparing them I think you can become a better engineer (by a little bit).</p>
 
 <p>The example I will use is a little object describing a person. In JSON I would write it like this:</p>
 
-<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="p">{</span>
-    <span class="s2">&quot;userName&quot;</span><span class="o">:</span> <span class="s2">&quot;Martin&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;favouriteNumber&quot;</span><span class="o">:</span> <span class="mi">1337</span><span class="p">,</span>
-    <span class="s2">&quot;interests&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;daydreaming&quot;</span><span class="p">,</span> <span class="s2">&quot;hacking&quot;</span><span class="p">]</span>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+    <span class="dl">"</span><span class="s2">userName</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Martin</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">favouriteNumber</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1337</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">interests</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">daydreaming</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">hacking</span><span class="dl">"</span><span class="p">]</span>
 <span class="p">}</span></code></pre></figure>
 
 <p>This JSON encoding can be our baseline. If I remove all the whitespace it consumes 82 bytes.</p>
@@ -123,12 +123,12 @@ comparing them I think you can become a better engineer (by a little bit).</p>
 
 <p>The Protocol Buffers schema for the person object might look something like this:</p>
 
-<pre><code>message Person {
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>message Person {
     required string user_name        = 1;
     optional int64  favourite_number = 2;
     repeated string interests        = 3;
 }
-</code></pre>
+</code></pre></div></div>
 
 <p>When we <a href="https://developers.google.com/protocol-buffers/docs/encoding">encode</a> the data above using
 this schema, it uses 33 bytes, as follows:</p>
@@ -137,7 +137,7 @@ this schema, it uses 33 bytes, as follows:</p>
 
 <p>Look exactly at how the binary representation is structured, byte by byte. The person record is just
 the concatentation of its fields. Each field starts with a byte that indicates its tag number (the
-numbers <code>1</code>, <code>2</code>, <code>3</code> in the schema above), and the type of the field. If the first byte of a field
+numbers <code class="language-plaintext highlighter-rouge">1</code>, <code class="language-plaintext highlighter-rouge">2</code>, <code class="language-plaintext highlighter-rouge">3</code> in the schema above), and the type of the field. If the first byte of a field
 indicates that the field is a string, it is followed by the number of bytes in the string, and then
 the UTF-8 encoding of the string. If the first byte indicates that the field is an integer, a
 variable-length encoding of the number follows. There is no array type, but a tag number can appear
@@ -146,13 +146,13 @@ multiple times to represent a multi-valued field.</p>
 <p>This encoding has consequences for schema evolution:</p>
 
 <ul>
-  <li>There is no difference in the encoding between <code>optional</code>, <code>required</code> and <code>repeated</code> fields
+  <li>There is no difference in the encoding between <code class="language-plaintext highlighter-rouge">optional</code>, <code class="language-plaintext highlighter-rouge">required</code> and <code class="language-plaintext highlighter-rouge">repeated</code> fields
 (except for the number of times the tag number can appear). This means that you can change a field
-from <code>optional</code> to <code>repeated</code> and vice versa (if the parser is expecting an <code>optional</code> field but
+from <code class="language-plaintext highlighter-rouge">optional</code> to <code class="language-plaintext highlighter-rouge">repeated</code> and vice versa (if the parser is expecting an <code class="language-plaintext highlighter-rouge">optional</code> field but
 sees the same tag number multiple times in one record, it discards all but the last value).
-<code>required</code> has an additional validation check, so if you change it, you risk runtime errors (if
+<code class="language-plaintext highlighter-rouge">required</code> has an additional validation check, so if you change it, you risk runtime errors (if
 the sender of a message thinks that it’s optional, but the recipient thinks that it’s required).</li>
-  <li>An <code>optional</code> field without a value, or a <code>repeated</code> field with zero values, does not appear in
+  <li>An <code class="language-plaintext highlighter-rouge">optional</code> field without a value, or a <code class="language-plaintext highlighter-rouge">repeated</code> field with zero values, does not appear in
 the encoded data at all — the field with that tag number is simply absent. Thus, it is safe to
 remove that kind of field from the schema. However, you must never reuse the tag number for
 another field in future, because you may still have data stored that uses that tag for the field
@@ -174,24 +174,24 @@ see in a minute, it’s not the only way of doing things.</p>
 
 <p>Avro schemas can be written in two ways, either in a JSON format:</p>
 
-<figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;record&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Person&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fields&quot;</span><span class="o">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;userName&quot;</span><span class="p">,</span>        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;favouriteNumber&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;long&quot;</span><span class="p">]},</span>
-        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;interests&quot;</span><span class="p">,</span>       <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}}</span>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+    <span class="dl">"</span><span class="s2">type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">record</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Person</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">fields</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">userName</span><span class="dl">"</span><span class="p">,</span>        <span class="dl">"</span><span class="s2">type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">string</span><span class="dl">"</span><span class="p">},</span>
+        <span class="p">{</span><span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">favouriteNumber</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">type</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">null</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">long</span><span class="dl">"</span><span class="p">]},</span>
+        <span class="p">{</span><span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">interests</span><span class="dl">"</span><span class="p">,</span>       <span class="dl">"</span><span class="s2">type</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span><span class="dl">"</span><span class="s2">type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">array</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">items</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">string</span><span class="dl">"</span><span class="p">}}</span>
     <span class="p">]</span>
 <span class="p">}</span></code></pre></figure>
 
 <p>…or in an IDL:</p>
 
-<pre><code>record Person {
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>record Person {
     string               userName;
     union { null, long } favouriteNumber;
     array&lt;string&gt;        interests;
 }
-</code></pre>
+</code></pre></div></div>
 
 <p>Notice that there are no tag numbers in the schema! So how does it work?</p>
 
@@ -220,9 +220,9 @@ to translate data from the writer schema into the reader schema.</p>
   <li>The Avro encoding doesn’t have an indicator to say which field is next; it just encodes one field
 after another, in the order they appear in the schema. Since there is no way for the parser to
 know that a field has been skipped, there is no such thing as an optional field in Avro. Instead,
-if you want to be able to leave out a value, you can use a union type, like <code>union { null, long }</code>
+if you want to be able to leave out a value, you can use a union type, like <code class="language-plaintext highlighter-rouge">union { null, long }</code>
 above. This is encoded as a byte to tell the parser which of the possible union types to use,
-followed by the value itself. By making a union with the <code>null</code> type (which is simply encoded as
+followed by the value itself. By making a union with the <code class="language-plaintext highlighter-rouge">null</code> type (which is simply encoded as
 zero bytes) you can make a field optional.</li>
   <li>Union types are powerful, but you must take care when changing them. If you want to add a type to
 a union, you first need to update all readers with the new schema, so that they know what to
@@ -235,8 +235,8 @@ no tag numbers are needed in Avro.</li>
 update all <em>readers</em> of the data to use the new field name, while keeping the old name as an alias
 (since the name matching uses aliases from the reader’s schema). Then you can update the writer’s
 schema to use the new field name.</li>
-  <li>You can add a field to a record, provided that you also give it a default value (e.g. <code>null</code> if
-the field’s type is a union with <code>null</code>). The default is necessary so that when a reader using the
+  <li>You can add a field to a record, provided that you also give it a default value (e.g. <code class="language-plaintext highlighter-rouge">null</code> if
+the field’s type is a union with <code class="language-plaintext highlighter-rouge">null</code>). The default is necessary so that when a reader using the
 new schema parses a record written with the old schema (and hence lacking the field), it can fill
 in the default instead.</li>
   <li>Conversely, you can remove a field from a record, provided that it previously had a default value.
@@ -305,12 +305,12 @@ we’re interested in cross-language serialization, I will focus on the other tw
 
 <p>All the encodings share the same schema definition, in Thrift IDL:</p>
 
-<pre><code>struct Person {
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct Person {
   1: string       userName,
   2: optional i64 favouriteNumber,
   3: list&lt;string&gt; interests
 }
-</code></pre>
+</code></pre></div></div>
 
 <p>The BinaryProtocol encoding is very straightforward, but also fairly wasteful (it takes 59 bytes to
 encode our example record):</p>

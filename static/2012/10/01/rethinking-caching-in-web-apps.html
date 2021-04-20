@@ -76,7 +76,7 @@ would take to achieve that flexibility.</p>
 
 <p>To illustrate, consider the clichéd Rails blogging engine example:</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span></span><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">attr_accessible</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:author</span>
   <span class="n">has_many</span> <span class="ss">:comments</span>
 <span class="k">end</span>
@@ -88,41 +88,41 @@ would take to achieve that flexibility.</p>
 
 <span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">show</span>
-    <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+    <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
     <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
-      <span class="nb">format</span><span class="o">.</span><span class="n">html</span>  <span class="c1"># show.html.erb</span>
-      <span class="nb">format</span><span class="o">.</span><span class="n">json</span>  <span class="p">{</span> <span class="n">render</span> <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="vi">@post</span> <span class="p">}</span>
+      <span class="nb">format</span><span class="p">.</span><span class="nf">html</span>  <span class="c1"># show.html.erb</span>
+      <span class="nb">format</span><span class="p">.</span><span class="nf">json</span>  <span class="p">{</span> <span class="n">render</span> <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="vi">@post</span> <span class="p">}</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="c1"># posts/show.html.erb:</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-html-erb" data-lang="html+erb"><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">title</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;author&quot;</span><span class="p">&gt;</span>By <span class="cp">&lt;%=</span> <span class="vi">@post</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span><span class="p">&gt;</span>
-  <span class="cp">&lt;%=</span> <span class="n">simple_format</span><span class="p">(</span><span class="vi">@post</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="cp">%&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Comments<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comments&quot;</span><span class="p">&gt;</span>
-  <span class="cp">&lt;%</span> <span class="vi">@post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">comment</span><span class="o">|</span> <span class="cp">%&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">blockquote</span><span class="p">&gt;</span><span class="cp">&lt;%=</span> <span class="n">simple_format</span><span class="p">(</span><span class="n">comment</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;author&quot;</span><span class="p">&gt;</span><span class="cp">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="n">author</span> <span class="cp">%&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
-<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html-erb" data-lang="html+erb">&lt;h1&gt;&lt;%= @post.title %&gt;&lt;/h1&gt;
+&lt;p class="author"&gt;By &lt;%= @post.author %&gt;&lt;/p&gt;
+&lt;div class="content"&gt;
+  &lt;%= simple_format(@post.content) %&gt;
+&lt;/div&gt;
+&lt;h2&gt;Comments&lt;/h2&gt;
+&lt;ul class="comments"&gt;
+  &lt;% @post.comments.each do |comment| %&gt;
+    &lt;li&gt;
+      &lt;blockquote&gt;&lt;%= simple_format(comment.content) %&gt;&lt;/blockquote&gt;
+      &lt;p class="author"&gt;&lt;%= comment.author %&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;</code></pre></figure>
 
 <p>Pretty good code by various standards, but it has always irked me a bit that I can’t see where the
-network communication (i.e. making database queries) is happening. When I look at that <code>Post.find</code>
-in the controller, I can guess that probabably translates into a <code>SELECT * FROM posts WHERE id = ?</code>
+network communication (i.e. making database queries) is happening. When I look at that <code class="language-plaintext highlighter-rouge">Post.find</code>
+in the controller, I can guess that probabably translates into a <code class="language-plaintext highlighter-rouge">SELECT * FROM posts WHERE id = ?</code>
 internally – unless the same query was already made recently, and ActiveRecord cached the result.
-And another database query of the form <code>SELECT * FROM comments WHERE post_id = ?</code> might be made as a
-result of the <code>@post.comments</code> call in the template. Or maybe the comments were already previously
+And another database query of the form <code class="language-plaintext highlighter-rouge">SELECT * FROM comments WHERE post_id = ?</code> might be made as a
+result of the <code class="language-plaintext highlighter-rouge">@post.comments</code> call in the template. Or maybe the comments were already previously
 loaded by some model logic, and then cached? Or someone decided to eagerly load comments with the
 original post? Who knows.</p>
 
-<p>The execution flow for a MVC framework request like <code>PostsController#show</code> probably looks something
+<p>The execution flow for a MVC framework request like <code class="language-plaintext highlighter-rouge">PostsController#show</code> probably looks something
 like this:</p>
 
 <p><a href="/2012/10/architecture-high-01.png"><img src="/2012/10/architecture-01.png" alt="Typical MVC request flow" width="550" height="119" /></a></p>
@@ -271,14 +271,14 @@ needs in order to produce a response, the MapReduce job has already gathered all
 the business logic is going to need, and <em>pushes</em> it into the business logic function.</p>
 
 <p>Let’s use the blog example to make this more concrete. The data dependency is fairly simple: when
-the blog post <code>params[:id]</code> is requested, we require the row in the <code>posts</code> table whose <code>id</code> column
-matches the requested post, and we require all the rows in the <code>comments</code> table whose <code>post_id</code>
-column matches the requested post. If the <code>posts</code> and <code>comments</code> tables are in HDFS, it’s a very
-simple MapReduce job to group together the post with <code>id = x</code> and all the comments with
-<code>post_id = x</code>.</p>
+the blog post <code class="language-plaintext highlighter-rouge">params[:id]</code> is requested, we require the row in the <code class="language-plaintext highlighter-rouge">posts</code> table whose <code class="language-plaintext highlighter-rouge">id</code> column
+matches the requested post, and we require all the rows in the <code class="language-plaintext highlighter-rouge">comments</code> table whose <code class="language-plaintext highlighter-rouge">post_id</code>
+column matches the requested post. If the <code class="language-plaintext highlighter-rouge">posts</code> and <code class="language-plaintext highlighter-rouge">comments</code> tables are in HDFS, it’s a very
+simple MapReduce job to group together the post with <code class="language-plaintext highlighter-rouge">id = x</code> and all the comments with
+<code class="language-plaintext highlighter-rouge">post_id = x</code>.</p>
 
-<p>We can then use a stub database implementation to feed those database rows into the existing <code>Post</code>
-and <code>Comment</code> model objects. That way we can make the models think that they loaded the data from a
+<p>We can then use a stub database implementation to feed those database rows into the existing <code class="language-plaintext highlighter-rouge">Post</code>
+and <code class="language-plaintext highlighter-rouge">Comment</code> model objects. That way we can make the models think that they loaded the data from a
 database, even though actually we had already gathered all the data we knew it was going to need.
 The model objects can keep doing their job as normally, and the output they produce can be written
 straight to the cache.</p>
@@ -301,9 +301,9 @@ deep inside the business logic.</p>
 following pattern would make more sense:</p>
 
 <ol>
-  <li>Declare your data dependencies: “if you want me to render the blog post with ID <code>x</code>, I’m going to
-need the row in the <code>posts</code> table with <code>id = x</code>, and also all the rows in the <code>comments</code> table
-with <code>post_id = x</code>”.</li>
+  <li>Declare your data dependencies: “if you want me to render the blog post with ID <code class="language-plaintext highlighter-rouge">x</code>, I’m going to
+need the row in the <code class="language-plaintext highlighter-rouge">posts</code> table with <code class="language-plaintext highlighter-rouge">id = x</code>, and also all the rows in the <code class="language-plaintext highlighter-rouge">comments</code> table
+with <code class="language-plaintext highlighter-rouge">post_id = x</code>”.</li>
   <li>Let the communication logic deal with resolving those dependencies. If you’re running as a normal
 web app, that means making database (or memcache) queries to one or more databases, and maybe
 talking to other services. If you’re running in Hadoop, it means configuring the MapReduce job to

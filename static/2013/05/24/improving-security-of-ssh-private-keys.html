@@ -58,11 +58,11 @@
 
                 <p><strong>Update (July 2015): This post is now rather outdated, and the procedure for modifying your
 private key files is no longer recommended. A better solution is to use
-<a href="http://www.tedunangst.com/flak/post/new-openssh-key-format-and-bcrypt-pbkdf"><code>ssh-keygen -o</code></a>.</strong></p>
+<a href="http://www.tedunangst.com/flak/post/new-openssh-key-format-and-bcrypt-pbkdf"><code class="language-plaintext highlighter-rouge">ssh-keygen -o</code></a>.</strong></p>
 
-<p>Ever wondered how those key files in <code>~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
+<p>Ever wondered how those key files in <code class="language-plaintext highlighter-rouge">~/.ssh</code> actually <em>work</em>? How secure are they actually?</p>
 
-<p>As you probably do too, I use ssh many times every single day — every <code>git fetch</code> and <code>git push</code>,
+<p>As you probably do too, I use ssh many times every single day — every <code class="language-plaintext highlighter-rouge">git fetch</code> and <code class="language-plaintext highlighter-rouge">git push</code>,
 every deploy, every login to a server. And recently I realised that to me, ssh was just some crypto
 voodoo that I had become accustomed to using, but I didn’t really understand. That’s a shame — I
 like to know how stuff works. So I went on a little journey of discovery, and here are some of the
@@ -72,10 +72,10 @@ things I found.</p>
 acronyms. I will briefly mention the acronyms as we go along; they don’t help you understand the
 concepts, but they are useful in case you want to Google for further details.</p>
 
-<p>Quick recap: If you’ve ever used public key authentication, you probably have a file <code>~/.ssh/id_rsa</code>
-or <code>~/.ssh/id_dsa</code> in your home directory. This is your RSA/DSA private key, and <code>~/.ssh/id_rsa.pub</code>
-or <code>~/.ssh/id_dsa.pub</code> is its public key counterpart. Any machine you want to log in to needs to
-have your public key in <code>~/.ssh/authorized_keys</code> on that machine. When you try to log in, your SSH
+<p>Quick recap: If you’ve ever used public key authentication, you probably have a file <code class="language-plaintext highlighter-rouge">~/.ssh/id_rsa</code>
+or <code class="language-plaintext highlighter-rouge">~/.ssh/id_dsa</code> in your home directory. This is your RSA/DSA private key, and <code class="language-plaintext highlighter-rouge">~/.ssh/id_rsa.pub</code>
+or <code class="language-plaintext highlighter-rouge">~/.ssh/id_dsa.pub</code> is its public key counterpart. Any machine you want to log in to needs to
+have your public key in <code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code> on that machine. When you try to log in, your SSH
 client uses a digital signature to prove that you have the private key; the server checks that the
 signature is valid, and that the public key is authorized for your username; if all is well, you are
 granted access.</p>
@@ -91,14 +91,14 @@ passphrase protection later.</p>
 
 <p>A ssh private key file typically looks something like this:</p>
 
-<pre><code>-----BEGIN RSA PRIVATE KEY-----
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEArCQG213utzqE5YVjTVF5exGRCkE9OuM7LCp/FOuPdoHrFUXk
 y2MQcwf29J3A4i8zxpES9RdSEU6iIEsow98wIi0x1/Lnfx6jG5Y0/iQsG1NRlNCC
 aydGvGaC+PwwWiwYRc7PtBgV4KOAVXMZdMB5nFRaekQ1ksdH/360KCGgljPtzTNl
 09e97QBwHFIZ3ea5Eih/HireTrRSnvF+ywmwuxX4ubDr0ZeSceuF2S5WLXH2+TV0
    ... etc ... lots of base64 blah blah ...
 -----END RSA PRIVATE KEY-----
-</code></pre>
+</code></pre></div></div>
 
 <p>The private key is an <a href="http://en.wikipedia.org/wiki/ASN.1">ASN.1</a> data structure, serialized to a
 byte string using <a href="http://en.wikipedia.org/wiki/X.690#DER_encoding">DER</a>, and then
@@ -112,7 +112,7 @@ format).</p>
 <a href="http://www.openbsd.org/cgi-bin/man.cgi?query=ssh-keygen&amp;sektion=1">ssh-keygen</a>, and then decode it
 using <a href="http://www.openssl.org/docs/apps/asn1parse.html">asn1parse</a>:</p>
 
-<pre><code>$ ssh-keygen -t rsa -N '' -f test_rsa_key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh-keygen -t rsa -N '' -f test_rsa_key
 $ openssl asn1parse -in test_rsa_key
     0:d=0  hl=4 l=1189 cons: SEQUENCE
     4:d=1  hl=2 l=   1 prim: INTEGER           :00
@@ -124,7 +124,7 @@ $ openssl asn1parse -in test_rsa_key
   798:d=1  hl=3 l= 129 prim: INTEGER           :D0ACED4635B5CA5FB896F88BB9177...
   930:d=1  hl=3 l= 128 prim: INTEGER           :511810DF9AFD590E11126397310A6...
  1061:d=1  hl=3 l= 129 prim: INTEGER           :E3A296AE14E7CAF32F7E493FDF474...
-</code></pre>
+</code></pre></div></div>
 
 <p>Alternatively, you can paste the Base64 string into Lapo Luchini’s excellent
 <a href="http://lapo.it/asn1js/">JavaScript ASN.1 decoder</a>. You can see that ASN.1 structure is quite
@@ -139,7 +139,7 @@ be derived from <em>n</em> and <em>d</em>, and are only cached in the key file t
 <p>DSA keys are similar, a
 <a href="http://blog.ngas.ch/archives/2008/10/23/asn_1_for_dsa_public_and_private_keys/index.html">sequence of six integers</a>:</p>
 
-<pre><code>$ ssh-keygen -t dsa -N '' -f test_dsa_key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh-keygen -t dsa -N '' -f test_dsa_key
 $ openssl asn1parse -in test_dsa_key
     0:d=0  hl=4 l= 444 cons: SEQUENCE
     4:d=1  hl=2 l=   1 prim: INTEGER           :00
@@ -148,14 +148,14 @@ $ openssl asn1parse -in test_dsa_key
   162:d=1  hl=3 l= 129 prim: INTEGER           :83218C0CA49BA8F11BE40EE1A7C72...
   294:d=1  hl=3 l= 128 prim: INTEGER           :16953EA4012988E914B466B9C37CB...
   425:d=1  hl=2 l=  21 prim: INTEGER           :89A356E922688EDEB1D388258C825...
-</code></pre>
+</code></pre></div></div>
 
 <h2 id="passphrase-protected-keys">Passphrase-protected keys</h2>
 
 <p>Next, in order to make life harder for an attacker who manages to steal your private key file, you
 protect it with a passphrase. How does this actually work?</p>
 
-<pre><code>$ ssh-keygen -t rsa -N 'super secret passphrase' -f test_rsa_key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh-keygen -t rsa -N 'super secret passphrase' -f test_rsa_key
 $ cat test_rsa_key
 -----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
@@ -166,14 +166,14 @@ lQX/Ahbx+UadJZOFrTx8aEWyZoI0ltBh9O5+ODov+vc25Hia3jtayE51McVWwSXg
 wYeg2L6U7iZBk78yg+sIKFVijxiWnpA7W2dj2B9QV0X3ILQPxbU/cRAVTd7AVrKT
     ... etc ...
 -----END RSA PRIVATE KEY-----
-</code></pre>
+</code></pre></div></div>
 
 <p>We’ve gained two header lines, and if you try to parse that Base64 text, you’ll find it’s no longer
 valid ASN.1. That’s because the entire ASN.1 structure we saw above has been encrypted, and the
 Base64-encoded text is the output of the encryption. The header tells us the encryption algorithm
 that was used: <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-128</a> in
 <a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">CBC mode</a>.
-The 128-bit hex string in the <code>DEK-Info</code> header is the
+The 128-bit hex string in the <code class="language-plaintext highlighter-rouge">DEK-Info</code> header is the
 <a href="http://en.wikipedia.org/wiki/Initialization_vector">initialization vector</a> (IV) for the cipher.
 This is pretty standard stuff; all common crypto libraries can handle it.</p>
 
@@ -186,20 +186,20 @@ anywhere, so I had to dig through the OpenSSL source to find it:</p>
 </ol>
 
 <p>That’s it.  To prove it, let’s decrypt the private key manually (using the IV/salt from the
-<code>DEK-Info</code> header above):</p>
+<code class="language-plaintext highlighter-rouge">DEK-Info</code> header above):</p>
 
-<pre><code>$ tail -n +4 test_rsa_key | grep -v 'END ' | base64 -D |    # get just the binary blob
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ tail -n +4 test_rsa_key | grep -v 'END ' | base64 -D |    # get just the binary blob
   openssl aes-128-cbc -d -iv D54228DB5838E32589695E83A22595C7 -K $(
     ruby -rdigest/md5 -e 'puts Digest::MD5.hexdigest(["super secret passphrase",0xD5,0x42,0x28,0xDB,0x58,0x38,0xE3,0x25].pack("a*cccccccc"))'
   ) |
   openssl asn1parse -inform DER
-</code></pre>
+</code></pre></div></div>
 
 <p>…which prints out the sequence of integers from the RSA key in the clear. Of course, if you want
 to inspect the key, it’s much easier to do this:</p>
 
-<pre><code>$ openssl rsa -text -in test_rsa_key -passin 'pass:super secret passphrase'
-</code></pre>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl rsa -text -in test_rsa_key -passin 'pass:super secret passphrase'
+</code></pre></div></div>
 
 <p>but I wanted to demonstrate exactly how the AES key is derived from the password. This is important
 because the private key protection has two weaknesses:</p>
@@ -243,21 +243,21 @@ and OpenSSH uses OpenSSL, so if you’re using OpenSSH that means you can swap y
 key files for PKCS#8 files and everything continues to work as normal!</li>
 </ul>
 
-<p>I don’t know why <code>ssh-keygen</code> still generates keys in SSH’s traditional format, even though a better
+<p>I don’t know why <code class="language-plaintext highlighter-rouge">ssh-keygen</code> still generates keys in SSH’s traditional format, even though a better
 format has been available for years. Compatibility with servers is not a concern, because the
 private key never leaves your machine. Fortunately it’s easy enough to
 <a href="http://www.openssl.org/docs/apps/pkcs8.html">convert to PKCS#8</a>:</p>
 
-<pre><code>$ mv test_rsa_key test_rsa_key.old
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv test_rsa_key test_rsa_key.old
 $ openssl pkcs8 -topk8 -v2 des3 \
     -in test_rsa_key.old -passin 'pass:super secret passphrase' \
     -out test_rsa_key -passout 'pass:super secret passphrase'
-</code></pre>
+</code></pre></div></div>
 
 <p>If you try using this new PKCS#8 file with a SSH client, you should find that it works exactly the
-same as the file generated by <code>ssh-keygen</code>. But what’s inside it?</p>
+same as the file generated by <code class="language-plaintext highlighter-rouge">ssh-keygen</code>. But what’s inside it?</p>
 
-<pre><code>$ cat test_rsa_key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat test_rsa_key
 -----BEGIN ENCRYPTED PRIVATE KEY-----
 MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIOu/S2/v547MCAggA
 MBQGCCqGSIb3DQMHBAh4q+o4ELaHnwSCBMjA+ho9K816gN1h9MAof4stq0akPoO0
@@ -265,13 +265,13 @@ CNvXdtqLudIxBq0dNxX0AxvEW6exWxz45bUdLOjQ5miO6Bko0lFoNUrOeOo/Gq4H
 dMyI7Ot1vL9UvZRqLNj51cj/7B/bmfa4msfJXeuFs8jMtDz9J19k6uuCLUGlJscP
     ... etc ...
 -----END ENCRYPTED PRIVATE KEY-----
-</code></pre>
+</code></pre></div></div>
 
-<p>Notice that the header/footer lines have changed (<code>BEGIN ENCRYPTED PRIVATE KEY</code> instead of
-<code>BEGIN RSA PRIVATE KEY</code>), and the plaintext <code>Proc-Type</code> and <code>DEK-Info</code> headers have gone. In fact,
+<p>Notice that the header/footer lines have changed (<code class="language-plaintext highlighter-rouge">BEGIN ENCRYPTED PRIVATE KEY</code> instead of
+<code class="language-plaintext highlighter-rouge">BEGIN RSA PRIVATE KEY</code>), and the plaintext <code class="language-plaintext highlighter-rouge">Proc-Type</code> and <code class="language-plaintext highlighter-rouge">DEK-Info</code> headers have gone. In fact,
 the whole key file is once again a ASN.1 structure:</p>
 
-<pre><code>$ openssl asn1parse -in test_rsa_key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ openssl asn1parse -in test_rsa_key
     0:d=0  hl=4 l=1294 cons: SEQUENCE
     4:d=1  hl=2 l=  64 cons: SEQUENCE
     6:d=2  hl=2 l=   9 prim: OBJECT            :PBES2
@@ -285,12 +285,12 @@ the whole key file is once again a ASN.1 structure:</p>
    50:d=4  hl=2 l=   8 prim: OBJECT            :des-ede3-cbc
    60:d=4  hl=2 l=   8 prim: OCTET STRING      [HEX DUMP]:78ABEA3810B6879F
    70:d=1  hl=4 l=1224 prim: OCTET STRING      [HEX DUMP]:C0FA1A3D2BCD7A80DD61F4C0287F8B2D...
-</code></pre>
+</code></pre></div></div>
 
 <p>Use Lapo Luchini’s <a href="http://lapo.it/asn1js/">JavaScript ASN.1 decoder</a> to display a nice ASN.1 tree
 structure:</p>
 
-<pre><code>Sequence (2 elements)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sequence (2 elements)
 |- Sequence (2 elements)
 |  |- Object identifier: 1.2.840.113549.1.5.13            // using PBES2 from PKCS#5
 |  `- Sequence (2 elements)
@@ -303,7 +303,7 @@ structure:</p>
 |          Object identifier: 1.2.840.113549.3.7          // encrypted with Triple DES, CBC
 |          Byte string (8 bytes): 78ABEA3810B6879F        // initialization vector
 `- Byte string (1224 bytes): C0FA1A3D2BCD7A80DD61F4C0287F8B2DAB46A43E...  // encrypted key blob
-</code></pre>
+</code></pre></div></div>
 
 <p>The format uses <a href="http://en.wikipedia.org/wiki/Object_identifier">OIDs</a>, numeric codes allocated by a
 registration authority to unambiguously refer to algorithms. The OIDs in this key file tell us that
@@ -332,14 +332,14 @@ protection from “easily breakable” to “slightly harder to break”.</p>
 
 <p>It’s so easy, you can do it right now:</p>
 
-<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.old
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.old
 $ openssl pkcs8 -topk8 -v2 des3 -in ~/.ssh/id_rsa.old -out ~/.ssh/id_rsa
 $ chmod 600 ~/.ssh/id_rsa
 # Check that the converted key works; if yes, delete the old one:
 $ rm ~/.ssh/id_rsa.old
-</code></pre>
+</code></pre></div></div>
 
-<p>The <code>openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private
+<p>The <code class="language-plaintext highlighter-rouge">openssl pkcs8</code> command asks for a passphrase three times: once to unlock your existing private
 key, and twice for the passphrase for the new key. It doesn’t matter whether you use a new
 passphrase for the converted key or keep it the same as the old key.</p>
 
@@ -357,13 +357,13 @@ keys for some reason. If you followed the instructions above, you may no longer 
 your servers. Fortunately, it’s easy to convert your private key from PKCS#8 format back into the
 traditional key format:</p>
 
-<pre><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.pkcs8
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv ~/.ssh/id_rsa ~/.ssh/id_rsa.pkcs8
 $ openssl pkcs8 -in ~/.ssh/id_rsa.pkcs8 -out ~/.ssh/id_rsa
 $ chmod 600 ~/.ssh/id_rsa
 $ ssh-keygen -f ~/.ssh/id_rsa -p
-</code></pre>
+</code></pre></div></div>
 
-<p>The <code>openssl</code> command decrypts the key, and the <code>ssh-keygen</code> command re-encrypts it using the
+<p>The <code class="language-plaintext highlighter-rouge">openssl</code> command decrypts the key, and the <code class="language-plaintext highlighter-rouge">ssh-keygen</code> command re-encrypts it using the
 traditional SSH key format.</p>
 
 

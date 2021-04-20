@@ -86,24 +86,24 @@ example that we can talk about.</p>
 <p>Say you have a web server that writes an entry to a log file every time it serves a request. For
 example, using the nginx default access log format, one line of the log might look like this:</p>
 
-<pre><code>216.58.210.78 - - [27/Feb/2015:17:55:11 +0000] "GET /css/typography.css HTTP/1.1"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>216.58.210.78 - - [27/Feb/2015:17:55:11 +0000] "GET /css/typography.css HTTP/1.1"
 200 3377 "http://martin.kleppmann.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X
 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36"
-</code></pre>
+</code></pre></div></div>
 
 <p>(That is actually one line, it’s only broken up into multiple lines here for readability.) This line
 of the log indicates that on 27 February 2015 at 17:55:11 UTC, the server received a request for the
-file <code>/css/typography.css</code> from the client IP address 216.58.210.78. It then goes on to note various
+file <code class="language-plaintext highlighter-rouge">/css/typography.css</code> from the client IP address 216.58.210.78. It then goes on to note various
 other details, including the browser’s user-agent string.</p>
 
 <p>Various tools can take these log files and produce pretty reports about your website traffic, but
 for the sake of the exercise, let’s build our own, using basic Unix tools. Let’s determine the
 5 most popular URLs on our website. To start with, we need to extract the path of the URL that was
-requested, for which we can use <code>awk</code>.</p>
+requested, for which we can use <code class="language-plaintext highlighter-rouge">awk</code>.</p>
 
-<p><code>awk</code> doesn’t know about the format of nginx logs – it just treats the log file as text. By
-default, <code>awk</code> takes one line of input at a time, splits it by whitespace, and makes the
-whitespace-separated components available as variables <code>$1</code>, <code>$2</code>, etc. In the nginx log example,
+<p><code class="language-plaintext highlighter-rouge">awk</code> doesn’t know about the format of nginx logs – it just treats the log file as text. By
+default, <code class="language-plaintext highlighter-rouge">awk</code> takes one line of input at a time, splits it by whitespace, and makes the
+whitespace-separated components available as variables <code class="language-plaintext highlighter-rouge">$1</code>, <code class="language-plaintext highlighter-rouge">$2</code>, etc. In the nginx log example,
 the requested URL path is the seventh whitespace-separated component:</p>
 
 <p><img src="/2015/08/unixphil-03.png" width="550" height="412" /></p>
@@ -111,30 +111,30 @@ the requested URL path is the seventh whitespace-separated component:</p>
 <p>Now that you’ve extracted the path, you can determine the 5 most popular pages on your website as
 follows:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>awk <span class="s1">&#39;{print $7}&#39;</span> access.log <span class="p">|</span> <span class="c1"># Split by whitespace, 7th field is request path</span>
-    sort     <span class="p">|</span> <span class="c1"># Make occurrences of the same URL appear consecutively in file</span>
-    uniq -c  <span class="p">|</span> <span class="c1"># Replace consecutive occurrences of the same URL with a count</span>
-    sort -rn <span class="p">|</span> <span class="c1"># Sort by number of occurrences, descending</span>
-    head -n <span class="m">5</span>  <span class="c1"># Output top 5 URLs</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">awk</span> <span class="s1">'{print $7}'</span> access.log | <span class="c"># Split by whitespace, 7th field is request path</span>
+    <span class="nb">sort</span>     | <span class="c"># Make occurrences of the same URL appear consecutively in file</span>
+    <span class="nb">uniq</span> <span class="nt">-c</span>  | <span class="c"># Replace consecutive occurrences of the same URL with a count</span>
+    <span class="nb">sort</span> <span class="nt">-rn</span> | <span class="c"># Sort by number of occurrences, descending</span>
+    <span class="nb">head</span> <span class="nt">-n</span> 5  <span class="c"># Output top 5 URLs</span></code></pre></figure>
 
 <p>The output of that series of commands looks something like this:</p>
 
-<pre><code>4189 /favicon.ico
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4189 /favicon.ico
 3631 /2013/05/24/improving-security-of-ssh-private-keys.html
 2124 /2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html
 1369 /
  915 /css/typography.css
-</code></pre>
+</code></pre></div></div>
 
 <p><img src="/2015/08/unixphil-04.png" width="550" height="412" /></p>
 
 <p>Although the above command line looks a bit obscure if you’re unfamiliar with Unix tools, it is
 incredibly powerful. It will process gigabytes of log files in a matter of seconds, and you can
 easily modify the analysis to suit your needs. For example, if you want to count top client IP
-addresses instead of top pages, change the <code>awk</code> argument to <code>'{print $1}'</code>.</p>
+addresses instead of top pages, change the <code class="language-plaintext highlighter-rouge">awk</code> argument to <code class="language-plaintext highlighter-rouge">'{print $1}'</code>.</p>
 
-<p>Many data analyses can be done in a few minutes using some combination of <code>awk</code>, <code>sed</code>, <code>grep</code>,
-<code>sort</code>, <code>uniq</code> and <code>xargs</code>, and they perform
+<p>Many data analyses can be done in a few minutes using some combination of <code class="language-plaintext highlighter-rouge">awk</code>, <code class="language-plaintext highlighter-rouge">sed</code>, <code class="language-plaintext highlighter-rouge">grep</code>,
+<code class="language-plaintext highlighter-rouge">sort</code>, <code class="language-plaintext highlighter-rouge">uniq</code> and <code class="language-plaintext highlighter-rouge">xargs</code>, and they perform
 <a href="http://aadrake.com/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html">surprisingly well</a>.
 This is no coincidence: it is a direct result of the design philosophy of Unix.</p>
 
@@ -171,7 +171,7 @@ projects into manageable chunks. Plus ça change.</p>
 
 <p>When you join two commands with the pipe character in your shell, the shell starts both programs at
 the same time, and attaches the output of the first process to the second process’ input. This
-attachment mechanism uses the <a href="http://linux.die.net/man/2/pipe"><code>pipe</code></a> syscall provided by the
+attachment mechanism uses the <a href="http://linux.die.net/man/2/pipe"><code class="language-plaintext highlighter-rouge">pipe</code></a> syscall provided by the
 operating system.</p>
 
 <p>Note that this wiring is not done by the programs themselves, but by the shell – this allows them
@@ -194,17 +194,17 @@ the contents of a file as input to a process) and output redirection (writing th
 a process to a file).</p>
 
 <p>The reason that Unix programs can be composed so flexibly is that they all conform to the same
-interface: most programs have one stream for input data (<code>stdin</code>) and two output streams (<code>stdout</code>
-for regular output data, and <code>stderr</code> for errors and diagnostic messages).</p>
+interface: most programs have one stream for input data (<code class="language-plaintext highlighter-rouge">stdin</code>) and two output streams (<code class="language-plaintext highlighter-rouge">stdout</code>
+for regular output data, and <code class="language-plaintext highlighter-rouge">stderr</code> for errors and diagnostic messages).</p>
 
 <p><img src="/2015/08/unixphil-12.png" width="550" height="311" /></p>
 
-<p>Programs may also do other things besides reading <code>stdin</code> and writing <code>stdout</code>, such as reading and
+<p>Programs may also do other things besides reading <code class="language-plaintext highlighter-rouge">stdin</code> and writing <code class="language-plaintext highlighter-rouge">stdout</code>, such as reading and
 writing files, communicating over the network, or drawing a graphical user interface. However, the
-<code>stdin</code>/<code>stdout</code> communication is considered to be the main way how data flows from one Unix tool to
+<code class="language-plaintext highlighter-rouge">stdin</code>/<code class="language-plaintext highlighter-rouge">stdout</code> communication is considered to be the main way how data flows from one Unix tool to
 another.</p>
 
-<p>And the great thing about the <code>stdin</code>/<code>stdout</code> interface is that anyone can implement it easily, in
+<p>And the great thing about the <code class="language-plaintext highlighter-rouge">stdin</code>/<code class="language-plaintext highlighter-rouge">stdout</code> interface is that anyone can implement it easily, in
 any programming language. You can develop your own tool that conforms to this interface, and it will
 play nicely with all the standard tools that ship as part of the operating system.</p>
 
@@ -214,7 +214,7 @@ play nicely with all the standard tools that ship as part of the operating syste
 you have from each country. The log doesn’t tell you the country, but it does tell you the IP
 address, which you can translate into a country using an IP geolocation database. Such a database
 isn’t included with your operating system by default, but you can write your own tool that takes
-IP addresses on <code>stdin</code> and outputs country codes on <code>stdout</code>.</p>
+IP addresses on <code class="language-plaintext highlighter-rouge">stdin</code> and outputs country codes on <code class="language-plaintext highlighter-rouge">stdout</code>.</p>
 
 <p>Once you’ve written that tool, you can include it in the data processing pipeline we discussed
 previously, and it will work just fine. This may seem painfully obvious if you’ve been working with
@@ -235,8 +235,8 @@ databases actually run on Unix systems. Does that mean they also follow the Unix
 
 <p><img src="/2015/08/unixphil-15.png" width="550" height="354" /></p>
 
-<p>The dataflow in most database systems is very different from Unix tools. Rather than using <code>stdin</code>
-and <code>stdout</code> as communication channels, there is a <em>database server</em>, and several <em>clients</em>. The
+<p>The dataflow in most database systems is very different from Unix tools. Rather than using <code class="language-plaintext highlighter-rouge">stdin</code>
+and <code class="language-plaintext highlighter-rouge">stdout</code> as communication channels, there is a <em>database server</em>, and several <em>clients</em>. The
 clients send queries to read or write data on the server, the server handles the queries and sends
 responses to the clients. This relationship is fundamentally asymmetric: clients and servers are
 distinct roles.</p>
@@ -309,13 +309,13 @@ can simply pipe any database into any other database.)</p>
 
 <p><img src="/2015/08/unixphil-19.png" width="550" height="412" /></p>
 
-<p>We said that Unix tools are composable because they all implement the same interface of <code>stdin</code>,
-<code>stdout</code> and <code>stderr</code> – and each of these is a <em>file descriptor</em>, i.e. a stream of bytes that you
+<p>We said that Unix tools are composable because they all implement the same interface of <code class="language-plaintext highlighter-rouge">stdin</code>,
+<code class="language-plaintext highlighter-rouge">stdout</code> and <code class="language-plaintext highlighter-rouge">stderr</code> – and each of these is a <em>file descriptor</em>, i.e. a stream of bytes that you
 can read or write like a file. This interface is simple enough that anyone can easily implement it,
 but it is also powerful enough that you can use it for anything.</p>
 
 <p>Because all Unix tools implement the same interface, we call it a <em>uniform interface</em>. That’s why
-you can pipe the output of <code>gunzip</code> to <code>wc</code> without a second thought, even though those two tools
+you can pipe the output of <code class="language-plaintext highlighter-rouge">gunzip</code> to <code class="language-plaintext highlighter-rouge">wc</code> without a second thought, even though those two tools
 appear to have nothing in common. It’s like lego bricks, which all implement the same pattern of
 knobbly bits and grooves, allowing you to stack any lego brick on any other, regardless of their
 shape, size or colour.</p>
@@ -325,8 +325,8 @@ shape, size or colour.</p>
 <p>The uniform interface of file descriptors in Unix doesn’t just apply to the input and output of
 processes, but it’s a very broadly applied pattern. If you open a file on the filesystem, you get
 a file descriptor. Pipes and unix sockets provide file descriptors that are a communication channel
-to another process on the same machine. On Linux, the virtual files in <code>/dev</code> are the interfaces of
-device drivers, so you might be talking to a USB port or even a GPU. The virtual files in <code>/proc</code>
+to another process on the same machine. On Linux, the virtual files in <code class="language-plaintext highlighter-rouge">/dev</code> are the interfaces of
+device drivers, so you might be talking to a USB port or even a GPU. The virtual files in <code class="language-plaintext highlighter-rouge">/proc</code>
 are an API for the kernel, but since they’re exposed as files, you can access them with the same
 tools as regular files.</p>
 
@@ -336,7 +336,7 @@ be. <a href="http://www.catb.org/esr/writings/taoup/html/plan9.html">Plan 9</a> 
 could have been cleanly integrated into the same uniform interface.</p>
 
 <p>To a first approximation, everything on Unix is a file. This uniformity means the logic of Unix
-tools is separated from the wiring, making it more composable. <code>sed</code> doesn’t need to care whether
+tools is separated from the wiring, making it more composable. <code class="language-plaintext highlighter-rouge">sed</code> doesn’t need to care whether
 it’s talking to a pipe to another process, or a socket, or a device driver, or a real file on the
 filesystem. It’s all the same.</p>
 
@@ -346,7 +346,7 @@ filesystem. It’s all the same.</p>
 that the stream has ended (a stream can be of arbitrary length, and a process may not know in
 advance how long its input is going to be).</p>
 
-<p>A few tools (e.g. <code>gzip</code>) operate purely on byte streams, and don’t care about the structure of the
+<p>A few tools (e.g. <code class="language-plaintext highlighter-rouge">gzip</code>) operate purely on byte streams, and don’t care about the structure of the
 data. But most tools need to parse their input in order to do anything useful with it. For this,
 most Unix tools use ASCII, with each record on one line, and fields separated by tabs or spaces, or
 maybe commas.</p>
@@ -391,15 +391,15 @@ edge case semantics. TCP is good, but by itself it’s too low-level to serve as
 implementation.</li>
   <li>A Unix pipe is designed to have a single sender process, and a single recipient. You can’t use
 pipes to send output to several processes, or to collect input from several processes. (You can
-branch a pipeline with <a href="http://linux.die.net/man/1/tee"><code>tee</code></a>, but a pipe itself is always
+branch a pipeline with <a href="http://linux.die.net/man/1/tee"><code class="language-plaintext highlighter-rouge">tee</code></a>, but a pipe itself is always
 one-to-one.)</li>
   <li>ASCII text (or rather, UTF-8) is great for making data easily explorable, but it quickly gets
 messy. Every process needs to be set up with its own input parsing: first breaking the byte stream
-into records (usually separated by newline, though some advocate <code>0x1e</code>, the <a href="https://ronaldduncan.wordpress.com/2009/10/31/text-file-formats-ascii-delimited-text-not-csv-or-tab-delimited-text/">ASCII record
+into records (usually separated by newline, though some advocate <code class="language-plaintext highlighter-rouge">0x1e</code>, the <a href="https://ronaldduncan.wordpress.com/2009/10/31/text-file-formats-ascii-delimited-text-not-csv-or-tab-delimited-text/">ASCII record
 separator</a>).
-Then a record needs to be broken up into fields, like the <code>$7</code> in the <code>awk</code> example at the
+Then a record needs to be broken up into fields, like the <code class="language-plaintext highlighter-rouge">$7</code> in the <code class="language-plaintext highlighter-rouge">awk</code> example at the
 beginning. Separator characters that appear in the data need to be escaped somehow. Even
-a fairly simple tool like <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?xargs"><code>xargs</code></a> has about half
+a fairly simple tool like <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?xargs"><code class="language-plaintext highlighter-rouge">xargs</code></a> has about half
 a dozen command-line options to specify how its input should be parsed. Text-based interfaces work
 tolerably well, but in retrospect, I am pretty sure that a richer data model with
 <a href="http://radar.oreilly.com/2014/11/the-problem-of-managing-schemas.html">explicit schemas</a>
@@ -430,7 +430,7 @@ write code to consume and produce data streams.</p>
 
 <p>In fact, when you look at it through the Unix lens, Kafka looks quite like the pipe that connects
 the output of one process to the input of another. And Samza looks quite like a standard library
-that helps you read <code>stdin</code> and write <code>stdout</code> (and a few helpful additions, such as a deployment
+that helps you read <code class="language-plaintext highlighter-rouge">stdin</code> and write <code class="language-plaintext highlighter-rouge">stdout</code> (and a few helpful additions, such as a deployment
 mechanism,
 <a href="http://samza.apache.org/learn/documentation/0.9/container/state-management.html">state management</a>,
 metrics, and monitoring).</p>
@@ -487,7 +487,7 @@ mess. Since messages are coarser-grained and self-contained, they can be safely 
 making it safe for multiple processes to concurrently write to the same stream.</li>
   <li>Unix pipes are just a small in-memory buffer, whereas Kafka durably writes all messages to disk.
 In this regard, Kafka is less like a pipe, and more like one process writing to a temporary file,
-while several other processes continuously read that file using <code>tail -f</code> (each consumer tails the
+while several other processes continuously read that file using <code class="language-plaintext highlighter-rouge">tail -f</code> (each consumer tails the
 file independently). Kafka’s approach provides better fault tolerance, since it allows a consumer
 to fail and restart without skipping messages. Kafka automatically splits those ‘temporary’ files
 into segments and garbage-collects old segments on a configurable schedule.</li>
@@ -518,7 +518,7 @@ Other types of message broker, like AMQP and JMS, do not have this ordering prop
 modify or transform it in some way, and produce an output stream that is somehow derived from the
 input.</p>
 
-<p>Importantly, the processing does not modify the input itself: it remains immutable. If you run <code>awk</code>
+<p>Importantly, the processing does not modify the input itself: it remains immutable. If you run <code class="language-plaintext highlighter-rouge">awk</code>
 on some input file, the file remains unmodified (unless you explicitly choose to overwrite it).
 Also, most Unix tools are <em>deterministic</em>, i.e. if you give them the same input, they always produce
 the same output. This means you can re-run the same command as many times as you want, and gradually

@@ -185,7 +185,7 @@ P(\text{data loss} \mid f \text{ nodes failed})
 <p>Cassandra and Riak call partitions “vnodes” instead, but they are the same thing. In general, the
 number of partitions \(k\) is independent from the number of nodes \(n\). In the case of
 Cassandra, there is usually a <a href="http://www.datastax.com/dev/blog/virtual-nodes-in-cassandra-1-2">fixed number of partitions per node</a>; the default
-is \(k=256\,n\) (configured by the <code>num_tokens</code> parameter), and this is also what I assumed for the
+is \(k=256\,n\) (configured by the <code class="language-plaintext highlighter-rouge">num_tokens</code> parameter), and this is also what I assumed for the
 graph above. In Riak, the number of partitions is <a href="https://docs.basho.com/riak/kv/2.1.4/setup/planning/cluster-capacity/#ring-size-number-of-partitions">fixed when you create the cluster</a>, but
 generally more nodes also mean more partitions.</p>
 
