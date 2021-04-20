@@ -1,4 +1,3 @@
 source: src
 destination: static
-highlighter: pygments
 future: true
