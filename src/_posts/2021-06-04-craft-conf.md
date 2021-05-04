@@ -4,8 +4,10 @@ title: "Automerge: A New Foundation for Collaboration Software"
 venue: Craft Conference
 place: Online
 venue_url: https://craft-conf.com/speaker/MartinKleppmann
+slides_url: https://speakerdeck.com/ept/automerge-a-new-foundation-for-collaboration-software
 ---
 
+<script async class="speakerdeck-embed" data-id="6288c2fdb7674b13acc82291373f1491" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
