@@ -219,7 +219,8 @@ Here are some related projects that have been pointed out to me since this post 
 have not vetted them, so don't take this as an endorsement.
 
 * The [Facebook/Instagram Oversight Board](https://oversightboard.com/) is quite close to what
-  I have in mind, and I am looking forward to seeing how it works out.
+  I have in mind, and it has [upheld](https://oversightboard.com/news/226612455899839-oversight-board-upholds-former-president-trump-s-suspension-finds-facebook-failed-to-impose-proper-penalty/)
+  the suspension of Trump's account.
 * The recently launched
   [MIT Center for Constructive Communication](https://news.mit.edu/2021/center-constructive-communication-0113)
   is an ambitious effort in this area.
