@@ -6,7 +6,7 @@ layout: front-page
 <h2>Archive of conference talks</h2>
 
 {% assign talks1 = site.posts | where:'layout','talk' %}
-{% assign talks2 = site.posts | where:'type','conference' | where:'me_presenting',true %}
+{% assign talks2 = site.posts | where:'layout','paper' | where:'me_presenting',true %}
 {% assign talks  = talks1 | concat: talks2 | sort: 'date' | reverse %}
 
 <ul>

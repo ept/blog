@@ -8,6 +8,7 @@ venue: Keynote at 15th ACM International Conference on Distributed and Event-bas
 place: Online (originally planned to be in Milan, Italy)
 doi: 10.1145/3465480.3467835
 venue_url: https://2021.debs.org/keynote-speakers/
+paper_url: /papers/debs20-keynote.pdf
 ---
 
 
