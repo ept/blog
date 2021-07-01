@@ -9,8 +9,13 @@ place: Online (originally planned to be in Milan, Italy)
 doi: 10.1145/3465480.3467835
 venue_url: https://2021.debs.org/keynote-speakers/
 paper_url: /papers/debs21-keynote.pdf
+video_url: https://www.youtube.com/watch?v=72W_VvFRqc0
+slides_url: https://speakerdeck.com/ept/thinking-in-events-from-databases-to-distributed-collaboration-software
 ---
 
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/72W_VvFRqc0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<script async class="speakerdeck-embed" data-id="1b87c307b5904b9aa366de4186ebe8d4" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 Abstract
 --------
