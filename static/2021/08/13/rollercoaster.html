@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Thinking in Events: From Databases to Distributed Collaboration Software &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -18,12 +18,10 @@
 
 
     <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
-    <meta name="citation_title" content="Thinking in Events: From Databases to Distributed Collaboration Software" /> 
-    <meta name="citation_publication_date" content="2021-07-02" /> 
-    <meta name="citation_authors" content="Martin Kleppmann" /> 
-    <meta name="citation_pdf_url" content="/papers/debs21-keynote.pdf" /> 
-    
-    <meta name="citation_doi" content="10.1145/3465480.3467835" /> 
+    <meta name="citation_title" content="Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks" /> 
+    <meta name="citation_publication_date" content="2021-08-13" /> 
+    <meta name="citation_authors" content="Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford" /> 
+    <meta name="citation_pdf_url" content="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-957.html" /> 
     
 </head>
 
@@ -56,59 +54,53 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Thinking in Events: From Databases to Distributed Collaboration Software"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Thinking in Events: From Databases to Distributed Collaboration Software</h1>
+                <h1>Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks</h1>
 
-                <p>Martin Kleppmann</p>
+                <p>Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford</p>
 
                 <p>
                   
-                    <a href="https://2021.debs.org/keynote-speakers/">Keynote at 15th ACM International Conference on Distributed and Event-based Systems (DEBS)</a>,
+                    <a href="https://www.usenix.org/conference/usenixsecurity21/presentation/hugenroth">30th USENIX Security Symposium</a>,
                   
                   
-                    Online (originally planned to be in Milan, Italy),
-                  
-                  July 2021.
+                  August 2021.
                 </p>
 
                 
 
                 <ul>
                   
-                    <li><a href="/papers/debs21-keynote.pdf">Paper (open access)</a></li>
+                    <li><a href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-957.html">Paper (open access)</a></li>
                   
                   
                   
-                    <li><a href="https://doi.org/10.1145/3465480.3467835">doi:10.1145/3465480.3467835</a></li>
                   
                   
-                  
-                    <li><a href="https://speakerdeck.com/ept/thinking-in-events-from-databases-to-distributed-collaboration-software">Slides</a></li>
-                  
-                  
-                    <li><a href="https://www.youtube.com/watch?v=72W_VvFRqc0">Video</a></li>
                   
                   
                   
                 </ul>
 
-                <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/72W_VvFRqc0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                <h2 id="abstract">Abstract</h2>
 
-<script async="" class="speakerdeck-embed" data-id="1b87c307b5904b9aa366de4186ebe8d4" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<p>Mix network designs such as Loopix provide strong metadata anonymity guarantees that are crucial
+across many applications. However, because they limit the rate at which messages can be sent by each
+user, they incur high delays when sending many messages to multiple recipients – for instance, in
+decentralised collaborative apps.</p>
 
-<h2 id="abstract">Abstract</h2>
+<p>In this paper we present an efficient multicast scheme named Rollercoaster that reduces the time for
+delivering a message to all members of a group of size m from O(m) to O(log m). Rollercoaster can
+be deployed without modifications to the underlying mix network, allowing it to benefit from the
+anonymity set provided by existing users. We further develop an extension that achieves the same
+asymptotic guarantees in the presence of unreliable group members.</p>
 
-<p>In this keynote I give a subjective but systematic overview of the landscape of distributed
-event-based systems, with an emphasis on two areas I have worked on over the last decade:
-large-scale stream processing with Apache Kafka and associated tools, and real-time collaboration
-software in the style of Google Docs. While these may seem at first glance to be very different
-topics, there are also important points of overlap. This paper lays out a taxonomy of event-based
-systems that shows where their commonalities and differences lie. It also highlights some of the key
-trade-offs that arise in the implementation of event-based systems, drawing both from distributed
-systems theory and from experience of their practical deployment, and outlines a number of open
-research problems.</p>
+<p>While the scheme is applicable to many mix network designs, we evaluate it for the Loopix network,
+which is the most advanced and practical design to date. For this evaluation we developed a network
+simulator that allows fast, reproducible, and inspectable runs while eliminating external
+influences.</p>
 
             </div>
 
