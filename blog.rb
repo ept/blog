@@ -60,6 +60,10 @@ get '/kryptopathen/' do
   send_file 'static/kryptopathen/index.html'
 end
 
+get '/papers/debs20-keynote.pdf' do
+  redirect '/papers/debs21-keynote.pdf', 301
+end
+
 # Static files route (reimplemented outside of Sinatra to make host-dependent redirect work)
 # Note this code is not used when using `jekyll serve`, only when running through Rack!
 get(/.*/) do
