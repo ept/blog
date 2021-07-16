@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Harm reduction for cryptographic backdoors &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?5" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+
+    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
+    <meta name="citation_title" content="Harm reduction for cryptographic backdoors" /> 
+    <meta name="citation_publication_date" content="2021-07-16" /> 
+    <meta name="citation_authors" content="Martin Kleppmann" /> 
+    <meta name="citation_pdf_url" content="/papers/backdoors-hotpets21.pdf" /> 
+    
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Harm reduction for cryptographic backdoors"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Harm reduction for cryptographic backdoors</h1>
+
+                <p>Martin Kleppmann</p>
+
+                <p>
+                  
+                    <a href="https://petsymposium.org/2021/hotpets.php">14th Workshop on Hot Topics in Privacy Enhancing Technologies (HotPETs)</a>,
+                  
+                  
+                    Online,
+                  
+                  July 2021.
+                </p>
+
+                
+
+                <ul>
+                  
+                    <li><a href="/papers/backdoors-hotpets21.pdf">Paper (open access)</a></li>
+                  
+                  
+                  
+                  
+                  
+                    <li><a href="https://speakerdeck.com/ept/harm-reduction-for-cryptographic-backdoors">Slides</a></li>
+                  
+                  
+                  
+                  
+                </ul>
+
+                <script async="" class="speakerdeck-embed" data-id="d908ec3aace04d15be349461d043f047" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>The pattern has been repeated ad nauseam: law enforcement officials complain that end-to-end
+encryption makes their work difficult, and campaign for weakening it; information security
+professionals respond with an outcry, saying we must never deliberately weaken security. The
+arguments have been <a href="https://dspace.mit.edu/handle/1721.1/97690">rehearsed many times</a> ever since
+the crypto wars of the 1990s, and I will not rehash them. Instead, I would like to outline
+a proposal for a compromise.</p>
+
+<p>To some, the mere idea of compromise on this matter is tantamount to treason; they say “cryptography
+is just math, you can’t ban math” to argue against any sort of regulation of cryptography. I believe
+that such a reductionist stance is unproductive: it ignores the fact that software systems are still
+subject to laws. The people maintaining the software, its users, the company hosting the servers
+that support the software, and the companies providing the app stores through which the software is
+distributed are all subject to the laws of the countries in which they live or operate. We can and
+should campaign against laws and proposals that we think are unreasonable, but ignoring them
+entirely is not going to work long-term, especially when there is public support for law
+enforcement’s side of the story.</p>
+
+<p>At present, law enforcement agencies (LEAs) are pushed to use zero-day exploits or
+<a href="https://martin.kleppmann.com/papers/ghost-attack-spw19.pdf">ghost user attacks</a> to conduct
+surveillance on end-to-end encrypted systems. These tools are problematic since they provide no
+accountability to ensure that they are being used in a lawful way, making them harmful to security
+overall. It would be better to take a <em>harm reduction</em> approach: to have an explicit backdoor
+mechanism that ensures accountability, and which has safeguards to prevent abuse. In particular, it
+should not be susceptible to undetectable mass surveillance, and it should ensure that any
+surveillance is legal.</p>
+
+<h2 id="a-proposal">A Proposal</h2>
+
+<p>I believe the following proposal achieves this goal. It is fairly simple, but I have not seen it
+described previously.</p>
+
+<p>A provider of a communication service (say, Facebook in the case of WhatsApp) maintains
+a transparency log, similar to <a href="https://queue.acm.org/detail.cfm?id=2668154">Certificate Transparency</a>,
+containing all of the law enforcement intercept orders (warrants, subpoenas) it has received and
+accepted. The log is public. Each log entry contains a few publicly readable fields: the
+jurisdiction of the warrant, a code indicating the reason (terrorism, child sexual abuse, etc),
+validity start and end date, and a cryptographic commitment to a single device ID that is the target
+of the warrant. Thus, anybody can see how many warrants are being issued in which jurisdiction and
+for which reason, but not who their targets are. Auditors (e.g. ACLU, EFF) track the log and report
+summary statistics to the public.</p>
+
+<p>To intercept a device’s communication, the service provider must first add the entry to the log,
+then send a message to the device that reveals the device ID in the commitment, and a proof that the
+entry is included in the log. The software on the user’s device checks whether the log entry is for
+its own device ID, and if it is valid, the software silently uploads a cleartext copy of the
+requested data to a server accessible to the appropriate LEA, and this process continues until the
+expiry date. This is essentially identical to the cloud backup feature that is already built into
+otherwise encrypted messaging apps such as WhatsApp and iMessage, which
+<a href="https://arxiv.org/abs/2105.12613">upload an unencrypted copy of the user’s messages to a cloud service</a>;
+the backdoor merely silently enables this backup if it had been disabled by the user.</p>
+
+<p>Additionally, in each jurisdiction there is a trusted oversight board. The service provider must
+give the oversight board in the appropriate jurisdiction a copy of every warrant it accepts, and
+reveal to it the target of the corresponding log entry. The board checks that each log entry has
+a corresponding warrant, that the warrant is genuine and legal, and that it targets a specifically
+named individual suspected of a serious crime. If the board determines that the system is being
+abused, it has legal powers to stop the abuse.</p>
+
+<h2 id="discussion">Discussion</h2>
+
+<p>Unlike key escrow and other backdoor proposals, this approach ensures the backdoor cannot be used
+without leaving a public audit trail, and it does not involve any weakening of the cryptographic
+protocols. There is no single “golden master key” that can silently decrypt all communications,
+avoiding the problem of how such a key would be managed. Since a single log entry can only target
+a single device, the number of devices intercepted is public, and thus any attempts at conducting
+mass surveillance through this system would immediately be noticed and subject to public debate.</p>
+
+<p>To avoid publishing exact numbers, the service provider can include fake entries in the log,
+allowing over-reporting but not under-reporting of numbers. To avoid leaking timing of when exactly
+warrants are issued, the service provider can publish a mixture of real warrants and fake log
+entries on a pre-set schedule (similarly to cover traffic in
+<a href="https://www.usenix.org/system/files/conference/usenixsecurity17/sec17-piotrowska.pdf">some anonymity networks</a>).
+Aside from any delays due to such a pre-set schedule, this proposal does not introduce additional
+delays into the existing legal process for warrants or subpoenas, which is useful for time-sensitive
+investigations.</p>
+
+<p>It is important for users of a communication system to know which countries are granted interception
+capabilities, since activities that are legal in one country may not be in another country (e.g.
+being gay or criticising the government), and countries differ in the degree to which they uphold
+the rule of law.  The proposed scheme forces service providers to be explicit and public about the
+jurisdictions in which they will accept warrants.</p>
+
+<p>The proposed scheme is simple, allowing it to be understood by people who are not technical experts.
+It uses only basic cryptography. Since many communication apps already have a backup feature, and
+users are likely to want to keep such a feature, adding the backdoor requires very little additional
+client-side code in many cases.</p>
+
+<p style="text-align: center">
+<img src="/2021/07/whatsapp-backup.png" width="320" height="568" alt="Screenshot of WhatsApp asking whether to enable cloud backups" /><br />
+<em>Figure 1: WhatsApp encourages the user to enable backups, causing an unencrypted copy of the user's messages to be uploaded to a server.</em>
+</p>
+
+<p>Law enforcement gains access to any data that is stored on the targeted user’s devices at the point
+in time when the warrant takes effect (including message history if it is stored), but any data that
+has been deleted from the targeted user’s devices is gone. If the system provides forward secrecy,
+the LEA does not gain the ability to retroactively decrypt deleted messages. I believe this is
+a reasonable compromise, since it is the same information as a LEA would gain if it physically
+seized the device and unlocked it.</p>
+
+<p>A limitation of this design is that it assumes the messaging software is able to run on the target
+device and is able to receive and process messages. In cases where the device has no network
+connectivity, it might not be possible to remotely activate the backdoor, so the LEA would need to
+gain physical access to the device and unlock it instead.</p>
+
+<p>The fact that an app contains a backdoor would be publicly known. Would this mean criminals simply
+move to another app? Probably not: how is a gangster to know that the alternative app isn’t
+<a href="https://www.bbc.co.uk/news/world-57394831">secretly operated by the FBI</a>? And installing a custom
+build of an open source messaging app, after having carefully reviewed its code for weaknesses,
+requires deeper technical skills than most criminals have. Moreover, there are network effects:
+co-conspirators need to be convinced to use the same app.</p>
+
+<p>The proposed scheme relies on a trusted oversight board to check the validity of warrants. There is
+a risk of the oversight board being too docile (regulatory capture), which is mitigated by making
+the number of warrants public. If civil liberties organisations believe that the number of people
+being surveilled is too high, they can instigate public debate and put pressure on the oversight
+board to be stricter.</p>
+
+<p>Would this scheme be acceptable to LEAs? In a
+<a href="https://www.lawfareblog.com/principles-more-informed-exceptional-access-debate">2018 article</a>, two GCHQ technical directors set out principles that they
+think backdoors should satisfy. They explicitly <em>do not</em> want key escrow or bulk decryption
+capabilities, and they <em>do</em> want to provide transparency about the number of people surveilled, in
+order to assure the public that the backdoor is only used on a small number of specifically named
+suspects. This is exactly what my proposal provides.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>LEAs have a legitimate need for targeted surveillance to investigate crime. This does not mean we
+should bow to every LEA wish, but we cannot dismiss them wholesale either. I fear that if the
+information security community categorically refuses to engage with the need for targeted
+surveillance, we will end up with poorly conceived legal measures being imposed, to the detriment of
+everybody’s security. I believe it is better to engage constructively with law enforcement and to
+work together towards system designs that balance investigative capabilities with protection of the
+civil liberties that form the foundation of a democratic society.</p>
+
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div class="mailing-list-signup">
+        <p>
+            To find out when I write something new, sign up to receive an
+            <a href="https://martinkl.substack.com/">email notification</a>,
+            <a href="https://twitter.com/martinkl">follow me on Twitter</a>, or subscribe to the
+            <a href="http://feeds.feedburner.com/martinkl">RSS feed</a>.
+        </p>
+
+        <p class="disclaimer">
+            I won't give your email address to anyone else, won't send you any spam,
+            and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>, has received
+        <a href="https://www.goodreads.com/book/show/23466395-designing-data-intensive-applications">thousands</a>
+        of five-star reviews.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div class="widget">
+        <p>If you find my work useful, please
+        <a href="https://www.patreon.com/martinkl">support me on Patreon</a>.
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>14 Apr 2021: <a href="/2021/04/14/goodbye-gpl.html">It's time to say goodbye to the GPL</a></li>
+            
+              <li>23 Feb 2021: <a href="/2021/02/23/patreon.html">Building the future of computing, with your help</a></li>
+            
+              <li>13 Jan 2021: <a href="/2021/01/13/decentralised-content-moderation.html">Decentralised content moderation</a></li>
+            
+              <li>02 Dec 2020: <a href="/2020/12/02/bloom-filter-hash-graph-sync.html">Using Bloom filters to efficiently synchronise hash graphs</a></li>
+            
+              <li>18 Nov 2020: <a href="/2020/11/18/distributed-systems-and-elliptic-curves.html">New courses on distributed systems and elliptic curve cryptography</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2021/07/16/cryptographic-backdoors-hotpets.html">16 Jul 2021 at 14th Workshop on Hot Topics in Privacy Enhancing Technologies (HotPETs)</a></li>
+            
+              <li><a href="/2021/07/02/debs-keynote-thinking-in-events.html">02 Jul 2021 at Keynote at 15th ACM International Conference on Distributed and Event-based Systems (DEBS)</a></li>
+            
+              <li><a href="/2021/06/04/craft-conf.html">04 Jun 2021 at Craft Conference</a></li>
+            
+              <li><a href="/2021/05/04/philly-ete.html">04 May 2021 at Emerging Technologies for the Enterprise (ETE)</a></li>
+            
+              <li><a href="/2020/07/06/crdt-hard-parts-hydra.html">06 Jul 2020 at Hydra distributed computing conference</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
