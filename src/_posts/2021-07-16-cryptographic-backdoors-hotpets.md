@@ -11,7 +11,6 @@ paper_url: /papers/backdoors-hotpets21.pdf
 slides_url: https://speakerdeck.com/ept/harm-reduction-for-cryptographic-backdoors
 ---
 
-<script async class="speakerdeck-embed" data-id="d908ec3aace04d15be349461d043f047" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 The Problem
 -----------
