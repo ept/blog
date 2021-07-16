@@ -11,6 +11,7 @@ venue_url: https://2021.debs.org/keynote-speakers/
 paper_url: /papers/debs21-keynote.pdf
 video_url: https://www.youtube.com/watch?v=72W_VvFRqc0
 slides_url: https://speakerdeck.com/ept/thinking-in-events-from-databases-to-distributed-collaboration-software
+hackernews: https://news.ycombinator.com/item?id=27824509
 ---
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/72W_VvFRqc0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
