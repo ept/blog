@@ -6,6 +6,7 @@ title: From Secure Messaging to Secure Collaboration
 authors: Martin Kleppmann, Stephan A. Kollmann, Diana A. Vasile and Alastair R. Beresford
 venue: 26th International Workshop on Security Protocols
 place: Cambridge, UK
+award: Best Presentation Award
 venue_url: http://spw2018.crocs.fi.muni.cz/programme.html
 slides_url: https://speakerdeck.com/ept/from-secure-messaging-to-secure-collaboration
 doi: 10.1007/978-3-030-03251-7_21
