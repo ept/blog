@@ -8,6 +8,7 @@ venue: 14th Workshop on Hot Topics in Privacy Enhancing Technologies (HotPETs)
 place: Online
 venue_url: https://petsymposium.org/2021/hotpets.php
 paper_url: /papers/backdoors-hotpets21.pdf
+video_url: https://youtu.be/2p_Pcjt6ebI?t=1873
 slides_url: https://speakerdeck.com/ept/harm-reduction-for-cryptographic-backdoors
 ---
 
