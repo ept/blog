@@ -1,11 +1,16 @@
 ---
 layout: talk
 title: "Automerge: A New Foundation for Collaboration Software"
-venue: Emerging Technologies for the Enterprise (ETE)
+venue: Emerging Technologies for the Enterprise (Philly ETE)
 place: Online
 venue_url: https://2021.phillyemergingtech.com/talks/automerge-a-new-foundation-for-collaboration-software/
 slides_url: https://speakerdeck.com/ept/automerge-a-new-foundation-for-collaboration-software
+video_url: https://www.youtube.com/watch?v=UUGdMHrdzIU
 ---
+
+Unfortunately I forgot to share my screen, so the first 10 minutes of the talk are without slides!
+
+<iframe width="550" height="315" src="https://www.youtube.com/embed/UUGdMHrdzIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <script async class="speakerdeck-embed" data-id="6288c2fdb7674b13acc82291373f1491" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
