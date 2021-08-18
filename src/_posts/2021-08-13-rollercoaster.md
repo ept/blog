@@ -6,6 +6,7 @@ authors: Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford
 venue: 30th USENIX Security Symposium
 paper_url: https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-957.html
 venue_url: https://www.usenix.org/conference/usenixsecurity21/presentation/hugenroth
+publisher_url: https://www.usenix.org/system/files/sec21-hugenroth.pdf
 ---
 
 
