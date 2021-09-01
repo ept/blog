@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: "New courses on distributed systems and elliptic curve cryptography"
+highlight: true
 ---
 
 I have just published new educational materials that might be of interest to computing people:
