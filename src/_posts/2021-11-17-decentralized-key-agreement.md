@@ -3,9 +3,10 @@ layout: paper
 type: journal
 title: Key Agreement for Decentralized Secure Group Messaging with Strong Security Guarantees
 authors: Matthew Weidner, Martin Kleppmann, Daniel Hugenroth, and Alastair R. Beresford
-venue: ACM Conference on Computer and Communications Security (CCS)
+venue: ACM SIGSAC Conference on Computer and Communications Security (CCS)
 place: Seoul, South Korea
 paper_url: https://eprint.iacr.org/2020/1281
+doi: 10.1145/3460120.3484542
 ---
 
 Abstract
