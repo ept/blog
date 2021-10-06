@@ -15,6 +15,7 @@ slides_url: https://speakerdeck.com/ept/verifying-strong-eventual-consistency-in
 
 * [arXiv: 1707.01747](https://arxiv.org/abs/1707.01747)
 * [Awards for this paper](https://2017.splashcon.org/attending/splash-awards)
+* [Proof framework on GitHub](https://github.com/trvedata/crdt-isabelle)
 
 Abstract
 --------
