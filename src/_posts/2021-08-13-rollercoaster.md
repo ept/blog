@@ -7,6 +7,8 @@ venue: 30th USENIX Security Symposium
 paper_url: https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-957.html
 venue_url: https://www.usenix.org/conference/usenixsecurity21/presentation/hugenroth
 publisher_url: https://www.usenix.org/system/files/sec21-hugenroth.pdf
+video_url: https://www.youtube.com/watch?v=b8JAQfZZZNM
+slides_url: https://www.usenix.org/system/files/sec21_slides_hugenroth.pdf
 ---
 
 
