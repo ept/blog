@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>A highly-available move operation for replicated trees &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -18,10 +18,12 @@
 
 
     <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
-    <meta name="citation_title" content="Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks" /> 
-    <meta name="citation_publication_date" content="2021-08-13" /> 
-    <meta name="citation_authors" content="Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford" /> 
-    <meta name="citation_pdf_url" content="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-957.html" /> 
+    <meta name="citation_title" content="A highly-available move operation for replicated trees" /> 
+    <meta name="citation_publication_date" content="2021-10-07" /> 
+    <meta name="citation_authors" content="Martin Kleppmann, Dominic P. Mulligan, Victor B. F. Gomes, and Alastair R. Beresford" /> 
+    <meta name="citation_pdf_url" content="https://martin.kleppmann.com/papers/move-op.pdf" /> 
+    
+    <meta name="citation_doi" content="10.1109/TPDS.2021.3118603" /> 
     
 </head>
 
@@ -54,37 +56,35 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="A highly-available move operation for replicated trees"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Rollercoaster: An Efficient Group-Multicast Scheme for Mix Networks</h1>
+                <h1>A highly-available move operation for replicated trees</h1>
 
-                <p>Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford</p>
+                <p>Martin Kleppmann, Dominic P. Mulligan, Victor B. F. Gomes, and Alastair R. Beresford</p>
 
                 <p>
                   
-                    <a href="https://www.usenix.org/conference/usenixsecurity21/presentation/hugenroth">30th USENIX Security Symposium</a>,
+                    IEEE Transactions on Parallel and Distributed Systems,
                   
                   
-                  August 2021.
+                  October 2021.
                 </p>
 
                 
 
                 <ul>
                   
-                    <li><a href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-957.html">Paper (open access)</a></li>
+                    <li><a href="https://martin.kleppmann.com/papers/move-op.pdf">Paper (open access)</a></li>
                   
                   
-                    <li><a href="https://www.usenix.org/system/files/sec21-hugenroth.pdf">Paper (version of record)</a></li>
+                    <li><a href="https://ieeexplore.ieee.org/document/9563274">Paper (version of record)</a></li>
+                  
+                  
+                    <li><a href="https://doi.org/10.1109/TPDS.2021.3118603">doi:10.1109/TPDS.2021.3118603</a></li>
                   
                   
                   
-                  
-                    <li><a href="https://www.usenix.org/system/files/sec21_slides_hugenroth.pdf">Slides</a></li>
-                  
-                  
-                    <li><a href="https://www.youtube.com/watch?v=b8JAQfZZZNM">Video</a></li>
                   
                   
                   
@@ -92,21 +92,18 @@
 
                 <h2 id="abstract">Abstract</h2>
 
-<p>Mix network designs such as Loopix provide strong metadata anonymity guarantees that are crucial
-across many applications. However, because they limit the rate at which messages can be sent by each
-user, they incur high delays when sending many messages to multiple recipients – for instance, in
-decentralised collaborative apps.</p>
-
-<p>In this paper we present an efficient multicast scheme named Rollercoaster that reduces the time for
-delivering a message to all members of a group of size m from O(m) to O(log m). Rollercoaster can
-be deployed without modifications to the underlying mix network, allowing it to benefit from the
-anonymity set provided by existing users. We further develop an extension that achieves the same
-asymptotic guarantees in the presence of unreliable group members.</p>
-
-<p>While the scheme is applicable to many mix network designs, we evaluate it for the Loopix network,
-which is the most advanced and practical design to date. For this evaluation we developed a network
-simulator that allows fast, reproducible, and inspectable runs while eliminating external
-influences.</p>
+<p>Replicated tree data structures are a fundamental building block of distributed filesystems, such as
+Google Drive and Dropbox, and collaborative applications with a JSON or XML data model. These
+systems need to support a <em>move</em> operation that allows a subtree to be moved to a new location
+within the tree. However, such a move operation is difficult to implement correctly if different
+replicas can concurrently perform arbitrary move operations, and we demonstrate bugs in Google Drive
+and Dropbox that arise with concurrent moves. In this paper we present a CRDT algorithm that handles
+arbitrary concurrent modifications on trees, while ensuring that the tree structure remains valid
+(in particular, no cycles are introduced), and guaranteeing that all replicas converge towards the
+same consistent state. Our algorithm requires no synchronous coordination between replicas, making
+it highly available in the face of network partitions. We formally prove the correctness of our
+algorithm using the Isabelle/HOL proof assistant, and evaluate the performance of our formally
+verified implementation in a geo-replicated setting.</p>
 
             </div>
 
