@@ -209,3 +209,5 @@ pushing for regulation that prioritises the interests of software users over the
 vendors.
 
 *Thank you to [Rob McQueen](https://ramcq.net/) for feedback on a draft of this post.*
+
+*Update: [related Twitter thread by Alexis King](https://twitter.com/lexi_lambda/status/1295426437583982592)*
