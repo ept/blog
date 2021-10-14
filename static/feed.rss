@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Mon, 11 Oct 2021 09:35:08 BST</lastBuildDate>
+        <lastBuildDate>Thu, 14 Oct 2021 15:53:11 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -56,8 +56,8 @@ Recorded 16 June 2021, published 26 August 2021.
     <p>Interview with the <a href="https://museapp.com/podcast/">Metamuse podcast</a>, in which we discuss local-first
 software: how the concept has evolved since we <a href="https://www.inkandswitch.com/local-first.html">first articulated it</a>,
 and where it’s heading in the future.
-Recorded 17 August 2021.
-Link to come.</p>
+Recorded 17 August 2021, published 14 October 2021.
+<a href="https://museapp.com/podcast/41-local-first-software/">Episode link</a></p>
   </li>
   <li>
     <p>Interview with the <a href="https://www.torocloud.com/podcast">Coding over Cocktails podcast</a>, in which we
@@ -359,6 +359,8 @@ pushing for regulation that prioritises the interests of software users over the
 vendors.</p>
 
 <p><em>Thank you to <a href="https://ramcq.net/">Rob McQueen</a> for feedback on a draft of this post.</em></p>
+
+<p><em>Update: <a href="https://twitter.com/lexi_lambda/status/1295426437583982592">related Twitter thread by Alexis King</a></em></p>
 
                 ]]></content:encoded>
             </item>
