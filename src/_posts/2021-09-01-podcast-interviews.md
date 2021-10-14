@@ -28,8 +28,8 @@ Here's a list of interviews I've given as of September 2021:
 * Interview with the [Metamuse podcast](https://museapp.com/podcast/), in which we discuss local-first
   software: how the concept has evolved since we [first articulated it](https://www.inkandswitch.com/local-first.html),
   and where it's heading in the future.
-  Recorded 17 August 2021.
-  Link to come.
+  Recorded 17 August 2021, published 14 October 2021.
+  [Episode link](https://museapp.com/podcast/41-local-first-software/)
 
 * Interview with the [Coding over Cocktails podcast](https://www.torocloud.com/podcast), in which we
   discuss making systems scalable, how data systems have evolved over the years, and local-first
