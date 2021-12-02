@@ -2,7 +2,7 @@
 layout: paper
 type: report
 title: Data Governance and Modern Computer Systems
-authors: Alistair R Beresford and Martin Kleppmann
+authors: Alastair R Beresford and Martin Kleppmann
 venue: British Academy and Royal Society workshop on the governance of data and its uses
 place: London, UK
 venue_url: https://royalsociety.org/topics-policy/projects/data-governance/
