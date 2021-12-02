@@ -12,6 +12,8 @@ video_url: https://www.youtube.com/watch?v=u4bJIdVwZCQ
 publisher_url: https://dl.acm.org/doi/abs/10.1145/3380787.3393683
 ---
 
+* [HTML version of article](https://www.inkandswitch.com/pushpin/)
+
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/u4bJIdVwZCQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Abstract

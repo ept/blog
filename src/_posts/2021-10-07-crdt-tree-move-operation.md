@@ -3,12 +3,14 @@ layout: paper
 type: journal
 title: A highly-available move operation for replicated trees
 authors: Martin Kleppmann, Dominic P. Mulligan, Victor B. F. Gomes, and Alastair R. Beresford
-venue: IEEE Transactions on Parallel and Distributed Systems
+venue: "IEEE Transactions on Parallel and Distributed Systems 33(7):1711–1724"
 doi: 10.1109/TPDS.2021.3118603
 paper_url: https://martin.kleppmann.com/papers/move-op.pdf
 publisher_url: https://ieeexplore.ieee.org/document/9563274
 ---
 
+* [GitHub repository](https://github.com/trvedata/move-op)
+* [Runnable code on Code Ocean](https://codeocean.com/capsule/7339128/tree)
 
 Abstract
 --------
