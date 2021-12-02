@@ -4,7 +4,11 @@ title: "Automerge: A New Foundation for Collaboration Software"
 venue: Computer Laboratory Systems Research Group Seminars
 place: Cambridge, UK
 venue_url: http://talks.cam.ac.uk/talk/index/163276
+video_url: https://www.youtube.com/watch?v=Qytg0Ibet2E
+slides_url: https://speakerdeck.com/ept/automerge-a-new-foundation-for-collaboration-software-693133ad-118f-42fe-bb31-5e34dfbc43b8
 ---
+
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/Qytg0Ibet2E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Abstract
 --------

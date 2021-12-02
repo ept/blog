@@ -4,10 +4,13 @@ title: Byzantine Eventual Consistency and the Fundamental Limits of Peer-to-Peer
 venue: Protocol Labs ConsensusDays
 place: Online
 venue_url: https://research.protocol.ai/sites/consensusday21/programme/
+video_url: https://www.youtube.com/watch?v=RhVQ2y8rwe0
 slides_url: https://speakerdeck.com/ept/byzantine-eventual-consistency-and-the-fundamental-limits-of-peer-to-peer-databases
 ---
 
 * [Paper on arXiv](https://arxiv.org/abs/2012.00472)
+
+<iframe width="550" height="315" src="https://www.youtube.com/embed/RhVQ2y8rwe0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Abstract
 --------
