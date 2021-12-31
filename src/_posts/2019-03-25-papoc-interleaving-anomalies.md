@@ -13,7 +13,8 @@ slides_url: https://speakerdeck.com/ept/interleaving-anomalies-in-collaborative-
 paper_url: /papers/interleaving-papoc19.pdf
 ---
 
-<script async class="speakerdeck-embed" data-id="d78a2f4c9a664f0f9ae7231c059d7fa7" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/d78a2f4c9a664f0f9ae7231c059d7fa7" title="Interleaving anomalies in collaborative text editors" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

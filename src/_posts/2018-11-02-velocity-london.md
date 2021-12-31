@@ -7,7 +7,8 @@ venue_url: https://conferences.oreilly.com/velocity/vl-eu/public/schedule/detail
 slides_url: https://speakerdeck.com/ept/what-changes-when-you-go-offline-first
 ---
 
-<script async class="speakerdeck-embed" data-id="15f6958506e84133b9ed2b89f54fa06b" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/15f6958506e84133b9ed2b89f54fa06b" title="What changes when you go offline-first?" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
 
 Abstract
 --------

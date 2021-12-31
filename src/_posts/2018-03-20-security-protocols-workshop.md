@@ -14,7 +14,8 @@ paper_url: /papers/secure-collaboration-spw18.pdf
 publisher_url: https://link.springer.com/chapter/10.1007/978-3-030-03251-7_21
 ---
 
-<script async class="speakerdeck-embed" data-id="04780a3879624d5cb46f59e45408ca87" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/04780a3879624d5cb46f59e45408ca87" title="From Secure Messaging to Secure Collaboration" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

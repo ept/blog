@@ -8,4 +8,4 @@ slides_url: https://speakerdeck.com/ept/rethinking-collaboration-software-like-g
 
 A pre-dinner lecture before the annual dinner of the [Cambridge Ring](https://www.cst.cam.ac.uk/ring).
 
-<script async class="speakerdeck-embed" data-id="6cb879ceb4f84fe9aa4d3788ca1ddd00" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/6cb879ceb4f84fe9aa4d3788ca1ddd00" title="Rethinking collaboration software: Like Google Docs, but without the Google" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>

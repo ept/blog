@@ -8,9 +8,10 @@ slides_url: https://speakerdeck.com/ept/event-sourcing-and-stream-processing-at-
 video_url: https://www.youtube.com/watch?v=avi-TZI9t2I
 ---
 
-<script async class="speakerdeck-embed" data-id="c4860907b26946ca8ef4e36575a7b71a" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/avi-TZI9t2I?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/c4860907b26946ca8ef4e36575a7b71a" title="Event Sourcing and Stream Processing at Scale" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
 
 Abstract
 --------

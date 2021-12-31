@@ -7,7 +7,8 @@ venue_url: https://craft-conf.com/speaker/MartinKleppmann
 slides_url: https://speakerdeck.com/ept/automerge-a-new-foundation-for-collaboration-software
 ---
 
-<script async class="speakerdeck-embed" data-id="6288c2fdb7674b13acc82291373f1491" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/6288c2fdb7674b13acc82291373f1491" title="Automerge: A new foundation for collaboration software" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

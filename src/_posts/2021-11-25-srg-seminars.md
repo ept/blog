@@ -10,6 +10,8 @@ slides_url: https://speakerdeck.com/ept/automerge-a-new-foundation-for-collabora
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/Qytg0Ibet2E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/ff039390c9604c2f87b6d3a4d10782d8" title="Automerge: a new foundation for collaboration software" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 Abstract
 --------
 

@@ -13,7 +13,8 @@ slides_url: https://speakerdeck.com/ept/crdts-the-hard-parts
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/x7drE24geUw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="71c432e2f3004c6e991bed35810cecfe" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/71c432e2f3004c6e991bed35810cecfe" title="CRDTs: The Hard Parts" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

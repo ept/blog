@@ -8,9 +8,9 @@ slides_url: https://speakerdeck.com/ept/transactions-myths-surprises-and-opportu
 video_url: https://www.youtube.com/watch?v=eo2EBdSbO10
 ---
 
-<script async class="speakerdeck-embed" data-id="0a5b3e46260542ff9e557458e33afd33" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/eo2EBdSbO10?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/0a5b3e46260542ff9e557458e33afd33" title="Transactions: Myths, Surprises and Opportunities" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
 This was a repeat of my
 [talk at Strange Loop 2015](/2015/09/26/transactions-at-strange-loop.html).

@@ -23,9 +23,9 @@ ACM Transactions on Computer Systems (TOCS), volume 12, number 2, pages 91–122
 [doi]: http://dx.doi.org/10.1145/176575.176576
 
 
-<script async class="speakerdeck-embed" data-id="b0a01598878f498d883ab560333bd1fe" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="550" height="309" src="https://www.youtube.com/embed/D5iCl12MuRw" frameborder="0" allowfullscreen></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b0a01598878f498d883ab560333bd1fe" title="Sequential Consistency versus Linearizability (Attiya and Welch)" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
 
 
 Abstract of my talk

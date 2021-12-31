@@ -11,7 +11,7 @@ slides_url: https://speakerdeck.com/ept/building-real-time-data-products-at-link
 
 <iframe width="550" height="315" src="//www.youtube.com/embed/yO3SBU6vVKA?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx" frameborder="0" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="76815b7051a50132a8285acd04932bc4" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/76815b7051a50132a8285acd04932bc4" title="Building real-time data products at LinkedIn with Apache Samza" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
 Apache Samza is a framework for processing high-volume real-time event streams. In this session we
 will walk through our experiences of putting Samza into production at LinkedIn, discuss how it

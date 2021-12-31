@@ -6,7 +6,8 @@ place: Kaiserslautern, Germany
 slides_url: https://speakerdeck.com/ept/adapting-secure-group-messaging-for-encrypted-crdts
 ---
 
-<script async class="speakerdeck-embed" data-id="b073059e8cba471293d33b2c453108cf" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b073059e8cba471293d33b2c453108cf" title="Adapting secure group messaging for encrypted CRDTs" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

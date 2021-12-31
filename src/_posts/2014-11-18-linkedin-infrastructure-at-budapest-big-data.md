@@ -7,7 +7,7 @@ venue_url: http://www.meetup.com/Big-Data-Meetup-Budapest/events/208253412/
 slides_url: https://speakerdeck.com/ept/linkedins-data-infrastructure-an-overview
 ---
 
-<script async class="speakerdeck-embed" data-id="4a4a921051710132c0b8727e7cfee038" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/4a4a921051710132c0b8727e7cfee038" title="LinkedIn's data infrastructure: an overview" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
 LinkedIn, with over 300 million members, has surmounted some interesting scalability challenges.
 Many core components of LinkedIn's data infrastructure are open source, so you can benefit from them

@@ -9,9 +9,9 @@ slides_url: https://speakerdeck.com/ept/scalable-stream-processing-with-apache-k
 video_url: https://www.youtube.com/watch?v=uRmYJGRPfKU
 ---
 
-<script async class="speakerdeck-embed" data-id="861136005156013261a506fa84ad753a" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/uRmYJGRPfKU?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/861136005156013261a506fa84ad753a" title="Scalable stream processing with Apache Kafka and Apache Samza" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 395px;" data-ratio="1.4177215189873418"></iframe>
 
 
 Abstract

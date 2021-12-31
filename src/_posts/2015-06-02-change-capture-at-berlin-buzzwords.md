@@ -11,7 +11,8 @@ video_url: https://www.youtube.com/watch?v=ZAZJqEKUl3U&list=PLeKd45zvjcDHJxge6Vt
 
 <iframe width="550" height="315" src="https://www.youtube.com/embed/ZAZJqEKUl3U?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx" frameborder="0" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="60f12a1eb231470a898a66d58f13536c" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/60f12a1eb231470a898a66d58f13536c" title="Change Data Capture: The Magic Wand We Forgot" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
 
 Links
 -----

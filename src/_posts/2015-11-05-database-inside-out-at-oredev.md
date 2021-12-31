@@ -9,9 +9,9 @@ slides_url: https://speakerdeck.com/ept/turning-the-database-inside-out-with-apa
 video_url: https://vimeo.com/144819293
 ---
 
-<script async class="speakerdeck-embed" data-id="bee4676021bf0132b11b1a9c43b4c166" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe src="https://player.vimeo.com/video/144863186" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/bee4676021bf0132b11b1a9c43b4c166" title="Turning the database inside out with Apache Samza" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 395px;" data-ratio="1.4177215189873418"></iframe>
 
 This was a repeat of my
 [talk at Strange Loop 2014](/2014/09/18/turning-database-inside-out-at-strange-loop.html).

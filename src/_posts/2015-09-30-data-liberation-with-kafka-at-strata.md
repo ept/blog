@@ -8,9 +8,9 @@ slides_url: https://speakerdeck.com/ept/data-liberation-and-data-integration-wit
 video_url: https://www.youtube.com/watch?v=GfJZ7duV_MM
 ---
 
-<script async class="speakerdeck-embed" data-id="e44d9f8df3284f7ca9deea573cb35f6f" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/GfJZ7duV_MM?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/e44d9f8df3284f7ca9deea573cb35f6f" title="Data liberation and data integration with Kafka" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
 
 Abstract

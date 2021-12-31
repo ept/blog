@@ -13,7 +13,8 @@ slides_url: https://speakerdeck.com/ept/correctness-proofs-of-distributed-system
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/NfdP6wwjsGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="e1beafadaa61453dbe5b93d41ce55c18" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/e1beafadaa61453dbe5b93d41ce55c18" title="Correctness proofs of distributed systems with Isabelle" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
 
 Abstract
 --------

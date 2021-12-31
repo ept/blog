@@ -9,7 +9,8 @@ slides_url: https://speakerdeck.com/ept/making-sense-of-stream-processing
 lanyrd_url: http://lanyrd.com/2015/devwinter/
 ---
 
-<script async class="speakerdeck-embed" data-id="26b1a1d085770132e01b0af595ac559a" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/26b1a1d085770132e01b0af595ac559a" title="Making sense of stream processing" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 395px;" data-ratio="1.4177215189873418"></iframe>
+
 
 Abstract
 --------

@@ -10,7 +10,8 @@ slides_url: https://speakerdeck.com/ept/syncing-data-across-user-devices-for-dis
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/j6KAYfP_iME" frameborder="0" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="4e8242c59c7541e1b8b9be59e093ab2f" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/4e8242c59c7541e1b8b9be59e093ab2f" title="Syncing data across user devices for distributed collaboration" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
 
 Abstract
 --------

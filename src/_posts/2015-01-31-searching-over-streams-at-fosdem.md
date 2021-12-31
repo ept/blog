@@ -9,7 +9,7 @@ slides_url: https://speakerdeck.com/ept/searching-over-streams-with-luwak-and-sa
 lanyrd_url: http://lanyrd.com/2015/fosdem/
 ---
 
-<script async class="speakerdeck-embed" data-id="1d93ecca5c324f3ba48c3b159628debe" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/1d93ecca5c324f3ba48c3b159628debe" title="Searching over streams with Luwak and Samza" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
 
 Co-presented with [Alan Woodward](https://twitter.com/romseygeek).
 

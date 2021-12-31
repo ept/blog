@@ -11,7 +11,8 @@ transcript_url: http://hubs.ly/H0125_b0
 
 <iframe width="550" height="309" src="https://www.youtube.com/embed/Gqdr0DiNh5g?list=PL5OOLwV_m9vaKzwGX7lM8oVT3aFw_CN5O" frameborder="0" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="98f3dbb96b9640c28c82fbd2355cc1db" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/98f3dbb96b9640c28c82fbd2355cc1db" title="Kafka, Samza, and the Unix philosophy of distributed data" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

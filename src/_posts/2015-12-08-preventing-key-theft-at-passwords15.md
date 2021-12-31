@@ -13,9 +13,10 @@ slides_url: https://speakerdeck.com/ept/strengthening-public-key-authentication-
 video_url: https://www.youtube.com/watch?v=8aENZMoiRZg&index=22&list=PLdIqs92nsIzQvvbTiWLLjZOVE7jPBDomw
 ---
 
-<script async class="speakerdeck-embed" data-id="2e56aa7d1efa466fb4893ea18b2ed6ca" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="550" height="309" src="https://www.youtube-nocookie.com/embed/8aENZMoiRZg?list=PLdIqs92nsIzQvvbTiWLLjZOVE7jPBDomw" frameborder="0" allowfullscreen></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/2e56aa7d1efa466fb4893ea18b2ed6ca" title="Strengthening public key authentication against key theft" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
 
 Abstract
 --------

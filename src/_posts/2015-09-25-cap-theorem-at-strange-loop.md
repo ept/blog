@@ -7,7 +7,7 @@ venue_url: https://github.com/strangeloop/StrangeLoop2015/wiki/Unsessions#cap
 slides_url: https://speakerdeck.com/ept/a-critique-of-the-cap-theorem
 ---
 
-<script async class="speakerdeck-embed" data-id="b9da18d42bf240cba5891d963956b950" data-ratio="1.41436464088398" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b9da18d42bf240cba5891d963956b950" title="A critique of the CAP Theorem" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 395px;" data-ratio="1.4177215189873418"></iframe>
 
 Abstract
 --------

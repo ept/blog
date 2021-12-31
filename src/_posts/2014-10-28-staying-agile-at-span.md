@@ -11,7 +11,7 @@ slides_url: https://speakerdeck.com/ept/staying-agile-in-the-face-of-the-data-de
 
 <iframe width="550" height="315" src="//www.youtube.com/embed/b_H4FFE3wP0" frameborder="0" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="c3b3b35040e3013242cb36dddb3f194a" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/c3b3b35040e3013242cb36dddb3f194a" title="Staying agile in the face of the data deluge" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
 As our applications need to process ever more data in ever shorter time, it's difficult to stay
 sane. The architecture of our applications quickly becomes a monstrosity of different databases,

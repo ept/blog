@@ -10,7 +10,8 @@ slides_url: https://speakerdeck.com/ept/data-structures-as-queries-expressing-cr
 I participated in [Dagstuhl Seminar 18091:
 *Data Consistency in Distributed Systems: Algorithms, Programs, and Databases.*](http://www.dagstuhl.de/18091)
 
-<script async class="speakerdeck-embed" data-id="f45f22e4fb1d4726b408a516cb11f2a8" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/f45f22e4fb1d4726b408a516cb11f2a8" title="Data structures as queries: Expressing CRDTs using Datalog" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

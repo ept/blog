@@ -8,9 +8,10 @@ slides_url: https://speakerdeck.com/ept/patterns-for-real-time-stream-processing
 video_url: http://www.ustream.tv/recorded/76606401
 ---
 
-<script async class="speakerdeck-embed" data-id="74f7bbd817ec4001b9c4c4e92deaef4f" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="480" height="270" src="http://www.ustream.tv/embed/recorded/76606401?html5ui" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0" style="border: 0 none transparent;"></iframe>
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/74f7bbd817ec4001b9c4c4e92deaef4f" title="Patterns for real-time stream processing" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
 
 Abstract
 --------

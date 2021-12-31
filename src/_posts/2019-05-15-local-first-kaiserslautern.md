@@ -8,7 +8,8 @@ slides_url: https://speakerdeck.com/ept/local-first-software-returning-data-owne
 
 * [Article](https://www.inkandswitch.com/local-first.html)
 
-<script async class="speakerdeck-embed" data-id="381b8e1dc145434ba504128cc3270ce2" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/381b8e1dc145434ba504128cc3270ce2" title="Local-first software: Returning data ownership to users" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------

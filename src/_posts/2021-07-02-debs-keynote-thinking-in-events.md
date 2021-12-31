@@ -16,7 +16,8 @@ hackernews: https://news.ycombinator.com/item?id=27824509
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/72W_VvFRqc0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<script async class="speakerdeck-embed" data-id="1b87c307b5904b9aa366de4186ebe8d4" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/1b87c307b5904b9aa366de4186ebe8d4" title="Thinking in Events: From Databases to Distributed Collaboration Software" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 
 Abstract
 --------
