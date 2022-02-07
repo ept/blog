@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Mon, 03 Jan 2022 14:55:28 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 07 Feb 2022 11:36:00 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -905,6 +905,10 @@ explores community-run moderation. He is also working on
 for news aggregators.</li>
   <li>Twitter is trialling <a href="https://blog.twitter.com/en_us/topics/product/2021/introducing-birdwatch-a-community-based-approach-to-misinformation.html">Birdwatch</a>,
 a crowdsourced effort to tackle misinformation.</li>
+  <li><a href="https://blog.coinbase.com/coinbases-philosophy-on-account-removal-and-content-moderation-c80d1aa452b7">Coinbase’s approach</a>
+is to ban only content that is illegal in jurisdictions where they operate, or content that is
+<a href="https://en.wikipedia.org/wiki/United_States_free_speech_exceptions">not considered protected speech</a>
+under the U.S. First Amendment.</li>
 </ul>
 
                 ]]></content:encoded>
