@@ -263,3 +263,7 @@ have not vetted them, so don't take this as an endorsement.
   for news aggregators.
 * Twitter is trialling [Birdwatch](https://blog.twitter.com/en_us/topics/product/2021/introducing-birdwatch-a-community-based-approach-to-misinformation.html),
   a crowdsourced effort to tackle misinformation.
+* [Coinbase's approach](https://blog.coinbase.com/coinbases-philosophy-on-account-removal-and-content-moderation-c80d1aa452b7)
+  is to ban only content that is illegal in jurisdictions where they operate, or content that is
+  [not considered protected speech](https://en.wikipedia.org/wiki/United_States_free_speech_exceptions)
+  under the U.S. First Amendment.
