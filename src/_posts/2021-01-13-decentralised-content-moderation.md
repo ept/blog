@@ -229,6 +229,9 @@ have not vetted them, so don't take this as an endorsement.
   technologies by extremists.
 * [Amy X. Zhang](https://homes.cs.washington.edu/~axz/publications.html) and her collaborators have
   done a lot of research on moderation.
+* [Evelyn Douek argues](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4005326) that it's not sufficient to
+  view content moderation as lots of individual decisions on individual pieces of content, but that accountability
+  requires a new form of institution that provides a dynamic, continuous governance structure.
 * [Jay Graber](https://twitter.com/arcalinea) recently published a comprehensive
   [report comparing decentralised social protocols](https://twitter.com/arcalinea/status/1352316972654944257), and a
   [blog post](https://jaygraber.medium.com/designing-decentralized-moderation-a76430a8eab)
@@ -239,6 +242,9 @@ have not vetted them, so don't take this as an endorsement.
 * A few [people](https://twitter.com/xmal/status/1349413781953273857)
   [mentioned](https://twitter.com/weschow/status/1349417270179737604) Slashdot, Reddit, and Stack Overflow
   as successful examples of community-run moderation.
+* On the other hand, J. Nathan Matias [is skeptical](https://twitter.com/natematias/status/1496318787712344067)
+  that volunteers will be able to handle the challenges of content moderation at scale, since Facebook reportedly
+  spends $500m a year on it.
 * [Trustnet](https://cblgh.org/articles/trustnet.html) is a way of computing numerical scores for
   the degree of trust in indvidual users, based on the social graph.
 * [Matrix](https://matrix.org/), a federated messaging system, is
@@ -247,6 +253,7 @@ have not vetted them, so don't take this as an endorsement.
 * [Freenet](https://freenetproject.org/) has a web-of-trust-based, decentralised
   [user reputation system](https://www.draketo.de/english/freenet/friendly-communication-with-anonymity)
   (see also this [Bachelor's thesis](https://github.com/xor-freenet/plugin-WebOfTrust/blob/master/developer-documentation/core-developers-manual/OadSFfF-version1.2-non-print-edition.pdf)).
+* [Waivlength](https://www.waivlength.io/) is exploring a [governance approach inspired by jury duty](https://waivlengthdev.medium.com/jury-duty-a-decentralised-moderation-model-for-governing-a-social-media-platform-b675b558dd6d).
 * [Freechains](https://github.com/Freechains/README) is a peer-to-peer content distribution
   protocol with an embedded user reputation system.
 * [Songbird](https://github.com/Murmuration-Labs/songbird-decentralized-moderation) is a sketch of a
