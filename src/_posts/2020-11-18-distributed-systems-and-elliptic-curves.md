@@ -20,15 +20,15 @@ I decided to make all of this available publicly under a [creative commons CC BY
 
 The result is here:
 
-* [Lecture notes (PDF)](https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-notes.pdf) (including exercises)
-* Slides: [slideshow](https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-slides.pdf) and [printable](https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-handout.pdf) (PDF)
+* [Lecture notes (PDF)](https://www.cl.cam.ac.uk/teaching/2122/ConcDisSys/dist-sys-notes.pdf) (including exercises)
+* Slides: [slideshow](https://www.cl.cam.ac.uk/teaching/2122/ConcDisSys/dist-sys-slides.pdf) and [printable](https://www.cl.cam.ac.uk/teaching/2122/ConcDisSys/dist-sys-handout.pdf) (PDF)
 * [Lecture videos (YouTube)](https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB)
-* [Course web page](https://www.cst.cam.ac.uk/teaching/2021/ConcDisSys)
+* [Course web page](https://www.cl.cam.ac.uk/teaching/2122/ConcDisSys/)
 * Solution notes for the exercises are available on demand ([email me](/contact.html) and convince me that you're not a student trying to cheat).
-  Cambridge supervisors can [download the solution notes directly](https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/supervisors/dist-sys-solutions.pdf) (Raven login required).
+  Cambridge supervisors can [download the solution notes directly](https://www.cl.cam.ac.uk/teaching/2122/ConcDisSys/supervisors/dist-sys-solutions.pdf) (Raven login required).
 
 The course is primarily designed for Cambridge undergraduate students, and it includes some cross-references to other courses.
-Many other courses also make their notes or slides publicly available, so you can still look them up if you're not at Cambridge by going to the [course web pages](https://www.cl.cam.ac.uk/teaching/2021/part1b-75.html).
+Many other courses also make their notes or slides publicly available, so you can still look them up if you're not at Cambridge by going to the [course web pages](https://www.cl.cam.ac.uk/teaching/2122/part1b.html).
 (Many lecturers restrict their video recordings to Cambridge users only, so those might not be publicly available.)
 
 The distributed systems course comprises about 7 hours of video and 87 pages of lecture notes.
