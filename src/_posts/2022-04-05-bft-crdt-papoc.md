@@ -9,8 +9,10 @@ place: Rennes, France
 doi: 10.1145/3517209.3524042
 venue_url: https://papoc-workshop.github.io/2022/
 paper_url: /papers/bft-crdt-papoc22.pdf
+slides_url: https://speakerdeck.com/ept/making-crdts-byzantine-fault-tolerant
 ---
 
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/392910792df1434a8fcb7d00a3c19792" title="Making CRDTs Byzantine fault tolerant" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
 
 Abstract
 --------
