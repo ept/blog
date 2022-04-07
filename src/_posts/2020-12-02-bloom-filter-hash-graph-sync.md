@@ -1,6 +1,7 @@
 ---
 layout: ync-post
 title: Using Bloom filters to efficiently synchronise hash graphs
+highlight: true
 hackernews: https://news.ycombinator.com/item?id=25278128
 ---
 
