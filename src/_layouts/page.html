@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Martin Kleppmann&rsquo;s website</title>
+    <title>{{ page.title }} &mdash; Martin Kleppmann&rsquo;s website</title>
     {% include headers.html %}
 </head>
 
@@ -12,13 +12,14 @@
 
         <div class="wrapper">
             <div id="content">
+                <h1>{{ page.title }}</h1>
+
                 {{ content }}
             </div>
 
             <div id="sidebar">
-                <p style="text-align: center"><img src="images/martin-kleppmann.jpg" width="300" height ="422"></p>
-
                 {% include sidebar_top.html %}
+                {% include sidebar_index.html %}
             </div>
         </div>
 

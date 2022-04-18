@@ -1,5 +1,5 @@
 ---
-layout: ync-post
+layout: page
 title: Projects
 ---
 
