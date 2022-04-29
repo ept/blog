@@ -239,7 +239,7 @@ writes (R+W&gt;N), and you have a network partition, clients on the minority sid
 cannot reach a quorum, so quorum operations are not CAP-available (at least temporarily, until the
 database sets up additional replicas on the minority side).
 
-You sometimes see people people claiming that quorum reads and writes guarantee linearizability, but
+You sometimes see people claiming that quorum reads and writes guarantee linearizability, but
 I think it would be unwise to rely on it -- subtle combinations of features such as sloppy quorums
 and read repair can lead to [tricky edge cases][riak-params] in which deleted data is resurrected,
 or the number of replicas of a value falls below the original W (violating the quorum condition), or
