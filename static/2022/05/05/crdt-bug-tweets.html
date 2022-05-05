@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Simulation of colliding constrained rigid bodies &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Assessing the understandability of a distributed algorithm by tweeting buggy pseudocode &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -18,12 +18,12 @@
 
 
     <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
-    <meta name="citation_title" content="Simulation of colliding constrained rigid bodies" /> 
-    <meta name="citation_publication_date" content="2007-04-01" /> 
+    <meta name="citation_title" content="Assessing the understandability of a distributed algorithm by tweeting buggy pseudocode" /> 
+    <meta name="citation_publication_date" content="2022-05-05" /> 
     <meta name="citation_authors" content="Martin Kleppmann" /> 
-    <meta name="citation_pdf_url" content="http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html" /> 
+    <meta name="citation_pdf_url" content="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-969.html" /> 
     
-    <meta name="citation_doi" content="10.48456/tr-683" /> 
+    <meta name="citation_doi" content="10.48456/tr-969" /> 
     
 </head>
 
@@ -57,67 +57,47 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Simulation of colliding constrained rigid bodies"
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Assessing the understandability of a distributed algorithm by tweeting buggy pseudocode"
                     data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
 
-                <h1>Simulation of colliding constrained rigid bodies</h1>
+                <h1>Assessing the understandability of a distributed algorithm by tweeting buggy pseudocode</h1>
 
                 <p>Martin Kleppmann</p>
 
                 <p>
                   
-                    University of Cambridge, Computer Laboratory, Tech Report UCAM-CL-TR-683,
+                    University of Cambridge, Department of Computer Science and Technology, Technical Report UCAM-CL-TR-969,
                   
                   
-                  April 2007.
+                  May 2022.
                 </p>
 
-                
-                  <p>This paper received a <strong>Prize for best undergraduate dissertation</strong>.</p>
                 
 
                 <ul>
                   
-                    <li><a href="http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html">Paper (open access)</a></li>
+                    <li><a href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-969.html">Paper (open access)</a></li>
                   
                   
                   
-                    <li><a href="https://doi.org/10.48456/tr-683">doi:10.48456/tr-683</a></li>
+                    <li><a href="https://doi.org/10.48456/tr-969">doi:10.48456/tr-969</a></li>
                   
                   
                   
-                  
-                    <li><a href="https://www.youtube.com/watch?v=WJLJlTx0M0E">Video</a></li>
                   
                   
                   
                 </ul>
 
-                <p>This technical report is based on the dissertation for my final-year undergraduate project at
-university. The dissertation was marked as the best dissertation in its year and was awarded the
-AT&amp;T prize. The code relating to the project is <a href="https://github.com/ept/maniation">available on Github</a>,
-and a video of simulations produced in this project is
-<a href="https://www.youtube.com/watch?v=WJLJlTx0M0E">available on YouTube</a>.</p>
+                <h2 id="abstract">Abstract</h2>
 
-<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/WJLJlTx0M0E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-<h2 id="abstract">Abstract</h2>
-
-<p>I describe the development of a program to simulate the dynamic behaviour of interacting rigid
-bodies. Such a simulation may be used to generate animations of articulated characters in 3D
-graphics applications. Bodies may have an arbitrary shape, defined by a triangle mesh, and may be
-connected with a variety of different joints. Joints are represented by constraint functions which
-are solved at run-time using Lagrange multipliers. The simulation performs collision detection and
-prevents penetration of rigid bodies by applying impulses to colliding bodies and reaction forces to
-bodies in resting contact.</p>
-
-<p>The simulation is shown to be physically accurate and is tested on several different scenes,
-including one of an articulated human character falling down a flight of stairs.</p>
-
-<p>An appendix describes how to derive arbitrary constraint functions for the Lagrange multiplier
-method. Collisions and joints are both represented as constraints, which allows them to be handled
-with a unified algorithm. The report also includes some results relating to the use of quaternions
-in dynamic simulations.</p>
+<p>Designing algorithms for distributed systems has a reputation of being a difficult and error-prone
+task, but this difficulty is rarely measured or quantified in any way. This report tells the story
+of one informal experiment, in which users on Twitter were invited to identify the bug in an
+incorrect CRDT algorithm. Over the following 11 hours, at least 16 people (many of whom are
+professional software engineers) made attempts to find the bug, but most were unsuccessful. The two
+people who did identify the bug were both PhD students specialising in CRDTs. This result may serve
+as evidence of the difficulty of designing correct CRDT algorithms.</p>
 
             </div>
 
