@@ -6,6 +6,7 @@ authors: Martin Kleppmann
 venue: University of Cambridge, Computer Laboratory, Tech Report UCAM-CL-TR-683
 paper_url: http://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-683.html
 video_url: https://www.youtube.com/watch?v=WJLJlTx0M0E
+doi: 10.48456/tr-683
 award: Prize for best undergraduate dissertation
 ---
 
