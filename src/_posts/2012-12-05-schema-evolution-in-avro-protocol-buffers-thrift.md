@@ -279,4 +279,5 @@ style that gives you an entire integrated RPC framework and many choices (with
 Buffers and Avro appear to follow much more of a
 ["do one thing and do it well"](http://www.faqs.org/docs/artu/ch01s06.html) style.
 
-*This post has been translated into [Korean](http://www.sjava.net/319) by Justin Song.*
+*This post has been translated into [Korean](http://www.sjava.net/319) by Justin Song, and into
+[Chinese](https://www.diguage.com/post/schema-evolution-in-avro-protobuf-thrift/) by 李君.*
