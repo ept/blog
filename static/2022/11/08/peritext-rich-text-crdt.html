@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Peritext: A CRDT for Collaborative Rich Text Editing &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?5" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+
+    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
+    <meta name="citation_title" content="Peritext: A CRDT for Collaborative Rich Text Editing" /> 
+    <meta name="citation_publication_date" content="2022-11-08" /> 
+    <meta name="citation_authors" content="Geoffrey Litt, Sarah Lim, Martin Kleppmann, and Peter van Hardenberg" /> 
+    <meta name="citation_pdf_url" content="https://www.inkandswitch.com/peritext/static/cscw-publication.pdf" /> 
+    
+    <meta name="citation_doi" content="10.1145/3555644" /> 
+    
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+                <li class="page_item"><a href="/supporters.html" title="Supporters">Supporters</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Peritext: A CRDT for Collaborative Rich Text Editing"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Peritext: A CRDT for Collaborative Rich Text Editing</h1>
+
+                <p>Geoffrey Litt, Sarah Lim, Martin Kleppmann, and Peter van Hardenberg</p>
+
+                <p>
+                  
+                    Proceedings of the ACM on Human-Computer Interaction (PACMHCI), Volume 6, Issue CSCW2, Article 531,
+                  
+                  
+                  November 2022.
+                </p>
+
+                
+
+                <ul>
+                  
+                    <li><a href="https://www.inkandswitch.com/peritext/static/cscw-publication.pdf">Paper (open access)</a></li>
+                  
+                  
+                  
+                    <li><a href="https://doi.org/10.1145/3555644">doi:10.1145/3555644</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                </ul>
+
+                <ul>
+  <li><a href="https://www.inkandswitch.com/peritext/">Earlier version of this paper as web essay</a></li>
+  <li><a href="https://github.com/inkandswitch/peritext">GitHub repository</a></li>
+</ul>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Conflict-Free Replicated Data Types (CRDTs) support decentralized collaborative editing of shared
+data, enabling peer-to-peer sharing and flexible branching and merging workflows. While there is
+extensive work on CRDTs for plain text, much less is known about CRDTs for rich text with
+formatting. No algorithms have been published, and existing open-source implementations do not
+always preserve user intent.</p>
+
+<p>In this paper, we describe a model of intent preservation in rich text editing, developed through
+a series of concurrent editing scenarios. We then describe Peritext, a CRDT algorithm for rich text
+that satisfies the criteria of our model. The key idea is to store formatting spans alongside the
+plaintext character sequence, linked to a stable identifier for the first and last character of each
+span, and then to derive the final formatted text from these spans in a deterministic way that
+ensures concurrent operations commute.</p>
+
+<p>We have prototyped our algorithm in TypeScript, validated it using randomized property-based
+testing, and integrated it with an editor UI. We also prove that our algorithm ensures convergence,
+and demonstrate its causality preservation and intention preservation properties.</p>
+
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div class="mailing-list-signup">
+        <p>
+            To find out when I write something new, sign up to receive an
+            <a href="https://martinkl.substack.com/">email notification</a>,
+            <a href="https://twitter.com/martinkl">follow me on Twitter</a>, or subscribe to the
+            <a href="http://feeds.feedburner.com/martinkl">RSS feed</a>.
+        </p>
+
+        <p class="disclaimer">
+            I won't give your email address to anyone else, won't send you any spam,
+            and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>, has received
+        <a href="https://www.goodreads.com/book/show/23466395-designing-data-intensive-applications">thousands</a>
+        of five-star reviews.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div class="widget">
+        <p>If you find my work useful, please
+        <a href="https://www.patreon.com/martinkl">support me on Patreon</a>.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>03 Jan 2022: <a href="/2022/01/03/future-of-fusion-energy.html">Book Review: The Future of Fusion Energy</a></li>
+            
+              <li>01 Sep 2021: <a href="/2021/09/01/podcast-interviews.html">Several podcast interviews</a></li>
+            
+              <li>14 Apr 2021: <a href="/2021/04/14/goodbye-gpl.html">It's time to say goodbye to the GPL</a></li>
+            
+              <li>23 Feb 2021: <a href="/2021/02/23/patreon.html">Building the future of computing, with your help</a></li>
+            
+              <li>13 Jan 2021: <a href="/2021/01/13/decentralised-content-moderation.html">Decentralised content moderation</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2022/04/29/hytradboi.html">29 Apr 2022 at Have You Tried Rubbing A Database On It? (HYTRADBOI)</a></li>
+            
+              <li><a href="/2022/04/05/bft-crdt-papoc.html">05 Apr 2022 at 9th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a></li>
+            
+              <li><a href="/2022/03/28/rainbowfs-workshop.html">28 Mar 2022 at RainbowFS final workshop</a></li>
+            
+              <li><a href="/2021/12/07/dicg-workshop.html">07 Dec 2021 at 2nd International Workshop on Distributed Infrastructure for Common Good (DICG)</a></li>
+            
+              <li><a href="/2021/11/25/srg-seminars.html">25 Nov 2021 at Computer Laboratory Systems Research Group Seminars</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

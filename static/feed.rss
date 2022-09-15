@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Thu, 05 May 2022 14:33:41 BST</lastBuildDate>
+        <lastBuildDate>Thu, 15 Sep 2022 12:52:02 CEST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -69,7 +69,7 @@
                 <description><![CDATA[ I regularly get asked to give interviews on the topics that I work on, especially for podcasts. To make them easier to find for anybody who’s interested, I thought I would make a list. They touch on a range of different topics, although there is also some overlap so I... ]]></description>
                 <content:encoded><![CDATA[
                     <!--
-Also got asked to go on https://podcast.sustainoss.org/ and https://nurkiewicz.com/
+Also got asked to go on https://podcast.sustainoss.org/
 and https://www.dataengineeringpodcast.com/
 -->
 
@@ -178,6 +178,13 @@ Recorded and published 27 October 2017.
 change data capture. Recorded 24 April 2015, published 28 June 2015.
 <a href="https://www.infoq.com/interviews/kleppmann-data-infrastructure-logs-crdt/">Video and transcript</a>.</p>
   </li>
+</ul>
+
+<p><strong>Update — later additions:</strong></p>
+
+<ul>
+  <li><a href="https://nurkiewicz.com/70">Short 4-minute episode on CRDTs</a> (April 2022)</li>
+  <li><a href="https://www.youtube.com/watch?v=sMRpv0fBJLU">Interview with Russian reading group {между скобок} or {between brackets}</a> (July 2022)</li>
 </ul>
 
                 ]]></content:encoded>
