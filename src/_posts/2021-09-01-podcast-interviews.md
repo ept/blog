@@ -4,7 +4,7 @@ title: Several podcast interviews
 ---
 
 <!--
-Also got asked to go on https://podcast.sustainoss.org/ and https://nurkiewicz.com/
+Also got asked to go on https://podcast.sustainoss.org/
 and https://www.dataengineeringpodcast.com/
 -->
 
@@ -98,3 +98,8 @@ Here's a list of interviews I've given as of September 2021:
 * Interview with [InfoQ](https://www.infoq.com/) about log-based messaging, stream processing, and
   change data capture. Recorded 24 April 2015, published 28 June 2015.
   [Video and transcript](https://www.infoq.com/interviews/kleppmann-data-infrastructure-logs-crdt/).
+
+**Update — later additions:**
+
+* [Short 4-minute episode on CRDTs](https://nurkiewicz.com/70) (April 2022)
+* [Interview with Russian reading group {между скобок} or {between brackets}](https://www.youtube.com/watch?v=sMRpv0fBJLU) (July 2022)
