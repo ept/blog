@@ -10,12 +10,148 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Tue, 04 Oct 2022 14:52:10 CEST</lastBuildDate>
+        <lastBuildDate>Wed, 12 Oct 2022 14:37:11 CEST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Verifying distributed systems with Isabelle/HOL</title>
+                <link>http://martin.kleppmann.com/2022/10/12/verifying-distributed-systems-isabelle.html</link>
+                <comments>http://martin.kleppmann.com/2022/10/12/verifying-distributed-systems-isabelle.html#disqus_thread</comments>
+                <pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2022/10/12/verifying-distributed-systems-isabelle.html</guid>
+                
+                <description><![CDATA[ This post also appears on Larry Paulson’s blog. We use distributed systems every day in the form of internet services. These systems are very useful, but also challenging to implement because networks are unpredictable. Whenever you send a message over the network, it is likely to arrive quite quickly, but... ]]></description>
+                <content:encoded><![CDATA[
+                    <p><em>This post also appears on <a href="https://lawrencecpaulson.github.io/2022/10/12/verifying-distributed-systems-isabelle.html">Larry Paulson’s blog</a>.</em></p>
+
+<p>We use distributed systems every day in the form of internet services. These systems are very useful, but also challenging to implement because networks are unpredictable. Whenever you send a message over the network, it is likely to arrive quite quickly, but it’s possible that it might be delayed for a long time, or never arrive, or arrive several times.</p>
+
+<p>When you send a request to another process and don’t receive a response, you have no idea what happened: was the request lost, or has the other process crashed, or was the response lost? Or maybe nothing was lost at all, but a message has simply been delayed and may yet arrive. There is no way of knowing what happened, because unreliable message-passing is the only way how processes can communicate.</p>
+
+<p>Distributed algorithms work with this model of unreliable communication and build stronger guarantees on top of it. Examples of such stronger guarantees include database transactions and replication (maintaining copies of some data on multiple machines so that the data is not lost if one machine fails).</p>
+
+<p>Unfortunately, distributed algorithms are notoriously difficult to reason about, because they must uphold their guarantees regardless of the order in which messages are delivered, and even when some messages are lost or some processes crash. Many algorithms are very subtle, and informal reasoning is not sufficient for ensuring that they are correct. Moreover, the number of possible permutations and interleavings of concurrent activities quickly becomes too great for model-checkers to test exhaustively. For this reason, formal proofs of correctness are valuable for distributed algorithms.</p>
+
+<h2 id="modelling-a-distributed-system-in-isabellehol">Modelling a distributed system in Isabelle/HOL</h2>
+
+<p>In this blog post we will explore how to use the Isabelle/HOL proof assistant to formally verify a number of distributed algorithms. Isabelle/HOL does not have any built-in support for distributed computing, but fortunately it is quite straightforward to model a distributed system using structures that Isabelle/HOL provides: functions, lists, and sets.</p>
+
+<p>First, we asssume each process (or <em>node</em>) in the system has a unique identifier, which could simply be an integer or a string. Depending on the algorithm, the set of process IDs in the system may be fixed and known, or unknown and unbounded (the latter is appropriate for systems where processes can join and leave over time).</p>
+
+<p>The execution of the algorithm then proceeds in discrete time steps. In each time step, an event occurs at one of the processes, and this event could be one of three things: receiving a message sent by another process, receiving user input, or the elapsing of a timeout.</p>
+
+<figure class="highlight"><pre><code class="language-ml" data-lang="ml"><span class="kr">datatype</span> <span class="p">(</span><span class="nd">'proc</span><span class="p">,</span> <span class="nd">'msg</span><span class="p">,</span> <span class="nd">'val</span><span class="p">)</span> <span class="kt">event</span>
+  <span class="p">=</span> <span class="nc">Receive</span> <span class="p">(</span><span class="n">msg_sender</span><span class="p">:</span> <span class="nd">'proc</span><span class="p">)</span> <span class="p">(</span><span class="n">recv_msg</span><span class="p">:</span> <span class="nd">'msg</span><span class="p">)</span>
+  <span class="p">|</span> <span class="nc">Request</span> <span class="nd">'val</span>
+  <span class="p">|</span> <span class="nc">Timeout</span></code></pre></figure>
+
+<p>Triggered by one of these events, the process executes a function that may update its own state, and may send messages to other processes. A message sent in one time step may be received at any future time step, or may never be received at all.</p>
+
+<p>Each process has a local state that is not shared with any other process. This state has a fixed initial value at the beginning of the execution, and is updated only when that process executes a step. One process cannot read the state of another process, but we can describe the state of the entire system as the collection of all the processes’ individual states:</p>
+
+<p><img src="/2022/10/time-steps.png" width="550" height="275" alt="Illustration of several processes executing steps, one at a time" /></p>
+
+<h2 id="why-a-linear-sequence-of-time-steps-is-sufficient">Why a linear sequence of time steps is sufficient</h2>
+
+<p>Even though in reality processes may run in parallel, we do not need to model this parallelism since the only communication between processes is by sending and receiving messages, and we can assume that a process finishes processing one event before starting to process the next event. Every parallel execution is therefore equivalent to some linear sequence of execution steps. Other formalisations of distributed systems, such as the <a href="https://lamport.azurewebsites.net/tla/tla.html">TLA+ language</a>, also use such a linear sequence of steps.</p>
+
+<p>We do not make any assumptions about which time step is executed by which process. It is possible that the processes fairly take turns to run, but it is equally possible for one process to execute a million steps while another process does nothing at all. By avoiding assumptions about process activity we ensure that the algorithm works correctly regardless of the timing in the system. For example, a process that is temporarily disconnected from the network is modelled simply by a process that does not experience any receive-message events, even while the other processes continue sending and receiving messages.</p>
+
+<p>In this model, a process crash is represented simply by a process that executes no more steps after some point in time; there is no need for a crash to be explicitly represented. If we want to allow processes to recover from a crash, we can add a fourth type of event that models a process restarting after a crash. When executing such a crash-recovery event, a process deletes any parts of its local state that are stored in volatile memory, but preserves those parts of its state that are in stable storage (on disk) and hence survive the crash.</p>
+
+<p>When reasoning about safety properties of algorithms, it is best not to assume anything about which process executes in which time step, since that ensures the algorithm can tolerate arbitrary message delays. If we wanted to reason about liveness (for example, that an algorithm eventually terminates), we would have to make some fairness assumptions, e.g. that every non-crashed process eventually executes a step. However, in our proofs so far we have only focussed on safety properties.</p>
+
+<p><img src="/2022/10/system-model.png" width="550" height="412" alt="System model: linear sequence of time steps; at each step, one process handles an event" /></p>
+
+<p>We can now express a distributed algorithm as the <em>step function</em>, which takes three arguments: the ID of the process executing the current time step, the current local state of that process, and the event that has occurred (message receipt, user input, timeout, or crash recovery). The return value consists of the new state for that process, and a set of messages to send to other processes (each message tagged with the ID of the recipient process).</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="k">type_synonym</span><span class="w"> </span><span class="o">(</span><span class="nv">'proc</span><span class="o">,</span><span class="w"> </span><span class="nv">'state</span><span class="o">,</span><span class="w"> </span><span class="nv">'msg</span><span class="o">,</span><span class="w"> </span><span class="nv">'val</span><span class="o">)</span><span class="w"> </span><span class="n">step_func</span><span class="w"> </span><span class="o">=</span><span class="w">
+  </span>‹'proc ⇒ 'state ⇒ ('proc, 'msg, 'val) event ⇒
+  ('state × ('proc × 'msg) set)›</code></pre></figure>
+
+<p>The current state of a process at one time step equals the new state after the previous step by the same process (or the initial state if there is no previous step). Assuming the step function is deterministic, we can now encode any execution of the system as a list of (processID, event) pairs indicating the series of events that occurred, and at which process they happened. The final state of the system is obtained by calling the step function one event at a time.</p>
+
+<h2 id="defining-what-may-happen">Defining what may happen</h2>
+
+<p>To prove a distributed algorithm correct, we need to show that it produces a correct result in every possible execution, i.e. for every possible list of (processID, event) pairs. But which executions are possible? There is only really one thing we can safely assume: if a message is received by a process, then that message must have been sent to that process. In other words, we assume the network does not fabricate messages out of thin air, and one process cannot impersonate another process. (In a public network where an attacker can inject fake packets, we would have to cryptographically authenticate the messages to ensure this property, but let’s leave that out of scope for now.)</p>
+
+<p>Therefore, the only assumption we will make is that if a message is received in some time step, then it must have been sent in a previous time step. However, we will allow messages to be lost, reordered, or received multiple times. Let’s encode this assumption in Isabelle/HOL.</p>
+
+<p>First, we define a function that tells us whether a single event is possible: <code class="language-plaintext highlighter-rouge">(valid_event evt proc msgs)</code> returns <code class="language-plaintext highlighter-rouge">true</code> if event <code class="language-plaintext highlighter-rouge">evt</code> is allowed to occur at process <code class="language-plaintext highlighter-rouge">proc</code> in a system in which <code class="language-plaintext highlighter-rouge">msgs</code> is the set of all messages that have been sent so far. <code class="language-plaintext highlighter-rouge">msgs</code> is a set of (sender, recipient, message) triples. We define that a <code class="language-plaintext highlighter-rouge">Receive</code> event is allowed to occur iff the received message is in <code class="language-plaintext highlighter-rouge">msgs</code>, and <code class="language-plaintext highlighter-rouge">Request</code> or <code class="language-plaintext highlighter-rouge">Timeout</code> events are allowed to happen anytime.</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="k">fun</span><span class="w"> </span><span class="n">valid_event</span><span class="w"> </span><span class="o">::</span><span class="w"> </span>‹('proc, 'msg, 'val) event ⇒ 'proc ⇒
+                    ('proc × 'proc × 'msg) set ⇒ bool›<span class="w">
+</span><span class="kp">where</span><span class="w">
+  </span>‹valid_event (Receive sender msg) recpt msgs =
+    ((sender, recpt, msg) ∈ msgs)›<span class="w"> </span><span class="o">|</span><span class="w">
+  </span>‹valid_event (Request _) _ _ = True›<span class="w"> </span><span class="o">|</span><span class="w">
+  </span>‹valid_event Timeout _ _ = True›</code></pre></figure>
+
+<p>Next, we define the set of all possible event sequences. For this we use an inductive predicate in Isabelle: <code class="language-plaintext highlighter-rouge">(execute step init procs events msgs states)</code> returns true if <code class="language-plaintext highlighter-rouge">events</code> is a valid sequence of events in an execution of the algorithm where <code class="language-plaintext highlighter-rouge">step</code> is the step function, <code class="language-plaintext highlighter-rouge">init</code> is the initial state of each process, and <code class="language-plaintext highlighter-rouge">proc</code> is the set of all processes in the system (which might be infinite if we want to allow any number of processes). The last two arguments keep track of the execution state: <code class="language-plaintext highlighter-rouge">msgs</code> is the set of all messages sent so far, and <code class="language-plaintext highlighter-rouge">states</code> is a map from process ID to the state of that process.</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="k">inductive</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="o">::</span><span class="w">
+  </span>‹('proc, 'state, 'msg, 'val) step_func ⇒ ('proc ⇒ 'state) ⇒
+   'proc set ⇒ ('proc × ('proc, 'msg, 'val) event) list ⇒
+   ('proc × 'proc × 'msg) set ⇒ ('proc ⇒ 'state) ⇒ bool›<span class="w">
+</span><span class="kp">where</span><span class="w">
+  </span>‹execute step init procs [] {} init›<span class="w"> </span><span class="o">|</span><span class="w">
+  </span>‹⟦execute step init procs events msgs states;
+    proc ∈ procs;
+    valid_event event proc msgs;
+    step proc (states proc) event = (new_state, sent);
+    events' = events @ [(proc, event)];
+    msgs' = msgs ∪ {m. ∃(recpt, msg) ∈ sent.
+                       m = (proc, recpt, msg)};
+    states' = states (proc := new_state)
+   ⟧ ⟹ execute step init procs events' msgs' states'›</code></pre></figure>
+
+<p>This definition states that the empty list of events is valid when the system is in the initial state and no messages have been sent. Moreover, if <code class="language-plaintext highlighter-rouge">events</code> is a valid sequence of events so far, and <code class="language-plaintext highlighter-rouge">event</code> is allowed in the current state, then we can invoke the step function, add any messages it sends to <code class="language-plaintext highlighter-rouge">msgs</code>, update the state of the appropriate process, and the result is another valid sequence of events.</p>
+
+<p>And that’s all we need to model the distributed system!</p>
+
+<h2 id="proving-an-algorithm-correct">Proving an algorithm correct</h2>
+
+<p>Now we can take some algorithm (defined by its step function and initial state) and prove that for all possible lists of events, some property <em>P</em> holds. Since we do not fix a maximum number of time steps, there is an infinite number of possible lists of events. But that’s not a problem, since we can use induction over lists to prove <em>P</em>.</p>
+
+<p><img src="/2022/10/induction.png" width="550" height="292" alt="The Isabelle/HOL induction principle over lists" /></p>
+
+<p>We use the <code class="language-plaintext highlighter-rouge">List.rev_induct</code> induction rule in Isabelle/HOL. It requires showing that:</p>
+
+<ol>
+  <li>the property <em>P</em> is true for the empty list (i.e. for a system in the initial state, which has not executed any time steps); and</li>
+  <li>if the property <em>P</em> is true for some execution, and we add one more time step to the end of the execution, then <em>P</em> still holds after that time step.</li>
+</ol>
+
+<p>In other words, we prove that <em>P</em> is an invariant over all possible states of the whole system. In Isabelle, that proof looks roughly like this (where <code class="language-plaintext highlighter-rouge">step</code>, <code class="language-plaintext highlighter-rouge">init</code>, and <code class="language-plaintext highlighter-rouge">procs</code> are appropriately defined):</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="kn">theorem</span><span class="w"> </span><span class="n">prove_invariant</span><span class="o">:</span><span class="w">
+  </span><span class="kp">assumes</span><span class="w"> </span>‹execute step init procs events msgs states›<span class="w">
+  </span><span class="kp">shows</span><span class="w"> </span>‹some_invariant states›<span class="w">
+</span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="n">arbitrary</span><span class="o">:</span><span class="w"> </span><span class="n">msgs</span><span class="w"> </span><span class="n">states</span><span class="w">
+                   </span><span class="n">rule</span><span class="o">:</span><span class="w"> </span><span class="n">List</span><span class="ow">.</span><span class="n">rev_induct</span><span class="o">)</span><span class="w">
+  </span><span class="k">case</span><span class="w"> </span><span class="n">Nil</span><span class="w">
+  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span>‹some_invariant states›<span class="w"> </span><span class="gr">sorry</span><span class="w">
+</span><span class="k">next</span><span class="w">
+  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">snoc</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="n">events</span><span class="o">)</span><span class="w">
+  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span><span class="w"> </span><span class="gr">sorry</span><span class="w">
+</span><span class="k">qed</span></code></pre></figure>
+
+<p>The real challenge in verifying distributed algorithms is to come up with the right invariant that is both true and also implies the properties you want your algorithm to have. Unfortunately, designing this invariant has to be done manually. However, once you have a candidate invariant, Isabelle is very helpful for checking whether it is correct and whether it is strong enough to meet your goals.</p>
+
+<p>For more detail on how to prove the correctness of a simple consensus algorithm in this model, I recorded a <a href="https://www.youtube.com/watch?v=Uav5jWHNghY">2-hour video lecture</a> that runs through a demo from first principles (no prior Isabelle experience required). The <a href="https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b">Isabelle code of demo</a> is also available.</p>
+
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/7w4KC6i9Yac" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>If you want to work on this kind of thing, I will soon be looking for a PhD student to work with me on formalising distributed algorithms in Isabelle, based at <a href="https://www.in.tum.de/en/in/cover-page/">TU Munich</a>. If this sounds like something you want to do, please <a href="https://martin.kleppmann.com/contact.html">get in touch</a>!</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Book Review: The Future of Fusion Energy</title>
@@ -1421,201 +1557,6 @@ No winners, only losers.</p>
 However, the way to improve it is not by throwing a screaming tantrum, running out of the door and banging it shut.
 The way to improve an institution is to work from the inside to reform it and shape it to be what we want.
 And so I mourn that my home country of choice, which I like in so many other ways, has decided to turn up its nose at this project.</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Research update for 2019</title>
-                <link>http://martin.kleppmann.com/2019/10/30/research-update.html</link>
-                <comments>http://martin.kleppmann.com/2019/10/30/research-update.html#disqus_thread</comments>
-                <pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2019/10/30/research-update.html</guid>
-                
-                <description><![CDATA[ It has now been four years since I moved from industry into academic research, and a lot has happened in this time. In 2015 I posted a year in review blog post, and in 2016 I announced the TRVE DATA project (which I am still working on), but I haven’t... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>It has now been four years since I moved from industry into academic research, and
-a lot has happened in this time.
-In 2015 I posted a <a href="/2015/12/28/year-2015-review.html">year in review</a> blog post, and
-in 2016 I announced the <a href="/2016/04/15/announcing-trve-data.html">TRVE DATA</a> project
-(which I am still working on), but I haven’t posted an update on my work since.
-So here goes!</p>
-
-<p>In academic terms, things have been going well. Last year I
-<a href="https://twitter.com/martinkl/status/1066748982129504256">got my PhD</a>, 
-and as of October 2019 I got another few upgrades to my titles:</p>
-
-<ul>
-  <li>I am now an Early Career Fellow of the <a href="https://www.leverhulme.ac.uk/early-career-fellowships">Leverhulme Trust</a>,
-with a matching fellowship from the <a href="https://www.newtontrust.cam.ac.uk">Isaac Newton Trust</a>.</li>
-  <li>In the department I am now a “Senior Research Associate” (SRA, up from “Research Associate” previously).</li>
-  <li>At <a href="https://www.corpus.cam.ac.uk">Corpus Christi College</a> I am now a
-<a href="https://www.corpus.cam.ac.uk/people/dr-martin-kleppmann">Fellow</a> and Director of Studies
-(which means that I look after the computer science students in the college).</li>
-</ul>
-
-<p>The fellowships from the Leverhulme Trust and Isaac Newton Trust are paying my salary
-for the next three years, along with additional support from the
-<a href="https://mobicentre.cst.cam.ac.uk">Cambridge Centre for Mobile, Wearable Systems and Augmented Intelligence</a>.
-The college fellowship mainly involves a very generous dining allowance, and being part of
-a community of academics across a broad range of subjects (it’s nice sometimes to talk to people who
-are not computer scientists).</p>
-
-<p>My job title of “Senior Research Associate” reflects my status as an independent researcher: that is,
-I set my own research agenda. However, to be clear, <em>independent</em> does not mean <em>alone</em>! My experience
-of research has been a very sociable one, and all of my work has been in collaboration with others.
-If you want to go far,
-<a href="https://www.npr.org/sections/goatsandsoda/2016/07/30/487925796/it-takes-a-village-to-determine-the-origins-of-an-african-proverb">go together</a>.
-On that note, shout-out to my fine collaborators of the last few years (in alphabetic order),
-<a href="https://www.cl.cam.ac.uk/~arb33/">Alastair Beresford</a>,
-<a href="https://www.cl.cam.ac.uk/~vb358/">Victor Gomes</a>,
-<a href="https://www.cl.cam.ac.uk/~sak70/">Stephan Kollmann</a>,
-<a href="http://dominic-mulligan.co.uk/">Dominic Mulligan</a>,
-<a href="https://personal.cis.strath.ac.uk/d.thomas/">Daniel Thomas</a>,
-<a href="https://twitter.com/pvh">Peter van Hardenberg</a>,
-<a href="https://www.cl.cam.ac.uk/~dac53/">Diana Vasile</a>,
-<a href="http://about.adamwiggins.com/">Adam Wiggins</a>,
-and several more people from the <a href="https://www.inkandswitch.com">Ink &amp; Switch</a> research lab!</p>
-
-<p>Huge thanks to <a href="http://www.boeing.com">The Boeing Company</a> for funding my work for the last four years.
-Huge thanks also to <a href="https://www.cl.cam.ac.uk/~arb33/">Prof. Alastair Beresford</a>, my excellent
-adviser, mentor, collaborator, and PI (that’s academic-speak for “boss”) over the last four years.</p>
-
-<h2 id="research-funding">Research funding</h2>
-
-<p>The Leverhulme Trust and Isaac Newton Trust, which are funding my work, are UK charities that support
-research across many subjects and disciplines, including humanities and social sciences. They fund about
-<a href="https://www.leverhulme.ac.uk/early-career-fellowships-2019">140 early career fellowships</a> per year
-across all subjects; only one or two per year of these are in computer science. So it looks like
-I’m the computer scientist for this year!</p>
-
-<p>A great aspect of this charity funding is that I am free to publish all my work as open source and
-open access, with no restrictions. All the code I write is in a public repository by default. This
-is very important to me, because the goal behind the things I’m working on (see below) is to
-maximise the public benefit of these technologies through open source and open standards.</p>
-
-<p>A downside is that all my positions are for a fixed three-year term (they are not tenure-track),
-and I don’t know what comes afterwards. But for now I am going to concentrate on making the most I
-can out of those three years.</p>
-
-<h2 id="background-to-my-research">Background to my research</h2>
-
-<p>Nowadays, we increasingly depend on Internet services for communication and collaboration: for
-example, we use Google Docs to collaborate on documents, spreadsheets and presentations; we copy
-files between devices using Dropbox; we communicate with colleagues using Slack; and we use many
-other online services for task tracking, note taking, project planning, knowledge management, and
-more.</p>
-
-<p>These services are very valuable and convenient, but their use is also risky because they are
-provided through a centralised server infrastructure. If the company providing the service goes out
-of business, or decides to discontinue a product, the servers are shut down, the software stops
-working, and users are locked out of the documents and data created with that software.</p>
-
-<p>Moreover, since those servers typically process user data in unencrypted form, a rogue employee, or
-an adversary who gains access to the servers, can read and tamper with vast amounts of sensitive
-data. The provider may also use the data in arbitrary ways, e.g. to train their machine learning
-systems and target you with ads.</p>
-
-<p>When these risks are unacceptable, we can fall back to what we might call “old-fashioned”
-collaboration methods: for example, one person creates a spreadsheet with Excel and emails it to
-their collaborator, who makes changes and then sends the modified file back again by email. This
-approach has merits: it does not rely on any external services that might go away (besides the email
-infrastructure), and the file can easily be encrypted. However, it quickly becomes messy if the
-file is modified by more than one person at a time.</p>
-
-<h2 id="research-goals">Research goals</h2>
-
-<p>Together with my collaborators I am developing the foundations of a new kind of collaboration
-software, which we are calling <a href="https://www.inkandswitch.com/local-first.html">local-first software</a>.
-It aims to achieve the best of both worlds: allowing the user-friendly real-time collaboration of
-applications like Google Docs, in which several people can make changes simultaneously without
-suffering conflicts, but without relying on trusted, centralised servers.</p>
-
-<p>While most of today’s Internet services keep the primary copy of any shared data on a server, the
-local-first approach stores primary copies of the data as files on the collaborators’ devices, like
-in “old-fashioned” collaboration. Servers may still be used, but rather than being a linchpin, they
-become an optional enabling component. Because all the data is local, the software continues
-working, even when the device has no Internet access or the servers are unavailable. When a user
-modifies a document, local-first software automatically sends the changes to collaborators whenever
-a network connection is available, so there is no need to email files back and forth.</p>
-
-<p>Local-first software allows multiple users to make changes to the same document concurrently, even
-while users are offline, and ensures that all of the changes are automatically merged into
-a consistent result. We do this using <a href="https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type">CRDTs</a>.
-In this regard our approach differs from version control systems such as SVN or Git, which require
-conflicts to be resolved manually, and only offer merging of plain text files. By contrast, we can
-perform all merges automatically, and support arbitrarily complex file formats such as spreadsheets,
-CAD drawings, or databases with various data models.</p>
-
-<p>Collaborators’ devices can either communicate directly, using fast local networks in a
-<em>peer-to-peer</em> manner, or indirectly via servers. To protect the confidentiality and integrity of
-the communication between collaborators we plan to use <em>end-to-end encryption</em>. In this approach, if
-servers are used, they only ever handle encrypted data that they cannot decrypt. Thus, even if
-communication networks or servers are compromised by an attacker, user privacy and data
-confidentiality are protected.</p>
-
-<p>This approach is particularly suitable for sensitive data such as a university’s student records,
-a hospital’s patient records, legally privileged communication, journalistic investigations, law
-enforcement, diplomatic correspondence, and many other settings where regulations and
-confidentiality obligations prohibit the sharing of unencrypted data with third parties.</p>
-
-<h2 id="research-outputs">Research outputs</h2>
-
-<p>The results of our research will be published in two forms: as traditional research papers in
-academic venues, and in the form of open source software.</p>
-
-<p>Research papers are important because they document the thought process and reasoning behind our
-designs, and help others build upon our work in the future. We have already written a series of
-<a href="/#publications">publications</a> about our research in the last four years, and there is lots more
-interesting material still to come.</p>
-
-<p>Software releases are traditionally regarded as less important in academia (and, to be honest, a lot
-of code written by researchers is not very good). However, I regard open source software as a
-crucial output for this project. <a href="https://github.com/automerge/automerge">Automerge</a> is the main
-CRDT implementation I am working on, and it is designed from the start to be production-quality (in
-terms of reliability, test coverage, stability, API design, documentation, community, and so on).</p>
-
-<p>Automerge is not yet perfect, especially in terms of its performance: if it was, our research would
-already be done! But I have a plan that should lead to big improvements in the coming year, and the
-goal is that Automerge will soon be suitable for building ambitious, large-scale, local-first
-applications.</p>
-
-<p>In order to maximise the number of projects that can benefit from this work, the code is licensed
-under the liberal <a href="https://opensource.org/licenses/MIT">MIT license</a>. Moreover, as the data format
-(for representing documents on disk and for network communication) becomes stable, I think it will
-make sense to formalise it as an open standard, with interoperable implementations in several
-different programming languages and platforms.</p>
-
-<p>And finally, we are starting to see an emerging community of users and contributors around Automerge.
-New community members are regularly popping up in the
-<a href="https://communityinviter.com/apps/automerge/automerge">Automerge Slack</a>, users are helpfully
-reporting bugs, and a steadily growing
-<a href="https://github.com/automerge/automerge/graphs/contributors">set of contributors</a> have had their
-pull requests merged. It’s exciting to see this growing community engagement.</p>
-
-<h2 id="interviews">Interviews</h2>
-
-<p>If you want to hear more, I’ve done a bunch of interviews with various podcasts and blogs over the
-last few years:</p>
-
-<ul>
-  <li><a href="https://softwareengineeringdaily.com/2017/05/02/data-intensive-applications-with-martin-kleppmann/">With Software Engineering Daily about my book</a>,
-“Designing Data-Intensive Applications” (May 2017)</li>
-  <li><a href="https://softwareengineeringdaily.com/2017/12/08/decentralized-objects-with-martin-kleppman/">With Software Engineering Daily again</a>,
-this time about my research on CRDTs (December 2017)</li>
-  <li><a href="https://advancetechmedia.org/episode-008-martin-kleppmann/">With the Advance Tech Podcast</a>
-about a wide range of topics that I find interesting (October 2017)</li>
-  <li><a href="https://www.investedinvestor.com/articles/2018/1/23/martin-kleppmann">With the Invested Investor podcast</a>
-about my startup career before I switched towards research (January 2018)</li>
-  <li><a href="/2019/06/27/hydra-interview.html">With the Hydra conference</a> about distributed systems in general,
-and my work specifically (June 2019)</li>
-  <li><a href="https://medium.com/csr-tales/csrtale-13-formal-verification-of-strong-eventual-consistency-1cc0af942e64">With Computer Science Research (CSR) Tales</a>
-(July 2019) about the background story behind our paper
-“<a href="/2017/10/25/verifying-crdt-isabelle.html">Verifying Strong Eventual Consistency in Distributed Systems</a>”,
-which won the Distinguished Paper Award and Distinguished Artifact Award at the OOPSLA 2017 conference.</li>
-</ul>
 
                 ]]></content:encoded>
             </item>

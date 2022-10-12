@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Verifying distributed systems with Isabelle/HOL &mdash; Martin Kleppmann&rsquo;s blog</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?5" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+                <li class="page_item"><a href="/supporters.html" title="Supporters">Supporters</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <a class="twitter-share-button" href="https://twitter.com/share" data-text="Verifying distributed systems with Isabelle/HOL"
+                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
+
+                <h1>Verifying distributed systems with Isabelle/HOL</h1>
+
+                
+                <p style="font-size: 80%">Published by Martin Kleppmann on 12 Oct 2022.</p>
+                
+
+                <p><em>This post also appears on <a href="https://lawrencecpaulson.github.io/2022/10/12/verifying-distributed-systems-isabelle.html">Larry Paulson’s blog</a>.</em></p>
+
+<p>We use distributed systems every day in the form of internet services. These systems are very useful, but also challenging to implement because networks are unpredictable. Whenever you send a message over the network, it is likely to arrive quite quickly, but it’s possible that it might be delayed for a long time, or never arrive, or arrive several times.</p>
+
+<p>When you send a request to another process and don’t receive a response, you have no idea what happened: was the request lost, or has the other process crashed, or was the response lost? Or maybe nothing was lost at all, but a message has simply been delayed and may yet arrive. There is no way of knowing what happened, because unreliable message-passing is the only way how processes can communicate.</p>
+
+<p>Distributed algorithms work with this model of unreliable communication and build stronger guarantees on top of it. Examples of such stronger guarantees include database transactions and replication (maintaining copies of some data on multiple machines so that the data is not lost if one machine fails).</p>
+
+<p>Unfortunately, distributed algorithms are notoriously difficult to reason about, because they must uphold their guarantees regardless of the order in which messages are delivered, and even when some messages are lost or some processes crash. Many algorithms are very subtle, and informal reasoning is not sufficient for ensuring that they are correct. Moreover, the number of possible permutations and interleavings of concurrent activities quickly becomes too great for model-checkers to test exhaustively. For this reason, formal proofs of correctness are valuable for distributed algorithms.</p>
+
+<h2 id="modelling-a-distributed-system-in-isabellehol">Modelling a distributed system in Isabelle/HOL</h2>
+
+<p>In this blog post we will explore how to use the Isabelle/HOL proof assistant to formally verify a number of distributed algorithms. Isabelle/HOL does not have any built-in support for distributed computing, but fortunately it is quite straightforward to model a distributed system using structures that Isabelle/HOL provides: functions, lists, and sets.</p>
+
+<p>First, we asssume each process (or <em>node</em>) in the system has a unique identifier, which could simply be an integer or a string. Depending on the algorithm, the set of process IDs in the system may be fixed and known, or unknown and unbounded (the latter is appropriate for systems where processes can join and leave over time).</p>
+
+<p>The execution of the algorithm then proceeds in discrete time steps. In each time step, an event occurs at one of the processes, and this event could be one of three things: receiving a message sent by another process, receiving user input, or the elapsing of a timeout.</p>
+
+<figure class="highlight"><pre><code class="language-ml" data-lang="ml"><span class="kr">datatype</span> <span class="p">(</span><span class="nd">'proc</span><span class="p">,</span> <span class="nd">'msg</span><span class="p">,</span> <span class="nd">'val</span><span class="p">)</span> <span class="kt">event</span>
+  <span class="p">=</span> <span class="nc">Receive</span> <span class="p">(</span><span class="n">msg_sender</span><span class="p">:</span> <span class="nd">'proc</span><span class="p">)</span> <span class="p">(</span><span class="n">recv_msg</span><span class="p">:</span> <span class="nd">'msg</span><span class="p">)</span>
+  <span class="p">|</span> <span class="nc">Request</span> <span class="nd">'val</span>
+  <span class="p">|</span> <span class="nc">Timeout</span></code></pre></figure>
+
+<p>Triggered by one of these events, the process executes a function that may update its own state, and may send messages to other processes. A message sent in one time step may be received at any future time step, or may never be received at all.</p>
+
+<p>Each process has a local state that is not shared with any other process. This state has a fixed initial value at the beginning of the execution, and is updated only when that process executes a step. One process cannot read the state of another process, but we can describe the state of the entire system as the collection of all the processes’ individual states:</p>
+
+<p><img src="/2022/10/time-steps.png" width="550" height="275" alt="Illustration of several processes executing steps, one at a time" /></p>
+
+<h2 id="why-a-linear-sequence-of-time-steps-is-sufficient">Why a linear sequence of time steps is sufficient</h2>
+
+<p>Even though in reality processes may run in parallel, we do not need to model this parallelism since the only communication between processes is by sending and receiving messages, and we can assume that a process finishes processing one event before starting to process the next event. Every parallel execution is therefore equivalent to some linear sequence of execution steps. Other formalisations of distributed systems, such as the <a href="https://lamport.azurewebsites.net/tla/tla.html">TLA+ language</a>, also use such a linear sequence of steps.</p>
+
+<p>We do not make any assumptions about which time step is executed by which process. It is possible that the processes fairly take turns to run, but it is equally possible for one process to execute a million steps while another process does nothing at all. By avoiding assumptions about process activity we ensure that the algorithm works correctly regardless of the timing in the system. For example, a process that is temporarily disconnected from the network is modelled simply by a process that does not experience any receive-message events, even while the other processes continue sending and receiving messages.</p>
+
+<p>In this model, a process crash is represented simply by a process that executes no more steps after some point in time; there is no need for a crash to be explicitly represented. If we want to allow processes to recover from a crash, we can add a fourth type of event that models a process restarting after a crash. When executing such a crash-recovery event, a process deletes any parts of its local state that are stored in volatile memory, but preserves those parts of its state that are in stable storage (on disk) and hence survive the crash.</p>
+
+<p>When reasoning about safety properties of algorithms, it is best not to assume anything about which process executes in which time step, since that ensures the algorithm can tolerate arbitrary message delays. If we wanted to reason about liveness (for example, that an algorithm eventually terminates), we would have to make some fairness assumptions, e.g. that every non-crashed process eventually executes a step. However, in our proofs so far we have only focussed on safety properties.</p>
+
+<p><img src="/2022/10/system-model.png" width="550" height="412" alt="System model: linear sequence of time steps; at each step, one process handles an event" /></p>
+
+<p>We can now express a distributed algorithm as the <em>step function</em>, which takes three arguments: the ID of the process executing the current time step, the current local state of that process, and the event that has occurred (message receipt, user input, timeout, or crash recovery). The return value consists of the new state for that process, and a set of messages to send to other processes (each message tagged with the ID of the recipient process).</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="k">type_synonym</span><span class="w"> </span><span class="o">(</span><span class="nv">'proc</span><span class="o">,</span><span class="w"> </span><span class="nv">'state</span><span class="o">,</span><span class="w"> </span><span class="nv">'msg</span><span class="o">,</span><span class="w"> </span><span class="nv">'val</span><span class="o">)</span><span class="w"> </span><span class="n">step_func</span><span class="w"> </span><span class="o">=</span><span class="w">
+  </span>‹'proc ⇒ 'state ⇒ ('proc, 'msg, 'val) event ⇒
+  ('state × ('proc × 'msg) set)›</code></pre></figure>
+
+<p>The current state of a process at one time step equals the new state after the previous step by the same process (or the initial state if there is no previous step). Assuming the step function is deterministic, we can now encode any execution of the system as a list of (processID, event) pairs indicating the series of events that occurred, and at which process they happened. The final state of the system is obtained by calling the step function one event at a time.</p>
+
+<h2 id="defining-what-may-happen">Defining what may happen</h2>
+
+<p>To prove a distributed algorithm correct, we need to show that it produces a correct result in every possible execution, i.e. for every possible list of (processID, event) pairs. But which executions are possible? There is only really one thing we can safely assume: if a message is received by a process, then that message must have been sent to that process. In other words, we assume the network does not fabricate messages out of thin air, and one process cannot impersonate another process. (In a public network where an attacker can inject fake packets, we would have to cryptographically authenticate the messages to ensure this property, but let’s leave that out of scope for now.)</p>
+
+<p>Therefore, the only assumption we will make is that if a message is received in some time step, then it must have been sent in a previous time step. However, we will allow messages to be lost, reordered, or received multiple times. Let’s encode this assumption in Isabelle/HOL.</p>
+
+<p>First, we define a function that tells us whether a single event is possible: <code class="language-plaintext highlighter-rouge">(valid_event evt proc msgs)</code> returns <code class="language-plaintext highlighter-rouge">true</code> if event <code class="language-plaintext highlighter-rouge">evt</code> is allowed to occur at process <code class="language-plaintext highlighter-rouge">proc</code> in a system in which <code class="language-plaintext highlighter-rouge">msgs</code> is the set of all messages that have been sent so far. <code class="language-plaintext highlighter-rouge">msgs</code> is a set of (sender, recipient, message) triples. We define that a <code class="language-plaintext highlighter-rouge">Receive</code> event is allowed to occur iff the received message is in <code class="language-plaintext highlighter-rouge">msgs</code>, and <code class="language-plaintext highlighter-rouge">Request</code> or <code class="language-plaintext highlighter-rouge">Timeout</code> events are allowed to happen anytime.</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="k">fun</span><span class="w"> </span><span class="n">valid_event</span><span class="w"> </span><span class="o">::</span><span class="w"> </span>‹('proc, 'msg, 'val) event ⇒ 'proc ⇒
+                    ('proc × 'proc × 'msg) set ⇒ bool›<span class="w">
+</span><span class="kp">where</span><span class="w">
+  </span>‹valid_event (Receive sender msg) recpt msgs =
+    ((sender, recpt, msg) ∈ msgs)›<span class="w"> </span><span class="o">|</span><span class="w">
+  </span>‹valid_event (Request _) _ _ = True›<span class="w"> </span><span class="o">|</span><span class="w">
+  </span>‹valid_event Timeout _ _ = True›</code></pre></figure>
+
+<p>Next, we define the set of all possible event sequences. For this we use an inductive predicate in Isabelle: <code class="language-plaintext highlighter-rouge">(execute step init procs events msgs states)</code> returns true if <code class="language-plaintext highlighter-rouge">events</code> is a valid sequence of events in an execution of the algorithm where <code class="language-plaintext highlighter-rouge">step</code> is the step function, <code class="language-plaintext highlighter-rouge">init</code> is the initial state of each process, and <code class="language-plaintext highlighter-rouge">proc</code> is the set of all processes in the system (which might be infinite if we want to allow any number of processes). The last two arguments keep track of the execution state: <code class="language-plaintext highlighter-rouge">msgs</code> is the set of all messages sent so far, and <code class="language-plaintext highlighter-rouge">states</code> is a map from process ID to the state of that process.</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="k">inductive</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="o">::</span><span class="w">
+  </span>‹('proc, 'state, 'msg, 'val) step_func ⇒ ('proc ⇒ 'state) ⇒
+   'proc set ⇒ ('proc × ('proc, 'msg, 'val) event) list ⇒
+   ('proc × 'proc × 'msg) set ⇒ ('proc ⇒ 'state) ⇒ bool›<span class="w">
+</span><span class="kp">where</span><span class="w">
+  </span>‹execute step init procs [] {} init›<span class="w"> </span><span class="o">|</span><span class="w">
+  </span>‹⟦execute step init procs events msgs states;
+    proc ∈ procs;
+    valid_event event proc msgs;
+    step proc (states proc) event = (new_state, sent);
+    events' = events @ [(proc, event)];
+    msgs' = msgs ∪ {m. ∃(recpt, msg) ∈ sent.
+                       m = (proc, recpt, msg)};
+    states' = states (proc := new_state)
+   ⟧ ⟹ execute step init procs events' msgs' states'›</code></pre></figure>
+
+<p>This definition states that the empty list of events is valid when the system is in the initial state and no messages have been sent. Moreover, if <code class="language-plaintext highlighter-rouge">events</code> is a valid sequence of events so far, and <code class="language-plaintext highlighter-rouge">event</code> is allowed in the current state, then we can invoke the step function, add any messages it sends to <code class="language-plaintext highlighter-rouge">msgs</code>, update the state of the appropriate process, and the result is another valid sequence of events.</p>
+
+<p>And that’s all we need to model the distributed system!</p>
+
+<h2 id="proving-an-algorithm-correct">Proving an algorithm correct</h2>
+
+<p>Now we can take some algorithm (defined by its step function and initial state) and prove that for all possible lists of events, some property <em>P</em> holds. Since we do not fix a maximum number of time steps, there is an infinite number of possible lists of events. But that’s not a problem, since we can use induction over lists to prove <em>P</em>.</p>
+
+<p><img src="/2022/10/induction.png" width="550" height="292" alt="The Isabelle/HOL induction principle over lists" /></p>
+
+<p>We use the <code class="language-plaintext highlighter-rouge">List.rev_induct</code> induction rule in Isabelle/HOL. It requires showing that:</p>
+
+<ol>
+  <li>the property <em>P</em> is true for the empty list (i.e. for a system in the initial state, which has not executed any time steps); and</li>
+  <li>if the property <em>P</em> is true for some execution, and we add one more time step to the end of the execution, then <em>P</em> still holds after that time step.</li>
+</ol>
+
+<p>In other words, we prove that <em>P</em> is an invariant over all possible states of the whole system. In Isabelle, that proof looks roughly like this (where <code class="language-plaintext highlighter-rouge">step</code>, <code class="language-plaintext highlighter-rouge">init</code>, and <code class="language-plaintext highlighter-rouge">procs</code> are appropriately defined):</p>
+
+<figure class="highlight"><pre><code class="language-isabelle" data-lang="isabelle"><span class="kn">theorem</span><span class="w"> </span><span class="n">prove_invariant</span><span class="o">:</span><span class="w">
+  </span><span class="kp">assumes</span><span class="w"> </span>‹execute step init procs events msgs states›<span class="w">
+  </span><span class="kp">shows</span><span class="w"> </span>‹some_invariant states›<span class="w">
+</span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">events</span><span class="w"> </span><span class="n">arbitrary</span><span class="o">:</span><span class="w"> </span><span class="n">msgs</span><span class="w"> </span><span class="n">states</span><span class="w">
+                   </span><span class="n">rule</span><span class="o">:</span><span class="w"> </span><span class="n">List</span><span class="ow">.</span><span class="n">rev_induct</span><span class="o">)</span><span class="w">
+  </span><span class="k">case</span><span class="w"> </span><span class="n">Nil</span><span class="w">
+  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span>‹some_invariant states›<span class="w"> </span><span class="gr">sorry</span><span class="w">
+</span><span class="k">next</span><span class="w">
+  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">snoc</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="n">events</span><span class="o">)</span><span class="w">
+  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span><span class="w"> </span><span class="gr">sorry</span><span class="w">
+</span><span class="k">qed</span></code></pre></figure>
+
+<p>The real challenge in verifying distributed algorithms is to come up with the right invariant that is both true and also implies the properties you want your algorithm to have. Unfortunately, designing this invariant has to be done manually. However, once you have a candidate invariant, Isabelle is very helpful for checking whether it is correct and whether it is strong enough to meet your goals.</p>
+
+<p>For more detail on how to prove the correctness of a simple consensus algorithm in this model, I recorded a <a href="https://www.youtube.com/watch?v=Uav5jWHNghY">2-hour video lecture</a> that runs through a demo from first principles (no prior Isabelle experience required). The <a href="https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b">Isabelle code of demo</a> is also available.</p>
+
+<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/7w4KC6i9Yac" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>If you want to work on this kind of thing, I will soon be looking for a PhD student to work with me on formalising distributed algorithms in Isabelle, based at <a href="https://www.in.tum.de/en/in/cover-page/">TU Munich</a>. If this sounds like something you want to do, please <a href="https://martin.kleppmann.com/contact.html">get in touch</a>!</p>
+
+
+                <div class="mailing-list-signup">
+                    <p>If you found this post useful, please
+                    <a href="https://www.patreon.com/martinkl">support me on Patreon</a>
+                    so that I can write more like it!</p>
+                    <p>
+                    To get notified when I write something new,
+                    <a href="https://twitter.com/martinkl">follow me</a> on Twitter
+                    or enter your email address:
+                    </p>
+
+                    <iframe src="https://martinkl.substack.com/embed" width="520" height="200" frameborder="0" scrolling="no"></iframe>
+
+                    <p class="disclaimer">
+                    I won't give your address to anyone else, won't send you any spam, and you can unsubscribe at any time.
+                    </p>
+                </div>
+
+                
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div class="mailing-list-signup">
+        <p>
+            To find out when I write something new, sign up to receive an
+            <a href="https://martinkl.substack.com/">email notification</a>,
+            <a href="https://twitter.com/martinkl">follow me on Twitter</a>, or subscribe to the
+            <a href="http://feeds.feedburner.com/martinkl">RSS feed</a>.
+        </p>
+
+        <p class="disclaimer">
+            I won't give your email address to anyone else, won't send you any spam,
+            and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>, has received
+        <a href="https://www.goodreads.com/book/show/23466395-designing-data-intensive-applications">thousands</a>
+        of five-star reviews.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am a researcher at the
+        <a href="http://www.cl.cam.ac.uk/">University of Cambridge</a>,
+        working on the <a href="http://www.trvedata.org/">TRVE DATA</a> project
+        at the intersection of databases, distributed systems, and information security.</p>
+    </div>
+
+    <div class="widget">
+        <p>If you find my work useful, please
+        <a href="https://www.patreon.com/martinkl">support me on Patreon</a>.</p>
+    </div>
+
+    <div id="tweets" class="widget">
+        <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/martinkl" data-widget-id="557543934298423296">Tweets by @martinkl</a>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>12 Oct 2022: <a href="/2022/10/12/verifying-distributed-systems-isabelle.html">Verifying distributed systems with Isabelle/HOL</a></li>
+            
+              <li>03 Jan 2022: <a href="/2022/01/03/future-of-fusion-energy.html">Book Review: The Future of Fusion Energy</a></li>
+            
+              <li>01 Sep 2021: <a href="/2021/09/01/podcast-interviews.html">Several podcast interviews</a></li>
+            
+              <li>14 Apr 2021: <a href="/2021/04/14/goodbye-gpl.html">It's time to say goodbye to the GPL</a></li>
+            
+              <li>23 Feb 2021: <a href="/2021/02/23/patreon.html">Building the future of computing, with your help</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2022/04/29/hytradboi.html">29 Apr 2022 at Have You Tried Rubbing A Database On It? (HYTRADBOI)</a></li>
+            
+              <li><a href="/2022/04/05/bft-crdt-papoc.html">05 Apr 2022 at 9th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a></li>
+            
+              <li><a href="/2022/03/28/rainbowfs-workshop.html">28 Mar 2022 at RainbowFS final workshop</a></li>
+            
+              <li><a href="/2021/12/07/dicg-workshop.html">07 Dec 2021 at 2nd International Workshop on Distributed Infrastructure for Common Good (DICG)</a></li>
+            
+              <li><a href="/2021/11/25/srg-seminars.html">25 Nov 2021 at Computer Laboratory Systems Research Group Seminars</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+
+    
+    <!-- Twitter -->
+<script>
+!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
