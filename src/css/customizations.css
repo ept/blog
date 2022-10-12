@@ -38,3 +38,7 @@
     font-size: 80%;
     margin-top: 0.8em;
 }
+
+figure.highlight {
+    margin: 0;
+}
