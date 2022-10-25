@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 12 Oct 2022 14:37:11 CEST</lastBuildDate>
+        <lastBuildDate>Tue, 25 Oct 2022 09:29:47 CEST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -144,7 +144,7 @@
 
 <p>The real challenge in verifying distributed algorithms is to come up with the right invariant that is both true and also implies the properties you want your algorithm to have. Unfortunately, designing this invariant has to be done manually. However, once you have a candidate invariant, Isabelle is very helpful for checking whether it is correct and whether it is strong enough to meet your goals.</p>
 
-<p>For more detail on how to prove the correctness of a simple consensus algorithm in this model, I recorded a <a href="https://www.youtube.com/watch?v=Uav5jWHNghY">2-hour video lecture</a> that runs through a demo from first principles (no prior Isabelle experience required). The <a href="https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b">Isabelle code of demo</a> is also available.</p>
+<p>For more detail on how to prove the correctness of a simple consensus algorithm in this model, I recorded a <a href="https://www.youtube.com/watch?v=Uav5jWHNghY">2-hour video lecture</a> that runs through a demo from first principles (no prior Isabelle experience required). The <a href="https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b">Isabelle code of the demo</a> is also available.</p>
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/7w4KC6i9Yac" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 
