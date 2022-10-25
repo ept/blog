@@ -131,7 +131,7 @@ qed
 
 The real challenge in verifying distributed algorithms is to come up with the right invariant that is both true and also implies the properties you want your algorithm to have. Unfortunately, designing this invariant has to be done manually. However, once you have a candidate invariant, Isabelle is very helpful for checking whether it is correct and whether it is strong enough to meet your goals.
 
-For more detail on how to prove the correctness of a simple consensus algorithm in this model, I recorded a [2-hour video lecture](https://www.youtube.com/watch?v=Uav5jWHNghY) that runs through a demo from first principles (no prior Isabelle experience required). The [Isabelle code of demo](https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b) is also available.
+For more detail on how to prove the correctness of a simple consensus algorithm in this model, I recorded a [2-hour video lecture](https://www.youtube.com/watch?v=Uav5jWHNghY) that runs through a demo from first principles (no prior Isabelle experience required). The [Isabelle code of the demo](https://gist.github.com/ept/b6872fc541a68a321a26198b53b3896b) is also available.
 
 <iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/7w4KC6i9Yac" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
