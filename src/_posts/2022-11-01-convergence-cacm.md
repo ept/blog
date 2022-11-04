@@ -1,7 +1,7 @@
 ---
 layout: paper
 type: report
-title: "Covergence: Research for Practice reboot"
+title: "Research for Practice: Convergence"
 authors: Martin Kleppmann and Peter Alvaro
 venue: Communications of the ACM, volume 65, issue 11, pages 104–106
 doi: 10.1145/3563901
