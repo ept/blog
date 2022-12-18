@@ -8,10 +8,11 @@ that are scattered across the interwebs:
 
 <ul>
 <li><a rel="me" href="http://martin.kleppmann.com/">My Blog</a></li>
+<li><a rel="me" href="https://martinkl.substack.com/">My email list on Substack</a> (notifications about new blog posts)</li>
 <li><a rel="me" href="https://nondeterministic.computer/@martin">@martin@nondeterministic.computer on Mastodon</a></li>
 <li><a rel="me" href="http://twitter.com/martinkl">@martinkl on Twitter</a></li>
 <li><a rel="me" href="https://www.patreon.com/martinkl">My crowdfunding campaign on Patreon</a></li>
-<li><a rel="me" href="http://github.com/ept">My Open Source projects on Github</a></li>
+<li><a rel="me" href="http://github.com/ept">My open source projects on Github</a></li>
 <li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
 <li><a rel="me" href="https://speakerdeck.com/ept">My presentations on Speakerdeck</a></li>
 <li><a rel="me" href="https://www.youtube.com/channel/UClB4KPy5LkJj1t3SgYVtMOQ">My talks on YouTube</a></li>
@@ -24,7 +25,7 @@ that are scattered across the interwebs:
 
 Email: firstname at lastname dot com.
 
-Projects I have worked on include:
+Past projects I have worked on include:
 
 <ul>
 <li><a href="/die-tuerme-des-februar/">Die Türme des Februar (a musical drama)</a></li>
