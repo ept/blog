@@ -8,7 +8,9 @@ that are scattered across the interwebs:
 
 <ul>
 <li><a rel="me" href="http://martin.kleppmann.com/">My Blog</a></li>
+<li><a rel="me" href="https://nondeterministic.computer/@martin">@martin@nondeterministic.computer on Mastodon</a></li>
 <li><a rel="me" href="http://twitter.com/martinkl">@martinkl on Twitter</a></li>
+<li><a rel="me" href="https://www.patreon.com/martinkl">My crowdfunding campaign on Patreon</a></li>
 <li><a rel="me" href="http://github.com/ept">My Open Source projects on Github</a></li>
 <li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
 <li><a rel="me" href="https://speakerdeck.com/ept">My presentations on Speakerdeck</a></li>

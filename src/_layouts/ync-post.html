@@ -12,9 +12,6 @@
 
         <div class="wrapper">
             <div id="content">
-                <a class="twitter-share-button" href="https://twitter.com/share" data-text="{{ page.title }}"
-                    data-via="martinkl" data-related="martinkl" data-size="large" data-count="none">Tweet</a>
-
                 <h1>{{ page.title }}</h1>
 
                 {% if page.date %}
@@ -29,7 +26,7 @@
                     so that I can write more like it!</p>
                     <p>
                     To get notified when I write something new,
-                    <a href="https://twitter.com/martinkl">follow me</a> on Twitter
+                    <a href="https://nondeterministic.computer/@martin">follow me on Mastodon</a>
                     or enter your email address:
                     </p>
 
@@ -53,6 +50,5 @@
     </div>
 
     {% if page.disqus %}{% include disqus.html %}{% endif %}
-    {% include analytics.html %}
 </body>
 </html>
