@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Viewing collaborative editing through a databases lens &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Upwelling: Combining real-time collaboration with version control for writers &mdash; Martin Kleppmann&rsquo;s publications</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -16,6 +16,13 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
+
+    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
+    <meta name="citation_title" content="Upwelling: Combining real-time collaboration with version control for writers" /> 
+    <meta name="citation_publication_date" content="2023-03-09" /> 
+    <meta name="citation_authors" content="Karissa Rae McKelvey, Scott Jenson, Eileen Wagner, Blaine Cook, and Martin Kleppmann" /> 
+    <meta name="citation_pdf_url" content="https://www.inkandswitch.com/upwelling/" /> 
+    
 </head>
 
 <body class="wordpress">
@@ -48,41 +55,48 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Viewing collaborative editing through a databases lens</h1>
+                <h1>Upwelling: Combining real-time collaboration with version control for writers</h1>
+
+                <p>Karissa Rae McKelvey, Scott Jenson, Eileen Wagner, Blaine Cook, and Martin Kleppmann</p>
 
                 <p>
-                  A talk at
                   
-                    <a href="https://www.hytradboi.com/">Have You Tried Rubbing A Database On It? (HYTRADBOI)</a>,
+                    Ink & Switch,
                   
-                  Online, 29 Apr 2022
+                  
+                  March 2023.
                 </p>
+
+                
 
                 <ul>
                   
+                    <li><a href="https://www.inkandswitch.com/upwelling/">Paper (open access)</a></li>
                   
-                    <li><a href="https://speakerdeck.com/ept/collaborative-editing-through-a-databases-lens">Slides</a></li>
                   
                   
-                    <li><a href="https://www.hytradboi.com/2022/viewing-collaborative-editing-through-a-databases-lens">Video</a></li>
+                  
+                  
+                  
                   
                   
                 </ul>
 
-                <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/a37bd2597afd4f13bad5cb1e89688ba7" title="Collaborative editing through a databases lens" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+                <h2 id="abstract">Abstract</h2>
 
-<h2 id="abstract">Abstract</h2>
+<p>Collaboration features of existing software do not sufficiently meet the needs of professional
+non-fiction writers. Real-time collaboration in cloud applications like Google Docs can create
+stress when writers feel watched by their co-authors, and file-based collaboration can introduce
+difficulty with versioning and merging edits from different co-authors. Further, in environments
+where accuracy is crucial, like newsrooms, existing tools make reviewing changes unnecessarily
+difficult.</p>
 
-<p>Software that allows several users to collaboratively edit a document, such as Google Docs, has
-traditionally been ignored by the databases community. This is surprising, because managing the
-edits to a text document, spreadsheet, vector graphics file, etc. is very much a data management
-problem, albeit with a data model that is very different from that supported by most databases.</p>
-
-<p>In our work on <a href="https://automerge.org/">Automerge</a>, a library for building
-collaborative software, we have been taking concepts from databases and applying them to the domain
-of collaborative editing. In this talk I will show how column-oriented data formats, multi-version
-concurrency control, log-structured storage, and other ideas from databases can be used to make
-collaboration software better.</p>
+<p>In the Upwelling project we have built an experimental editor that aims to satisfy the needs of
+professional writers and editors. It allows co-authors to collaborate in real time when they wish
+to, but it also supports work on private drafts that can be shared and merged only when their
+authors are ready. By combining elements of real-time collaboration with ideas from version control
+systems, Upwelling supports writers in maintaining their creative privacy and editors in ensuring
+accurate results.</p>
 
             </div>
 
