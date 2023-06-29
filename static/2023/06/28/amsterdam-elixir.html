@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Adapting secure group messaging for encrypted CRDTs &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Creating local-first collaboration software with Automerge &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -48,39 +48,43 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Adapting secure group messaging for encrypted CRDTs</h1>
+                <h1>Creating local-first collaboration software with Automerge</h1>
 
                 <p>
                   A talk at
                   
-                    LightKone workshop on Verification, Security and Antidote,
+                    <a href="https://www.meetup.com/amsterdam-elixir/events/294180192/">Amsterdam |> Elixir</a>,
                   
-                  Kaiserslautern, Germany, 15 May 2019
+                  Amsterdam, Netherlands, 28 Jun 2023
                 </p>
 
                 <ul>
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/adapting-secure-group-messaging-for-encrypted-crdts">Slides</a></li>
+                    <li><a href="https://speakerdeck.com/ept/creating-local-first-collaboration-software-with-automerge">Slides</a></li>
                   
                   
                   
                 </ul>
 
-                <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b073059e8cba471293d33b2c453108cf" title="Adapting secure group messaging for encrypted CRDTs" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+                <iframe class="speakerdeck-iframe" style="border: 0px none; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 420;" src="https://speakerdeck.com/player/aaaa9966971e4118b69b6717ed0f4034" title="Creating local-first collaboration software with Automerge" allowfullscreen="true" data-ratio="1.3333333333333333" frameborder="0"></iframe>
 
 <h2 id="abstract">Abstract</h2>
 
-<p>Secure messaging apps like WhatsApp, Signal, and iMessage have brought end-to-end encryption to over
-1 billion users. The protocols underlying these apps provide much stronger security properties than
-earlier encryption systems such as PGP/GnuPG. This makes them an interesting basis for implementing
-CRDT-based data systems with end-to-end security: if we simply send all the CRDT operations or state
-updates via a secure messaging protocol, we inherit its strong security properties.</p>
+<p>Many of us use collaboration software such as Google Docs, Overleaf, Figma, or Trello every day.
+While this cloud software is very valuable, it is also fragile: if the company providing it goes out
+of business, or decides to suspend your account, the software stops working, and you are locked out
+of all of the documents and data you ever created with that software.</p>
 
-<p>However, there are lots of subtleties about the guarantees provided by secure messaging protocols:
-in particular, the properties that hold for communication between two parties often don’t easily
-generalise to groups of more than two participants. This talk will summarise the current state of
-research in secure group messaging, and discuss how we can bring this work into the world of CRDTs.</p>
+<p>Local-first software is an effort to make collaboration software less dependent on cloud services,
+and Automerge is an open-source library for realising local-first software. Automerge uses
+Conflict-free Replicated Data Types (CRDTs) to allow several users to concurrently update a file,
+and it automatically merges those updates into a consistent result. It provides data formats for
+efficiently storing this data and syncing it between users. It seamlessly supports both offline work
+and live real-time collaboration while users are online.</p>
+
+<p>This talk will introduce our recent research on CRDTs, and provide an update on the latest
+developments in Automerge.</p>
 
             </div>
 
