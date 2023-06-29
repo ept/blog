@@ -1,9 +1,9 @@
 ---
 layout: talk
 title: Creating local-first collaboration software with Automerge
-venue: GOTO Amsterdam
+venue: "Amsterdam |> Elixir"
 place: Amsterdam, Netherlands
-venue_url: https://gotoams.nl/2023/sessions/2449/creating-local-first-collaboration-software-with-automerge
+venue_url: https://www.meetup.com/amsterdam-elixir/events/294180192/
 slides_url: https://speakerdeck.com/ept/creating-local-first-collaboration-software-with-automerge
 ---
 
