@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Beyond relational databases &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Creating local-first collaboration software with Automerge &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -48,38 +48,43 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Beyond relational databases</h1>
+                <h1>Creating local-first collaboration software with Automerge</h1>
 
                 <p>
                   A talk at
                   
-                    <a href="http://www.cl.cam.ac.uk/teaching/1516/Databases/">University of Cambridge</a>,
+                    <a href="https://learning.acm.org/techtalks">ACM Tech Talks</a>,
                   
-                  Cambridge, UK, 04 Mar 2016
+                  Online, 27 Sep 2023
                 </p>
 
                 <ul>
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/beyond-relational-databases">Slides</a></li>
+                    <li><a href="https://speakerdeck.com/ept/creating-local-first-collaboration-software-with-automerge">Slides</a></li>
                   
                   
                   
                 </ul>
 
-                <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/7a29aeb8c5344a13baac2985a023c5d9" title="Beyond relational databases" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+                <iframe class="speakerdeck-iframe" style="border: 0px none; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 420;" src="https://speakerdeck.com/player/aaaa9966971e4118b69b6717ed0f4034" title="Creating local-first collaboration software with Automerge" allowfullscreen="true" data-ratio="1.3333333333333333" frameborder="0"></iframe>
 
-<p>I was asked to give a guest lecture on “NoSQL” for the University of Cambridge undergraduate course
-in computer science, part of the lecture series on databases.</p>
+<h2 id="abstract">Abstract</h2>
 
-<p>The audience for this lecture was second-year undergraduate students who have learnt about SQL and
-relational algebra, but who have little practical experience in working with database systems.</p>
+<p>Many of us use collaboration software such as Google Docs, Overleaf, Figma, or Trello every day.
+While this cloud software is very valuable, it is also fragile: if the company providing it goes out
+of business, or decides to suspend your account, the software stops working, and you are locked out
+of all of the documents and data you ever created with that software.</p>
 
-<p>My goal in this lecture was to use various examples to illustrate why one might use different data
-models and different storage technologies in different situations — there is no “one size fits all”
-database that can handle all possible data management needs. Every data management approach works
-well in some scenarios, and runs into limitations in other scenarios. These trade-offs help explain
-why there is such a variety of technologies.</p>
+<p><a href="https://www.inkandswitch.com/local-first/">Local-first software</a> is an effort to make collaboration software
+less dependent on cloud services, and <a href="https://automerge.org/">Automerge</a> is an open-source library for
+realising local-first software. Automerge uses <a href="https://crdt.tech/">Conflict-free Replicated Data Types</a>
+(CRDTs) to allow several users to concurrently update a file, and it automatically merges those updates into
+a consistent result. It provides data formats for efficiently storing this data and syncing it between users.
+It seamlessly supports both offline work and live real-time collaboration while users are online.</p>
+
+<p>This talk will introduce our recent research on CRDTs, and provide an update on the latest
+developments in Automerge.</p>
 
             </div>
 
