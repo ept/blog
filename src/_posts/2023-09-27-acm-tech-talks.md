@@ -1,14 +1,11 @@
 ---
 layout: talk
 title: Creating local-first collaboration software with Automerge
-venue: GOTO Amsterdam
-place: Amsterdam, Netherlands
-venue_url: https://gotoams.nl/2023/sessions/2449/creating-local-first-collaboration-software-with-automerge
+venue: ACM Tech Talks
+place: Online
+venue_url: https://learning.acm.org/techtalks
 slides_url: https://speakerdeck.com/ept/creating-local-first-collaboration-software-with-automerge
-video_url: https://www.youtube.com/watch?v=esMjP-7jlRE
 ---
-
-<iframe width="550" height="315" src="https://www.youtube-nocookie.com/embed/esMjP-7jlRE?si=BySn2v5IVMRwlSNO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 <iframe class="speakerdeck-iframe" style="border: 0px none; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 420;" src="https://speakerdeck.com/player/aaaa9966971e4118b69b6717ed0f4034" title="Creating local-first collaboration software with Automerge" allowfullscreen="true" data-ratio="1.3333333333333333" frameborder="0"></iframe>
 
