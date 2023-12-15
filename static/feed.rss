@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Wed, 01 Nov 2023 12:12:31 CET</lastBuildDate>
+        <lastBuildDate>Fri, 15 Dec 2023 14:51:44 CET</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -1134,7 +1134,7 @@ It is quite simple if you know how <a href="https://en.wikipedia.org/wiki/Bloom_
 
 <p>In addition to sending the hashes of their heads, each node constructs a Bloom filter containing the hashes of the commits that it knows about.
 In our prototype, we allocate 10 bits (1.25 bytes) per commit.
-This number can be adjusted, but note that it is a lot more compact than sending the full 16-byte (for SHA-1, used by Git) or 32-byte (for SHA-256, which is more secure) hash for each commit.
+This number can be adjusted, but note that it is a lot more compact than sending the full 20-byte (for SHA-1, used by Git) or 32-byte (for SHA-256, which is more secure) hash for each commit.
 Moreover, we keep track of the heads from the last time we reconciled our state with a particular node, and then the Bloom filter only needs to include commits that were added since the last reconciliation.</p>
 
 <p>When a node receives such a Bloom filter, it checks its own commit hashes to see whether they appear in the filter.
@@ -1142,7 +1142,7 @@ Any commits whose hash does not appear in the Bloom filter, and its successors, 
 For any commits whose hash does appear in the Bloom filter, it is likely that the other node knows about that commit, but due to false positives it is possible that the other node actually does not know about those commits.</p>
 
 <p>After receiving all the commits that did not appear in the Bloom filter, we check whether we know all of their predecessor hashes.
-If any are missing, we request them in a separate round trip using the same graph traversal algrorithm as before.
+If any are missing, we request them in a separate round trip using the same graph traversal algorithm as before.
 Due to the way the false positive probabilities work, the probability of requiring n round trips decreases exponentially as n grows.
 For example, you might have a 1% chance of requiring two round trips, a 0.01% chance of requiring three round trips, a 0.0001% chance of requiring four round trips, and so on.
 Almost all reconciliations complete in one round trip.</p>

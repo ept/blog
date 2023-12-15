@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Snapdoc: Authenticated snapshots with history privacy in peer-to-peer collaborative editing &mdash; Martin Kleppmann&rsquo;s publications</title>
+    <title>Pudding: Private User Discovery in Anonymity Networks &mdash; Martin Kleppmann&rsquo;s publications</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -18,12 +18,10 @@
 
 
     <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
-    <meta name="citation_title" content="Snapdoc: Authenticated snapshots with history privacy in peer-to-peer collaborative editing" /> 
-    <meta name="citation_publication_date" content="2019-07-16" /> 
-    <meta name="citation_authors" content="Stephan A. Kollmann, Martin Kleppmann, and Alastair R. Beresford" /> 
-    <meta name="citation_pdf_url" content="/papers/snapdoc-pets19.pdf" /> 
-    
-    <meta name="citation_doi" content="10.2478/popets-2019-0044" /> 
+    <meta name="citation_title" content="Pudding: Private User Discovery in Anonymity Networks" /> 
+    <meta name="citation_publication_date" content="2024-05-20" /> 
+    <meta name="citation_authors" content="Ceren Kocaoğullar, Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford" /> 
+    <meta name="citation_pdf_url" content="https://arxiv.org/abs/2311.10825" /> 
     
 </head>
 
@@ -57,31 +55,25 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Snapdoc: Authenticated snapshots with history privacy in peer-to-peer collaborative editing</h1>
+                <h1>Pudding: Private User Discovery in Anonymity Networks</h1>
 
-                <p>Stephan A. Kollmann, Martin Kleppmann, and Alastair R. Beresford</p>
+                <p>Ceren Kocaoğullar, Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford</p>
 
                 <p>
                   
-                    <a href="https://www.petsymposium.org/2019/paperlist.php">Proceedings on Privacy Enhancing Technologies (PoPETS), Vol. 2019, Issue 3</a>,
+                    IEEE Symposium on Security and Privacy (S&P),
                   
                   
-                    Stockholm, Sweden,
-                  
-                  July 2019.
+                  May 2024.
                 </p>
 
                 
 
                 <ul>
                   
-                    <li><a href="/papers/snapdoc-pets19.pdf">Paper (open access)</a></li>
+                    <li><a href="https://arxiv.org/abs/2311.10825">Paper (open access)</a></li>
                   
                   
-                    <li><a href="https://petsymposium.org/popets/2019/popets-2019-0044.pdf">Paper (version of record)</a></li>
-                  
-                  
-                    <li><a href="https://doi.org/10.2478/popets-2019-0044">doi:10.2478/popets-2019-0044</a></li>
                   
                   
                   
@@ -90,21 +82,27 @@
                   
                 </ul>
 
-                <h2 id="abstract">Abstract</h2>
+                <ul>
+  <li><a href="https://github.com/ckocaogullar/pudding-protocol">GitHub repository</a></li>
+</ul>
 
-<p>Document collaboration applications, such as Google Docs or Microsoft Office Online, need to ensure
-that all collaborators have a consistent view of the shared document, and usually achieve this by
-relying on a trusted server. Other existing approaches that do not rely on a trusted third party
-assume that all collaborating devices are trusted. In particular, when inviting a new collaborator
-to a group, one needs to choose between a) keeping past edits private and sending only the latest
-state (a snapshot) of the document; or b) allowing the new collaborator to verify her view of the
-document is consistent with other honest devices by sending the full history of (signed) edits. We
-present a new protocol which allows an authenticated snapshot to be sent to new collaborators while
-both hiding the past editing history, and allowing them to verify consistency. We evaluate the costs
-of the protocol by emulating the editing history of 270 Wikipedia pages; 99% of insert operations
-were processed within 11.0 ms; 64.9 ms for delete operations. An additional benefit of authenticated
-snapshots is a median 84% reduction in the amount of data sent to a new collaborator compared to
-a basic protocol that transfers a full edit history.</p>
+<h2 id="abstract">Abstract</h2>
+
+<p>Anonymity networks allow messaging with metadata privacy, providing better privacy than popular
+encrypted messaging applications. However, contacting a user on an anonymity network currently
+requires knowing their public key or similar high-entropy information, as these systems lack
+a privacy-preserving mechanism for contacting a user via a short, human-readable username. Previous
+research suggests that this is a barrier to widespread adoption.</p>
+
+<p>In this paper we propose Pudding, a novel private user discovery protocol that allows a user to be
+contacted on an anonymity network knowing only their email address. Our protocol hides contact
+relationships between users, prevents impersonation, and conceals which usernames are registered on
+the network. Pudding is Byzantine fault tolerant, remaining available and secure as long as less
+than one third of servers are crashed, unavailable, or malicious. It can be deployed on Loopix and
+Nym without changes to the underlying anonymity network protocol, and it supports mobile devices
+with intermittent network connectivity. We demonstrate the practicality of Pudding with a prototype
+using the Nym anonymity network. We also formally define the security and privacy goals of our
+protocol and conduct a thorough analysis to assess its compliance with these definitions.</p>
 
             </div>
 
