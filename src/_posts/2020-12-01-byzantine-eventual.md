@@ -7,6 +7,8 @@ venue: "arXiv:2012.00472 [cs.DC]"
 paper_url: https://arxiv.org/abs/2012.00472
 ---
 
+* [Blog post](https://martin.kleppmann.com/2020/12/02/bloom-filter-hash-graph-sync.html)
+
 Abstract
 --------
 

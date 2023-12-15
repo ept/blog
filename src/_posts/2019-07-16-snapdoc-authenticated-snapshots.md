@@ -8,7 +8,7 @@ place: Stockholm, Sweden
 doi: 10.2478/popets-2019-0044
 paper_url: /papers/snapdoc-pets19.pdf
 venue_url: https://www.petsymposium.org/2019/paperlist.php
-publisher_url: https://www.degruyter.com/view/j/popets.2019.2019.issue-3/popets-2019-0044/popets-2019-0044.xml
+publisher_url: https://petsymposium.org/popets/2019/popets-2019-0044.pdf
 ---
 
 

@@ -31,3 +31,13 @@ addresses it. We show that several algorithms suffer from this problem, explain 
 identify a lesser variant of the anomaly that occurs in another algorithm. Moreover, we propose
 a specification of collaborative text editing that rules out the anomaly, and show how to prevent
 the lesser anomaly from occurring in one particular algorithm.
+
+Errata
+------
+
+A few years after publication, we learned about some serious flaws in this paper:
+
+* The definition of non-interleaving in Section 2.1 cannot be guaranteed by any algorithm.
+* The algorithm presented in Section 3.1 does not guarantee convergence.
+
+Please see the [Fugue paper](https://arxiv.org/abs/2305.00583) for more details.
