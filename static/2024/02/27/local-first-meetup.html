@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Making CRDTs Byzantine Fault Tolerant &mdash; Martin Kleppmann&rsquo;s publications</title>
+    <title>Local-first software: Resilient and secure collaboration &mdash; Martin Kleppmann&rsquo;s talks</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -16,15 +16,6 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
-
-    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
-    <meta name="citation_title" content="Making CRDTs Byzantine Fault Tolerant" /> 
-    <meta name="citation_publication_date" content="2022-04-05" /> 
-    <meta name="citation_authors" content="Martin Kleppmann" /> 
-    <meta name="citation_pdf_url" content="/papers/bft-crdt-papoc22.pdf" /> 
-    
-    <meta name="citation_doi" content="10.1145/3517209.3524042" /> 
-    
 </head>
 
 <body class="wordpress">
@@ -57,51 +48,30 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Making CRDTs Byzantine Fault Tolerant</h1>
-
-                <p>Martin Kleppmann</p>
+                <h1>Local-first software: Resilient and secure collaboration</h1>
 
                 <p>
+                  A talk at
                   
-                    <a href="https://papoc-workshop.github.io/2022/">9th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a>,
+                    <a href="https://localfirstweb.dev/">Local First (LoFi) meetup</a>,
                   
-                  
-                    Rennes, France,
-                  
-                  April 2022.
+                  Online, 27 Feb 2024
                 </p>
-
-                
 
                 <ul>
                   
-                    <li><a href="/papers/bft-crdt-papoc22.pdf">Paper (open access)</a></li>
+                  
+                    <li><a href="https://speakerdeck.com/ept/where-local-first-came-from-and-where-its-going">Slides</a></li>
                   
                   
-                  
-                    <li><a href="https://doi.org/10.1145/3517209.3524042">doi:10.1145/3517209.3524042</a></li>
-                  
-                  
-                  
-                    <li><a href="https://speakerdeck.com/ept/making-crdts-byzantine-fault-tolerant">Slides</a></li>
-                  
-                  
+                    <li><a href="https://www.youtube.com/watch?v=6Q0yb_ROUBQ&t=261s">Video</a></li>
                   
                   
                 </ul>
 
-                <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/392910792df1434a8fcb7d00a3c19792" title="Making CRDTs Byzantine fault tolerant" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 550px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+                <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/6Q0yb_ROUBQ?si=BtRgHDY8-1tsWjvY&amp;start=261" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
 
-<h2 id="abstract">Abstract</h2>
-
-<p>It is often claimed that Conflict-free Replicated Data Types (CRDTs) ensure consistency of
-replicated data in peer-to-peer systems. However, peer-to-peer systems usually consist of untrusted
-nodes that may deviate from the specified protocol (i.e. exhibit Byzantine faults), and most
-existing CRDT algorithms cannot guarantee consistency in the presence of such faults. This paper
-shows how to adapt existing non-Byzantine CRDT algorithms and make them Byzantine fault-tolerant.
-The proposed scheme can tolerate any number of Byzantine nodes (making it immune to Sybil attacks),
-guarantees Strong Eventual Consistency, and requires only modest changes to existing CRDT
-algorithms.</p>
+<iframe class="speakerdeck-iframe" style="border: 0px; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 420;" frameborder="0" src="https://speakerdeck.com/player/354e9cbaebdc4d169f1ba5290be5d622" title="Where local-first came from and where it's going" allowfullscreen="true" data-ratio="1.3333333333333333"></iframe>
 
             </div>
 
