@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>About/Contact &mdash; Martin Kleppmann&rsquo;s website</title>
+    <title>Undo and Redo Support for Replicated Registers &mdash; Martin Kleppmann&rsquo;s publications</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -16,6 +16,15 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
+
+    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
+    <meta name="citation_title" content="Undo and Redo Support for Replicated Registers" /> 
+    <meta name="citation_publication_date" content="2024-04-22" /> 
+    <meta name="citation_authors" content="Leo Stewen and Martin Kleppmann" /> 
+    <meta name="citation_pdf_url" content="https://arxiv.org/abs/2404.11308" /> 
+    
+    <meta name="citation_doi" content="10.1145/3642976.3653029" /> 
+    
 </head>
 
 <body class="wordpress">
@@ -48,46 +57,51 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>About/Contact</h1>
+                <h1>Undo and Redo Support for Replicated Registers</h1>
 
-                <p>My name is Martin Kleppmann. I am probably best described by the snippets of digital identity
-that are scattered across the interwebs:</p>
+                <p>Leo Stewen and Martin Kleppmann</p>
 
-<ul>
-<li><a rel="me" href="http://martin.kleppmann.com/">My Blog</a></li>
-<li><a rel="me" href="https://martinkl.substack.com/">My email list on Substack</a> (notifications about new blog posts)</li>
-<li><a rel="me" href="https://bsky.app/profile/martin.kleppmann.com">@martin.kleppmann.com on Bluesky</a></li>
-<li><a rel="me" href="https://nondeterministic.computer/@martin">@martin@nondeterministic.computer on Mastodon</a></li>
-<li><a rel="me" href="http://twitter.com/martinkl">@martinkl on Twitter</a> (account is inactive, use Bluesky or Mastodon instead)</li>
-<li><a rel="me" href="https://www.patreon.com/martinkl">My crowdfunding campaign on Patreon</a></li>
-<li><a rel="me" href="http://github.com/ept">My open source projects on Github</a></li>
-<li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
-<li><a rel="me" href="https://speakerdeck.com/ept">My presentations on Speakerdeck</a></li>
-<li><a rel="me" href="https://www.youtube.com/channel/UClB4KPy5LkJj1t3SgYVtMOQ">My talks on YouTube</a></li>
-<li><a rel="me" href="https://keybase.io/martinkl">My PGP public key on Keybase</a></li>
-<li><a rel="me" href="http://dblp.uni-trier.de/pers/hd/k/Kleppmann:Martin">My publications on DBLP</a></li>
-<li><a rel="me" href="https://scholar.google.com/citations?hl=en&amp;user=TbyvU7oAAAAJ">My publications on Google Scholar</a></li>
-<li><a rel="me" href="https://arxiv.org/a/kleppmann_m_1.html">My papers on arXiv</a></li>
-<li><a rel="me" href="https://orcid.org/0000-0001-7252-6958">My ORCID (Open Researcher and Contributor ID)</a></li>
-</ul>
+                <p>
+                  
+                    <a href="https://papoc-workshop.github.io/2024/">11th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a>,
+                  
+                  
+                    Athens, Greece,
+                  
+                  April 2024.
+                </p>
 
-<p>Email: firstname at lastname dot com.</p>
+                
 
-<p>Past projects I have worked on include:</p>
+                <ul>
+                  
+                    <li><a href="https://arxiv.org/abs/2404.11308">Paper (open access)</a></li>
+                  
+                  
+                  
+                    <li><a href="https://doi.org/10.1145/3642976.3653029">doi:10.1145/3642976.3653029</a></li>
+                  
+                  
+                  
+                    <li><a href="https://github.com/lstwn/undo-redo-replicated-registers/blob/arxiv/presentation/build/Undo%20and%20Redo%20Support%20for%20Replicated%20Registers.pdf">Slides</a></li>
+                  
+                  
+                  
+                  
+                </ul>
 
-<ul>
-<li><a href="/die-tuerme-des-februar/">Die Türme des Februar (a musical drama)</a></li>
-<li><a href="https://www.crunchbase.com/organization/rapportive">Rapportive</a></li>
-<li><a href="https://www.crunchbase.com/organization/go-test-it">Go Test It</a></li>
-</ul>
+                <h2 id="abstract">Abstract</h2>
 
-<p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/" style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
-Unless otherwise specified, all content on this site is licensed under a
-<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
-    Attribution 3.0 Unported License</a>.
-Theme borrowed from
-<span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
-ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.</p>
+<p>Undo and redo functionality is ubiquitous in collaboration software. In single user settings, undo
+and redo are well understood. However, when multiple users edit a document, concurrency may arise,
+leading to a non-linear operation history. This renders undo and redo more complex both in terms of
+their semantics and implementation.</p>
+
+<p>We survey the undo and redo semantics of current mainstream collaboration software and derive
+principles for undo and redo behavior in a collaborative setting. We then apply these principles to
+a simple CRDT, the Multi-Valued Replicated Register, and present a novel undo and redo algorithm
+that implements the undo and redo semantics that we believe are most consistent with users’
+expectations.</p>
 
             </div>
 
