@@ -11,7 +11,7 @@ that are scattered across the interwebs:
 <li><a rel="me" href="https://martinkl.substack.com/">My email list on Substack</a> (notifications about new blog posts)</li>
 <li><a rel="me" href="https://bsky.app/profile/martin.kleppmann.com">@martin.kleppmann.com on Bluesky</a></li>
 <li><a rel="me" href="https://nondeterministic.computer/@martin">@martin@nondeterministic.computer on Mastodon</a></li>
-<li><a rel="me" href="http://twitter.com/martinkl">@martinkl on Twitter</a></li>
+<li><a rel="me" href="http://twitter.com/martinkl">@martinkl on X/Twitter</a> (account is inactive, use Bluesky or Mastodon instead)</li>
 <li><a rel="me" href="https://www.patreon.com/martinkl">My crowdfunding campaign on Patreon</a></li>
 <li><a rel="me" href="http://github.com/ept">My open source projects on Github</a></li>
 <li><a rel="me" href="http://www.linkedin.com/in/martinkleppmann">My LinkedIn profile</a></li>
