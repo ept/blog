@@ -4,6 +4,9 @@ type: journal
 title: "Pudding: Private User Discovery in Anonymity Networks"
 authors: Ceren Kocaoğullar, Daniel Hugenroth, Martin Kleppmann, and Alastair R. Beresford
 venue: IEEE Symposium on Security and Privacy (S&P)
+place: San Francisco, CA, USA
+doi: 10.1109/SP54263.2024.00167
+venue_url: https://sp2024.ieee-security.org/
 paper_url: https://arxiv.org/abs/2311.10825
 ---
 
