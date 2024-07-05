@@ -8,6 +8,7 @@ place: San Francisco, CA, USA
 doi: 10.1109/SP54263.2024.00167
 venue_url: https://sp2024.ieee-security.org/
 paper_url: https://arxiv.org/abs/2311.10825
+publisher_url: https://doi.ieeecomputersociety.org/10.1109/SP54263.2024.00167
 ---
 
 * [GitHub repository](https://github.com/ckocaogullar/pudding-protocol)
