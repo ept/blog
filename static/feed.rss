@@ -10,12 +10,44 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Tue, 18 Jun 2024 20:16:39 BST</lastBuildDate>
+        <lastBuildDate>Fri, 05 Jul 2024 11:12:44 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Pudding: user discovery for anonymity networks</title>
+                <link>http://martin.kleppmann.com/2024/07/05/pudding-user-discovery-anonymity-networks.html</link>
+                <comments>http://martin.kleppmann.com/2024/07/05/pudding-user-discovery-anonymity-networks.html#disqus_thread</comments>
+                <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2024/07/05/pudding-user-discovery-anonymity-networks.html</guid>
+                
+                <description><![CDATA[ I’d like to introduce an exciting new research paper I worked on! It’s about a system called Pudding, and it was presented by Ceren at the IEEE Symposium on Security and Privacy, one of the top academic conferences on computer security, in May. Daniel and Alastair also worked on this... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>I’d like to introduce an exciting new research paper I worked on! It’s about a system called <a href="https://arxiv.org/abs/2311.10825">Pudding</a>, and it was presented by <a href="https://twitter.com/ckocaogullar1">Ceren</a> at the <a href="https://sp2024.ieee-security.org">IEEE Symposium on Security and Privacy</a>, one of the top academic conferences on computer security, in May. <a href="https://www.danielhugenroth.com/">Daniel</a> and <a href="https://www.cl.cam.ac.uk/~arb33/">Alastair</a> also worked on this project. Ceren’s presentation <a href="https://www.youtube.com/watch?v=EEUdslTwYZ8">is now available</a>:</p>
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/EEUdslTwYZ8?si=8XNlKyv_Y5HZdGou" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+
+<p>Let me briefly explain what the paper is about.</p>
+
+<p>Anonymity systems allow internet users to hide who is communicating with whom – for example, think a whistleblower talking to a journalist, or a group of activists organising protests against their repressive regime. <a href="https://www.torproject.org/">Tor</a> is the most popular anonymity network; <a href="https://nymtech.net/">Nym</a> is a more recent design with stronger security (and incidentally, one of the better cryptocurrency applications I’ve seen). Nym is based on a research system called <a href="https://www.usenix.org/conference/usenixsecurity17/technical-sessions/presentation/piotrowska">Loopix</a>.</p>
+
+<p>The trouble with these anonymity networks is that if you want to contact someone, you need to know their public key, and sometimes a bunch of other information as well. In the case of Tor, this is encoded in a “<a href="https://community.torproject.org/onion-services/">onion service</a>” URL, which is an unreadable sequence of random letters and numbers (sometimes service operators use brute force to pick a public key so that the first few letters of the hostname spell out the name of the service, but the rest remains random). In Nym, it’s an <a href="https://nymtech.net/docs/clients/addressing-system.html">even longer base58 string</a>. How are users supposed to find the correct key for the person they’re trying to contact? If they send the key via a non-anonymous channel or query a server, they leak the information of who is talking to who, which defeats the entire purpose of the anonymity network.</p>
+
+<p>Having to manually exchange public keys is a huge step backwards in terms of usability. A big part of why WhatsApp and Signal succeeded in bringing end-to-end encryption to billions of users, while PGP failed, is that today’s secure messaging apps allow you to find your friends using only a phone number or some other friendly username, while PGP encouraged <a href="https://en.wikipedia.org/wiki/Key_signing_party">weird, nerdy, in-person meetings</a> for exchanging keys.</p>
+
+<p>Pudding brings friendly usernames to the Loopix/Nym anonymity networks, so that users don’t have to deal with long random strings. We used email addresses rather than phone numbers, for reasons explained in the paper, but the idea is the same. The challenge is providing the username lookup in a way that doesn’t leak who is talking to who. In fact, Pudding even goes further and hides whether a given username is registered to the network or not.</p>
+
+<p>If you’re wondering how this work on anonymity relates to my other work on <a href="https://crdt.tech/">CRDTs</a>/<a href="https://www.inkandswitch.com/local-first/">local-first software</a>: I see anonymity networks as one possible transport layer on top of which we can build decentralised collaboration software. Not all collaboration apps will need the metadata privacy of an anonymity network, but it’s nice to be able to support high-risk users, such as investigative journalists, who do have strong security needs.</p>
+
+<p>If you want to learn more, please <a href="https://www.youtube.com/watch?v=EEUdslTwYZ8">watch the talk</a>, <a href="https://arxiv.org/abs/2311.10825">read the paper</a>, or <a href="https://github.com/ckocaogullar/pudding-protocol">check out the source code</a>! Just note that the implementation is a research prototype and not fit for production use. We’re hoping that Nym might officially adopt something like Pudding in the future.</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>2023 year in review</title>
@@ -1401,225 +1433,6 @@ It is fast and secure; in particular, it uses constant-time algorithms to preven
 
 <p>I wrote this because I wanted to learn how real implementations of ECC work, but I couldn’t find good resources that explained it, so I wrote the document as I figured it out step-by-step from a number of sources (and by doing a lot of the calculations myself).
 I hope others will also find it useful.</p>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Writing a book: is it worth it?</title>
-                <link>http://martin.kleppmann.com/2020/09/29/is-book-writing-worth-it.html</link>
-                <comments>http://martin.kleppmann.com/2020/09/29/is-book-writing-worth-it.html#disqus_thread</comments>
-                <pubDate>Tue, 29 Sep 2020 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2020/09/29/is-book-writing-worth-it.html</guid>
-                
-                <description><![CDATA[ My book, Designing Data-Intensive Applications, recently passed the milestone of 100,000 copies sold. Last year, it was the second-best-selling book in O’Reilly’s entire catalogue, second only to Aurélien Géron’s machine learning book. Machine learning is obviously a hot topic, so I am quite content with coming second to it! 😄... ]]></description>
-                <content:encoded><![CDATA[
-                    <p>My book, <a href="https://dataintensive.net/">Designing Data-Intensive Applications</a>, recently passed the
-milestone of 100,000 copies sold. Last year, it was the second-best-selling book in O’Reilly’s
-entire catalogue, second only to
-<a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=7d47ed0da85dc67659afbfbbad99f6ec&amp;language=en_US">Aurélien Géron’s machine learning book</a>.
-Machine learning is obviously a hot topic, so I am quite content with coming second to it! 😄</p>
-
-<p>To me, the success of this book was totally unexpected: while I was writing it, I thought that it
-was going to be a bit niche, and I set myself the goal of selling 10,000 copies over the lifetime
-of the book. Having passed that goal tenfold, this seems like a good opportunity to look back and
-reflect on the process. I don’t want to make this post too self-congratulatory, but rather I will
-try to share some insights into the business of book-writing.</p>
-
-<h2 id="is-it-financially-worth-it">Is it financially worth it?</h2>
-
-<p>Most books make very little money for both authors and publishers, but then occasionally something
-like <em>Harry Potter</em> comes along. If you are considering writing a book, I strongly recommend that
-you estimate the value of your future royalties to be close to zero. Like starting a band with
-friends and hoping to become rock stars, it’s difficult to predict in advance what will be a hit and
-what will flop. Maybe this applies less to technical books than to fiction and music, but I suspect
-that even with technical books, there are a small number of hits, and most books sell quite modest
-numbers.</p>
-
-<p>That said, in my case, I am happy to report that writing this book has in retrospect turned out to
-be a financially sound decision. These graphs show the royalties I have been paid since the book
-first went on sale:</p>
-
-<p><img src="/2020/09/royalties-cumulative.png" width="550" height="311" alt="Cumulative royalties chart" /></p>
-
-<p><img src="/2020/09/royalties-monthly.png" width="550" height="311" alt="Monthly royalties chart" /></p>
-
-<p>For the first 2½ years the book was in “early release”: during this period I was still writing, and
-we released it in unedited form, one chapter at a time, as ebook only. Then in March 2017 the book
-was officially published, and the print edition went on sale. Since then, the sales have fluctuated
-from month to month, but on average they have stayed remarkably constant. At some point I would
-expect the market to become saturated (i.e. most people who were going to buy the book have already
-bought it), but that does not seem to have happened yet: indeed, sales noticeably increased in late
-2018 (I don’t know why). The x axis ends in July 2020 because from the time of sale, it takes
-a couple of months for the money to trickle through the system.</p>
-
-<p>My contract with the publisher specifies that I get 25% of publisher revenue from ebooks, online
-access, and licensing, 10% of revenue from print sales, and 5% of revenue from translations. That’s
-a percentage of the wholesale price that retailers/distributors pay to the publisher, so it doesn’t
-include the retailers’ markup. The figures in this section are the royalties I was paid, after the
-retailer and publisher have taken their cut, but before tax.</p>
-
-<p>The total sales since the beginning have been (in US dollars):</p>
-
-<ul>
-  <li>Print: 68,763 copies, $161,549 royalties ($2.35/book)</li>
-  <li>Ebook: 33,420	copies, $169,350 royalties ($5.07/book)</li>
-  <li>O’Reilly online access (formerly called Safari Books Online): $110,069 royalties
-(I don’t get readership numbers for this channel)</li>
-  <li><a href="http://dataintensive.net/translations.html">Translations</a>: 5,896 copies, $8,278 royalties ($1.40/book)</li>
-  <li>Other licensing and sponsorship: $34,600 royalties</li>
-  <li>Total: 108,079 copies, $477,916</li>
-</ul>
-
-<p>A lot of money, but I also put a lot of time into it! I estimate that I spent about 2.5 years of
-full-time equivalent work researching and writing the book, spread out over the course of 4 years.
-Of that time, I spent one year (2014–15) working full-time on the book without income, while the
-rest of the time I worked on the book part-time alongside part-time employment.</p>
-
-<p>Now, in retrospect, it turns out that those 2.5 years were a good investment, because the income
-that this work has generated is in the same ballpark as the Silicon Valley software engineering
-salary (including stock and benefits) I could have received in the same time if I hadn’t quit
-LinkedIn in 2014 to work on the book. But of course I didn’t know that at the time! The royalties
-could easily have turned out to be a factor of 10 lower, in which case it would have been
-a financially much less compelling proposition.</p>
-
-<h2 id="beyond-the-royalties">Beyond the royalties</h2>
-
-<p>Part of the success of my book might also be explained by the fact that I put a lot of effort into
-promoting it. Since the book went into early release I have given <a href="/talks.html">almost 50 talks</a> at
-major conferences, plus a bunch of additional invited talks at companies and universities. Every
-single talk contained at least a small advertisement for my book. Like a band going on tour to
-promote their latest album, I suspect these talks contributed to the book being widely known.
-A couple of my blog posts have also been quite popular, and these may also have brought the book to
-potential readers’ attention. I have now significantly dialled back my speaking commitments, so
-I assume it is mostly spreading via word of mouth
-(<a href="https://twitter.com/intensivedata/likes">social media</a>, and readers recommending it to their
-colleagues).</p>
-
-<p>The combination of talks and the book have allowed me to establish a significant public presence and
-reputation in this field. I now get far more invitations to speak at conferences than I can
-realistically accept. Conference talks don’t generate income <em>per se</em> (good industry conferences
-generally pay for speakers’ travel and accommodation, but they rarely pay speaking fees), but this
-kind of reputation is helpful for getting consulting gigs.</p>
-
-<p>I have only done a bit of consulting (and I now regularly turn down consulting requests from
-companies because I’m focussing on my research), but I suspect that in my current position it would
-be fairly easy to establish a lucrative consulting and training business, going into companies and
-helping them with their data infrastructure problems. That is further financial value that writing
-a book can bring: you become recognised as an expert and an authority in an area, and companies will
-pay good money to get advice from such experts.</p>
-
-<p>I have focussed a lot on the financial viability of writing a book because I believe that books are
-an extremely valuable educational resource (more on this below). I want more people to write books,
-and that requires book-writing to be a sustainable activity.</p>
-
-<p>I was able to spend a great deal of time doing background research for my book because I was able to
-afford to live without a salary for a year, but many people will not be able to do that. If people
-can get <a href="https://jvns.ca/blog/2018/09/01/who-pays-to-educate-developers-/">paid fairly for creating educational materials</a>,
-we will get more and better educational materials.</p>
-
-<p>The economics of book-writing are challenging, and I reiterate that the success of my book is
-atypical. However, I also find it heartening that it is <em>possible</em> to make a decent living from
-technical writing. Not guaranteed, but possible, and that gives me hope.</p>
-
-<h2 id="a-book-is-accessible-education">A book is accessible education</h2>
-
-<p>Besides financial value to the author, there are lots of other good things about writing books.</p>
-
-<p>A book is universally <strong>accessible</strong>: it is affordable to almost everyone, anywhere in the world. It
-is vastly cheaper than a university course or corporate training, and you don’t have to move to
-another city to take advantage of it. People in rural areas and developing countries can benefit
-equally to those living in the global centres of tech. You can skim it or read it carefully cover to
-cover, as you please. You don’t even need an internet connection to use it. Of course it doesn’t
-confer all of the benefits of a university education (such as individual feedback, credentials,
-professional network, social life), but as a medium for communicating knowledge, a book is almost
-unbeatably efficient.</p>
-
-<p>Of course there are also plenty of free resources online: Wikipedia, blog posts, videos, Stack
-Overflow, API documentation, research papers, and so on. These are good as reference material for
-answering a concrete question that you have (such as “what are the parameters of the function
-foo?”), but they are piecemeal fragments that are difficult to assemble into a coherent education.
-On the other hand, a good book provides a carefully selected and designed programme of study, and
-a narrative that is particularly valuable when you are trying to make sense of a complex topic for
-the first time.</p>
-
-<p>Compared to teaching people in person, a book is vastly more scalable. Even if I lecture in my
-university’s largest lecture theatre for the rest of my career, I will not get anywhere near
-teaching 100,000 people. For individual and small-group teaching, the disparity is greater still.
-Yet a book is able to reach such large numbers of people routinely.</p>
-
-<h2 id="creating-more-value-than-you-capture">Creating more value than you capture</h2>
-
-<p>Writing a book is an activity that
-<a href="http://radar.oreilly.com/2009/01/work-on-stuff-that-matters-fir.html">creates more value than it captures</a>.
-What I mean with this is that the benefits that readers get from it are greater than the price they
-paid for the book. To back this up, let’s try roughly estimating the value created by my book.</p>
-
-<p>Of the 100,000 people who have bought my book so far, let’s say that two thirds of them intend to
-read it but actually haven’t got round to it yet. Of those who have read it, let’s say that one
-third were able to actually apply some of the ideas in the book, and two thirds read it purely out
-of interest. So let’s say conservatively that 10% of people who bought the book, that is 10,000
-people, have applied it for some useful purpose.</p>
-
-<p>What might such a useful purpose look like? In the case of my book, much of it is about making
-architectural decisions regarding data storage. If you get them right, you can build some amazing
-systems; if you get them wrong, you have to spend ages painfully digging yourself out of a mess that
-you got yourself into.</p>
-
-<p>It’s hard to quantify that, but let’s say that the people who applied ideas from the book avoided
-a bad decision that would have taken them one month of engineering time to rectify. (I’d actually
-love to claim that the time saving is much higher, but let’s be conservative in our estimates.)
-Thus, the 10,000 readers who applied the knowledge freed up an estimated 10,000 months, or 833
-years, of engineering time to spend on things that are more useful than digging yourself out of
-a mess.</p>
-
-<p>If I spend 2.5 years writing a book, and it saves other people 833 years of time in aggregate, that
-is over 300x leverage. If we assume an average engineering salary on the order of $100k, that’s $80m
-of value created. Readers have spent approximately $4m buying those 100,000 books, so the value
-created is about 20 times greater than the value captured. And this is based on some very
-conservative estimates.</p>
-
-<p>There are further ways in which the book creates value. For example, lots of readers have sent me
-emails and tweets saying that because they read my book, they did well in a job interview, landing
-them their dream job and providing financial security for their family. I don’t know how to measure
-that sort of value created, but I think it’s tremendous.</p>
-
-<p>How to be a 10x engineer:
-<a href="https://twitter.com/peterseibel/status/512615519934230528">help ten other engineers be twice as good</a>.
-Producing high-quality educational materials enables you to be a 300x engineer.</p>
-
-<h2 id="conclusions">Conclusions</h2>
-
-<p>Writing a technical book is not easy, but it is:</p>
-
-<ul>
-  <li>valuable (it helps people be better at their job),</li>
-  <li>scalable (large numbers of people can benefit from it),</li>
-  <li>accessible (it doesn’t discriminate who can benefit), and</li>
-  <li>economically viable (it is possible to generate a reasonable level of income from it).</li>
-</ul>
-
-<p>It would be interesting to compare it to working on open source software, another activity that can
-have significant positive impact but is
-<a href="https://www.amazon.com/Working-Public-Making-Maintenance-Software/dp/0578675862/ref=as_li_ss_tl?ref_=nav_signin&amp;&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=a152ade47ab23a9351d3e24950a89515&amp;language=en_US">difficult to get paid for</a>.
-I don’t have a strong opinion on this at the moment.</p>
-
-<p>On the downside, writing a book is really hard, at least if you want to do it well. For me it was
-about the same level of difficulty as building and selling a
-<a href="https://www.crunchbase.com/organization/rapportive">startup</a> (YMMV), that is to say, involving
-multiple existential crises. The writing process was not good for my mental health. For that reason
-I haven’t rushed into writing another book: the scars from writing the first one are still too
-fresh. But the scars gradually do fade, and I’m hoping (perhaps naively) that it might be easier
-next time.</p>
-
-<p>On balance, I do think that writing a technical book is worth it. The feeling of knowing that you
-have helped a lot of people is gratifying.  The personal growth that comes from taking on such
-a challenge is also considerable. And there is no better way to learn something in depth than by
-explaining it to others.</p>
-
-<p>In my next post I will provide some advice on writing and publishing from my experience so far.</p>
 
                 ]]></content:encoded>
             </item>
