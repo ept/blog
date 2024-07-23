@@ -28,10 +28,10 @@ encoded in a “[onion service](https://community.torproject.org/onion-services/
 unreadable sequence of random letters and numbers (sometimes service operators use brute force to
 pick a public key so that the first few letters of the hostname spell out the name of the service,
 but the rest remains random). In Nym, it’s an
-[even longer base58 string](https://nymtech.net/docs/clients/addressing-system.html). How are users
-supposed to find the correct key for the person they’re trying to contact? If they send the key via
-a non-anonymous channel or query a server, they leak the information of who is talking to who, which
-defeats the entire purpose of the anonymity network.
+[even longer base58 string](https://nymtech.net/docs/architecture/addressing-system.html). How are
+users supposed to find the correct key for the person they’re trying to contact? If they send the
+key via a non-anonymous channel or query a server, they leak the information of who is talking to
+who, which defeats the entire purpose of the anonymity network.
 
 Having to manually exchange public keys is a huge step backwards in terms of usability. A big part
 of why WhatsApp and Signal succeeded in bringing end-to-end encryption to billions of users, while
