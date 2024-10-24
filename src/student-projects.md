@@ -18,11 +18,14 @@ supervising student projects:
   [Jack Wickham](https://www.cl.cam.ac.uk/teaching/projects/archive/2019/jaw89-dissertation.pdf),
   [Elias Calocane](https://www.cl.cam.ac.uk/teaching/projects/archive/2018/ec581-dissertation.pdf)
 * MPhil/master's:
-  Liangrun Da (ongoing, [previous project](https://arxiv.org/abs/2311.14007)),
-  [Leo Stewen](https://arxiv.org/abs/2404.11308),
+  [Liangrun Da](https://liangrunda.com/) (ongoing),
   [Ceren Kocaoğullar](https://www.cl.cam.ac.uk/teaching/masters/projects/archive/1921/CerenKocaogullarProject.pdf),
   [Eeo Jun](https://www.cl.cam.ac.uk/teaching/masters/projects/archive/1921/JunEeoProject.pdf),
   [Matthew Weidner](https://mattweidner.com/assets/pdf/acs-dissertation.pdf)
+* Research interns:
+  [Emilie Ma](https://kewbi.sh/),
+  [Leo Stewen](https://arxiv.org/abs/2404.11308),
+  [Liangrun Da](https://arxiv.org/abs/2311.14007)
 * PhD:
   Liangrun Da (incoming),
   [Jessica Man](https://www.cst.cam.ac.uk/people/psjm3) (ongoing)
@@ -59,9 +62,13 @@ My approach to research:
 * I believe that doing good work requires a range of different perspectives. I therefore cultivate
   an inclusive environment, and collaborate with a diverse set of people, both inside and outside
   academia.
-* I think that teaching others is just as important as coming up with new ideas, and so I highly
-  value good writing and accessible communication.
 * Encouragement and collaboration yield better results than pressure and competition.
+
+As your supervisor, I will help you refine a project idea and provide guidance to make your project
+successful, but you'll also have the freedom to choose your own path. I'll try my best to answer
+your questions and unblock you if you're stuck. I will help you get good at writing and presenting
+your ideas.
+
 
 Project ideas
 -------------
@@ -171,3 +178,12 @@ location. If another user concurrently edits that section, their edits are eithe
 to the old location. It would be nicer if those edits were instead applied to the section in its new
 location. This project is to design, implement, and verify a collaborative text editing algorithm
 that supports moving blocks of text.
+
+That's just a selection of ideas... I have many more, but this page is getting too long!
+
+
+For students outside of Cambridge
+---------------------------------
+
+Please note that I advise students at other universities only in very exceptional cases. Sorry,
+there just aren't enough hours in the day.
