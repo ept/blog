@@ -4,38 +4,41 @@ layout: front-page
 
 <h1>Hello!</h1>
 
-<p>I’m Dr. Martin Kleppmann. I do various things:</p>
+<p>I’m Dr. Martin Kleppmann. Briefly about myself:</p>
 
 <ul>
     <li>I am an Associate Professor at the <a href="http://www.cst.cam.ac.uk/">University of Cambridge</a>,
         working on <a href="https://www.inkandswitch.com/local-first.html">local-first</a> collaboration software
-        and distributed systems security.</li>
-    <li>If you have found my work useful, please
-        <a href="https://www.patreon.com/martinkl">support me on Patreon</a>.
-        The income from Patreon goes towards supporting my research collaborators.
-        Thank you to my <a href="supporters.html">supporters</a>!</li>
-    <li>In 2017 I published a book for <a href="http://www.oreilly.com/">O’Reilly</a>, called
-        <a href="https://dataintensive.net">Designing Data-Intensive Applications</a>.
-        It covers the architecture of a broad range of databases and distributed data processing systems,
-        and it is one of the best-selling titles in the publisher’s entire catalogue.</li>
-    <li>I am a regular <a href="/talks.html">speaker at conferences</a>, and
-        <a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx">recordings of my talks</a>
-        have been watched over 500,000 times.</li>
-    <li>I have worked on various open source projects including
-        <a href="https://github.com/automerge/automerge">Automerge</a>,
-        <a href="https://avro.apache.org">Apache Avro</a>, and
-        <a href="https://samza.apache.org">Apache Samza</a>.</li>
-    <li>Between 2007 and 2014 I was an industrial software engineer and entrepreneur. I co-founded
+        and distributed systems security. I teach
+        <a href="https://www.cl.cam.ac.uk/teaching/2425/ConcDisSys/">Concurrent and Distributed Systems</a> and
+        <a href="https://www.cl.cam.ac.uk/teaching/2425/P79/">Cryptography and Protocol Engineering</a>,
+        and I'm one of the people behind the
+        <a href="https://github.com/automerge/automerge">Automerge</a> open source project.</li>
+    <li>I was previously a research fellow in the <a href="https://dse.in.tum.de/">Systems Research Group</a>
+        at <a href="https://www.tum.de/en/">TU Munich</a> (2022–2023), and at the
+        <a href="http://www.cst.cam.ac.uk/">University of Cambridge</a> (2015–2022).
+        Before that I was a software engineer and startup founder: I co-founded
         <a href="https://www.crunchbase.com/organization/rapportive">Rapportive</a>
         (<a href="http://allthingsd.com/20120207/linkedin-is-acquiring-contacts-start-up-rapportive/">acquired</a>
         by <a href="http://www.linkedin.com/">LinkedIn</a> in 2012) and
         <a href="https://www.crunchbase.com/organization/go-test-it">Go Test It</a>
         (<a href="https://thenextweb.com/uk/2009/12/02/red-gate-software-acquire-gotestit-testing-environment-start-ups/">acquired</a>
         by <a href="http://www.red-gate.com/">Red Gate Software</a> in 2009).</li>
+    <li>In 2017 I published a book for <a href="http://www.oreilly.com/">O’Reilly</a>, called
+        <a href="https://dataintensive.net">Designing Data-Intensive Applications</a>.
+        It covers the architecture of a broad range of databases and distributed data processing systems,
+        and it has <a href="https://www.amazon.com/gp/product/1449373321/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=dataintensive-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=1449373321&linkId=7b365b768a6f6c8e5e397e48e30d435e">thousands
+        of five-star reviews</a> on Amazon. A second edition co-authored with
+        <a href="https://cnr.sh/">Chris Riccomini</a> is due to appear in late 2025, and is now
+        <a href="https://learning.oreilly.com/library/view/designing-data-intensive-applications/9781098119058/">in early release</a>.</li>
     <li>I have composed several musical works, including
         “<a href="/die-tuerme-des-februar/">Die Türme des Februar</a>” (in German), a musical-dramatic adaptation of the
         <a href="https://www.goodreads.com/book/show/254092.The_Towers_of_February">book by Tonke Dragt</a>,
         which <a href="/die-tuerme-des-februar/">premiered</a> in 2007 with a cast of 150 people.</li>
+    <li>If you have found my work useful, please
+        <a href="https://www.patreon.com/martinkl">support me on Patreon</a>.
+        The income from Patreon goes towards supporting my research collaborators.
+        Thank you to my <a href="supporters.html">supporters</a>!</li>
 </ul>
 
 <p>Feel free to <a rel="author" href="/contact.html">contact me</a>.</p>
@@ -66,12 +69,13 @@ layout: front-page
 </ul>
 
 <h2 class="title">Conference talks</h2>
-<p>Events where I will be speaking or have spoken.</p>
+<p>Events where I will be speaking or have spoken:</p>
 <ul>
   {% for talk in talks limit:5 %}
     {% include talk_summary.html talk=talk %}
   {% endfor %}
   <li><a href="/talks.html">Full archive</a></li>
+  <li><a href="https://www.youtube.com/playlist?list=PLeKd45zvjcDHJxge6VtYUAbYnvd_VNQCx">YouTube playlist of my talks</a></li>
 </ul>
 
 <h2 class="title" id="publications">Publications</h2>
