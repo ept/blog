@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Keynote: Byzantine Eventual Consistency and Local-First Access Control &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/ansi2html.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/customizations.css?5" />
+<!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/martinkl?format=xml" title="Martin Kleppmann's blog" />
+<script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+
+</head>
+
+<body class="wordpress">
+    <div id="page">
+        <p id="top">
+    <a id="to-content" href="#content" title="Skip to content">Skip to content</a>
+</p>
+
+<div id="header">
+    <div class="wrapper">
+        <strong id="blog-title">
+            <a href="/" title="Home" rel="home">Martin Kleppmann</a>
+        </strong>
+    </div>
+</div>
+
+<div id="sub-header">
+    <div class="wrapper">
+        <div id="navigation">
+            <ul>
+                <li class="page_item"><a href="/student-projects.html" title="Student Projects">Student Projects</a></li>
+                <li class="page_item"><a href="/contact.html" title="About/Contact">About/Contact</a></li>
+                <li class="page_item"><a href="/supporters.html" title="Supporters">Supporters</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr class="divider">
+
+
+        <div class="wrapper">
+            <div id="content">
+                <h1>Keynote: Byzantine Eventual Consistency and Local-First Access Control</h1>
+
+                <p>
+                  A talk at
+                  
+                    <a href="https://papoc-workshop.github.io/2025/">12th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a>,
+                  
+                  Rotterdam, Netherlands, 31 Mar 2025
+                </p>
+
+                <ul>
+                  
+                  
+                  
+                  
+                </ul>
+
+                <h2 id="abstract">Abstract</h2>
+
+<p>CRDTs have long provided eventual consistency without a central server. But they have also long
+ignored the question: how do you know which peers are allowed to update the state? Performing access
+control without reintroducing a central server means we need a replicated data structure that stores
+the set of authorised users. This access control list is itself a CRDT, but it needs to be resilient
+against malicious manipulation. This talk will introduce how to think about Byzantine fault
+tolerance in eventually consistent systems, apply those principles to the problem of local-first
+access control, and show how these topics open exciting new research directions.</p>
+
+            </div>
+
+            <div id="sidebar">
+                <div id="carrington-subscribe" class="widget">
+    <h2 class="widget-title">Subscribe</h2>
+    <a class="feed" title="RSS 2.0 feed for posts" rel="alternate" href="http://feeds.feedburner.com/martinkl">
+        Site <acronym title="Really Simple Syndication">RSS</acronym> feed
+    </a>
+
+    <div class="mailing-list-signup">
+        <p>
+            To find out when I write something new, sign up to receive an
+            <a href="https://martinkl.substack.com/">email notification</a>,
+            <a href="https://bsky.app/profile/martin.kleppmann.com">follow me on Bluesky</a> or
+            <a href="https://nondeterministic.computer/@martin">Mastodon</a>, or subscribe to the
+            <a href="http://feeds.feedburner.com/martinkl">RSS feed</a>.
+        </p>
+
+        <p class="disclaimer">
+            I won't give your email address to anyone else, won't send you any spam,
+            and you can unsubscribe at any time.
+        </p>
+    </div>
+</div>
+
+<div id="primary-sidebar">
+    <div id="book-promo" class="widget">
+        <h2 class="title">My book</h2>
+        <p><a href="http://dataintensive.net" target="_top"><img src="/images/book-cover-small.png" border="0" alt="Designing Data-Intensive Applications" width="180" height="236"/></a></p>
+        <p>My book,
+        <a href="http://dataintensive.net"><em>Designing Data-Intensive Applications</em></a>, has received
+        <a href="https://www.goodreads.com/book/show/23466395-designing-data-intensive-applications">thousands</a>
+        of five-star reviews.</p>
+    </div>
+
+    <div class="widget">
+        <p>I am an Associate Professor working on <a href="https://www.inkandswitch.com/local-first/">local-first software</a>
+        and security protocols at the <a href="http://www.cst.cam.ac.uk/">University of Cambridge</a>.
+        If you find my work useful, please <a href="https://www.patreon.com/martinkl">support me on Patreon</a>.</p>
+    </div>
+</div>
+
+                
+
+
+
+
+
+<div id="secondary-sidebar">
+    <div class="widget">
+        <h2 class="title">Recent posts</h2>
+        <ul>
+            
+              <li>05 Jul 2024: <a href="/2024/07/05/pudding-user-discovery-anonymity-networks.html">Pudding: user discovery for anonymity networks</a></li>
+            
+              <li>04 Jan 2024: <a href="/2024/01/04/year-in-review.html">2023 year in review</a></li>
+            
+              <li>12 Oct 2022: <a href="/2022/10/12/verifying-distributed-systems-isabelle.html">Verifying distributed systems with Isabelle/HOL</a></li>
+            
+              <li>03 Jan 2022: <a href="/2022/01/03/future-of-fusion-energy.html">Book Review: The Future of Fusion Energy</a></li>
+            
+              <li>01 Sep 2021: <a href="/2021/09/01/podcast-interviews.html">Several podcast interviews</a></li>
+            
+            <li><a href="/archive.html">Full archive</a></li>
+        </ul>
+    </div>
+
+    <div class="widget">
+        <h2 class="title">Conference talks</h2>
+        <ul>
+            
+              <li><a href="/2025/04/02/eg-walker-collaborative-text.html">02 Apr 2025 at 20th European Conference on Computer Systems (EuroSys)</a></li>
+            
+              <li><a href="/2025/03/31/papoc-keynote-byzantine.html">31 Mar 2025 at 12th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a></li>
+            
+              <li><a href="/2024/05/30/local-first-conference.html">30 May 2024 at Local-First Conference</a></li>
+            
+              <li><a href="/2024/02/27/local-first-meetup.html">27 Feb 2024 at Local First (LoFi) meetup</a></li>
+            
+              <li><a href="/2023/11/06/ietf-decentralization-research.html">06 Nov 2023 at IETF-118 Decentralization of the Internet Research Group</a></li>
+            
+            <li><a href="/talks.html">Full archive</a></li>
+        </ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+<div id="footer">
+    <div class="wrapper">
+        <p id="generator-link">
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"
+                style="float: left; padding: 0.3em 1em 0 0;"><img alt="Creative Commons License"
+                src="/images/creative-commons.png" width="88" height="31" /></a>
+            Unless otherwise specified, all content on this site is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+                Attribution 3.0 Unported License</a>.
+            Theme borrowed from
+            <span id="theme-link"><a href="http://carringtontheme.com" title="Carrington theme for WordPress">Carrington</a></span>,
+            ported to <a href="https://github.com/mojombo/jekyll">Jekyll</a> by Martin Kleppmann.
+        </p>
+    </div>
+</div>
+
+    </div>
+</body>
+</html>
