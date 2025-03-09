@@ -1,6 +1,7 @@
 ---
 layout: paper
 type: journal
+me_presenting: true
 title: "Collaborative Text Editing with Eg-walker: Better, Faster, Smaller"
 authors: Joseph Gentle and Martin Kleppmann
 venue: 20th European Conference on Computer Systems (EuroSys)
