@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Keynote: Byzantine Eventual Consistency and Local-First Access Control &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Emission Impossible: privacy-preserving carbon emissions claims &mdash; Martin Kleppmann&rsquo;s publications</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -16,6 +16,13 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
+
+    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
+    <meta name="citation_title" content="Emission Impossible: privacy-preserving carbon emissions claims" /> 
+    <meta name="citation_publication_date" content="2024-12-03" /> 
+    <meta name="citation_authors" content="Jessica Man, Sadiq Jaffer, Patrick Ferris, Martin Kleppmann, and Anil Madhavapeddy" /> 
+    <meta name="citation_pdf_url" content="" /> 
+    
 </head>
 
 <body class="wordpress">
@@ -49,20 +56,28 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Keynote: Byzantine Eventual Consistency and Local-First Access Control</h1>
+                <h1>Emission Impossible: privacy-preserving carbon emissions claims</h1>
+
+                <p>Jessica Man, Sadiq Jaffer, Patrick Ferris, Martin Kleppmann, and Anil Madhavapeddy</p>
 
                 <p>
-                  A talk at
                   
-                    <a href="https://papoc-workshop.github.io/2025/">12th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a>,
+                    <a href="https://sicsa.ac.uk/loco/loco2024/">1st International Workshop on Low Carbon Computing (LOCO)</a>,
                   
-                  Rotterdam, Netherlands, 31 Mar 2025
+                  
+                    Glasgow, UK,
+                  
+                  December 2024.
                 </p>
+
+                
 
                 <ul>
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/byzantine-eventual-consistency-and-local-first-access-control">Slides</a></li>
+                  
+                  
+                  
                   
                   
                   
@@ -70,15 +85,22 @@
 
                 <h2 id="abstract">Abstract</h2>
 
-<p>CRDTs have long provided eventual consistency without a central server. But they have also long
-ignored the question: how do you know which peers are allowed to update the state? Performing access
-control without reintroducing a central server means we need a replicated data structure that stores
-the set of authorised users. This access control list is itself a CRDT, but it needs to be resilient
-against malicious manipulation. This talk will introduce how to think about Byzantine fault
-tolerance in eventually consistent systems, apply those principles to the problem of local-first
-access control, and show how these topics open exciting new research directions.</p>
-
-<iframe class="speakerdeck-iframe" style="border: 0px; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 420;" frameborder="0" src="https://speakerdeck.com/player/c6290deac8a44e70afe2be04b02600cf" title="Byzantine Eventual Consistency and Local-first Access Control" allowfullscreen="true" data-ratio="1.3333333333333333"></iframe>
+<p>Information and Communication Technologies (ICT) have a significant climate impact, and data centres
+account for a large proportion of the carbon emissions from ICT. To achieve sustainability goals, it
+is important that all parties involved in ICT supply chains can track and share accurate carbon
+emissions data with their customers, investors, and the authorities. However, businesses have strong
+incentives to make their numbers look good, whilst less so to publish their accounting methods along
+with all the input data, due to the risk of revealing sensitive information. It would be
+uneconomical to use a trusted third party to verify the data for every report for each party in the
+chain. As a result, carbon emissions reporting in supply chains currently relies on unverified data.
+This paper proposes a methodology that applies cryptography and zero-knowledge proofs for carbon
+emissions claims that can be subsequently verified without the knowledge of the private input data.
+The proposed system is based on a zero-knowledge Succinct Non-interactive ARguments of Knowledge
+(zk-SNARK) protocol, which enables verifiable emissions reporting mechanisms across a chain of
+energy suppliers, cloud data centres, cloud services providers, and customers, without any company
+needing to disclose commercially sensitive information. This allows customers of the cloud service
+to accurately account for the emissions generated by their activities and identify opportunities to
+reduce them.</p>
 
             </div>
 

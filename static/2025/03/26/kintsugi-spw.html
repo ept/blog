@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Keynote: Byzantine Eventual Consistency and Local-First Access Control &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Kintsugi: Decentralized E2EE Key Recovery &mdash; Martin Kleppmann&rsquo;s publications</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -16,6 +16,13 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
+
+    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
+    <meta name="citation_title" content="Kintsugi: Decentralized E2EE Key Recovery" /> 
+    <meta name="citation_publication_date" content="2025-03-26" /> 
+    <meta name="citation_authors" content="Emilie Ma and Martin Kleppmann" /> 
+    <meta name="citation_pdf_url" content="" /> 
+    
 </head>
 
 <body class="wordpress">
@@ -49,20 +56,30 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Keynote: Byzantine Eventual Consistency and Local-First Access Control</h1>
+                <h1>Kintsugi: Decentralized E2EE Key Recovery</h1>
+
+                <p>Emilie Ma and Martin Kleppmann</p>
 
                 <p>
-                  A talk at
                   
-                    <a href="https://papoc-workshop.github.io/2025/">12th Workshop on Principles and Practice of Consistency for Distributed Data (PaPoC)</a>,
+                    <a href="https://www.cl.cam.ac.uk/events/spw/2025/">29th International Workshop on Security Protocols</a>,
                   
-                  Rotterdam, Netherlands, 31 Mar 2025
+                  
+                    Cambridge, UK,
+                  
+                  March 2025.
                 </p>
+
+                
+                  <p>This paper received a <strong>Best Presentation Award</strong>.</p>
+                
 
                 <ul>
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/byzantine-eventual-consistency-and-local-first-access-control">Slides</a></li>
+                  
+                  
+                  
                   
                   
                   
@@ -70,15 +87,14 @@
 
                 <h2 id="abstract">Abstract</h2>
 
-<p>CRDTs have long provided eventual consistency without a central server. But they have also long
-ignored the question: how do you know which peers are allowed to update the state? Performing access
-control without reintroducing a central server means we need a replicated data structure that stores
-the set of authorised users. This access control list is itself a CRDT, but it needs to be resilient
-against malicious manipulation. This talk will introduce how to think about Byzantine fault
-tolerance in eventually consistent systems, apply those principles to the problem of local-first
-access control, and show how these topics open exciting new research directions.</p>
-
-<iframe class="speakerdeck-iframe" style="border: 0px; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 420;" frameborder="0" src="https://speakerdeck.com/player/c6290deac8a44e70afe2be04b02600cf" title="Byzantine Eventual Consistency and Local-first Access Control" allowfullscreen="true" data-ratio="1.3333333333333333"></iframe>
+<p>Kintsugi is a protocol for key recovery, allowing a user to regain access to end-to-end encrypted
+data after they have lost their device, but still have their (potentially low-entropy) password.
+Existing E2EE key recovery methods, such as those deployed by Signal and WhatsApp, centralize trust
+by relying on servers administered by a single provider. Kintsugi is decentralized, distributing
+trust over multiple recovery nodes, which could be servers run by independent parties, or end user
+devices in a peer-to-peer setting. To recover a user’s keys, a threshold <em>t</em> + 1 of recovery nodes
+must assist the user in decrypting a shared backup. Kintsugi is password-authenticated and protects
+against offline brute-force password guessing without requiring any specialized secure hardware.</p>
 
             </div>
 
