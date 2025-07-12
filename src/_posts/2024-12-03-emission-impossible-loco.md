@@ -5,6 +5,7 @@ title: "Emission Impossible: privacy-preserving carbon emissions claims"
 authors: Jessica Man, Sadiq Jaffer, Patrick Ferris, Martin Kleppmann, and Anil Madhavapeddy
 venue: 1st International Workshop on Low Carbon Computing (LOCO)
 place: Glasgow, UK
+paper_url: https://arxiv.org/abs/2506.16347
 venue_url: https://sicsa.ac.uk/loco/loco2024/
 video_url: https://www.youtube.com/watch?v=RJ0z1Zhphiw
 ---
