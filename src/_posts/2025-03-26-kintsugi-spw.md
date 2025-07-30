@@ -7,6 +7,7 @@ venue: 29th International Workshop on Security Protocols
 place: Cambridge, UK
 award: Best Presentation Award
 venue_url: https://www.cl.cam.ac.uk/events/spw/2025/
+paper_url: https://arxiv.org/abs/2507.21122
 ---
 
 Abstract
@@ -20,3 +21,6 @@ trust over multiple recovery nodes, which could be servers run by independent pa
 devices in a peer-to-peer setting. To recover a user's keys, a threshold _t_ + 1 of recovery nodes
 must assist the user in decrypting a shared backup. Kintsugi is password-authenticated and protects
 against offline brute-force password guessing without requiring any specialized secure hardware.
+Kintsugi can tolerate up to _t_ honest-but-curious colluding recovery nodes, as well as _n – t_ – 1
+offline nodes, and operates safely in an asynchronous network model where messages can be
+arbitrarily delayed.
