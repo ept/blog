@@ -21,7 +21,7 @@
     <meta name="citation_title" content="Kintsugi: Decentralized E2EE Key Recovery" /> 
     <meta name="citation_publication_date" content="2025-03-26" /> 
     <meta name="citation_authors" content="Emilie Ma and Martin Kleppmann" /> 
-    <meta name="citation_pdf_url" content="" /> 
+    <meta name="citation_pdf_url" content="https://arxiv.org/abs/2507.21122" /> 
     
 </head>
 
@@ -76,6 +76,8 @@
 
                 <ul>
                   
+                    <li><a href="https://arxiv.org/abs/2507.21122">Paper (open access)</a></li>
+                  
                   
                   
                   
@@ -94,7 +96,10 @@ by relying on servers administered by a single provider. Kintsugi is decentraliz
 trust over multiple recovery nodes, which could be servers run by independent parties, or end user
 devices in a peer-to-peer setting. To recover a user’s keys, a threshold <em>t</em> + 1 of recovery nodes
 must assist the user in decrypting a shared backup. Kintsugi is password-authenticated and protects
-against offline brute-force password guessing without requiring any specialized secure hardware.</p>
+against offline brute-force password guessing without requiring any specialized secure hardware.
+Kintsugi can tolerate up to <em>t</em> honest-but-curious colluding recovery nodes, as well as <em>n – t</em> – 1
+offline nodes, and operates safely in an asynchronous network model where messages can be
+arbitrarily delayed.</p>
 
             </div>
 
