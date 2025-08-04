@@ -10,6 +10,9 @@ venue_url: https://www.cl.cam.ac.uk/events/spw/2025/
 paper_url: https://arxiv.org/abs/2507.21122
 ---
 
+* [Emilie's talk at FOSDEM 2025](https://fosdem.org/2025/schedule/event/fosdem-2025-5266-kintsugi-a-decentralized-e2ee-key-recovery-protocol/)
+* [Code](https://github.com/kewbish/kintsugi)
+
 Abstract
 --------
 
