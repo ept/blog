@@ -11,27 +11,31 @@ If you're bright, motivated, and excited about the topics below, come join my re
 I'm a new associate professor, having started only in 2024, but I have a fair bit of experience
 supervising student projects:
 
-* Part II:
+* Part II/bachelor's:
+  [Niels Glodny](https://arxiv.org/abs/2507.22071),
+  Kai Sun,
   [Nicole Choong](https://www.cl.cam.ac.uk/teaching/projects/archive/2023/nwyc2-dissertation.pdf),
   [Simeon Stoykov](https://www.cl.cam.ac.uk/teaching/projects/archive/2020/ss2476-dissertation.pdf),
   [David Berry](https://www.cst.cam.ac.uk/people/dgb37),
   [Jack Wickham](https://www.cl.cam.ac.uk/teaching/projects/archive/2019/jaw89-dissertation.pdf),
   [Elias Calocane](https://www.cl.cam.ac.uk/teaching/projects/archive/2018/ec581-dissertation.pdf)
 * MPhil/master's:
+  Leo Stewen,
+  Aryan Shah,
+  Firas Aleem,
   [Liangrun Da](https://github.com/TUM-DSE/research-work-archive/blob/main/archive/2024/winter/docs/msc_liangrun_da_design_and_verification_of_byzantine_fault_tolerant_crdts.pdf),
   [Ceren Kocaoğullar](https://www.cl.cam.ac.uk/teaching/masters/projects/archive/1921/CerenKocaogullarProject.pdf),
   [Eeo Jun](https://www.cl.cam.ac.uk/teaching/masters/projects/archive/1921/JunEeoProject.pdf),
   [Matthew Weidner](https://mattweidner.com/assets/pdf/acs-dissertation.pdf)
 * Research interns:
-  [Emilie Ma](https://kewbi.sh/),
+  [Emilie Ma](https://arxiv.org/abs/2507.21122),
   [Leo Stewen](https://arxiv.org/abs/2404.11308),
   [Liangrun Da](https://arxiv.org/abs/2311.14007)
 * PhD:
-  Liangrun Da (incoming),
   [Jessica Man](https://www.cst.cam.ac.uk/people/psjm3) (ongoing)
 
-I've also examined 6 PhD theses and 4 MPhil dissertations so far, so I think I know what a good
-thesis looks like.
+I've also examined 7 PhD theses, 8 master's dissertations, and dozens of undergraduate dissertations, so
+I think I know what a good thesis looks like.
 
 Research areas
 --------------
@@ -50,7 +54,8 @@ control over their own data. Concretely, I'm working on:
   contributing to the development of the underlying [AT Protocol](https://atproto.com/).
 * Decentralised and privacy-preserving approaches to carbon emissions accounting and reporting, as
   well as tracking other sustainability issues such as deforestation across supply chains. (This is
-  a new research area, so I haven't written much about it yet.)
+  a new research area, so I haven't written much about it yet. Here's an initial
+  [position paper](https://arxiv.org/abs/2506.16347).)
 
 My approach to research:
 
@@ -77,7 +82,7 @@ The following are some brief outlines of projects that I think could be promisin
 know more about one of them, please get in touch. I'm also happy for you to propose your own
 project, as long as it falls within my research area.
 
-**Decentralised access control**. Level: Part II. Status: available
+**Decentralised access control**. Level: Part II. Status: in progress
 
 Imagine you have your phone and your laptop that are both authorised devices on your account; then
 your phone revokes your laptop's access, and concurrently your laptop revokes your phone's access.
@@ -88,7 +93,7 @@ access your account). Solving this problem robustly turns out to be a surprising
 problem. We have a draft paper (available on request) that attempts a solution; this project is to
 implement and evaluate the algorithm from that paper.
 
-**CRDT-based version control**. Level: Part II. Status: one project in progress
+**CRDT-based version control**. Level: Part II. Status: completed
 
 [CRDTs](https://crdt.tech/) like [Automerge](https://automerge.org/) and
 [Eg-walker](https://arxiv.org/abs/2409.14252) allow multiple users to concurrently edit a text
@@ -99,7 +104,7 @@ practice they do not yet implement this. The project is to implement a version c
 on one of these algorithms. It could efficiently support keystroke-granularity editing history,
 whereas Git would become very inefficient if you made a separate commit for every keystroke.
 
-**Benchmarking Operational Transformation**. Level: Part II/MPhil. Status: one project in progress
+**Benchmarking Operational Transformation**. Level: Part II/MPhil. Status: one project completed, more possible
 
 In a [recent paper](https://arxiv.org/abs/2409.14252) we examined how different collaborative
 editing algorithms handle not only real-time collaboration, but also asynchronous collaboration,
@@ -126,7 +131,7 @@ Many of them aim to be Byzantine fault-tolerant, i.e. resilient against corrupti
 parties. The goal of this project is to benchmark these algorithms, and to compare their trade-offs
 in terms of performance, security, and other characteristics.
 
-**Formalising Git merge**. Level: MPhil/PhD. Status: one project in progress
+**Formalising Git merge**. Level: MPhil/PhD. Status: one project completed, more possible
 
 Even though huge numbers of people use Git every day, and many have a rough idea of how it works
 internally, there are some parts of it that very few people really understand. One such dark corner
