@@ -4,7 +4,7 @@ type: report
 title: Making Sense of Stream Processing
 authors: Martin Kleppmann
 venue: O’Reilly Media
-paper_url: http://www.oreilly.com/data/free/stream-processing.csp
+paper_url: /papers/stream-processing.pdf
 ---
 
 This report is an edited, updated and extended version of five talks and blog posts I had published
