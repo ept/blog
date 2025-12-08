@@ -9,7 +9,7 @@ decades has been a bit of a fringe pursuit, into the software engineering mainst
 
 Proof assistants and proof-oriented programming languages such as [Rocq](https://rocq-prover.org/),
 [Isabelle](https://isabelle.in.tum.de/), [Lean](https://lean-lang.org/),
-[F*](https://fstar-lang.org/), and [Agda](https://agda.readthedocs.io/) have been around for a long
+[F\*](https://fstar-lang.org/), and [Agda](https://agda.readthedocs.io/) have been around for a long
 time. They make it possible to write a formal specification that some piece of code is supposed to
 satisfy, and then mathematically prove that the code *always* satisfies that spec (even on weird
 edge cases that you didn't think of testing). These tools have been used to develop some large
