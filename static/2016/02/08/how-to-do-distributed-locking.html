@@ -134,18 +134,18 @@ this read-modify-write cycle concurrently, which would result in lost updates. T
 something like this:</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// THIS CODE IS BROKEN</span>
-<span class="kd">function</span> <span class="nx">writeData</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">lock</span> <span class="o">=</span> <span class="nx">lockService</span><span class="p">.</span><span class="nx">acquireLock</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lock</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">function</span> <span class="nf">writeData</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">lock</span> <span class="o">=</span> <span class="nx">lockService</span><span class="p">.</span><span class="nf">acquireLock</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">lock</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">throw</span> <span class="dl">'</span><span class="s1">Failed to acquire lock</span><span class="dl">'</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">try</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nx">updateContents</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
-        <span class="nx">storage</span><span class="p">.</span><span class="nx">writeFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">updated</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">storage</span><span class="p">.</span><span class="nf">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nf">updateContents</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+        <span class="nx">storage</span><span class="p">.</span><span class="nf">writeFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">updated</span><span class="p">);</span>
     <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-        <span class="nx">lock</span><span class="p">.</span><span class="nx">release</span><span class="p">();</span>
+        <span class="nx">lock</span><span class="p">.</span><span class="nf">release</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 

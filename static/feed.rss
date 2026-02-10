@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Mon, 08 Dec 2025 20:56:09 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 10 Feb 2026 12:08:20 GMT</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -103,6 +103,10 @@ precision of formal verification counteracts the imprecise and probabilistic nat
 three things taken together mean formal verification is likely to go mainstream in the foreseeable
 future. I suspect that soon the limiting factor will not be the technology, but the culture change
 required for people to realise that formal methods have become viable in practice.</p>
+
+<p><strong>Update:</strong> <a href="https://arxiv.org/abs/2509.22908">This paper</a> from September 2025 coins the term
+“vericoding” (in contrast to “vibecoding”) to describe using LLMs to generate formally verified
+code, and presents some benchmark results for several languages.</p>
 
                 ]]></content:encoded>
             </item>
