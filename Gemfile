@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.0.1'
+ruby '>= 3.0'
 gem 'puma' # for Heroku
 gem 'webrick' # for bundle serve
 gem 'sinatra'
