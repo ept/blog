@@ -79,6 +79,13 @@ three things taken together mean formal verification is likely to go mainstream 
 future. I suspect that soon the limiting factor will not be the technology, but the culture change
 required for people to realise that formal methods have become viable in practice.
 
-**Update:** [This paper](https://arxiv.org/abs/2509.22908) from September 2025 coins the term
-"vericoding" (in contrast to "vibecoding") to describe using LLMs to generate formally verified
-code, and presents some benchmark results for several languages.
+**Updates:**
+
+* [This paper](https://arxiv.org/abs/2509.22908) from September 2025 coins the term "vericoding" (in
+  contrast to "vibecoding") to describe using LLMs to generate formally verified code, and presents
+  some benchmark results for several languages.
+* A few startups are on the case: I've heard reports that
+  [Harmonic's Aristotle](https://aristotle.harmonic.fun/),
+  [Logical Intelligence](https://logicalintelligence.com/), and
+  [DeepSeek-Prover-V2](https://arxiv.org/pdf/2504.21801)
+  are getting pretty good at writing Lean proofs.
