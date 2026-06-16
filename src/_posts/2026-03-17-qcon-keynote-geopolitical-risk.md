@@ -4,7 +4,14 @@ title: "Keynote: Mitigating Geopolitical Risks with Local-First Software and atp
 venue: QCon London
 place: London, UK
 venue_url: https://qconlondon.com/keynote/mar2026/mitigating-geopolitical-risks-local-first-software-and-atproto
+video_url: https://www.infoq.com/presentations/cloud-computing-technological-sovereignty-multi-cloud/
+slides_url: https://speakerdeck.com/ept/mitigating-geopolitical-risks-with-local-first-software-and-atproto
 ---
+
+* [Transcript](https://www.infoq.com/presentations/cloud-computing-technological-sovereignty-multi-cloud/)
+* [Article summarising the keynote](https://www.infoq.com/news/2026/03/qcon-local-first-sovereignty/)
+
+<iframe class="speakerdeck-iframe" style="border: 0px; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" frameborder="0" src="https://speakerdeck.com/player/2d1ca2a20965404dae6b6aa611546716" title="Mitigating geopolitical risks with local-first software and atproto" allowfullscreen="true" data-ratio="1.7777777777777777"></iframe>
 
 Abstract
 --------
