@@ -88,4 +88,5 @@ required for people to realise that formal methods have become viable in practic
   [Harmonic's Aristotle](https://aristotle.harmonic.fun/),
   [Logical Intelligence](https://logicalintelligence.com/), and
   [DeepSeek-Prover-V2](https://arxiv.org/pdf/2504.21801)
-  are getting pretty good at writing Lean proofs.
+  are getting pretty good at writing Lean proofs. In fact, it seems that
+  [Lean is where most of the action is](https://leodemoura.github.io/blog/2026/02/28/when-ai-writes-the-worlds-software.html).
