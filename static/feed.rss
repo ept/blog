@@ -10,7 +10,7 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Tue, 24 Feb 2026 17:01:34 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 16 Jun 2026 14:39:19 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -114,7 +114,8 @@ some benchmark results for several languages.</li>
 <a href="https://aristotle.harmonic.fun/">Harmonic’s Aristotle</a>,
 <a href="https://logicalintelligence.com/">Logical Intelligence</a>, and
 <a href="https://arxiv.org/pdf/2504.21801">DeepSeek-Prover-V2</a>
-are getting pretty good at writing Lean proofs.</li>
+are getting pretty good at writing Lean proofs. In fact, it seems that
+<a href="https://leodemoura.github.io/blog/2026/02/28/when-ai-writes-the-worlds-software.html">Lean is where most of the action is</a>.</li>
 </ul>
 
                 ]]></content:encoded>

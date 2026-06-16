@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Keynote: Mitigating Geopolitical Risks with Local-First Software and atproto &mdash; Martin Kleppmann&rsquo;s talks</title>
+    <title>Emission Impossible: Cryptographically Verifiable Carbon Emissions Reporting for Cloud Computing &mdash; Martin Kleppmann&rsquo;s publications</title>
     <link rel="stylesheet" type="text/css" media="screen, print, handheld" href="/css/typography.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" media="all" href="/css/pygments-default.css" />
@@ -16,6 +16,15 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 
+
+    <!-- Info on meta tags for Google Scholar: https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar -->
+    <meta name="citation_title" content="Emission Impossible: Cryptographically Verifiable Carbon Emissions Reporting for Cloud Computing" /> 
+    <meta name="citation_publication_date" content="2026-06-23" /> 
+    <meta name="citation_authors" content="Jessica Man and Martin Kleppmann" /> 
+    <meta name="citation_pdf_url" content="" /> 
+    
+    <meta name="citation_doi" content="10.1145/3744255.3811720" /> 
+    
 </head>
 
 <body class="wordpress">
@@ -49,42 +58,51 @@
 
         <div class="wrapper">
             <div id="content">
-                <h1>Keynote: Mitigating Geopolitical Risks with Local-First Software and atproto</h1>
+                <h1>Emission Impossible: Cryptographically Verifiable Carbon Emissions Reporting for Cloud Computing</h1>
+
+                <p>Jessica Man and Martin Kleppmann</p>
 
                 <p>
-                  A talk at
                   
-                    <a href="https://qconlondon.com/keynote/mar2026/mitigating-geopolitical-risks-local-first-software-and-atproto">QCon London</a>,
+                    <a href="https://energy.acm.org/conferences/eenergy/2026/index.php">17th ACM International Conference on Future and Sustainable Energy Systems (E-Energy)</a>,
                   
-                  London, UK, 17 Mar 2026
+                  
+                    Banff, Alberta, Canada,
+                  
+                  June 2026.
                 </p>
+
+                
 
                 <ul>
                   
                   
-                    <li><a href="https://speakerdeck.com/ept/mitigating-geopolitical-risks-with-local-first-software-and-atproto">Slides</a></li>
+                  
+                    <li><a href="https://doi.org/10.1145/3744255.3811720">doi:10.1145/3744255.3811720</a></li>
                   
                   
-                    <li><a href="https://www.infoq.com/presentations/cloud-computing-technological-sovereignty-multi-cloud/">Video</a></li>
+                  
+                  
                   
                   
                 </ul>
 
                 <ul>
-  <li><a href="https://www.infoq.com/presentations/cloud-computing-technological-sovereignty-multi-cloud/">Transcript</a></li>
-  <li><a href="https://www.infoq.com/news/2026/03/qcon-local-first-sovereignty/">Article summarising the keynote</a></li>
+  <li><a href="https://github.com/psjm3/verifiable_cloud_carbon_emissions">Code and benchmarks</a> (<a href="https://www.repository.cam.ac.uk/handle/1810/402892">archived copy</a>)</li>
 </ul>
-
-<iframe class="speakerdeck-iframe" style="border: 0px; background: rgba(0, 0, 0, 0.1) padding-box; margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" frameborder="0" src="https://speakerdeck.com/player/2d1ca2a20965404dae6b6aa611546716" title="Mitigating geopolitical risks with local-first software and atproto" allowfullscreen="true" data-ratio="1.7777777777777777"></iframe>
 
 <h2 id="abstract">Abstract</h2>
 
-<p>Europe is highly dependent on US cloud services. Until recently that was not a problem, but
-geopolitical shifts have made it risky. Technological sovereignty sounds nice, but how do we achieve
-it? Being able to easily move from one provider to another is an important part of the story. In
-this keynote Martin Kleppmann will talk about two technological trends that he has helped kick off,
-and that both aim to enable easy provider switching for different domains: local-first software (for
-collaborative tools) and the atproto ecosystem around Bluesky (for social media).</p>
+<p>Cloud providers need to report to their customers what carbon emissions have arisen from their use
+of computing resources, so that customers can include them in their own mandated emissions
+reporting. At present, these reports are neither verifiable nor audited. We show how a data centre
+operator can produce cryptographic zero-knowledge proofs to each customer that the emissions
+reported to that customer are accurate, without the customer being able to learn sensitive
+information about the data centre operator or other customers.  Our approach is scalable, costing
+a data centre operator with one million customers an estimated $150 USD per month plus $0.01 USD for
+each customer who requests a verifiable emissions report. For customers, a proof is 37 KiB in size,
+and verifying it takes less than a second. By making emissions reports more trustworthy, we hope to
+give companies and policymakers the data they need to push towards decarbonisation.</p>
 
             </div>
 
