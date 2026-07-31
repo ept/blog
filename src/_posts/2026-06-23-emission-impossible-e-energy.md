@@ -8,6 +8,7 @@ venue: 17th ACM International Conference on Future and Sustainable Energy System
 place: Banff, Alberta, Canada
 doi: 10.1145/3744255.3811720
 venue_url: https://energy.acm.org/conferences/eenergy/2026/index.php
+paper_url: https://dl.acm.org/doi/pdf/10.1145/3744255.3811720
 ---
 
 * [Code and benchmarks](https://github.com/psjm3/verifiable_cloud_carbon_emissions) ([archived copy](https://www.repository.cam.ac.uk/handle/1810/402892))
