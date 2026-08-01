@@ -7,6 +7,7 @@ I am very grateful to the individuals and organisations who support my work fina
 
 Institutional supporters:
 
+* [Advanced Research + Invention Agency (ARIA)](https://aria.org.uk/)
 * [Volkswagen Foundation](https://www.volkswagenstiftung.de/en/)
 * [Leverhulme Trust](https://www.leverhulme.ac.uk/)
 * [Isaac Newton Trust](https://www.newtontrust.cam.ac.uk/)
