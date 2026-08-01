@@ -1,6 +1,6 @@
 ---
 layout: talk
-title: Local-first in an unstable world
+title: "Keynote: Local-first in an unstable world"
 venue: Local-First Conference
 place: Berlin, Germany
 venue_url: https://app-2026.localfirstconf.com/schedule/day-1/0930-local-first-in-an-unstable-world

@@ -1,6 +1,6 @@
 ---
 layout: talk
-title: The past, present, and future of local-first
+title: "Keynote: The past, present, and future of local-first"
 venue: Local-First Conference
 place: Berlin, Germany
 venue_url: https://app.localfirstconf.com/schedule/conference/the-past-present-and-future-of-local-first
