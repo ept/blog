@@ -12,6 +12,7 @@ I'm a new associate professor, having started only in 2024, but I have a fair bi
 supervising student projects:
 
 * Part II/bachelor's:
+  Sami Abobaker,
   [Niels Glodny](https://arxiv.org/abs/2507.22071),
   Kai Sun,
   [Nicole Choong](https://www.cl.cam.ac.uk/teaching/projects/archive/2023/nwyc2-dissertation.pdf),
@@ -20,6 +21,7 @@ supervising student projects:
   [Jack Wickham](https://www.cl.cam.ac.uk/teaching/projects/archive/2019/jaw89-dissertation.pdf),
   [Elias Calocane](https://www.cl.cam.ac.uk/teaching/projects/archive/2018/ec581-dissertation.pdf)
 * MPhil/master's:
+  Zaz Brown,
   Leo Stewen,
   Aryan Shah,
   Firas Aleem,
@@ -27,12 +29,16 @@ supervising student projects:
   [Ceren Kocaoğullar](https://www.cl.cam.ac.uk/teaching/masters/projects/archive/1921/CerenKocaogullarProject.pdf),
   [Eeo Jun](https://www.cl.cam.ac.uk/teaching/masters/projects/archive/1921/JunEeoProject.pdf),
   [Matthew Weidner](https://mattweidner.com/assets/pdf/acs-dissertation.pdf)
-* Research interns:
+* Temporary research staff/interns:
+  [Jonathan Heiß](https://www.tu.berlin/en/ise/team/jonathan-heiss),
+  [Hossein Hafezi](https://hosseinhafezi.com/),
+  [Thomas Addoah](https://www.geog.cam.ac.uk/people/addoah/),
   [Emilie Ma](https://arxiv.org/abs/2507.21122),
   [Leo Stewen](https://arxiv.org/abs/2404.11308),
   [Liangrun Da](https://arxiv.org/abs/2311.14007)
 * PhD:
-  [Jessica Man](https://www.cst.cam.ac.uk/people/psjm3) (ongoing)
+  [Jessica Man](https://www.cst.cam.ac.uk/people/psjm3) (ongoing),
+  [Vincent Liu](https://www.cst.cam.ac.uk/people/sl955) (ongoing)
 
 I've also examined 7 PhD theses, 8 master's dissertations, and dozens of undergraduate dissertations, so
 I think I know what a good thesis looks like.
@@ -53,9 +59,8 @@ control over their own data. Concretely, I'm working on:
 * Decentralised social media, by advising social network [Bluesky](https://bsky.social/about) and
   contributing to the development of the underlying [AT Protocol](https://atproto.com/).
 * Decentralised and privacy-preserving approaches to carbon emissions accounting and reporting, as
-  well as tracking other sustainability issues such as deforestation across supply chains. (This is
-  a new research area, so I haven't written much about it yet. Here's an initial
-  [position paper](https://arxiv.org/abs/2506.16347).)
+  well as tracking other sustainability issues such as deforestation across supply chains. See our
+  [Emission Impossible paper](https://dl.acm.org/doi/pdf/10.1145/3744255.3811720) as an example.
 
 My approach to research:
 
@@ -75,92 +80,10 @@ your questions and unblock you if you're stuck. I will help you get good at writ
 your ideas.
 
 
+<!--
+
 Project ideas
 -------------
-
-The following are some brief outlines of projects that I think could be promising. If you want to
-know more about one of them, please get in touch. I'm also happy for you to propose your own
-project, as long as it falls within my research area.
-
-**Decentralised access control**. Level: Part II. Status: in progress
-
-Imagine you have your phone and your laptop that are both authorised devices on your account; then
-your phone revokes your laptop's access, and concurrently your laptop revokes your phone's access.
-What should happen? In a centralised system, whichever revocation reaches the server first wins, but
-in a decentralised system that approach doesn't work. In addition, we have to assume that some of
-the operations might be malicious (maybe your phone was stolen and the thief is now using it to
-access your account). Solving this problem robustly turns out to be a surprisingly challenging
-problem. We have a draft paper (available on request) that attempts a solution; this project is to
-implement and evaluate the algorithm from that paper.
-
-**CRDT-based version control**. Level: Part II. Status: completed
-
-[CRDTs](https://crdt.tech/) like [Automerge](https://automerge.org/) and
-[Eg-walker](https://arxiv.org/abs/2409.14252) allow multiple users to concurrently edit a text
-document, and to merge those edits automatically. They work by internally recording
-a keystroke-granularity editing history of the document. In principle, this enables them to offer
-version control features (like comparing versions of a file from different points in time), but in
-practice they do not yet implement this. The project is to implement a version control system based
-on one of these algorithms. It could efficiently support keystroke-granularity editing history,
-whereas Git would become very inefficient if you made a separate commit for every keystroke.
-
-**Benchmarking Operational Transformation**. Level: Part II/MPhil. Status: one project completed, more possible
-
-In a [recent paper](https://arxiv.org/abs/2409.14252) we examined how different collaborative
-editing algorithms handle not only real-time collaboration, but also asynchronous collaboration,
-where users work on their own branch for a while before merging with their collaborators' branches.
-We tested with one [OT](https://en.wikipedia.org/wiki/Operational_transformation) algorithm, which
-turned out to be extremely slow on asynchronous traces. This project is to explore this performance
-characteristic more thoroughly by testing a wider selection of algorithms (e.g.
-[ShareDB](https://github.com/share/sharedb)) and datasets. You may have to implement some algorithms
-yourself, as some older ones are not available as peudocode, and collect additional datasets.
-
-**Byzantine fault tolerant set reconciliation**. Level: Part II/MPhil. Status: available
-
-Set reconciliation is a protocol in which two parties each have a set of items (e.g. files), and
-they want to figure out which items they need to send to each other so that at the end both have all
-of the items. Set reconciliation is very useful for data sync between collaborating users. A number
-of such algorithms have been published recently, including
-[Rateless IBLTs](https://arxiv.org/pdf/2402.02668),
-[RBSR](https://logperiodic.com/rbsr.html),
-[BFT Set Reconciliation](https://lsd.gnunet.org/lsd0003/),
-[minisketch](https://github.com/sipa/minisketch) ([paper](https://arxiv.org/pdf/1905.10518)),
-[hash history](https://oceanstore.cs.berkeley.edu/publications/papers/pdf/hh_icdcs03_kang.pdf), and
-[BEC](https://arxiv.org/abs/2012.00472).
-Many of them aim to be Byzantine fault-tolerant, i.e. resilient against corruption by malicious
-parties. The goal of this project is to benchmark these algorithms, and to compare their trade-offs
-in terms of performance, security, and other characteristics.
-
-**Formalising Git merge**. Level: MPhil/PhD. Status: one project completed, more possible
-
-Even though huge numbers of people use Git every day, and many have a rough idea of how it works
-internally, there are some parts of it that very few people really understand. One such dark corner
-is how exactly Git performs merges, rebases, and cherry-picks. There are multiple
-[merge strategies](https://git-scm.com/docs/merge-strategies), but they are barely documented. Back
-in 2007 a [formal model](https://www.cis.upenn.edu/~bcpierce/papers/diff3-short.pdf) of 3-way merges
-was published, but I believe Git's merge strategies are more sophisticated than what that model
-describes. This project is to develop a formal model that precisely describes how Git merges work,
-so that we can reason about them and prove properties (for example, does merging A into B always
-produce the same result as merging B into A?). As an extension, we can also consider less mainstream
-version control systems such as [Pijul](https://pijul.org/manual/theory.html) and
-[Darcs](https://en.wikibooks.org/wiki/Understanding_Darcs/Patch_theory).
-
-**Expressing CRDTs using Datalog**. Level: MPhil/PhD. Status: one project in progress
-
-[CRDTs](https://crdt.tech/) are an essential building block for
-[local-first software](https://www.inkandswitch.com/local-first/), but they are
-[difficult](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-969.pdf) to get right. To be sure that
-they are correct, we have to prove their commutativity, which is
-[a lot of work](https://dl.acm.org/doi/pdf/10.1145/3133933).
-One idea for solving this problem is to define CRDTs using
-[Datalog](https://columbiadb.github.io/files/papers/datalog.pdf), a subset of Prolog that was
-designed for expressing database queries. It would have the nice property that every algorithm
-written in the language would be
-[guaranteed to converge](https://speakerdeck.com/ept/data-structures-as-queries-expressing-crdts-using-datalog)!
-However, some CRDTs probably can't be expressed using Datalog with stratified negation, and this
-project could explore where that boundary lies. Achieving good performance will require a Datalog
-engine that supports incremental view maintenance, of which there aren't many, so this project may
-end up having to adapt an existing Datalog engine for the required workload.
 
 **App-specific conflict detection**. Level: MPhil/PhD. Status: available
 
@@ -184,8 +107,7 @@ to the old location. It would be nicer if those edits were instead applied to th
 location. This project is to design, implement, and verify a collaborative text editing algorithm
 that supports moving blocks of text.
 
-That's just a selection of ideas... I have many more, but this page is getting too long!
-
+-->
 
 For students outside of Cambridge
 ---------------------------------
