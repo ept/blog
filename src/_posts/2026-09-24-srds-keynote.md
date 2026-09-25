@@ -4,8 +4,10 @@ title: "Keynote: Byzantine Eventual Consistency for Reliable Local-first Softwar
 venue: 45th International Symposium on Reliable Distributed Systems (SRDS)
 place: Rome, Italy
 venue_url: https://srds-conference.org/
+slides_url: https://speakerdeck.com/ept/byzantine-eventual-consistency-for-reliable-local-first-software
 ---
 
+<iframe class="speakerdeck-iframe" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 550 / 420;" frameborder="0" src="https://speakerdeck.com/player/34979657186441c9bf9f4711f7fbfecc" title="Byzantine Eventual Consistency for Reliable Local-First Software" allowfullscreen="true" allow="web-share" data-ratio="1.3333333333333333"></iframe>
 
 Abstract
 --------
