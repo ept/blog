@@ -10,12 +10,144 @@
         <atom:link href="http://martin.kleppmann.com/feed.rss" rel="self" type="application/rss+xml" />
         <link>http://martin.kleppmann.com/</link>
         <description></description>
-        <lastBuildDate>Fri, 25 Sep 2026 09:57:01 BST</lastBuildDate>
+        <lastBuildDate>Wed, 07 Oct 2026 12:22:11 BST</lastBuildDate>
         <language>en</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
 
         
+        
+            <item>
+                <title>Announcing the Centre for Cryptographic Trust Infrastructure (CCTI)</title>
+                <link>http://martin.kleppmann.com/2026/10/07/centre-for-cryptographic-trust-infrastructure.html</link>
+                <comments>http://martin.kleppmann.com/2026/10/07/centre-for-cryptographic-trust-infrastructure.html#disqus_thread</comments>
+                <pubDate>Wed, 07 Oct 2026 00:00:00 +0000</pubDate>
+                <dc:creator>Martin Kleppmann</dc:creator>
+                
+                    <guid isPermaLink="true">http://martin.kleppmann.com/2026/10/07/centre-for-cryptographic-trust-infrastructure.html</guid>
+                
+                <description><![CDATA[ Today I am happy to announce a very exciting new research project that I’ve been working towards for years! We are establishing the Centre for Cryptographic Trust Infrastructure (CCTI), funded initially by a £2.4m grant from the Advanced Research + Invention Agency (ARIA) through the Scaling Trust programme. CCTI is... ]]></description>
+                <content:encoded><![CDATA[
+                    <p>Today I am happy to
+<a href="https://www.cst.cam.ac.uk/news/researchers-receive-funding-explore-ambitious-new-ways-improving-ai-security">announce</a>
+a very exciting new research project that I’ve been working towards for years!</p>
+
+<p>We are establishing the <strong>Centre for Cryptographic Trust Infrastructure (CCTI)</strong>, funded initially
+by a £2.4m grant from the
+<a href="https://aria.org.uk/">Advanced Research + Invention Agency</a> (ARIA) through the
+<a href="https://aria.org.uk/opportunity-spaces/trust-everything-everywhere/scaling-trust">Scaling Trust programme</a>.
+CCTI is a collaboration between the
+<a href="https://www.cst.cam.ac.uk/">University of Cambridge Department of Computer Science and Technology</a>,
+the nonprofit <a href="https://sine.foundation/">SINE Foundation</a>, my longstanding collaborators at
+<a href="https://www.inkandswitch.com/">Ink &amp; Switch</a>, and the startup
+<a href="https://lightsquares.dev/">Light Squares</a>.</p>
+
+<p>The overall goal of the ARIA Scaling Trust programme is to enable AI agents to coordinate securely
+on their owners’ behalf, across both the digital and physical worlds. The programme is funding
+several teams who are investigating the use of cryptography to enable such coordination.</p>
+
+<p>ARIA is a fairly new funding body in the UK, started only 3 years ago. It is modelled after
+<a href="https://www.darpa.mil/">DARPA</a>, but with a civilian rather than military remit. ARIA’s goal is to
+fund ambitious research that, if successful, will have a huge positive impact on society. For the
+last year ARIA has already been funding a lot of my collaborators’ work on
+<a href="https://automerge.org/">Automerge</a> through the
+<a href="https://aria.org.uk/opportunity-spaces/trust-everything-everywhere/safeguarded-ai/funded-projects?tabId=tooling-platforms&amp;cardId=gaios">Safeguarded AI programme</a>,
+and now I am extremely grateful for their support for CCTI as well!</p>
+
+<h2 id="introducing-ccti">Introducing CCTI</h2>
+
+<p>Imagine you’re a manufacturing company, and you have an AI agent that is tasked with finding
+a supplier for a particular component you need. Your agent may contact various potential suppliers,
+even interacting with their agents if they have them. But it’s a messy world out there. How is your
+agent supposed to know if the other agents are telling the truth? They might be fraudsters,
+pretending to have the product you want while actually giving you something else (or nothing at
+all). If you don’t already have some sort of prior history or another way of establishing
+reputation, there is no way for the agents to know whether they can trust each other.</p>
+
+<p>The traditional economy solves this problem through trusted third parties such as certification
+bodies, and by using expensive, slow, and manual processes for vetting potential suppliers (for
+example, flying someone over to inspect their factory in person). But maybe our brave new AI world
+will allow us to do this faster, cheaper, and more reliably?</p>
+
+<p>Our hypothesis is that <strong>cryptographic protocols</strong> such as zero-knowledge proofs provide a way for
+one agent to prove to another that it is telling the truth, but without revealing commercially
+sensitive data. For example, it would allow a supplier to prove that its products were indeed
+manufactured using a particular process as it claims. If this works, we believe that it will unlock
+huge economic opportunities.</p>
+
+<p>But wait, I hear you ask: cryptography can only prove something about the relationship between one
+number and another number. How could it ever prove something about the physical world? Well, as it
+happens, for the last two years my PhD student <a href="https://www.cst.cam.ac.uk/people/psjm3">Jessica</a> and
+I have already been busy using cryptography to prove things about the physical world, and CCTI is
+a generalisation of this line of work.</p>
+
+<p>In our <a href="https://dl.acm.org/doi/pdf/10.1145/3744255.3811720">Emission Impossible</a> paper, Jessica and
+I show how the operator of a datacenter could cryptographically prove to its customers what carbon
+emissions have arisen from each customer’s use of computing resources in the datacenter. Since it’s
+about emissions, it’s about the physical world. We chose datacenters as the use case for that paper
+because it allowed us to make some simplifying assumptions; in particular, we considered only
+electricity as the source of emissions and ignored, say, hardware manufacturing. But in subsequent
+work since then we’ve been chipping away at these assumptions, and generalising the technique to
+other use cases.</p>
+
+<p>From the carbon emissions example you can see that we’re interested in sustainability issues. We
+have also looked into using similar techniques for other sustainability concerns, such as verifying
+that agricultural commodities were not grown on recently deforested land (as required by the
+<a href="https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en">EU Deforestation Regulation</a>).
+CCTI is broader than this – we’re interested in any case of mutually untrusting parties wanting to
+establish a trust relationship – but I believe the approach is particularly valuable in the context
+of sustainability, where companies have a tendency of making dubious claims (“greenwashing”), but
+where accuracy is important if we want to actually achieve our sustainability goals, such as
+reducing carbon emissions.</p>
+
+<h2 id="but-how-does-it-work">But how does it work?</h2>
+
+<p>I will leave a more detailed explanation of our technical approach to another post, but for now
+I wanted to give a brief outline of how we intend to actually make this work, since otherwise this
+project may seem outlandish.</p>
+
+<p>Say you want to prove a property about some physical production process (e.g., that your company’s
+steel was manufactured with a low-carbon process, such as
+<a href="https://www.sciencedirect.com/science/article/pii/S0959652618326301">direct reduction</a> with green
+hydrogen and using an electric arc furnace powered by renewable electricity, rather than a blast
+furnace).  Analysing a sample of the material itself may tell you the process, but it does not tell
+you what carbon intensity was associated with the hydrogen and the electricity. Thus, we need to
+prove a property that is not directly observable.</p>
+
+<p>However, indirect facts are observable, and indeed cryptographically attestable. We can download
+a list of financial transactions from the company’s bank account, and prove using
+<a href="https://tlsnotary.org/">TLSnotary</a> or a similar tool that the transactions are genuine (assuming
+you trust the bank’s TLS certificate). We can verifiably associate each financial transaction with
+a digital invoice, and attach product and emissions data to the invoices. That way, you could prove
+cryptographically that the steel company did not buy any coke, but it did buy a lot of renewable
+electricity and a lot of green hydrogen (themselves attested through recursively validated proofs).
+You also need to prove that the company is not reselling high-emissions steel from another producer.
+And if you can do that, the result is compelling evidence that the steel is indeed green as claimed.</p>
+
+<p>Additionally, the proof process could take input from many other sources: sensor data from trusted
+sensors can be digitally signed, emails can be authenticated via DKIM signatures, company identities
+can be attested by government websites, and certification bodies can issue digital certificates. All
+of these cryptographically attested facts can then feed into a big zero-knowledge proof that deduces
+the fact you want to prove using domain-specific logic.</p>
+
+<p>There is a lot more to this project – we are exploring game-theoretic models to help agents
+establish what further evidence would be needed to come to an agreement, allowing us to weigh off
+the cost of producing the evidence against the benefits it would bring. We are looking into
+real-world use cases from several different industries to inform the design of the whole system, and
+we will use LLM-based prototypes to measure the degree to which cryptographic protocols increase the
+ability for untrusting agents to establish trust and come to an agreement.</p>
+
+<p>If that sounds very ambitious – well, it is. But we think that we have a viable plan for making it
+happen. And if it works, this project will be hugely impactful, potentially changing the way the
+world economy works by enabling new business models that would have been infeasible previously. And
+maybe we can even embed sustainability concerns in every single purchasing decision – which will be
+critical for decarbonising the economy.</p>
+
+<p>CCTI doesn’t have a website yet, as we’re just getting started. But we’ll be writing more about our
+work as it progresses. Stay tuned!</p>
+
+                ]]></content:encoded>
+            </item>
         
             <item>
                 <title>Prediction: AI will make formal verification go mainstream</title>
@@ -1339,160 +1471,6 @@ is to ban only content that is illegal in jurisdictions where they operate, or c
 <a href="https://en.wikipedia.org/wiki/United_States_free_speech_exceptions">not considered protected speech</a>
 under the U.S. First Amendment.</li>
 </ul>
-
-                ]]></content:encoded>
-            </item>
-        
-            <item>
-                <title>Using Bloom filters to efficiently synchronise hash graphs</title>
-                <link>http://martin.kleppmann.com/2020/12/02/bloom-filter-hash-graph-sync.html</link>
-                <comments>http://martin.kleppmann.com/2020/12/02/bloom-filter-hash-graph-sync.html#disqus_thread</comments>
-                <pubDate>Wed, 02 Dec 2020 00:00:00 +0000</pubDate>
-                <dc:creator>Martin Kleppmann</dc:creator>
-                
-                    <guid isPermaLink="true">http://martin.kleppmann.com/2020/12/02/bloom-filter-hash-graph-sync.html</guid>
-                
-                <description><![CDATA[ This blog post uses MathJax to render mathematics. You need JavaScript enabled for MathJax to work. In some recent research, Heidi and I needed to solve the following problem. Say you want to sync a hash graph, such as a Git repository, between two nodes. In Git, each commit is... ]]></description>
-                <content:encoded><![CDATA[
-                    <p><em>This blog post uses <a href="https://www.mathjax.org/">MathJax</a> to render mathematics. You need JavaScript enabled for MathJax to work.</em></p>
-
-<p>In some recent research, <a href="http://heidihoward.co.uk/">Heidi</a> and I needed to solve the following problem.
-Say you want to sync a hash graph, such as a Git repository, between two nodes.
-In Git, each commit is identified by its hash, and a commit may include the hashes of predecessor commits (a commit may include more than one hash if it’s a merge commit).
-We want to figure out the minimal set of commits that the two nodes need to send to each other in order to make their graphs the same.</p>
-
-<p>You might wonder: isn’t this a solved problem?
-Git has to do this every time you do <code class="language-plaintext highlighter-rouge">git pull</code> or <code class="language-plaintext highlighter-rouge">git push</code>!
-You’re right, and some cases are easy, but other cases are a bit trickier.
-What’s more, the algorithm used by Git is not particularly well-documented, and in any case we think that we can do better.</p>
-
-<p>For example, say we have two nodes, and each has one of the following two hash graphs (circles are commits, arrows indicate one commit referencing the hash of another).
-The blue part (commit A and those to the left of it) is shared between the two graphs, while the dark grey and light grey parts exist in only one of the two graphs.</p>
-
-<p><a href="/2020/12/hash-dag.png"><img src="/2020/12/hash-dag.png" width="550" height="258" alt="Illustration of two hash graphs" /></a></p>
-
-<p>We want to reconcile the two nodes’ states so that one node sends all of the dark-grey-coloured commits, the other sends all of the light-grey-coloured commits, and both end up with the following graph:</p>
-
-<p><a href="/2020/12/hash-dag2.png"><img src="/2020/12/hash-dag2.png" width="550" height="143" alt="Hash graph after reconciliation" /></a></p>
-
-<p>How do we efficiently figure out which commits the two nodes need to send to each other?</p>
-
-<h2 id="traversing-the-graph">Traversing the graph</h2>
-
-<p>First, some terminology.
-Let’s say commit A is a <em>predecessor</em> of commit B if B references the hash of A, or if there is some chain of hash references from B leading to A.
-If A is a predecessor of B, then B is a <em>successor</em> of A.
-Finally, define the <em>heads</em> of the graph to be those commits that have no successors.
-In the example above, the heads are B, C, and D.
-(This is slightly different from how Git defines <code class="language-plaintext highlighter-rouge">HEAD</code>.)</p>
-
-<p>The reconciliation algorithm is easy if it’s a “fast-forward” situation: that is, if one node’s heads are commits that the other node already has.
-In that case, one node sends the other the hashes of its heads, and the other node replies with all commits that are successors of the first node’s heads.
-However, the situation is tricker in the example above, where one node’s heads B and C are unknown to the other node, and likewise head D is unknown to the first node.</p>
-
-<p>In order to reconcile the two graphs, we want to figure out which commits are the latest common predecessors of both graphs’ heads (also known as <em>common ancestors</em>, marked A in the example), and then the nodes can send each other all commits that are successors of the common predecessors.</p>
-
-<p>As a first attempt, we can try this: the two nodes send each other their heads; if those contain any unknown predecessor hashes, they request those, and repeat until all hashes resolve to known commits.
-Thus, the nodes gradually work their way from the heads towards the common predecessors.
-This works, but it is slow if your graph contains long chains of commits, since the number of round trips required equals the length of the longest path from a head to a common predecessor.</p>
-
-<p>The “smart” transfer protocol used by Git essentially <a href="https://www.git-scm.com/docs/http-protocol">works like this</a>, except that it sends 32 hashes at a time in order to reduce the number of round trips.
-Why 32? Who knows.
-It’s a trade-off: send more hashes to reduce the number of round trips, but each request/response is bigger.
-Presumably they decided that 32 was a reasonable compromise between latency and bandwidth.</p>
-
-<p>Recent versions of Git also support an experimental <a href="https://github.com/git/git/commit/42cc7485a2ec49ecc440c921d2eb0cae4da80549">“skipping” algorithm</a>, which can be enabled using the <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-fetchnegotiationAlgorithm"><code class="language-plaintext highlighter-rouge">fetch.negotiationAlgorithm</code> config option</a>.
-Rather than moving forward by a fixed number of predecessors in each round trip, this algorithm allows some commits to be skipped, so that it reaches the common predecessors faster.
-The skip size grows similarly to the Fibonacci sequence (i.e. exponentially) with each round trip.
-This reduces the number of round trips to \(O(\log n)\), but you can end up overshooting the common predecessors, and thus the protocol may end up unnecessarily transmitting commits that the other node already has.</p>
-
-<h2 id="bloom-filters-to-the-rescue">Bloom filters to the rescue</h2>
-
-<p>In our new paper draft, which we are <a href="https://arxiv.org/abs/2012.00472">making available on arXiv today</a>, Heidi and I propose a different algorithm for performing this kind of reconciliation.
-It is quite simple if you know how <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filters</a> work.</p>
-
-<p>In addition to sending the hashes of their heads, each node constructs a Bloom filter containing the hashes of the commits that it knows about.
-In our prototype, we allocate 10 bits (1.25 bytes) per commit.
-This number can be adjusted, but note that it is a lot more compact than sending the full 20-byte (for SHA-1, used by Git) or 32-byte (for SHA-256, which is more secure) hash for each commit.
-Moreover, we keep track of the heads from the last time we reconciled our state with a particular node, and then the Bloom filter only needs to include commits that were added since the last reconciliation.</p>
-
-<p>When a node receives such a Bloom filter, it checks its own commit hashes to see whether they appear in the filter.
-Any commits whose hash does not appear in the Bloom filter, and its successors, can immediately be sent to the other node, since we can be sure that the other node does not know about those commits.
-For any commits whose hash does appear in the Bloom filter, it is likely that the other node knows about that commit, but due to false positives it is possible that the other node actually does not know about those commits.</p>
-
-<p>After receiving all the commits that did not appear in the Bloom filter, we check whether we know all of their predecessor hashes.
-If any are missing, we request them in a separate round trip using the same graph traversal algorithm as before.
-Due to the way the false positive probabilities work, the probability of requiring n round trips decreases exponentially as n grows.
-For example, you might have a 1% chance of requiring two round trips, a 0.01% chance of requiring three round trips, a 0.0001% chance of requiring four round trips, and so on.
-Almost all reconciliations complete in one round trip.</p>
-
-<p>Unlike the skipping algorithm used by Git, our algorithm never unnecessarily sends any commits that the other side already has, and the Bloom filters are very compact, even for large commit histories.</p>
-
-<h2 id="practical-relevance">Practical relevance</h2>
-
-<p>In the paper we also prove that this algorithm allows nodes to sync their state even in the presence of arbitrarily many malicious nodes, making it immune to <a href="https://en.wikipedia.org/wiki/Sybil_attack">Sybil attacks</a>.
-We then go on to prove a theorem that shows which types of applications can and cannot be implemented in this Sybil-immune way, without requiring any Sybil countermeasures such as <a href="https://en.wikipedia.org/wiki/Proof_of_work">proof-of-work</a> or the centralised control of <a href="https://arxiv.org/pdf/1711.03936.pdf">permissioned blockchains</a>.</p>
-
-<p>All of this is directly relevant for <a href="https://www.inkandswitch.com/local-first.html">local-first</a> peer-to-peer applications in which apps running on different devices need to sync up their state without necessarily trusting each other or relying on any trusted servers.
-I assume it’s also relevant for <a href="https://www.swirlds.com/downloads/SWIRLDS-TR-2016-01.pdf">blockchains that use hash graphs</a>, but I don’t know much about them.
-So, syncing a Git commit history is just one of many possible use cases – I just used it because most developers will be at least roughly familiar with it!</p>
-
-<p>The details of the algorithm and the theorems are in the <a href="https://arxiv.org/abs/2012.00472">paper</a>, so I won’t repeat them here.
-Instead, I will briefly mention a few interesting things that didn’t make it into the paper.</p>
-
-<h2 id="why-bloom-filters">Why Bloom filters?</h2>
-
-<p>One thing you might be wondering: rather than creating a Bloom filters with 10 bits per commit, can we not just truncate the commit hashes to 10 bits and send those instead?
-That would use the same amount of network bandwidth, and intuitively it may seem like it should be equivalent.</p>
-
-<p>However, that is not the case: Bloom filters perform vastly better than truncated hashes.
-I will use a small amount of probability theory to explain why.</p>
-
-<p>Say we have a hash graph containing \(n\) distinct items, and we want to use \(b\) bits per item (so the total size of the data structure is \(m=bn\) bits).
-If we are using truncated hashes, there are \(2^b\) possible values for each \(b\)-bit hash.
-Thus, given two independently chosen, uniformly distributed hashes, the probability that they are the same is \(2^{-b}\).</p>
-
-<p>If we have \(n\) uniformly distributed hashes, the probability that they are all different from a given \(b\)-bit hash is \((1-2^{-b})^n\).
-The false positive probability is therefore the probability that a given \(b\)-bit hash equals one or more of the \(n\) hashes:</p>
-
-<p>\[ P(\text{false positive in truncated hashes}) = 1 - (1 - 2^{-b})^n \]</p>
-
-<p>On the other hand, with a Bloom filter, we start out with all \(m\) bits set to zero, and then for each item, we set \(k\) bits to one.
-After one uniformly distributed bit-setting operation, the probability that a given bit is zero is \(1 - 1/m\).
-Thus, after \(kn\) bit-setting operations, the probability that a given bit is still zero is \((1 - 1/m)^{kn}\).</p>
-
-<p>A Bloom filter has a false positive when we check \(k\) bits for some item and they are all one, even though that item was not in the set.
-The probability of this happening is</p>
-
-<p>\[ P(\text{false positive in Bloom filter}) = (1 - (1 - 1/m)^{kn})^k \]</p>
-
-<p>It’s not obvious from those expressions which of the two is better, so I plotted the false positive probabilities of truncated hashes and Bloom filters for varying numbers of items \(n\), and with parameters \(b=10\), \(k=7\), \(m=bn\):</p>
-
-<p><a href="/2020/12/false-pos.png"><img src="/2020/12/false-pos.png" width="550" height="200" alt="Plot of false positive probability for truncated hashes and Bloom filters" /></a></p>
-
-<p>For a Bloom filter, as long as we grow the size of the filter proportionally to the number of items (here we have 10 bits per item), the false positive probability remains pretty much constant at about 0.8%.
-But truncated hashes of the same size behave much worse, and with more than about 1,000 items the false positive probability exceeds 50%.</p>
-
-<p>The reason for this: with 10-bit truncated hashes there are only 1,024 possible hash values, and if we have 1,000 different items, then most of those 1,024 possible values are already taken.
-With truncated hashes, if we wanted to keep the false positive probability constant, we would have to use more bits per item as the number of items grows, so the total size of the data structure would grow faster than linearly in the number of items.</p>
-
-<p>Viewing it like this, it is quite remarkable that Bloom filters work as well as they do, using only a constant number of bits per item!</p>
-
-<h2 id="further-details">Further details</h2>
-
-<p>The Bloom filter false positive formula given above is the one that is commonly quoted, but it’s actually not quite correct.
-To be precise, it is a <a href="https://www.sciencedirect.com/science/article/abs/pii/S0020019008001579">lower bound</a> on the exact false positive probability (<a href="https://git.gnunet.org/bibliography.git/plain/docs/FalsepositiverateBloomFilter2008Bose.pdf">open access paper</a>).</p>
-
-<p>Out of curiosity I wrote a <a href="https://gist.github.com/ept/83b91aa07e2495c86ddd8c364a8cfbc7">little Python script</a> that calculates the false positive probability for truncated hashes, Bloom filters using the approximate formula, and Bloom filters using the exact formula.
-Fortunately, for the parameter values we are interested in, the difference between approximate and exact probability is very small.
-The <a href="https://gist.github.com/ept/83b91aa07e2495c86ddd8c364a8cfbc7">gist</a> also contains a <a href="http://www.gnuplot.info/">Gnuplot</a> script to produce the graph above.</p>
-
-<p><a href="https://twitter.com/pvh">Peter</a> suggested that a <a href="https://en.wikipedia.org/wiki/Cuckoo_filter">Cockoo filter</a> may perform even better than a Bloom filter, but we haven’t looked into that yet.
-To be honest, the Bloom filter approach already works so well, and it’s so simple, that I’m not sure the added complexity of a more sophisticated data structure would really be worth it.</p>
-
-<p>That’s all for today.
-Our paper is at <a href="https://arxiv.org/abs/2012.00472">arxiv.org/abs/2012.00472</a>.
-Hope you found this interesting, and please let us know if you end up using the algorithm!</p>
 
                 ]]></content:encoded>
             </item>
